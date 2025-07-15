@@ -13,6 +13,11 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="InternalAzureSearchChatDataSourceParameters"/>. </summary>
+        /// <param name="endpoint"> The absolute endpoint path for the Azure Search resource to use. </param>
+        /// <param name="indexName"> The name of the index to use, as specified in the Azure Search resource. </param>
+        /// <param name="authentication"> The authentication options to use with the Azure Search data source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="indexName"/> or <paramref name="authentication"/> is null. </exception>
         public InternalAzureSearchChatDataSourceParameters(Uri endpoint, string indexName, DataSourceAuthentication authentication)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -25,8 +30,34 @@ namespace Azure.AI.OpenAI.Chat
             _internalIncludeContexts = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="InternalAzureSearchChatDataSourceParameters"/>. </summary>
+        /// <param name="topNDocuments"> The configured number of documents to feature in the query. </param>
+        /// <param name="inScope"> Whether queries should be restricted to use of the indexed data. </param>
+        /// <param name="strictness">
+        /// The configured strictness of the search relevance filtering.
+        /// Higher strictness will increase precision but lower recall of the answer.
+        /// </param>
+        /// <param name="maxSearchQueries">
+        /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
+        /// By default, the system will make an automatic determination.
+        /// </param>
+        /// <param name="allowPartialResult">
+        /// If set to true, the system will allow partial search results to be used and the request will fail if all
+        /// partial queries fail. If not specified or specified as false, the request will fail if any search query fails.
+        /// </param>
+        /// <param name="endpoint"> The absolute endpoint path for the Azure Search resource to use. </param>
+        /// <param name="indexName"> The name of the index to use, as specified in the Azure Search resource. </param>
+        /// <param name="semanticConfiguration"> Additional semantic configuration for the query. </param>
+        /// <param name="filter"> A filter to apply to the search. </param>
+        /// <param name="authentication"> The authentication options to use with the Azure Search data source. </param>
+        /// <param name="fieldMappings"> Gets the index field mappings. </param>
+        /// <param name="queryType"> The query type for the Azure Search resource to use. </param>
+        /// <param name="vectorizationSource"> The vectorization dependency used for embeddings. </param>
+        /// <param name="internalIncludeContexts"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalAzureSearchChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, Uri endpoint, string indexName, string semanticConfiguration, string filter, DataSourceAuthentication authentication, DataSourceFieldMappings fieldMappings, DataSourceQueryType? queryType, DataSourceVectorizer vectorizationSource, IList<string> internalIncludeContexts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            // Plugin customization: ensure initialization of collections
             TopNDocuments = topNDocuments;
             InScope = inScope;
             Strictness = strictness;
@@ -40,7 +71,7 @@ namespace Azure.AI.OpenAI.Chat
             FieldMappings = fieldMappings;
             QueryType = queryType;
             VectorizationSource = vectorizationSource;
-            _internalIncludeContexts = internalIncludeContexts;
+            _internalIncludeContexts = internalIncludeContexts ?? new ChangeTrackingList<string>();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

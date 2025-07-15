@@ -77,7 +77,7 @@ public static partial class AzureFileExtensions
 
         using MultiPartFormDataBinaryContent content = AzureFileClient.CreateMultiPartContentWithMimeType(file, filename, purpose, expirationOptions);
         ClientResult result = await client.UploadFileAsync(content, content.ContentType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return ClientResult.FromValue((OpenAIFile)result, result.GetRawResponse());
+        return AzureFileClient.GetAzureFileResult(result);
     }
 
     [Experimental("AOAI001")]
@@ -104,7 +104,7 @@ public static partial class AzureFileExtensions
 
         using MultiPartFormDataBinaryContent content = AzureFileClient.CreateMultiPartContentWithMimeType(file, filename, purpose, expirationOptions);
         ClientResult result = client.UploadFile(content, content.ContentType, cancellationToken.ToRequestOptions());
-        return ClientResult.FromValue((OpenAIFile)result, result.GetRawResponse());
+        return AzureFileClient.GetAzureFileResult(result);
     }
 
     [Experimental("AOAI001")]

@@ -13,10 +13,15 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="RequestContentFilterResult"/>. </summary>
         internal RequestContentFilterResult()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RequestContentFilterResult"/>. </summary>
+        /// <param name="promptIndex"></param>
+        /// <param name="internalResults"> Gets the content filter results. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RequestContentFilterResult(int? promptIndex, InternalAzureContentFilterResultForPromptContentFilterResults internalResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PromptIndex = promptIndex;

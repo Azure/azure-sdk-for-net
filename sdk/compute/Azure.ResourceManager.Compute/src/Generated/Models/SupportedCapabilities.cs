@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskControllerTypes"> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </param>
         /// <param name="acceleratedNetwork"> True if the image from which the OS disk is created supports accelerated networking. </param>
         /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
+        /// <param name="supportedSecurityOption"> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture, SupportedSecurityOption? supportedSecurityOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
+            SupportedSecurityOption = supportedSecurityOption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? AcceleratedNetwork { get; set; }
         /// <summary> CPU architecture supported by an OS disk. </summary>
         public ArchitectureType? Architecture { get; set; }
+        /// <summary> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </summary>
+        public SupportedSecurityOption? SupportedSecurityOption { get; set; }
     }
 }

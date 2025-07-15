@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> A list of gallery Application Versions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationVersionList(IReadOnlyList<GalleryApplicationVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryApplicationVersionList(IReadOnlyList<GalleryApplicationVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of gallery Application Versions. </summary>
         public IReadOnlyList<GalleryApplicationVersionData> Value { get; }
         /// <summary> The uri to fetch the next page of gallery Application Versions. Call ListNext() with this to fetch the next page of gallery Application Versions. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

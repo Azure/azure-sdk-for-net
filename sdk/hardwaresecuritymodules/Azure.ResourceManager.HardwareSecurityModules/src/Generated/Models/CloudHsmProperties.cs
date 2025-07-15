@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> FQDN of the Cloud HSM. </summary>
-        [WirePath("fqdn")]
         public string Fqdn { get; }
         /// <summary> The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating. </summary>
-        [WirePath("state")]
         public string State { get; }
         /// <summary> The Cloud HSM State message. </summary>
-        [WirePath("stateMessage")]
         public string StateMessage { get; }
     }
 }

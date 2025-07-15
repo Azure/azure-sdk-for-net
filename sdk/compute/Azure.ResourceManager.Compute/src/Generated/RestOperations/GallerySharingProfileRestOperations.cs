@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update sharing profile of a gallery. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Update sharing profile of a gallery. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="sharingUpdate"> Parameters supplied to the update gallery sharing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -10,19 +10,26 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceApiKeyAuthenticationOptions : DataSourceAuthentication
     {
-        public InternalAzureChatDataSourceApiKeyAuthenticationOptions(string key) : base("api_key")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="key"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public InternalAzureChatDataSourceApiKeyAuthenticationOptions(string key) : base(InternalAzureChatDataSourceAuthenticationOptionsType.ApiKey)
         {
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
         }
 
-        internal InternalAzureChatDataSourceApiKeyAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="key"></param>
+        internal InternalAzureChatDataSourceApiKeyAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key) : base(kind, additionalBinaryDataProperties)
         {
             Key = key;
         }
 
-        /// <summary> Gets the Key. </summary>
+        /// <summary> Gets or sets the Key. </summary>
         public string Key { get; set; }
     }
 }

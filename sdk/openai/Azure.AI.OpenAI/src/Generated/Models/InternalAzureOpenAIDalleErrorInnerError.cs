@@ -12,11 +12,17 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="InternalAzureOpenAIDalleErrorInnerError"/>. </summary>
         internal InternalAzureOpenAIDalleErrorInnerError()
         {
         }
 
-        internal InternalAzureOpenAIDalleErrorInnerError(InternalAzureOpenAIDalleErrorInnerErrorCode? code, string revisedPrompt, RequestImageContentFilterResult contentFilterResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureOpenAIDalleErrorInnerError"/>. </summary>
+        /// <param name="code"> The code associated with the inner error. </param>
+        /// <param name="revisedPrompt"> If applicable, the modified prompt used for generation. </param>
+        /// <param name="contentFilterResults"> The content filter result details associated with the inner error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalAzureOpenAIDalleErrorInnerError(string code, string revisedPrompt, RequestImageContentFilterResult contentFilterResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             RevisedPrompt = revisedPrompt;
@@ -25,7 +31,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> The code associated with the inner error. </summary>
-        public InternalAzureOpenAIDalleErrorInnerErrorCode? Code { get; set; }
+        public string Code { get; set; }
 
         /// <summary> If applicable, the modified prompt used for generation. </summary>
         public string RevisedPrompt { get; set; }

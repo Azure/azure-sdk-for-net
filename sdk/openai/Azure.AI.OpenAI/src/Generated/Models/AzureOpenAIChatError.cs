@@ -12,16 +12,24 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIChatError"/>. </summary>
         internal AzureOpenAIChatError()
         {
         }
 
-        internal AzureOpenAIChatError(string code, string message, string @param, string @type, InternalAzureOpenAIChatErrorInnerError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIChatError"/>. </summary>
+        /// <param name="code"> The distinct, machine-generated identifier for the error. </param>
+        /// <param name="message"> A human-readable message associated with the error. </param>
+        /// <param name="param"> If applicable, the request input parameter associated with the error. </param>
+        /// <param name="kind"> The object type, always 'error.'. </param>
+        /// <param name="innerError"> If applicable, an upstream error that originated this error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureOpenAIChatError(string code, string message, string @param, string kind, InternalAzureOpenAIChatErrorInnerError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Param = @param;
-            Type = @type;
+            Kind = kind;
             InnerError = innerError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -35,11 +43,11 @@ namespace Azure.AI.OpenAI
         /// <summary> If applicable, the request input parameter associated with the error. </summary>
         public string Param { get; }
 
-        /// <summary> If applicable, the input line number associated with the error. </summary>
-        public string Type { get; }
+        /// <summary> The object type, always 'error.'. </summary>
+        public string Kind { get; }
 
         /// <summary> If applicable, an upstream error that originated this error. </summary>
-        public InternalAzureOpenAIChatErrorInnerError InnerError { get; }
+        internal InternalAzureOpenAIChatErrorInnerError InnerError { get; }
 
         /// <summary></summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData

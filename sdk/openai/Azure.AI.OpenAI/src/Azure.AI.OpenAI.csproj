@@ -41,7 +41,7 @@
     <Otherwise>
       <PropertyGroup>
         <VersionPrefix>2.2.0</VersionPrefix>
-        <VersionSuffix>beta.4</VersionSuffix>
+        <VersionSuffix>beta.5</VersionSuffix>
       </PropertyGroup>
     </Otherwise>
   </Choose>

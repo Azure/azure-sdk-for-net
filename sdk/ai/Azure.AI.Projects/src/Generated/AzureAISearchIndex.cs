@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Azure AI Search Index Definition. </summary>
-    public partial class AzureAISearchIndex : Index
+    public partial class AzureAISearchIndex : DatasetIndex
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/>. </summary>
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>

@@ -10,7 +10,16 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceEndpointVectorizationSource : DataSourceVectorizer
     {
-        public InternalAzureChatDataSourceEndpointVectorizationSource(Uri endpoint, DataSourceAuthentication authentication) : base("endpoint")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceEndpointVectorizationSource"/>. </summary>
+        /// <param name="endpoint">
+        /// Specifies the resource endpoint URL from which embeddings should be retrieved.
+        /// It should be in the format of:
+        /// https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings.
+        /// The api-version query parameter is not allowed.
+        /// </param>
+        /// <param name="authentication"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="authentication"/> is null. </exception>
+        public InternalAzureChatDataSourceEndpointVectorizationSource(Uri endpoint, DataSourceAuthentication authentication) : base(InternalAzureChatDataSourceVectorizationSourceType.Endpoint)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(authentication, nameof(authentication));
@@ -19,7 +28,21 @@ namespace Azure.AI.OpenAI.Chat
             Authentication = authentication;
         }
 
-        internal InternalAzureChatDataSourceEndpointVectorizationSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri endpoint, int? dimensions, DataSourceAuthentication authentication) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceEndpointVectorizationSource"/>. </summary>
+        /// <param name="kind"> The differentiating identifier for the concrete vectorization source. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="endpoint">
+        /// Specifies the resource endpoint URL from which embeddings should be retrieved.
+        /// It should be in the format of:
+        /// https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings.
+        /// The api-version query parameter is not allowed.
+        /// </param>
+        /// <param name="dimensions">
+        /// The number of dimensions to request on embeddings.
+        /// Only supported in 'text-embedding-3' and later models.
+        /// </param>
+        /// <param name="authentication"></param>
+        internal InternalAzureChatDataSourceEndpointVectorizationSource(InternalAzureChatDataSourceVectorizationSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri endpoint, int? dimensions, DataSourceAuthentication authentication) : base(kind, additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             Dimensions = dimensions;

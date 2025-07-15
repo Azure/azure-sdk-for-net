@@ -3,21 +3,29 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.OpenAI;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    /// <summary></summary>
+    /// <summary>
+    /// A representation of configuration data for a single Azure OpenAI chat data source.
+    /// This will be used by a chat completions request that should use Azure OpenAI chat extensions to augment the
+    /// response behavior.
+    /// The use of this configuration is compatible only with Azure OpenAI.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSearchChatDataSource"/>, <see cref="CosmosChatDataSource"/>, <see cref="ElasticsearchChatDataSource"/>, <see cref="PineconeChatDataSource"/>, and <see cref="MongoDBChatDataSource"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(InternalUnknownAzureChatDataSource))]
     public abstract partial class ChatDataSource : IJsonModel<ChatDataSource>
     {
+        /// <summary> Initializes a new instance of <see cref="ChatDataSource"/> for deserialization. </summary>
         internal ChatDataSource()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -37,7 +45,7 @@ namespace Azure.AI.OpenAI.Chat
             if (_additionalBinaryDataProperties?.ContainsKey("type") != true)
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Kind.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -60,6 +68,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ChatDataSource IJsonModel<ChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -75,6 +85,8 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeChatDataSource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ChatDataSource DeserializeChatDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -100,6 +112,7 @@ namespace Azure.AI.OpenAI.Chat
             return InternalUnknownAzureChatDataSource.DeserializeInternalUnknownAzureChatDataSource(element, options);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ChatDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -109,12 +122,14 @@ namespace Azure.AI.OpenAI.Chat
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChatDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ChatDataSource IPersistableModel<ChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -134,24 +149,7 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="chatDataSource"> The <see cref="ChatDataSource"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ChatDataSource chatDataSource)
-        {
-            if (chatDataSource == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(chatDataSource, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ChatDataSource"/> from. </param>
-        public static explicit operator ChatDataSource(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeChatDataSource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

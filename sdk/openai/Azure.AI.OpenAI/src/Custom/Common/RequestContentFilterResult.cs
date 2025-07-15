@@ -14,9 +14,6 @@ public partial class RequestContentFilterResult
     [CodeGenMember("ContentFilterResults")]
     internal InternalAzureContentFilterResultForPromptContentFilterResults InternalResults { get; }
 
-    /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Error"/>
-    internal InternalAzureContentFilterResultForChoiceError Error { get; set; }
-
     /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Sexual"/>
     public ContentFilterSeverityResult Sexual => InternalResults?.Sexual;
     /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Violence"/>

@@ -1,5 +1,17 @@
 namespace Azure.ResourceManager.Dell.Storage
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.DellFileSystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.DellFileSystemResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityPatchProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionPatchProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatchProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails))]
     public partial class AzureResourceManagerDellStorageContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDellStorageContext() { }

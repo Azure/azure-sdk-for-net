@@ -12,11 +12,6 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    public partial class AIProjectClient
-    {
-        private Telemetry _telemetry;
-        public Telemetry Telemetry => _telemetry ??= new Telemetry(this);
-    }
     /// <summary>
     /// Provides telemetry-related operations for the project.
     /// </summary>
@@ -44,8 +39,7 @@ namespace Azure.AI.Projects
         {
             if (_connectionString == null)
             {
-                Connections connectionsClient = _outerInstance.GetConnectionsClient();
-                Connection connection = connectionsClient.GetDefault(ConnectionType.ApplicationInsights, includeCredentials: true);
+                ConnectionProperties connection = _outerInstance.Connections.GetDefault(ConnectionType.ApplicationInsights, includeCredentials: true);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");
@@ -76,8 +70,7 @@ namespace Azure.AI.Projects
         {
             if (_connectionString == null)
             {
-                Connections connectionsClient = _outerInstance.GetConnectionsClient();
-                Connection connection = await connectionsClient.GetDefaultAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
+                ConnectionProperties connection = await _outerInstance.Connections.GetDefaultAsync(ConnectionType.ApplicationInsights, includeCredentials: true).ConfigureAwait(false);
                 if (connection == null)
                 {
                     throw new RequestFailedException("No Application Insights connection found.");

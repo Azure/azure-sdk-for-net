@@ -126,4 +126,15 @@ public static partial class AzureChatExtensions
             options.SerializedAdditionalRawData,
             "user_security_context");
     }
+
+    [Experimental("AOAI001")]
+    public static string GetMessageReasoningContent(this ChatCompletion chatCompletion)
+    {
+        if (chatCompletion?.Choices?.FirstOrDefault()?.Message?.SerializedAdditionalRawData?.TryGetValue("reasoning_content", out BinaryData reasoningContentData) == true
+            && reasoningContentData?.ToString() is string retrievedReasoningContent)
+        {
+            return retrievedReasoningContent;
+        }
+        return null;
+    }
 }

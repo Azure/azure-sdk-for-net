@@ -52,8 +52,8 @@ To send a notification message, call the `Send` or `SendAsync` function from the
 #### Send a text message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
-var recipient = new List<string> { "<RecipientPhoneNumber>" };
-var textContent = new = new TextNotificationContent(new Guid("<channel-registration-id>"), recipient, "Come on everyone, let's go for lunch together.");
+var recipientList = new List<string> { "<RecipientPhoneNumber>" };
+var textContent = new TextNotificationContent(new Guid("<channel-registration-id>"), recipientList, "Come on everyone, let's go for lunch together.");
 SendMessageResult result = await notificationMessagesClient.SendAsync(textContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
@@ -61,7 +61,7 @@ Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 #### Send a template message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
-var recipient = new List<string> { "<RecipientPhoneNumber>" };
+var recipientList = new List<string> { "<RecipientPhoneNumber>" };
 string templateName = "sample_template";
 string templateLanguage = "en_us";
 var messageTemplate = new MessageTemplate(templateName, templateLanguage);
@@ -73,9 +73,9 @@ Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 #### Send a media message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
-var recipient = new List<string> { "<RecipientPhoneNumber>" };
+var recipientList = new List<string> { "<RecipientPhoneNumber>" };
 var uri = new Uri("https://aka.ms/acsicon1");
-var imageContent = new ImageNotificationContent(channelRegistrationId, recipientList, uri);
+var mediaContent = new ImageNotificationContent(channelRegistrationId, recipientList, uri);
 SendMessageResult result = await notificationMessagesClient.SendAsync(mediaContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```

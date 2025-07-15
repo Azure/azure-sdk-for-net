@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> The list of dedicated hosts. </param>
         /// <param name="nextLink"> The URI to fetch the next page of dedicated hosts. Call ListNext() with this URI to fetch the next page of dedicated hosts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostListResult(IReadOnlyList<DedicatedHostData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DedicatedHostListResult(IReadOnlyList<DedicatedHostData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The list of dedicated hosts. </summary>
         public IReadOnlyList<DedicatedHostData> Value { get; }
         /// <summary> The URI to fetch the next page of dedicated hosts. Call ListNext() with this URI to fetch the next page of dedicated hosts. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

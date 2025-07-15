@@ -77,6 +77,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
+                    case "submit_tool_approval": return SubmitToolApprovalAction.DeserializeSubmitToolApprovalAction(element, options);
                     case "submit_tool_outputs": return SubmitToolOutputsAction.DeserializeSubmitToolOutputsAction(element, options);
                 }
             }

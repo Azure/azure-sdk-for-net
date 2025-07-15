@@ -12,10 +12,14 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIDalleErrorResponse"/>. </summary>
         internal AzureOpenAIDalleErrorResponse()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIDalleErrorResponse"/>. </summary>
+        /// <param name="error"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureOpenAIDalleErrorResponse(AzureOpenAIDalleError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
@@ -23,7 +27,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Gets the Error. </summary>
-        public AzureOpenAIDalleError Error { get; }
+        internal AzureOpenAIDalleError Error { get; }
 
         /// <summary></summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData

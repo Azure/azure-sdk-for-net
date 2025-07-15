@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Backup and Restore operation common properties. </summary>
-        [WirePath("properties")]
         public BackupRestoreBaseResultProperties Properties { get; }
     }
 }

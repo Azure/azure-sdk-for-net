@@ -10,7 +10,11 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions : DataSourceAuthentication
     {
-        public InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(string key, string keyId) : base("key_and_key_id")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="keyId"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="keyId"/> is null. </exception>
+        public InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(string key, string keyId) : base(InternalAzureChatDataSourceAuthenticationOptionsType.KeyAndKeyId)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(keyId, nameof(keyId));
@@ -19,16 +23,21 @@ namespace Azure.AI.OpenAI.Chat
             KeyId = keyId;
         }
 
-        internal InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key, string keyId) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="key"></param>
+        /// <param name="keyId"></param>
+        internal InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key, string keyId) : base(kind, additionalBinaryDataProperties)
         {
             Key = key;
             KeyId = keyId;
         }
 
-        /// <summary> Gets the Key. </summary>
+        /// <summary> Gets or sets the Key. </summary>
         public string Key { get; set; }
 
-        /// <summary> Gets the KeyId. </summary>
+        /// <summary> Gets or sets the KeyId. </summary>
         public string KeyId { get; set; }
     }
 }

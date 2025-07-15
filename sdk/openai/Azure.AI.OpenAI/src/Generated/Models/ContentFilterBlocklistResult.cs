@@ -13,16 +13,23 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistResult"/>. </summary>
+        /// <param name="filtered"> A value indicating whether any of the detailed blocklists resulted in a filtering action. </param>
         internal ContentFilterBlocklistResult(bool filtered)
         {
             Filtered = filtered;
             InternalDetails = new ChangeTrackingList<InternalAzureContentFilterBlocklistResultDetail>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistResult"/>. </summary>
+        /// <param name="filtered"> A value indicating whether any of the detailed blocklists resulted in a filtering action. </param>
+        /// <param name="internalDetails"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContentFilterBlocklistResult(bool filtered, IReadOnlyList<InternalAzureContentFilterBlocklistResultDetail> internalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            // Plugin customization: ensure initialization of collections
             Filtered = filtered;
-            InternalDetails = internalDetails;
+            InternalDetails = internalDetails ?? new ChangeTrackingList<InternalAzureContentFilterBlocklistResultDetail>();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

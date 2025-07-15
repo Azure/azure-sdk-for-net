@@ -13,6 +13,12 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="UserSecurityContext"/>. </summary>
+        /// <param name="applicationName"> The name of the application. Sensitive personal information should not be included in this field. </param>
+        /// <param name="endUserId"> This identifier is the Microsoft Entra ID (formerly Azure Active Directory) user object ID used to authenticate end-users within the generative AI application. Sensitive personal information should not be included in this field. </param>
+        /// <param name="endUserTenantId"> The Microsoft 365 tenant ID the end user belongs to. It's required when the generative AI application is multitenant. </param>
+        /// <param name="sourceIP"> Captures the original client's IP address. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal UserSecurityContext(string applicationName, string endUserId, string endUserTenantId, string sourceIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationName = applicationName;

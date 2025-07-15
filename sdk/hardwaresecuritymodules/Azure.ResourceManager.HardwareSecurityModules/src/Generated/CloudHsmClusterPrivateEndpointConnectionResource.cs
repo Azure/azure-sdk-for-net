@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics;
-        private readonly CloudHsmClusterPrivateEndpointConnectionsRestOperations _cloudHsmClusterPrivateEndpointConnectionRestClient;
+        private readonly ClientDiagnostics _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly CloudHsmClusterPrivateEndpointConnectionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudHsmClusterPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cloudHsmClusterPrivateEndpointConnectionApiVersion);
-            _cloudHsmClusterPrivateEndpointConnectionRestClient = new CloudHsmClusterPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterPrivateEndpointConnectionApiVersion);
+            _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CloudHsmClusterPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Get");
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudHsmClusterPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudHsmClusterPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Get");
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudHsmClusterPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Delete</description>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Delete");
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterPrivateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation(_cloudHsmClusterPrivateEndpointConnectionClientDiagnostics, Pipeline, _cloudHsmClusterPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwareSecurityModulesArmOperation(_cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Delete</description>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Delete");
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterPrivateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation(_cloudHsmClusterPrivateEndpointConnectionClientDiagnostics, Pipeline, _cloudHsmClusterPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new HardwareSecurityModulesArmOperation(_cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Create</description>
+        /// <description>PrivateEndpointConnection_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Update");
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterPrivateEndpointConnectionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _cloudHsmClusterPrivateEndpointConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterPrivateEndpointConnectionResource>(Response.FromValue(new CloudHsmClusterPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Create</description>
+        /// <description>PrivateEndpointConnection_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-30-preview</description>
+        /// <description>2025-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudHsmClusterPrivateEndpointConnectionClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Update");
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterPrivateEndpointConnectionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _cloudHsmClusterPrivateEndpointConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _cloudHsmClusterPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterPrivateEndpointConnectionResource>(Response.FromValue(new CloudHsmClusterPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)

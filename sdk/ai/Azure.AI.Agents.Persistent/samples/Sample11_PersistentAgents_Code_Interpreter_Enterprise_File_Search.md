@@ -62,8 +62,8 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 );
 
 ThreadRun run = client.Runs.CreateRun(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 do
 {
@@ -90,8 +90,8 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
 );
 
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 do
 {
@@ -143,8 +143,8 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 );
 
 ThreadRun run = client.Runs.CreateRun(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 do
 {
@@ -171,8 +171,8 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
 );
 
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 do
 {

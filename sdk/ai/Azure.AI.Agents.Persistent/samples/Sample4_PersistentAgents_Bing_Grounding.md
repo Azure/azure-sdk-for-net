@@ -6,7 +6,7 @@ To enable your Agent to perform search through Bing search API, you use `BingGro
 ```C# Snippet:AgentsBingGrounding_CreateProject
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONECTION_ID");
+var connectionId = System.Environment.GetEnvironmentVariable("AZURE_BING_CONNECTION_ID");
 PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 

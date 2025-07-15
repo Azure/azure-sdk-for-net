@@ -12,10 +12,14 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIChatErrorResponse"/>. </summary>
         internal AzureOpenAIChatErrorResponse()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIChatErrorResponse"/>. </summary>
+        /// <param name="error"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureOpenAIChatErrorResponse(AzureOpenAIChatError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
@@ -23,7 +27,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> Gets the Error. </summary>
-        public AzureOpenAIChatError Error { get; }
+        internal AzureOpenAIChatError Error { get; }
 
         /// <summary></summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData

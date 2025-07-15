@@ -3,16 +3,17 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary></summary>
+    /// <summary> A content filter result for a single response item produced by a generative AI system. </summary>
     public partial class ResponseContentFilterResult : IJsonModel<ResponseContentFilterResult>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -59,6 +60,16 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteObjectValue(CustomBlocklists, options);
             }
+            if (Optional.IsDefined(CustomTopics) && _additionalBinaryDataProperties?.ContainsKey("custom_topics") != true)
+            {
+                writer.WritePropertyName("custom_topics"u8);
+                writer.WriteObjectValue(CustomTopics, options);
+            }
+            if (Optional.IsDefined(Error) && _additionalBinaryDataProperties?.ContainsKey("error") != true)
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
+            }
             if (Optional.IsDefined(ProtectedMaterialText) && _additionalBinaryDataProperties?.ContainsKey("protected_material_text") != true)
             {
                 writer.WritePropertyName("protected_material_text"u8);
@@ -68,11 +79,6 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("protected_material_code"u8);
                 writer.WriteObjectValue(ProtectedMaterialCode, options);
-            }
-            if (Optional.IsDefined(Error) && _additionalBinaryDataProperties?.ContainsKey("error") != true)
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsDefined(UngroundedMaterial) && _additionalBinaryDataProperties?.ContainsKey("ungrounded_material") != true)
             {
@@ -100,6 +106,8 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResponseContentFilterResult IJsonModel<ResponseContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,6 +123,8 @@ namespace Azure.AI.OpenAI
             return DeserializeResponseContentFilterResult(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponseContentFilterResult DeserializeResponseContentFilterResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -127,9 +137,10 @@ namespace Azure.AI.OpenAI
             ContentFilterSeverityResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
             ContentFilterBlocklistResult customBlocklists = default;
+            AzureContentFilterCustomTopicResult customTopics = default;
+            AzureContentFilterResultForChoiceError error = default;
             ContentFilterDetectionResult protectedMaterialText = default;
             ContentFilterProtectedMaterialResult protectedMaterialCode = default;
-            InternalAzureContentFilterResultForChoiceError error = default;
             ContentFilterTextSpanResult ungroundedMaterial = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -188,6 +199,24 @@ namespace Azure.AI.OpenAI
                     customBlocklists = ContentFilterBlocklistResult.DeserializeContentFilterBlocklistResult(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("custom_topics"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customTopics = AzureContentFilterCustomTopicResult.DeserializeAzureContentFilterCustomTopicResult(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("error"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = AzureContentFilterResultForChoiceError.DeserializeAzureContentFilterResultForChoiceError(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("protected_material_text"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -204,15 +233,6 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     protectedMaterialCode = ContentFilterProtectedMaterialResult.DeserializeContentFilterProtectedMaterialResult(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = InternalAzureContentFilterResultForChoiceError.DeserializeInternalAzureContentFilterResultForChoiceError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ungrounded_material"u8))
@@ -236,13 +256,15 @@ namespace Azure.AI.OpenAI
                 selfHarm,
                 profanity,
                 customBlocklists,
+                customTopics,
+                error,
                 protectedMaterialText,
                 protectedMaterialCode,
-                error,
                 ungroundedMaterial,
                 additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResponseContentFilterResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -252,12 +274,14 @@ namespace Azure.AI.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseContentFilterResult)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResponseContentFilterResult IPersistableModel<ResponseContentFilterResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -277,24 +301,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseContentFilterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="responseContentFilterResult"> The <see cref="ResponseContentFilterResult"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ResponseContentFilterResult responseContentFilterResult)
-        {
-            if (responseContentFilterResult == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(responseContentFilterResult, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ResponseContentFilterResult"/> from. </param>
-        public static explicit operator ResponseContentFilterResult(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeResponseContentFilterResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

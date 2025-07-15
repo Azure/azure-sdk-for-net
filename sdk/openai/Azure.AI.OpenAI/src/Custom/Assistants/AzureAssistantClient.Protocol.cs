@@ -18,7 +18,7 @@ internal partial class AzureAssistantClient : AssistantClient
         return new AzureAsyncCollectionResult<Assistant, AssistantCollectionPageToken>(
             Pipeline,
             options,
-            continuation => CreateListAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
             page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data,
             options?.CancellationToken ?? default);
@@ -29,7 +29,7 @@ internal partial class AzureAssistantClient : AssistantClient
         return new AzureCollectionResult<Assistant, AssistantCollectionPageToken>(
             Pipeline,
             options,
-            continuation => CreateListAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
+            continuation => CreateGetAssistantsRequest(limit, order, continuation?.After ?? after, continuation?.Before ?? before, options),
             page => AssistantCollectionPageToken.FromResponse(page, limit, order, before),
             page => ModelReaderWriter.Read<InternalListAssistantsResponse>(page.GetRawResponse().Content).Data);
     }
@@ -455,7 +455,7 @@ internal partial class AzureAssistantClient : AssistantClient
     internal override PipelineMessage CreateCreateAssistantRequest(BinaryContent content, RequestOptions options = null)
         => NewJsonPostBuilder(content, options).WithPath("assistants").Build();
 
-    internal override PipelineMessage CreateListAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
+    internal override PipelineMessage CreateGetAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
         => NewGetListBuilder(limit, order, after, before, options).WithPath("assistants").Build();
 
     internal override PipelineMessage CreateGetAssistantRequest(string assistantId, RequestOptions options)

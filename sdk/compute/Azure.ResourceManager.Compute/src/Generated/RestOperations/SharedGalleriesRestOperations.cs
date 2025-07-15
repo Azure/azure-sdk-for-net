@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List shared galleries by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List shared galleries by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is null. </exception>
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Get a shared gallery by subscription id or tenant id. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="galleryUniqueName"/> is null. </exception>
@@ -248,8 +248,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List shared galleries by subscription id or tenant id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> List shared galleries by subscription id or tenant id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>

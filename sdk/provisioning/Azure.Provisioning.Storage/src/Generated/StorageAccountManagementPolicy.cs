@@ -94,6 +94,7 @@ public partial class StorageAccountManagementPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _rules = DefineListProperty<ManagementPolicyRule>("Rules", ["properties", "policy", "rules"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

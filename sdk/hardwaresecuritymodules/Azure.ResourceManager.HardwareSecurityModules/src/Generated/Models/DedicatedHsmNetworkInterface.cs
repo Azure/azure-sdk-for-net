@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> Private Ip address of the interface. </summary>
-        [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; set; }
     }
 }

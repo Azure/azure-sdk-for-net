@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The updatable properties of the FooSettings. </summary>
-    public partial class FooSettingsUpdateProperties : IJsonModel<FooSettingsUpdateProperties>
+    internal partial class FooSettingsUpdateProperties : IJsonModel<FooSettingsUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
+        /// <description>2025-01-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-02</description>
+        /// <description>2025-01-02</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
+        /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>

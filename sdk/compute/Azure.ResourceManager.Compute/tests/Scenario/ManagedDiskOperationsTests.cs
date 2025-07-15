@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [ClientTestFixture(true, "2024-03-02", "2022-07-02", "2021-04-01", "2019-07-01")]
+    [ClientTestFixture(true, "2025-01-02", "2024-03-02", "2022-07-02", "2021-04-01", "2019-07-01")]
     public class ManagedDiskOperationsTests : ComputeTestBase
     {
         public ManagedDiskOperationsTests(bool isAsync, string apiVersion)

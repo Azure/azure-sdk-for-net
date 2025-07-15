@@ -42,7 +42,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4.1",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "You are a helpful chat agent."
             );
@@ -79,6 +79,11 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ChatOptionsTestType.WithResponseFormat)]
         public async Task TestGetStreamingResponseAsync(ChatOptionsTestType optionsType)
         {
+            // This test will not record the sync version, however, CI/CD will still check
+            // the presense of this file. Just copy assets for
+            // TestGetStreamingResponseAsync(***)Async to TestGetStreamingResponseAsync(***)
+            // in net\sdk\ai\Azure.AI.Agents.Persistent\tests\SessionRecords\PersistentAgentsChatClientTests
+            // assets folder to make CI/CD pass.
             if (!IsAsync)
             {
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
@@ -138,7 +143,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4.1",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided function to answer questions.",
                 tools: [tool]
@@ -199,7 +204,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // First tool is registered on agent level.
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4.1",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided function to answer questions.",
                 tools: [wordTool]

@@ -46,6 +46,8 @@ interface Bars {
 @parentResource(Bar)
 model BarSettings is ProxyResource<BarSettingsProperties> {
   ...ResourceNameParameter<BarSettings, SegmentName = "settings">;
+
+  stringArray?: string[];
 }
 
 model BarSettingsProperties {

@@ -177,6 +177,7 @@ public partial class BlobService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _changeFeed = DefineModelProperty<BlobServiceChangeFeed>("ChangeFeed", ["properties", "changeFeed"]);
         _containerDeleteRetentionPolicy = DefineModelProperty<DeleteRetentionPolicy>("ContainerDeleteRetentionPolicy", ["properties", "containerDeleteRetentionPolicy"]);

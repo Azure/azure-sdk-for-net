@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publisherName"> The <see cref="string"/> to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>

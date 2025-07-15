@@ -77,6 +77,6 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc />
-        public override string ToString() => JsonSerializer.Serialize(this);
+        public override string ToString() => JsonSerializer.Serialize(this, ArmEnvironmentJsonContext.Default.ArmEnvironment);
     }
 }

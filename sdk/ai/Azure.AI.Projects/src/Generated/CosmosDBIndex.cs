@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> CosmosDB Vector Store Index Definition. </summary>
-    public partial class CosmosDBIndex : Index
+    public partial class CosmosDBIndex : DatasetIndex
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndex"/>. </summary>
         /// <param name="connectionName"> Name of connection to CosmosDB. </param>

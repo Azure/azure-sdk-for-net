@@ -3,20 +3,22 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary></summary>
+    /// <summary> A collection of true/false filtering results for configured custom blocklists. </summary>
     public partial class ContentFilterBlocklistResult : IJsonModel<ContentFilterBlocklistResult>
     {
-        internal ContentFilterBlocklistResult()
+        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistResult"/> for deserialization. </summary>
+        internal ContentFilterBlocklistResult() : this(default, null, null)
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContentFilterBlocklistResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,6 +71,8 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContentFilterBlocklistResult IJsonModel<ContentFilterBlocklistResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -84,6 +88,8 @@ namespace Azure.AI.OpenAI
             return DeserializeContentFilterBlocklistResult(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContentFilterBlocklistResult DeserializeContentFilterBlocklistResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -122,6 +128,7 @@ namespace Azure.AI.OpenAI
             return new ContentFilterBlocklistResult(filtered, internalDetails ?? new ChangeTrackingList<InternalAzureContentFilterBlocklistResultDetail>(), additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContentFilterBlocklistResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -131,12 +138,14 @@ namespace Azure.AI.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContentFilterBlocklistResult)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContentFilterBlocklistResult IPersistableModel<ContentFilterBlocklistResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -156,24 +165,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContentFilterBlocklistResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="contentFilterBlocklistResult"> The <see cref="ContentFilterBlocklistResult"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ContentFilterBlocklistResult contentFilterBlocklistResult)
-        {
-            if (contentFilterBlocklistResult == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(contentFilterBlocklistResult, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ContentFilterBlocklistResult"/> from. </param>
-        public static explicit operator ContentFilterBlocklistResult(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeContentFilterBlocklistResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

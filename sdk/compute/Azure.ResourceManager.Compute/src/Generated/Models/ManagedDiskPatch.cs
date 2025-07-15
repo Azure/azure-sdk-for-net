@@ -75,8 +75,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDiskPatch(IDictionary<string, string> tags, DiskSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDiskPatch(IDictionary<string, string> tags, DiskSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Sku = sku;
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
             PublicNetworkAccess = publicNetworkAccess;
             DataAccessAuthMode = dataAccessAuthMode;
             IsOptimizedForFrequentAttach = isOptimizedForFrequentAttach;
+            AvailabilityPolicy = availabilityPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -153,5 +155,18 @@ namespace Azure.ResourceManager.Compute.Models
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }
         /// <summary> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </summary>
         public bool? IsOptimizedForFrequentAttach { get; set; }
+        /// <summary> Determines how platform treats disk failures. </summary>
+        internal AvailabilityPolicy AvailabilityPolicy { get; set; }
+        /// <summary> Determines on how to handle disks with slow I/O. </summary>
+        public AvailabilityPolicyDiskDelay? AvailabilityActionOnDiskDelay
+        {
+            get => AvailabilityPolicy is null ? default : AvailabilityPolicy.ActionOnDiskDelay;
+            set
+            {
+                if (AvailabilityPolicy is null)
+                    AvailabilityPolicy = new AvailabilityPolicy();
+                AvailabilityPolicy.ActionOnDiskDelay = value;
+            }
+        }
     }
 }

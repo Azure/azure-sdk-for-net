@@ -37,6 +37,7 @@ public class StorageSpecification() :
         AddNameRequirements<StorageQueueResource>(min: 3, max: 63, lower: true, digits: true, hyphen: true);
         AddNameRequirements<TableResource>(min: 3, max: 63, lower: true, upper: true, digits: true);
         CustomizeProperty<QueueServiceResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `default`
+        CustomizeProperty<TableServiceResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `default`
 
         // Roles
         Roles.Add(new Role("StorageAccountBackupContributor", "e5e2a7ff-d759-4cd2-bb51-3152d37e2eb1", "Lets you perform backup and restore operations using Azure Backup on the storage account."));

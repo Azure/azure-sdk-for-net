@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,10 +11,13 @@ namespace Azure.AI.OpenAI
 {
     internal partial class InternalAzureContentFilterBlocklistResultDetail : IJsonModel<InternalAzureContentFilterBlocklistResultDetail>
     {
+        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterBlocklistResultDetail"/> for deserialization. </summary>
         internal InternalAzureContentFilterBlocklistResultDetail()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAzureContentFilterBlocklistResultDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -23,6 +25,8 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -61,8 +65,12 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureContentFilterBlocklistResultDetail IJsonModel<InternalAzureContentFilterBlocklistResultDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAzureContentFilterBlocklistResultDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -74,6 +82,8 @@ namespace Azure.AI.OpenAI
             return DeserializeInternalAzureContentFilterBlocklistResultDetail(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAzureContentFilterBlocklistResultDetail DeserializeInternalAzureContentFilterBlocklistResultDetail(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -103,22 +113,28 @@ namespace Azure.AI.OpenAI
             return new InternalAzureContentFilterBlocklistResultDetail(filtered, id, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InternalAzureContentFilterBlocklistResultDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureContentFilterBlocklistResultDetail IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAzureContentFilterBlocklistResultDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -134,22 +150,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAzureContentFilterBlocklistResultDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        public static implicit operator BinaryContent(InternalAzureContentFilterBlocklistResultDetail internalAzureContentFilterBlocklistResultDetail)
-        {
-            if (internalAzureContentFilterBlocklistResultDetail == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(internalAzureContentFilterBlocklistResultDetail, ModelSerializationExtensions.WireOptions);
-        }
-
-        public static explicit operator InternalAzureContentFilterBlocklistResultDetail(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalAzureContentFilterBlocklistResultDetail(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

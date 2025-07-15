@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostSizeListResult"/>. </summary>
         /// <param name="value"> The list of dedicated host sizes. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostSizeListResult(IReadOnlyList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DedicatedHostSizeListResult(IReadOnlyList<string> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of dedicated host sizes. </summary>
         public IReadOnlyList<string> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public string NextLink { get; }
     }
 }

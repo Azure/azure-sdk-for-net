@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarSettingsProperties. </summary>
-    public partial class BarSettingsProperties : IJsonModel<BarSettingsProperties>
+    internal partial class BarSettingsProperties : IJsonModel<BarSettingsProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

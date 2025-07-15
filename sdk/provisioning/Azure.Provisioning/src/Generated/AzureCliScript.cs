@@ -231,9 +231,9 @@ public partial class AzureCliScript : ArmDeploymentScript
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        DefineProperty<string>("Kind", ["Kind"], defaultValue: "AzureCLI");
+        DefineProperty<string>("kind", ["kind"], defaultValue: "AzureCLI");
         _azCliVersion = DefineProperty<string>("AzCliVersion", ["properties", "azCliVersion"], isRequired: true);
-        _retentionInterval = DefineProperty<TimeSpan>("RetentionInterval", ["properties", "retentionInterval"], isRequired: true);
+        _retentionInterval = DefineProperty<TimeSpan>("RetentionInterval", ["properties", "retentionInterval"], isRequired: true, format: "P");
         _arguments = DefineProperty<string>("Arguments", ["properties", "arguments"]);
         _cleanupPreference = DefineProperty<ScriptCleanupOptions>("CleanupPreference", ["properties", "cleanupPreference"]);
         _containerGroupName = DefineProperty<string>("ContainerGroupName", ["properties", "containerSettings", "containerGroupName"]);
@@ -244,7 +244,7 @@ public partial class AzureCliScript : ArmDeploymentScript
         _scriptContent = DefineProperty<string>("ScriptContent", ["properties", "scriptContent"]);
         _storageAccountSettings = DefineModelProperty<ScriptStorageConfiguration>("StorageAccountSettings", ["properties", "storageAccountSettings"]);
         _supportingScriptUris = DefineListProperty<Uri>("SupportingScriptUris", ["properties", "supportingScriptUris"]);
-        _timeout = DefineProperty<TimeSpan>("Timeout", ["properties", "timeout"]);
+        _timeout = DefineProperty<TimeSpan>("Timeout", ["properties", "timeout"], format: "P");
         _outputs = DefineProperty<BinaryData>("Outputs", ["properties", "outputs"], isOutput: true);
         _provisioningState = DefineProperty<ScriptProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _status = DefineModelProperty<ScriptStatus>("Status", ["properties", "status"], isOutput: true);

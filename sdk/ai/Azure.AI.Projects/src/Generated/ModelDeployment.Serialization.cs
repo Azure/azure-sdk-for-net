@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
             string modelVersion = default;
             string modelPublisher = default;
             IReadOnlyDictionary<string, string> capabilities = default;
-            Sku sku = default;
+            ModelDeploymentSku sku = default;
             string connectionName = default;
             DeploymentType type = default;
             string name = default;
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = Sku.DeserializeSku(property.Value, options);
+                    sku = ModelDeploymentSku.DeserializeModelDeploymentSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionName"u8))

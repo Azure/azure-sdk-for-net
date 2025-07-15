@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiskAccessList"/>. </summary>
-        /// <param name="value"> A list of disk access resources. </param>
+        /// <param name="value"> The DiskAccess items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskAccessList(IEnumerable<DiskAccessData> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskAccessList"/>. </summary>
-        /// <param name="value"> A list of disk access resources. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of disk access resources. Call ListNext() with this to fetch the next page of disk access resources. </param>
+        /// <param name="value"> The DiskAccess items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskAccessList(IReadOnlyList<DiskAccessData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskAccessList(IReadOnlyList<DiskAccessData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> A list of disk access resources. </summary>
+        /// <summary> The DiskAccess items on this page. </summary>
         public IReadOnlyList<DiskAccessData> Value { get; }
-        /// <summary> The uri to fetch the next page of disk access resources. Call ListNext() with this to fetch the next page of disk access resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

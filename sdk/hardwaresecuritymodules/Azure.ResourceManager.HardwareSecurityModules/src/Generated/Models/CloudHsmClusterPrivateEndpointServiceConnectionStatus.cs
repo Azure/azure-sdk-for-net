@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Pending { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Approved { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Rejected { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(CloudHsmClusterPrivateEndpointServiceConnectionStatus left, CloudHsmClusterPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

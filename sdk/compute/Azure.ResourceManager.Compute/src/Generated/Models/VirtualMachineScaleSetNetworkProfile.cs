@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkProfile"/>. </summary>
         /// <param name="healthProbe"> A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The reference will be in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'. </param>
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
-        /// <param name="networkApiVersion"> Specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. For support of all network properties, use '2022-11-01'. </param>
+        /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachineScaleSetNetworkProfile(WritableSubResource healthProbe, IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, NetworkApiVersion? networkApiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The list of network configurations. </summary>
         public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get; }
-        /// <summary> Specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. For support of all network properties, use '2022-11-01'. </summary>
+        /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode 'Flexible'. </summary>
         public NetworkApiVersion? NetworkApiVersion { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationList"/>. </summary>
-        /// <param name="value"> A list of Gallery Applications. </param>
+        /// <param name="value"> The GalleryApplication items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryApplicationList(IEnumerable<GalleryApplicationData> value)
         {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationList"/>. </summary>
-        /// <param name="value"> A list of Gallery Applications. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </param>
+        /// <param name="value"> The GalleryApplication items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationList(IReadOnlyList<GalleryApplicationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryApplicationList(IReadOnlyList<GalleryApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> A list of Gallery Applications. </summary>
+        /// <summary> The GalleryApplication items on this page. </summary>
         public IReadOnlyList<GalleryApplicationData> Value { get; }
-        /// <summary> The uri to fetch the next page of Application Definitions in the Application Gallery. Call ListNext() with this to fetch the next page of gallery Application Definitions. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

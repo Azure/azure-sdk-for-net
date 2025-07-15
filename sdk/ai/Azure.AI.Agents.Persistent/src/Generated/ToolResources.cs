@@ -52,18 +52,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="ToolResources"/>. </summary>
         public ToolResources()
         {
+            Mcp = new ChangeTrackingList<MCPToolResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolResources"/>. </summary>
         /// <param name="codeInterpreter"> Resources to be used by the `code_interpreter` tool consisting of file IDs. </param>
         /// <param name="fileSearch"> Resources to be used by the `file_search` tool consisting of vector store IDs. </param>
         /// <param name="azureAISearch"> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </param>
+        /// <param name="mcp"> Resources to be used by the `mcp` tool consisting of a server label and headers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolResources(CodeInterpreterToolResource codeInterpreter, FileSearchToolResource fileSearch, AzureAISearchToolResource azureAISearch, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ToolResources(CodeInterpreterToolResource codeInterpreter, FileSearchToolResource fileSearch, AzureAISearchToolResource azureAISearch, IList<MCPToolResource> mcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CodeInterpreter = codeInterpreter;
             FileSearch = fileSearch;
             AzureAISearch = azureAISearch;
+            Mcp = mcp;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +76,7 @@ namespace Azure.AI.Agents.Persistent
         public FileSearchToolResource FileSearch { get; set; }
         /// <summary> Resources to be used by the `azure_ai_search` tool consisting of index IDs and names. </summary>
         public AzureAISearchToolResource AzureAISearch { get; set; }
+        /// <summary> Resources to be used by the `mcp` tool consisting of a server label and headers. </summary>
+        public IList<MCPToolResource> Mcp { get; }
     }
 }

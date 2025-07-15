@@ -5,7 +5,7 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated FileService resource.
+// Customize the generated QueueService resource.
 public partial class QueueService
 {
     /// <summary>

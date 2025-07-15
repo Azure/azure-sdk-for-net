@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,6 +11,8 @@ namespace Azure.AI.OpenAI
 {
     internal partial class AzureOpenAIDalleError : IJsonModel<AzureOpenAIDalleError>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOpenAIDalleError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -19,6 +20,8 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIDalleError>)this).GetFormatFromOptions(options) : options.Format;
@@ -41,10 +44,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("param"u8);
                 writer.WriteStringValue(Param);
             }
-            if (Optional.IsDefined(Type) && _additionalBinaryDataProperties?.ContainsKey("type") != true)
+            if (Optional.IsDefined(Kind) && _additionalBinaryDataProperties?.ContainsKey("type") != true)
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(InnerError) && _additionalBinaryDataProperties?.ContainsKey("inner_error") != true)
             {
@@ -72,8 +75,12 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureOpenAIDalleError IJsonModel<AzureOpenAIDalleError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AzureOpenAIDalleError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIDalleError>)this).GetFormatFromOptions(options) : options.Format;
@@ -85,6 +92,8 @@ namespace Azure.AI.OpenAI
             return DeserializeAzureOpenAIDalleError(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureOpenAIDalleError DeserializeAzureOpenAIDalleError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -94,7 +103,7 @@ namespace Azure.AI.OpenAI
             string code = default;
             string message = default;
             string @param = default;
-            string @type = default;
+            string kind = default;
             InternalAzureOpenAIDalleErrorInnerError innerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -116,7 +125,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("inner_error"u8))
@@ -137,27 +146,33 @@ namespace Azure.AI.OpenAI
                 code,
                 message,
                 @param,
-                @type,
+                kind,
                 innerError,
                 additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureOpenAIDalleError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIDalleError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureOpenAIDalleError)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureOpenAIDalleError IPersistableModel<AzureOpenAIDalleError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AzureOpenAIDalleError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIDalleError>)this).GetFormatFromOptions(options) : options.Format;
@@ -173,22 +188,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureOpenAIDalleError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        public static implicit operator BinaryContent(AzureOpenAIDalleError azureOpenAIDalleError)
-        {
-            if (azureOpenAIDalleError == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(azureOpenAIDalleError, ModelSerializationExtensions.WireOptions);
-        }
-
-        public static explicit operator AzureOpenAIDalleError(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureOpenAIDalleError(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

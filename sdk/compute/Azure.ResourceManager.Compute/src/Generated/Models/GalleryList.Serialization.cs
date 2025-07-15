@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<GalleryData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             ImageVersionSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))

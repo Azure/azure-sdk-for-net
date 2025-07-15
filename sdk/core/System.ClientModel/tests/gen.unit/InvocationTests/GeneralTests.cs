@@ -8,7 +8,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
     internal class GeneralTests
     {
         public void ListOfListAndList()
-            => InvocationTestBase.RunInvocationTest(
+            => new ListOfListTests().RunInvocationTest(
                 InvocationTestBase.JsonModel,
                 string.Empty,
                 true,
