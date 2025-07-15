@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
-using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -14,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
-using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
@@ -113,7 +110,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var clientProvider = resourceClientProvider.GetClientProvider();
             var convenienceMethod = clientProvider.GetConvenienceMethodByOperation(getServiceMethod!.Operation, isAsync);
             var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod.Operation);
-            var arguments = PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, "CreateGetRequest", arguments, out var messageVariable));
 
@@ -125,49 +122,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 out responseVariable));
 
             return statements;
-        }
-
-        private IReadOnlyList<ValueExpression> PopulateArguments(
-            IReadOnlyList<ParameterProvider> requestParameters,
-            VariableExpression requestContext,
-            IReadOnlyList<ParameterProvider> methodParameters)
-        {
-            var idProperty = This.As<ArmResource>().Id();
-            var arguments = new List<ValueExpression>();
-            // here we always assume that the parameter names in the create request method would match the parameter in the current method.
-            foreach (var parameter in requestParameters)
-            {
-                // find the corresponding contextual parameter
-                if (_contextualPath.TryGetContextualParameter(parameter, out var contextualParameter))
-                {
-                    // if the parameter is a contextual parameter, we use its value from the context variable
-                    arguments.Add(contextualParameter.BuildValueExpression(idProperty)); // TODO -- add the convert later
-                }
-                else if (parameter.Type.Equals(typeof(RequestContent)))
-                {
-                    // find the body parameter
-                    var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
-                    if (bodyParameter is not null)
-                    {
-                        arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
-                    }
-                    else
-                    {
-                        arguments.Add(Null);
-                    }
-                }
-                else if (parameter.Type.Equals(typeof(RequestContext)))
-                {
-                    // if the parameter is RequestContext, we use the requestContext variable
-                    arguments.Add(requestContext);
-                }
-                else
-                {
-                    // otherwise, we just passing through the parameter as it is when there is one
-                    arguments.Add(methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName));
-                }
-            }
-            return arguments;
         }
 
         protected static List<MethodBodyStatement> CreatePrimaryPathResponseStatements(

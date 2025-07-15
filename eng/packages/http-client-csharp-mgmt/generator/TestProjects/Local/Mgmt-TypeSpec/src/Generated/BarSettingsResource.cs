@@ -89,12 +89,12 @@ namespace MgmtTypeSpec
 
         /// <summary> Create a BarSettings. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resource"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public virtual ArmOperation<BarSettingsResource> CreateOrUpdate(WaitUntil waitUntil, BarSettingsData resource, CancellationToken cancellationToken = default)
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<BarSettingsResource> CreateOrUpdate(WaitUntil waitUntil, BarSettingsData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _barSettingsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdate");
             scope.Start();
@@ -102,10 +102,10 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken0
+                    CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(resource), context);
+                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<BarSettingsResource> operation = new MgmtTypeSpecArmOperation<BarSettingsResource>(
                     new BarSettingsOperationSource(Client),
@@ -116,7 +116,7 @@ namespace MgmtTypeSpec
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken0);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -129,12 +129,12 @@ namespace MgmtTypeSpec
 
         /// <summary> Create a BarSettings. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resource"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public virtual async Task<ArmOperation<BarSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BarSettingsData resource, CancellationToken cancellationToken = default)
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<BarSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BarSettingsData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _barSettingsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdateAsync");
             scope.Start();
@@ -142,10 +142,10 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken0
+                    CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(resource), context);
+                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<BarSettingsResource> operation = new MgmtTypeSpecArmOperation<BarSettingsResource>(
                     new BarSettingsOperationSource(Client),
@@ -156,7 +156,7 @@ namespace MgmtTypeSpec
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken0).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -168,7 +168,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Get a BarSettings. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarSettingsResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _barSettingsClientDiagnostics.CreateScope("BarSettingsResource.Get");
@@ -177,7 +177,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken0
+                    CancellationToken = cancellationToken
                 }
                 ;
                 HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
@@ -197,7 +197,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Get a BarSettings. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _barSettingsClientDiagnostics.CreateScope("BarSettingsResource.GetAsync");
@@ -206,7 +206,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken0
+                    CancellationToken = cancellationToken
                 }
                 ;
                 HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);

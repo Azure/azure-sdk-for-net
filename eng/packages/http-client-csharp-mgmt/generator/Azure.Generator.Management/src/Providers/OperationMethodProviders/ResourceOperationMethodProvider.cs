@@ -138,7 +138,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
@@ -156,62 +156,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 tryStatements.AddRange(BuildReturnStatements(responseVariable, _signature));
             }
             return new TryExpression(tryStatements);
-        }
-
-        private IReadOnlyList<ValueExpression> PopulateArguments(
-            IReadOnlyList<ParameterProvider> requestParameters,
-            VariableExpression requestContext,
-            IReadOnlyList<ParameterProvider> methodParameters)
-        {
-            var idProperty = This.Property("Id").As<ResourceIdentifier>();
-            var arguments = new List<ValueExpression>();
-            // here we always assume that the parameter name matches the parameter name in the request path.
-            foreach (var parameter in requestParameters)
-            {
-                // find the corresponding contextual parameter in the contextual parameter list
-                if (_contextualPath.TryGetContextualParameter(parameter, out var contextualParameter))
-                {
-                    arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
-                }
-                else if (parameter.Type.Equals(typeof(RequestContent)))
-                {
-                    // find the body parameter
-                    var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
-                    if (bodyParameter is not null)
-                    {
-                        arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
-                    }
-                    else
-                    {
-                        arguments.Add(Null);
-                    }
-                }
-                else if (parameter.Type.Equals(typeof(RequestContext)))
-                {
-                    arguments.Add(requestContext);
-                }
-                else
-                {
-                    arguments.Add(methodParameters.Single(p => p.Name == parameter.Name));
-                }
-            }
-            return arguments;
-
-            static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
-            {
-                if (fromType.Equals(toType))
-                {
-                    return expression; // No conversion needed
-                }
-
-                if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
-                {
-                    return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
-                }
-
-                // other unhandled cases, we will add when we need them in the future.
-                return expression;
-            }
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
@@ -369,28 +313,45 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return statements;
         }
 
+        // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            var parameters = new List<ParameterProvider>();
+            var requiredParameters = new List<ParameterProvider>();
+            var optionalParameters = new List<ParameterProvider>();
             if (_serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation())
             {
-                parameters.Add(KnownAzureParameters.WaitUntil);
+                requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            foreach (var parameter in _convenienceMethod.Signature.Parameters)
+            foreach (var parameter in _serviceMethod.Operation.Parameters)
             {
-                if (!_contextualPath.TryGetContextualParameter(parameter, out _))
+                if (parameter.Kind != InputParameterKind.Method)
                 {
-                    if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+                    continue;
+                }
+
+                var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
+                if (!_contextualPath.TryGetContextualParameter(outputParameter, out _))
+                {
+                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
                     {
-                        parameter.Update(name: "data");
+                        outputParameter.Update(name: "data");
                     }
 
-                    parameters.Add(parameter);
+                    if (parameter.IsRequired)
+                    {
+                        requiredParameters.Add(outputParameter);
+                    }
+                    else
+                    {
+                        optionalParameters.Add(outputParameter);
+                    }
                 }
             }
 
-            return parameters;
+            optionalParameters.Add(KnownParameters.CancellationTokenParameter);
+
+            return [.. requiredParameters, .. optionalParameters];
         }
     }
 }
