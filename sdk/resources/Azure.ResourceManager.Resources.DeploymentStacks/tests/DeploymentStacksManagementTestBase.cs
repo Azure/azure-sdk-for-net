@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
 
         protected static DeploymentStackData CreateRGDeploymentStackDataWithTemplate()
         {
-            var data = new DeploymentStackData();
+            var data = new DeploymentStackData(string.Empty);
 
             data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -58,10 +58,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
             return data;
         }
 
-        protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location) {
-            var data = new DeploymentStackData();
-
-            data.Location = location;
+        protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location)
+        {
+            var data = new DeploymentStackData(location);
 
             data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
@@ -87,9 +86,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
 
         protected static DeploymentStackData CreateMGDeploymentStackDataWithTemplate(AzureLocation location)
         {
-            var data = new DeploymentStackData();
-
-            data.Location = location;
+            var data = new DeploymentStackData(location);
 
             data.Template = BinaryData.FromString(File.ReadAllText(Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
