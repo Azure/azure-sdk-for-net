@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                JsonSerializer.Serialize(writer, Properties);
             }
             writer.WriteEndObject();
         }

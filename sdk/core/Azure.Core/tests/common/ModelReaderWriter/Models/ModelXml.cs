@@ -81,7 +81,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 writer.WriteStringValue(ReadOnlyProperty);
             }
             writer.WritePropertyName("renamedChildModelXml"u8);
-            writer.WriteObjectValue(RenamedChildModelXml);
+            ((IJsonModel<ChildModelXml>)RenamedChildModelXml).Write(writer, options);
             writer.WriteEndObject();
         }
 
