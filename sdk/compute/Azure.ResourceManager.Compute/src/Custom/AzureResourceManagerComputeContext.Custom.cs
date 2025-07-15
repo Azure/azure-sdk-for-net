@@ -433,7 +433,6 @@ namespace Azure.ResourceManager.Compute;
 [ModelReaderWriterBuildable(typeof(VirtualMachineImage))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineImageBase))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineImageFeature))]
-[ModelReaderWriterBuildable(typeof(VirtualMachineImagesWithPropertiesListResult))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineInstallPatchesContent))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineInstallPatchesResult))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceView))]

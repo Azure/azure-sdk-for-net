@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using Azure.Core.GeoJson;
 
 namespace Azure.Core
 {
@@ -12,6 +13,7 @@ namespace Azure.Core
     [ModelReaderWriterBuildable(typeof(RehydrationToken))]
     [ModelReaderWriterBuildable(typeof(ResponseInnerError))]
     [ModelReaderWriterBuildable(typeof(RequestFailedException.ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(GeoPoint))]
     public partial class AzureCoreContext : ModelReaderWriterContext
     {
     }

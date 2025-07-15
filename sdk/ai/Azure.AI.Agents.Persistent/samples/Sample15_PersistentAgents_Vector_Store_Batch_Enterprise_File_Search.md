@@ -147,8 +147,8 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun
 ThreadRun run = client.Runs.CreateRun(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 
 do
@@ -183,8 +183,8 @@ WriteMessages(messages, dtFiles);
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 
 do

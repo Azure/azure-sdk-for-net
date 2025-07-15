@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The Operating System type. </summary>
+    /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </summary>
     public enum SupportedOperatingSystemType
     {
         /// <summary> Windows. </summary>
