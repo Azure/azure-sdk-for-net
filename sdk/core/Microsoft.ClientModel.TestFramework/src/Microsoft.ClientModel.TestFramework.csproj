@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+     <PackageReference Include="Castle.Core" />
      <PackageReference Include="System.ClientModel" /> 
     <PackageReference Include="NUnit" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />

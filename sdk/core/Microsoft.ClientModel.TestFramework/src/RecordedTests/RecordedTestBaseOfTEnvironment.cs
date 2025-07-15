@@ -20,7 +20,7 @@ public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TE
     /// </summary>
     /// <param name="isAsync"></param>
     /// <param name="mode"></param>
-    protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null)// : base(isAsync, mode)
+    protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
     {
         throw new NotImplementedException();
         //TestEnvironment = new TEnvironment();

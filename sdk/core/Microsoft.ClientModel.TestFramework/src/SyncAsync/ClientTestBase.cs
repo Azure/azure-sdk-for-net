@@ -3,12 +3,210 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using Castle.DynamicProxy;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace Microsoft.ClientModel.TestFramework;
 
-public class ClientTestBase
+/// <summary>
+/// TODO.
+/// </summary>
+[ClientTestFixture]
+public abstract class ClientTestBase
 {
+    private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
+    private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
+    private static Dictionary<Type, Exception?> s_clientValidation = new();
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    protected static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public int TestTimeoutInSeconds { get; set; } = 10;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public bool IsAsync { get; }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public bool TestDiagnostics { get; set; } = true;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="isAsync"></param>
+    public ClientTestBase(bool isAsync)
+    {
+        IsAsync = isAsync;
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    protected IReadOnlyCollection<IInterceptor>? AdditionalInterceptors { get; set; }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <exception cref="TestTimeoutException"></exception>
+    [TearDown]
+    public virtual void GlobalTimeoutTearDown()
+    {
+        if (Debugger.IsAttached)
+        {
+            return;
+        }
+
+        var executionContext = TestExecutionContext.CurrentContext;
+        var duration = DateTime.UtcNow - TestStartTime;
+        if (duration > TimeSpan.FromSeconds(TestTimeoutInSeconds))
+        {
+            string message = $"Test exceeded global time limit of {TestTimeoutInSeconds} seconds. Duration: {duration} ";
+            if (this is RecordedTestBase &&
+                !executionContext.CurrentTest.GetCustomAttributes<RecordedTestAttribute>(true).Any())
+            {
+                message += Environment.NewLine + "Replace the [Test] attribute with the [RecordedTest] attribute in your test to allow an automatic retry for timeouts.";
+            }
+            throw new TestTimeoutException(message);
+        }
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <typeparam name="TClient"></typeparam>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    protected TClient CreateClient<TClient>(params object[] args) where TClient : class
+    {
+        var instance = Activator.CreateInstance(typeof(TClient), args);
+        if (instance == null)
+        {
+            throw new InvalidOperationException($"Unable to create an instance of {typeof(TClient)}.");
+        }
+        return InstrumentClient((TClient)instance);
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <typeparam name="TClient"></typeparam>
+    /// <param name="client"></param>
+    /// <returns></returns>
+    public TClient InstrumentClient<TClient>(TClient client) where TClient : class => (TClient)InstrumentClient(typeof(TClient), client, null);
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <typeparam name="TClient"></typeparam>
+    /// <param name="client"></param>
+    /// <param name="preInterceptors"></param>
+    /// <returns></returns>
+    protected TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class =>
+        (TClient)InstrumentClient(typeof(TClient), client, preInterceptors);
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="clientType"></param>
+    /// <param name="client"></param>
+    /// <param name="preInterceptors"></param>
+    /// <returns></returns>
+    protected internal virtual object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor>? preInterceptors)
+    {
+        if (client is IProxyTargetAccessor)
+        {
+            // Already instrumented
+            return client;
+        }
+
+        lock (s_clientValidation)
+        {
+            if (!s_clientValidation.TryGetValue(clientType, out var validationException))
+            {
+                var coreMethods = new Dictionary<string, MethodInfo>();
+
+                foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic))
+                {
+                    if (methodInfo.Name.EndsWith("CoreAsync") && (methodInfo.IsVirtual || methodInfo.IsAbstract))
+                    {
+                        coreMethods.Add(methodInfo.Name.Substring(0, methodInfo.Name.Length - 9) + "Async", methodInfo);
+                    }
+                }
+
+                foreach (MethodInfo methodInfo in clientType.GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                {
+                    if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
+                    {
+                        validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
+
+                        break;
+                    }
+
+                    if (methodInfo.Name.EndsWith("Client") &&
+                        methodInfo.Name.StartsWith("Get") &&
+                        !methodInfo.IsVirtual)
+                    {
+                        // if an async method is not virtual, we should find if we have a corresponding virtual or abstract Core method
+                        // if no, we throw the validation failed exception
+                        if (!coreMethods.ContainsKey(methodInfo.Name))
+                        {
+                            validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
+
+                            break;
+                        }
+                    }
+                }
+
+                s_clientValidation[clientType] = validationException;
+            }
+
+            if (validationException != null)
+            {
+                throw validationException;
+            }
+        }
+
+        List<IInterceptor> interceptors = new List<IInterceptor>();
+        if (preInterceptors != null)
+        {
+            interceptors.AddRange(preInterceptors);
+        }
+
+        // TODO: Add more interceptors as needed
+        //interceptors.Add(new GetOriginalInterceptor(client));
+
+        //interceptors.Add(new InstrumentResultInterceptor(this));
+
+        // Ignore the async method interceptor entirely if we're running a
+        // a SyncOnly test
+        TestContext.TestAdapter test = TestContext.CurrentContext.Test;
+        bool? isSyncOnly = (bool?)test.Properties.Get(ClientTestFixtureAttribute.SyncOnlyKey);
+        if (isSyncOnly != true)
+        {
+            interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
+        }
+
+        return ProxyGenerator.CreateClassProxyWithTarget(
+            clientType,
+            client,
+            interceptors.ToArray());
+    }
 }
