@@ -1,5 +1,6 @@
 {
   "package-name": "_Specs_.Azure.ClientGenerator.Core.Access",
+  "unreferenced-types-handling": "keepAll",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

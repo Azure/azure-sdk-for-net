@@ -18,6 +18,20 @@ namespace _Specs_.Azure.ClientGenerator.Core.Access
 
         public static PublicDecoratorModelInPublic PublicDecoratorModelInPublic(string name = default) => throw null;
 
+        public static NoDecoratorModelInInternal NoDecoratorModelInInternal(string name = default) => throw null;
+
+        public static PublicDecoratorModelInInternal PublicDecoratorModelInInternal(string name = default) => throw null;
+
         public static SharedModel SharedModel(string name = default) => throw null;
+
+        public static OuterModel OuterModel(string name = default, InnerModel inner = default) => throw null;
+
+        public static InnerModel InnerModel(string name = default) => throw null;
+
+        public static BaseModel BaseModel(string name = default) => throw null;
+
+        public static AbstractModel AbstractModel(string kind = default, string name = default) => throw null;
+
+        public static RealModel RealModel(string name = default) => throw null;
     }
 }
