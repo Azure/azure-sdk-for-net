@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HealthBot
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthBot.HealthBotData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthBot.HealthBotResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthBot.Models.HealthBotPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthBot.Models.HealthBotProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthBot.Models.HealthBotSku))]
     public partial class AzureResourceManagerHealthBotContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHealthBotContext() { }

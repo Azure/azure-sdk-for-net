@@ -1125,7 +1125,7 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public partial class ShareFileSymbolicLinkInfo
     {
-        public ShareFileSymbolicLinkInfo() { }
+        internal ShareFileSymbolicLinkInfo() { }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LinkText { get { throw null; } }

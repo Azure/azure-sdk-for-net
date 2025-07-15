@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Management"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Mgmt.Tests", "Azure.Generator.Management\test\Azure.Generator.Mgmt.Tests.csproj", "{236F0049-E44C-40C9-90BB-BD19495CB689}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Local.Tests", "TestProjects\Local.Tests\TestProjects.Local.Tests.csproj", "{E6E6C66A-E1E2-4D4D-9E8A-FD97A1761F90}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.Tests.Common", "..\..\http-client-csharp\generator\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj", "{5C43C4D9-AC67-6643-B7AF-DF8096B8265A}"
 EndProject
 Global

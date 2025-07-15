@@ -17,15 +17,21 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal ChatMessageContext()
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContext"/>. </summary>
+        internal ChatMessageContext() : this(null, null, null, null)
         {
-            Citations = new ChangeTrackingList<ChatCitation>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChatMessageContext"/>. </summary>
+        /// <param name="intent"> The detected intent from the chat history, which is used to carry conversation context between interactions. </param>
+        /// <param name="citations"> The citations produced by the data retrieval. </param>
+        /// <param name="retrievedDocuments"> Summary information about documents retrieved by the data retrieval operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ChatMessageContext(string intent, IList<ChatCitation> citations, ChatRetrievedDocument retrievedDocuments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            // Plugin customization: ensure initialization of collections
             Intent = intent;
-            Citations = citations;
+            Citations = citations ?? new ChangeTrackingList<ChatCitation>();
             RetrievedDocuments = retrievedDocuments;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
