@@ -5,8 +5,8 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated QueueService resource.
-public partial class QueueService
+// Customize the generated TableService resource.
+public partial class TableService
 {
     /// <summary>
     /// Get the default value for the Name property.

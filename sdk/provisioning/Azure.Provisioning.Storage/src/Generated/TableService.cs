@@ -18,13 +18,6 @@ namespace Azure.Provisioning.Storage;
 /// </summary>
 public partial class TableService : ProvisionableResource
 {
-    /// <summary>
-    /// Gets the Name.
-    /// </summary>
-    public BicepValue<string> Name 
-    {
-        get { Initialize(); return _name!; }
-    }
     private BicepValue<string>? _name;
 
     /// <summary>
@@ -67,6 +60,11 @@ public partial class TableService : ProvisionableResource
     private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new TableService.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -87,7 +85,7 @@ public partial class TableService : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
