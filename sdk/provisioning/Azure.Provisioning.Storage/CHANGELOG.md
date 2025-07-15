@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.2 (2025-07-15)
 
 ### Bugs Fixed
 
-### Other Changes
+- `Name` property of `TableService` now always has the value of `default` since this is its only valid value. Fixes [#51210](https://github.com/Azure/azure-sdk-for-net/issues/51210)
 
 ## 1.1.1 (2025-06-25)
 
