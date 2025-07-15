@@ -9,7 +9,9 @@ using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
@@ -146,6 +148,7 @@ namespace Azure.Generator.Management.Tests.Providers
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
         {
             var resourceClientProvider = GetResourceClientProvider();
+            var mockUpdateMethodProvider = CreateMockUpdateMethodProvider(resourceClientProvider);
 
             // Get the appropriate tag method provider based on method name and async flag
             // find the clientDiagnosticField
@@ -167,6 +170,28 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.NotNull(method);
             Assert.AreEqual(methodName, method.Signature.Name);
             return method;
+        }
+
+        private static MethodProvider CreateMockUpdateMethodProvider(ResourceClientProvider resourceClientProvider)
+        {
+            // Create a mock Update method signature
+            var updateSignature = new MethodSignature(
+                "Update",
+                $"Update a resource",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), resourceClientProvider.ResourceClientCSharpType),
+                $"The updated resource operation",
+                [
+                    new ParameterProvider("waitUntil", $"The wait until value", typeof(Azure.WaitUntil)),
+                    new ParameterProvider("data", $"The resource data", resourceClientProvider.ResourceData.Type),
+                    KnownParameters.CancellationTokenParameter
+                ]);
+
+            // Create a simple mock body that throws NotImplementedException
+            var throwExpression = Throw(New.Instance(typeof(NotImplementedException)));
+            var mockBody = new MethodBodyStatement[] { throwExpression };
+
+            return new MethodProvider(updateSignature, mockBody, resourceClientProvider);
         }
 
         private static ResourceClientProvider GetResourceClientProvider()

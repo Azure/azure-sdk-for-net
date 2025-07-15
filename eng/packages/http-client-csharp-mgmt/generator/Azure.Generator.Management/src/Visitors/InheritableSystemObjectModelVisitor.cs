@@ -83,6 +83,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
+        // If the model property modifiers contain 'new', we should drop it because the base type already has it.
+        model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
+
         var rawDataField = CreateRawDataField(model);
         UpdateSerialization(model);
 

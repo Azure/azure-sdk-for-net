@@ -17,7 +17,7 @@ internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new HashSet<CSharpType>();
+    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
@@ -27,19 +27,21 @@ internal class NameVisitor : ScmLibraryVisitor
             type.Update(name: newName);
         }
 
-        if (type is not null && inputLibrary.IsResourceUpdateModel(model))
+        if (type is not null)
         {
-            var enclosingResourceName = inputLibrary.FindEnclosingResourceNameForResourceUpdateModel(model);
-            var newModelName = $"{enclosingResourceName}Patch";
-
-            _resourceUpdateModelTypes.Add(type.Type);
-
-            type.Update(name: newModelName);
-
-            foreach (var serializationProvider in type.SerializationProviders)
+            if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
             {
-                serializationProvider.Update(name: newModelName);
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
+                var newModelName = $"{enclosingResourceName}Patch";
+
+                _resourceUpdateModelTypes.Add(type.Type);
+
+                type.Update(name: newModelName);
+
+                foreach (var serializationProvider in type.SerializationProviders)
+                {
+                    serializationProvider.Update(name: newModelName);
+                    _resourceUpdateModelTypes.Add(serializationProvider.Type);
+                }
             }
         }
 

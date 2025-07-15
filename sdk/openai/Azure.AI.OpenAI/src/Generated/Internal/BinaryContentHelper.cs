@@ -11,8 +11,9 @@ namespace Azure.AI.OpenAI
 {
     internal static partial class BinaryContentHelper
     {
+        /// <param name="enumerable"></param>
         public static BinaryContent FromEnumerable<T>(IEnumerable<T> enumerable)
-            where T : notnull 
+            where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -25,6 +26,7 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        /// <param name="enumerable"></param>
         public static BinaryContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -52,8 +54,9 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        /// <param name="span"></param>
         public static BinaryContent FromEnumerable<T>(ReadOnlySpan<T> span)
-            where T : notnull 
+            where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -67,8 +70,9 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        /// <param name="dictionary"></param>
         public static BinaryContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
-            where TValue : notnull 
+            where TValue : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartObject();
@@ -82,6 +86,7 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        /// <param name="dictionary"></param>
         public static BinaryContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -110,6 +115,7 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        /// <param name="value"></param>
         public static BinaryContent FromObject(object value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -117,6 +123,7 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        /// <param name="value"></param>
         public static BinaryContent FromObject(BinaryData value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();

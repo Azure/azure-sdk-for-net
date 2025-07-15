@@ -17,12 +17,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public RemoveTagMethodProvider(
             ResourceClientProvider resource,
+            MethodProvider updateMethodProvider,
             RequestPathPattern contextualPath,
             ClientProvider restClient,
             FieldProvider clientDiagnosticsField,
             FieldProvider restClientField,
             bool isAsync)
-            : base(resource, contextualPath, restClient, clientDiagnosticsField, restClientField, isAsync,
+            : base(resource, updateMethodProvider, contextualPath, restClient, clientDiagnosticsField, restClientField, isAsync,
                    isAsync ? "RemoveTagAsync" : "RemoveTag",
                    "Removes a tag by key from the resource.")
         {
@@ -51,8 +52,16 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Create if-else statement with primary path in if block and secondary path in else block
             var ifElseStatement = new IfElseStatement(
                 canUseTagResourceCondition,
-                BuildIfStatement(keyParam, cancellationTokenParam),
-                BuildElseStatement(keyParam, cancellationTokenParam)
+                BuildIfStatements(cancellationTokenParam, (tagValues) =>
+                {
+                    // originalTags.Value.Data.TagValues.Remove(key);
+                    return tagValues.Invoke("Remove", [keyParam]).Terminate();
+                }, false),
+                BuildElseStatements(cancellationTokenParam, (currentTags) =>
+                {
+                    // current.Tags.Remove(key);
+                    return currentTags.Invoke("Remove", [keyParam]).Terminate();
+                }, true)
             );
 
             tryStatements.Add(ifElseStatement);
@@ -66,70 +75,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 catchBlock));
 
             return [.. statements];
-        }
-
-        private List<MethodBodyStatement> BuildIfStatement(ParameterProvider keyParam, ParameterProvider cancellationTokenParam)
-        {
-            var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
-
-            var statements = new List<MethodBodyStatement>
-            {
-                GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar),
-
-                // originalTags.Value.Data.TagValues.Remove(key);
-                originalTagsVar.Property("Value").Property("Data").Property("TagValues")
-                    .Invoke("Remove", [keyParam]).Terminate(),
-
-                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                This.Invoke("GetTagResource").Invoke(createMethod, [
-                    Static(typeof(WaitUntil)).Property("Completed"),
-                    originalTagsVar.Property("Value").Property("Data"),
-                    cancellationTokenParam
-                ], null, _isAsync).Terminate(),
-            };
-
-            // Add RequestContext/HttpMessage/Pipeline processing statements
-            statements.AddRange(CreateRequestContextAndProcessMessage(
-                _resource,
-                _isAsync,
-                cancellationTokenParam,
-                out var responseVar));
-
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resource, responseVar));
-
-            return statements;
-        }
-
-        private List<MethodBodyStatement> BuildElseStatement(ParameterProvider keyParam, ParameterProvider cancellationTokenParam)
-        {
-            var updateMethod = _isAsync ? "UpdateAsync" : "Update";
-
-            var statements = new List<MethodBodyStatement>();
-
-            // Get current resource data
-            statements.AddRange(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var currentVar));
-
-            statements.AddRange(
-            [
-                // current.Tags.Remove(key);
-                currentVar.Property("Tags").Invoke("Remove", [keyParam]).Terminate(),
-
-                // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                Declare(
-                    "result",
-                    new CSharpType(typeof(ResourceManager.ArmOperation<>), _resource.Type),
-                    This.Invoke(updateMethod, [
-                        Static(typeof(WaitUntil)).Property("Completed"),
-                        currentVar,
-                        cancellationTokenParam
-                    ], null, _isAsync),
-                    out var resultVar),
-
-                // return Response.FromValue(result.Value, result.GetRawResponse());
-                CreateSecondaryPathResponseStatement(resultVar)
-            ]);
-
-            return statements;
         }
     }
 }

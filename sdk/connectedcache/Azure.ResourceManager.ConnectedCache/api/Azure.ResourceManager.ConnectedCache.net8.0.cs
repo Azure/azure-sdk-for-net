@@ -1,5 +1,33 @@
 namespace Azure.ResourceManager.ConnectedCache
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.EnterpriseMccCacheNodeData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.EnterpriseMccCacheNodeResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.EnterpriseMccCustomerData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.EnterpriseMccCustomerResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.IspCacheNodeData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.IspCacheNodeResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.IspCustomerData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.IspCustomerResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.CacheNodeDriveConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.ConnectedCachePatchContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeAdditionalProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeAutoUpdateHistoryData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeAutoUpdateHistoryProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeAutoUpdateInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeBgpCidrDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeInstallDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeInstallProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeIssue))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeIssueHistoryData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeIssueHistoryProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeProperty))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeTlsCertificate))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeTlsCertificateHistoryData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCacheNodeTlsCertificateProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCustomerAdditionalProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCustomerEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCustomerProperty))]
     public partial class AzureResourceManagerConnectedCacheContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConnectedCacheContext() { }

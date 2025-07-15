@@ -1,8 +1,9 @@
 # Release History
 
-## 1.15.0-beta.1
+## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
+
 - Expanded the set of acceptable values for environment variable `AZURE_TOKEN_CREDENTIALS` to allow for selection of a specific credential in the `DefaultAzureCredential` chain. The valid values now include any of the credential names available in the default chain (`VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerAuthenticationCredential`.) **Note:** `BrokerAuthenticationCredential` requires that the project include a reference to package Azure.Identity.Broker.
 
 ### Breaking Changes
@@ -20,7 +21,8 @@
 ## 1.14.2 (2025-07-10)
 
 ### Other changes
-- Updated `Microsoft.Identity.Client` dependency to version 4.73.1
+
+- Updated `Microsoft.Identity.Client` dependency to version 4.73.1 to take a security fix.
 
 ## 1.14.1 (2025-06-24)
 
