@@ -54,12 +54,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Add a custom calling context sip X header. The provided key is appended to such as 'X-{key}'
+        /// Add a custom calling context sip X header. The provided key is appended to such as 'X-{key}' or 'X-MS-Custom-{key}' depending on the prefix.
         /// </summary>
         /// <param name="key">custom calling context sip X header's key.</param>
         /// <param name="value">custom calling context sip X header's value.</param>
         /// <param name="prefix">prefix to be used for SIP X headers.</param>
-        public void AddSipX(string key, string value, SipHeaderPrefix prefix = SipHeaderPrefix.X)
+        public void AddSipX(string key, string value, SipHeaderPrefix prefix)
         {
             if (SipHeaders == null)
             {
