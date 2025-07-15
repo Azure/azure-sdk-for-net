@@ -285,13 +285,11 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
-            return new VisualStudioCodeCredential();
-#pragma warning restore CS0618 // Type or member is obsolete
+            return new VisualStudioCodeCredential(options);
         }
 
         public virtual TokenCredential CreateAzurePowerShellCredential()
