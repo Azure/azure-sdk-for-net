@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
         /// Versioning for Azure Storage Services</see>.
         /// </summary>
-        public virtual BlobClientOptions.ServiceVersion Version { get; internal set; }
+        public virtual BlobClientOptions.ServiceVersion Version => ClientOptions.Version;
 
         /// <summary>
         /// The encryption key to be used with client provided key server-side encryption.
@@ -40,25 +40,17 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with token authentication.
         /// </summary>
-
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             TokenCredential tokenCredential,
-            ClientDiagnostics clientDiagnostics,
-            BlobClientOptions.ServiceVersion version,
-            CustomerProvidedKey? customerProvidedKey,
-            TransferValidationOptions transferValidation,
-            string encryptionScope,
-            bool trimBlobNameSlashes,
             BlobClientOptions clientOptions)
-            : base(pipeline, tokenCredential, clientDiagnostics)
+            : base(pipeline, tokenCredential, new ClientDiagnostics(clientOptions))
         {
-            Version = version;
-            CustomerProvidedKey = customerProvidedKey;
-            TransferValidation = transferValidation;
-            EncryptionScope = encryptionScope;
-            TrimBlobNameSlashes = trimBlobNameSlashes;
-            ClientOptions = clientOptions;
+            CustomerProvidedKey = clientOptions.CustomerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
+            EncryptionScope = clientOptions.EncryptionScope;
+            TrimBlobNameSlashes = clientOptions.TrimBlobNameSlashes;
+            ClientOptions = new(clientOptions);
         }
 
         /// <summary>
@@ -67,21 +59,14 @@ namespace Azure.Storage.Blobs
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
-            ClientDiagnostics clientDiagnostics,
-            BlobClientOptions.ServiceVersion version,
-            CustomerProvidedKey? customerProvidedKey,
-            TransferValidationOptions transferValidation,
-            string encryptionScope,
-            bool trimBlobNameSlashes,
             BlobClientOptions clientOptions)
-            : base(pipeline, sharedKeyCredential, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, new ClientDiagnostics(clientOptions))
         {
-            Version = version;
-            CustomerProvidedKey = customerProvidedKey;
-            TransferValidation = transferValidation;
-            EncryptionScope = encryptionScope;
-            TrimBlobNameSlashes = trimBlobNameSlashes;
-            ClientOptions = clientOptions;
+            CustomerProvidedKey = clientOptions.CustomerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
+            EncryptionScope = clientOptions.EncryptionScope;
+            TrimBlobNameSlashes = clientOptions.TrimBlobNameSlashes;
+            ClientOptions = new(clientOptions);
         }
 
         /// <summary>
@@ -90,21 +75,14 @@ namespace Azure.Storage.Blobs
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
-            ClientDiagnostics clientDiagnostics,
-            BlobClientOptions.ServiceVersion version,
-            CustomerProvidedKey? customerProvidedKey,
-            TransferValidationOptions transferValidation,
-            string encryptionScope,
-            bool trimBlobNameSlashes,
             BlobClientOptions clientOptions)
-            : base(pipeline, sasCredential, clientDiagnostics)
+            : base(pipeline, sasCredential, new ClientDiagnostics(clientOptions))
         {
-            Version = version;
-            CustomerProvidedKey = customerProvidedKey;
-            TransferValidation = transferValidation;
-            EncryptionScope = encryptionScope;
-            TrimBlobNameSlashes = trimBlobNameSlashes;
-            ClientOptions = clientOptions;
+            CustomerProvidedKey = clientOptions.CustomerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
+            EncryptionScope = clientOptions.EncryptionScope;
+            TrimBlobNameSlashes = clientOptions.TrimBlobNameSlashes;
+            ClientOptions = new(clientOptions);
         }
 
         /// <summary>
@@ -113,22 +91,14 @@ namespace Azure.Storage.Blobs
         /// </summary>
 
         public BlobClientConfiguration(
-            HttpPipeline pipeline,
-            ClientDiagnostics clientDiagnostics,
-            BlobClientOptions.ServiceVersion version,
-            CustomerProvidedKey? customerProvidedKey,
-            TransferValidationOptions transferValidation,
-            string encryptionScope,
-            bool trimBlobNameSlashes,
             BlobClientOptions clientOptions)
-            : base(pipeline, clientDiagnostics)
+            : base(clientOptions.Build(null), new ClientDiagnostics(clientOptions))
         {
-            Version = version;
-            CustomerProvidedKey = customerProvidedKey;
-            TransferValidation = transferValidation;
-            EncryptionScope = encryptionScope;
-            TrimBlobNameSlashes = trimBlobNameSlashes;
-            ClientOptions = clientOptions;
+            CustomerProvidedKey = clientOptions.CustomerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
+            EncryptionScope = clientOptions.EncryptionScope;
+            TrimBlobNameSlashes = clientOptions.TrimBlobNameSlashes;
+            ClientOptions = new(clientOptions);
         }
 
         /// <summary>
@@ -148,12 +118,11 @@ namespace Azure.Storage.Blobs
             BlobClientOptions clientOptions)
             : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
-            Version = version;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
-            ClientOptions = clientOptions;
+            ClientOptions = new(clientOptions);
         }
 
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)

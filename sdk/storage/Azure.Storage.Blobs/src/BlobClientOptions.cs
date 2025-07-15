@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs
         /// with the same values.
         /// </summary>
         /// <param name="options"></param>
-        private BlobClientOptions(BlobClientOptions options)
+        internal BlobClientOptions(BlobClientOptions options)
             : base(options.Diagnostics)
         {
             Transport = options.Transport;
@@ -274,27 +274,6 @@ namespace Azure.Storage.Blobs
             Retry.MaxDelay = options.Retry.MaxDelay;
             Retry.NetworkTimeout = options.Retry.NetworkTimeout;
             Retry.Delay = options.Retry.Delay;
-        }
-
-        /// <summary>
-        /// Initializes new instance of <see cref="BlobClientOptions"/> with
-        /// the passed user agent policy.
-        /// </summary>
-        /// <param name="clientOptions">
-        /// The existing client options.
-        /// </param>
-        /// <param name="userAgentPolicy">
-        /// The policy to inject into the client options.
-        /// </param>
-        /// <returns></returns>
-        internal static BlobClientOptions WithUserAgentPolicy(this BlobClientOptions clientOptions, StorageUserAgentPolicy userAgentPolicy)
-        {
-            // Deep copy over client options
-            BlobClientOptions newOptions = new(clientOptions);
-
-            // Add new User Agent policy
-            newOptions.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
-            return newOptions;
         }
 
         /// <summary>

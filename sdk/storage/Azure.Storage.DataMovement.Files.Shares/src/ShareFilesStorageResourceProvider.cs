@@ -361,6 +361,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareDirectoryClient client,
             ShareFileStorageResourceOptions options = default)
         {
+            ShareDirectoryClient newClient = ShareDirectoryClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
             return new ShareDirectoryStorageResourceContainer(client, options);
         }
 
@@ -382,6 +383,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient client,
             ShareFileStorageResourceOptions options = default)
         {
+            ShareFileClient newClient = ShareFileClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
             return new ShareFileStorageResource(client, options);
         }
         #endregion
@@ -393,8 +395,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
         private static ShareClientOptions GetUserAgentClientOptions()
         {
             ShareClientOptions options = new ShareClientOptions();
+            StorageUserAgentPolicy policy = new(GetUserAgentVersionString());
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            return options;
+        }
 
-            // We grab the assembly of ShareFilesStorageResourceProvider which is Azure.Storage.DataMovement.Files.Shares.
+        /// <summary>
+        /// Gets the assembly version of Azure.Storage.DataMovement.Blobs.
+        /// </summary>
+        private static string GetUserAgentVersionString()
+        {
+            // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
             // From there we can grab the version of the Assembly.
             Assembly assembly = typeof(ShareFilesStorageResourceProvider).Assembly;
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
@@ -402,12 +413,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 throw Azure.Storage.Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
             }
-            // Now using a policy, update the user agent string with the version and add the policy
-            // to the client options.
-            string dataMovementVersion = string.Concat(DataMovementConstants.UserAgentIdentifier, versionAttribute.InformationalVersion);
-            StorageUserAgentPolicy policy = new(dataMovementVersion);
-            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-            return options;
+            // Concat the version with the DataMovement user agent string identifier.
+            return string.Concat(DataMovementConstants.UserAgentIdentifier, versionAttribute.InformationalVersion);
         }
     }
 }

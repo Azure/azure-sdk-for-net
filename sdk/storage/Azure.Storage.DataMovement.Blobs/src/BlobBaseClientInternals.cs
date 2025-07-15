@@ -3,7 +3,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -14,5 +13,10 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobBaseClient client,
             CancellationToken cancellationToken)
             => BlobBaseClient.GetCopyAuthorizationHeaderAsync(client, cancellationToken);
+
+        public static BlobBaseClient WithAppendedUserAgentClient(
+            BlobBaseClient client,
+            string appendedUserAgent)
+            => BlobBaseClient.WithAppendedUserAgent(client, appendedUserAgent);
     }
 }

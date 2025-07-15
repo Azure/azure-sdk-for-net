@@ -21,10 +21,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Storage.Blobs" />
-    <!-- The ProjectReference is commented out because Azure.Storage.Blobs is now included via PackageReference above. -->
-    <!-- It is retained here for reference in case the dependency needs to be switched back to a ProjectReference in the future. -->
-    <!-- <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" /> -->
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <!-- The PackageReference is commented out because Azure.Storage.Blobs is now included via ProjectReference above. -->
+    <!-- It is retained here for reference in case the dependency needs to be switched back to a PackageReference in the future. -->
+    <!-- In the future this needs to be added back in and the ProjectReference needs to be commented out for releases. -->
+    <!-- <PackageReference Include="Azure.Storage.Blobs" /> -->
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>

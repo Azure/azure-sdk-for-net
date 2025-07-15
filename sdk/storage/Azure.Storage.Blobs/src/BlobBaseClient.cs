@@ -214,12 +214,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey,
-                transferValidation: options.TransferValidation,
-                encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                clientOptions: options);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(_uri);
@@ -593,26 +588,6 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
-        /// class with identical configurations but with an updated User Agent string.
-        /// </summary>
-        /// <param name="preappendedUserAgent">
-        /// The string to preappend the user agent with.
-        /// </param>
-        /// <returns></returns>
-        protected virtual BlobBaseClient WithPreappendUserAgent(string preappendedUserAgent)
-        {
-            // Create the pipeline policy with the user agent string updated.
-            StorageUserAgentPolicy userAgentPolicy = new(preappendedUserAgent);
-
-            // Update the client options with the injected user agent policy.
-            BlobClientOptions options = _client
-            // Create a deep copy of the BlobBaseClient but with an updated client options
-            // with an additional injected pipeline policy with the user agent string
-
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BlobLeaseClient"/> class.
         /// </summary>
         /// <param name="leaseId">
@@ -660,6 +635,56 @@ namespace Azure.Storage.Blobs.Specialized
                 return await client.ClientConfiguration.TokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             }
             return default;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with identical configurations but with an updated User Agent string.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to clone the configurations from.
+        /// </param>
+        /// <param name="appendedUserAgent">
+        /// The string to prepend the user agent with.
+        /// </param>
+        /// <returns></returns>
+        protected static BlobBaseClient WithAppendedUserAgent(
+            BlobBaseClient client,
+            string appendedUserAgent)
+        {
+            // Create the pipeline policy with the user agent string updated.
+            StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
+
+            // Update the client options with the injected user agent policy.
+            BlobClientOptions options = new(client.ClientConfiguration.ClientOptions);
+            options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
+
+            // Create a deep copy of the BlobBaseClient but with an updated client options
+            // with an additional injected pipeline policy with the user agent string
+            // based on the credential type.
+            if (client.ClientConfiguration.TokenCredential != default)
+            {
+                return new BlobBaseClient(
+                    client.Uri,
+                    client.ClientConfiguration.TokenCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration.SasCredential != default)
+            {
+                return new BlobBaseClient(
+                    client.Uri,
+                    client.ClientConfiguration.SasCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration.SharedKeyCredential != default)
+            {
+                return new BlobBaseClient(
+                    client.Uri,
+                    client.ClientConfiguration.SharedKeyCredential,
+                    options);
+            }
+
+            return new BlobBaseClient(client.Uri, options);
         }
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 

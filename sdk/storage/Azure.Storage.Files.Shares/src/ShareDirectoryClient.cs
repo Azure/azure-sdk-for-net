@@ -534,6 +534,58 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class with identical configurations but with an updated User Agent string.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to clone the configurations from.
+        /// </param>
+        /// <param name="appendedUserAgent">
+        /// The string to prepend the user agent with.
+        /// </param>
+        /// <returns></returns>
+        #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
+        protected static ShareDirectoryClient WithAppendedUserAgent(
+            ShareDirectoryClient client,
+            string appendedUserAgent)
+        {
+            // Create the pipeline policy with the user agent string updated.
+            StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
+
+            // Update the client options with the injected user agent policy.
+            ShareClientOptions options = new(client.ClientConfiguration.ClientOptions);
+            options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
+
+            // Create a deep copy of the BlobBaseClient but with an updated client options
+            // with an additional injected pipeline policy with the user agent string
+            // based on the credential type.
+            if (client.ClientConfiguration.TokenCredential != default)
+            {
+                return new ShareDirectoryClient(
+                    client.Uri,
+                    client.ClientConfiguration.TokenCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration.SasCredential != default)
+            {
+                return new ShareDirectoryClient(
+                    client.Uri,
+                    client.ClientConfiguration.SasCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration.SharedKeyCredential != default)
+            {
+                return new ShareDirectoryClient(
+                    client.Uri,
+                    client.ClientConfiguration.SharedKeyCredential,
+                    options);
+            }
+
+            return new ShareDirectoryClient(client.Uri, options);
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Files.Shares
+
         #region Create
         /// <summary>
         /// The <see cref="Create(ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new directory
