@@ -52,8 +52,7 @@ namespace Azure.Generator.Management.Providers
 
         private readonly FieldProvider _dataField;
         private readonly FieldProvider _resourceTypeField;
-        private readonly bool _hasGetMethod;
-        private readonly bool _shouldGenerateTagMethods;
+        private readonly InputModelType _inputModel;
 
         private readonly RequestPathPattern _contextualRequestPattern;
         private readonly ResourceMetadata _resourceMetadata;
@@ -65,9 +64,9 @@ namespace Azure.Generator.Management.Providers
         private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata, RequestPathPattern contextualRequestPattern)
         {
             _resourceMetadata = resourceMetadata;
-            _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get);
+            _inputModel = model;
+
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
-            _shouldGenerateTagMethods = ShouldGenerateTagMethods(model);
 
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
             SpecName = model.Name.ToIdentifierName();
@@ -345,6 +344,7 @@ namespace Azure.Generator.Management.Providers
         {
             var operationMethods = new List<MethodProvider>();
             UpdateOperationMethodProvider? updateMethodProvider = null;
+
             foreach (var (methodKind, method) in _resourceServiceMethods)
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
@@ -366,14 +366,12 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var provider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
-                    operationMethods.Add(provider);
-
-                    updateMethodProvider = provider;
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
+                    operationMethods.Add(updateMethodProvider);
 
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    var asyncProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
-                    operationMethods.Add(asyncProvider);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
+                    operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
@@ -390,14 +388,9 @@ namespace Azure.Generator.Management.Providers
             };
             methods.AddRange(operationMethods);
 
-            // Only generate tag methods if the resource model has tag properties
-            if (_shouldGenerateTagMethods)
+            // Only generate tag methods if the resource model has tag properties, has get and update methods
+            if (HasTags() && _resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get) && updateMethodProvider is not null)
             {
-                if (updateMethodProvider is null)
-                {
-                    throw new InvalidOperationException($"Update method provider is required for tag methods but was not found for resource {SpecName}.");
-                }
-
                 methods.AddRange([
                     new AddTagMethodProvider(this, updateMethodProvider, true),
                     new AddTagMethodProvider(this, updateMethodProvider, false),
@@ -449,14 +442,9 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private bool ShouldGenerateTagMethods(InputModelType model)
+        private bool HasTags()
         {
-            if (!_hasGetMethod)
-            {
-                return false; // If there is no Get method, we cannot retrieve tags, so no need to generate tag methods.
-            }
-
-            InputModelType? currentModel = model;
+            InputModelType? currentModel = _inputModel;
             while (currentModel != null)
             {
                 foreach (var property in currentModel.Properties)
