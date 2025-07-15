@@ -11,7 +11,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Usage
 {
     public class UsageTests : SpectorTestBase
     {
-        [Test]
+        [SpectorTest]
         public Task Azure_ClientGenerator_Core_Usage_ModelInOperation() => Test(async (host) =>
         {
             var response1 = await new UsageClient(host, null).GetModelInOperationClient().InputToInputOutputAsync(new InputModel("Madge"));
