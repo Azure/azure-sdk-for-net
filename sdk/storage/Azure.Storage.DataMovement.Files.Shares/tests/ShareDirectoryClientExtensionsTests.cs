@@ -94,17 +94,17 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 TransferOptions = transferOptions,
             };
             string localPath = Path.GetTempPath();
-            Mock<ShareDirectoryClient> clientMock = new();
+            ShareDirectoryClient clientMock = new(new Uri("https://storageaccount.file.core.windows.net/share/dir"));
 
             await ShareDirectoryClientExtensions.DownloadToDirectoryAsync(
-                clientMock.Object,
+                clientMock,
                 WaitUntil.Started,
                 localPath,
                 useOptions ? clientTransferOptions : null);
 
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
-                    (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock.Object &&
+                    (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock &&
                     (
                         useOptions
                             ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions

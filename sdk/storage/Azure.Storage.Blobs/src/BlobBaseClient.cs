@@ -656,27 +656,28 @@ namespace Azure.Storage.Blobs.Specialized
             StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
 
             // Update the client options with the injected user agent policy.
-            BlobClientOptions options = new(client.ClientConfiguration.ClientOptions);
+            BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
+            BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
             options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
 
             // Create a deep copy of the BlobBaseClient but with an updated client options
             // with an additional injected pipeline policy with the user agent string
             // based on the credential type.
-            if (client.ClientConfiguration.TokenCredential != default)
+            if (client.ClientConfiguration?.TokenCredential != default)
             {
                 return new BlobBaseClient(
                     client.Uri,
                     client.ClientConfiguration.TokenCredential,
                     options);
             }
-            else if (client.ClientConfiguration.SasCredential != default)
+            else if (client.ClientConfiguration?.SasCredential != default)
             {
                 return new BlobBaseClient(
                     client.Uri,
                     client.ClientConfiguration.SasCredential,
                     options);
             }
-            else if (client.ClientConfiguration.SharedKeyCredential != default)
+            else if (client.ClientConfiguration?.SharedKeyCredential != default)
             {
                 return new BlobBaseClient(
                     client.Uri,

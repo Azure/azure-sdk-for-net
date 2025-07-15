@@ -4093,7 +4093,8 @@ namespace Azure.Storage.Blobs
             StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
 
             // Update the client options with the injected user agent policy.
-            BlobClientOptions options = new(client.ClientConfiguration.ClientOptions);
+            BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
+            BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
             options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
 
             // Create a deep copy of the BlobContainerClient but with an updated client options

@@ -554,27 +554,28 @@ namespace Azure.Storage.Files.Shares
             StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
 
             // Update the client options with the injected user agent policy.
-            ShareClientOptions options = new(client.ClientConfiguration.ClientOptions);
+            ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
+            ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
             options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
 
             // Create a deep copy of the BlobBaseClient but with an updated client options
             // with an additional injected pipeline policy with the user agent string
             // based on the credential type.
-            if (client.ClientConfiguration.TokenCredential != default)
+            if (client.ClientConfiguration?.TokenCredential != default)
             {
                 return new ShareDirectoryClient(
                     client.Uri,
                     client.ClientConfiguration.TokenCredential,
                     options);
             }
-            else if (client.ClientConfiguration.SasCredential != default)
+            else if (client.ClientConfiguration?.SasCredential != default)
             {
                 return new ShareDirectoryClient(
                     client.Uri,
                     client.ClientConfiguration.SasCredential,
                     options);
             }
-            else if (client.ClientConfiguration.SharedKeyCredential != default)
+            else if (client.ClientConfiguration?.SharedKeyCredential != default)
             {
                 return new ShareDirectoryClient(
                     client.Uri,
