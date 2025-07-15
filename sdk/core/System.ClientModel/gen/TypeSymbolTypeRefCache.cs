@@ -12,16 +12,19 @@ namespace System.ClientModel.SourceGeneration
             = new(SymbolEqualityComparer.Default);
 
         public TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache)
+            => Get(typeSymbol, symbolToKindCache, isContext: false);
+
+        private TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache, bool isContext = false)
         {
             if (_cache.TryGetValue(typeSymbol, out var typeRef))
                 return typeRef;
 
-            typeRef = FromTypeSymbol(typeSymbol, symbolToKindCache);
+            typeRef = FromTypeSymbol(typeSymbol, symbolToKindCache, isContext);
             _cache[typeSymbol] = typeRef;
             return typeRef;
         }
 
-        private TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache)
+        private TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache, bool isContext)
         {
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
@@ -33,6 +36,7 @@ namespace System.ClientModel.SourceGeneration
                     symbol.ContainingNamespace.ToDisplayString(),
                     symbol.ContainingAssembly.ToDisplayString(),
                     symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                    isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache),
                     itemType,
                     obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol));
             }
@@ -40,11 +44,14 @@ namespace System.ClientModel.SourceGeneration
             {
                 var elementType = Get(arrayTypeSymbol.ElementType, symbolToKindCache);
 
+                var assembly = GetArrayAssembly(arrayTypeSymbol);
+
                 return new TypeRef(
                     arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat).RemoveAsterisks(),
                     elementType.Namespace,
                     elementType.Assembly,
                     arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                    isContext ? null : GetContextType(assembly, symbolToKindCache),
                     elementType,
                     arrayTypeSymbol.Rank,
                     obsoleteLevel: elementType.ObsoleteLevel);
@@ -55,11 +62,63 @@ namespace System.ClientModel.SourceGeneration
             }
         }
 
+        private IAssemblySymbol GetArrayAssembly(IArrayTypeSymbol arrayTypeSymbol)
+        {
+            while (arrayTypeSymbol.ElementType is IArrayTypeSymbol innerArray)
+            {
+                arrayTypeSymbol = innerArray;
+            }
+
+            return arrayTypeSymbol.ElementType.ContainingAssembly;
+        }
+
+        private TypeRef? GetContextType(IAssemblySymbol assembly, TypeSymbolKindCache symbolToKindCache)
+        {
+            foreach (var attribute in assembly.GetAttributes())
+            {
+                if (attribute.AttributeClass is
+                    {
+                        Name: "ModelReaderWriterContextTypeAttribute",
+                        ContainingType: null,
+                        ContainingNamespace:
+                        {
+                            Name: "Primitives",
+                            ContainingNamespace:
+                            {
+                                Name: "ClientModel",
+                                ContainingNamespace:
+                                {
+                                    Name: "System",
+                                    ContainingNamespace.IsGlobalNamespace: true
+                                }
+                            }
+                        }
+                    })
+                {
+                    if (attribute.ConstructorArguments.Length > 0 &&
+                        attribute.ConstructorArguments[0].Value is ITypeSymbol typeSymbol)
+                    {
+                        return Get(typeSymbol, symbolToKindCache, true);
+                    }
+                }
+            }
+            return null;
+        }
+
         public static ObsoleteLevel GetObsoleteLevel(ITypeSymbol typeSymbol)
         {
             foreach (var attribute in typeSymbol.GetAttributes())
             {
-                if (attribute.AttributeClass?.ToDisplayString() == "System.ObsoleteAttribute")
+                if (attribute.AttributeClass is
+                    {
+                        Name: "ObsoleteAttribute",
+                        ContainingType: null,
+                        ContainingNamespace:
+                        {
+                            Name: "System",
+                            ContainingNamespace.IsGlobalNamespace: true
+                        }
+                    })
                 {
                     if (attribute.ConstructorArguments.Length == 2 &&
                                     attribute.ConstructorArguments[1].Kind == TypedConstantKind.Primitive &&
