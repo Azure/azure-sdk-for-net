@@ -12,7 +12,7 @@ using _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation;
 using _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation;
 using _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
 
-namespace TestProjects.Spector.Tests.Http.Azure.ClientGenerator.Core.Access
+namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Access
 {
     public class AccessTests : SpectorTestBase
     {
@@ -39,13 +39,13 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGenerator.Core.Access
         public Task Azure_ClientGenerator_Core_Access_InternalOperation() => Test(async (host) =>
         {
             var internalOperationClient = new AccessClient(host, null).GetInternalOperationClient();
-            var response1 = await InvokeMethodAsync(internalOperationClient, "NoDecoratorInInternalAsync", "sample");
+            var response1 = await InvokeMethodAsync(internalOperationClient, "NoDecoratorInInternalAsync", "sample", CancellationToken.None);
             Assert.AreEqual("sample", GetNameValue(response1!));
 
-            var response2 = await InvokeMethodAsync(internalOperationClient, "InternalDecoratorInInternalAsync", "sample");
+            var response2 = await InvokeMethodAsync(internalOperationClient, "InternalDecoratorInInternalAsync", "sample", CancellationToken.None);
             Assert.AreEqual("sample", GetNameValue(response2!));
 
-            var response3 = await InvokeMethodAsync(internalOperationClient, "PublicDecoratorInInternalAsync", "sample");
+            var response3 = await InvokeMethodAsync(internalOperationClient, "PublicDecoratorInInternalAsync", "sample", CancellationToken.None);
             Assert.AreEqual("sample", GetNameValue(response3!));
 
             Assert.IsNotNull(typeof(InternalOperation).GetMethod("NoDecoratorInInternalAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) }));
@@ -60,6 +60,42 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGenerator.Core.Access
             Assert.IsTrue(typeof(PublicDecoratorModelInInternal).IsVisible);
         });
 
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_Access_SharedModelInOperation() => Test(async (host) =>
+        {
+            var response1 = await new AccessClient(host, null).GetSharedModelInOperationClient().PublicAsync("sample");
+            Assert.AreEqual("sample", response1.Value.Name);
+
+            var response2 = await InvokeMethodAsync(new AccessClient(host, null).GetSharedModelInOperationClient(), "InternalAsync", "sample", CancellationToken.None);
+            Assert.AreEqual("sample", GetNameValue(response2!));
+
+            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("PublicAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(CancellationToken) }));
+            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("PublicAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(RequestContext) }));
+
+            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("InternalAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) })!.IsPublic);
+            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("InternalAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(RequestContext) })!.IsPublic);
+
+            Assert.IsTrue(typeof(SharedModel).IsVisible);
+        });
+
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_Access_RelativeModelInOperation() => Test(async (host) =>
+        {
+            var response1 = await InvokeMethodAsync(new AccessClient(host, null).GetRelativeModelInOperationClient(), "OperationAsync", "Madge", CancellationToken.None);
+            Assert.AreEqual("Madge", GetNameValue(response1!));
+            Assert.AreEqual("Madge", GetInnerNameValue(response1!));
+
+            var response2 = await InvokeMethodAsync(new AccessClient(host, null).GetRelativeModelInOperationClient(), "DiscriminatorAsync", "real", CancellationToken.None);
+            Assert.AreEqual("Madge", GetNameValue(response2!));
+
+            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("OperationAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) }));
+            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("OperationAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(RequestContext) }));
+
+            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("DiscriminatorAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) }));
+            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("DiscriminatorAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(RequestContext) }));
+        });
+
+
         private static object GetNameValue(object response)
         {
             object model = response.GetType().GetProperty("Value")!.GetValue(response)!;
@@ -72,40 +108,5 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGenerator.Core.Access
             object innerModel = model.GetType().GetProperty("Inner")!.GetValue(model)!;
             return innerModel.GetType().GetProperty("Name")!.GetValue(innerModel)!;
         }
-
-        [Test]
-        public Task Azure_ClientGenerator_Core_Access_SharedModelInOperation() => Test(async (host) =>
-        {
-            var response1 = await new AccessClient(host, null).GetSharedModelInOperationClient().PublicAsync("sample");
-            Assert.AreEqual("sample", response1.Value.Name);
-
-            var response2 = await InvokeMethodAsync(new AccessClient(host, null).GetSharedModelInOperationClient(), "InternalAsync", "sample");
-            Assert.AreEqual("sample", GetNameValue(response2!));
-
-            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("PublicAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(CancellationToken) }));
-            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("PublicAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(RequestContext) }));
-
-            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("InternalAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) })!.IsPublic);
-            Assert.IsNotNull(typeof(SharedModelInOperation).GetMethod("InternalAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(RequestContext) })!.IsPublic);
-
-            Assert.IsTrue(typeof(SharedModel).IsVisible);
-        });
-
-        [Test]
-        public Task Azure_ClientGenerator_Core_Access_RelativeModelInOperation() => Test(async (host) =>
-        {
-            var response1 = await InvokeMethodAsync(new AccessClient(host, null).GetRelativeModelInOperationClient(), "OperationAsync", "Madge");
-            Assert.AreEqual("Madge", GetNameValue(response1!));
-            Assert.AreEqual("Madge", GetInnerNameValue(response1!));
-
-            var response2 = await InvokeMethodAsync(new AccessClient(host, null).GetRelativeModelInOperationClient(), "DiscriminatorAsync", "real");
-            Assert.AreEqual("Madge", GetNameValue(response2!));
-
-            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("OperationAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) }));
-            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("OperationAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(RequestContext) }));
-
-            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("DiscriminatorAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(CancellationToken) }));
-            Assert.IsNotNull(typeof(RelativeModelInOperation).GetMethod("DiscriminatorAsync", BindingFlags.Instance | BindingFlags.NonPublic, new[] { typeof(string), typeof(RequestContext) }));
-        });
     }
 }
