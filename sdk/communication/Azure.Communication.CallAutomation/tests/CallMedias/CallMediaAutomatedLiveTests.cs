@@ -2285,12 +2285,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
-                        false);
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(MediaStreamingAudioChannel.Mixed)
+                    {
+                        StartMediaStreaming = false,
+                        MediaStreamingContent = MediaStreamingContent.Audio,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl)
+                    };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           mediaStreamingOptions, transcriptionOptions: null);
@@ -2351,11 +2351,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
-                        false);
+                        MediaStreamingAudioChannel.Mixed)
+                    {
+                        StartMediaStreaming = false,
+                        MediaStreamingContent = MediaStreamingContent.Audio,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl)
+                    };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           mediaStreamingOptions, transcriptionOptions: null);
@@ -2416,11 +2417,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Unmixed,
-                        MediaStreamingTransport.Websocket,
-                        false);
+                        MediaStreamingAudioChannel.Unmixed)
+                    {
+                        StartMediaStreaming = false,
+                        MediaStreamingContent = MediaStreamingContent.Audio,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl)
+                    };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           mediaStreamingOptions, transcriptionOptions: null);
@@ -2482,9 +2484,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                        "en-CA")
+                    {
+                        StartTranscription = false,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl)
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
                     callConnectionId = result.CallerCallConnectionId;
@@ -2545,9 +2549,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                        "en-CA")
+                    {
+                        StartTranscription = false,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl)
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
                     callConnectionId = result.TargetCallConnectionId;
