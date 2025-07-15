@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager
 {
@@ -47,12 +48,13 @@ namespace Azure.ResourceManager
             var assembly = Assembly.GetExecutingAssembly();
             using (Stream stream = assembly.GetManifestResourceStream(profile.GetManifestName()))
             {
-                var allProfile = BinaryData.FromStream(stream).ToObjectFromJson<Dictionary<string, Dictionary<string, object>>>();
+                var span = BinaryData.FromStream(stream).ToMemory().Span;
+                var allProfile = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>>(span, ArmClientOptionsJsonContext.Default.DictionaryStringDictionaryStringJsonElement);
                 var armProfile = allProfile["resource-manager"];
                 foreach (var keyValuePair in armProfile)
                 {
                     var namespaceName = keyValuePair.Key;
-                    var element = (JsonElement)keyValuePair.Value;
+                    var element = keyValuePair.Value;
 
                     foreach (var apiVersionProperty in element.EnumerateObject())
                     {

@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 [AttributeUsage(AttributeTargets.Assembly)]
 [EditorBrowsable(EditorBrowsableState.Never)]
-public class ModelReaderWriterContextTypeAttribute : Attribute
+public sealed class ModelReaderWriterContextTypeAttribute : Attribute
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ModelReaderWriterContextTypeAttribute"/> class.

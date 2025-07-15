@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,9 +10,11 @@ using Azure.AI.OpenAI;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    /// <summary></summary>
+    /// <summary> Represents a data source configuration that will use an Azure CosmosDB resource. </summary>
     public partial class CosmosChatDataSource : IJsonModel<CosmosChatDataSource>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -38,6 +39,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosChatDataSource IJsonModel<CosmosChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CosmosChatDataSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -53,20 +56,22 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeCosmosChatDataSource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static CosmosChatDataSource DeserializeCosmosChatDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "azure_cosmos_db";
+            InternalAzureChatDataSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             InternalAzureCosmosDBChatDataSourceParameters internalParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = new InternalAzureChatDataSourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -79,9 +84,10 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosChatDataSource(@type, additionalBinaryDataProperties, internalParameters);
+            return new CosmosChatDataSource(kind, additionalBinaryDataProperties, internalParameters);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosChatDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,12 +97,14 @@ namespace Azure.AI.OpenAI.Chat
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CosmosChatDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosChatDataSource IPersistableModel<CosmosChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (CosmosChatDataSource)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -116,24 +124,7 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CosmosChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="cosmosChatDataSource"> The <see cref="CosmosChatDataSource"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(CosmosChatDataSource cosmosChatDataSource)
-        {
-            if (cosmosChatDataSource == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(cosmosChatDataSource, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="CosmosChatDataSource"/> from. </param>
-        public static explicit operator CosmosChatDataSource(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeCosmosChatDataSource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
