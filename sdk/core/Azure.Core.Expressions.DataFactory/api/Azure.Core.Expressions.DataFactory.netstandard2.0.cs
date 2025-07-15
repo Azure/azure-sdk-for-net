@@ -1,5 +1,9 @@
 namespace Azure.Core.Expressions.DataFactory
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactorySecret))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactorySecretString))]
     public partial class DataFactoryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal DataFactoryContext() { }
