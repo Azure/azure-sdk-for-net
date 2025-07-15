@@ -13,19 +13,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
     public class CallAutomationClientTests : CallAutomationTestBase
     {
         private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
-            new Uri("https://websocket"),
             MediaStreamingAudioChannel.Mixed)
         {
             StartMediaStreaming = false,
-            MediaStreamingContent = MediaStreamingContent.Audio
+            MediaStreamingContent = MediaStreamingContent.Audio,
+            TransportUri = new Uri("https://websocket"),
         };
 
         private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
-            new Uri("https://websocket"),
-            "en-CA")
+            "en-CA",
+            TranscriptionTransport.Websocket)
         {
             StartTranscription = true,
-            TranscriptionTransport = TranscriptionTransport.Websocket,
+            TransportUri = new Uri("https://websocket"),
         };
 
         [TestCaseSource(nameof(TestData_AnswerCall))]

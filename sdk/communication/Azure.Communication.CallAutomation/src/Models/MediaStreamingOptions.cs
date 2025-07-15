@@ -8,20 +8,18 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The MediaStreamingOptions. </summary>
     public class MediaStreamingOptions
     {
-        /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
-        /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
-        /// <param name="transportUri">Transport URL for media streaming</param>
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingOptions"/>. </summary>
         /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
-        public MediaStreamingOptions(Uri transportUri, MediaStreamingAudioChannel audioChannelType)
+        /// <param name="streamingTransport">Media streaming transport.</param>
+        public MediaStreamingOptions(MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport streamingTransport = default)
         {
             MediaStreamingAudioChannel = audioChannelType;
-            TransportUri = transportUri ?? throw new ArgumentNullException(nameof(transportUri));
-            MediaStreamingTransport = MediaStreamingTransport.Websocket;
+            MediaStreamingTransport = streamingTransport == default ? MediaStreamingTransport.Websocket : streamingTransport;
             MediaStreamingContent = MediaStreamingContent.Audio;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
-        public Uri TransportUri { get; }
+        public Uri TransportUri { get; set; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
         public MediaStreamingTransport MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
