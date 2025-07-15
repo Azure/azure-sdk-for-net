@@ -1,0 +1,4 @@
+directory: specification/touchcast/Touchcast.CogCache.Management
+commit: 80abeca3c00e2bc15055d3236671082f8b17260f
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
