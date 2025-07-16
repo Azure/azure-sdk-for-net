@@ -13,10 +13,28 @@ This sample demonstrates how to use the synchronous and asynchronous `Azure Open
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_AzureOpenAIChatSync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+
+Console.WriteLine("Complete a chat");
+ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
+Console.WriteLine(result.Content[0].Text);
 ```
 
 ## Asynchronous Sample
 ```C# Snippet:AI_Projects_AzureOpenAIChatAsync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+
+Console.WriteLine("Complete a chat");
+ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");
+Console.WriteLine(result.Content[0].Text);
 ```

@@ -27,6 +27,8 @@ namespace Azure.AI.Projects
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
+        public OpenAI.Chat.ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
+        public OpenAI.Embeddings.EmbeddingClient GetAzureOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
         public virtual Azure.AI.Projects.Connections GetConnectionsClient() { throw null; }
         public virtual Azure.AI.Projects.Datasets GetDatasetsClient() { throw null; }
