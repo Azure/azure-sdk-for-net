@@ -16,16 +16,21 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+// Enable debugging for System.ClientModel
+EnableSystemClientModelDebugging();
+
+// Create client with debugging enabled
+AIProjectClient projectClient = CreateDebugClient(endpoint);
 
 Console.WriteLine("List all deployments:");
-foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments())
+foreach (AIDeployment deployment in projectClient.Deployments.Get())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+foreach (AIDeployment deployment in projectClient.Deployments.Get(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
@@ -41,16 +46,21 @@ Console.WriteLine(deploymentDetails);
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+// Enable debugging for System.ClientModel
+EnableSystemClientModelDebugging();
+
+// Create client with debugging enabled
+AIProjectClient projectClient = CreateDebugClient(endpoint);
 
 Console.WriteLine("List all deployments:");
-await foreach (AIDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+await foreach (AIDeployment deployment in projectClient.Deployments.GetAsync())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-await foreach (AIDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+await foreach (AIDeployment deployment in projectClient.Deployments.GetAsync(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }

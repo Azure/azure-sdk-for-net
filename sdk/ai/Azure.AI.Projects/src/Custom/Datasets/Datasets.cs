@@ -117,8 +117,9 @@ namespace Azure.AI.Projects
                 FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
                 BinaryContent content = BinaryContent.Create(fileDatasetVersion);
 
-                ClientResult<FileDatasetVersion> result = (ClientResult<FileDatasetVersion>)CreateOrUpdate(name, outputVersion, content);
-                return result;
+                ClientResult result = CreateOrUpdate(name, outputVersion, content);
+
+                return ClientResult.FromValue((FileDatasetVersion)result, result.GetRawResponse());
             }
         }
 
@@ -163,8 +164,8 @@ namespace Azure.AI.Projects
             FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
             BinaryContent content = BinaryContent.Create(folderDatasetVersion);
 
-            ClientResult<FolderDatasetVersion> result = (ClientResult<FolderDatasetVersion>)CreateOrUpdate(name, outputVersion, content);
-            return result;
+            ClientResult result = CreateOrUpdate(name, outputVersion, content);
+            return ClientResult.FromValue((FolderDatasetVersion)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -213,9 +214,9 @@ namespace Azure.AI.Projects
                 FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
                 BinaryContent content = BinaryContent.Create(fileDatasetVersion);
 
-                ClientResult<FileDatasetVersion> result = (ClientResult<FileDatasetVersion>)await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+                ClientResult result = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-                return result;
+                return ClientResult.FromValue((FileDatasetVersion)result, result.GetRawResponse());
             }
         }
 
@@ -259,9 +260,9 @@ namespace Azure.AI.Projects
 
             FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
             BinaryContent content = BinaryContent.Create(folderDatasetVersion);
-            ClientResult<FolderDatasetVersion> result = (ClientResult<FolderDatasetVersion>)await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-            return result;
+            return ClientResult.FromValue((FolderDatasetVersion)result, result.GetRawResponse());
         }
     }
 }

@@ -13,7 +13,7 @@ In this example, we will demonstrate listing and retrieving connections using th
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List the properties of all connections:");
 foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
@@ -29,11 +29,11 @@ foreach (ConnectionProperties connection in projectClient.Connections.GetConnect
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-ConnectionProperties specificConnection = projectClient.Connections.Get(connectionName, includeCredentials: false);
+ConnectionProperties specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-ConnectionProperties specificConnectionCredentials = projectClient.Connections.Get(connectionName, includeCredentials: true);
+ConnectionProperties specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
@@ -65,11 +65,11 @@ await foreach (ConnectionProperties connection in projectClient.Connections.GetC
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-ConnectionProperties specificConnection = await projectClient.Connections.GetAsync(connectionName, includeCredentials: false);
+ConnectionProperties specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-ConnectionProperties specificConnectionCredentials = await projectClient.Connections.GetAsync(connectionName, includeCredentials: true);
+ConnectionProperties specificConnectionCredentials = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
