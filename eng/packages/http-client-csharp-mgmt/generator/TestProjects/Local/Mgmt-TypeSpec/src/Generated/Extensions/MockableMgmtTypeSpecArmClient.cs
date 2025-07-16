@@ -61,5 +61,14 @@ namespace MgmtTypeSpec.Mocking
             BarSettingsResource.ValidateResourceId(id);
             return new BarSettingsResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
+        public virtual ZooResource GetZooResource(ResourceIdentifier id)
+        {
+            ZooResource.ValidateResourceId(id);
+            return new ZooResource(Client, id);
+        }
     }
 }

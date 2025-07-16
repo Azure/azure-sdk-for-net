@@ -9,11 +9,15 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions : DataSourceAuthentication
     {
-        public InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions() : base("system_assigned_managed_identity")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions"/>. </summary>
+        public InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions() : this(InternalAzureChatDataSourceAuthenticationOptionsType.SystemAssignedManagedIdentity, null)
         {
         }
 
-        internal InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
         }
     }

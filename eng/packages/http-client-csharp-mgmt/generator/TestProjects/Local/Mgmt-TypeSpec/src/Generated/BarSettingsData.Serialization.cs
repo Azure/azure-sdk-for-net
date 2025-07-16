@@ -43,6 +43,21 @@ namespace MgmtTypeSpec
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsCollectionDefined(StringArray))
+            {
+                writer.WritePropertyName("stringArray"u8);
+                writer.WriteStartArray();
+                foreach (string item in StringArray)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -76,6 +91,7 @@ namespace MgmtTypeSpec
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BarSettingsProperties properties = default;
+            IList<string> stringArray = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -115,6 +131,27 @@ namespace MgmtTypeSpec
                     properties = BarSettingsProperties.DeserializeBarSettingsProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("stringArray"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    stringArray = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -126,7 +163,8 @@ namespace MgmtTypeSpec
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                stringArray ?? new ChangeTrackingList<string>());
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
