@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -58,7 +60,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
                 writer.WritePropertyName("reportSystemData"u8);
-                JsonSerializer.Serialize(writer, ReportSystemData);
+                ((IJsonModel<SystemData>)ReportSystemData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
             {
@@ -155,7 +157,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    reportSystemData = (SystemData)
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.AppComplianceAutomation.ModelSerializationExtensions.WireOptions, AzureResourceManagerAppComplianceAutomationContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppComplianceAutomationContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("complianceResults"u8))

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -128,7 +130,7 @@ namespace Azure.ResourceManager.Orbital
             if (Optional.IsDefined(ContactProfile))
             {
                 writer.WritePropertyName("contactProfile"u8);
-                JsonSerializer.Serialize(writer, ContactProfile);
+                ((IJsonModel<WritableSubResource>)ContactProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -209,7 +211,13 @@ namespace Azure.ResourceManager.Orbital
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.Orbital.ModelSerializationExtensions.WireOptions, AzureResourceManagerOrbitalContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOrbitalContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -363,7 +371,13 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            contactProfile =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerOrbitalContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerOrbitalContext.Default)
+#endif
+;
                             continue;
                         }
                     }

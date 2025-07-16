@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("trainedModelName"u8);
             JsonSerializer.Serialize(writer, TrainedModelName);
             writer.WritePropertyName("trainedModelLinkedServiceName"u8);
-            JsonSerializer.Serialize(writer, TrainedModelLinkedServiceName);
+            ((IJsonModel<DataFactoryLinkedServiceReference>)TrainedModelLinkedServiceName).Write(writer, options);
             writer.WritePropertyName("trainedModelFilePath"u8);
             JsonSerializer.Serialize(writer, TrainedModelFilePath);
             writer.WriteEndObject();
@@ -101,7 +103,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerDataFactoryContext.Default)
+#else
+                ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -190,7 +198,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("trainedModelLinkedServiceName"u8))
                         {
-                            trainedModelLinkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            trainedModelLinkedServiceName =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerDataFactoryContext.Default)
+#else
+                ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("trainedModelFilePath"u8))

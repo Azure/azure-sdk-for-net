@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Orbital.Models
             }
 
             writer.WritePropertyName("contactProfile"u8);
-            JsonSerializer.Serialize(writer, ContactProfile);
+            ((IJsonModel<WritableSubResource>)ContactProfile).Write(writer, options);
             writer.WritePropertyName("groundStationName"u8);
             writer.WriteStringValue(GroundStationName);
             writer.WritePropertyName("startTime"u8);
@@ -90,7 +92,13 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 if (property.NameEquals("contactProfile"u8))
                 {
-                    contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    contactProfile =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerOrbitalContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerOrbitalContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("groundStationName"u8))

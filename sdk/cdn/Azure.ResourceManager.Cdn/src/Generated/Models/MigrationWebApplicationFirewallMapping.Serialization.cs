@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,12 +40,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(MigratedFrom))
             {
                 writer.WritePropertyName("migratedFrom"u8);
-                JsonSerializer.Serialize(writer, MigratedFrom);
+                ((IJsonModel<WritableSubResource>)MigratedFrom).Write(writer, options);
             }
             if (Optional.IsDefined(MigratedTo))
             {
                 writer.WritePropertyName("migratedTo"u8);
-                JsonSerializer.Serialize(writer, MigratedTo);
+                ((IJsonModel<WritableSubResource>)MigratedTo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +96,13 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    migratedFrom = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    migratedFrom =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("migratedTo"u8))
@@ -103,7 +111,13 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    migratedTo = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    migratedTo =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

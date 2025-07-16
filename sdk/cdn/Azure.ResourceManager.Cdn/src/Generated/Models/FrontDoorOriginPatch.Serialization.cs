@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin"u8);
-                JsonSerializer.Serialize(writer, Origin);
+                ((IJsonModel<WritableSubResource>)Origin).Write(writer, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -186,7 +188,13 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            azureOrigin = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            azureOrigin =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

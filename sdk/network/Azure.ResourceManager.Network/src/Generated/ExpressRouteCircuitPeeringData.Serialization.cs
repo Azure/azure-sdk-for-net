@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -122,7 +124,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                JsonSerializer.Serialize(writer, RouteFilter);
+                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
             }
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteConnection))
             {
                 writer.WritePropertyName("expressRouteConnection"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteConnection);
+                ((IJsonModel<SubResource>)ExpressRouteConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -359,7 +361,13 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            routeFilter =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"u8))
@@ -377,7 +385,13 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            expressRouteConnection =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.SubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("connections"u8))
