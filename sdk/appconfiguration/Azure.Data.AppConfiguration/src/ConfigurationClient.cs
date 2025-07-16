@@ -37,8 +37,8 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
     [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
     [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
-    [CodeGenSuppress("SetConfigurationSetting", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("SetConfigurationSettingAsync", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("SetConfigurationSettingInternal", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("SetConfigurationSettingInternalAsync", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteConfigurationSettingAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetSnapshot", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
@@ -270,7 +270,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 string ifNoneMatch = ETag.All.ToString("H");
 
-                using Response response = await SetConfigurationSettingAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -308,7 +308,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 string ifNoneMatch = ETag.All.ToString("H");
 
-                using Response response = SetConfigurationSetting(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context);
+                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context);
                 switch (response.Status)
                 {
                     case 200:
@@ -378,7 +378,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 string ifMatch = onlyIfUnchanged ? setting.ETag.ToString("H") : null;
 
-                using Response response = await SetConfigurationSettingAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifMatch: ifMatch, context: context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifMatch: ifMatch, context: context).ConfigureAwait(false);
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
@@ -419,7 +419,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 string ifMatch = onlyIfUnchanged ? setting.ETag.ToString("H") : null;
 
-                using Response response = SetConfigurationSetting(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifMatch: ifMatch, context: context);
+                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifMatch: ifMatch, context: context);
 
                 return response.Status switch
                 {

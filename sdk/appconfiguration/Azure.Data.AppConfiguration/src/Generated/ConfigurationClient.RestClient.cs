@@ -269,7 +269,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateSetConfigurationSettingRequest(string key, string contentType, RequestContent content, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateSetConfigurationSettingInternalRequest(string key, string contentType, RequestContent content, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

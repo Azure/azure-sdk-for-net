@@ -158,13 +158,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response SetConfigurationSetting(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        internal virtual Response SetConfigurationSettingInternal(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSettingInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -198,13 +198,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SetConfigurationSettingAsync(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        internal virtual async Task<Response> SetConfigurationSettingInternalAsync(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSettingInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
