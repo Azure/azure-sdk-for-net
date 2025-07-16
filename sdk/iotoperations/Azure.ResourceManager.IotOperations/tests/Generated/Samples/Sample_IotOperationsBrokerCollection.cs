@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BrokerCreateOrUpdateComplex()
         {
-            // Generated from example definition: 2024-11-01/Broker_CreateOrUpdate_Complex.json
+            // Generated from example definition: 2025-07-01-preview/Broker_CreateOrUpdate_Complex.json
             // this example is just showing the usage of "BrokerResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
 
             // invoke the operation
             string brokerName = "resource-name123";
-            IotOperationsBrokerData data = new IotOperationsBrokerData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerData data = new IotOperationsBrokerData
             {
                 Properties = new IotOperationsBrokerProperties
                 {
@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
                     GenerateResourceLimitsCpu = IotOperationsOperationalMode.Enabled,
                     MemoryProfile = BrokerMemoryProfile.Medium,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, brokerName, data);
             IotOperationsBrokerResource result = lro.Value;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BrokerCreateOrUpdate()
         {
-            // Generated from example definition: 2024-11-01/Broker_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Broker_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
 
             // invoke the operation
             string brokerName = "resource-name123";
-            IotOperationsBrokerData data = new IotOperationsBrokerData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerData data = new IotOperationsBrokerData
             {
                 Properties = new IotOperationsBrokerProperties
                 {
@@ -225,6 +226,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
                     GenerateResourceLimitsCpu = IotOperationsOperationalMode.Enabled,
                     MemoryProfile = BrokerMemoryProfile.Tiny,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, brokerName, data);
             IotOperationsBrokerResource result = lro.Value;
@@ -240,7 +242,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BrokerCreateOrUpdateMinimal()
         {
-            // Generated from example definition: 2024-11-01/Broker_CreateOrUpdate_Minimal.json
+            // Generated from example definition: 2025-07-01-preview/Broker_CreateOrUpdate_Minimal.json
             // this example is just showing the usage of "BrokerResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -261,12 +263,13 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
 
             // invoke the operation
             string brokerName = "resource-name123";
-            IotOperationsBrokerData data = new IotOperationsBrokerData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerData data = new IotOperationsBrokerData
             {
                 Properties = new IotOperationsBrokerProperties
                 {
                     MemoryProfile = BrokerMemoryProfile.Tiny,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, brokerName, data);
             IotOperationsBrokerResource result = lro.Value;
@@ -282,7 +285,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BrokerCreateOrUpdateSimple()
         {
-            // Generated from example definition: 2024-11-01/Broker_CreateOrUpdate_Simple.json
+            // Generated from example definition: 2025-07-01-preview/Broker_CreateOrUpdate_Simple.json
             // this example is just showing the usage of "BrokerResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,7 +306,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
 
             // invoke the operation
             string brokerName = "resource-name123";
-            IotOperationsBrokerData data = new IotOperationsBrokerData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerData data = new IotOperationsBrokerData
             {
                 Properties = new IotOperationsBrokerProperties
                 {
@@ -317,6 +320,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
                     GenerateResourceLimitsCpu = IotOperationsOperationalMode.Enabled,
                     MemoryProfile = BrokerMemoryProfile.Low,
                 },
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, brokerName, data);
             IotOperationsBrokerResource result = lro.Value;
@@ -332,7 +336,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_BrokerGet()
         {
-            // Generated from example definition: 2024-11-01/Broker_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Broker_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -366,7 +370,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_BrokerListByResourceGroup()
         {
-            // Generated from example definition: 2024-11-01/Broker_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Broker_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -402,7 +406,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_BrokerGet()
         {
-            // Generated from example definition: 2024-11-01/Broker_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Broker_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -432,7 +436,7 @@ Values = {"slmpajlywqvuyknipgztsonqyybt"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_BrokerGet()
         {
-            // Generated from example definition: 2024-11-01/Broker_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/Broker_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

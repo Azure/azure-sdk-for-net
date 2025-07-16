@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_BrokerAuthenticationGet()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthentication_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthentication_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerAuthenticationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_BrokerAuthenticationDelete()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthentication_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthentication_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerAuthenticationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_BrokerAuthenticationCreateOrUpdateComplex()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthentication_CreateOrUpdate_Complex.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthentication_CreateOrUpdate_Complex.json
             // this example is just showing the usage of "BrokerAuthenticationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
             IotOperationsBrokerAuthenticationResource iotOperationsBrokerAuthentication = client.GetIotOperationsBrokerAuthenticationResource(iotOperationsBrokerAuthenticationResourceId);
 
             // invoke the operation
-            IotOperationsBrokerAuthenticationData data = new IotOperationsBrokerAuthenticationData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerAuthenticationData data = new IotOperationsBrokerAuthenticationData
             {
                 Properties = new IotOperationsBrokerAuthenticationProperties(new BrokerAuthenticatorMethods[]
             {
@@ -132,6 +132,7 @@ TrustedClientCaCert = "my-ca",
 },
 }
             }),
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerAuthenticationResource> lro = await iotOperationsBrokerAuthentication.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsBrokerAuthenticationResource result = lro.Value;
@@ -147,7 +148,7 @@ TrustedClientCaCert = "my-ca",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_BrokerAuthenticationCreateOrUpdate()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthentication_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthentication_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerAuthenticationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +167,7 @@ TrustedClientCaCert = "my-ca",
             IotOperationsBrokerAuthenticationResource iotOperationsBrokerAuthentication = client.GetIotOperationsBrokerAuthenticationResource(iotOperationsBrokerAuthenticationResourceId);
 
             // invoke the operation
-            IotOperationsBrokerAuthenticationData data = new IotOperationsBrokerAuthenticationData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerAuthenticationData data = new IotOperationsBrokerAuthenticationData
             {
                 Properties = new IotOperationsBrokerAuthenticationProperties(new BrokerAuthenticatorMethods[]
             {
@@ -195,6 +196,7 @@ TrustedClientCaCert = "vlctsqddl",
 },
 }
             }),
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerAuthenticationResource> lro = await iotOperationsBrokerAuthentication.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsBrokerAuthenticationResource result = lro.Value;

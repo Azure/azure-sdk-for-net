@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         private const string KafkaValue = "Kafka";
         private const string LocalStorageValue = "LocalStorage";
         private const string MqttValue = "Mqtt";
+        private const string OpenTelemetryValue = "OpenTelemetry";
 
         /// <summary> Azure Data Explorer Type. </summary>
         public static DataflowEndpointType DataExplorer { get; } = new DataflowEndpointType(DataExplorerValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static DataflowEndpointType LocalStorage { get; } = new DataflowEndpointType(LocalStorageValue);
         /// <summary> Broker Type. </summary>
         public static DataflowEndpointType Mqtt { get; } = new DataflowEndpointType(MqttValue);
+        /// <summary> OpenTelemetry Type. </summary>
+        public static DataflowEndpointType OpenTelemetry { get; } = new DataflowEndpointType(OpenTelemetryValue);
         /// <summary> Determines if two <see cref="DataflowEndpointType"/> values are the same. </summary>
         public static bool operator ==(DataflowEndpointType left, DataflowEndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataflowEndpointType"/> values are not the same. </summary>
