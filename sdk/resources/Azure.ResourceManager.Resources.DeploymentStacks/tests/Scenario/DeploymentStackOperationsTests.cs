@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
             // TODO: Output is off by a little and may be how the template is being read.
             //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
 
-            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Detach, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Detach, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Detach);
             await rg.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
             // TODO: Output is off by a little and may be how the template is being read.
             //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
 
-            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Detach, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Detach, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Detach);
         }
 
         [TestCase]
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
             // TODO: Output is off by a little and may be how the template is being read.
             //Assert.AreEqual(deploymentStackTemplate.Template, deploymentStackData.Template);
 
-            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Delete, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Delete, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Delete);
+            await deploymentStack.DeleteAsync(WaitUntil.Completed, unmanageActionResources: UnmanageActionResourceMode.Detach, unmanageActionResourceGroups: UnmanageActionResourceGroupMode.Detach, unmanageActionManagementGroups: UnmanageActionManagementGroupMode.Detach);
         }
 
         [TestCase]
