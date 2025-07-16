@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string solutionId = default;
-            SelfHelpDiagnosticStatus? status = default;
+            Status? status = default;
             string statusDetails = default;
             string replacementKey = default;
             string estimatedCompletionTime = default;
             IReadOnlyList<string> requiredParameters = default;
-            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
+            IReadOnlyList<Insight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    status = new SelfHelpDiagnosticStatus(property.Value.GetString());
+                    status = new Status(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusDetails"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
+                    List<Insight> array = new List<Insight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
+                        array.Add(Insight.DeserializeInsight(item, options));
                     }
                     insights = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 replacementKey,
                 estimatedCompletionTime,
                 requiredParameters ?? new ChangeTrackingList<string>(),
-                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                insights ?? new ChangeTrackingList<Insight>(),
                 serializedAdditionalRawData);
         }
 

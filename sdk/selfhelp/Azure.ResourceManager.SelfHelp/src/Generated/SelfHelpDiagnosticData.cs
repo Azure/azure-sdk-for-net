@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SelfHelp
         public SelfHelpDiagnosticData()
         {
             GlobalParameters = new ChangeTrackingDictionary<string, string>();
-            Insights = new ChangeTrackingList<SelfHelpDiagnosticInvocation>();
-            Diagnostics = new ChangeTrackingList<SelfHelpDiagnosticInfo>();
+            Insights = new ChangeTrackingList<DiagnosticInvocation>();
+            Diagnostics = new ChangeTrackingList<Diagnostic>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticData"/>. </summary>
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="globalParameters"> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </param>
         /// <param name="insights"> SolutionIds that are needed to be invoked. </param>
-        /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
+        /// <param name="acceptedAt"> Diagnostic Request Accepted time. </param>
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<DiagnosticInvocation> insights, string acceptedAt, DiagnosticProvisioningState? provisioningState, IReadOnlyList<Diagnostic> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
             Insights = insights;
-            AcceptedOn = acceptedOn;
+            AcceptedAt = acceptedAt;
             ProvisioningState = provisioningState;
             Diagnostics = diagnostics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </summary>
         public IDictionary<string, string> GlobalParameters { get; }
         /// <summary> SolutionIds that are needed to be invoked. </summary>
-        public IList<SelfHelpDiagnosticInvocation> Insights { get; }
+        public IList<DiagnosticInvocation> Insights { get; }
         /// <summary> Diagnostic Request Accepted time. </summary>
-        public DateTimeOffset? AcceptedOn { get; }
+        public string AcceptedAt { get; }
         /// <summary> Status of diagnostic provisioning. </summary>
-        public SelfHelpProvisioningState? ProvisioningState { get; }
+        public DiagnosticProvisioningState? ProvisioningState { get; }
         /// <summary> Array of Diagnostics. </summary>
-        public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
+        public IReadOnlyList<Diagnostic> Diagnostics { get; }
     }
 }

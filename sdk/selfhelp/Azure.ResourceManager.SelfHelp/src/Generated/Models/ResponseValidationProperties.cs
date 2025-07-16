@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="validationErrorMessage"> Validation Error Message. </param>
         /// <param name="maxLength"> Max text input (open Ended Text). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseValidationProperties(string regex, TroubleshooterValidationScope? validationScope, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseValidationProperties(string regex, ValidationScope? validationScope, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Regex = regex;
             ValidationScope = validationScope;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Regex used for the input validation. </summary>
         public string Regex { get; }
         /// <summary> Validation scope. </summary>
-        public TroubleshooterValidationScope? ValidationScope { get; }
+        public ValidationScope? ValidationScope { get; }
         /// <summary> Default True. </summary>
         public bool? IsRequired { get; }
         /// <summary> Validation Error Message. </summary>

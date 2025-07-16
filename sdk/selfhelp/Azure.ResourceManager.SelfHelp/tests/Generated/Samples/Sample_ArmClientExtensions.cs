@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SelfHelp.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckSelfHelpNameAvailability_ExampleWhenNameIsAvailableForADiagnosticResource()
+        public async Task CheckAvailability_ExampleWhenNameIsAvailableForADiagnosticResource()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/CheckNameAvailabilityForDiagnosticWhenNameIsAvailable.json
-            // this example is just showing the usage of "CheckNameAvailability_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-03-01-preview/CheckNameAvailabilityForDiagnosticWhenNameIsAvailable.json
+            // this example is just showing the usage of "CheckNameAvailabilityOperationGroup_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation
             ResourceIdentifier scope = new ResourceIdentifier("subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6");
-            SelfHelpNameAvailabilityContent content = new SelfHelpNameAvailabilityContent
+            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent
             {
-                ResourceName = "sampleName",
-                ResourceType = new ResourceType("Microsoft.Help/diagnostics"),
+                Name = "sampleName",
+                Type = "Microsoft.Help/diagnostics",
             };
-            SelfHelpNameAvailabilityResult result = await client.CheckSelfHelpNameAvailabilityAsync(scope, content: content);
+            CheckNameAvailabilityResult result = await client.CheckAvailabilityAsync(scope, content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckSelfHelpNameAvailability_ExampleWhenNameIsNotAvailableForADiagnosticResource()
+        public async Task CheckAvailability_ExampleWhenNameIsNotAvailableForADiagnosticResource()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/CheckNameAvailabilityForDiagnosticWhenNameIsNotAvailable.json
-            // this example is just showing the usage of "CheckNameAvailability_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-03-01-preview/CheckNameAvailabilityForDiagnosticWhenNameIsNotAvailable.json
+            // this example is just showing the usage of "CheckNameAvailabilityOperationGroup_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation
             ResourceIdentifier scope = new ResourceIdentifier("subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6");
-            SelfHelpNameAvailabilityContent content = new SelfHelpNameAvailabilityContent
+            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent
             {
-                ResourceName = "sampleName",
-                ResourceType = new ResourceType("Microsoft.Help/diagnostics"),
+                Name = "sampleName",
+                Type = "Microsoft.Help/diagnostics",
             };
-            SelfHelpNameAvailabilityResult result = await client.CheckSelfHelpNameAvailabilityAsync(scope, content: content);
+            CheckNameAvailabilityResult result = await client.CheckAvailabilityAsync(scope, content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

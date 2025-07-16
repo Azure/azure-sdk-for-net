@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IList<SolutionTriggerCriterion> triggerCriteria = default;
+            IList<TriggerCriterion> triggerCriteria = default;
             IDictionary<string, string> parameters = default;
             string solutionId = default;
             SolutionProvisioningState? provisioningState = default;
             string title = default;
             string content = default;
-            SolutionReplacementMaps replacementMaps = default;
-            IReadOnlyList<SelfHelpSection> sections = default;
+            ReplacementMaps replacementMaps = default;
+            IReadOnlyList<Section> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             {
                                 continue;
                             }
-                            List<SolutionTriggerCriterion> array = new List<SolutionTriggerCriterion>();
+                            List<TriggerCriterion> array = new List<TriggerCriterion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SolutionTriggerCriterion.DeserializeSolutionTriggerCriterion(item, options));
+                                array.Add(TriggerCriterion.DeserializeTriggerCriterion(item, options));
                             }
                             triggerCriteria = array;
                             continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             {
                                 continue;
                             }
-                            replacementMaps = SolutionReplacementMaps.DeserializeSolutionReplacementMaps(property0.Value, options);
+                            replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sections"u8))
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             {
                                 continue;
                             }
-                            List<SelfHelpSection> array = new List<SelfHelpSection>();
+                            List<Section> array = new List<Section>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpSection.DeserializeSelfHelpSection(item, options));
+                                array.Add(Section.DeserializeSection(item, options));
                             }
                             sections = array;
                             continue;
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new SelfHelpSolutionPatch(
-                triggerCriteria ?? new ChangeTrackingList<SolutionTriggerCriterion>(),
+                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 solutionId,
                 provisioningState,
                 title,
                 content,
                 replacementMaps,
-                sections ?? new ChangeTrackingList<SelfHelpSection>(),
+                sections ?? new ChangeTrackingList<Section>(),
                 serializedAdditionalRawData);
         }
 

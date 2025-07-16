@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="questionType"> Type of Question. </param>
         /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshooterResult(string questionId, TroubleshooterQuestionType? questionType, string response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TroubleshooterResult(string questionId, QuestionType? questionType, string response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> id of the question. </summary>
         public string QuestionId { get; set; }
         /// <summary> Type of Question. </summary>
-        public TroubleshooterQuestionType? QuestionType { get; set; }
+        public QuestionType? QuestionType { get; set; }
         /// <summary> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </summary>
         public string Response { get; set; }
     }

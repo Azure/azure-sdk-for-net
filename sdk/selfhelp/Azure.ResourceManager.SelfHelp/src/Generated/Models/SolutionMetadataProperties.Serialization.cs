@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string solutionId = default;
-            SelfHelpSolutionType? solutionType = default;
+            SolutionType? solutionType = default;
             string description = default;
             IReadOnlyList<string> requiredInputs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    solutionType = new SelfHelpSolutionType(property.Value.GetString());
+                    solutionType = new SolutionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

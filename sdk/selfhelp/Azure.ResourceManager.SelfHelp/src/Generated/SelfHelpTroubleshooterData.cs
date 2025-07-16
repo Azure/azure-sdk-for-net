@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp
         public SelfHelpTroubleshooterData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
-            Steps = new ChangeTrackingList<SelfHelpStep>();
+            Steps = new ChangeTrackingList<Step>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpTroubleshooterData"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpTroubleshooterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpTroubleshooterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<Step> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             Parameters = parameters;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Status of troubleshooter provisioning. </summary>
         public TroubleshooterProvisioningState? ProvisioningState { get; }
         /// <summary> List of step object. </summary>
-        public IReadOnlyList<SelfHelpStep> Steps { get; }
+        public IReadOnlyList<Step> Steps { get; }
     }
 }

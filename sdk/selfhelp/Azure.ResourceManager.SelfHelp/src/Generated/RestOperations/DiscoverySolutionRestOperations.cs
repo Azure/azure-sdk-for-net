@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Initializes a new instance of DiscoverySolutionRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public DiscoverySolutionRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, false);
+                uri.AppendQuery("$filter", filter, true);
             }
             if (skiptoken != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, false);
+                uri.AppendQuery("$filter", filter, true);
             }
             if (skiptoken != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveryResponse>> ListAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpDiscoverySolutionResult value = default;
+                        DiscoveryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
+                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SelfHelpDiscoverySolutionResult> List(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<DiscoveryResponse> List(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest(filter, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpDiscoverySolutionResult value = default;
+                        DiscoveryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
+                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListNextPageAsync(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveryResponse>> ListNextPageAsync(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpDiscoverySolutionResult value = default;
+                        DiscoveryResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
+                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<SelfHelpDiscoverySolutionResult> ListNextPage(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<DiscoveryResponse> ListNextPage(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpDiscoverySolutionResult value = default;
+                        DiscoveryResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SelfHelpDiscoverySolutionResult.DeserializeSelfHelpDiscoverySolutionResult(document.RootElement);
+                        value = DiscoveryResponse.DeserializeDiscoveryResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

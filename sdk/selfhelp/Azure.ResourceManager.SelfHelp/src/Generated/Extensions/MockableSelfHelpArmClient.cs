@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutions_Get</description>
+        /// <description>SimplifiedSolutionsResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutions_Get</description>
+        /// <description>SimplifiedSolutionsResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_CheckAvailability</description>
+        /// <description>CheckNameAvailabilityOperationGroup_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -354,11 +354,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
+            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckAvailability");
             scope0.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_CheckAvailability</description>
+        /// <description>CheckNameAvailabilityOperationGroup_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckAvailability(ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
+            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckAvailability");
             scope0.Start();
             try
             {

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(TimeSpanDuration))
             {
                 writer.WritePropertyName("timeSpanDuration"u8);
-                writer.WriteStringValue(TimeSpanDuration.Value, "P");
+                writer.WriteStringValue(TimeSpanDuration);
             }
             if (Optional.IsDefined(Title))
             {
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string name = default;
-            ChartAggregationType? aggregationType = default;
-            TimeSpan? timeSpanDuration = default;
+            AggregationType? aggregationType = default;
+            string timeSpanDuration = default;
             string title = default;
-            ChartFilterGroup filterGroup = default;
+            FilterGroup filterGroup = default;
             string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -122,16 +122,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    aggregationType = new ChartAggregationType(property.Value.GetString());
+                    aggregationType = new AggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeSpanDuration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeSpanDuration = property.Value.GetTimeSpan("P");
+                    timeSpanDuration = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -145,7 +141,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = ChartFilterGroup.DeserializeChartFilterGroup(property.Value, options);
+                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))

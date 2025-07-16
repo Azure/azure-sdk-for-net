@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Diagnostics_Get</description>
+        /// <description>DiagnosticResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutions_Get</description>
+        /// <description>SimplifiedSolutionsResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutions_Get</description>
+        /// <description>SimplifiedSolutionsResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_CheckAvailability</description>
+        /// <description>CheckNameAvailabilityOperationGroup_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailability(ResourceIdentifier,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -443,11 +443,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSelfHelpArmClient(client).CheckAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability_CheckAvailability</description>
+        /// <description>CheckNameAvailabilityOperationGroup_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailability(ResourceIdentifier,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -476,11 +476,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckAvailability(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailability(scope, content, cancellationToken);
+            return GetMockableSelfHelpArmClient(client).CheckAvailability(scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutionsBySubscription</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutionsBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -577,19 +577,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionNlpMetadataResource> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPsAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlpAsync(content, cancellationToken);
+            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsBySubscriptionDiscoverySolutionNLPsAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutionsBySubscription</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutionsBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -610,87 +610,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionNlpMetadataResource> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsNlp(content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoverySolution_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutions(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SelfHelpSolutionMetadata> DiscoverSolutionsAsync(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsAsync(filter, skiptoken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoverySolution_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutions(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SelfHelpSolutionMetadata> DiscoverSolutions(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutions(filter, skiptoken, cancellationToken);
+            return GetMockableSelfHelpSubscriptionResource(subscriptionResource).DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(content, cancellationToken);
         }
 
         /// <summary>
@@ -702,7 +634,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionSelfHelp_Get</description>
+        /// <description>SolutionResourceSelfHelp_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -711,7 +643,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSelfHelpSolutionById(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSolutionSelfHelp(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -719,11 +651,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="solutionId"/> is null. </exception>
-        public static async Task<Response<SelfHelpSolutionResult>> GetSelfHelpSolutionByIdAsync(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SolutionResourceSelfHelp>> GetSolutionSelfHelpAsync(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableSelfHelpTenantResource(tenantResource).GetSelfHelpSolutionByIdAsync(solutionId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSelfHelpTenantResource(tenantResource).GetSolutionSelfHelpAsync(solutionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -735,7 +667,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionSelfHelp_Get</description>
+        /// <description>SolutionResourceSelfHelp_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -744,7 +676,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSelfHelpSolutionById(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetSolutionSelfHelp(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -752,11 +684,79 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="solutionId"/> is null. </exception>
-        public static Response<SelfHelpSolutionResult> GetSelfHelpSolutionById(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
+        public static Response<SolutionResourceSelfHelp> GetSolutionSelfHelp(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).GetSelfHelpSolutionById(solutionId, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).GetSolutionSelfHelp(solutionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoverySolutionOperationGroup_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetDiscoverySolutions(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SolutionMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionMetadataResource> GetDiscoverySolutionsAsync(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSelfHelpTenantResource(tenantResource).GetDiscoverySolutionsAsync(filter, skiptoken, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the relevant Azure Diagnostics, Solutions and Troubleshooters using [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) AND  resourceUri or resourceType.&lt;br/&gt; Discovery Solutions is the initial entry point within Help API, which identifies relevant Azure diagnostics and solutions. &lt;br/&gt;&lt;br/&gt; Required Input :  problemClassificationId (Use the [problemClassification API](https://learn.microsoft.com/rest/api/support/problem-classifications/list?tabs=HTTP)) &lt;br/&gt;Optional input: resourceUri OR resource Type &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;  ‘requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics and Solutions API.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Help/discoverySolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoverySolutionOperationGroup_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.GetDiscoverySolutions(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SolutionMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionMetadataResource> GetDiscoverySolutions(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSelfHelpTenantResource(tenantResource).GetDiscoverySolutions(filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutions</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -777,19 +777,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutionsDiscoverySolutionNLPs(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionNlpMetadataResource> DiscoverSolutionsDiscoverySolutionNLPsAsync(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsNlpAsync(content, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsDiscoverySolutionNLPsAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutions</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -810,19 +810,19 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutionsNlp(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.DiscoverSolutionsDiscoverySolutionNLPs(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionNlpMetadataResource> DiscoverSolutionsDiscoverySolutionNLPs(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsNlp(content, cancellationToken);
+            return GetMockableSelfHelpTenantResource(tenantResource).DiscoverSolutionsDiscoverySolutionNLPs(content, cancellationToken);
         }
     }
 }

@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.SelfHelp
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptedOn))
+            if (options.Format != "W" && Optional.IsDefined(AcceptedAt))
             {
                 writer.WritePropertyName("acceptedAt"u8);
-                writer.WriteStringValue(AcceptedOn.Value, "O");
+                writer.WriteStringValue(AcceptedAt);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, string> globalParameters = default;
-            IList<SelfHelpDiagnosticInvocation> insights = default;
-            DateTimeOffset? acceptedAt = default;
-            SelfHelpProvisioningState? provisioningState = default;
-            IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics = default;
+            IList<DiagnosticInvocation> insights = default;
+            string acceptedAt = default;
+            DiagnosticProvisioningState? provisioningState = default;
+            IReadOnlyList<Diagnostic> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,21 +169,17 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<SelfHelpDiagnosticInvocation> array = new List<SelfHelpDiagnosticInvocation>();
+                            List<DiagnosticInvocation> array = new List<DiagnosticInvocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnosticInvocation.DeserializeSelfHelpDiagnosticInvocation(item, options));
+                                array.Add(DiagnosticInvocation.DeserializeDiagnosticInvocation(item, options));
                             }
                             insights = array;
                             continue;
                         }
                         if (property0.NameEquals("acceptedAt"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            acceptedAt = property0.Value.GetDateTimeOffset("O");
+                            acceptedAt = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            provisioningState = new SelfHelpProvisioningState(property0.Value.GetString());
+                            provisioningState = new DiagnosticProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"u8))
@@ -201,10 +197,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<SelfHelpDiagnosticInfo> array = new List<SelfHelpDiagnosticInfo>();
+                            List<Diagnostic> array = new List<Diagnostic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnosticInfo.DeserializeSelfHelpDiagnosticInfo(item, options));
+                                array.Add(Diagnostic.DeserializeDiagnostic(item, options));
                             }
                             diagnostics = array;
                             continue;
@@ -224,10 +220,10 @@ namespace Azure.ResourceManager.SelfHelp
                 type,
                 systemData,
                 globalParameters ?? new ChangeTrackingDictionary<string, string>(),
-                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInvocation>(),
+                insights ?? new ChangeTrackingList<DiagnosticInvocation>(),
                 acceptedAt,
                 provisioningState,
-                diagnostics ?? new ChangeTrackingList<SelfHelpDiagnosticInfo>(),
+                diagnostics ?? new ChangeTrackingList<Diagnostic>(),
                 serializedAdditionalRawData);
         }
 

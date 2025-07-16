@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Initializes a new instance of CheckNameAvailabilityRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public CheckNameAvailabilityRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string scope, SelfHelpNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string scope, CheckNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateCheckAvailabilityRequest(string scope, SelfHelpNameAvailabilityContent content)
+        internal HttpMessage CreateCheckAvailabilityRequest(string scope, CheckNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions. </summary>
-        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpNameAvailabilityResult value = default;
+                        CheckNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions. </summary>
-        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
+        /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<SelfHelpNameAvailabilityResult> CheckAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckAvailability(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SelfHelpNameAvailabilityResult value = default;
+                        CheckNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
+                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

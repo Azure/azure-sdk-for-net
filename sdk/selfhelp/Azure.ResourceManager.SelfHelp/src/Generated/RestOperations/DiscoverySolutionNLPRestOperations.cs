@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Initializes a new instance of DiscoverySolutionNLPRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public DiscoverySolutionNLPRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveryNlpResponse>> DiscoverSolutionsAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDiscoverSolutionsRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryNlpResult value = default;
+                        DiscoveryNlpResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
+                        value = DiscoveryNlpResponse.DeserializeDiscoveryNlpResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DiscoveryNlpResult> DiscoverSolutions(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public Response<DiscoveryNlpResponse> DiscoverSolutions(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDiscoverSolutionsRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryNlpResult value = default;
+                        DiscoveryNlpResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
+                        value = DiscoveryNlpResponse.DeserializeDiscoveryNlpResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SelfHelp
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SelfHelp
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -145,13 +145,14 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsBySubscriptionAsync(string subscriptionId, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DiscoveryNlpResponse>> DiscoverSolutionsBySubscriptionAsync(string subscriptionId, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateDiscoverSolutionsBySubscriptionRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -159,9 +160,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryNlpResult value = default;
+                        DiscoveryNlpResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
+                        value = DiscoveryNlpResponse.DeserializeDiscoveryNlpResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -170,13 +171,14 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary and subscription. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public Response<DiscoveryNlpResult> DiscoverSolutionsBySubscription(string subscriptionId, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DiscoveryNlpResponse> DiscoverSolutionsBySubscription(string subscriptionId, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateDiscoverSolutionsBySubscriptionRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
@@ -184,9 +186,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryNlpResult value = default;
+                        DiscoveryNlpResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
+                        value = DiscoveryNlpResponse.DeserializeDiscoveryNlpResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

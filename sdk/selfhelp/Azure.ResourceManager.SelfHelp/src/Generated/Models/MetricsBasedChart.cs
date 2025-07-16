@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="filterGroup"> Filter group. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsBasedChart(string name, ChartAggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, ChartFilterGroup filterGroup, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricsBasedChart(string name, AggregationType? aggregationType, string timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AggregationType = aggregationType;
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Chart name. </summary>
         public string Name { get; }
         /// <summary> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </summary>
-        public ChartAggregationType? AggregationType { get; }
+        public AggregationType? AggregationType { get; }
         /// <summary> Time span duration. </summary>
-        public TimeSpan? TimeSpanDuration { get; }
+        public string TimeSpanDuration { get; }
         /// <summary> Chart title. </summary>
         public string Title { get; }
         /// <summary> Filter group. </summary>
-        internal ChartFilterGroup FilterGroup { get; }
+        internal FilterGroup FilterGroup { get; }
         /// <summary> List of filters. </summary>
-        public IReadOnlyList<SelfHelpFilter> Filter
+        public IReadOnlyList<Filter> Filter
         {
             get => FilterGroup?.Filter;
         }
