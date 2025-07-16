@@ -176,7 +176,7 @@ namespace Azure.Generator.Management.Providers
                 _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate(),
                 thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate(),
                 _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), apiVersion)).Terminate(),
-                Static(Type).Invoke("ValidateResourceId", idParameter).Terminate()
+                Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate()
             };
 
             return new ConstructorProvider(signature, bodyStatements, this);

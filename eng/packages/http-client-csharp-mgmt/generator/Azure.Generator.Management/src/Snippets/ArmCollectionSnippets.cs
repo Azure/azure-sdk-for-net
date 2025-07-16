@@ -41,5 +41,16 @@ namespace Azure.Generator.Management.Snippets
             var f = new FuncExpression([client], factory(new VariableExpression(typeof(ArmClient), client).As<ArmClient>()));
             return collection.Invoke(nameof(ArmCollection.GetCachedClient), f);
         }
+
+        /// <summary>
+        /// Constructs a method expression that calls the ValidateResourceId method on the ArmCollection type.
+        /// Note: this method is a static method, the <paramref name="type"/> must be a static type reference of the type.
+        /// Also the abstract class ArmCollection does not have a ValidateResourceId method, but our generated ArmCollection's derived classes will always have one.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static InvokeMethodExpression ValidateResourceId(this ScopedApi<ArmCollection> type, ValueExpression id)
+            => type.Invoke("ValidateResourceId", id);
     }
 }

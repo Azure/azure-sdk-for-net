@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Snippets
 {
@@ -50,5 +51,16 @@ namespace Azure.Generator.Management.Snippets
             var f = new FuncExpression([client], factory(new VariableExpression(typeof(ArmClient), client).As<ArmClient>()));
             return resource.Invoke(nameof(ArmResource.GetCachedClient), f);
         }
+
+        /// <summary>
+        /// Constructs a method expression that calls the ValidateResourceId method on the ArmResource type.
+        /// Note: this method is a static method, the <paramref name="type"/> must be a static type reference of the type.
+        /// Also the abstract class ArmResource does not have a ValidateResourceId method, but our generated ArmResource's derived classes will always have one.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static InvokeMethodExpression ValidateResourceId(this ScopedApi<ArmResource> type, ValueExpression id)
+            => type.Invoke("ValidateResourceId", id);
     }
 }
