@@ -3,15 +3,32 @@
 
 // #nullable disable
 
-// using System;
+using System;
 // using System.Collections.Generic;
 // using System.ComponentModel;
 // using System.Data;
 // using System.Threading.Tasks;
-// using Azure.Core.TestFramework;
-// using NUnit.Framework;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
-// namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests;
+
+public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
+{
+    [Test]
+    [SyncOnly]
+    public void AzureOpenAIChatCompletion()
+    {
+        #region Snippet:AI_Projects_EvaluationsExampleSync
+
+        Console.WriteLine("Create the Azure OpenAI chat client");
+        #endregion
+
+        #region Snippet:AI_Projects_EvaluationsExampleAsync
+        Console.WriteLine("Create the Azure OpenAI chat client");
+        #endregion
+    }
+}
 
 // public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
 // {

@@ -4,15 +4,14 @@
 #nullable disable
 
 using System;
-using NUnit.Framework;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using System.Text.RegularExpressions;
-using System.ClientModel.Primitives;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Threading;
-using System.ClientModel;
+using NUnit.Framework;
 
 // TODO: issue with UploadFile/UploadFolder: Error Message: System.ClientModel.ClientResultException : Service request failed. Status: 500 (Received 400 from a service request)
 // need to compare api calls with pre-SCM transition or figure out where there is an issue, possibly work with Josh Love for SCM issues
@@ -126,7 +125,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
             DatasetVersion dataset = projectClient.Datasets.Get(datasetName, datasetVersion1);
-            Console.WriteLine(dataset);
+            Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
             AssetCredentialResponse credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
@@ -136,6 +135,7 @@ namespace Azure.AI.Projects.Tests
             foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
             {
                 Console.WriteLine(ds);
+                Console.WriteLine(ds.Id);
                 Console.WriteLine(ds.Version);
             }
 
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects.Tests
             var datasetVersions = projectClient.Datasets.Get(cancellationToken: cancellationTokenSource.Token);
             foreach (DatasetVersion ds in datasetVersions)
             {
-                Console.WriteLine($"{ds.Name}, {ds.Version}");
+                Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
             }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
