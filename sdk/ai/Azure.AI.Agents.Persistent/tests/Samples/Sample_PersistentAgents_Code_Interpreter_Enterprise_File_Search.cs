@@ -33,6 +33,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateAgent
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "my-agent",
@@ -63,8 +64,8 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         );
 
         ThreadRun run = await client.Runs.CreateRunAsync(
-            thread.Id,
-            agent.Id
+            thread,
+            agent
         );
         do
         {
@@ -86,6 +87,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         WriteMessages(messages);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -109,6 +111,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateAgent
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "my-agent",
@@ -137,8 +140,8 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         );
 
         ThreadRun run = client.Runs.CreateRun(
-            thread.Id,
-            agent.Id
+            thread,
+            agent
         );
         do
         {
@@ -160,6 +163,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
         WriteMessages(messages);
         #endregion
         #region Snippet:AgentsCodeInterpreterEnterpriseSearch_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -96,7 +95,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken))) ?? KnownParameters.CancellationTokenParameter;
+            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
             var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
@@ -105,7 +104,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _convenienceMethod);
+            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _serviceMethod.Operation);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out var messageVariable));
 
@@ -282,25 +281,42 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            var result = new List<ParameterProvider>();
+            var requiredParameters = new List<ParameterProvider>();
+            var optionalParameters = new List<ParameterProvider>();
             if (_serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation())
             {
-                result.Add(KnownAzureParameters.WaitUntil);
+                requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            foreach (var parameter in _convenienceMethod.Signature.Parameters)
+            foreach (var parameter in _serviceMethod.Operation.Parameters)
             {
-                if (parameter.Type.Equals(typeof(RequestContext)))
+                if (parameter.Kind != InputParameterKind.Method)
                 {
-                    result.Add(KnownParameters.CancellationTokenParameter);
+                    continue;
                 }
-                else if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+
+                if (!_resourceClientProvider.ContextualParameters.ContainsKey(parameter.Name))
                 {
-                    result.Add(parameter);
+                    var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
+                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                    {
+                        outputParameter.Update(name: "data");
+                    }
+
+                    if (parameter.IsRequired)
+                    {
+                        requiredParameters.Add(outputParameter);
+                    }
+                    else
+                    {
+                        optionalParameters.Add(outputParameter);
+                    }
                 }
             }
 
-            return result;
+            optionalParameters.Add(KnownParameters.CancellationTokenParameter);
+
+            return requiredParameters.Concat(optionalParameters).ToList();
         }
     }
 }
