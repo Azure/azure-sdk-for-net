@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string replacementKey = default;
             string estimatedCompletionTime = default;
             IReadOnlyList<string> requiredParameters = default;
-            IReadOnlyList<Insight> insights = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<Insight> array = new List<Insight>();
+                    List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Insight.DeserializeInsight(item, options));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 replacementKey,
                 estimatedCompletionTime,
                 requiredParameters ?? new ChangeTrackingList<string>(),
-                insights ?? new ChangeTrackingList<Insight>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
                 serializedAdditionalRawData);
         }
 

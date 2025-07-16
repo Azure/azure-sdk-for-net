@@ -284,15 +284,15 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ContinueAsync(ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ContinueAsync(TroubleshooterContinueContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterResource.Continue");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshooterResourcesRestClient.ContinueAsync(Id.Parent, Id.Name, continueRequestBody, cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpTroubleshooterTroubleshooterResourcesRestClient.ContinueAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -323,15 +323,15 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Continue(ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
+        public virtual Response Continue(TroubleshooterContinueContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterResource.Continue");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.Continue(Id.Parent, Id.Name, continueRequestBody, cancellationToken);
+                var response = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.Continue(Id.Parent, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

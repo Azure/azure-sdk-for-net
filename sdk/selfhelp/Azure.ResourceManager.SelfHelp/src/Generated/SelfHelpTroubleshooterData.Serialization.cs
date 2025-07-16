@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp
             string solutionId = default;
             IDictionary<string, string> parameters = default;
             TroubleshooterProvisioningState? provisioningState = default;
-            IReadOnlyList<Step> steps = default;
+            IReadOnlyList<SelfHelpStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<Step> array = new List<Step>();
+                            List<SelfHelpStep> array = new List<SelfHelpStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Step.DeserializeStep(item, options));
+                                array.Add(SelfHelpStep.DeserializeSelfHelpStep(item, options));
                             }
                             steps = array;
                             continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SelfHelp
                 solutionId,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
-                steps ?? new ChangeTrackingList<Step>(),
+                steps ?? new ChangeTrackingList<SelfHelpStep>(),
                 serializedAdditionalRawData);
         }
 

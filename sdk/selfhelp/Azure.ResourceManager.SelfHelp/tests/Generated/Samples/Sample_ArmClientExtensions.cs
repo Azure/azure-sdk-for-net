@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation
             ResourceIdentifier scope = new ResourceIdentifier("subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent
+            SelfHelpNameAvailabilityContent content = new SelfHelpNameAvailabilityContent
             {
                 Name = "sampleName",
                 Type = "Microsoft.Help/diagnostics",
             };
-            CheckNameAvailabilityResult result = await client.CheckAvailabilityAsync(scope, content: content);
+            SelfHelpNameAvailabilityResult result = await client.CheckAvailabilityAsync(scope, content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation
             ResourceIdentifier scope = new ResourceIdentifier("subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6");
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent
+            SelfHelpNameAvailabilityContent content = new SelfHelpNameAvailabilityContent
             {
                 Name = "sampleName",
                 Type = "Microsoft.Help/diagnostics",
             };
-            CheckNameAvailabilityResult result = await client.CheckAvailabilityAsync(scope, content: content);
+            SelfHelpNameAvailabilityResult result = await client.CheckAvailabilityAsync(scope, content: content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

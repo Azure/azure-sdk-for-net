@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string solutionType = default;
             string description = default;
             IList<IList<string>> requiredParameterSets = default;
-            IList<SolutionMetadataProperties> solutions = default;
+            IReadOnlyList<SolutionMetadataProperties> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

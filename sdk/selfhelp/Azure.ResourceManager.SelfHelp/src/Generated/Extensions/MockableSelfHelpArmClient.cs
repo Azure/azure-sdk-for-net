@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckAvailability(ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHelpNameAvailabilityResult> CheckAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

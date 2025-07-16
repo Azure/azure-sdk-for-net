@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SelfHelp
         public SelfHelpDiagnosticData()
         {
             GlobalParameters = new ChangeTrackingDictionary<string, string>();
-            Insights = new ChangeTrackingList<DiagnosticInvocation>();
-            Diagnostics = new ChangeTrackingList<Diagnostic>();
+            Insights = new ChangeTrackingList<SelfHelpDiagnosticInvocation>();
+            Diagnostics = new ChangeTrackingList<SelfHelpDiagnosticInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticData"/>. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<DiagnosticInvocation> insights, string acceptedAt, DiagnosticProvisioningState? provisioningState, IReadOnlyList<Diagnostic> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, string acceptedAt, DiagnosticProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
             Insights = insights;
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </summary>
         public IDictionary<string, string> GlobalParameters { get; }
         /// <summary> SolutionIds that are needed to be invoked. </summary>
-        public IList<DiagnosticInvocation> Insights { get; }
+        public IList<SelfHelpDiagnosticInvocation> Insights { get; }
         /// <summary> Diagnostic Request Accepted time. </summary>
         public string AcceptedAt { get; }
         /// <summary> Status of diagnostic provisioning. </summary>
         public DiagnosticProvisioningState? ProvisioningState { get; }
         /// <summary> Array of Diagnostics. </summary>
-        public IReadOnlyList<Diagnostic> Diagnostics { get; }
+        public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }
 }

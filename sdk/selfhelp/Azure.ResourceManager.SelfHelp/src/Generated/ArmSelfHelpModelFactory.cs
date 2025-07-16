@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticData"/> instance for mocking. </returns>
-        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<DiagnosticInvocation> insights = null, string acceptedAt = null, DiagnosticProvisioningState? provisioningState = null, IEnumerable<Diagnostic> diagnostics = null)
+        public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> insights = null, string acceptedAt = null, DiagnosticProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
         {
             globalParameters ??= new Dictionary<string, string>();
-            insights ??= new List<DiagnosticInvocation>();
-            diagnostics ??= new List<Diagnostic>();
+            insights ??= new List<SelfHelpDiagnosticInvocation>();
+            diagnostics ??= new List<SelfHelpDiagnosticInfo>();
 
             return new SelfHelpDiagnosticData(
                 id,
@@ -46,41 +46,41 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Diagnostic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInfo"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="insights"> The problems (if any) detected by this insight. </param>
         /// <param name="error"> Error definition. </param>
-        /// <returns> A new <see cref="Models.Diagnostic"/> instance for mocking. </returns>
-        public static Diagnostic Diagnostic(string solutionId = null, Status? status = null, IEnumerable<Insight> insights = null, Error error = null)
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInfo"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, Status? status = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, SelfHelpError error = null)
         {
-            insights ??= new List<Insight>();
+            insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new Diagnostic(solutionId, status, insights?.ToList(), error, serializedAdditionalRawData: null);
+            return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Insight"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInsight"/>. </summary>
         /// <param name="id"> Article id. </param>
         /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>
         /// <param name="importanceLevel"> Importance level of the insight. </param>
-        /// <returns> A new <see cref="Models.Insight"/> instance for mocking. </returns>
-        public static Insight Insight(string id = null, string title = null, string results = null, ImportanceLevel? importanceLevel = null)
+        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
+        public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, ImportanceLevel? importanceLevel = null)
         {
-            return new Insight(id, title, results, importanceLevel, serializedAdditionalRawData: null);
+            return new SelfHelpDiagnosticInsight(id, title, results, importanceLevel, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpError"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="type"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> An array of additional nested error response info objects, as described by this contract. </param>
-        /// <returns> A new <see cref="Models.Error"/> instance for mocking. </returns>
-        public static Error Error(string code = null, string type = null, string message = null, IEnumerable<Error> details = null)
+        /// <returns> A new <see cref="Models.SelfHelpError"/> instance for mocking. </returns>
+        public static SelfHelpError SelfHelpError(string code = null, string type = null, string message = null, IEnumerable<SelfHelpError> details = null)
         {
-            details ??= new List<Error>();
+            details ??= new List<SelfHelpError>();
 
-            return new Error(code, type, message, details?.ToList(), serializedAdditionalRawData: null);
+            return new SelfHelpError(code, type, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpSolutionData"/>. </summary>
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpSolutionData"/> instance for mocking. </returns>
-        public static SelfHelpSolutionData SelfHelpSolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<TriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, ReplacementMaps replacementMaps = null, IEnumerable<Section> sections = null)
+        public static SelfHelpSolutionData SelfHelpSolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionTriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, SolutionReplacementMaps replacementMaps = null, IEnumerable<SelfHelpSection> sections = null)
         {
-            triggerCriteria ??= new List<TriggerCriterion>();
+            triggerCriteria ??= new List<SolutionTriggerCriterion>();
             parameters ??= new Dictionary<string, string>();
-            sections ??= new List<Section>();
+            sections ??= new List<SelfHelpSection>();
 
             return new SelfHelpSolutionData(
                 id,
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReplacementMaps"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionReplacementMaps"/>. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="diagnostics"> Solution diagnostics results. </param>
         /// <param name="troubleshooters"> Solutions Troubleshooters. </param>
         /// <param name="metricsBasedCharts"> Solution metrics based charts. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        /// <returns> A new <see cref="Models.ReplacementMaps"/> instance for mocking. </returns>
-        public static ReplacementMaps ReplacementMaps(IEnumerable<WebResult> webResults = null, IEnumerable<SolutionsDiagnostic> diagnostics = null, IEnumerable<SolutionsTroubleshooters> troubleshooters = null, IEnumerable<MetricsBasedChart> metricsBasedCharts = null, IEnumerable<Video> videos = null, IEnumerable<VideoGroup> videoGroups = null)
+        /// <returns> A new <see cref="Models.SolutionReplacementMaps"/> instance for mocking. </returns>
+        public static SolutionReplacementMaps SolutionReplacementMaps(IEnumerable<KBWebResult> webResults = null, IEnumerable<SolutionsDiagnostic> diagnostics = null, IEnumerable<SolutionsTroubleshooters> troubleshooters = null, IEnumerable<MetricsBasedChart> metricsBasedCharts = null, IEnumerable<SelfHelpVideo> videos = null, IEnumerable<VideoGroupDetail> videoGroups = null)
         {
-            webResults ??= new List<WebResult>();
+            webResults ??= new List<KBWebResult>();
             diagnostics ??= new List<SolutionsDiagnostic>();
             troubleshooters ??= new List<SolutionsTroubleshooters>();
             metricsBasedCharts ??= new List<MetricsBasedChart>();
-            videos ??= new List<Video>();
-            videoGroups ??= new List<VideoGroup>();
+            videos ??= new List<SelfHelpVideo>();
+            videoGroups ??= new List<VideoGroupDetail>();
 
-            return new ReplacementMaps(
+            return new SolutionReplacementMaps(
                 webResults?.ToList(),
                 diagnostics?.ToList(),
                 troubleshooters?.ToList(),
@@ -146,18 +146,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WebResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KBWebResult"/>. </summary>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="searchResults"> AzureKB search results. </param>
-        /// <returns> A new <see cref="Models.WebResult"/> instance for mocking. </returns>
-        public static WebResult WebResult(string replacementKey = null, IEnumerable<SearchResult> searchResults = null)
+        /// <returns> A new <see cref="Models.KBWebResult"/> instance for mocking. </returns>
+        public static KBWebResult KBWebResult(string replacementKey = null, IEnumerable<KBSearchResult> searchResults = null)
         {
-            searchResults ??= new List<SearchResult>();
+            searchResults ??= new List<KBSearchResult>();
 
-            return new WebResult(replacementKey, searchResults?.ToList(), serializedAdditionalRawData: null);
+            return new KBWebResult(replacementKey, searchResults?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SearchResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KBSearchResult"/>. </summary>
         /// <param name="solutionId"> Unique id of the result. </param>
         /// <param name="content"> Content of the search result. </param>
         /// <param name="title"> Title of the search result. </param>
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="resultType"> Result type of the search result. </param>
         /// <param name="rank"> rank of the search result. </param>
         /// <param name="link"> Link to the document. </param>
-        /// <returns> A new <see cref="Models.SearchResult"/> instance for mocking. </returns>
-        public static SearchResult SearchResult(string solutionId = null, string content = null, string title = null, Confidence? confidence = null, string source = null, ResultType? resultType = null, int? rank = null, string link = null)
+        /// <returns> A new <see cref="Models.KBSearchResult"/> instance for mocking. </returns>
+        public static KBSearchResult KBSearchResult(string solutionId = null, string content = null, string title = null, Confidence? confidence = null, string source = null, ResultType? resultType = null, int? rank = null, string link = null)
         {
-            return new SearchResult(
+            return new KBSearchResult(
                 solutionId,
                 content,
                 title,
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="requiredParameters"> Required parameters of this item. </param>
         /// <param name="insights"> Diagnostic insights. </param>
         /// <returns> A new <see cref="Models.SolutionsDiagnostic"/> instance for mocking. </returns>
-        public static SolutionsDiagnostic SolutionsDiagnostic(string solutionId = null, Status? status = null, string statusDetails = null, string replacementKey = null, string estimatedCompletionTime = null, IEnumerable<string> requiredParameters = null, IEnumerable<Insight> insights = null)
+        public static SolutionsDiagnostic SolutionsDiagnostic(string solutionId = null, Status? status = null, string statusDetails = null, string replacementKey = null, string estimatedCompletionTime = null, IEnumerable<string> requiredParameters = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null)
         {
             requiredParameters ??= new List<string>();
-            insights ??= new List<Insight>();
+            insights ??= new List<SelfHelpDiagnosticInsight>();
 
             return new SolutionsDiagnostic(
                 solutionId,
@@ -224,38 +224,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="filter"> Filter group. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <returns> A new <see cref="Models.MetricsBasedChart"/> instance for mocking. </returns>
-        public static MetricsBasedChart MetricsBasedChart(string name = null, AggregationType? aggregationType = null, string timeSpanDuration = null, string title = null, IEnumerable<Filter> filter = null, string replacementKey = null)
+        public static MetricsBasedChart MetricsBasedChart(string name = null, AggregationType? aggregationType = null, string timeSpanDuration = null, string title = null, IEnumerable<SelfHelpFilter> filter = null, string replacementKey = null)
         {
-            filter ??= new List<Filter>();
+            filter ??= new List<SelfHelpFilter>();
 
             return new MetricsBasedChart(
                 name,
                 aggregationType,
                 timeSpanDuration,
                 title,
-                filter != null ? new FilterGroup(filter?.ToList(), serializedAdditionalRawData: null) : null,
+                filter != null ? new ChartFilterGroup(filter?.ToList(), serializedAdditionalRawData: null) : null,
                 replacementKey,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Filter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpFilter"/>. </summary>
         /// <param name="name"> Filter name. </param>
         /// <param name="values"> Filter values. </param>
         /// <param name="operator"> Filter operator. </param>
-        /// <returns> A new <see cref="Models.Filter"/> instance for mocking. </returns>
-        public static Filter Filter(string name = null, string values = null, string @operator = null)
+        /// <returns> A new <see cref="Models.SelfHelpFilter"/> instance for mocking. </returns>
+        public static SelfHelpFilter SelfHelpFilter(string name = null, string values = null, string @operator = null)
         {
-            return new Filter(name, values, @operator, serializedAdditionalRawData: null);
+            return new SelfHelpFilter(name, values, @operator, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Video"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpVideo"/>. </summary>
         /// <param name="src"> Link to the video. </param>
         /// <param name="title"> Title of the video. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
-        /// <returns> A new <see cref="Models.Video"/> instance for mocking. </returns>
-        public static Video Video(string src = null, string title = null, string replacementKey = null)
+        /// <returns> A new <see cref="Models.SelfHelpVideo"/> instance for mocking. </returns>
+        public static SelfHelpVideo SelfHelpVideo(string src = null, string title = null, string replacementKey = null)
         {
-            return new Video(src, title, serializedAdditionalRawData: null, replacementKey);
+            return new SelfHelpVideo(src, title, serializedAdditionalRawData: null, replacementKey);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VideoGroupVideo"/>. </summary>
@@ -267,25 +267,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new VideoGroupVideo(src, title, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VideoGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VideoGroupDetail"/>. </summary>
         /// <param name="videos"> List of videos will be shown to customers. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
-        /// <returns> A new <see cref="Models.VideoGroup"/> instance for mocking. </returns>
-        public static VideoGroup VideoGroup(IEnumerable<VideoGroupVideo> videos = null, string replacementKey = null)
+        /// <returns> A new <see cref="Models.VideoGroupDetail"/> instance for mocking. </returns>
+        public static VideoGroupDetail VideoGroupDetail(IEnumerable<VideoGroupVideo> videos = null, string replacementKey = null)
         {
             videos ??= new List<VideoGroupVideo>();
 
-            return new VideoGroup(videos?.ToList(), replacementKey, serializedAdditionalRawData: null);
+            return new VideoGroupDetail(videos?.ToList(), replacementKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Section"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSection"/>. </summary>
         /// <param name="title"> Solution sections title. </param>
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
-        /// <returns> A new <see cref="Models.Section"/> instance for mocking. </returns>
-        public static Section Section(string title = null, string content = null, ReplacementMaps replacementMaps = null)
+        /// <returns> A new <see cref="Models.SelfHelpSection"/> instance for mocking. </returns>
+        public static SelfHelpSection SelfHelpSection(string title = null, string content = null, SolutionReplacementMaps replacementMaps = null)
         {
-            return new Section(title, content, replacementMaps, serializedAdditionalRawData: null);
+            return new SelfHelpSection(title, content, replacementMaps, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionPatch"/>. </summary>
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <returns> A new <see cref="Models.SelfHelpSolutionPatch"/> instance for mocking. </returns>
-        public static SelfHelpSolutionPatch SelfHelpSolutionPatch(IEnumerable<TriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, ReplacementMaps replacementMaps = null, IEnumerable<Section> sections = null)
+        public static SelfHelpSolutionPatch SelfHelpSolutionPatch(IEnumerable<SolutionTriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, SolutionReplacementMaps replacementMaps = null, IEnumerable<SelfHelpSection> sections = null)
         {
-            triggerCriteria ??= new List<TriggerCriterion>();
+            triggerCriteria ??= new List<SolutionTriggerCriterion>();
             parameters ??= new Dictionary<string, string>();
-            sections ??= new List<Section>();
+            sections ??= new List<SelfHelpSection>();
 
             return new SelfHelpSolutionPatch(
                 triggerCriteria?.ToList(),
@@ -357,10 +357,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpTroubleshooterData"/> instance for mocking. </returns>
-        public static SelfHelpTroubleshooterData SelfHelpTroubleshooterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<Step> steps = null)
+        public static SelfHelpTroubleshooterData SelfHelpTroubleshooterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<SelfHelpStep> steps = null)
         {
             parameters ??= new Dictionary<string, string>();
-            steps ??= new List<Step>();
+            steps ??= new List<SelfHelpStep>();
 
             return new SelfHelpTroubleshooterData(
                 id,
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Step"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpStep"/>. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>
@@ -387,13 +387,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
-        /// <returns> A new <see cref="Models.Step"/> instance for mocking. </returns>
-        public static Step Step(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, Type? type = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<Insight> insights = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.SelfHelpStep"/> instance for mocking. </returns>
+        public static SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, Type? type = null, bool? isLastStep = null, IEnumerable<TroubleshooterStepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
         {
-            inputs ??= new List<StepInput>();
-            insights ??= new List<Insight>();
+            inputs ??= new List<TroubleshooterStepInput>();
+            insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new Step(
+            return new SelfHelpStep(
                 id,
                 title,
                 description,
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StepInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TroubleshooterStepInput"/>. </summary>
         /// <param name="questionId"> Use Index as QuestionId. </param>
         /// <param name="questionType"> Type of Question. </param>
         /// <param name="questionTitle"> Question title. </param>
@@ -420,12 +420,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="selectedOptionValue"> Text of response that was selected. </param>
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
-        /// <returns> A new <see cref="Models.StepInput"/> instance for mocking. </returns>
-        public static StepInput StepInput(string questionId = null, QuestionType? questionType = null, string questionTitle = null, string questionContent = null, QuestionContentType? questionContentType = null, string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, ResponseValidationProperties responseValidationProperties = null, IEnumerable<ResponseConfig> responseOptions = null)
+        /// <returns> A new <see cref="Models.TroubleshooterStepInput"/> instance for mocking. </returns>
+        public static TroubleshooterStepInput TroubleshooterStepInput(string questionId = null, QuestionType? questionType = null, string questionTitle = null, string questionContent = null, QuestionContentType? questionContentType = null, string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, ResponseValidationProperties responseValidationProperties = null, IEnumerable<ResponseConfig> responseOptions = null)
         {
             responseOptions ??= new List<ResponseConfig>();
 
-            return new StepInput(
+            return new TroubleshooterStepInput(
                 questionId,
                 questionType,
                 questionTitle,
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new RestartTroubleshooterResult(troubleshooterResourceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionResourceSelfHelp"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -495,12 +495,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
-        /// <returns> A new <see cref="Models.SolutionResourceSelfHelp"/> instance for mocking. </returns>
-        public static SolutionResourceSelfHelp SolutionResourceSelfHelp(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string title = null, string content = null, ReplacementMapsSelfHelp replacementMaps = null, IEnumerable<SectionSelfHelp> sections = null)
+        /// <returns> A new <see cref="Models.SelfHelpSolutionResult"/> instance for mocking. </returns>
+        public static SelfHelpSolutionResult SelfHelpSolutionResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string title = null, string content = null, ReplacementMapsResult replacementMaps = null, IEnumerable<SolutionSection> sections = null)
         {
-            sections ??= new List<SectionSelfHelp>();
+            sections ??= new List<SolutionSection>();
 
-            return new SolutionResourceSelfHelp(
+            return new SelfHelpSolutionResult(
                 id,
                 name,
                 resourceType,
@@ -513,52 +513,52 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReplacementMapsSelfHelp"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplacementMapsResult"/>. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        /// <returns> A new <see cref="Models.ReplacementMapsSelfHelp"/> instance for mocking. </returns>
-        public static ReplacementMapsSelfHelp ReplacementMapsSelfHelp(IEnumerable<WebResult> webResults = null, IEnumerable<Video> videos = null, IEnumerable<VideoGroup> videoGroups = null)
+        /// <returns> A new <see cref="Models.ReplacementMapsResult"/> instance for mocking. </returns>
+        public static ReplacementMapsResult ReplacementMapsResult(IEnumerable<KBWebResult> webResults = null, IEnumerable<SelfHelpVideo> videos = null, IEnumerable<VideoGroupDetail> videoGroups = null)
         {
-            webResults ??= new List<WebResult>();
-            videos ??= new List<Video>();
-            videoGroups ??= new List<VideoGroup>();
+            webResults ??= new List<KBWebResult>();
+            videos ??= new List<SelfHelpVideo>();
+            videoGroups ??= new List<VideoGroupDetail>();
 
-            return new ReplacementMapsSelfHelp(webResults?.ToList(), videos?.ToList(), videoGroups?.ToList(), serializedAdditionalRawData: null);
+            return new ReplacementMapsResult(webResults?.ToList(), videos?.ToList(), videoGroups?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SectionSelfHelp"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionSection"/>. </summary>
         /// <param name="title"> Solution sections title. </param>
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
-        /// <returns> A new <see cref="Models.SectionSelfHelp"/> instance for mocking. </returns>
-        public static SectionSelfHelp SectionSelfHelp(string title = null, string content = null, ReplacementMapsSelfHelp replacementMaps = null)
+        /// <returns> A new <see cref="Models.SolutionSection"/> instance for mocking. </returns>
+        public static SolutionSection SolutionSection(string title = null, string content = null, ReplacementMapsResult replacementMaps = null)
         {
-            return new SectionSelfHelp(title, content, replacementMaps, serializedAdditionalRawData: null);
+            return new SolutionSection(title, content, replacementMaps, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new SelfHelpNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="solutions"> List of metadata. </param>
-        /// <returns> A new <see cref="Models.SolutionMetadataResource"/> instance for mocking. </returns>
-        public static SolutionMetadataResource SolutionMetadataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
+        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
         {
             solutions ??= new List<SolutionMetadataProperties>();
 
-            return new SolutionMetadataResource(
+            return new SelfHelpSolutionMetadata(
                 id,
                 name,
                 resourceType,
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionNlpMetadataResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionNlpMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -602,13 +602,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="problemClassificationId"> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
         /// <param name="solutions"> The list of solution metadata. </param>
         /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
-        /// <returns> A new <see cref="Models.SolutionNlpMetadataResource"/> instance for mocking. </returns>
-        public static SolutionNlpMetadataResource SolutionNlpMetadataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, IEnumerable<SolutionMetadataProperties> solutions = null, IEnumerable<ClassificationService> relatedServices = null)
+        /// <returns> A new <see cref="Models.SolutionNlpMetadata"/> instance for mocking. </returns>
+        public static SolutionNlpMetadata SolutionNlpMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, IEnumerable<SolutionMetadataProperties> solutions = null, IEnumerable<ClassificationService> relatedServices = null)
         {
             solutions ??= new List<SolutionMetadataProperties>();
             relatedServices ??= new List<ClassificationService>();
 
-            return new SolutionNlpMetadataResource(
+            return new SolutionNlpMetadata(
                 id,
                 name,
                 resourceType,

@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailability(ResourceIdentifier,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailability(ResourceIdentifier,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckAvailability(this ArmClient client, ResourceIdentifier scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpNameAvailabilityResult> CheckAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -584,8 +584,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadataResource> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPsAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPsAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -617,8 +617,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadataResource> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsBySubscriptionDiscoverySolutionNLPs(this SubscriptionResource subscriptionResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="solutionId"/> is null. </exception>
-        public static async Task<Response<SolutionResourceSelfHelp>> GetSolutionSelfHelpAsync(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SelfHelpSolutionResult>> GetSolutionSelfHelpAsync(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="solutionId"/> is null. </exception>
-        public static Response<SolutionResourceSelfHelp> GetSolutionSelfHelp(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
+        public static Response<SelfHelpSolutionResult> GetSolutionSelfHelp(this TenantResource tenantResource, string solutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -717,8 +717,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SolutionMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionMetadataResource> GetDiscoverySolutionsAsync(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SelfHelpSolutionMetadata> GetDiscoverySolutionsAsync(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -751,8 +751,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SolutionMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionMetadataResource> GetDiscoverySolutions(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SelfHelpSolutionMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SelfHelpSolutionMetadata> GetDiscoverySolutions(this TenantResource tenantResource, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -784,8 +784,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadataResource> DiscoverSolutionsDiscoverySolutionNLPsAsync(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsDiscoverySolutionNLPsAsync(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -817,8 +817,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadataResource> DiscoverSolutionsDiscoverySolutionNLPs(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SolutionNlpMetadata> DiscoverSolutionsDiscoverySolutionNLPs(this TenantResource tenantResource, DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

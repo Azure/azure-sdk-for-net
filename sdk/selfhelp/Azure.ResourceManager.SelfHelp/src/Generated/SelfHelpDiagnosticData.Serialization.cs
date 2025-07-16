@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.SelfHelp
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, string> globalParameters = default;
-            IList<DiagnosticInvocation> insights = default;
+            IList<SelfHelpDiagnosticInvocation> insights = default;
             string acceptedAt = default;
             DiagnosticProvisioningState? provisioningState = default;
-            IReadOnlyList<Diagnostic> diagnostics = default;
+            IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<DiagnosticInvocation> array = new List<DiagnosticInvocation>();
+                            List<SelfHelpDiagnosticInvocation> array = new List<SelfHelpDiagnosticInvocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticInvocation.DeserializeDiagnosticInvocation(item, options));
+                                array.Add(SelfHelpDiagnosticInvocation.DeserializeSelfHelpDiagnosticInvocation(item, options));
                             }
                             insights = array;
                             continue;
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<Diagnostic> array = new List<Diagnostic>();
+                            List<SelfHelpDiagnosticInfo> array = new List<SelfHelpDiagnosticInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Diagnostic.DeserializeDiagnostic(item, options));
+                                array.Add(SelfHelpDiagnosticInfo.DeserializeSelfHelpDiagnosticInfo(item, options));
                             }
                             diagnostics = array;
                             continue;
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.SelfHelp
                 type,
                 systemData,
                 globalParameters ?? new ChangeTrackingDictionary<string, string>(),
-                insights ?? new ChangeTrackingList<DiagnosticInvocation>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInvocation>(),
                 acceptedAt,
                 provisioningState,
-                diagnostics ?? new ChangeTrackingList<Diagnostic>(),
+                diagnostics ?? new ChangeTrackingList<SelfHelpDiagnosticInfo>(),
                 serializedAdditionalRawData);
         }
 

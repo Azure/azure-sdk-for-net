@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionData"/>. </summary>
         public SelfHelpSolutionData()
         {
-            TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
+            TriggerCriteria = new ChangeTrackingList<SolutionTriggerCriterion>();
             Parameters = new ChangeTrackingDictionary<string, string>();
-            Sections = new ChangeTrackingList<Section>();
+            Sections = new ChangeTrackingList<SelfHelpSection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionData"/>. </summary>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpSolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IReadOnlyList<Section> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionTriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, SolutionReplacementMaps replacementMaps, IReadOnlyList<SelfHelpSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TriggerCriteria = triggerCriteria;
             Parameters = parameters;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Solution request trigger criteria. </summary>
-        public IList<TriggerCriterion> TriggerCriteria { get; }
+        public IList<SolutionTriggerCriterion> TriggerCriteria { get; }
         /// <summary> Client input parameters to run Solution. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> Solution Id to identify single solution. </summary>
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
         public string Content { get; }
         /// <summary> Solution replacement maps. </summary>
-        public ReplacementMaps ReplacementMaps { get; }
+        public SolutionReplacementMaps ReplacementMaps { get; }
         /// <summary> List of section object. </summary>
-        public IReadOnlyList<Section> Sections { get; }
+        public IReadOnlyList<SelfHelpSection> Sections { get; }
     }
 }

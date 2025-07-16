@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string scope, CheckNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckAvailabilityRequestUri(string scope, SelfHelpNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateCheckAvailabilityRequest(string scope, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckAvailabilityRequest(string scope, SelfHelpNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckAvailabilityAsync(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        SelfHelpNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<CheckNameAvailabilityResult> CheckAvailability(string scope, CheckNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpNameAvailabilityResult> CheckAvailability(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        SelfHelpNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = SelfHelpNameAvailabilityResult.DeserializeSelfHelpNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

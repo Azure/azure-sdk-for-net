@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // invoke the operation
             string solutionId = "SolutionId1";
-            SolutionResourceSelfHelp result = await tenantResource.GetSolutionSelfHelpAsync(solutionId);
+            SelfHelpSolutionResult result = await tenantResource.GetSolutionSelfHelpAsync(solutionId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            await foreach (SolutionMetadataResource item in tenantResource.GetDiscoverySolutionsAsync())
+            await foreach (SelfHelpSolutionMetadata item in tenantResource.GetDiscoverySolutionsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             {
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
             };
-            await foreach (SolutionNlpMetadataResource item in tenantResource.DiscoverSolutionsDiscoverySolutionNLPsAsync(content: content))
+            await foreach (SolutionNlpMetadata item in tenantResource.DiscoverSolutionsDiscoverySolutionNLPsAsync(content: content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

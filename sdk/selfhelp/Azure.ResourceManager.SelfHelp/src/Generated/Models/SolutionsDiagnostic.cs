@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         internal SolutionsDiagnostic()
         {
             RequiredParameters = new ChangeTrackingList<string>();
-            Insights = new ChangeTrackingList<Insight>();
+            Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionsDiagnostic"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="requiredParameters"> Required parameters of this item. </param>
         /// <param name="insights"> Diagnostic insights. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionsDiagnostic(string solutionId, Status? status, string statusDetails, string replacementKey, string estimatedCompletionTime, IReadOnlyList<string> requiredParameters, IReadOnlyList<Insight> insights, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionsDiagnostic(string solutionId, Status? status, string statusDetails, string replacementKey, string estimatedCompletionTime, IReadOnlyList<string> requiredParameters, IReadOnlyList<SelfHelpDiagnosticInsight> insights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             Status = status;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Required parameters of this item. </summary>
         public IReadOnlyList<string> RequiredParameters { get; }
         /// <summary> Diagnostic insights. </summary>
-        public IReadOnlyList<Insight> Insights { get; }
+        public IReadOnlyList<SelfHelpDiagnosticInsight> Insights { get; }
     }
 }

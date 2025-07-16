@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        internal RequestUriBuilder CreateContinueRequestUri(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody)
+        internal RequestUriBuilder CreateContinueRequestUri(string scope, string troubleshooterName, TroubleshooterContinueContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateContinueRequest(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody)
+        internal HttpMessage CreateContinueRequest(string scope, string troubleshooterName, TroubleshooterContinueContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (continueRequestBody != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(continueRequestBody, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -260,16 +260,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API. </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
-        /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ContinueAsync(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ContinueAsync(string scope, string troubleshooterName, TroubleshooterContinueContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var message = CreateContinueRequest(scope, troubleshooterName, continueRequestBody);
+            using var message = CreateContinueRequest(scope, troubleshooterName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -283,16 +283,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API. </summary>
         /// <param name="scope"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
-        /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Continue(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
+        public Response Continue(string scope, string troubleshooterName, TroubleshooterContinueContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var message = CreateContinueRequest(scope, troubleshooterName, continueRequestBody);
+            using var message = CreateContinueRequest(scope, troubleshooterName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
