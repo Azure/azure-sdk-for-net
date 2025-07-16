@@ -1,0 +1,4 @@
+directory: specification/storagediscovery/Microsoft.StorageDiscovery.Management
+commit: a29efddd350bf7554c30797af1d44fa3504519e6
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
