@@ -356,5 +356,13 @@ public class MultiPartFormDataBinaryContent : BinaryContent
         protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
             => _content.WriteTo(stream, cancellationToken);
 #endif
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _content?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
