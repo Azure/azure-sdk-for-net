@@ -26,7 +26,7 @@ public class RateLimitedSamplerTests
         var parentSamplingParams = new SamplingParameters(default(ActivityContext), parentActivity.TraceId, parentActivity.OperationName, ActivityKind.Internal);
         var parentResult = sampler.ShouldSample(parentSamplingParams);
 
-        // Assert parent span is sampled and has correct attribute 
+        // Assert parent span is sampled and has correct attribute
         Assert.Equal(SamplingDecision.RecordAndSample, parentResult.Decision);
         var parentSampleRateAttr = Assert.Single(parentResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         Assert.IsType<double>(parentSampleRateAttr.Value);
@@ -38,7 +38,7 @@ public class RateLimitedSamplerTests
         childActivity.Stop();
         parentActivity.Stop();
 
-        // Assert child span is sampled and has same attribute 
+        // Assert child span is sampled and has same attribute
         Assert.Equal(SamplingDecision.RecordAndSample, childResult.Decision);
         var childSampleRateAttr = Assert.Single(childResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         Assert.IsType<double>(childSampleRateAttr.Value);
