@@ -36,10 +36,10 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ServiceUrl))
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUrl.AbsoluteUri);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Something))
             {
@@ -103,7 +103,7 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            Uri serviceUrl = default;
+            Uri serviceUri = default;
             string something = default;
             bool? boolValue = default;
             float? floatValue = default;
@@ -117,7 +117,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    serviceUrl = new Uri(prop.Value.GetString());
+                    serviceUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("something"u8))
@@ -158,7 +158,7 @@ namespace MgmtTypeSpec.Models
                 }
             }
             return new FooProperties(
-                serviceUrl,
+                serviceUri,
                 something,
                 boolValue,
                 floatValue,

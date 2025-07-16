@@ -63,17 +63,16 @@ internal class NameVisitor : ScmLibraryVisitor
                 }
             }
         }
-        else
-        {
-            foreach (var property in model.Properties)
-            {
-                if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
-                {
-                    modelProperty.Update(name: newPropertyName);
-                }
-            }
-        }
         return base.PreVisitModel(model, type);
+    }
+
+    protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && TryTransformUrlToUri(propertyProvider.Name, out var newPropertyName))
+        {
+            propertyProvider.Update(name: newPropertyName);
+        }
+        return base.PreVisitProperty(property, propertyProvider);
     }
 
     protected override MethodProvider? VisitMethod(MethodProvider method)
