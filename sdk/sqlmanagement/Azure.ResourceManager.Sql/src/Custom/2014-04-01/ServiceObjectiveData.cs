@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,8 @@ namespace Azure.ResourceManager.Sql
     /// A class representing the ServiceObjective data model.
     /// Represents a database service objective.
     /// </summary>
-    [Obsolete]
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ServiceObjectiveData : ResourceData
     {
         /// <summary>

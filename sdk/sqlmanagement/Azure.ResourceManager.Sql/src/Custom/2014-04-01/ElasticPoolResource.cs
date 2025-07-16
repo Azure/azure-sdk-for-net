@@ -4,13 +4,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
-using System.Threading.Tasks;
-using Autorest.CSharp.Core;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -36,7 +31,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticPoolActivity"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ElasticPoolActivity> GetElasticPoolActivitiesAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -61,7 +57,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolActivity"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ElasticPoolActivity> GetElasticPoolActivities(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -86,7 +83,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticPoolDatabaseActivity"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivitiesAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -111,7 +109,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolDatabaseActivity"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivities(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -136,7 +135,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -161,7 +161,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlMetricDefinition"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -188,7 +189,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> An async collection of <see cref="SqlMetric"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SqlMetric> GetMetricsAsync(string filter, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -215,7 +217,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <returns> A collection of <see cref="SqlMetric"/> that may take multiple service requests to iterate over. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SqlMetric> GetMetrics(string filter, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();

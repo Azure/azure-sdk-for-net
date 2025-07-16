@@ -5,13 +5,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents the response to a list elastic pool database activity request. </summary>
-    [Obsolete]
-    internal partial class ElasticPoolDatabaseActivityListResult
+    /// <summary> A metric availability value. </summary>
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class SqlMetricAvailability
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,27 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/>. </summary>
-        /// <param name="value"> The list of elastic pool database activities. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ElasticPoolDatabaseActivityListResult(IEnumerable<ElasticPoolDatabaseActivity> value)
+        /// <summary> Initializes a new instance of <see cref="SqlMetricAvailability"/>. </summary>
+        internal SqlMetricAvailability()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/>. </summary>
-        /// <param name="value"> The list of elastic pool database activities. </param>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricAvailability"/>. </summary>
+        /// <param name="retention"> The length of retention for the database metric. </param>
+        /// <param name="timeGrain"> The granularity of the database metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolDatabaseActivityListResult(IReadOnlyList<ElasticPoolDatabaseActivity> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlMetricAvailability(string retention, string timeGrain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            Retention = retention;
+            TimeGrain = timeGrain;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/> for deserialization. </summary>
-        internal ElasticPoolDatabaseActivityListResult()
-        {
-        }
-
-        /// <summary> The list of elastic pool database activities. </summary>
-        public IReadOnlyList<ElasticPoolDatabaseActivity> Value { get; }
+        /// <summary> The length of retention for the database metric. </summary>
+        [WirePath("retention")]
+        public string Retention { get; }
+        /// <summary> The granularity of the database metric. </summary>
+        [WirePath("timeGrain")]
+        public string TimeGrain { get; }
     }
 }

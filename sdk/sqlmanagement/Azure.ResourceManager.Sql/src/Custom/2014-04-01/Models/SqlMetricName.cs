@@ -5,13 +5,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The response to a list database metric definitions request. </summary>
-    [Obsolete]
-    internal partial class MetricDefinitionListResult
+    /// <summary> A database metric name. </summary>
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class SqlMetricName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,27 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionListResult"/>. </summary>
-        /// <param name="value"> The list of metric definitions for the database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricDefinitionListResult(IEnumerable<SqlMetricDefinition> value)
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
+        internal SqlMetricName()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionListResult"/>. </summary>
-        /// <param name="value"> The list of metric definitions for the database. </param>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
+        /// <param name="value"> The name of the database metric. </param>
+        /// <param name="localizedValue"> The friendly name of the database metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDefinitionListResult(IReadOnlyList<SqlMetricDefinition> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlMetricName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            LocalizedValue = localizedValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinitionListResult"/> for deserialization. </summary>
-        internal MetricDefinitionListResult()
-        {
-        }
-
-        /// <summary> The list of metric definitions for the database. </summary>
-        public IReadOnlyList<SqlMetricDefinition> Value { get; }
+        /// <summary> The name of the database metric. </summary>
+        [WirePath("value")]
+        public string Value { get; }
+        /// <summary> The friendly name of the database metric. </summary>
+        [WirePath("localizedValue")]
+        public string LocalizedValue { get; }
     }
 }

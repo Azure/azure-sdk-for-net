@@ -616,7 +616,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ServiceObjectiveResource"/> object. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceObjectiveResource GetServiceObjectiveResource(this ArmClient client, ResourceIdentifier id)
         {
             throw new NotSupportedException();
@@ -634,7 +635,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="SqlServerCommunicationLinkResource"/> object. </returns>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             throw new NotSupportedException();

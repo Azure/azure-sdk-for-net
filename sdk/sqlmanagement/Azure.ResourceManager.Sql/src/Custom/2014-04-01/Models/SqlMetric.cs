@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Database metrics. </summary>
-    [Obsolete]
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SqlMetric
     {
         /// <summary>

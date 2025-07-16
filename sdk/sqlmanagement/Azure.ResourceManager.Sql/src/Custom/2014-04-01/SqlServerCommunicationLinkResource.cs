@@ -4,7 +4,7 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.Sql
     /// from an instance of <see cref="ArmClient"/> using the GetSqlServerCommunicationLinkResource method.
     /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerCommunicationLink method.
     /// </summary>
-    [Obsolete]
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SqlServerCommunicationLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerCommunicationLinkResource"/> instance. </summary>
@@ -31,24 +32,8 @@ namespace Azure.ResourceManager.Sql
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly SqlServerCommunicationLinkData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/communicationLinks";
-
-        /// <summary> Initializes a new instance of the <see cref="SqlServerCommunicationLinkResource"/> class for mocking. </summary>
-        protected SqlServerCommunicationLinkResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SqlServerCommunicationLinkResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerCommunicationLinkResource(ArmClient client, SqlServerCommunicationLinkData data) : base(client, data.Id)
-        {
-            HasData = true;
-            _data = data;
-        }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -59,16 +44,8 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
+                throw new NotSupportedException();
             }
-        }
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -93,7 +70,8 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<SqlServerCommunicationLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -121,7 +99,8 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SqlServerCommunicationLinkResource> Get(CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -150,7 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -179,7 +159,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -210,7 +191,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The required parameters for creating a server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SqlServerCommunicationLinkResource>> UpdateAsync(WaitUntil waitUntil, SqlServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();
@@ -241,7 +223,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The required parameters for creating a server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [Obsolete]
+        [Obsolete("This method is deprecated and will be removed in a future release.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SqlServerCommunicationLinkResource> Update(WaitUntil waitUntil, SqlServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException();

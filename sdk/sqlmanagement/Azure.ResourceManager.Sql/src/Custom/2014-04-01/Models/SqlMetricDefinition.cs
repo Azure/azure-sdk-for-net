@@ -10,7 +10,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database metric definition. </summary>
-    [Obsolete]
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SqlMetricDefinition
     {
         /// <summary>
