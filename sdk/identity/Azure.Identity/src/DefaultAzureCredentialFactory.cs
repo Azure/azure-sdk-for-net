@@ -41,6 +41,7 @@ namespace Azure.Identity
                     return
                     [
                         CreateVisualStudioCredential(),
+                        CreateVisualStudioCodeCredential(),
                         CreateAzureCliCredential(),
                         CreateAzurePowerShellCredential(),
                         CreateAzureDeveloperCliCredential()
