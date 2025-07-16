@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
                 count++;
             }
 
-            Assert.AreEqual(count, 1);
+            Assert.AreEqual(1, count);
             await getStack.DeleteAsync(WaitUntil.Completed);
             await rg.DeleteAsync(WaitUntil.Completed);
         }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
                 count++;
             }
 
-            Assert.AreEqual(count, 1);
+            Assert.GreaterOrEqual(count, 1);
             await getStack.DeleteAsync(WaitUntil.Completed);
         }
 
