@@ -552,7 +552,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 ServerCallId,
                 CorelationId,
                 invitationId,
-                new ResultInformation(400, 4000, "resultInformation"),
+                new ResultInformation(400, 4000, "resultInformation",null,null),
                 OperationContext));
 
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();

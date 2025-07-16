@@ -48,9 +48,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sessionEndReason"></param>
         /// <param name="recordingExpirationTime"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingResult"/> instance for mocking. </returns>
-        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<Error> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
+        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetails> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
         {
-            errors ??= new List<Error>();
+            errors ??= new List<ErrorDetails>();
 
             return new RecordingResult(
                 recordingId,
@@ -91,14 +91,43 @@ namespace Azure.Communication.CallAutomation
                 deleteLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetails"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innerError"> Inner error details. </param>
-        /// <returns> A new <see cref="CallAutomation.Error"/> instance for mocking. </returns>
-        public static Error Error(string code = null, string message = null, Error innerError = null)
+        /// <returns> A new <see cref="CallAutomation.ErrorDetails"/> instance for mocking. </returns>
+        public static ErrorDetails ErrorDetails(string code = null, string message = null, ErrorDetails innerError = null)
         {
-            return new Error(code, message, innerError);
+            return new ErrorDetails(code, message, innerError);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
+        /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="message"> Detail message that describes the current result. </param>
+        /// <param name="sipCode">
+        /// Sip code from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
+        /// <param name="q850Cause">
+        /// Q850 cause code from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
+        /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipCode = null, SipDiagnosticInfo q850Cause = null)
+        {
+            return new ResultInformation(code, subCode, message, sipCode, q850Cause);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SipDiagnosticInfo"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="CallAutomation.SipDiagnosticInfo"/> instance for mocking. </returns>
+        public static SipDiagnosticInfo SipDiagnosticInfo(int? code = null, string message = null)
+        {
+            return new SipDiagnosticInfo(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>

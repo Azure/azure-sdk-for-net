@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
             }
             IDictionary<string, string> voipHeaders = default;
             IDictionary<string, string> sipHeaders = default;
-            TeamsPhoneCallDetails teamsPhoneCallDetails = default;
+            TeamsPhoneCallDetailsInternal teamsPhoneCallDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("voipHeaders"u8))
@@ -91,7 +91,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    teamsPhoneCallDetails = CallAutomation.TeamsPhoneCallDetails.DeserializeTeamsPhoneCallDetails(property.Value);
+                    teamsPhoneCallDetails = TeamsPhoneCallDetailsInternal.DeserializeTeamsPhoneCallDetailsInternal(property.Value);
                     continue;
                 }
             }

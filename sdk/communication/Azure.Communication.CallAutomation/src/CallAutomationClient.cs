@@ -209,6 +209,7 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
 
             return request;
         }
@@ -675,6 +676,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
 
             return request;
         }
@@ -701,6 +703,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
 
             return request;
         }
@@ -716,6 +719,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
             };
+
+            connectRequest.EnableLoopbackAudio = options.EnableLoopbackAudio;
 
             return connectRequest;
         }

@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The SipDiagnosticInfo. </summary>
-    internal partial class SipDiagnosticInfo
+    public partial class SipDiagnosticInfo
     {
         /// <summary> Initializes a new instance of <see cref="SipDiagnosticInfo"/>. </summary>
         internal SipDiagnosticInfo()

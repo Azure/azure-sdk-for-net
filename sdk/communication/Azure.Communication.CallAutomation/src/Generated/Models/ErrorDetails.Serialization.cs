@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class Error
+    public partial class ErrorDetails
     {
-        internal static Error DeserializeError(JsonElement element)
+        internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             }
             string code = default;
             string message = default;
-            Error innerError = default;
+            ErrorDetails innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -38,19 +38,19 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    innerError = DeserializeError(property.Value);
+                    innerError = DeserializeErrorDetails(property.Value);
                     continue;
                 }
             }
-            return new Error(code, message, innerError);
+            return new ErrorDetails(code, message, innerError);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Error FromResponse(Response response)
+        internal static ErrorDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeError(document.RootElement);
+            return DeserializeErrorDetails(document.RootElement);
         }
     }
 }
