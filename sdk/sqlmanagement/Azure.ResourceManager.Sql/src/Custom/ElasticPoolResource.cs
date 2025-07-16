@@ -17,39 +17,6 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ElasticPoolResource
     {
-        private readonly ClientDiagnostics _elasticPoolActivitiesClientDiagnostics;
-        private readonly ElasticPoolDatabaseActivitiesRestOperations _elasticPoolDatabaseActivitiesRestClient;
-        private readonly ClientDiagnostics _elasticPoolDatabaseActivitiesClientDiagnostics;
-        private readonly MetricDefinitionsRestOperations _metricDefinitionsRestClient;
-        private readonly ClientDiagnostics _metricDefinitionsClientDiagnostics;
-        private readonly MetricsRestOperations _metricsRestClient;
-        private readonly ClientDiagnostics _metricsClientDiagnostics;
-
-        /// <summary> Initializes a new instance of the <see cref="ElasticPoolResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ElasticPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
-            _elasticPoolRestClient = new ElasticPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion);
-            _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseDatabasesApiVersion);
-            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseDatabasesApiVersion);
-            _elasticPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _elasticPoolOperationsRestClient = new ElasticPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _elasticPoolActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _elasticPoolDatabaseActivitiesRestClient = new ElasticPoolDatabaseActivitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _elasticPoolDatabaseActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _metricDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _metricDefinitionsRestClient = new MetricDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _metricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _metricsRestClient = new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
-        }
-
         /// <summary>
         /// Returns elastic pool activities.
         /// <list type="bullet">
