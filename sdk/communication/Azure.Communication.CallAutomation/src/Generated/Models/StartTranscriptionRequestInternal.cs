@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The StartTranscriptionRequest. </summary>
@@ -13,6 +15,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
         public StartTranscriptionRequestInternal()
         {
+            Locales = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
@@ -23,12 +26,20 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal StartTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri)
+        /// <param name="piiRedactionOptions"> PII redaction configuration options. </param>
+        /// <param name="enableSentimentAnalysis"> Indicating if sentiment analysis should be used. </param>
+        /// <param name="locales"> List of languages for Language Identification. </param>
+        /// <param name="summarizationOptions"> Summarization configuration options. </param>
+        internal StartTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri, PiiRedactionOptionsInternal piiRedactionOptions, bool? enableSentimentAnalysis, IList<string> locales, SummarizationOptionsInternal summarizationOptions)
         {
             Locale = locale;
             SpeechModelEndpointId = speechModelEndpointId;
             OperationContext = operationContext;
             OperationCallbackUri = operationCallbackUri;
+            PiiRedactionOptions = piiRedactionOptions;
+            EnableSentimentAnalysis = enableSentimentAnalysis;
+            Locales = locales;
+            SummarizationOptions = summarizationOptions;
         }
 
         /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
@@ -42,5 +53,13 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptionsInternal PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
+        /// <summary> List of languages for Language Identification. </summary>
+        public IList<string> Locales { get; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptionsInternal SummarizationOptions { get; set; }
     }
 }

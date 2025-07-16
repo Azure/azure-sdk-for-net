@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.CallAutomation.Models.Events;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The speech status as a result. </summary>
@@ -18,15 +20,23 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
         /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
-        internal SpeechResult(string speech, double? confidence)
+        /// <param name="languageIdentified"> The identified language. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        internal SpeechResult(string speech, double? confidence, string languageIdentified, SentimentAnalysisResult sentimentAnalysisResult)
         {
             Speech = speech;
             Confidence = confidence;
+            LanguageIdentified = languageIdentified;
+            SentimentAnalysisResult = sentimentAnalysisResult;
         }
 
         /// <summary> The recognized speech in string. </summary>
         public string Speech { get; }
         /// <summary> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </summary>
         public double? Confidence { get; }
+        /// <summary> The identified language. </summary>
+        public string LanguageIdentified { get; }
+        /// <summary> Gets or sets the sentiment analysis result. </summary>
+        public SentimentAnalysisResult SentimentAnalysisResult { get; }
     }
 }

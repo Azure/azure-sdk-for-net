@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -24,6 +26,21 @@ namespace Azure.Communication.CallAutomation
             Locale = locale;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
+        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
+        /// <param name="locales"> Defines the list locale for the language identification e.g en-CA, en-AU. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
+        public TranscriptionOptions(string locale, IEnumerable<string> locales, StreamingTransport streamingTransport = default)
+        {
+            Argument.AssertNotNull(locale, nameof(locale));
+            TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
+            Locale = locale;
+            Locales = locales.ToList<string>();
+        }
+
+
+
         /// <summary> Transport URL for live transcription. </summary>
         public Uri TransportUri { get; set; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
@@ -36,5 +53,13 @@ namespace Azure.Communication.CallAutomation
         public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Enables intermediate results for the transcribed speech. </summary>
         public bool? EnableIntermediateResults { get; set; }
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
+        /// <summary> List of languages for Language Identification. </summary>
+        public IList<string> Locales { get; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptions SummarizationOptions { get; set; }
     }
 }

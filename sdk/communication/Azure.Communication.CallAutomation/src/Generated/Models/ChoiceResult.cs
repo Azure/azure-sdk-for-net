@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.CallAutomation.Models.Events;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ChoiceResult. </summary>
@@ -22,11 +24,15 @@ namespace Azure.Communication.CallAutomation
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
         /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
-        internal ChoiceResult(string label, string recognizedPhrase, double? confidence)
+        /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        internal ChoiceResult(string label, string recognizedPhrase, double? confidence, string languageIdentified, SentimentAnalysisResult sentimentAnalysisResult)
         {
             Label = label;
             RecognizedPhrase = recognizedPhrase;
             Confidence = confidence;
+            LanguageIdentified = languageIdentified;
+            SentimentAnalysisResult = sentimentAnalysisResult;
         }
 
         /// <summary> Label is the primary identifier for the choice detected. </summary>
@@ -38,5 +44,9 @@ namespace Azure.Communication.CallAutomation
         public string RecognizedPhrase { get; }
         /// <summary> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </summary>
         public double? Confidence { get; }
+        /// <summary> The identified language for a spoken phrase. </summary>
+        public string LanguageIdentified { get; }
+        /// <summary> Gets or sets the sentiment analysis result. </summary>
+        public SentimentAnalysisResult SentimentAnalysisResult { get; }
     }
 }

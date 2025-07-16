@@ -664,7 +664,8 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id)
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CallIntelligenceOptions = new()
@@ -688,7 +689,8 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id)
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CallIntelligenceOptions = new()
@@ -746,7 +748,11 @@ namespace Azure.Communication.CallAutomation
                     TransportUrl = configuration.TransportUri?.AbsoluteUri,
                     TransportType = configuration.TranscriptionTransport,
                     EnableIntermediateResults = configuration.EnableIntermediateResults,
-                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId
+                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
+                    PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.Enable, configuration.PiiRedactionOptions.RedactionType),
+                    EnableSentimentAnalysis = configuration.EnableSentimentAnalysis,
+                    //Locales = configuration.Locales == null ? null : configuration.Locales.Select(locale => locale.ToString()).ToList(),
+                    SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.EnableEndCallSummary, configuration.SummarizationOptions.Locale)
                 };
         }
 

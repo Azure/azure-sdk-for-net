@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -20,6 +21,8 @@ namespace Azure.Communication.CallAutomation
             string label = default;
             string recognizedPhrase = default;
             double? confidence = default;
+            string languageIdentified = default;
+            SentimentAnalysisResult sentimentAnalysisResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -41,8 +44,22 @@ namespace Azure.Communication.CallAutomation
                     confidence = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("languageIdentified"u8))
+                {
+                    languageIdentified = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sentimentAnalysisResult"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sentimentAnalysisResult = SentimentAnalysisResult.DeserializeSentimentAnalysisResult(property.Value);
+                    continue;
+                }
             }
-            return new ChoiceResult(label, recognizedPhrase, confidence);
+            return new ChoiceResult(label, recognizedPhrase, confidence, languageIdentified, sentimentAnalysisResult);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
