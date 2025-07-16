@@ -42,7 +42,7 @@ public class RateLimitedSamplerTests
         Assert.Equal(SamplingDecision.RecordAndSample, childResult.Decision);
         var childSampleRateAttr = Assert.Single(childResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         Assert.IsType<double>(childSampleRateAttr.Value);
-        double childSampleRate = (double) childSampleRateAttr.Value;
+        double childSampleRate = (double)childSampleRateAttr.Value;
         Assert.Equal(parentSampleRate, childSampleRate);
     }
 
@@ -94,6 +94,7 @@ public class RateLimitedSamplerTests
             "span",
             ActivityKind.Internal
         );
+        System.Threading.Thread.Sleep(100); // Allow for adaptation time
         var result = sampler.ShouldSample(samplingParams);
 
         Assert.Equal(SamplingDecision.RecordAndSample, result.Decision);
@@ -111,6 +112,7 @@ public class RateLimitedSamplerTests
             "span",
             ActivityKind.Internal
         );
+        System.Threading.Thread.Sleep(100); // Allow for adaptation time
         var result = sampler.ShouldSample(samplingParams);
 
         Assert.Equal(SamplingDecision.RecordOnly, result.Decision);

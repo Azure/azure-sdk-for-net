@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using OpenTelemetry.Trace;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -24,6 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // get the span context of the parent span
             var parentContext = samplingParameters.ParentContext;
+
             SamplingResult? samplingResult = useLocalParentDecisionIfPossible(parentContext);
             if (samplingResult != null)
             {
@@ -45,8 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var attributes = new List<KeyValuePair<string, object>>();
                 attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", samplingPercentage));
                 return new SamplingResult(SamplingDecision.RecordAndSample,
-                    attributes,
-                    "microsoft.sample_rate=" + samplingPercentage.ToString("F2"));
+                    attributes);
             }
 
             // the sampling score is between 0 and 1, for correct comparison with samplingPercentage, we multiply by 100
@@ -57,8 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     new KeyValuePair<string, object>("microsoft.sample_rate", samplingPercentage)
                 };
-                string traceState = "microsoft.sample_rate=" + samplingPercentage.ToString("F2");
-                return new SamplingResult(SamplingDecision.RecordAndSample, attributes, traceState);
+                return new SamplingResult(SamplingDecision.RecordAndSample, attributes);
             }
             else
             {
@@ -85,34 +85,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return RecordOnlySamplingResult;
             }
 
-            if (parentActivityContext.TraceState == null)
+            // fetch the sampling rate from the parent span attributes
+            var parentAttributes = Activity.Current?.Tags;
+            string? parentSampleRate = parentAttributes?.FirstOrDefault(kv => kv.Key == "microsoft.sample_rate").Value;
+
+            if (parentSampleRate == null)
             {
-                // if we can't fetch the sampling rate of the parent from the tracestate, we can't honor the parent sampling decision
+                // if we can't fetch the sampling rate of the parent, we can't honor the parent sampling decision
                 return null;
             }
 
             // this is a span that has a local parent span that is sampled. Sample it in and include the sample rate from the parent.
             var attributes = new List<KeyValuePair<string, object>>();
-            double? sampleRate = parseSampleRateFromTraceState(parentActivityContext.TraceState);
-            if (sampleRate != null)
-            {
-                attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", sampleRate));
-            }
-            return new SamplingResult(SamplingDecision.RecordAndSample, attributes, parentActivityContext.TraceState);
-        }
-        private double? parseSampleRateFromTraceState(string traceState)
-        {
-            if (string.IsNullOrEmpty(traceState))
-            {
-                return null;
-            }
-
-            string[] parts = traceState.Split('=');
-            if (parts.Length != 2 || !double.TryParse(parts[1], out double sampleRate))
-            {
-                return null;
-            }
-            return sampleRate;
+            attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", parentSampleRate));
+            return new SamplingResult(SamplingDecision.RecordAndSample, attributes);
         }
 
         private bool IsValid(ActivityContext context)
