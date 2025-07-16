@@ -64,11 +64,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("teamsAppSource"u8);
                 writer.WriteObjectValue(TeamsAppSource);
             }
-            if (Optional.IsDefined(EnableLoopbackAudio))
-            {
-                writer.WritePropertyName("enableLoopbackAudio"u8);
-                writer.WriteBooleanValue(EnableLoopbackAudio.Value);
-            }
             writer.WriteEndObject();
         }
 

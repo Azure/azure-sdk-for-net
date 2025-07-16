@@ -55,7 +55,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var callLocator = CallLocatorSerializer.Serialize(options.CallLocator);
                 StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
@@ -78,7 +77,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     foreach (var c in options.AudioChannelParticipantOrdering)
                     {
-                        request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
+                        request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer_2025_06_30.Serialize(c));
                     }
                 }
 
@@ -86,7 +85,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     foreach (var c in options.ChannelAffinity)
                     {
-                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer.Serialize(c.Participant));
+                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(c.Participant));
                         if (c.Channel != null)
                         {
                             newChannelAffinity.Channel = c.Channel;
@@ -127,7 +126,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var callLocator = CallLocatorSerializer.Serialize(options.CallLocator);
                 StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
@@ -150,7 +148,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     foreach (var c in options.AudioChannelParticipantOrdering)
                     {
-                        request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer.Serialize(c));
+                        request.AudioChannelParticipantOrdering.Add(CommunicationIdentifierSerializer_2025_06_30.Serialize(c));
                     }
                 };
 
@@ -158,7 +156,7 @@ namespace Azure.Communication.CallAutomation
                 {
                     foreach (var c in options.ChannelAffinity)
                     {
-                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer.Serialize(c.Participant));
+                        ChannelAffinityInternal newChannelAffinity = new ChannelAffinityInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(c.Participant));
                         if (c.Channel != null)
                         {
                             newChannelAffinity.Channel = c.Channel;

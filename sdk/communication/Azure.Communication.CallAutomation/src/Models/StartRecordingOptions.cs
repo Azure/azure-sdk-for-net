@@ -30,14 +30,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The call connection id.
-        /// </summary>
-        internal string CallConnectionId { get; }
-
-        /// <summary>
         /// The callLocator.
         /// </summary>
         internal CallLocator CallLocator { get; }
+
+        /// <summary>
+        /// The call connection id.
+        /// </summary>
+        internal string CallConnectionId { get; }
 
         /// <summary>
         /// The callLocator.

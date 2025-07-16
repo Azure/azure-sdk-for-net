@@ -6,8 +6,9 @@
 #nullable disable
 
 using System;
+using Azure.Communication.CallAutomation;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams Phone user who is using a Communication Services resource to extend their Teams Phone set up. </summary>
     internal partial class TeamsExtensionUserIdentifierModel
