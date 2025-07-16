@@ -319,8 +319,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<DeidServiceResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    DeidServicePatch patch = new DeidServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -363,8 +368,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = Get(cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<DeidServiceResource> result = this.Update(WaitUntil.Completed, current, cancellationToken);
+                    DeidServicePatch patch = new DeidServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -406,8 +416,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<DeidServiceResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    DeidServicePatch patch = new DeidServicePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -449,8 +460,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = Get(cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<DeidServiceResource> result = this.Update(WaitUntil.Completed, current, cancellationToken);
+                    DeidServicePatch patch = new DeidServicePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -491,8 +503,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<DeidServiceResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    DeidServicePatch patch = new DeidServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -533,8 +550,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 else
                 {
                     DeidServiceData current = Get(cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<DeidServiceResource> result = this.Update(WaitUntil.Completed, current, cancellationToken);
+                    DeidServicePatch patch = new DeidServicePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
