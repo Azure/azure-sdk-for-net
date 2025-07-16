@@ -6359,8 +6359,14 @@
       "in": "header"
     },
     "oAuth2": {
-      "scopes": [
-        "https://theservice.azure.com/.default"
+      "flows": [
+        {
+          "scopes": [
+            "https://theservice.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+          "tokenUrl": "https://login.microsoftonline.com/common/oauth2/token"
+        }
       ]
     }
   }
