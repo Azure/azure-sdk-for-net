@@ -362,7 +362,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = default)
         {
             ShareDirectoryClient newClient = ShareDirectoryClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
-            return new ShareDirectoryStorageResourceContainer(client, options);
+            return new ShareDirectoryStorageResourceContainer(newClient, options);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = default)
         {
             ShareFileClient newClient = ShareFileClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
-            return new ShareFileStorageResource(client, options);
+            return new ShareFileStorageResource(newClient, options);
         }
         #endregion
 
@@ -401,11 +401,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// Gets the assembly version of Azure.Storage.DataMovement.Blobs.
+        /// Gets the assembly version of Azure.Storage.DataMovement.Files.Shares.
         /// </summary>
         private static string GetUserAgentVersionString()
         {
-            // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
+            // We grab the assembly of ShareFilesStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
             // From there we can grab the version of the Assembly.
             Assembly assembly = typeof(ShareFilesStorageResourceProvider).Assembly;
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();

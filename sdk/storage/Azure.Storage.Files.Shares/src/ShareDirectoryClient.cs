@@ -534,8 +534,9 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
         /// <summary>
-        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
         /// class with identical configurations but with an updated User Agent string.
         /// </summary>
         /// <param name="client">
@@ -545,7 +546,6 @@ namespace Azure.Storage.Files.Shares
         /// The string to prepend the user agent with.
         /// </param>
         /// <returns></returns>
-        #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
         protected static ShareDirectoryClient WithAppendedUserAgent(
             ShareDirectoryClient client,
             string appendedUserAgent)
@@ -558,8 +558,8 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
             options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
 
-            // Create a deep copy of the BlobBaseClient but with an updated client options
-            // with an additional injected pipeline policy with the user agent string
+            // Create a deep copy of the ShareDirectoryClient but with updated client options
+            // and an additional injected pipeline policy with the user agent string
             // based on the credential type.
             if (client.ClientConfiguration?.TokenCredential != default)
             {

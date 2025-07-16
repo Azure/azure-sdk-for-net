@@ -392,7 +392,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobStorageResourceContainerOptions options = default)
         {
             BlobContainerClient newClient = BlobContainerClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
-            return new BlobStorageResourceContainer(client, options);
+            return new BlobStorageResourceContainer(newClient, options);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.Storage.DataMovement.Blobs
             PageBlobStorageResourceOptions options = default)
         {
             PageBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as PageBlobClient;
-            return new PageBlobStorageResource(client, options);
+            return new PageBlobStorageResource(newClient, options);
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace Azure.Storage.DataMovement.Blobs
             AppendBlobStorageResourceOptions options = default)
         {
             AppendBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as AppendBlobClient;
-            return new AppendBlobStorageResource(client, options);
+            return new AppendBlobStorageResource(newClient, options);
         }
         #endregion
 

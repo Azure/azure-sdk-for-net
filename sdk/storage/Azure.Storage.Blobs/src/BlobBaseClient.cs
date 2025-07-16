@@ -660,8 +660,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
             options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
 
-            // Create a deep copy of the BlobBaseClient but with an updated client options
-            // with an additional injected pipeline policy with the user agent string
+            // Create a deep copy of the BlobBaseClient but with updated client options
+            // and an additional injected pipeline policy with the user agent string
             // based on the credential type.
             if (client.ClientConfiguration?.TokenCredential != default)
             {
