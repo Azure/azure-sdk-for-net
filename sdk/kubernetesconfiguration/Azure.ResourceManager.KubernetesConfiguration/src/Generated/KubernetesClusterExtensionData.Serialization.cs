@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -42,12 +43,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ArmPlan>)Plan).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (ErrorInfo != null)
                 {
                     writer.WritePropertyName("errorInfo"u8);
-                    JsonSerializer.Serialize(writer, ErrorInfo);
+                    ((IJsonModel<ResponseError>)ErrorInfo).Write(writer, options);
                 }
                 else
                 {
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(AksAssignedIdentity))
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
-                JsonSerializer.Serialize(writer, AksAssignedIdentity);
+                ((IJsonModel<ManagedServiceIdentity>)AksAssignedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
             {
@@ -259,7 +260,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.ManagedServiceIdentity>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#else
+                ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -268,7 +275,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.ArmPlan>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#else
+                ModelReaderWriter.Read<ArmPlan>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -292,7 +305,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.KubernetesConfiguration.ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesConfigurationContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesConfigurationContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -413,7 +432,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                                 errorInfo = null;
                                 continue;
                             }
-                            errorInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            errorInfo =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#else
+                ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("customLocationSettings"u8))
@@ -447,7 +472,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             {
                                 continue;
                             }
-                            aksAssignedIdentity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
+                            aksAssignedIdentity =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.ManagedServiceIdentity>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#else
+                ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerKubernetesConfigurationContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("isSystemExtension"u8))
