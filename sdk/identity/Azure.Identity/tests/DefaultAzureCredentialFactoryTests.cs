@@ -464,8 +464,8 @@ namespace Azure.Identity.Tests
                     Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    // VS Code and InteractiveBrowser are always excluded by default.
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    // InteractiveBrowser is always excluded by default.
                     Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
                 }
                 else if (credSelection == Constants.ProdCredentials)
@@ -518,8 +518,7 @@ namespace Azure.Identity.Tests
                     Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    // VS Code is always excluded.
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential));
                 }
             }
         }
