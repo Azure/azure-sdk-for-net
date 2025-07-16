@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         protected CommonExportProperties()
         {
+            AzureResourcesToExclude = new ChangeTrackingList<string>();
+            TerraformResourcesToExclude = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
@@ -59,13 +61,17 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             TargetProvider = targetProvider;
             IsOutputFullPropertiesEnabled = isOutputFullPropertiesEnabled;
             IsMaskSensitiveEnabled = isMaskSensitiveEnabled;
+            AzureResourcesToExclude = azureResourcesToExclude;
+            TerraformResourcesToExclude = terraformResourcesToExclude;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +83,9 @@ namespace Azure.ResourceManager.Terraform.Models
         public bool? IsOutputFullPropertiesEnabled { get; set; }
         /// <summary> Mask sensitive attributes in the Terraform configuration. </summary>
         public bool? IsMaskSensitiveEnabled { get; set; }
+        /// <summary> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </summary>
+        public IList<string> AzureResourcesToExclude { get; }
+        /// <summary> Exclude resources from being exported based on the Terraform resource type. </summary>
+        public IList<string> TerraformResourcesToExclude { get; }
     }
 }

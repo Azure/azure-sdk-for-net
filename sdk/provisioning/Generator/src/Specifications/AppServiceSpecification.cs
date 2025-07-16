@@ -72,7 +72,7 @@ public class AppServiceSpecification() :
         Roles.Add(new Role("WebsiteContributor", "de139f84-1756-47ae-9be6-808fbbe84772", "Manage websites, but not web plans. Does not allow you to assign roles in Azure RBAC."));
     }
 
-    protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
+    private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         // Add missing resources
         var dict = base.FindConstructibleResources();

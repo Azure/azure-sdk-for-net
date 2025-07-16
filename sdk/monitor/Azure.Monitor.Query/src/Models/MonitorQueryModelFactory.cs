@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -18,6 +19,8 @@ namespace Azure.Monitor.Query.Models
     /// </summary>
     public static partial class MonitorQueryModelFactory
     {
+        private const string TrimmingUnsafeMessage = "This method uses JSON serialization that is incompatible with trimming.";
+
         /// <summary>
         /// Creates an instance of <see cref="MetricsQueryResult"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
@@ -82,6 +85,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
+        [RequiresUnreferencedCode(TrimmingUnsafeMessage)]
+        [RequiresDynamicCode(TrimmingUnsafeMessage)]
         public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
         {
             JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
@@ -95,6 +100,8 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="columns"> The list of columns. </param>
         /// <param name="values"> An object array representing the rows of the table. </param>
+        [RequiresUnreferencedCode(TrimmingUnsafeMessage)]
+        [RequiresDynamicCode(TrimmingUnsafeMessage)]
         public static LogsTableRow LogsTableRow(IEnumerable<LogsTableColumn> columns, IEnumerable<object> values)
         {
             var columnsList = columns.ToArray();
@@ -126,6 +133,8 @@ namespace Azure.Monitor.Query.Models
             return new LogsTable(name, columns, logsTableRow);
         }
 
+        [RequiresUnreferencedCode(TrimmingUnsafeMessage)]
+        [RequiresDynamicCode(TrimmingUnsafeMessage)]
         private static JsonElement JsonElementFromObject<TValue>(TValue value, JsonSerializerOptions options = default)
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);

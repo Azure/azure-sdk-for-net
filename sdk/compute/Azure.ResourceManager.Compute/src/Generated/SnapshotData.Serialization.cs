@@ -170,6 +170,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotAccessState))
+            {
+                writer.WritePropertyName("snapshotAccessState"u8);
+                writer.WriteStringValue(SnapshotAccessState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.Compute
             float? completionPercent = default;
             CopyCompletionError copyCompletionError = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
+            SnapshotAccessState? snapshotAccessState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -499,6 +505,15 @@ namespace Azure.ResourceManager.Compute
                             dataAccessAuthMode = new DataAccessAuthMode(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("snapshotAccessState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            snapshotAccessState = new SnapshotAccessState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -541,6 +556,7 @@ namespace Azure.ResourceManager.Compute
                 completionPercent,
                 copyCompletionError,
                 dataAccessAuthMode,
+                snapshotAccessState,
                 serializedAdditionalRawData);
         }
 
