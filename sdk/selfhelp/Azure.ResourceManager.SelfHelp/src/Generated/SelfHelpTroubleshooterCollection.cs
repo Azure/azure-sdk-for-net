@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpTroubleshooterCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _selfHelpTroubleshooterTroubleshootersClientDiagnostics;
-        private readonly TroubleshootersRestOperations _selfHelpTroubleshooterTroubleshootersRestClient;
+        private readonly ClientDiagnostics _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics;
+        private readonly TroubleshooterResourcesRestOperations _selfHelpTroubleshooterTroubleshooterResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SelfHelpTroubleshooterCollection"/> class for mocking. </summary>
         protected SelfHelpTroubleshooterCollection()
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SelfHelpTroubleshooterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _selfHelpTroubleshooterTroubleshootersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpTroubleshooterResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SelfHelpTroubleshooterResource.ResourceType, out string selfHelpTroubleshooterTroubleshootersApiVersion);
-            _selfHelpTroubleshooterTroubleshootersRestClient = new TroubleshootersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpTroubleshooterTroubleshootersApiVersion);
+            _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpTroubleshooterResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SelfHelpTroubleshooterResource.ResourceType, out string selfHelpTroubleshooterTroubleshooterResourcesApiVersion);
+            _selfHelpTroubleshooterTroubleshooterResourcesRestClient = new TroubleshooterResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpTroubleshooterTroubleshooterResourcesApiVersion);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Create</description>
+        /// <description>TroubleshooterResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SelfHelp
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.CreateAsync(Id, troubleshooterName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _selfHelpTroubleshooterTroubleshootersRestClient.CreateCreateRequestUri(Id, troubleshooterName, data);
+                var response = await _selfHelpTroubleshooterTroubleshooterResourcesRestClient.CreateAsync(Id, troubleshooterName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.CreateCreateRequestUri(Id, troubleshooterName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SelfHelpArmOperation<SelfHelpTroubleshooterResource>(Response.FromValue(new SelfHelpTroubleshooterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Create</description>
+        /// <description>TroubleshooterResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.SelfHelp
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Create(Id, troubleshooterName, data, cancellationToken);
-                var uri = _selfHelpTroubleshooterTroubleshootersRestClient.CreateCreateRequestUri(Id, troubleshooterName, data);
+                var response = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.Create(Id, troubleshooterName, data, cancellationToken);
+                var uri = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.CreateCreateRequestUri(Id, troubleshooterName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SelfHelpArmOperation<SelfHelpTroubleshooterResource>(Response.FromValue(new SelfHelpTroubleshooterResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpTroubleshooterTroubleshooterResourcesRestClient.GetAsync(Id, troubleshooterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken);
+                var response = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.Get(Id, troubleshooterName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpTroubleshooterTroubleshooterResourcesRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
+                var response = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -345,11 +345,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _selfHelpTroubleshooterTroubleshootersRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpTroubleshooterTroubleshooterResourcesRestClient.GetAsync(Id, troubleshooterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SelfHelpTroubleshooterResource>(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Troubleshooters_Get</description>
+        /// <description>TroubleshooterResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -390,11 +390,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var scope = _selfHelpTroubleshooterTroubleshootersClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
+            using var scope = _selfHelpTroubleshooterTroubleshooterResourcesClientDiagnostics.CreateScope("SelfHelpTroubleshooterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _selfHelpTroubleshooterTroubleshootersRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
+                var response = _selfHelpTroubleshooterTroubleshooterResourcesRestClient.Get(Id, troubleshooterName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SelfHelpTroubleshooterResource>(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpTroubleshooterResource(Client, response.Value), response.GetRawResponse());
