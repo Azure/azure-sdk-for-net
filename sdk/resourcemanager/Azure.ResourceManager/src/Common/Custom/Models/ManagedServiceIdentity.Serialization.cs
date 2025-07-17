@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(ManagedServiceIdentityConverter))]
     public partial class ManagedServiceIdentity : IJsonModel<ManagedServiceIdentity>
     {
+        internal ManagedServiceIdentity()
+        {
+        }
+
         private const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
 
         // This method checks if the format string in options.Format ends with the "|v3" suffix.

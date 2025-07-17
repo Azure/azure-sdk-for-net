@@ -66,4 +66,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere;
 [ModelReaderWriterBuildable(typeof(VMwareVmWindowsConfiguration))]
 public partial class AzureResourceManagerConnectedVMwarevSphereContext
 {
+    // TODO: This is workaround to get AzureResourceManagerContext, we will remove this when we fix the dependency context generation issue in System.ClientModel.
+    private static AzureResourceManagerContext s_managerContext;
+    private AzureResourceManagerContext ArmContext => s_managerContext ??= AzureResourceManagerContext.Default;
+
+    partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
+    {
+        factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+    }
 }
