@@ -9,6 +9,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct SqlMetricPrimaryAggregationType : IEquatable<SqlMetricPrimaryAggregationType>
     {
         private readonly string _value;

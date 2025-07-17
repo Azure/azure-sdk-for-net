@@ -5,11 +5,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A database metric name. </summary>
-    public partial class SqlMetricName
+    /// <summary> A metric availability value. </summary>
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class SqlMetricAvailability
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,27 +46,27 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
-        internal SqlMetricName()
+        /// <summary> Initializes a new instance of <see cref="SqlMetricAvailability"/>. </summary>
+        internal SqlMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
-        /// <param name="value"> The name of the database metric. </param>
-        /// <param name="localizedValue"> The friendly name of the database metric. </param>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricAvailability"/>. </summary>
+        /// <param name="retention"> The length of retention for the database metric. </param>
+        /// <param name="timeGrain"> The granularity of the database metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlMetricName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlMetricAvailability(string retention, string timeGrain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            LocalizedValue = localizedValue;
+            Retention = retention;
+            TimeGrain = timeGrain;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the database metric. </summary>
-        [WirePath("value")]
-        public string Value { get; }
-        /// <summary> The friendly name of the database metric. </summary>
-        [WirePath("localizedValue")]
-        public string LocalizedValue { get; }
+        /// <summary> The length of retention for the database metric. </summary>
+        [WirePath("retention")]
+        public string Retention { get; }
+        /// <summary> The granularity of the database metric. </summary>
+        [WirePath("timeGrain")]
+        public string TimeGrain { get; }
     }
 }

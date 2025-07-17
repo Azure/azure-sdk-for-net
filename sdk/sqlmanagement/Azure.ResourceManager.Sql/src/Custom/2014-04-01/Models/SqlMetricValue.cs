@@ -7,10 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents database metrics. </summary>
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SqlMetricValue
     {
         /// <summary>

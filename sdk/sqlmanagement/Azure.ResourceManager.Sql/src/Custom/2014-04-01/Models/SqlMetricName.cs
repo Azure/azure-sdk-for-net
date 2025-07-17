@@ -5,12 +5,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Represents the response to a get database service objectives request. </summary>
-    internal partial class ServiceObjectiveListResult
+    /// <summary> A database metric name. </summary>
+    [Obsolete("This class is deprecated and will be removed in a future release.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class SqlMetricName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,31 +46,27 @@ namespace Azure.ResourceManager.Sql.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveListResult"/>. </summary>
-        /// <param name="value"> The list of database service objectives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServiceObjectiveListResult(IEnumerable<ServiceObjectiveData> value)
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
+        internal SqlMetricName()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveListResult"/>. </summary>
-        /// <param name="value"> The list of database service objectives. </param>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
+        /// <param name="value"> The name of the database metric. </param>
+        /// <param name="localizedValue"> The friendly name of the database metric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceObjectiveListResult(IReadOnlyList<ServiceObjectiveData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SqlMetricName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            LocalizedValue = localizedValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveListResult"/> for deserialization. </summary>
-        internal ServiceObjectiveListResult()
-        {
-        }
-
-        /// <summary> The list of database service objectives. </summary>
-        public IReadOnlyList<ServiceObjectiveData> Value { get; }
+        /// <summary> The name of the database metric. </summary>
+        [WirePath("value")]
+        public string Value { get; }
+        /// <summary> The friendly name of the database metric. </summary>
+        [WirePath("localizedValue")]
+        public string LocalizedValue { get; }
     }
 }
