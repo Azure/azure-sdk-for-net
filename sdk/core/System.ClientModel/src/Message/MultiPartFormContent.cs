@@ -12,7 +12,7 @@ namespace System.ClientModel;
 /// <summary>
 /// Represents a multipart form data content that can be used to send binary data as part of a HTTP request.
 /// </summary>
-public class MultiPartFormDataBinaryContent : BinaryContent
+public class MultiPartFormContent : BinaryContent
 {
     private const string MediaTypeApplicationJson = "application/json";
 
@@ -23,15 +23,15 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     private readonly MultipartFormDataContent _multipartContent;
 
     /// <summary>
-    /// Creates an instance of <see cref="MultiPartFormDataBinaryContent"/> with a randomly generated boundary.
+    /// Creates an instance of <see cref="MultiPartFormContent"/> with a randomly generated boundary.
     /// </summary>
-    public MultiPartFormDataBinaryContent() : this(CreateBoundary()) { }
+    public MultiPartFormContent() : this(CreateBoundary()) { }
 
     /// <summary>
-    /// Creates an instance of <see cref="MultiPartFormDataBinaryContent"/> with a specified boundary.
+    /// Creates an instance of <see cref="MultiPartFormContent"/> with a specified boundary.
     /// </summary>
     /// <param name="boundary"></param>
-    public MultiPartFormDataBinaryContent(string boundary)
+    public MultiPartFormContent(string boundary)
     {
         _multipartContent = new MultipartFormDataContent(boundary);
         MediaType = _multipartContent.Headers.ContentType?.ToString();
