@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The parameters for a PATCH request to a grafana resource. </summary>
-    public partial class ManagedGrafanaUpdateContent
+    /// <summary> The parameters for a PATCH request to a managed private endpoint. </summary>
+    public partial class ManagedPrivateEndpointModelPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,41 +45,22 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaUpdateContent"/>. </summary>
-        public ManagedGrafanaUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
+        public ManagedPrivateEndpointModelPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaUpdateContent"/>. </summary>
-        /// <param name="sku"></param>
-        /// <param name="identity"> The managed identity of the grafana resource. </param>
-        /// <param name="tags"> The new tags of the grafana resource. </param>
-        /// <param name="properties"> Properties specific to the managed grafana resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
+        /// <param name="tags"> The new tags of the managed private endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedGrafanaUpdateContent(ManagedGrafanaSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedGrafanaPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedPrivateEndpointModelPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Sku = sku;
-            Identity = identity;
             Tags = tags;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the sku. </summary>
-        internal ManagedGrafanaSku Sku { get; set; }
-        /// <summary> The name of the SKU. </summary>
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new ManagedGrafanaSku(value);
-        }
-
-        /// <summary> The managed identity of the grafana resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The new tags of the grafana resource. </summary>
+        /// <summary> The new tags of the managed private endpoint. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Properties specific to the managed grafana resource. </summary>
-        public ManagedGrafanaPatchProperties Properties { get; set; }
     }
 }

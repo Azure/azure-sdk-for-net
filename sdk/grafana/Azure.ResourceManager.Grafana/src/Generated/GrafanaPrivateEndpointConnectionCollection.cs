@@ -14,20 +14,18 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A class representing a collection of <see cref="GrafanaPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="GrafanaPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="GrafanaPrivateEndpointConnectionCollection"/> instance call the GetGrafanaPrivateEndpointConnections method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="GrafanaPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ManagedGrafanaResource"/>.
+    /// To get a <see cref="GrafanaPrivateEndpointConnectionCollection"/> instance call the GetGrafanaPrivateEndpointConnections method from an instance of <see cref="ManagedGrafanaResource"/>.
     /// </summary>
     public partial class GrafanaPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<GrafanaPrivateEndpointConnectionResource>, IAsyncEnumerable<GrafanaPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnectionsRestOperations _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
-        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected GrafanaPrivateEndpointConnectionCollection()
@@ -37,12 +35,8 @@ namespace Azure.ResourceManager.Grafana
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal GrafanaPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
+        internal GrafanaPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceName = workspaceName;
             _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", GrafanaPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GrafanaPrivateEndpointConnectionResource.ResourceType, out string grafanaPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
             _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
@@ -53,8 +47,8 @@ namespace Azure.ResourceManager.Grafana
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedGrafanaResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -93,8 +87,8 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ApproveAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ApproveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,8 +136,8 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Approve(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Approve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -188,7 +182,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -233,7 +227,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, cancellationToken);
+                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -270,8 +264,8 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="GrafanaPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GrafanaPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GrafanaPrivateEndpointConnectionResource(Client, GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(e)), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "GrafanaPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -300,8 +294,8 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="GrafanaPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GrafanaPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GrafanaPrivateEndpointConnectionResource(Client, GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(e)), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "GrafanaPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -338,7 +332,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -381,7 +375,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -424,7 +418,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<GrafanaPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -469,7 +463,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<GrafanaPrivateEndpointConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());

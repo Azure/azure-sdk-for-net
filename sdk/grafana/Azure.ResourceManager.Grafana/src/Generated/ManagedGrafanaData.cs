@@ -8,12 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Grafana.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Grafana.Models
+namespace Azure.ResourceManager.Grafana
 {
-    /// <summary> The grafana resource type. </summary>
-    public partial class ManagedGrafana : TrackedResourceData
+    /// <summary>
+    /// A class representing the ManagedGrafana data model.
+    /// The grafana resource type.
+    /// </summary>
+    public partial class ManagedGrafanaData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +51,13 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafana"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public ManagedGrafana(AzureLocation location) : base(location)
+        public ManagedGrafanaData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafana"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +68,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedGrafana(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedGrafanaSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedGrafanaSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;
@@ -72,8 +76,8 @@ namespace Azure.ResourceManager.Grafana.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedGrafana"/> for deserialization. </summary>
-        internal ManagedGrafana()
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/> for deserialization. </summary>
+        internal ManagedGrafanaData()
         {
         }
 

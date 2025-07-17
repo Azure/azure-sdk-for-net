@@ -5,26 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Grafana.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    internal class ManagedGrafanaOperationSource : IOperationSource<ManagedGrafana>
+    internal class ManagedGrafanaOperationSource : IOperationSource<ManagedGrafanaResource>
     {
-        ManagedGrafana IOperationSource<ManagedGrafana>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal ManagedGrafanaOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ManagedGrafana.DeserializeManagedGrafana(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<ManagedGrafana> IOperationSource<ManagedGrafana>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        ManagedGrafanaResource IOperationSource<ManagedGrafanaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ManagedGrafana.DeserializeManagedGrafana(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            return new ManagedGrafanaResource(_client, data);
+        }
+
+        async ValueTask<ManagedGrafanaResource> IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            return await Task.FromResult(new ManagedGrafanaResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

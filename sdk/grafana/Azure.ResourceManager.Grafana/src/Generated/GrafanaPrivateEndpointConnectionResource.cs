@@ -11,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Grafana
     /// A Class representing a GrafanaPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GrafanaPrivateEndpointConnectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetGrafanaPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGrafanaPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource"/> using the GetGrafanaPrivateEndpointConnection method.
     /// </summary>
     public partial class GrafanaPrivateEndpointConnectionResource : ArmResource
     {

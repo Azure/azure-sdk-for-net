@@ -10,15 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Grafana.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Grafana.Models
+namespace Azure.ResourceManager.Grafana
 {
-    public partial class ManagedGrafana : IUtf8JsonSerializable, IJsonModel<ManagedGrafana>
+    public partial class ManagedGrafanaData : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafana>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ManagedGrafana>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedGrafanaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafana>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafana)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -54,19 +55,19 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        ManagedGrafana IJsonModel<ManagedGrafana>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedGrafanaData IJsonModel<ManagedGrafanaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafana>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedGrafana)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedGrafanaData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedGrafana(document.RootElement, options);
+            return DeserializeManagedGrafanaData(document.RootElement, options);
         }
 
-        internal static ManagedGrafana DeserializeManagedGrafana(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedGrafanaData DeserializeManagedGrafanaData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedGrafana(
+            return new ManagedGrafanaData(
                 id,
                 name,
                 type,
@@ -177,35 +178,35 @@ namespace Azure.ResourceManager.Grafana.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ManagedGrafana>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedGrafanaData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafana>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafana)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedGrafana IPersistableModel<ManagedGrafana>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedGrafanaData IPersistableModel<ManagedGrafanaData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafana>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedGrafana(document.RootElement, options);
+                        return DeserializeManagedGrafanaData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedGrafana)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedGrafanaData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ManagedGrafana>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedGrafanaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

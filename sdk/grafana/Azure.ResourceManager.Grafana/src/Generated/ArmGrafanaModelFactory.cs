@@ -16,121 +16,7 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmGrafanaModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="groupIds"> The private endpoint connection group ids. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, GrafanaPrivateLinkServiceConnectionState connectionState = null, IEnumerable<string> groupIds = null, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = null)
-        {
-            groupIds ??= new List<string>();
-
-            return new GrafanaPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
-                connectionState,
-                groupIds?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Grafana.GrafanaPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static GrafanaPrivateLinkResourceData GrafanaPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GrafanaProvisioningState? provisioningState = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new GrafanaPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaIntegrationFabricData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Grafana.GrafanaIntegrationFabricData"/> instance for mocking. </returns>
-        public static GrafanaIntegrationFabricData GrafanaIntegrationFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaIntegrationFabricProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new GrafanaIntegrationFabricData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GrafanaIntegrationFabricProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
-        /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
-        /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
-        /// <returns> A new <see cref="Models.GrafanaIntegrationFabricProperties"/> instance for mocking. </returns>
-        public static GrafanaIntegrationFabricProperties GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState = null, ResourceIdentifier targetResourceId = null, ResourceIdentifier dataSourceResourceId = null, IEnumerable<string> scenarios = null)
-        {
-            scenarios ??= new List<string>();
-
-            return new GrafanaIntegrationFabricProperties(provisioningState, targetResourceId, dataSourceResourceId, scenarios?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Grafana.ManagedDashboardData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Grafana.ManagedDashboardData"/> instance for mocking. </returns>
-        public static ManagedDashboardData ManagedDashboardData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaProvisioningState? provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ManagedDashboardData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedGrafana"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Grafana.ManagedGrafanaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -140,12 +26,12 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="skuName"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.ManagedGrafana"/> instance for mocking. </returns>
-        public static ManagedGrafana ManagedGrafana(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, ManagedGrafanaProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
+        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string skuName = null, ManagedGrafanaProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedGrafana(
+            return new ManagedGrafanaData(
                 id,
                 name,
                 resourceType,
@@ -198,6 +84,32 @@ namespace Azure.ResourceManager.Grafana.Models
                 grafanaConfigurations,
                 grafanaPlugins,
                 grafanaMajorVersion,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateEndpointId"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="groupIds"> The private endpoint connection group ids. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, GrafanaPrivateLinkServiceConnectionState connectionState = null, IEnumerable<string> groupIds = null, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        {
+            groupIds ??= new List<string>();
+
+            return new GrafanaPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                groupIds?.ToList(),
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -259,7 +171,34 @@ namespace Azure.ResourceManager.Grafana.Models
             return new GrafanaAvailablePlugin(pluginId, name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Grafana.GrafanaPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static GrafanaPrivateLinkResourceData GrafanaPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GrafanaProvisioningState? provisioningState = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new GrafanaPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Grafana.ManagedPrivateEndpointModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -274,13 +213,13 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="connectionState"> The state of managed private endpoint connection. </param>
         /// <param name="privateLinkServiceUri"> The URL of the data store behind the private link service. It would be the URL in the Grafana data source configuration page without the protocol and port. </param>
         /// <param name="privateLinkServicePrivateIP"> The private IP of private endpoint after approval. This property is empty before connection is approved. </param>
-        /// <returns> A new <see cref="Models.ManagedPrivateEndpointModel"/> instance for mocking. </returns>
-        public static ManagedPrivateEndpointModel ManagedPrivateEndpointModel(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkResourceRegion = null, IEnumerable<string> groupIds = null, string requestMessage = null, ManagedPrivateEndpointConnectionState connectionState = null, Uri privateLinkServiceUri = null, string privateLinkServicePrivateIP = null)
+        /// <returns> A new <see cref="Grafana.ManagedPrivateEndpointModelData"/> instance for mocking. </returns>
+        public static ManagedPrivateEndpointModelData ManagedPrivateEndpointModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, string privateLinkResourceRegion = null, IEnumerable<string> groupIds = null, string requestMessage = null, ManagedPrivateEndpointConnectionState connectionState = null, Uri privateLinkServiceUri = null, string privateLinkServicePrivateIP = null)
         {
             tags ??= new Dictionary<string, string>();
             groupIds ??= new List<string>();
 
-            return new ManagedPrivateEndpointModel(
+            return new ManagedPrivateEndpointModelData(
                 id,
                 name,
                 resourceType,
@@ -305,6 +244,67 @@ namespace Azure.ResourceManager.Grafana.Models
         public static ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(ManagedPrivateEndpointConnectionStatus? status = null, string description = null)
         {
             return new ManagedPrivateEndpointConnectionState(status, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaIntegrationFabricData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Grafana.GrafanaIntegrationFabricData"/> instance for mocking. </returns>
+        public static GrafanaIntegrationFabricData GrafanaIntegrationFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaIntegrationFabricProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new GrafanaIntegrationFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GrafanaIntegrationFabricProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
+        /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
+        /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
+        /// <returns> A new <see cref="Models.GrafanaIntegrationFabricProperties"/> instance for mocking. </returns>
+        public static GrafanaIntegrationFabricProperties GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState = null, ResourceIdentifier targetResourceId = null, ResourceIdentifier dataSourceResourceId = null, IEnumerable<string> scenarios = null)
+        {
+            scenarios ??= new List<string>();
+
+            return new GrafanaIntegrationFabricProperties(provisioningState, targetResourceId, dataSourceResourceId, scenarios?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Grafana.ManagedDashboardData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Grafana.ManagedDashboardData"/> instance for mocking. </returns>
+        public static ManagedDashboardData ManagedDashboardData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ManagedDashboardData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }
