@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry;
 
@@ -167,6 +170,6 @@ public partial class AzureResourceManagerContainerRegistryContext
 
     partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
     {
-        factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+        factories.Add(typeof(SystemData), () => ArmContext.GetTypeBuilder(typeof(SystemData)));
     }
 }

@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices;
 

@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Communication;
 

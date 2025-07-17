@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.ContainerInstance;
 using Azure.ResourceManager.ContainerInstance.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance;
 

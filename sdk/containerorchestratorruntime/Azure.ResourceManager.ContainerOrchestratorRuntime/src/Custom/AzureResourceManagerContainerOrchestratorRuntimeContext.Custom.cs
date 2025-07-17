@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.ContainerOrchestratorRuntime;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime;
 
@@ -40,6 +43,6 @@ public partial class AzureResourceManagerContainerOrchestratorRuntimeContext
 
     partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
     {
-        factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+        factories.Add(typeof(SystemData), () => ArmContext.GetTypeBuilder(typeof(SystemData)));
     }
 }

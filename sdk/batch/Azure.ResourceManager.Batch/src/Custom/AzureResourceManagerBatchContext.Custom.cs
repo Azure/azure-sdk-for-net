@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Batch;
 
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Batch;
 [ModelReaderWriterBuildable(typeof(DetectorListResult))]
 [ModelReaderWriterBuildable(typeof(DiffDiskSettings))]
 [ModelReaderWriterBuildable(typeof(DiskEncryptionConfiguration))]
-[ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.Batch.Models.KeyVaultProperties))]
 [ModelReaderWriterBuildable(typeof(ListApplicationPackagesResult))]
 [ModelReaderWriterBuildable(typeof(ListApplicationsResult))]
 [ModelReaderWriterBuildable(typeof(ListCertificatesResult))]

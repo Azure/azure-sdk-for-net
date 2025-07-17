@@ -2,7 +2,11 @@
 
 using Azure.ResourceManager.ConnectedVMwarevSphere;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere;
 
@@ -72,6 +76,8 @@ public partial class AzureResourceManagerConnectedVMwarevSphereContext
 
     partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
     {
+        factories.Add(typeof(ExtendedLocation), () => ArmContext.GetTypeBuilder(typeof(ExtendedLocation)));
         factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+        factories.Add(typeof(SystemData), () => ArmContext.GetTypeBuilder(typeof(SystemData)));
     }
 }

@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB;
 
@@ -382,5 +385,6 @@ public partial class AzureResourceManagerCosmosDBContext
     partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
     {
         factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+        factories.Add(typeof(SystemData), () => ArmContext.GetTypeBuilder(typeof(SystemData)));
     }
 }
