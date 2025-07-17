@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PolicyList"/>. </summary>
-        internal PolicyList()
+        /// <param name="value"> The Policy items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PolicyList(IEnumerable<PolicyData> value)
         {
-            Value = new ChangeTrackingList<DevTestLabPolicyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyList"/>. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
+        /// <param name="value"> The Policy items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyList(IReadOnlyList<DevTestLabPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyList(IReadOnlyList<PolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<DevTestLabPolicyData> Value { get; }
-        /// <summary> Link for next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="PolicyList"/> for deserialization. </summary>
+        internal PolicyList()
+        {
+        }
+
+        /// <summary> The Policy items on this page. </summary>
+        public IReadOnlyList<PolicyData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

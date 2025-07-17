@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
         /// <param name="diskSizeGiB"> Gets data disk size in GiB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeDataDisk(string name, Uri diskUri, string managedDiskId, int? diskSizeGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeDataDisk(string name, string diskUri, string managedDiskId, int? diskSizeGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DiskUri = diskUri;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Gets data disk name. </summary>
         public string Name { get; }
         /// <summary> When backed by a blob, the URI of underlying blob. </summary>
-        public Uri DiskUri { get; }
+        public string DiskUri { get; }
         /// <summary> When backed by managed disk, this is the ID of the compute disk resource. </summary>
         public string ManagedDiskId { get; }
         /// <summary> Gets data disk size in GiB. </summary>

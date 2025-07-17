@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
         public SharedPublicIPAddressConfiguration()
         {
-            InboundNatRules = new ChangeTrackingList<DevTestLabInboundNatRule>();
+            InboundNatRules = new ChangeTrackingList<InboundNatRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
         /// <param name="inboundNatRules"> The incoming NAT rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedPublicIPAddressConfiguration(IList<DevTestLabInboundNatRule> inboundNatRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedPublicIPAddressConfiguration(IList<InboundNatRule> inboundNatRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InboundNatRules = inboundNatRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The incoming NAT rules. </summary>
-        public IList<DevTestLabInboundNatRule> InboundNatRules { get; }
+        public IList<InboundNatRule> InboundNatRules { get; }
     }
 }

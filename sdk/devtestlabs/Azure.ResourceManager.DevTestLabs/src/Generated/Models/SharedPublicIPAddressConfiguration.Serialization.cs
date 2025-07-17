@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IList<DevTestLabInboundNatRule> inboundNatRules = default;
+            IList<InboundNatRule> inboundNatRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    List<DevTestLabInboundNatRule> array = new List<DevTestLabInboundNatRule>();
+                    List<InboundNatRule> array = new List<InboundNatRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabInboundNatRule.DeserializeDevTestLabInboundNatRule(item, options));
+                        array.Add(InboundNatRule.DeserializeInboundNatRule(item, options));
                     }
                     inboundNatRules = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SharedPublicIPAddressConfiguration(inboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>(), serializedAdditionalRawData);
+            return new SharedPublicIPAddressConfiguration(inboundNatRules ?? new ChangeTrackingList<InboundNatRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)
