@@ -38,12 +38,8 @@ namespace Azure.ResourceManager.BotService
 
         private readonly ClientDiagnostics _botClientDiagnostics;
         private readonly BotsRestOperations _botRestClient;
-        private readonly ClientDiagnostics _directLineClientDiagnostics;
-        private readonly DirectLineRestOperations _directLineRestClient;
-        private readonly ClientDiagnostics _emailClientDiagnostics;
-        private readonly EmailRestOperations _emailRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _botChannelClientDiagnostics;
+        private readonly BotChannelsRestOperations _botChannelRestClient;
         private readonly BotData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -71,12 +67,9 @@ namespace Azure.ResourceManager.BotService
             _botClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string botApiVersion);
             _botRestClient = new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion);
-            _directLineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _directLineRestClient = new DirectLineRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _emailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _emailRestClient = new EmailRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _botChannelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotChannelResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BotChannelResource.ResourceType, out string botChannelApiVersion);
+            _botChannelRestClient = new BotChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -119,11 +112,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,10 +124,12 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(string channelName, CancellationToken cancellationToken = default)
         {
             return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
         }
@@ -148,11 +143,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -160,10 +155,12 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BotChannelResource> GetBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannel(string channelName, CancellationToken cancellationToken = default)
         {
             return GetBotChannels().Get(channelName, cancellationToken);
         }
@@ -184,11 +181,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,11 +212,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,11 +250,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,11 +281,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -306,6 +303,75 @@ namespace Azure.ResourceManager.BotService
             return GetBotServicePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the Bot. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
+        {
+            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified Network Security Perimeter configuration associated with the Bot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The resource association Name. Composed of parameter guid and association name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Network Security Perimeter configuration associated with the Bot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/networkSecurityPerimeterConfigurations/{networkSecurityPerimeterConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkSecurityPerimeterConfigurationName"> The resource association Name. Composed of parameter guid and association name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
+        }
+
         /// <summary>
         /// Returns a BotService specified by the parameters.
         /// <list type="bullet">
@@ -315,11 +381,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,11 +421,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,11 +461,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Delete</description>
+        /// <description>Bot_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,11 +505,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Delete</description>
+        /// <description>Bot_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,11 +549,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Update</description>
+        /// <description>Bot_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -525,11 +591,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Update</description>
+        /// <description>Bot_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -559,84 +625,6 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DirectLine_RegenerateKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
-        /// <param name="content"> The parameters to provide for the created bot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
-            scope.Start();
-            try
-            {
-                var response = await _directLineRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DirectLine_RegenerateKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
-        /// <param name="content"> The parameters to provide for the created bot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeys(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
-            scope.Start();
-            try
-            {
-                var response = _directLineRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken);
-                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Creates an email channel sign in url for a Bot Service
         /// <list type="bullet">
         /// <item>
@@ -645,22 +633,26 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Email_CreateSignInUrl</description>
+        /// <description>Bots_CreateSignInUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BotCreateEmailSignInUriResult>> CreateEmailSignInUriAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotCreateEmailSignInUriResult>> CreateSignInUrlAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
+            using var scope = _botClientDiagnostics.CreateScope("BotResource.CreateSignInUrl");
             scope.Start();
             try
             {
-                var response = await _emailRestClient.CreateSignInUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _botRestClient.CreateSignInUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -679,22 +671,26 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Email_CreateSignInUrl</description>
+        /// <description>Bots_CreateSignInUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BotCreateEmailSignInUriResult> CreateEmailSignInUri(CancellationToken cancellationToken = default)
+        public virtual Response<BotCreateEmailSignInUriResult> CreateSignInUrl(CancellationToken cancellationToken = default)
         {
-            using var scope = _emailClientDiagnostics.CreateScope("BotResource.CreateEmailSignInUri");
+            using var scope = _botClientDiagnostics.CreateScope("BotResource.CreateSignInUrl");
             scope.Start();
             try
             {
-                var response = _emailRestClient.CreateSignInUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _botRestClient.CreateSignInUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -713,20 +709,24 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByBotResource</description>
+        /// <description>Bots_ListByBotResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BotServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetByBotResourceAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _botRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _botClientDiagnostics, Pipeline, "BotResource.GetByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -738,20 +738,188 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByBotResource</description>
+        /// <description>Bots_ListByBotResource</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BotServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
+        public virtual Pageable<BotServicePrivateLinkResourceData> GetByBotResource(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _botRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _botClientDiagnostics, Pipeline, "BotResource.GetByBotResource", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists a Channel registration for a Bot Service including secrets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotChannels_ListWithKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BotChannelGetWithKeysResult>> GetWithKeysBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.GetWithKeysBotChannel");
+            scope.Start();
+            try
+            {
+                var response = await _botChannelRestClient.ListWithKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists a Channel registration for a Bot Service including secrets
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/listChannelWithKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotChannels_ListWithKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BotChannelGetWithKeysResult> GetWithKeysBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.GetWithKeysBotChannel");
+            scope.Start();
+            try
+            {
+                var response = _botChannelRestClient.ListWithKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotChannels_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
+        /// <param name="content"> The parameters to provide for the created bot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BotChannelResource>> RegenerateKeysBotChannelAsync(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.RegenerateKeysBotChannel");
+            scope.Start();
+            try
+            {
+                var response = await _botChannelRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotChannels_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
+        /// <param name="content"> The parameters to provide for the created bot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BotChannelResource> RegenerateKeysBotChannel(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotResource.RegenerateKeysBotChannel");
+            scope.Start();
+            try
+            {
+                var response = _botChannelRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken);
+                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -763,11 +931,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -825,11 +993,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -887,11 +1055,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -944,11 +1112,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1001,11 +1169,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1061,11 +1229,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_Get</description>
+        /// <description>Bot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

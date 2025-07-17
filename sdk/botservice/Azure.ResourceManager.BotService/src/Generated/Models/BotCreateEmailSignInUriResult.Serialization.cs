@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            AzureLocation? location = default;
+            string location = default;
             CreateEmailSignInUrlResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -104,11 +104,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

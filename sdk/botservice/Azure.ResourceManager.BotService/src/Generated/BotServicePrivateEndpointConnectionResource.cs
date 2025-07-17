@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Create</description>
+        /// <description>PrivateEndpointConnection_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Create</description>
+        /// <description>PrivateEndpointConnection_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
+        /// <description>2023-09-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

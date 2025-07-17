@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
+        /// <param name="nextLink"> The link used to get the next page of private endpoint connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServicePrivateEndpointConnectionListResult(IReadOnlyList<BotServicePrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotServicePrivateEndpointConnectionListResult(IReadOnlyList<BotServicePrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>
         public IReadOnlyList<BotServicePrivateEndpointConnectionData> Value { get; }
+        /// <summary> The link used to get the next page of private endpoint connections. </summary>
+        public string NextLink { get; }
     }
 }

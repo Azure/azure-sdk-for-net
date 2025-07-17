@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Initializes a new instance of <see cref="BotServiceProviderParameter"/>. </summary>
         /// <param name="name"> Name of the Service Provider. </param>
-        /// <param name="serviceProviderParameterType"> Type of the Service Provider. </param>
+        /// <param name="type"> Type of the Service Provider. </param>
         /// <param name="displayName"> Display Name of the Service Provider. </param>
         /// <param name="description"> Description of the Service Provider. </param>
         /// <param name="helpUri"> Help Url for the  Service Provider. </param>
         /// <param name="default"> Default Name for the Service Provider. </param>
         /// <param name="metadata"> Meta data for the Service Provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotServiceProviderParameter(string name, string serviceProviderParameterType, string displayName, string description, Uri helpUri, string @default, ServiceProviderParameterMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotServiceProviderParameter(string name, string type, string displayName, string description, string helpUri, string @default, ServiceProviderParameterMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            ServiceProviderParameterType = serviceProviderParameterType;
+            Type = type;
             DisplayName = displayName;
             Description = description;
             HelpUri = helpUri;
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Name of the Service Provider. </summary>
         public string Name { get; }
         /// <summary> Type of the Service Provider. </summary>
-        public string ServiceProviderParameterType { get; }
+        public string Type { get; }
         /// <summary> Display Name of the Service Provider. </summary>
         public string DisplayName { get; }
         /// <summary> Description of the Service Provider. </summary>
         public string Description { get; }
         /// <summary> Help Url for the  Service Provider. </summary>
-        public Uri HelpUri { get; }
+        public string HelpUri { get; }
         /// <summary> Default Name for the Service Provider. </summary>
         public string Default { get; }
         /// <summary> Meta data for the Service Provider. </summary>

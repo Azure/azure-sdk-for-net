@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    [PersistableModelProxy(typeof(UnknownChannel))]
+    [PersistableModelProxy(typeof(UnknownBotChannelProperties))]
     public partial class BotChannelProperties : IUtf8JsonSerializable, IJsonModel<BotChannelProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -38,15 +38,8 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStringValue(ChannelName);
             if (Optional.IsDefined(ETag))
             {
-                if (ETag != null)
-                {
-                    writer.WritePropertyName("etag"u8);
-                    writer.WriteStringValue(ETag.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("etag");
-                }
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -120,7 +113,7 @@ namespace Azure.ResourceManager.BotService.Models
                     case "WebChatChannel": return WebChatChannel.DeserializeWebChatChannel(element, options);
                 }
             }
-            return UnknownChannel.DeserializeUnknownChannel(element, options);
+            return UnknownBotChannelProperties.DeserializeUnknownBotChannelProperties(element, options);
         }
 
         BinaryData IPersistableModel<BotChannelProperties>.Write(ModelReaderWriterOptions options)

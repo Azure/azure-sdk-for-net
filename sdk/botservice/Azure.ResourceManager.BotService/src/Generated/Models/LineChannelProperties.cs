@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="callbackUri"> Callback Url to enter in line registration. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LineChannelProperties(IList<LineRegistration> lineRegistrations, Uri callbackUri, bool? isValidated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LineChannelProperties(IList<LineRegistration> lineRegistrations, string callbackUri, bool? isValidated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LineRegistrations = lineRegistrations;
             CallbackUri = callbackUri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The list of line channel registrations. </summary>
         public IList<LineRegistration> LineRegistrations { get; }
         /// <summary> Callback Url to enter in line registration. </summary>
-        public Uri CallbackUri { get; }
+        public string CallbackUri { get; }
         /// <summary> Whether this channel is validated for the bot. </summary>
         public bool? IsValidated { get; }
     }

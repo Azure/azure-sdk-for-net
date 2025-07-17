@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(ServiceEndpointUri))
             {
                 writer.WritePropertyName("serviceEndpointUri"u8);
-                writer.WriteStringValue(ServiceEndpointUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceEndpointUri);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             string alexaSkillId = default;
             string urlFragment = default;
-            Uri serviceEndpointUri = default;
+            string serviceEndpointUri = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,11 +105,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("serviceEndpointUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serviceEndpointUri = new Uri(property.Value.GetString());
+                    serviceEndpointUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isEnabled"u8))

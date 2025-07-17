@@ -70,15 +70,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(AcsResourceId))
             {
-                if (AcsResourceId != null)
-                {
-                    writer.WritePropertyName("acsResourceId"u8);
-                    writer.WriteStringValue(AcsResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("acsResourceId");
-                }
+                writer.WritePropertyName("acsResourceId"u8);
+                writer.WriteStringValue(AcsResourceId);
             }
             if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
@@ -106,15 +99,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
-                if (CognitiveServiceResourceId != null)
-                {
-                    writer.WritePropertyName("cognitiveServiceResourceId"u8);
-                    writer.WriteStringValue(CognitiveServiceResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("cognitiveServiceResourceId");
-                }
+                writer.WritePropertyName("cognitiveServiceResourceId"u8);
+                writer.WriteStringValue(CognitiveServiceResourceId);
             }
             if (Optional.IsDefined(DefaultLocale))
             {
@@ -225,7 +211,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        acsResourceId = null;
                         continue;
                     }
                     acsResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -255,7 +240,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cognitiveServiceResourceId = null;
                         continue;
                     }
                     cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());

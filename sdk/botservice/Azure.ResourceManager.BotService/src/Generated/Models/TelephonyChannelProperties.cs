@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="cognitiveServiceSubscriptionKey"> The extensionKey1. </param>
         /// <param name="cognitiveServiceRegion"> The extensionKey2. </param>
         /// <param name="defaultLocale"> The default locale of the channel. </param>
-        /// <param name="premiumSku"> The premium SKU applied to the channel. </param>
+        /// <param name="premiumSKU"> The premium SKU applied to the channel. </param>
         /// <param name="isEnabled"> Whether the channel is enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyChannelProperties(IList<TelephonyPhoneNumbers> phoneNumbers, IList<TelephonyChannelResourceApiConfiguration> apiConfigurations, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string defaultLocale, string premiumSku, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TelephonyChannelProperties(IList<TelephonyPhoneNumbers> phoneNumbers, IList<TelephonyChannelResourceApiConfiguration> apiConfigurations, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string defaultLocale, string premiumSKU, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhoneNumbers = phoneNumbers;
             ApiConfigurations = apiConfigurations;
             CognitiveServiceSubscriptionKey = cognitiveServiceSubscriptionKey;
             CognitiveServiceRegion = cognitiveServiceRegion;
             DefaultLocale = defaultLocale;
-            PremiumSku = premiumSku;
+            PremiumSKU = premiumSKU;
             IsEnabled = isEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The default locale of the channel. </summary>
         public string DefaultLocale { get; set; }
         /// <summary> The premium SKU applied to the channel. </summary>
-        public string PremiumSku { get; set; }
+        public string PremiumSKU { get; set; }
         /// <summary> Whether the channel is enabled. </summary>
         public bool? IsEnabled { get; set; }
     }

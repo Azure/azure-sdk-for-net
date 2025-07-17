@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BotChannelSettings"/>. </summary>
-        public BotChannelSettings()
+        internal BotChannelSettings()
         {
             Sites = new ChangeTrackingList<BotChannelSite>();
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
         /// <param name="requireTermsAgreement"> Whether customer needs to agree to new terms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotChannelSettings(string extensionKey1, string extensionKey2, IList<BotChannelSite> sites, string channelId, string channelDisplayName, string botId, Uri botIconUri, bool? isEnabled, bool? disableLocalAuth, bool? requireTermsAgreement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotChannelSettings(string extensionKey1, string extensionKey2, IReadOnlyList<BotChannelSite> sites, string channelId, string channelDisplayName, string botId, string botIconUri, bool? isEnabled, bool? disableLocalAuth, bool? requireTermsAgreement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExtensionKey1 = extensionKey1;
             ExtensionKey2 = extensionKey2;
@@ -79,24 +79,24 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> The extensionKey1. </summary>
-        public string ExtensionKey1 { get; set; }
+        public string ExtensionKey1 { get; }
         /// <summary> The extensionKey2. </summary>
-        public string ExtensionKey2 { get; set; }
+        public string ExtensionKey2 { get; }
         /// <summary> The list of sites. </summary>
-        public IList<BotChannelSite> Sites { get; }
+        public IReadOnlyList<BotChannelSite> Sites { get; }
         /// <summary> The channel id. </summary>
-        public string ChannelId { get; set; }
+        public string ChannelId { get; }
         /// <summary> The channel display name. </summary>
-        public string ChannelDisplayName { get; set; }
+        public string ChannelDisplayName { get; }
         /// <summary> The bot id. </summary>
-        public string BotId { get; set; }
+        public string BotId { get; }
         /// <summary> The bot icon url. </summary>
-        public Uri BotIconUri { get; set; }
+        public string BotIconUri { get; }
         /// <summary> Whether this channel is enabled for the bot. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled { get; }
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
-        public bool? DisableLocalAuth { get; set; }
+        public bool? DisableLocalAuth { get; }
         /// <summary> Whether customer needs to agree to new terms. </summary>
-        public bool? RequireTermsAgreement { get; set; }
+        public bool? RequireTermsAgreement { get; }
     }
 }

@@ -73,20 +73,13 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(Kind))
             {
-                if (Kind != null)
-                {
-                    writer.WritePropertyName("kind"u8);
-                    writer.WriteStringValue(Kind.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("kind");
-                }
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
@@ -98,6 +91,19 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
         }
 
         BotChannelGetWithKeysResult IJsonModel<BotChannelGetWithKeysResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -128,10 +134,10 @@ namespace Azure.ResourceManager.BotService.Models
             BotChannelProperties properties = default;
             BotServiceSku sku = default;
             BotServiceKind? kind = default;
-            ETag? etag = default;
+            string etag = default;
             IReadOnlyList<string> zones = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            string location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -195,7 +201,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kind = null;
                         continue;
                     }
                     kind = new BotServiceKind(property.Value.GetString());
@@ -203,11 +208,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -278,8 +279,6 @@ namespace Azure.ResourceManager.BotService.Models
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 resource,
                 setting,
                 provisioningState,
@@ -290,6 +289,8 @@ namespace Azure.ResourceManager.BotService.Models
                 kind,
                 etag,
                 zones ?? new ChangeTrackingList<string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 serializedAdditionalRawData);
         }
 

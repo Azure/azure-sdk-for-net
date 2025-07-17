@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The ARM channel of list channel with keys operation response. </summary>
-    public partial class BotChannelGetWithKeysResult : TrackedResourceData
+    public partial class BotChannelGetWithKeysResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,10 +48,15 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BotChannelGetWithKeysResult"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public BotChannelGetWithKeysResult(AzureLocation location) : base(location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        internal BotChannelGetWithKeysResult(string location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
             Zones = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="BotChannelGetWithKeysResult"/>. </summary>
@@ -59,8 +64,6 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="resource">
         /// The set of properties specific to bot channel resource
         /// Please note <see cref="BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -79,8 +82,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
         /// <param name="etag"> Entity Tag. </param>
         /// <param name="zones"> Entity zones. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotChannelGetWithKeysResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BotChannelProperties resource, BotChannelSettings setting, string provisioningState, string entityTag, string changedTime, BotChannelProperties properties, BotServiceSku sku, BotServiceKind? kind, ETag? etag, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal BotChannelGetWithKeysResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BotChannelProperties resource, BotChannelSettings setting, string provisioningState, string entityTag, string changedTime, BotChannelProperties properties, BotServiceSku sku, BotServiceKind? kind, string etag, IReadOnlyList<string> zones, IReadOnlyDictionary<string, string> tags, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
             Setting = setting;
@@ -92,6 +97,8 @@ namespace Azure.ResourceManager.BotService.Models
             Kind = kind;
             ETag = etag;
             Zones = zones;
+            Tags = tags;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,28 +112,32 @@ namespace Azure.ResourceManager.BotService.Models
         /// Please note <see cref="BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AcsChatChannel"/>, <see cref="AlexaChannel"/>, <see cref="DirectLineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="EmailChannel"/>, <see cref="FacebookChannel"/>, <see cref="KikChannel"/>, <see cref="LineChannel"/>, <see cref="M365Extensions"/>, <see cref="MsTeamsChannel"/>, <see cref="Omnichannel"/>, <see cref="OutlookChannel"/>, <see cref="SearchAssistant"/>, <see cref="SkypeChannel"/>, <see cref="SlackChannel"/>, <see cref="SmsChannel"/>, <see cref="TelegramChannel"/>, <see cref="TelephonyChannel"/> and <see cref="WebChatChannel"/>.
         /// </summary>
-        public BotChannelProperties Resource { get; set; }
+        public BotChannelProperties Resource { get; }
         /// <summary> Channel settings. </summary>
-        public BotChannelSettings Setting { get; set; }
+        public BotChannelSettings Setting { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; }
         /// <summary> Entity tag of the resource. </summary>
-        public string EntityTag { get; set; }
+        public string EntityTag { get; }
         /// <summary> Changed time of the resource. </summary>
-        public string ChangedTime { get; set; }
+        public string ChangedTime { get; }
         /// <summary>
         /// The set of properties specific to bot channel resource
         /// Please note <see cref="BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AcsChatChannel"/>, <see cref="AlexaChannel"/>, <see cref="DirectLineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="EmailChannel"/>, <see cref="FacebookChannel"/>, <see cref="KikChannel"/>, <see cref="LineChannel"/>, <see cref="M365Extensions"/>, <see cref="MsTeamsChannel"/>, <see cref="Omnichannel"/>, <see cref="OutlookChannel"/>, <see cref="SearchAssistant"/>, <see cref="SkypeChannel"/>, <see cref="SlackChannel"/>, <see cref="SmsChannel"/>, <see cref="TelegramChannel"/>, <see cref="TelephonyChannel"/> and <see cref="WebChatChannel"/>.
         /// </summary>
-        public BotChannelProperties Properties { get; set; }
+        public BotChannelProperties Properties { get; }
         /// <summary> Gets or sets the SKU of the resource. </summary>
-        public BotServiceSku Sku { get; set; }
+        public BotServiceSku Sku { get; }
         /// <summary> Required. Gets or sets the Kind of the resource. </summary>
-        public BotServiceKind? Kind { get; set; }
+        public BotServiceKind? Kind { get; }
         /// <summary> Entity Tag. </summary>
-        public ETag? ETag { get; set; }
+        public string ETag { get; }
         /// <summary> Entity zones. </summary>
         public IReadOnlyList<string> Zones { get; }
+        /// <summary> Resource tags. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; }
     }
 }

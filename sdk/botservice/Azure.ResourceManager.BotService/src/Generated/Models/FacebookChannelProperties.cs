@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="callbackUri"> Callback Url. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FacebookChannelProperties(string verifyToken, IList<FacebookPage> pages, string appId, string appSecret, Uri callbackUri, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FacebookChannelProperties(string verifyToken, IList<FacebookPage> pages, string appId, string appSecret, string callbackUri, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VerifyToken = verifyToken;
             Pages = pages;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Facebook application secret. Value only returned through POST to the action Channel List API, otherwise empty. </summary>
         public string AppSecret { get; set; }
         /// <summary> Callback Url. </summary>
-        public Uri CallbackUri { get; }
+        public string CallbackUri { get; }
         /// <summary> Whether this channel is enabled for the bot. </summary>
         public bool IsEnabled { get; set; }
     }

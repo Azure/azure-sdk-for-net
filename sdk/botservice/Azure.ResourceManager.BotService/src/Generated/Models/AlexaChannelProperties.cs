@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="serviceEndpointUri"> Full Uri used to configured the skill in Alexa. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AlexaChannelProperties(string alexaSkillId, string uriFragment, Uri serviceEndpointUri, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AlexaChannelProperties(string alexaSkillId, string uriFragment, string serviceEndpointUri, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlexaSkillId = alexaSkillId;
             UriFragment = uriFragment;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Url fragment used in part of the Uri configured in Alexa. </summary>
         public string UriFragment { get; }
         /// <summary> Full Uri used to configured the skill in Alexa. </summary>
-        public Uri ServiceEndpointUri { get; }
+        public string ServiceEndpointUri { get; }
         /// <summary> Whether this channel is enabled for the bot. </summary>
         public bool IsEnabled { get; set; }
     }
