@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WritePropertyName("resourcegroup"u8);
                 writer.WriteStringValue(Resourcegroup);
             }
-            if (Optional.IsDefined(Subscriptionid))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionid"u8);
-                writer.WriteStringValue(Subscriptionid);
+                writer.WriteStringValue(SubscriptionId);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
