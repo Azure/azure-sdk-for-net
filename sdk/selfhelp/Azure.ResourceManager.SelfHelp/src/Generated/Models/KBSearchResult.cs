@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="rank"> rank of the search result. </param>
         /// <param name="link"> Link to the document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KBSearchResult(string solutionId, string content, string title, Confidence? confidence, string source, ResultType? resultType, int? rank, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KBSearchResult(string solutionId, string content, string title, SelfHelpConfidence? confidence, string source, KBSearchResultType? resultType, int? rank, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             Content = content;
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Title of the search result. </summary>
         public string Title { get; }
         /// <summary> Confidence of the search result. </summary>
-        public Confidence? Confidence { get; }
+        public SelfHelpConfidence? Confidence { get; }
         /// <summary> Source of the search result. </summary>
         public string Source { get; }
         /// <summary> Result type of the search result. </summary>
-        public ResultType? ResultType { get; }
+        public KBSearchResultType? ResultType { get; }
         /// <summary> rank of the search result. </summary>
         public int? Rank { get; }
         /// <summary> Link to the document. </summary>

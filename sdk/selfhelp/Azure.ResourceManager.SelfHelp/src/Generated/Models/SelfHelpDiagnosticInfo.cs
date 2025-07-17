@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="insights"> The problems (if any) detected by this insight. </param>
         /// <param name="error"> Error definition. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticInfo(string solutionId, Status? status, IReadOnlyList<SelfHelpDiagnosticInsight> insights, SelfHelpError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SelfHelpDiagnosticInfo(string solutionId, SelfHelpDiagnosticStatus? status, IReadOnlyList<SelfHelpDiagnosticInsight> insights, SelfHelpError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             Status = status;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Solution Id. </summary>
         public string SolutionId { get; }
         /// <summary> Denotes the status of the diagnostic resource. </summary>
-        public Status? Status { get; }
+        public SelfHelpDiagnosticStatus? Status { get; }
         /// <summary> The problems (if any) detected by this insight. </summary>
         public IReadOnlyList<SelfHelpDiagnosticInsight> Insights { get; }
         /// <summary> Error definition. </summary>

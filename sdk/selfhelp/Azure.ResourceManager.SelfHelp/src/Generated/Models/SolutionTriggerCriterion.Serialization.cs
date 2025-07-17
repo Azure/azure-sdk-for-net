@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Name? name = default;
+            SelfHelpName? name = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    name = new Name(property.Value.GetString());
+                    name = new SelfHelpName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

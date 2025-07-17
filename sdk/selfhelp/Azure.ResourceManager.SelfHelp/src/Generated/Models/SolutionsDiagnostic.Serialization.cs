@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string solutionId = default;
-            Status? status = default;
+            SelfHelpDiagnosticStatus? status = default;
             string statusDetails = default;
             string replacementKey = default;
             string estimatedCompletionTime = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new SelfHelpDiagnosticStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusDetails"u8))

@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="version"> Version for automated check result. </param>
         /// <param name="status"> Status for automated check result. </param>
         /// <param name="result"> Insight Article Content. </param>
-        /// <param name="type"> Type of Result. </param>
+        /// <param name="resultType"> Type of Result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomatedCheckResult(string version, string status, string result, AutomatedCheckResultType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomatedCheckResult(string version, string status, string result, AutomatedCheckResultType? resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             Status = status;
             Result = result;
-            Type = type;
+            ResultType = resultType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Insight Article Content. </summary>
         public string Result { get; }
         /// <summary> Type of Result. </summary>
-        public AutomatedCheckResultType? Type { get; }
+        public AutomatedCheckResultType? ResultType { get; }
     }
 }

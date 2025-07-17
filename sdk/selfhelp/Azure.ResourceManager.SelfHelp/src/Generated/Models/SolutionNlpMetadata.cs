@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SolutionNlpMetadata"/>. </summary>
-        internal SolutionNlpMetadata()
+        public SolutionNlpMetadata()
         {
             Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
             RelatedServices = new ChangeTrackingList<ClassificationService>();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="solutions"> The list of solution metadata. </param>
         /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionNlpMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string problemTitle, string problemDescription, string serviceId, string problemClassificationId, IReadOnlyList<SolutionMetadataProperties> solutions, IReadOnlyList<ClassificationService> relatedServices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SolutionNlpMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string problemTitle, string problemDescription, string serviceId, string problemClassificationId, IList<SolutionMetadataProperties> solutions, IList<ClassificationService> relatedServices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProblemTitle = problemTitle;
             ProblemDescription = problemDescription;
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Title of the problem classification. </summary>
-        public string ProblemTitle { get; }
+        public string ProblemTitle { get; set; }
         /// <summary> Description of the problem classification. </summary>
-        public string ProblemDescription { get; }
+        public string ProblemDescription { get; set; }
         /// <summary> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </summary>
-        public string ServiceId { get; }
+        public string ServiceId { get; set; }
         /// <summary> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </summary>
-        public string ProblemClassificationId { get; }
+        public string ProblemClassificationId { get; set; }
         /// <summary> The list of solution metadata. </summary>
-        public IReadOnlyList<SolutionMetadataProperties> Solutions { get; }
+        public IList<SolutionMetadataProperties> Solutions { get; }
         /// <summary> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </summary>
-        public IReadOnlyList<ClassificationService> RelatedServices { get; }
+        public IList<ClassificationService> RelatedServices { get; }
     }
 }

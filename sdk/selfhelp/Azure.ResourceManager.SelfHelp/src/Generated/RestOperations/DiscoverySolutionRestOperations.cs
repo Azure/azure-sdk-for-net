@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string filter, string skiptoken)
+        internal RequestUriBuilder CreateDiscoverSolutionsRequestUri(string filter, string skiptoken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string filter, string skiptoken)
+        internal HttpMessage CreateDiscoverSolutionsRequest(string filter, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiscoverySolutionResult>> DiscoverSolutionsAsync(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter, skiptoken);
+            using var message = CreateDiscoverSolutionsRequest(filter, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="filter"> 'ProblemClassificationId' is a mandatory filter to get solutions ids. It also supports optional 'ResourceType' and 'SolutionType' filters. The [$filter](https://learn.microsoft.com/en-us/odata/webapi/first-odata-api#filter) supports only 'and', 'or' and 'eq' operators. Example: $filter=ProblemClassificationId eq '1ddda5b4-cf6c-4d4f-91ad-bc38ab0e811e'. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SelfHelpDiscoverySolutionResult> List(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiscoverySolutionResult> DiscoverSolutions(string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter, skiptoken);
+            using var message = CreateDiscoverSolutionsRequest(filter, skiptoken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string filter, string skiptoken)
+        internal RequestUriBuilder CreateDiscoverSolutionsNextPageRequestUri(string nextLink, string filter, string skiptoken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string filter, string skiptoken)
+        internal HttpMessage CreateDiscoverSolutionsNextPageRequest(string nextLink, string filter, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<SelfHelpDiscoverySolutionResult>> ListNextPageAsync(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpDiscoverySolutionResult>> DiscoverSolutionsNextPageAsync(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, filter, skiptoken);
+            using var message = CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<SelfHelpDiscoverySolutionResult> ListNextPage(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<SelfHelpDiscoverySolutionResult> DiscoverSolutionsNextPage(string nextLink, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, filter, skiptoken);
+            using var message = CreateDiscoverSolutionsNextPageRequest(nextLink, filter, skiptoken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

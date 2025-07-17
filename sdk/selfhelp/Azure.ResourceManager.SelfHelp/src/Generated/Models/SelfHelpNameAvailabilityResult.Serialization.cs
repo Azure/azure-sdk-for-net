@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 throw new FormatException($"The model {nameof(SelfHelpNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {

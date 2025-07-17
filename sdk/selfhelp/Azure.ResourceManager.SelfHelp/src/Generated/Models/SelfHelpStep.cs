@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="guidance"> Get or sets the Step guidance. </param>
         /// <param name="executionStatus"> Status of Troubleshooter Step execution. </param>
         /// <param name="executionStatusDescription"> This field has more detailed status description of the execution status. </param>
-        /// <param name="type"> Type of Troubleshooting step. </param>
+        /// <param name="stepType"> Type of Troubleshooting step. </param>
         /// <param name="isLastStep"> is this last step of the workflow. </param>
         /// <param name="inputs"></param>
         /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpStep(string id, string title, string description, string guidance, ExecutionStatus? executionStatus, string executionStatusDescription, Type? type, bool? isLastStep, IReadOnlyList<TroubleshooterStepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SelfHelpStep(string id, string title, string description, string guidance, TroubleshooterExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<TroubleshooterStepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Guidance = guidance;
             ExecutionStatus = executionStatus;
             ExecutionStatusDescription = executionStatusDescription;
-            Type = type;
+            StepType = stepType;
             IsLastStep = isLastStep;
             Inputs = inputs;
             AutomatedCheckResults = automatedCheckResults;
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Get or sets the Step guidance. </summary>
         public string Guidance { get; }
         /// <summary> Status of Troubleshooter Step execution. </summary>
-        public ExecutionStatus? ExecutionStatus { get; }
+        public TroubleshooterExecutionStatus? ExecutionStatus { get; }
         /// <summary> This field has more detailed status description of the execution status. </summary>
         public string ExecutionStatusDescription { get; }
         /// <summary> Type of Troubleshooting step. </summary>
-        public Type? Type { get; }
+        public SelfHelpType? StepType { get; }
         /// <summary> is this last step of the workflow. </summary>
         public bool? IsLastStep { get; }
         /// <summary> Gets the inputs. </summary>

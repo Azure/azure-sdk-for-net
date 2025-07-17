@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -51,19 +52,19 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceName"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SelfHelpNameAvailabilityContent(string resourceName, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Type = type;
+            ResourceName = resourceName;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
-        public string Name { get; set; }
+        public string ResourceName { get; set; }
         /// <summary> The resource type. </summary>
-        public string Type { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

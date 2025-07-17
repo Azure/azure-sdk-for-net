@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ResultType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

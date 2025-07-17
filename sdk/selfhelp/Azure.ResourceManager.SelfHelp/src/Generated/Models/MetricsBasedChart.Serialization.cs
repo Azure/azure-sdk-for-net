@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(TimeSpanDuration))
             {
                 writer.WritePropertyName("timeSpanDuration"u8);
-                writer.WriteStringValue(TimeSpanDuration);
+                writer.WriteStringValue(TimeSpanDuration.Value, "P");
             }
             if (Optional.IsDefined(Title))
             {
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string name = default;
-            AggregationType? aggregationType = default;
-            string timeSpanDuration = default;
+            ChartAggregationType? aggregationType = default;
+            TimeSpan? timeSpanDuration = default;
             string title = default;
             ChartFilterGroup filterGroup = default;
             string replacementKey = default;
@@ -122,12 +122,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    aggregationType = new AggregationType(property.Value.GetString());
+                    aggregationType = new ChartAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeSpanDuration"u8))
                 {
-                    timeSpanDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeSpanDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("title"u8))

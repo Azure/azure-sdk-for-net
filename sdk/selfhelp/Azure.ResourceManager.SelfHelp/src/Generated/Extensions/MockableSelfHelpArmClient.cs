@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityOperationGroup_CheckAvailability</description>
+        /// <description>CheckNameAvailabilityOperationGroup_CheckSelfHelpNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -354,15 +354,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckAvailability");
+            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
             try
             {
-                var response = await CheckNameAvailabilityRestClient.CheckAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+                var response = await CheckNameAvailabilityRestClient.CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityOperationGroup_CheckAvailability</description>
+        /// <description>CheckNameAvailabilityOperationGroup_CheckSelfHelpNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -393,15 +393,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="content"> The required parameters for availability check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SelfHelpNameAvailabilityResult> CheckAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckAvailability");
+            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
             scope0.Start();
             try
             {
-                var response = CheckNameAvailabilityRestClient.CheckAvailability(scope, content, cancellationToken);
+                var response = CheckNameAvailabilityRestClient.CheckSelfHelpNameAvailability(scope, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

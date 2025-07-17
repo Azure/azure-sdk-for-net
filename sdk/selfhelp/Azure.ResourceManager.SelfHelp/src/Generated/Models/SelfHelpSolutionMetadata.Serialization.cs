@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<SolutionMetadataProperties> solutions = default;
+            IList<SolutionMetadataProperties> solutions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

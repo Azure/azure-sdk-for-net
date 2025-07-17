@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="requiredParameters"> Required parameters of this item. </param>
         /// <param name="insights"> Diagnostic insights. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionsDiagnostic(string solutionId, Status? status, string statusDetails, string replacementKey, string estimatedCompletionTime, IReadOnlyList<string> requiredParameters, IReadOnlyList<SelfHelpDiagnosticInsight> insights, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionsDiagnostic(string solutionId, SelfHelpDiagnosticStatus? status, string statusDetails, string replacementKey, string estimatedCompletionTime, IReadOnlyList<string> requiredParameters, IReadOnlyList<SelfHelpDiagnosticInsight> insights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             Status = status;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Solution Id to identify single Solutions Diagnostic. </summary>
         public string SolutionId { get; }
         /// <summary> Denotes the status of the diagnostic resource. </summary>
-        public Status? Status { get; }
+        public SelfHelpDiagnosticStatus? Status { get; }
         /// <summary> Details of the status. </summary>
         public string StatusDetails { get; }
         /// <summary> Place holder used in HTML Content replace control with the content. </summary>

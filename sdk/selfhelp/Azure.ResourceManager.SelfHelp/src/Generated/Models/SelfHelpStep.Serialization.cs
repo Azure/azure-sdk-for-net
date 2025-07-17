@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("executionStatusDescription"u8);
                 writer.WriteStringValue(ExecutionStatusDescription);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(StepType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(StepType.Value.ToString());
             }
             if (Optional.IsDefined(IsLastStep))
             {
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string title = default;
             string description = default;
             string guidance = default;
-            ExecutionStatus? executionStatus = default;
+            TroubleshooterExecutionStatus? executionStatus = default;
             string executionStatusDescription = default;
-            Type? type = default;
+            SelfHelpType? type = default;
             bool? isLastStep = default;
             IReadOnlyList<TroubleshooterStepInput> inputs = default;
             AutomatedCheckResult automatedCheckResults = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    executionStatus = new ExecutionStatus(property.Value.GetString());
+                    executionStatus = new TroubleshooterExecutionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionStatusDescription"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    type = new Type(property.Value.GetString());
+                    type = new SelfHelpType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isLastStep"u8))

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string regex = default;
-            ValidationScope? validationScope = default;
+            TroubleshooterValidationScope? validationScope = default;
             bool? isRequired = default;
             string validationErrorMessage = default;
             long? maxLength = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    validationScope = new ValidationScope(property.Value.GetString());
+                    validationScope = new TroubleshooterValidationScope(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isRequired"u8))

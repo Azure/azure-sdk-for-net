@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="id"> Article id. </param>
         /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>
-        /// <param name="importanceLevel"> Importance level of the insight. </param>
+        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticInsight(string id, string title, string results, ImportanceLevel? importanceLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SelfHelpDiagnosticInsight(string id, string title, string results, SelfHelpImportanceLevel? insightImportanceLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
             Results = results;
-            ImportanceLevel = importanceLevel;
+            InsightImportanceLevel = insightImportanceLevel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Detailed result content. </summary>
         public string Results { get; }
         /// <summary> Importance level of the insight. </summary>
-        public ImportanceLevel? ImportanceLevel { get; }
+        public SelfHelpImportanceLevel? InsightImportanceLevel { get; }
     }
 }

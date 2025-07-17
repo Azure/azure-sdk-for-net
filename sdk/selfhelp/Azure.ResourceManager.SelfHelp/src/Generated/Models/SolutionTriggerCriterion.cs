@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> Trigger criterion name. </param>
         /// <param name="value"> Trigger criterion value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTriggerCriterion(Name? name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionTriggerCriterion(SelfHelpName? name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Trigger criterion name. </summary>
-        public Name? Name { get; set; }
+        public SelfHelpName? Name { get; set; }
         /// <summary> Trigger criterion value. </summary>
         public string Value { get; set; }
     }

@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string problemDescription = default;
             string serviceId = default;
             string problemClassificationId = default;
-            IReadOnlyList<SolutionMetadataProperties> solutions = default;
-            IReadOnlyList<ClassificationService> relatedServices = default;
+            IList<SolutionMetadataProperties> solutions = default;
+            IList<ClassificationService> relatedServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string questionId = default;
-            QuestionType? questionType = default;
+            TroubleshooterQuestionType? questionType = default;
             string response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    questionType = new QuestionType(property.Value.GetString());
+                    questionType = new TroubleshooterQuestionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("response"u8))

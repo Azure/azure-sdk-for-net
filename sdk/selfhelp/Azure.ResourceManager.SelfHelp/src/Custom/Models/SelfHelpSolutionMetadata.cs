@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="description"> A detailed description of solution. </param>
         /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
         /// <param name="solutions"> List of metadata. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, IList<IList<string>> requiredParameterSets, IReadOnlyList<SolutionMetadataProperties> solutions) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, IList<IList<string>> requiredParameterSets, IList<SolutionMetadataProperties> solutions) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             SolutionType = solutionType;

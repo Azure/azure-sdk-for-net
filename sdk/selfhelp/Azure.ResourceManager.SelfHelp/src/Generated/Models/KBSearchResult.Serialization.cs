@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string solutionId = default;
             string content = default;
             string title = default;
-            Confidence? confidence = default;
+            SelfHelpConfidence? confidence = default;
             string source = default;
-            ResultType? resultType = default;
+            KBSearchResultType? resultType = default;
             int? rank = default;
             string link = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    confidence = new Confidence(property.Value.GetString());
+                    confidence = new SelfHelpConfidence(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    resultType = new ResultType(property.Value.GetString());
+                    resultType = new KBSearchResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rank"u8))

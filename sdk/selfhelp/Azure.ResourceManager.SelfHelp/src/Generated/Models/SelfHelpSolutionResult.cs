@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionResult"/>. </summary>
-        internal SelfHelpSolutionResult()
+        public SelfHelpSolutionResult()
         {
             Sections = new ChangeTrackingList<SolutionSection>();
         }

@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string questionId = default;
-            QuestionType? questionType = default;
+            TroubleshooterQuestionType? questionType = default;
             string questionTitle = default;
             string questionContent = default;
-            QuestionContentType? questionContentType = default;
+            TroubleshooterQuestionContentType? questionContentType = default;
             string responseHint = default;
             string recommendedOption = default;
             string selectedOptionValue = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    questionType = new QuestionType(property.Value.GetString());
+                    questionType = new TroubleshooterQuestionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("questionTitle"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    questionContentType = new QuestionContentType(property.Value.GetString());
+                    questionContentType = new TroubleshooterQuestionContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("responseHint"u8))

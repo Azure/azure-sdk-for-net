@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
-        internal SelfHelpSolutionMetadata()
+        public SelfHelpSolutionMetadata()
         {
             Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
         }
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="solutions"> List of metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Solutions = solutions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of metadata. </summary>
-        public IReadOnlyList<SolutionMetadataProperties> Solutions { get; }
+        public IList<SolutionMetadataProperties> Solutions { get; }
     }
 }

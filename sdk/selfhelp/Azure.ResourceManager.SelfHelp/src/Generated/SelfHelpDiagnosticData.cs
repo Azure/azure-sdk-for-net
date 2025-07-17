@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="globalParameters"> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </param>
         /// <param name="insights"> SolutionIds that are needed to be invoked. </param>
-        /// <param name="acceptedAt"> Diagnostic Request Accepted time. </param>
+        /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
         /// <param name="diagnostics"> Array of Diagnostics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, string acceptedAt, DiagnosticProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GlobalParameters = globalParameters;
             Insights = insights;
-            AcceptedAt = acceptedAt;
+            AcceptedOn = acceptedOn;
             ProvisioningState = provisioningState;
             Diagnostics = diagnostics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> SolutionIds that are needed to be invoked. </summary>
         public IList<SelfHelpDiagnosticInvocation> Insights { get; }
         /// <summary> Diagnostic Request Accepted time. </summary>
-        public string AcceptedAt { get; }
+        public DateTimeOffset? AcceptedOn { get; }
         /// <summary> Status of diagnostic provisioning. </summary>
-        public DiagnosticProvisioningState? ProvisioningState { get; }
+        public SelfHelpProvisioningState? ProvisioningState { get; }
         /// <summary> Array of Diagnostics. </summary>
         public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }

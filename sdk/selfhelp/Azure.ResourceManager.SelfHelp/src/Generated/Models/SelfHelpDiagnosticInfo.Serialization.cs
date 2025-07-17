@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string solutionId = default;
-            Status? status = default;
+            SelfHelpDiagnosticStatus? status = default;
             IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             SelfHelpError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new SelfHelpDiagnosticStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("insights"u8))

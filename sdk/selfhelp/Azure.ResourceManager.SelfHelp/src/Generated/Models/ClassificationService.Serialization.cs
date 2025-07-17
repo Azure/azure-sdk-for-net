@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
             ResourceIdentifier serviceId = default;
             string displayName = default;
-            IReadOnlyList<string> resourceTypes = default;
+            IList<string> resourceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

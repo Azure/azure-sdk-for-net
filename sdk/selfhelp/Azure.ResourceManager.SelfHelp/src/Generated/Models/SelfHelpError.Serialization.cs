@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ErrorType);
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {

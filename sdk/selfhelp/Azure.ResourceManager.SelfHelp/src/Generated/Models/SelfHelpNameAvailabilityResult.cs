@@ -51,20 +51,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Returns true or false depending on the availability of the name. </param>
+        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SelfHelpNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Returns true or false depending on the availability of the name. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> Reason for why value is not available. This field is returned if nameAvailable is false. </summary>
         public string Reason { get; }
         /// <summary> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </summary>

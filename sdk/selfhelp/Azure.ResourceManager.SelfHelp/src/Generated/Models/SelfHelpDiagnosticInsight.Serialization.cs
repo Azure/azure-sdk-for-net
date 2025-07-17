@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("results"u8);
                 writer.WriteStringValue(Results);
             }
-            if (Optional.IsDefined(ImportanceLevel))
+            if (Optional.IsDefined(InsightImportanceLevel))
             {
                 writer.WritePropertyName("importanceLevel"u8);
-                writer.WriteStringValue(ImportanceLevel.Value.ToString());
+                writer.WriteStringValue(InsightImportanceLevel.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string id = default;
             string title = default;
             string results = default;
-            ImportanceLevel? importanceLevel = default;
+            SelfHelpImportanceLevel? importanceLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    importanceLevel = new ImportanceLevel(property.Value.GetString());
+                    importanceLevel = new SelfHelpImportanceLevel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

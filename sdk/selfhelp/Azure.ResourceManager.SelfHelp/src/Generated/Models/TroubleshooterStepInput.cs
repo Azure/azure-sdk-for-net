@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshooterStepInput(string questionId, QuestionType? questionType, string questionTitle, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TroubleshooterStepInput(string questionId, TroubleshooterQuestionType? questionType, string questionTitle, string questionContent, TroubleshooterQuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Use Index as QuestionId. </summary>
         public string QuestionId { get; }
         /// <summary> Type of Question. </summary>
-        public QuestionType? QuestionType { get; }
+        public TroubleshooterQuestionType? QuestionType { get; }
         /// <summary> Question title. </summary>
         public string QuestionTitle { get; }
         /// <summary> User question content. </summary>
         public string QuestionContent { get; }
         /// <summary> Default is Text. </summary>
-        public QuestionContentType? QuestionContentType { get; }
+        public TroubleshooterQuestionContentType? QuestionContentType { get; }
         /// <summary> Place holder text for response hints. </summary>
         public string ResponseHint { get; }
         /// <summary> Result of Automate step. </summary>
