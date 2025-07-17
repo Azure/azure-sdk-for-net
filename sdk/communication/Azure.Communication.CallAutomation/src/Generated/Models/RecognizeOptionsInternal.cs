@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+            SpeechLanguages = new ChangeTrackingList<string>();
             Choices = new ChangeTrackingList<RecognitionChoice>();
         }
 
@@ -29,16 +30,20 @@ namespace Azure.Communication.CallAutomation
         /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
         /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <param name="speechLanguage"> Speech language to be recognized, If not set default is en-US. </param>
+        /// <param name="speechLanguages"> Gets or sets a list of languages for Language Identification. </param>
+        /// <param name="enableSentimentAnalysis"> Gets or sets a value indicating if sentiment analysis should be used. </param>
         /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
         /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
         /// <param name="choices"> Defines Ivr choices for recognize. </param>
         /// <param name="speechOptions"> Defines continuous speech recognition option. </param>
-        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognitionChoice> choices, SpeechOptionsInternal speechOptions)
+        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, IList<string> speechLanguages, bool? enableSentimentAnalysis, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognitionChoice> choices, SpeechOptionsInternal speechOptions)
         {
             InterruptPrompt = interruptPrompt;
             InitialSilenceTimeoutInSeconds = initialSilenceTimeoutInSeconds;
             TargetParticipant = targetParticipant;
             SpeechLanguage = speechLanguage;
+            SpeechLanguages = speechLanguages;
+            EnableSentimentAnalysis = enableSentimentAnalysis;
             SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
             DtmfOptions = dtmfOptions;
             Choices = choices;
@@ -53,6 +58,10 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
+        /// <summary> Gets or sets a list of languages for Language Identification. </summary>
+        public IList<string> SpeechLanguages { get; }
+        /// <summary> Gets or sets a value indicating if sentiment analysis should be used. </summary>
+        public bool? EnableSentimentAnalysis { get; set; }
         /// <summary> Endpoint where the custom model was deployed. </summary>
         public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Defines configurations for DTMF. </summary>

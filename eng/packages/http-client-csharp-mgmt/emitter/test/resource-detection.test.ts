@@ -148,8 +148,8 @@ interface Employees2 {
     );
     strictEqual(resourceMetadataDecorator.arguments.methods[0].kind, "Get");
     strictEqual(
-      resourceMetadataDecorator.arguments.parentResource,
-      parentModel.crossLanguageDefinitionId
+      resourceMetadataDecorator.arguments.parentResourceId,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
   });
 

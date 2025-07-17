@@ -35,6 +35,31 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("enableIntermediateResults"u8);
                 writer.WriteBooleanValue(EnableIntermediateResults.Value);
             }
+            if (Optional.IsDefined(PiiRedactionOptions))
+            {
+                writer.WritePropertyName("piiRedactionOptions"u8);
+                writer.WriteObjectValue(PiiRedactionOptions);
+            }
+            if (Optional.IsDefined(EnableSentimentAnalysis))
+            {
+                writer.WritePropertyName("enableSentimentAnalysis"u8);
+                writer.WriteBooleanValue(EnableSentimentAnalysis.Value);
+            }
+            if (Optional.IsCollectionDefined(Locales))
+            {
+                writer.WritePropertyName("locales"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locales)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SummarizationOptions))
+            {
+                writer.WritePropertyName("summarizationOptions"u8);
+                writer.WriteObjectValue(SummarizationOptions);
+            }
             writer.WritePropertyName("transportType"u8);
             writer.WriteStringValue(TransportType.ToString());
             writer.WritePropertyName("locale"u8);

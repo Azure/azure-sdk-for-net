@@ -38,14 +38,95 @@ namespace Azure.Communication.CallAutomation
             return new MuteParticipantResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingResult"/>. </summary>
+        /// <param name="recordingId"></param>
+        /// <param name="recordingStorageInfo"> Container for chunks. </param>
+        /// <param name="errors"></param>
+        /// <param name="recordingStartTime"></param>
+        /// <param name="recordingDurationMs"></param>
+        /// <param name="sessionEndReason"></param>
+        /// <param name="recordingExpirationTime"></param>
+        /// <returns> A new <see cref="CallAutomation.RecordingResult"/> instance for mocking. </returns>
+        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetails> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
+        {
+            errors ??= new List<ErrorDetails>();
+
+            return new RecordingResult(
+                recordingId,
+                recordingStorageInfo,
+                errors?.ToList(),
+                recordingStartTime,
+                recordingDurationMs,
+                sessionEndReason,
+                recordingExpirationTime);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingStorageInfo"/>. </summary>
+        /// <param name="recordingChunks"> Collection of {Microsoft.Skype.Platform.ExecutionAgent.Azure.Communication.Service.ServerCalling.Content.Contracts.BETA7_2025_08_15_preview.Models.RecordingChunkStorageInfo}. </param>
+        /// <returns> A new <see cref="CallAutomation.RecordingStorageInfo"/> instance for mocking. </returns>
+        public static RecordingStorageInfo RecordingStorageInfo(IEnumerable<RecordingChunkStorageInfo> recordingChunks = null)
+        {
+            recordingChunks ??= new List<RecordingChunkStorageInfo>();
+
+            return new RecordingStorageInfo(recordingChunks?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingChunkStorageInfo"/>. </summary>
+        /// <param name="documentId"> Chunk document id. </param>
+        /// <param name="index"> Chunks order in a multi chunk recording. </param>
+        /// <param name="endReason"> Reason this chunk ended. </param>
+        /// <param name="contentLocation"> Location of the chunk. </param>
+        /// <param name="metadataLocation"> Location of chunk metadata. </param>
+        /// <param name="deleteLocation"> Callback for deleting chunk. </param>
+        /// <returns> A new <see cref="CallAutomation.RecordingChunkStorageInfo"/> instance for mocking. </returns>
+        public static RecordingChunkStorageInfo RecordingChunkStorageInfo(string documentId = null, int? index = null, ChunkEndReason? endReason = null, string contentLocation = null, string metadataLocation = null, string deleteLocation = null)
+        {
+            return new RecordingChunkStorageInfo(
+                documentId,
+                index,
+                endReason,
+                contentLocation,
+                metadataLocation,
+                deleteLocation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetails"/>. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="innerError"> Inner error details. </param>
+        /// <returns> A new <see cref="CallAutomation.ErrorDetails"/> instance for mocking. </returns>
+        public static ErrorDetails ErrorDetails(string code = null, string message = null, ErrorDetails innerError = null)
+        {
+            return new ErrorDetails(code, message, innerError);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
+        /// <param name="sipCode">
+        /// Sip code from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
+        /// <param name="q850Cause">
+        /// Q850 cause code from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
         /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
-        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipCode = null, SipDiagnosticInfo q850Cause = null)
         {
-            return new ResultInformation(code, subCode, message);
+            return new ResultInformation(code, subCode, message, sipCode, q850Cause);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SipDiagnosticInfo"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="CallAutomation.SipDiagnosticInfo"/> instance for mocking. </returns>
+        public static SipDiagnosticInfo SipDiagnosticInfo(int? code = null, string message = null)
+        {
+            return new SipDiagnosticInfo(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
@@ -65,19 +146,31 @@ namespace Azure.Communication.CallAutomation
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
         /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
-        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null, double? confidence = null)
+        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
         {
-            return new ChoiceResult(label, recognizedPhrase, confidence);
+            return new ChoiceResult(label, recognizedPhrase, confidence, languageIdentified, sentimentAnalysisResult);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SentimentAnalysisResult"/>. </summary>
+        /// <param name="sentiment"> Gets or sets the value of the sentiment detected (positive, negative, neutral, mixed). </param>
+        /// <returns> A new <see cref="CallAutomation.SentimentAnalysisResult"/> instance for mocking. </returns>
+        public static SentimentAnalysisResult SentimentAnalysisResult(string sentiment = null)
+        {
+            return new SentimentAnalysisResult(sentiment);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
         /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        /// <param name="languageIdentified"> The identified language. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
-        public static SpeechResult SpeechResult(string speech = null, double? confidence = null)
+        public static SpeechResult SpeechResult(string speech = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
         {
-            return new SpeechResult(speech, confidence);
+            return new SpeechResult(speech, confidence, languageIdentified, sentimentAnalysisResult);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingFailed"/>. </summary>

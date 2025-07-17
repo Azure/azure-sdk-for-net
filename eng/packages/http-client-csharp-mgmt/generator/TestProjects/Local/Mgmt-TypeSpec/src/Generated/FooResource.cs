@@ -543,5 +543,12 @@ namespace MgmtTypeSpec
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of Bars in the Foo. </summary>
+        /// <returns> An object representing collection of Bars and their operations over a Foo. </returns>
+        public virtual BarCollection GetBars()
+        {
+            return GetCachedClient(client => new BarCollection(client, Id));
+        }
     }
 }

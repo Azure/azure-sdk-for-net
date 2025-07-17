@@ -56,5 +56,8 @@ namespace Azure.Communication.CallAutomation
         /// This is per-operation setting and does not change the client's default source.
         /// </summary>
         public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
+
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }

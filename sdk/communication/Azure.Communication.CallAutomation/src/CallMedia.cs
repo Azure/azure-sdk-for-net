@@ -809,6 +809,16 @@ namespace Azure.Communication.CallAutomation
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
                 }
 
+                if (recognizeChoiceOptions.SpeechLanguages != null && recognizeChoiceOptions.SpeechLanguages.Any())
+                {
+                    foreach (string language in recognizeChoiceOptions.SpeechLanguages)
+                    {
+                        recognizeConfigurationsInternal.SpeechLanguages.Add(language);
+                    }
+                }
+
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeChoiceOptions.EnableSentimentAnalysis;
+
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
                 {
                     recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeChoiceOptions.SpeechModelEndpointId;
@@ -843,6 +853,16 @@ namespace Azure.Communication.CallAutomation
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
                 }
+
+                if (recognizeSpeechOptions.SpeechLanguages != null && recognizeSpeechOptions.SpeechLanguages.Any())
+                {
+                    foreach (string language in recognizeSpeechOptions.SpeechLanguages)
+                    {
+                        recognizeConfigurationsInternal.SpeechLanguages.Add(language);
+                    }
+                }
+
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOptions.EnableSentimentAnalysis;
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
                 {
@@ -886,6 +906,16 @@ namespace Azure.Communication.CallAutomation
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
                 }
+
+                if (recognizeSpeechOrDtmfOptions.SpeechLanguages != null && recognizeSpeechOrDtmfOptions.SpeechLanguages.Any())
+                {
+                    foreach (string language in recognizeSpeechOrDtmfOptions.SpeechLanguages)
+                    {
+                        recognizeConfigurationsInternal.SpeechLanguages.Add(language);
+                    }
+                }
+
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOrDtmfOptions.EnableSentimentAnalysis;
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))
                 {
@@ -1276,9 +1306,26 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = options == default
-                    ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
+                StartTranscriptionRequestInternal request = new StartTranscriptionRequestInternal();
+
+                if ( options != default)
+                {
+                    request.Locale = options.Locale;
+                    request.OperationContext = options.OperationContext;
+                    request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
+                    request.SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId;
+                    request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType);
+                    request.EnableSentimentAnalysis = options.EnableSentimentAnalysis;
+                    request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale);
+
+                    if (options.Locales != null && options.Locales.Any())
+                    {
+                        foreach (string locale in options.Locales)
+                        {
+                            request.Locales.Add(locale);
+                        }
+                    }
+                }
 
                 return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1301,9 +1348,26 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = options == default
-                    ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, SpeechModelEndpointId = options.SpeechRecognitionModelEndpointId };
+                StartTranscriptionRequestInternal request = new StartTranscriptionRequestInternal();
+
+                if (options != default)
+                {
+                    request.Locale = options.Locale;
+                    request.OperationContext = options.OperationContext;
+                    request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
+                    request.SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId;
+                    request.PiiRedactionOptions = options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType);
+                    request.EnableSentimentAnalysis = options.EnableSentimentAnalysis;
+                    request.SummarizationOptions = options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale);
+
+                    if (options.Locales != null && options.Locales.Any())
+                    {
+                        foreach (string locale in options.Locales)
+                        {
+                            request.Locales.Add(locale);
+                        }
+                    }
+                }
 
                 return await CallMediaRestClient.StartTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1380,7 +1444,10 @@ namespace Azure.Communication.CallAutomation
                     locale: locale,
                     speechModelEndpointId: null,
                     operationContext: null,
-                    operationCallbackUri: null);
+                    operationCallbackUri: null,
+                    piiRedactionOptions:null,
+                    enableSentimentAnalysis:null,
+                    summarizationOptions:null);
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
@@ -1402,7 +1469,15 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri?.AbsoluteUri);
+                UpdateTranscriptionRequestInternal request = new(
+                    options.Locale,
+                    options.SpeechRecognitionModelEndpointId,
+                    options.OperationContext,
+                    options.OperationCallbackUri?.AbsoluteUri,
+                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType),
+                    options.EnableSentimentAnalysis,
+                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                    );
 
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1429,7 +1504,10 @@ namespace Azure.Communication.CallAutomation
                     locale: locale,
                     speechModelEndpointId: null,
                     operationContext: null,
-                    operationCallbackUri: null);
+                    operationCallbackUri: null,
+                    piiRedactionOptions: null,
+                    enableSentimentAnalysis: null,
+                    summarizationOptions: null);
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -1451,7 +1529,15 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri?.AbsoluteUri);
+                UpdateTranscriptionRequestInternal request = new(
+                    options.Locale,
+                    options.SpeechRecognitionModelEndpointId,
+                    options.OperationContext,
+                    options.OperationCallbackUri?.AbsoluteUri,
+                    options.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(options.PiiRedactionOptions.Enable, options.PiiRedactionOptions.RedactionType),
+                    options.EnableSentimentAnalysis,
+                    options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                    );
 
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }

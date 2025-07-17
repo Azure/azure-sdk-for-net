@@ -170,6 +170,14 @@ namespace Azure.Communication.CallAutomation
             {
                 options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
             }
+            else if (targetParticipant is MicrosoftTeamsAppIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsAppIdentifier);
+            }
+            else if (targetParticipant is TeamsExtensionUserIdentifier)
+            {
+                options = new TransferToParticipantOptions(targetParticipant as TeamsExtensionUserIdentifier);
+            }
             else
             {
                 throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
@@ -278,7 +286,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails)),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(options.Transferee),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
@@ -381,7 +390,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.ParticipantToAdd.CustomCallingContext?.TeamsPhoneCallDetails)),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
@@ -818,6 +828,134 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call.
+        /// </summary>
+        /// <param name="fromCall">The call to move the participants from.</param>
+        /// <param name="targetParticipants">The participants to move.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual async Task<Response<MoveParticipantsResult>> MoveParticipantsAsync(
+            string fromCall,
+            IEnumerable<CommunicationIdentifier> targetParticipants,
+            CancellationToken cancellationToken = default)
+        {
+            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
+            return await MoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call.
+        /// </summary>
+        /// <param name="fromCall">The call to move the participants from.</param>
+        /// <param name="targetParticipants">The participants to move.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual Response<MoveParticipantsResult> MoveParticipants(
+            string fromCall,
+            IEnumerable<CommunicationIdentifier> targetParticipants,
+            CancellationToken cancellationToken = default)
+        {
+            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
+
+            return MoveParticipants(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call using the provided options.
+        /// </summary>
+        /// <param name="options">Options for the MoveParticipants operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual async Task<Response<MoveParticipantsResult>> MoveParticipantsAsync(
+            MoveParticipantsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MoveParticipants)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MoveParticipantsRequestInternal request = CreateMoveParticipantsRequest(options);
+
+                var response = await RestClient.MoveParticipantsAsync(
+                    callConnectionId: CallConnectionId,
+                    request,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var result = new MoveParticipantsResult(response);
+
+                if (EventProcessor != null)
+                {
+                    result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                }
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call using the provided options.
+        /// </summary>
+        /// <param name="options">Options for the MoveParticipants operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual Response<MoveParticipantsResult> MoveParticipants(
+            MoveParticipantsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MoveParticipants)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MoveParticipantsRequestInternal request = CreateMoveParticipantsRequest(options);
+
+                var response = RestClient.MoveParticipants(
+                    callConnectionId: CallConnectionId,
+                    request,
+                    cancellationToken: cancellationToken);
+
+                var result = new MoveParticipantsResult(response);
+
+                if (EventProcessor != null)
+                {
+                    result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                }
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static MoveParticipantsRequestInternal CreateMoveParticipantsRequest(MoveParticipantsOptions options)
+        {
+            // validate TargetParticipants is not null
+            Argument.AssertNotNull(options.TargetParticipants, nameof(options.TargetParticipants));
+            Argument.AssertNotNull(options.FromCall, nameof(options.FromCall));
+            MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
+                options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                options.FromCall)
+            {
+                OperationContext = options.OperationContext ?? Guid.NewGuid().ToString(),
+                OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
+            };
+            return request;
         }
     }
 }

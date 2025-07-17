@@ -20,6 +20,8 @@ namespace Azure.Communication.CallAutomation
             int? code = default;
             int? subCode = default;
             string message = default;
+            SipDiagnosticInfo sipCode = default;
+            SipDiagnosticInfo q850Cause = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -45,8 +47,26 @@ namespace Azure.Communication.CallAutomation
                     message = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sipCode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sipCode = SipDiagnosticInfo.DeserializeSipDiagnosticInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("q850Cause"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    q850Cause = SipDiagnosticInfo.DeserializeSipDiagnosticInfo(property.Value);
+                    continue;
+                }
             }
-            return new ResultInformation(code, subCode, message);
+            return new ResultInformation(code, subCode, message, sipCode, q850Cause);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

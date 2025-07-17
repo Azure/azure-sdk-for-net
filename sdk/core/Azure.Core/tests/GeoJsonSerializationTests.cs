@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -13,6 +15,8 @@ namespace Azure.Core.Tests
     [TestFixture(3)]
     public class GeoJsonSerializationTests
     {
+        private readonly ModelReaderWriterOptions _jsonOptions = new("J");
+        private readonly ModelReaderWriterOptions _xmlOptions = new("X");
         private readonly int _points;
 
         public GeoJsonSerializationTests(int points)
@@ -303,6 +307,75 @@ namespace Azure.Core.Tests
             var geometry4 = JsonSerializer.Deserialize<T>(bytes2);
 
             return geometry4;
+        }
+
+        private GeoPoint AssertRoundtripMRW(string json)
+        {
+            BinaryData data = new BinaryData(json);
+            var point = ModelReaderWriter.Read<GeoPoint>(data, _jsonOptions);
+
+            // Write using IJsonModel
+            var memoryStreamOutput = new MemoryStream();
+            using (Utf8JsonWriter writer = new Utf8JsonWriter(memoryStreamOutput))
+            {
+                ((IJsonModel<GeoPoint>)point).Write(writer, _jsonOptions);
+            }
+
+            // Read back using IJsonModel
+            var jsonReader2 = new Utf8JsonReader(memoryStreamOutput.ToArray());
+            var point2 = ((IJsonModel<GeoPoint>)point).Create(ref jsonReader2, _jsonOptions);
+
+            // Write using IPersistableModel
+            var binaryData = ((IPersistableModel<GeoPoint>)point2).Write(_jsonOptions);
+
+            // Read back using IPersistableModel
+            var point3 = ((IPersistableModel<GeoPoint>)point2).Create(binaryData, _jsonOptions);
+
+            return point3;
+        }
+
+        [Test]
+        public void CanRoundTripPointMRW()
+        {
+            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
+
+            var point = AssertRoundtripMRW(input);
+
+            Assert.AreEqual(P(0), point.Coordinates);
+        }
+
+        [Test]
+        public void CanRoundTripComplexPointMRW()
+        {
+            var input = """{"type":"Point","coordinates":[-122.091954,47.607148],"bbox":[-180,-90,180,90],"name":"Test Point","value":42}""";
+
+            var point = AssertRoundtripMRW(input);
+
+            Assert.AreEqual(-122.091954, point.Coordinates.Longitude, 1e-10);
+            Assert.AreEqual(47.607148, point.Coordinates.Latitude, 1e-10);
+            Assert.IsNotNull(point.BoundingBox);
+            Assert.AreEqual(-180, point.BoundingBox.West);
+            Assert.AreEqual(-90, point.BoundingBox.South);
+            Assert.AreEqual(180, point.BoundingBox.East);
+            Assert.AreEqual(90, point.BoundingBox.North);
+            Assert.AreEqual("Test Point", point.CustomProperties["name"]);
+            Assert.AreEqual(42, point.CustomProperties["value"]);
+        }
+
+        [Test]
+        public void NonJsonFormatThrowsMRW()
+        {
+            var point = new GeoPoint(-122.091954, 47.607148);
+            var jsonModel = (IJsonModel<GeoPoint>)point;
+            var persistableModel = (IPersistableModel<GeoPoint>)point;
+
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            var binaryData = BinaryData.FromString("""{"type":"Point","coordinates":[-122.091954,47.607148]}""");
+
+            Assert.Throws<FormatException>(() => jsonModel.Write(writer, _xmlOptions));
+            Assert.Throws<FormatException>(() => persistableModel.Write(_xmlOptions));
+            Assert.Throws<FormatException>(() => persistableModel.Create(binaryData, _xmlOptions));
         }
     }
 }

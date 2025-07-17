@@ -15,10 +15,10 @@ The library inventory helps us:
 
 To generate the library inventory:
 
-1. Run the `Library_Inventory.py` script from the repository root:
+1. Run the `Library_Inventory.ps1` script from the repository root:
 
-```bash
-python doc/GeneratorMigration/Library_Inventory.py
+```powershell
+pwsh doc/GeneratorMigration/Library_Inventory.ps1
 ```
 
 2. The script will:
@@ -27,10 +27,10 @@ python doc/GeneratorMigration/Library_Inventory.py
    - Identify the generator used (Swagger or TypeSpec)
    - Generate a markdown report (`doc/GeneratorMigration/Library_Inventory.md`)
 
-3. If you need JSON output for programmatic use, use the `--json` flag:
+3. If you need JSON output for programmatic use, use the `-Json` flag:
 
-```bash
-python doc/GeneratorMigration/Library_Inventory.py --json
+```powershell
+pwsh doc/GeneratorMigration/Library_Inventory.ps1 -Json
 ```
    - This will generate an additional `Library_Inventory.json` file with the raw inventory data
    - Note: The JSON file is for temporary analytical use and should not be checked into the repository

@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -296,7 +295,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     continue;
                 }
 
-                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+                if (!_resourceClientProvider.ContextualParameters.ContainsKey(parameter.Name))
                 {
                     var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
                     if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
