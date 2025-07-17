@@ -1,14 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Generator.Management.Models
 {
+    /// <summary>
+    /// This class provides the pattern of an operation request path.
+    /// </summary>
     internal class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<RequestPathSegment>
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
@@ -161,6 +171,27 @@ namespace Azure.Generator.Management.Models
         public static implicit operator string(RequestPathPattern requestPath)
         {
             return requestPath._path;
+        }
+
+        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
+
+        /// <summary>
+        /// Get the corresponding contextual parameter in this request path for a provided parameter.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="contextualParameter"></param>
+        /// <returns></returns>
+        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        {
+            contextualParameter = null;
+            if (parameter.Location != ParameterLocation.Path)
+            {
+                return false;
+            }
+
+            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
+
+            return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
         }
     }
 }
