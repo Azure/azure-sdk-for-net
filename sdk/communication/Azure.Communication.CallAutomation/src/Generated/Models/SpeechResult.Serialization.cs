@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {

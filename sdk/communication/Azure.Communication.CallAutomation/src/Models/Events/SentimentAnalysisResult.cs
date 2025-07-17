@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The SentimentAnalysisResult. </summary>
     [CodeGenModel("SentimentAnalysisResult", Usage = new string[] { "output" }, Formats = new string[] { "json" })]

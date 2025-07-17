@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -155,9 +154,9 @@ namespace Azure.Communication.CallAutomation
             return new ChoiceResult(label, recognizedPhrase, confidence, languageIdentified, sentimentAnalysisResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Events.SentimentAnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SentimentAnalysisResult"/>. </summary>
         /// <param name="sentiment"> Gets or sets the value of the sentiment detected (positive, negative, neutral, mixed). </param>
-        /// <returns> A new <see cref="Models.Events.SentimentAnalysisResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="CallAutomation.SentimentAnalysisResult"/> instance for mocking. </returns>
         public static SentimentAnalysisResult SentimentAnalysisResult(string sentiment = null)
         {
             return new SentimentAnalysisResult(sentiment);

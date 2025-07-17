@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation.Models.Events;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ChoiceResult. </summary>

@@ -743,22 +743,33 @@ namespace Azure.Communication.CallAutomation
 
         private static WebSocketTranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
-            return configuration == default
-                ? default
-                : new WebSocketTranscriptionOptionsInternal(
-                configuration.Locale)
+            if (configuration == default)
+            {
+                return default;
+            }
+
+            WebSocketTranscriptionOptionsInternal webSocketTranscriptionOptionsInternal = new WebSocketTranscriptionOptionsInternal(configuration.Locale)
+            {
+                SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
+                StartTranscription = configuration.StartTranscription,
+                TransportUrl = configuration.TransportUri?.AbsoluteUri,
+                TransportType = configuration.TranscriptionTransport,
+                EnableIntermediateResults = configuration.EnableIntermediateResults,
+                SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
+                PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.Enable, configuration.PiiRedactionOptions.RedactionType),
+                EnableSentimentAnalysis = configuration.EnableSentimentAnalysis,
+                SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.EnableEndCallSummary, configuration.SummarizationOptions.Locale)
+            };
+
+            if (configuration.Locales != null && configuration.Locales.Any())
+            {
+                foreach (string locale in configuration.Locales)
                 {
-                    SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
-                    StartTranscription = configuration.StartTranscription,
-                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
-                    TransportType = configuration.TranscriptionTransport,
-                    EnableIntermediateResults = configuration.EnableIntermediateResults,
-                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
-                    PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.Enable, configuration.PiiRedactionOptions.RedactionType),
-                    EnableSentimentAnalysis = configuration.EnableSentimentAnalysis,
-                    //Locales = configuration.Locales == null ? null : configuration.Locales.Select(locale => locale.ToString()).ToList(),
-                    SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.EnableEndCallSummary, configuration.SummarizationOptions.Locale)
-                };
+                    webSocketTranscriptionOptionsInternal.Locales.Add(locale);
+                }
+            }
+
+            return webSocketTranscriptionOptionsInternal;
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

@@ -7,7 +7,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     public partial class SentimentAnalysisResult
     {
