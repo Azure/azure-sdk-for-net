@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SCMetadataEntity"/>. </summary>
-        internal SCMetadataEntity()
+        public SCMetadataEntity()
         {
         }
 
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> Self lookup url. </summary>
-        public string Self { get; }
+        public string Self { get; set; }
         /// <summary> Resource name of the record. </summary>
-        public string ResourceName { get; }
+        public string ResourceName { get; set; }
         /// <summary> Created Date Time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Updated Date time. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Deleted Date time. </summary>
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletedOn { get; set; }
     }
 }

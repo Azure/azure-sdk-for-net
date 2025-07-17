@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListClustersSuccessResponse"/>. </summary>
-        internal ListClustersSuccessResponse()
+        /// <param name="value"> The SCClusterRecord items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListClustersSuccessResponse(IEnumerable<SCClusterRecordData> value)
         {
-            Value = new ChangeTrackingList<SCClusterRecord>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListClustersSuccessResponse"/>. </summary>
-        /// <param name="value"> List of clusters in an environment of a confluent organization. </param>
-        /// <param name="nextLink"> URL to get the next set of cluster records if there are any. </param>
+        /// <param name="value"> The SCClusterRecord items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListClustersSuccessResponse(IReadOnlyList<SCClusterRecord> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListClustersSuccessResponse(IReadOnlyList<SCClusterRecordData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of clusters in an environment of a confluent organization. </summary>
-        public IReadOnlyList<SCClusterRecord> Value { get; }
-        /// <summary> URL to get the next set of cluster records if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="ListClustersSuccessResponse"/> for deserialization. </summary>
+        internal ListClustersSuccessResponse()
+        {
+        }
+
+        /// <summary> The SCClusterRecord items on this page. </summary>
+        public IReadOnlyList<SCClusterRecordData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableConfluentResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _validationsClientDiagnostics;
-        private ValidationsRestOperations _validationsRestClient;
+        private ClientDiagnostics _validationsOperationGroupClientDiagnostics;
+        private ValidationsOperationGroupRestOperations _validationsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableConfluentResourceGroupResource"/> class for mocking. </summary>
         protected MockableConfluentResourceGroupResource()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         {
         }
 
-        private ClientDiagnostics ValidationsClientDiagnostics => _validationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ValidationsRestOperations ValidationsRestClient => _validationsRestClient ??= new ValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ValidationsOperationGroupClientDiagnostics => _validationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ValidationsOperationGroupRestOperations ValidationsOperationGroupRestClient => _validationsOperationGroupRestClient ??= new ValidationsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganization</description>
+        /// <description>ValidationsOperationGroup_ValidateOrganization</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
+            using var scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
             scope.Start();
             try
             {
-                var response = await ValidationsRestClient.ValidateOrganizationAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
+                var response = await ValidationsOperationGroupRestClient.ValidateOrganizationAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganization</description>
+        /// <description>ValidationsOperationGroup_ValidateOrganization</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
+            using var scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
             scope.Start();
             try
             {
-                var response = ValidationsRestClient.ValidateOrganization(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
+                var response = ValidationsOperationGroupRestClient.ValidateOrganization(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,11 +201,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganizationV2</description>
+        /// <description>ValidationsOperationGroup_ValidateOrganizationV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
+            using var scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
             try
             {
-                var response = await ValidationsRestClient.ValidateOrganizationV2Async(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
+                var response = await ValidationsOperationGroupRestClient.ValidateOrganizationV2Async(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganizationV2</description>
+        /// <description>ValidationsOperationGroup_ValidateOrganizationV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.Confluent.Mocking
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
+            using var scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
             try
             {
-                var response = ValidationsRestClient.ValidateOrganizationV2(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
+                var response = ValidationsOperationGroupRestClient.ValidateOrganizationV2(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
                 return response;
             }
             catch (Exception e)

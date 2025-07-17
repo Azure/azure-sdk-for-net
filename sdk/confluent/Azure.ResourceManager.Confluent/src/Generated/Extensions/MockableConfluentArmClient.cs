@@ -45,5 +45,53 @@ namespace Azure.ResourceManager.Confluent.Mocking
             ConfluentOrganizationResource.ValidateResourceId(id);
             return new ConfluentOrganizationResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SCEnvironmentRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SCEnvironmentRecordResource.CreateResourceIdentifier" /> to create a <see cref="SCEnvironmentRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SCEnvironmentRecordResource"/> object. </returns>
+        public virtual SCEnvironmentRecordResource GetSCEnvironmentRecordResource(ResourceIdentifier id)
+        {
+            SCEnvironmentRecordResource.ValidateResourceId(id);
+            return new SCEnvironmentRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SCClusterRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SCClusterRecordResource.CreateResourceIdentifier" /> to create a <see cref="SCClusterRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SCClusterRecordResource"/> object. </returns>
+        public virtual SCClusterRecordResource GetSCClusterRecordResource(ResourceIdentifier id)
+        {
+            SCClusterRecordResource.ValidateResourceId(id);
+            return new SCClusterRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectorResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
+        public virtual ConnectorResource GetConnectorResource(ResourceIdentifier id)
+        {
+            ConnectorResource.ValidateResourceId(id);
+            return new ConnectorResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TopicRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicRecordResource.CreateResourceIdentifier" /> to create a <see cref="TopicRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TopicRecordResource"/> object. </returns>
+        public virtual TopicRecordResource GetTopicRecordResource(ResourceIdentifier id)
+        {
+            TopicRecordResource.ValidateResourceId(id);
+            return new TopicRecordResource(Client, id);
+        }
     }
 }

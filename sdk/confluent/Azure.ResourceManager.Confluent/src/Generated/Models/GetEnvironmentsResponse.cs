@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/>. </summary>
-        internal GetEnvironmentsResponse()
+        /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal GetEnvironmentsResponse(IEnumerable<SCEnvironmentRecordData> value)
         {
-            Value = new ChangeTrackingList<SCEnvironmentRecord>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/>. </summary>
-        /// <param name="value"> List of environments in a confluent organization. </param>
-        /// <param name="nextLink"> URL to get the next set of environment records if there are any. </param>
+        /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetEnvironmentsResponse(IReadOnlyList<SCEnvironmentRecord> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetEnvironmentsResponse(IReadOnlyList<SCEnvironmentRecordData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of environments in a confluent organization. </summary>
-        public IReadOnlyList<SCEnvironmentRecord> Value { get; }
-        /// <summary> URL to get the next set of environment records if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/> for deserialization. </summary>
+        internal GetEnvironmentsResponse()
+        {
+        }
+
+        /// <summary> The SCEnvironmentRecord items on this page. </summary>
+        public IReadOnlyList<SCEnvironmentRecordData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

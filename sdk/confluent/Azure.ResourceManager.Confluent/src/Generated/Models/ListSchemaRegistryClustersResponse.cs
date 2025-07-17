@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Confluent.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListSchemaRegistryClustersResponse"/>. </summary>
-        internal ListSchemaRegistryClustersResponse()
+        /// <param name="value"> The SchemaRegistryClusterRecord items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListSchemaRegistryClustersResponse(IEnumerable<SchemaRegistryClusterRecord> value)
         {
-            Value = new ChangeTrackingList<SchemaRegistryClusterRecord>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListSchemaRegistryClustersResponse"/>. </summary>
-        /// <param name="value"> List of schema registry clusters in an environment of a confluent organization. </param>
-        /// <param name="nextLink"> URL to get the next set of schema registry cluster records if there are any. </param>
+        /// <param name="value"> The SchemaRegistryClusterRecord items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListSchemaRegistryClustersResponse(IReadOnlyList<SchemaRegistryClusterRecord> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListSchemaRegistryClustersResponse(IReadOnlyList<SchemaRegistryClusterRecord> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of schema registry clusters in an environment of a confluent organization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSchemaRegistryClustersResponse"/> for deserialization. </summary>
+        internal ListSchemaRegistryClustersResponse()
+        {
+        }
+
+        /// <summary> The SchemaRegistryClusterRecord items on this page. </summary>
         public IReadOnlyList<SchemaRegistryClusterRecord> Value { get; }
-        /// <summary> URL to get the next set of schema registry cluster records if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Confluent
     /// </summary>
     public partial class ConfluentOrganizationCollection : ArmCollection, IEnumerable<ConfluentOrganizationResource>, IAsyncEnumerable<ConfluentOrganizationResource>
     {
-        private readonly ClientDiagnostics _confluentOrganizationOrganizationClientDiagnostics;
-        private readonly OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
+        private readonly ClientDiagnostics _confluentOrganizationOrganizationResourcesClientDiagnostics;
+        private readonly OrganizationResourcesRestOperations _confluentOrganizationOrganizationResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationCollection"/> class for mocking. </summary>
         protected ConfluentOrganizationCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConfluentOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _confluentOrganizationOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConfluentOrganizationResource.ResourceType, out string confluentOrganizationOrganizationApiVersion);
-            _confluentOrganizationOrganizationRestClient = new OrganizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationOrganizationApiVersion);
+            _confluentOrganizationOrganizationResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ConfluentOrganizationResource.ResourceType, out string confluentOrganizationOrganizationResourcesApiVersion);
+            _confluentOrganizationOrganizationResourcesRestClient = new OrganizationResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationOrganizationResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Create</description>
+        /// <description>OrganizationResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _confluentOrganizationOrganizationResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationResourcesClientDiagnostics, Pipeline, _confluentOrganizationOrganizationResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Create</description>
+        /// <description>OrganizationResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _confluentOrganizationOrganizationResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
+                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationResourcesClientDiagnostics, Pipeline, _confluentOrganizationOrganizationResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken);
+                var response = _confluentOrganizationOrganizationResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_ListByResourceGroup</description>
+        /// <description>OrganizationResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,9 +265,9 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationResourcesClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_ListByResourceGroup</description>
+        /// <description>OrganizationResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationResourcesClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,11 +352,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
+                var response = _confluentOrganizationOrganizationResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,11 +395,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,11 +415,11 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _confluentOrganizationOrganizationResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ConfluentOrganizationResource>(response.GetRawResponse());
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -440,11 +440,11 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
+            using var scope = _confluentOrganizationOrganizationResourcesClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
+                var response = _confluentOrganizationOrganizationResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ConfluentOrganizationResource>(response.GetRawResponse());
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
