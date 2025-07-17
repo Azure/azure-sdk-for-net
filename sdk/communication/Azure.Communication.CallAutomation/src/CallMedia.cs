@@ -809,6 +809,16 @@ namespace Azure.Communication.CallAutomation
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
                 }
 
+                if (recognizeChoiceOptions.SpeechLanguages != null && recognizeChoiceOptions.SpeechLanguages.Any())
+                {
+                    foreach (string language in recognizeChoiceOptions.SpeechLanguages)
+                    {
+                        recognizeConfigurationsInternal.SpeechLanguages.Add(language);
+                    }
+                }
+
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeChoiceOptions.EnableSentimentAnalysis;
+
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
                 {
                     recognizeConfigurationsInternal.SpeechRecognitionModelEndpointId = recognizeChoiceOptions.SpeechModelEndpointId;
@@ -843,6 +853,16 @@ namespace Azure.Communication.CallAutomation
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
                 }
+
+                if (recognizeSpeechOptions.SpeechLanguages != null && recognizeSpeechOptions.SpeechLanguages.Any())
+                {
+                    foreach (string language in recognizeSpeechOptions.SpeechLanguages)
+                    {
+                        recognizeConfigurationsInternal.SpeechLanguages.Add(language);
+                    }
+                }
+
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOptions.EnableSentimentAnalysis;
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
                 {
@@ -886,6 +906,16 @@ namespace Azure.Communication.CallAutomation
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
                 }
+
+                if (recognizeSpeechOrDtmfOptions.SpeechLanguages != null && recognizeSpeechOrDtmfOptions.SpeechLanguages.Any())
+                {
+                    foreach (string language in recognizeSpeechOrDtmfOptions.SpeechLanguages)
+                    {
+                        recognizeConfigurationsInternal.SpeechLanguages.Add(language);
+                    }
+                }
+
+                recognizeConfigurationsInternal.EnableSentimentAnalysis = recognizeSpeechOrDtmfOptions.EnableSentimentAnalysis;
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))
                 {
