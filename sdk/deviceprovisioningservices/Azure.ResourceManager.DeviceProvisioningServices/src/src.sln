@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.DeviceProvisioningServices", "Azure.ResourceManager.DeviceProvisioningServices.csproj", "{FF4F4F4D-42BD-415F-44C3-8F75D6A4425A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF4F4F4D-42BD-415F-44C3-8F75D6A4425A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF4F4F4D-42BD-415F-44C3-8F75D6A4425A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF4F4F4D-42BD-415F-44C3-8F75D6A4425A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF4F4F4D-42BD-415F-44C3-8F75D6A4425A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {679B7D59-5E00-4935-A150-C54D571BBCB6}
+	EndGlobalSection
+EndGlobal
