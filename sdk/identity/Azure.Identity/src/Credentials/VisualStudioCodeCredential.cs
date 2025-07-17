@@ -168,14 +168,14 @@ namespace Azure.Identity
 
             try
             {
-                using var authRecordStream = new FileStream(authRecordPath, FileMode.Open, FileAccess.Read);
+                using var authRecordStream = _fileSystem.GetFileStream(authRecordPath);
                 var authRecord = AuthenticationRecord.Deserialize(authRecordStream);
                 if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
                 {
                     return authRecord;
                 }
             }
-            catch (IOException) { }
+            catch (Exception) { }
             return null;
         }
     }

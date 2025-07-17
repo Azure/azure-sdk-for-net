@@ -9,6 +9,7 @@ namespace Azure.Identity.Broker.Tests
     public class VisualStudioCodeTests
     {
         [Test]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
         public void CanGetTokenFromBroker()
         {
             var cred = new VisualStudioCodeCredential();
