@@ -2,90 +2,34 @@
 
 #nullable disable
 
-using Azure.Core;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Text.Json;
-using System.Threading;
 
 namespace Payload.MultiPart.Models
 {
-    public partial class ComplexPartsRequest : IPersistableModel<ComplexPartsRequest>
+    public partial class ComplexPartsRequest
     {
         internal ComplexPartsRequest()
         {
         }
 
-        BinaryData IPersistableModel<ComplexPartsRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        internal virtual MultiPartFormDataRequestContent ToMultipartContent()
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComplexPartsRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "MPFD":
-                    return SerializeMultipart();
-                default:
-                    throw new FormatException($"The model {nameof(ComplexPartsRequest)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ComplexPartsRequest IPersistableModel<ComplexPartsRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComplexPartsRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComplexPartsRequest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                default:
-                    throw new FormatException($"The model {nameof(ComplexPartsRequest)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ComplexPartsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MPFD";
-        internal RequestContent ToMultipartContent()
-        {
-            List<RequestContent> parts = [];
-            parts.Add(RequestContent.CreateMultipartFormDataPart("id", Id));
-            parts.Add(RequestContent.CreateMultipartFormDataPart("address", ModelReaderWriter.Write(Address, ModelSerializationExtensions.WireOptions)));
-            parts.Add(RequestContent.CreateMultipartFormDataPart("profileImage", ProfileImage));
+            MultiPartFormDataRequestContent content = new();
+            content.Add("id", Id);
+            content.Add("address", Address, ModelSerializationExtensions.WireOptions, new PayloadMultiPartContext());
+            content.Add("profileImage", ProfileImage);
 
             foreach (var picture in Pictures)
             {
-                parts.Add(RequestContent.CreateMultipartFormDataPart("pictures", picture));
+                content.Add("pictures", picture);
             }
 
-            return RequestContent.CreateMultipartFormDataContent(parts);
-        }
-
-        public static implicit operator RequestContent(ComplexPartsRequest complexPartsRequest)
-        {
-            if (complexPartsRequest == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(complexPartsRequest, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-
-        private BinaryData SerializeMultipart()
-        {
-            using MemoryStream stream = new MemoryStream();
-            using RequestContent content = ToMultipartContent();
-
-            content.WriteTo(stream, CancellationToken.None);
-            if (stream.CanSeek)
-            {
-                stream.Seek(0, SeekOrigin.Begin);
-            }
-            return BinaryData.FromStream(stream);
         }
     }
 }

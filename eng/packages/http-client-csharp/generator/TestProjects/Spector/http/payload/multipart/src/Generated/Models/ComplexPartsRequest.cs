@@ -14,7 +14,7 @@ namespace Payload.MultiPart.Models
 {
     public partial class ComplexPartsRequest
     {
-        public ComplexPartsRequest(string id, Address address, string profileImagePath, IEnumerable<FileRequestContent> pictures)
+        public ComplexPartsRequest(string id, Address address, string profileImagePath, IEnumerable<FileBinaryContent> pictures)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(address, nameof(address));
@@ -27,7 +27,7 @@ namespace Payload.MultiPart.Models
             Pictures = pictures.ToList();
         }
 
-        public ComplexPartsRequest(string id, Address address, Stream profileImage, IEnumerable<FileRequestContent> pictures)
+        public ComplexPartsRequest(string id, Address address, Stream profileImage, IEnumerable<FileBinaryContent> pictures)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(address, nameof(address));
@@ -38,7 +38,7 @@ namespace Payload.MultiPart.Models
             ProfileImage = new(profileImage);
         }
 
-        public ComplexPartsRequest(string id, Address address, BinaryData profileImage, IEnumerable<FileRequestContent> pictures)
+        public ComplexPartsRequest(string id, Address address, BinaryData profileImage, IEnumerable<FileBinaryContent> pictures)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(address, nameof(address));
@@ -49,7 +49,7 @@ namespace Payload.MultiPart.Models
             ProfileImage = new(profileImage);
         }
 
-        public ComplexPartsRequest(string id, Address address, FileRequestContent profileImage, IEnumerable<FileRequestContent> pictures)
+        public ComplexPartsRequest(string id, Address address, FileBinaryContent profileImage, IEnumerable<FileBinaryContent> pictures)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(address, nameof(address));
@@ -64,7 +64,7 @@ namespace Payload.MultiPart.Models
 
         public string Id { get; }
         public Address Address { get; }
-        public FileRequestContent ProfileImage { get; }
-        public IList<FileRequestContent> Pictures { get; }
+        public FileBinaryContent ProfileImage { get; }
+        public IList<FileBinaryContent> Pictures { get; }
     }
 }

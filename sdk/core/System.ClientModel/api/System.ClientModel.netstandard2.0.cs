@@ -70,13 +70,32 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public sealed partial class FileBinaryContent : System.ClientModel.BinaryContent
+    public partial class FileBinaryContent : System.ClientModel.BinaryContent
     {
-        public FileBinaryContent(System.BinaryData data) { }
-        public FileBinaryContent(System.IO.Stream stream) { }
-        public FileBinaryContent(string path) { }
-        public override string? ContentType { get { throw null; } set { } }
+        public FileBinaryContent(System.BinaryData data, string? mediaType = null) { }
+        public FileBinaryContent(System.IO.Stream stream, string? mediaType = null) { }
+        public FileBinaryContent(string path, string? mediaType = null) { }
         public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MultiPartFormDataBinaryContent : System.ClientModel.BinaryContent
+    {
+        public MultiPartFormDataBinaryContent() { }
+        public MultiPartFormDataBinaryContent(string boundary) { }
+        public void Add(string name, System.BinaryData content, string? mediaType = null) { }
+        public void Add(string name, bool content, string? mediaType = null) { }
+        public void Add(string name, byte[] content, string? mediaType = null) { }
+        public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
+        public void Add(string name, decimal content, string? mediaType = null) { }
+        public void Add(string name, double content, string? mediaType = null) { }
+        public void Add(string name, int content, string? mediaType = null) { }
+        public void Add(string name, long content, string? mediaType = null) { }
+        public void Add(string name, float content, string? mediaType = null) { }
+        public void Add(string name, string content, string? mediaType = null) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, string? mediaType = null) { }
         public override void Dispose() { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
