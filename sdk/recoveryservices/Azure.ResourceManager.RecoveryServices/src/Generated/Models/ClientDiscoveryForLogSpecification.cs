@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Usage for vault. </summary>
-    internal partial class VaultUsageListResult
+    /// <summary> Class to represent shoebox log specification in json client discovery. </summary>
+    public partial class ClientDiscoveryForLogSpecification
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,29 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VaultUsageListResult"/>. </summary>
-        internal VaultUsageListResult()
+        /// <summary> Initializes a new instance of <see cref="ClientDiscoveryForLogSpecification"/>. </summary>
+        internal ClientDiscoveryForLogSpecification()
         {
-            Value = new ChangeTrackingList<VaultUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VaultUsageListResult"/>. </summary>
-        /// <param name="value"> The list of usages for the given vault. </param>
+        /// <summary> Initializes a new instance of <see cref="ClientDiscoveryForLogSpecification"/>. </summary>
+        /// <param name="name"> Name of the log. </param>
+        /// <param name="displayName"> Localized display name. </param>
+        /// <param name="blobDuration"> Blobs created in customer storage account per hour. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultUsageListResult(IReadOnlyList<VaultUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientDiscoveryForLogSpecification(string name, string displayName, string blobDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            Name = name;
+            DisplayName = displayName;
+            BlobDuration = blobDuration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of usages for the given vault. </summary>
-        public IReadOnlyList<VaultUsage> Value { get; }
+        /// <summary> Name of the log. </summary>
+        public string Name { get; }
+        /// <summary> Localized display name. </summary>
+        public string DisplayName { get; }
+        /// <summary> Blobs created in customer storage account per hour. </summary>
+        public string BlobDuration { get; }
     }
 }
