@@ -12,9 +12,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-     <PackageReference Include="Castle.Core" />
-     <PackageReference Include="System.ClientModel" /> 
+    <PackageReference Include="Castle.Core" />
     <PackageReference Include="NUnit" />
+    <PackageReference Include="System.ClientModel" /> 
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestProxyPath</_Parameter1>
+      <_Parameter2>$(NuGetPackageRoot)\azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net8.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
+    </AssemblyAttribute>
   </ItemGroup>
 </Project>

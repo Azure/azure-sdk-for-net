@@ -46,21 +46,21 @@ public abstract class ClientTestBase
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <param name="isAsync"></param>
-    public ClientTestBase(bool isAsync)
-    {
-        IsAsync = isAsync;
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
     protected IReadOnlyCollection<IInterceptor>? AdditionalInterceptors { get; set; }
 
     /// <summary>
     /// TODO.
     /// </summary>
     protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="isAsync"></param>
+    public ClientTestBase(bool isAsync)
+    {
+        IsAsync = isAsync;
+    }
 
     /// <summary>
     /// TODO.
@@ -190,10 +190,8 @@ public abstract class ClientTestBase
             interceptors.AddRange(preInterceptors);
         }
 
-        // TODO: Add more interceptors as needed
-        //interceptors.Add(new GetOriginalInterceptor(client));
-
-        //interceptors.Add(new InstrumentResultInterceptor(this));
+        interceptors.Add(new GetOriginalInterceptor(client));
+        interceptors.Add(new WrapResultInterceptor(this));
 
         // Ignore the async method interceptor entirely if we're running a
         // a SyncOnly test
@@ -208,5 +206,20 @@ public abstract class ClientTestBase
             clientType,
             client,
             interceptors.ToArray());
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="instrumented"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    protected T GetOriginal<T>(T instrumented)
+    {
+        if (instrumented == null) throw new ArgumentNullException(nameof(instrumented));
+        var i = instrumented as IWrapped ?? throw new InvalidOperationException($"{instrumented.GetType()} is not an instrumented type");
+        return (T)i.Original;
     }
 }

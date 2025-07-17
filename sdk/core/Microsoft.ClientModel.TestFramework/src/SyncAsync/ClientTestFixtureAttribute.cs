@@ -21,11 +21,11 @@ internal class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IP
 
     private readonly object[] _additionalParameters;
 
-/// <summary>
-/// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
-/// </summary>
-/// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
-public ClientTestFixtureAttribute(params object[] additionalParameters)
+    /// <summary>
+    /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
+    /// </summary>
+    /// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
+    public ClientTestFixtureAttribute(params object[] additionalParameters)
     {
         _additionalParameters = additionalParameters ?? new object[] { };
     }
@@ -35,12 +35,12 @@ public ClientTestFixtureAttribute(params object[] additionalParameters)
         return BuildFrom(typeInfo, this);
     }
 
-public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
-{
-    bool includeSync = !typeInfo.GetCustomAttributes<AsyncOnlyAttribute>(true).Any();
-    bool includeAsync = !typeInfo.GetCustomAttributes<SyncOnlyAttribute>(true).Any();
+    public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
+    {
+        bool includeSync = !typeInfo.GetCustomAttributes<AsyncOnlyAttribute>(true).Any();
+        bool includeAsync = !typeInfo.GetCustomAttributes<SyncOnlyAttribute>(true).Any();
 
-    Debug.Assert(includeSync || includeAsync);
+        Debug.Assert(includeSync || includeAsync);
 
         Debug.Assert(includeSync || includeAsync);
 
@@ -56,29 +56,30 @@ public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
         }
     }
 
-    private List<(TestFixtureAttribute Suite, bool IsAsync, object Parameter)> GeneratePermutations(bool includeSync, bool includeAsync)
+    private List<(TestFixtureAttribute Suite, bool IsAsync, object? Parameter)> GeneratePermutations(bool includeSync, bool includeAsync)
     {
-        var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object Parameter)>();
+        var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object? Parameter)>();
 
         void AddResult(object parameter)
         {
-            var parameters = new List<object>();
-            parameters.Add(true); // isAsync flag
-
-            if (parameter != null)
-            {
-                parameters.Add(parameter);
-            }
-
             if (includeAsync)
             {
-                //result.Add((new TestFixtureAttribute(parameters.ToArray()), true, parameter));
+                var asyncParameters = new List<object> { true }; // isAsync flag
+                if (parameter != null)
+                {
+                    asyncParameters.Add(parameter);
+                }
+                result.Add((new TestFixtureAttribute(asyncParameters.ToArray()), true, parameter));
             }
 
             if (includeSync)
             {
-                parameters[0] = false; // Set isAsync to false for sync tests
-                //result.Add((new TestFixtureAttribute(parameters.ToArray()), false, parameter));
+                var syncParameters = new List<object> { false }; // isAsync flag
+                if (parameter != null)
+                {
+                    syncParameters.Add(parameter);
+                }
+                result.Add((new TestFixtureAttribute(syncParameters.ToArray()), false, parameter));
             }
         }
 
@@ -89,21 +90,26 @@ public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
                 AddResult(parameter);
             }
         }
+        else
+        {
+            // Generate base sync/async permutations when no additional parameters
+            AddResult(null);
+        }
 
         return result;
     }
 
-    private void Process(TestSuite testSuite, bool isAsync, object parameter)
+    private void Process(TestSuite testSuite, bool isAsync, object? parameter)
     {
         if (parameter != null)
         {
-            //testSuite.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
+            testSuite.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString()!);
         }
 
-        //ProcessTestList(testSuite, isAsync, parameter);
+        ProcessTestList(testSuite, isAsync, parameter);
     }
 
-    private void ProcessTestList(TestSuite testSuite, bool isAsync, object parameter)
+    private void ProcessTestList(TestSuite testSuite, bool isAsync, object? parameter)
     {
         List<Test>? testsToDelete = null;
         foreach (Test test in testSuite.Tests)
@@ -137,11 +143,11 @@ public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
         }
     }
 
-    private bool ProcessTest(bool isAsync, object parameter, Test test)
+    private bool ProcessTest(bool isAsync, object? parameter, Test test)
     {
         if (parameter != null)
         {
-            //test.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
+            test.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString()!);
         }
 
         // Handle sync-only tests
