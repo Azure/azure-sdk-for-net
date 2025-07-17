@@ -5,32 +5,26 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Grafana.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    internal class ManagedGrafanaOperationSource : IOperationSource<ManagedGrafanaResource>
+    internal class ManagedGrafanaOperationSource : IOperationSource<ManagedGrafana>
     {
-        private readonly ArmClient _client;
-
-        internal ManagedGrafanaOperationSource(ArmClient client)
+        ManagedGrafana IOperationSource<ManagedGrafana>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            _client = client;
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return ManagedGrafana.DeserializeManagedGrafana(document.RootElement);
         }
 
-        ManagedGrafanaResource IOperationSource<ManagedGrafanaResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedGrafana> IOperationSource<ManagedGrafana>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
-            return new ManagedGrafanaResource(_client, data);
-        }
-
-        async ValueTask<ManagedGrafanaResource> IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
-            return await Task.FromResult(new ManagedGrafanaResource(_client, data)).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return ManagedGrafana.DeserializeManagedGrafana(document.RootElement);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Grafana.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Grafana.Samples
@@ -28,16 +29,16 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedGrafanaResource created on azure
-            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
-            string workspaceName = "myWorkspace";
-            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GrafanaIntegrationFabricResource
-            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
+            string workspaceName = "myWorkspace";
+            GrafanaIntegrationFabricCollection collection = resourceGroupResource.GetGrafanaIntegrationFabrics(workspaceName);
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
@@ -72,16 +73,16 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedGrafanaResource created on azure
-            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
-            string workspaceName = "myWorkspace";
-            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GrafanaIntegrationFabricResource
-            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
+            string workspaceName = "myWorkspace";
+            GrafanaIntegrationFabricCollection collection = resourceGroupResource.GetGrafanaIntegrationFabrics(workspaceName);
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
@@ -106,16 +107,16 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedGrafanaResource created on azure
-            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
-            string workspaceName = "myWorkspace";
-            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GrafanaIntegrationFabricResource
-            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
+            string workspaceName = "myWorkspace";
+            GrafanaIntegrationFabricCollection collection = resourceGroupResource.GetGrafanaIntegrationFabrics(workspaceName);
 
             // invoke the operation and iterate over the result
             await foreach (GrafanaIntegrationFabricResource item in collection.GetAllAsync())
@@ -142,16 +143,16 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedGrafanaResource created on azure
-            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
-            string workspaceName = "myWorkspace";
-            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GrafanaIntegrationFabricResource
-            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
+            string workspaceName = "myWorkspace";
+            GrafanaIntegrationFabricCollection collection = resourceGroupResource.GetGrafanaIntegrationFabrics(workspaceName);
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
@@ -172,16 +173,16 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ManagedGrafanaResource created on azure
-            // for more information of creating ManagedGrafanaResource, please refer to the document of ManagedGrafanaResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
-            string workspaceName = "myWorkspace";
-            ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this GrafanaIntegrationFabricResource
-            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
+            string workspaceName = "myWorkspace";
+            GrafanaIntegrationFabricCollection collection = resourceGroupResource.GetGrafanaIntegrationFabrics(workspaceName);
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";

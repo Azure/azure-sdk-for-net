@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            IReadOnlyList<ManagedPrivateEndpointModelData> value = default;
+            IReadOnlyList<ManagedPrivateEndpointModel> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ManagedPrivateEndpointModelData> array = new List<ManagedPrivateEndpointModelData>();
+                    List<ManagedPrivateEndpointModel> array = new List<ManagedPrivateEndpointModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(item, options));
+                        array.Add(ManagedPrivateEndpointModel.DeserializeManagedPrivateEndpointModel(item, options));
                     }
                     value = array;
                     continue;

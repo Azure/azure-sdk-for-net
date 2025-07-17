@@ -9,16 +9,17 @@ using System.Threading;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Grafana.Models;
 
 namespace Azure.ResourceManager.Grafana.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableGrafanaSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _managedGrafanaClientDiagnostics;
-        private ManagedGrafanasRestOperations _managedGrafanaRestClient;
         private ClientDiagnostics _managedDashboardClientDiagnostics;
         private ManagedDashboardsRestOperations _managedDashboardRestClient;
+        private ClientDiagnostics _grafanaClientDiagnostics;
+        private GrafanaRestOperations _grafanaRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableGrafanaSubscriptionResource"/> class for mocking. </summary>
         protected MockableGrafanaSubscriptionResource()
@@ -32,75 +33,15 @@ namespace Azure.ResourceManager.Grafana.Mocking
         {
         }
 
-        private ClientDiagnostics ManagedGrafanaClientDiagnostics => _managedGrafanaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedGrafanaResource.ResourceType.Namespace, Diagnostics);
-        private ManagedGrafanasRestOperations ManagedGrafanaRestClient => _managedGrafanaRestClient ??= new ManagedGrafanasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedGrafanaResource.ResourceType));
         private ClientDiagnostics ManagedDashboardClientDiagnostics => _managedDashboardClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedDashboardResource.ResourceType.Namespace, Diagnostics);
         private ManagedDashboardsRestOperations ManagedDashboardRestClient => _managedDashboardRestClient ??= new ManagedDashboardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDashboardResource.ResourceType));
+        private ClientDiagnostics GrafanaClientDiagnostics => _grafanaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GrafanaRestOperations GrafanaRestClient => _grafanaRestClient ??= new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List all resources of workspaces for Grafana under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGrafana_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedGrafanaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedGrafanas", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all resources of workspaces for Grafana under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedGrafana_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedGrafanaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedGrafanaResource> GetManagedGrafanas(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedGrafanas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,6 +102,58 @@ namespace Azure.ResourceManager.Grafana.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDashboardRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDashboardRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDashboardResource(Client, ManagedDashboardData.DeserializeManagedDashboardData(e)), ManagedDashboardClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedDashboards", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources of workspaces for Grafana under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedGrafana"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedGrafana> GetGrafanasAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GrafanaRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedGrafana.DeserializeManagedGrafana(e), GrafanaClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetGrafanas", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources of workspaces for Grafana under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedGrafana"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedGrafana> GetGrafanas(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GrafanaRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedGrafana.DeserializeManagedGrafana(e), GrafanaClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetGrafanas", "value", "nextLink", cancellationToken);
         }
     }
 }

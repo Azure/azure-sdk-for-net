@@ -14,18 +14,20 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A class representing a collection of <see cref="GrafanaPrivateLinkResource"/> and their operations.
-    /// Each <see cref="GrafanaPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ManagedGrafanaResource"/>.
-    /// To get a <see cref="GrafanaPrivateLinkResourceCollection"/> instance call the GetGrafanaPrivateLinkResources method from an instance of <see cref="ManagedGrafanaResource"/>.
+    /// Each <see cref="GrafanaPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="GrafanaPrivateLinkResourceCollection"/> instance call the GetGrafanaPrivateLinkResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class GrafanaPrivateLinkResourceCollection : ArmCollection, IEnumerable<GrafanaPrivateLinkResource>, IAsyncEnumerable<GrafanaPrivateLinkResource>
     {
         private readonly ClientDiagnostics _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient;
+        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateLinkResourceCollection"/> class for mocking. </summary>
         protected GrafanaPrivateLinkResourceCollection()
@@ -35,8 +37,12 @@ namespace Azure.ResourceManager.Grafana
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GrafanaPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal GrafanaPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
+            _workspaceName = workspaceName;
             _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", GrafanaPrivateLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GrafanaPrivateLinkResource.ResourceType, out string grafanaPrivateLinkResourcePrivateLinkResourcesApiVersion);
             _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaPrivateLinkResourcePrivateLinkResourcesApiVersion);
@@ -47,8 +53,8 @@ namespace Azure.ResourceManager.Grafana
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedGrafanaResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -129,7 +135,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken);
+                var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateLinkResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -166,8 +172,8 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="GrafanaPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GrafanaPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GrafanaPrivateLinkResource(Client, GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(e)), _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "GrafanaPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -196,8 +202,8 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="GrafanaPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GrafanaPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GrafanaPrivateLinkResource(Client, GrafanaPrivateLinkResourceData.DeserializeGrafanaPrivateLinkResourceData(e)), _grafanaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "GrafanaPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -234,7 +240,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -277,7 +283,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateLinkResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,7 +326,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<GrafanaPrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -365,7 +371,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                var response = _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, privateLinkResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<GrafanaPrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new GrafanaPrivateLinkResource(Client, response.Value), response.GetRawResponse());

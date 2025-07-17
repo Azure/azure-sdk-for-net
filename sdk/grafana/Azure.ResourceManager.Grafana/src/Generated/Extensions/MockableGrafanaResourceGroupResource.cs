@@ -8,13 +8,21 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Grafana.Models;
 
 namespace Azure.ResourceManager.Grafana.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableGrafanaResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _grafanaClientDiagnostics;
+        private GrafanaRestOperations _grafanaRestClient;
+        private ClientDiagnostics _managedPrivateEndpointsClientDiagnostics;
+        private ManagedPrivateEndpointsRestOperations _managedPrivateEndpointsRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableGrafanaResourceGroupResource"/> class for mocking. </summary>
         protected MockableGrafanaResourceGroupResource()
         {
@@ -27,29 +35,37 @@ namespace Azure.ResourceManager.Grafana.Mocking
         {
         }
 
+        private ClientDiagnostics GrafanaClientDiagnostics => _grafanaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GrafanaRestOperations GrafanaRestClient => _grafanaRestClient ??= new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ManagedPrivateEndpointsClientDiagnostics => _managedPrivateEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ManagedPrivateEndpointsRestOperations ManagedPrivateEndpointsRestClient => _managedPrivateEndpointsRestClient ??= new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ManagedGrafanaResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
-        public virtual ManagedGrafanaCollection GetManagedGrafanas()
+        /// <summary> Gets a collection of GrafanaPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of GrafanaPrivateEndpointConnectionResources and their operations over a GrafanaPrivateEndpointConnectionResource. </returns>
+        public virtual GrafanaPrivateEndpointConnectionCollection GetGrafanaPrivateEndpointConnections(string workspaceName)
         {
-            return GetCachedClient(client => new ManagedGrafanaCollection(client, Id));
+            return new GrafanaPrivateEndpointConnectionCollection(Client, Id, workspaceName);
         }
 
         /// <summary>
-        /// Get the properties of a specific workspace for Grafana resource.
+        /// Get private endpoint connections.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedGrafana_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -57,30 +73,31 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// <description><see cref="GrafanaPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GrafanaPrivateEndpointConnectionResource>> GetGrafanaPrivateEndpointConnectionAsync(string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedGrafanas().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetGrafanaPrivateEndpointConnections(workspaceName).GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get the properties of a specific workspace for Grafana resource.
+        /// Get private endpoint connections.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedGrafana_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,18 +105,167 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// <description><see cref="GrafanaPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GrafanaPrivateEndpointConnectionResource> GetGrafanaPrivateEndpointConnection(string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetGrafanaPrivateEndpointConnections(workspaceName).Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GrafanaPrivateLinkResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedGrafanaResource> GetManagedGrafana(string workspaceName, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of GrafanaPrivateLinkResources and their operations over a GrafanaPrivateLinkResource. </returns>
+        public virtual GrafanaPrivateLinkResourceCollection GetGrafanaPrivateLinkResources(string workspaceName)
         {
-            return GetManagedGrafanas().Get(workspaceName, cancellationToken);
+            return new GrafanaPrivateLinkResourceCollection(Client, Id, workspaceName);
+        }
+
+        /// <summary>
+        /// Get specific private link resource information for this grafana resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GrafanaPrivateLinkResource>> GetGrafanaPrivateLinkResourceAsync(string workspaceName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetGrafanaPrivateLinkResources(workspaceName).GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get specific private link resource information for this grafana resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GrafanaPrivateLinkResource> GetGrafanaPrivateLinkResource(string workspaceName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetGrafanaPrivateLinkResources(workspaceName).Get(privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GrafanaIntegrationFabricResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of GrafanaIntegrationFabricResources and their operations over a GrafanaIntegrationFabricResource. </returns>
+        public virtual GrafanaIntegrationFabricCollection GetGrafanaIntegrationFabrics(string workspaceName)
+        {
+            return new GrafanaIntegrationFabricCollection(Client, Id, workspaceName);
+        }
+
+        /// <summary>
+        /// Get a IntegrationFabric
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="integrationFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GrafanaIntegrationFabricResource>> GetGrafanaIntegrationFabricAsync(string workspaceName, string integrationFabricName, CancellationToken cancellationToken = default)
+        {
+            return await GetGrafanaIntegrationFabrics(workspaceName).GetAsync(integrationFabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a IntegrationFabric
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="integrationFabricName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GrafanaIntegrationFabricResource> GetGrafanaIntegrationFabric(string workspaceName, string integrationFabricName, CancellationToken cancellationToken = default)
+        {
+            return GetGrafanaIntegrationFabrics(workspaceName).Get(integrationFabricName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedDashboardResources in the ResourceGroupResource. </summary>
@@ -169,6 +335,1048 @@ namespace Azure.ResourceManager.Grafana.Mocking
         public virtual Response<ManagedDashboardResource> GetManagedDashboard(string dashboardName, CancellationToken cancellationToken = default)
         {
             return GetManagedDashboards().Get(dashboardName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the properties of a specific workspace for Grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<Response<ManagedGrafana>> GetGrafanaAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.GetGrafana");
+            scope.Start();
+            try
+            {
+                var response = await GrafanaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the properties of a specific workspace for Grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual Response<ManagedGrafana> GetGrafana(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.GetGrafana");
+            scope.Start();
+            try
+            {
+                var response = GrafanaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a workspace for Grafana resource. This API is idempotent, so user can either create a new grafana or update an existing grafana.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="requestBodyParameters"> The <see cref="ManagedGrafana"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="requestBodyParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedGrafana>> CreateGrafanaAsync(WaitUntil waitUntil, string workspaceName, ManagedGrafana requestBodyParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(requestBodyParameters, nameof(requestBodyParameters));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.CreateGrafana");
+            scope.Start();
+            try
+            {
+                var response = await GrafanaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, requestBodyParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedGrafana>(new ManagedGrafanaOperationSource(), GrafanaClientDiagnostics, Pipeline, GrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, requestBodyParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a workspace for Grafana resource. This API is idempotent, so user can either create a new grafana or update an existing grafana.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="requestBodyParameters"> The <see cref="ManagedGrafana"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="requestBodyParameters"/> is null. </exception>
+        public virtual ArmOperation<ManagedGrafana> CreateGrafana(WaitUntil waitUntil, string workspaceName, ManagedGrafana requestBodyParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(requestBodyParameters, nameof(requestBodyParameters));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.CreateGrafana");
+            scope.Start();
+            try
+            {
+                var response = GrafanaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, requestBodyParameters, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedGrafana>(new ManagedGrafanaOperationSource(), GrafanaClientDiagnostics, Pipeline, GrafanaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, requestBodyParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a workspace for Grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="content"> The <see cref="ManagedGrafanaUpdateContent"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedGrafana>> UpdateGrafanaAsync(WaitUntil waitUntil, string workspaceName, ManagedGrafanaUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.UpdateGrafana");
+            scope.Start();
+            try
+            {
+                var response = await GrafanaRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedGrafana>(new ManagedGrafanaOperationSource(), GrafanaClientDiagnostics, Pipeline, GrafanaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a workspace for Grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="content"> The <see cref="ManagedGrafanaUpdateContent"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ManagedGrafana> UpdateGrafana(WaitUntil waitUntil, string workspaceName, ManagedGrafanaUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.UpdateGrafana");
+            scope.Start();
+            try
+            {
+                var response = GrafanaRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, content, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedGrafana>(new ManagedGrafanaOperationSource(), GrafanaClientDiagnostics, Pipeline, GrafanaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a workspace for Grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteGrafanaAsync(WaitUntil waitUntil, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.DeleteGrafana");
+            scope.Start();
+            try
+            {
+                var response = await GrafanaRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation(GrafanaClientDiagnostics, Pipeline, GrafanaRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a workspace for Grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual ArmOperation DeleteGrafana(WaitUntil waitUntil, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.DeleteGrafana");
+            scope.Start();
+            try
+            {
+                var response = GrafanaRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var operation = new GrafanaArmOperation(GrafanaClientDiagnostics, Pipeline, GrafanaRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all resources of workspaces for Grafana under the specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedGrafana"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedGrafana> GetGrafanasByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedGrafana.DeserializeManagedGrafana(e), GrafanaClientDiagnostics, Pipeline, "MockableGrafanaResourceGroupResource.GetGrafanasByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources of workspaces for Grafana under the specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedGrafana"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedGrafana> GetGrafanasByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GrafanaRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GrafanaRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedGrafana.DeserializeManagedGrafana(e), GrafanaClientDiagnostics, Pipeline, "MockableGrafanaResourceGroupResource.GetGrafanasByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve enterprise add-on details information
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/checkEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafanas_CheckEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<Response<EnterpriseDetails>> CheckEnterpriseDetailsGrafanaAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.CheckEnterpriseDetailsGrafana");
+            scope.Start();
+            try
+            {
+                var response = await GrafanaRestClient.CheckEnterpriseDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve enterprise add-on details information
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/checkEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafanas_CheckEnterpriseDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual Response<EnterpriseDetails> CheckEnterpriseDetailsGrafana(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = GrafanaClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.CheckEnterpriseDetailsGrafana");
+            scope.Start();
+            try
+            {
+                var response = GrafanaRestClient.CheckEnterpriseDetails(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/fetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafanas_FetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="GrafanaAvailablePlugin"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GrafanaAvailablePlugin> FetchAvailablePluginsGrafanasAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin(e), GrafanaClientDiagnostics, Pipeline, "MockableGrafanaResourceGroupResource.FetchAvailablePluginsGrafanas", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/fetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafanas_FetchAvailablePlugins</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="GrafanaAvailablePlugin"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GrafanaAvailablePlugin> FetchAvailablePluginsGrafanas(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => GrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin(e), GrafanaClientDiagnostics, Pipeline, "MockableGrafanaResourceGroupResource.FetchAvailablePluginsGrafanas", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Refresh and sync managed private endpoints of a grafana resource to latest state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/refreshManagedPrivateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafanas_RefreshManagedPrivateEndpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<ArmOperation> RefreshManagedPrivateEndpointAsync(WaitUntil waitUntil, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.RefreshManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = await ManagedPrivateEndpointsRestClient.RefreshManagedPrivateEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation(ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateRefreshManagedPrivateEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh and sync managed private endpoints of a grafana resource to latest state.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/refreshManagedPrivateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafanas_RefreshManagedPrivateEndpoint</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual ArmOperation RefreshManagedPrivateEndpoint(WaitUntil waitUntil, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.RefreshManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = ManagedPrivateEndpointsRestClient.RefreshManagedPrivateEndpoint(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var operation = new GrafanaArmOperation(ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateRefreshManagedPrivateEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a specific managed private endpoint of a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        public virtual async Task<Response<ManagedPrivateEndpointModel>> GetManagedPrivateEndpointAsync(string workspaceName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.GetManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = await ManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a specific managed private endpoint of a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        public virtual Response<ManagedPrivateEndpointModel> GetManagedPrivateEndpoint(string workspaceName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.GetManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = ManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a managed private endpoint for a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="requestBodyParameters"> The managed private endpoint to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="requestBodyParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedPrivateEndpointModel>> CreateManagedPrivateEndpointAsync(WaitUntil waitUntil, string workspaceName, string managedPrivateEndpointName, ManagedPrivateEndpointModel requestBodyParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(requestBodyParameters, nameof(requestBodyParameters));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.CreateManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = await ManagedPrivateEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, requestBodyParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModel>(new ManagedPrivateEndpointModelOperationSource(), ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, requestBodyParameters).Request, response, OperationFinalStateVia.OriginalUri);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a managed private endpoint for a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="requestBodyParameters"> The managed private endpoint to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="requestBodyParameters"/> is null. </exception>
+        public virtual ArmOperation<ManagedPrivateEndpointModel> CreateManagedPrivateEndpoint(WaitUntil waitUntil, string workspaceName, string managedPrivateEndpointName, ManagedPrivateEndpointModel requestBodyParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(requestBodyParameters, nameof(requestBodyParameters));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.CreateManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = ManagedPrivateEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, requestBodyParameters, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModel>(new ManagedPrivateEndpointModelOperationSource(), ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, requestBodyParameters).Request, response, OperationFinalStateVia.OriginalUri);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a managed private endpoint for an existing grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="content"> Properties that can be updated to an existing managed private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedPrivateEndpointModel>> UpdateManagedPrivateEndpointAsync(WaitUntil waitUntil, string workspaceName, string managedPrivateEndpointName, ManagedPrivateEndpointUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.UpdateManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = await ManagedPrivateEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModel>(new ManagedPrivateEndpointModelOperationSource(), ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a managed private endpoint for an existing grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="content"> Properties that can be updated to an existing managed private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ManagedPrivateEndpointModel> UpdateManagedPrivateEndpoint(WaitUntil waitUntil, string workspaceName, string managedPrivateEndpointName, ManagedPrivateEndpointUpdateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.UpdateManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = ManagedPrivateEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, content, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModel>(new ManagedPrivateEndpointModelOperationSource(), ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a managed private endpoint for a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteManagedPrivateEndpointAsync(WaitUntil waitUntil, string workspaceName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.DeleteManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = await ManagedPrivateEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation(ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a managed private endpoint for a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
+        public virtual ArmOperation DeleteManagedPrivateEndpoint(WaitUntil waitUntil, string workspaceName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+
+            using var scope = ManagedPrivateEndpointsClientDiagnostics.CreateScope("MockableGrafanaResourceGroupResource.DeleteManagedPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                var response = ManagedPrivateEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName, cancellationToken);
+                var operation = new GrafanaArmOperation(ManagedPrivateEndpointsClientDiagnostics, Pipeline, ManagedPrivateEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, managedPrivateEndpointName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all managed private endpoints of a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedPrivateEndpointModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedPrivateEndpointModel> GetManagedPrivateEndpointsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedPrivateEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedPrivateEndpointModel.DeserializeManagedPrivateEndpointModel(e), ManagedPrivateEndpointsClientDiagnostics, Pipeline, "MockableGrafanaResourceGroupResource.GetManagedPrivateEndpoints", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all managed private endpoints of a grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedPrivateEndpointModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedPrivateEndpointModel> GetManagedPrivateEndpoints(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedPrivateEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedPrivateEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedPrivateEndpointModel.DeserializeManagedPrivateEndpointModel(e), ManagedPrivateEndpointsClientDiagnostics, Pipeline, "MockableGrafanaResourceGroupResource.GetManagedPrivateEndpoints", "value", "nextLink", cancellationToken);
         }
     }
 }

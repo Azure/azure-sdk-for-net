@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            IReadOnlyList<ManagedGrafanaData> value = default;
+            IReadOnlyList<ManagedGrafana> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ManagedGrafanaData> array = new List<ManagedGrafanaData>();
+                    List<ManagedGrafana> array = new List<ManagedGrafana>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedGrafanaData.DeserializeManagedGrafanaData(item, options));
+                        array.Add(ManagedGrafana.DeserializeManagedGrafana(item, options));
                     }
                     value = array;
                     continue;

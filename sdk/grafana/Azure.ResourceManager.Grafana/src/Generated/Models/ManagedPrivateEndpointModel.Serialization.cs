@@ -10,16 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Grafana.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Grafana
+namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class ManagedPrivateEndpointModelData : IUtf8JsonSerializable, IJsonModel<ManagedPrivateEndpointModelData>
+    public partial class ManagedPrivateEndpointModel : IUtf8JsonSerializable, IJsonModel<ManagedPrivateEndpointModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedPrivateEndpointModelData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedPrivateEndpointModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ManagedPrivateEndpointModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedPrivateEndpointModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModel)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -87,19 +86,19 @@ namespace Azure.ResourceManager.Grafana
             writer.WriteEndObject();
         }
 
-        ManagedPrivateEndpointModelData IJsonModel<ManagedPrivateEndpointModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedPrivateEndpointModel IJsonModel<ManagedPrivateEndpointModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedPrivateEndpointModelData(document.RootElement, options);
+            return DeserializeManagedPrivateEndpointModel(document.RootElement, options);
         }
 
-        internal static ManagedPrivateEndpointModelData DeserializeManagedPrivateEndpointModelData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedPrivateEndpointModel DeserializeManagedPrivateEndpointModel(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Grafana
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedPrivateEndpointModelData(
+            return new ManagedPrivateEndpointModel(
                 id,
                 name,
                 type,
@@ -269,35 +268,35 @@ namespace Azure.ResourceManager.Grafana
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ManagedPrivateEndpointModelData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedPrivateEndpointModel>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModel)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ManagedPrivateEndpointModelData IPersistableModel<ManagedPrivateEndpointModelData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedPrivateEndpointModel IPersistableModel<ManagedPrivateEndpointModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedPrivateEndpointModelData(document.RootElement, options);
+                        return DeserializeManagedPrivateEndpointModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModel)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ManagedPrivateEndpointModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedPrivateEndpointModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

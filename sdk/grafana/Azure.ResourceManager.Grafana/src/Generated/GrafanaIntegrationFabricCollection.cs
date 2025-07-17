@@ -14,18 +14,20 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A class representing a collection of <see cref="GrafanaIntegrationFabricResource"/> and their operations.
-    /// Each <see cref="GrafanaIntegrationFabricResource"/> in the collection will belong to the same instance of <see cref="ManagedGrafanaResource"/>.
-    /// To get a <see cref="GrafanaIntegrationFabricCollection"/> instance call the GetGrafanaIntegrationFabrics method from an instance of <see cref="ManagedGrafanaResource"/>.
+    /// Each <see cref="GrafanaIntegrationFabricResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="GrafanaIntegrationFabricCollection"/> instance call the GetGrafanaIntegrationFabrics method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class GrafanaIntegrationFabricCollection : ArmCollection, IEnumerable<GrafanaIntegrationFabricResource>, IAsyncEnumerable<GrafanaIntegrationFabricResource>
     {
         private readonly ClientDiagnostics _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics;
         private readonly IntegrationFabricsRestOperations _grafanaIntegrationFabricIntegrationFabricsRestClient;
+        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="GrafanaIntegrationFabricCollection"/> class for mocking. </summary>
         protected GrafanaIntegrationFabricCollection()
@@ -35,8 +37,12 @@ namespace Azure.ResourceManager.Grafana
         /// <summary> Initializes a new instance of the <see cref="GrafanaIntegrationFabricCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GrafanaIntegrationFabricCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal GrafanaIntegrationFabricCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
+            _workspaceName = workspaceName;
             _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", GrafanaIntegrationFabricResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GrafanaIntegrationFabricResource.ResourceType, out string grafanaIntegrationFabricIntegrationFabricsApiVersion);
             _grafanaIntegrationFabricIntegrationFabricsRestClient = new IntegrationFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaIntegrationFabricIntegrationFabricsApiVersion);
@@ -47,8 +53,8 @@ namespace Azure.ResourceManager.Grafana
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedGrafanaResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -87,8 +93,8 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricOperationSource(Client), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricOperationSource(Client), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,8 +142,8 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data, cancellationToken);
-                var operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricOperationSource(Client), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricOperationSource(Client), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
@@ -227,7 +233,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken);
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
@@ -264,8 +270,8 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="GrafanaIntegrationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GrafanaIntegrationFabricResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GrafanaIntegrationFabricResource(Client, GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(e)), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, "GrafanaIntegrationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -294,8 +300,8 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="GrafanaIntegrationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GrafanaIntegrationFabricResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GrafanaIntegrationFabricResource(Client, GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(e)), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, "GrafanaIntegrationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,7 +381,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken);
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -418,7 +424,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<GrafanaIntegrationFabricResource>(response.GetRawResponse());
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
@@ -463,7 +469,7 @@ namespace Azure.ResourceManager.Grafana
             scope.Start();
             try
             {
-                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken);
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, integrationFabricName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<GrafanaIntegrationFabricResource>(response.GetRawResponse());
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
