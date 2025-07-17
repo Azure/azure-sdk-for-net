@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary></summary>
+    /// <summary> The Deployments sub-client. </summary>
     public partial class Deployments
     {
         private readonly Uri _endpoint;

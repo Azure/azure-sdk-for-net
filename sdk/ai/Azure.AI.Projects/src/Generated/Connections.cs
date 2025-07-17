@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary></summary>
+    /// <summary> The Connections sub-client. </summary>
     public partial class Connections
     {
         private readonly Uri _endpoint;

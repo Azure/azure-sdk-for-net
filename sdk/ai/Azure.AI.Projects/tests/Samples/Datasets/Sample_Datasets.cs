@@ -135,7 +135,6 @@ namespace Azure.AI.Projects.Tests
             foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
             {
                 Console.WriteLine(ds);
-                Console.WriteLine(ds.Id);
                 Console.WriteLine(ds.Version);
             }
 

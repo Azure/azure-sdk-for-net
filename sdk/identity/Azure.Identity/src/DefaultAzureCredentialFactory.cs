@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -240,6 +241,7 @@ namespace Azure.Identity
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
             ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
+            options.RedirectUri = brokerOptions.RedirectUri;
 
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
 
@@ -322,6 +324,12 @@ namespace Azure.Identity
                 ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
                 object optionsInstance = optionsCtor?.Invoke(null);
                 options = optionsInstance as InteractiveBrowserCredentialOptions;
+                options.IsChainedCredential = true;
+                // Set default value for UseDefaultBrokerAccount on macOS
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    options.RedirectUri = new(Constants.MacBrokerRedirectUri);
+                }
 
                 return options != null;
             }

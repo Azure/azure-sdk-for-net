@@ -1723,7 +1723,12 @@
       "crossLanguageDefinitionId": "BasicTypeSpec.RoundTripModel",
       "usage": "Input,Output,Json",
       "doc": "this is a roundtrip model",
-      "decorators": [],
+      "decorators": [
+        {
+          "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
+          "arguments": {}
+        }
+      ],
       "properties": [
         {
           "$id": "175",
@@ -6354,8 +6359,14 @@
       "in": "header"
     },
     "oAuth2": {
-      "scopes": [
-        "https://theservice.azure.com/.default"
+      "flows": [
+        {
+          "scopes": [
+            "https://theservice.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+          "tokenUrl": "https://login.microsoftonline.com/common/oauth2/token"
+        }
       ]
     }
   }

@@ -1,16 +1,26 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
-
-- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.4 (2025-07-11)
+
+### Features Added
+
+- Added support for Deep Research.
+- Added support for MCP.
+
+### Sample updates
+
+- Added sample for Deep Research.
+- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
 
 ## 1.1.0-beta.3 (2025-06-27)
 
@@ -63,3 +73,4 @@
 
 ### Features Added
 - Initial release
+- Please see the [agents migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/AGENTS_MIGRATION_GUIDE.md) on how to use `Azure.AI.Projects` with `Azure.AI.Agents.Persistent` package.

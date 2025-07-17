@@ -56,7 +56,6 @@ Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
 foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
 {
     Console.WriteLine(ds);
-    Console.WriteLine(ds.Id);
     Console.WriteLine(ds.Version);
 }
 

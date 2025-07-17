@@ -5,13 +5,8 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Identity;
 
 #pragma warning disable AZC0007
 
@@ -68,6 +63,24 @@ namespace Azure.AI.Projects
             _tokenCredential = credential;
 
             _cacheManager = new ConnectionCacheManager(_endpoint, credential);
+        }
+
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AIProjectClientOptions options)
+            : base(_defaultMaxCacheSize)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
+
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            _tokenProvider = tokenProvider;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
+        }
+
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
+        {
         }
 
         private readonly ConnectionCacheManager _cacheManager;

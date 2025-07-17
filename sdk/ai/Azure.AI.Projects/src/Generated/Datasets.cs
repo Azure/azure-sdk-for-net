@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary></summary>
+    /// <summary> The Datasets sub-client. </summary>
     public partial class Datasets
     {
         private readonly Uri _endpoint;

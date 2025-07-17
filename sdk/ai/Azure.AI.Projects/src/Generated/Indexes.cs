@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    /// <summary></summary>
+    /// <summary> The Indexes sub-client. </summary>
     public partial class Indexes
     {
         private readonly Uri _endpoint;

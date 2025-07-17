@@ -5,11 +5,9 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identity;
 using Azure.AI.OpenAI;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
@@ -20,7 +18,7 @@ namespace Azure.AI.Projects
     /// <summary> The AzureAI service client. </summary>
     public partial class AIProjectClient : ClientConnectionProvider
     {
-#nullable enable
+        #nullable enable
 
         /// <summary>
         /// Gets the OpenAI chat client.

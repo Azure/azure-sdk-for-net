@@ -31,13 +31,6 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
-        /// <summary> Gets a collection of PrivateLinks in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinks and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkCollection GetPrivateLinks()
-        {
-            return GetCachedClient(client => new PrivateLinkCollection(client, Id));
-        }
-
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
         public virtual FooCollection GetFoos()
@@ -76,6 +69,39 @@ namespace MgmtTypeSpec.Mocking
         public virtual FooSettingsResource GetFooSettings()
         {
             return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
+        }
+
+        /// <summary> Gets a collection of Zoos in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Zoos and their operations over a ZooResource. </returns>
+        public virtual ZooCollection GetZoos()
+        {
+            return GetCachedClient(client => new ZooCollection(client, Id));
+        }
+
+        /// <summary> Get a Zoo. </summary>
+        /// <param name="zooName"> The name of the Zoo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ZooResource> GetZoo(string zooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
+
+            return GetZoos().Get(zooName, cancellationToken);
+        }
+
+        /// <summary> Get a Zoo. </summary>
+        /// <param name="zooName"> The name of the Zoo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ZooResource>> GetZooAsync(string zooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
+
+            return await GetZoos().GetAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -3,25 +3,32 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary></summary>
+    /// <summary> The AIProjectClient. </summary>
     public partial class AIProjectClient
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential provider used to authenticate to the service. </summary>
+        private readonly AuthenticationTokenProvider _tokenProvider;
+        /// <summary> The OAuth2 flows supported by the service. </summary>
+        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+            }
+        };
         private readonly string _apiVersion;
         private Connections _cachedConnections;
         private Datasets _cachedDatasets;
         private Indexes _cachedIndexes;
         private Deployments _cachedDeployments;
-
-        /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        internal AIProjectClient(Uri endpoint) : this(endpoint, new AIProjectClientOptions())
-        {
-        }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }

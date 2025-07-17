@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -16,14 +17,21 @@ namespace Azure.Core.GeoJson
     /// </code>
     /// </example>
     [JsonConverter(typeof(GeoJsonConverter))]
-    public sealed class GeoPoint : GeoObject
+    public sealed partial class GeoPoint : GeoObject
     {
+        /// <summary>
+        /// Initializes new instance of <see cref="GeoPoint"/>.
+        /// </summary>
+        public GeoPoint() : this(default, default)
+        {
+        }
+
         /// <summary>
         /// Initializes new instance of <see cref="GeoPoint"/>.
         /// </summary>
         /// <param name="longitude">The longitude of the point.</param>
         /// <param name="latitude">The latitude of the point.</param>
-        public GeoPoint(double longitude, double latitude): this(new GeoPosition(longitude, latitude), null, DefaultProperties)
+        public GeoPoint(double longitude, double latitude) : this(new GeoPosition(longitude, latitude), null, DefaultProperties)
         {
         }
 

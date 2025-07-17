@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
 #endif
-            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine("List the properties of all connections:");
             foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())

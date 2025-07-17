@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
-using Azure.AI.OpenAI;
 
 namespace Azure.AI.Projects.Tests;
 
-public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
     [SyncOnly]
@@ -45,7 +44,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);
         #endregion
-    }
+        }
 
     [Test]
     [AsyncOnly]

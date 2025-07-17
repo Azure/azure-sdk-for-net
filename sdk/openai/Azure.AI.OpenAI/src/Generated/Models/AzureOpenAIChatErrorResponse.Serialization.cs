@@ -12,6 +12,8 @@ namespace Azure.AI.OpenAI
 {
     internal partial class AzureOpenAIChatErrorResponse : IJsonModel<AzureOpenAIChatErrorResponse>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOpenAIChatErrorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -19,6 +21,8 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIChatErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
@@ -52,8 +56,12 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureOpenAIChatErrorResponse IJsonModel<AzureOpenAIChatErrorResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AzureOpenAIChatErrorResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIChatErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
@@ -65,6 +73,8 @@ namespace Azure.AI.OpenAI
             return DeserializeAzureOpenAIChatErrorResponse(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureOpenAIChatErrorResponse DeserializeAzureOpenAIChatErrorResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -92,22 +102,28 @@ namespace Azure.AI.OpenAI
             return new AzureOpenAIChatErrorResponse(error, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureOpenAIChatErrorResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIChatErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureOpenAIChatErrorResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureOpenAIChatErrorResponse IPersistableModel<AzureOpenAIChatErrorResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AzureOpenAIChatErrorResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIChatErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,17 +139,10 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AzureOpenAIChatErrorResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        public static implicit operator BinaryContent(AzureOpenAIChatErrorResponse azureOpenAIChatErrorResponse)
-        {
-            if (azureOpenAIChatErrorResponse == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(azureOpenAIChatErrorResponse, ModelSerializationExtensions.WireOptions);
-        }
-
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AzureOpenAIChatErrorResponse"/> from. </param>
         public static explicit operator AzureOpenAIChatErrorResponse(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();

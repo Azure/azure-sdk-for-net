@@ -243,7 +243,7 @@ The code below shows some Connection operations, which allow you to enumerate th
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List the properties of all connections:");
 foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
@@ -320,7 +320,6 @@ Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
 foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
 {
     Console.WriteLine(ds);
-    Console.WriteLine(ds.Id);
     Console.WriteLine(ds.Version);
 }
 
@@ -398,7 +397,7 @@ try
 {
     projectClient.Datasets.Get("non-existent-dataset-name", "non-existent-dataset-version");
 }
-catch (RequestFailedException ex) when (ex.Status == 404)
+catch (ClientResultException ex) when (ex.Status == 404)
 {
     Console.WriteLine($"Exception status code: {ex.Status}");
     Console.WriteLine($"Exception message: {ex.Message}");

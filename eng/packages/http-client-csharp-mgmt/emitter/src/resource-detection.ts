@@ -9,6 +9,7 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
+  convertResourceMetadataToArguments,
   ResourceMetadata,
   ResourceOperationKind,
   ResourceScope
@@ -55,20 +56,18 @@ export async function updateClients(
   );
   const resourceModels = getAllResourceModels(codeModel);
 
-  const resourceModelMap = new Map<string, ResourceMetadata>(
+  const resourceModelToMetadataMap = new Map<string, ResourceMetadata>(
     resourceModels.map((m) => [
       m.crossLanguageDefinitionId,
       {
-        resourceType: "",
+        resourceIdPattern: "", // this will be populated later
+        resourceType: "", // this will be populated later
         singletonResourceName: getSingletonResource(
           m.decorators?.find((d) => d.name == singleton)
         ),
         resourceScope: getResourceScope(m),
         methods: [],
-        parentResource: getParentResourceModelId(
-          sdkContext,
-          models.get(m.crossLanguageDefinitionId)
-        )
+        parentResourceId: undefined // this will be populated later
       } as ResourceMetadata
     ])
   );
@@ -78,7 +77,7 @@ export async function updateClients(
 
   // then we iterate over all the clients and their methods to find the resource operations
   // and add them to the resource model metadata
-  // we also calculate the resource type from the path of the operation
+  // during the process we populate the resourceIdPattern and resourceType
   for (const client of clients) {
     for (const method of client.methods) {
       const serviceMethod = serviceMethods.get(
@@ -87,7 +86,7 @@ export async function updateClients(
       const [kind, modelId] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
       if (modelId && kind) {
-        const entry = resourceModelMap.get(modelId);
+        const entry = resourceModelToMetadataMap.get(modelId);
         entry?.methods.push({
           id: method.crossLanguageDefinitionId,
           kind
@@ -97,17 +96,37 @@ export async function updateClients(
             method.operation.path
           );
         }
+        if (entry && !entry.resourceIdPattern && isCRUDKind(kind)) {
+          entry.resourceIdPattern = method.operation.path;
+        }
       }
+    }
+  }
+
+  // after the resourceIdPattern has been populated, we can set the parentResourceId
+  for (const [modelId, metadata] of resourceModelToMetadataMap) {
+    const parentResourceModelId = getParentResourceModelId(sdkContext, models.get(modelId));
+    if (parentResourceModelId) {
+      metadata.parentResourceId = resourceModelToMetadataMap.get(parentResourceModelId)?.resourceIdPattern;
     }
   }
 
   // the last step, add the decorator to the resource model
   for (const model of resourceModels) {
-    const metadata = resourceModelMap.get(model.crossLanguageDefinitionId);
+    const metadata = resourceModelToMetadataMap.get(model.crossLanguageDefinitionId);
     if (metadata) {
-      addResourceMetadata(model, metadata);
+      addResourceMetadata(sdkContext, model, metadata);
     }
   }
+}
+
+function isCRUDKind(kind: ResourceOperationKind): boolean {
+  return [
+    ResourceOperationKind.Get,
+    ResourceOperationKind.Create,
+    ResourceOperationKind.Update,
+    ResourceOperationKind.Delete
+  ].includes(kind);
 }
 
 function parseResourceOperation(
@@ -159,7 +178,7 @@ function getParentResourceModelId(
   const parentResourceDecorator = decorators?.find(
     (d) => d.definition?.name == parentResourceName
   );
-  return getResourceModelId(sdkContext, parentResourceDecorator) ?? undefined;
+  return getResourceModelId(sdkContext, parentResourceDecorator);
 }
 
 function getResourceModelId(
@@ -176,9 +195,11 @@ function getResourceModelId(
   } else {
     sdkContext.logger.reportDiagnostic({
       code: "general-error",
-      message: `Resource model not found for decorator ${decorator.decorator.name}`,
-      target: NoTarget,
-      severity: "error"
+      messageId: "default",
+      format: {
+        message: `Resource model not found for decorator ${decorator.decorator.name}`
+      },
+      target: NoTarget
     });
     return undefined;
   }
@@ -256,18 +277,25 @@ function getResourceScope(model: InputModelType): ResourceScope {
 }
 
 function addResourceMetadata(
+  sdkContext: CSharpEmitterContext,
   model: InputModelType,
   metadata: ResourceMetadata
 ) {
+  if (metadata.resourceIdPattern === "") {
+    sdkContext.logger.reportDiagnostic({
+      code: "general-warning", // TODO -- later maybe we could define a specific code for resource hierarchy issues
+      messageId: "default",
+      format: {
+        message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+      },
+      target: NoTarget // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
+    });
+    return;
+  }
+
   const resourceMetadataDecorator: DecoratorInfo = {
     name: resourceMetadata,
-    arguments: {
-      resourceType: metadata.resourceType,
-      resourceScope: metadata.resourceScope,
-      methods: metadata.methods,
-      parentResource: metadata.parentResource,
-      singletonResourceName: metadata.singletonResourceName
-    }
+    arguments: convertResourceMetadataToArguments(metadata)
   };
 
   if (!model.decorators) {
