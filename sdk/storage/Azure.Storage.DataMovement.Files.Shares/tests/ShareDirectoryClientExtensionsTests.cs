@@ -60,7 +60,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 TransferOptions = transferOptions,
             };
             string localPath = Path.GetTempPath();
-            ShareDirectoryClient client = new(new Uri("https://storageaccount.file.core.windows.net/share/dir"));
+            Uri uri = new Uri("https://storageaccount.file.core.windows.net/share/dir");
+            ShareDirectoryClient client = new(uri);
 
             await ShareDirectoryClientExtensions.UploadDirectoryAsync(
                 client,
@@ -71,7 +72,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.IsAny<StorageResource>(),
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
-                    (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == client &&
+                    (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient.Uri == client.Uri &&
                     (
                         useOptions
                             ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions
@@ -94,17 +95,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 TransferOptions = transferOptions,
             };
             string localPath = Path.GetTempPath();
-            ShareDirectoryClient clientMock = new(new Uri("https://storageaccount.file.core.windows.net/share/dir"));
-
+            ShareDirectoryClient client = new(new Uri("https://storageaccount.file.core.windows.net/share/dir"));
             await ShareDirectoryClientExtensions.DownloadToDirectoryAsync(
-                clientMock,
+                client,
                 WaitUntil.Started,
                 localPath,
                 useOptions ? clientTransferOptions : null);
 
             ExtensionMockTransferManager.Verify(tm => tm.StartTransferAsync(
                 It.Is<StorageResource>(res => res is ShareDirectoryStorageResourceContainer &&
-                    (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient == clientMock &&
+                    (res as ShareDirectoryStorageResourceContainer).ShareDirectoryClient.Uri == client.Uri &&
                     (
                         useOptions
                             ? (res as ShareDirectoryStorageResourceContainer).ResourceOptions == storageResourceOptions
