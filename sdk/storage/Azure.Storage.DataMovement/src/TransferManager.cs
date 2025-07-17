@@ -345,9 +345,9 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        internal virtual Task<bool> TryRemoveTransferAsync(string id)
+        internal virtual bool TryRemoveTransferAsync(string id)
         {
-            throw new NotImplementedException();
+            return _transfers.TryRemove(id, out TransferOperation transfer);
         }
         #endregion Transfer Job Management
 

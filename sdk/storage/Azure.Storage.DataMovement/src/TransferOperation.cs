@@ -14,6 +14,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class TransferOperation
     {
+        private TransferManager _transferManager;
         /// <summary>
         /// Defines whether the transfer has completed.
         /// </summary>
@@ -32,7 +33,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The <see cref="TransferManager"/> responsible for this transfer.
         /// </summary>
-        public TransferManager TransferManager { get; internal set; }
+        public TransferManager TransferManager {
+            get => _transferManager;
+            internal set
+            {
+                _transferManager = value;
+                _state.TransferManager = value;
+            }
+        }
 
         /// <summary>
         /// Defines the current state of the transfer.
