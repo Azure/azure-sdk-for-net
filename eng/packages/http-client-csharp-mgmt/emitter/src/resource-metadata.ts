@@ -43,6 +43,7 @@ export interface ResourceMetadata {
   resourceScope: ResourceScope;
   parentResourceId?: string;
   singletonResourceName?: string;
+  resourceName?: string;
   // TODO -- add parent resource support in the same RP case
 }
 
@@ -55,7 +56,8 @@ export function convertResourceMetadataToArguments(
     methods: metadata.methods,
     resourceScope: metadata.resourceScope,
     parentResourceId: metadata.parentResourceId,
-    singletonResourceName: metadata.singletonResourceName
+    singletonResourceName: metadata.singletonResourceName,
+    resourceName: metadata.resourceName
   };
 }
 

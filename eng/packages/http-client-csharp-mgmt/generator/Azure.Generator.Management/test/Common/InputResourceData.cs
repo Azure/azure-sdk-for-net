@@ -35,11 +35,11 @@ namespace Azure.Generator.Management.Tests.Common
                 TestClientName,
                 methods: [InputFactory.BasicServiceMethod("get", operation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: crossLanguageDefinitionId)],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
-            decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, ResourceOperationKind.Get)]));
+            decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, ResourceOperationKind.Get)], "ResponseType"));
             return (client, [responseModel]);
         }
 
-        private static InputDecoratorInfo BuildResourceMetadata(InputModelType resourceModel, InputClient resourceClient, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, IReadOnlyList<ResourceMethod> methods)
+        private static InputDecoratorInfo BuildResourceMetadata(InputModelType resourceModel, InputClient resourceClient, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, IReadOnlyList<ResourceMethod> methods, string? resourceName)
         {
             var options = new JsonSerializerOptions
             {
@@ -54,6 +54,7 @@ namespace Azure.Generator.Management.Tests.Common
                 ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
                 ["methods"] = BinaryData.FromObjectAsJson(methods, options),
                 ["singletonResourceName"] = BinaryData.FromObjectAsJson(singletonResourceName, options),
+                ["resourceName"] = BinaryData.FromObjectAsJson(resourceName, options),
             };
 
             return new InputDecoratorInfo("Azure.ClientGenerator.Core.@resourceSchema", arguments);
