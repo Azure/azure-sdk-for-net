@@ -3,20 +3,22 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary></summary>
+    /// <summary> The ContentFilterProtectedMaterialResult. </summary>
     public partial class ContentFilterProtectedMaterialResult : IJsonModel<ContentFilterProtectedMaterialResult>
     {
+        /// <summary> Initializes a new instance of <see cref="ContentFilterProtectedMaterialResult"/> for deserialization. </summary>
         internal ContentFilterProtectedMaterialResult()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContentFilterProtectedMaterialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,6 +71,8 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContentFilterProtectedMaterialResult IJsonModel<ContentFilterProtectedMaterialResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -84,6 +88,8 @@ namespace Azure.AI.OpenAI
             return DeserializeContentFilterProtectedMaterialResult(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContentFilterProtectedMaterialResult DeserializeContentFilterProtectedMaterialResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -123,6 +129,7 @@ namespace Azure.AI.OpenAI
             return new ContentFilterProtectedMaterialResult(filtered, detected, citation, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContentFilterProtectedMaterialResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -132,12 +139,14 @@ namespace Azure.AI.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialResult)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContentFilterProtectedMaterialResult IPersistableModel<ContentFilterProtectedMaterialResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -157,24 +166,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContentFilterProtectedMaterialResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="contentFilterProtectedMaterialResult"> The <see cref="ContentFilterProtectedMaterialResult"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ContentFilterProtectedMaterialResult contentFilterProtectedMaterialResult)
-        {
-            if (contentFilterProtectedMaterialResult == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(contentFilterProtectedMaterialResult, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ContentFilterProtectedMaterialResult"/> from. </param>
-        public static explicit operator ContentFilterProtectedMaterialResult(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeContentFilterProtectedMaterialResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

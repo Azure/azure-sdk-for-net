@@ -1,11 +1,22 @@
 # Release History
 
-## 1.15.0-beta.1 (Unreleased)
+## 1.15.0-beta.2 (Unreleased)
 
 ### Features Added
-- Expanded the set of acceptable values for environment variable `AZURE_TOKEN_CREDENTIALS` to allow for selection of a specific credential in the `DefaultAzureCredential` chain. The valid values now include any of the credential names available in the default chain (`VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerAuthenticationCredential`.) **Note:** `BrokerAuthenticationCredential` requires that the project include a reference to package Azure.Identity.Broker.
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.15.0-beta.1 (2025-07-17)
+
+### Features Added
+
+- Expanded the set of acceptable values for environment variable `AZURE_TOKEN_CREDENTIALS` to allow for selection of a specific credential in the `DefaultAzureCredential` chain. The valid values now include any of the credential names available in the default chain (`VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerAuthenticationCredential`.) **Note:** `BrokerAuthenticationCredential` requires that the project include a reference to package Azure.Identity.Broker.
+
+- Re-introduced `VisualStudioCodeCredential` and included it in the `DefaultAzureCredential` authentication flow. This credential now supports Single Sign-On (SSO) through the authentication broker on Windows, macOS, and Linux using the Azure.Identity.Broker package.
 
 ### Bugs Fixed
 
@@ -16,6 +27,12 @@
 
 - `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
 - Removed `AzureApplicationCredential`. For context, see issue [49781](https://github.com/Azure/azure-sdk-for-net/issues/49781).
+
+## 1.14.2 (2025-07-10)
+
+### Other changes
+
+- Updated `Microsoft.Identity.Client` dependency to version 4.73.1 to take a security fix.
 
 ## 1.14.1 (2025-06-24)
 

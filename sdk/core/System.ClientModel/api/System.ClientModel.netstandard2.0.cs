@@ -289,6 +289,12 @@ namespace System.ClientModel.Primitives
         public bool TryGetTypeBuilder(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public sealed partial class ModelReaderWriterContextTypeAttribute : System.Attribute
+    {
+        public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
+    }
     public partial class ModelReaderWriterOptions
     {
         public ModelReaderWriterOptions(string format) { }

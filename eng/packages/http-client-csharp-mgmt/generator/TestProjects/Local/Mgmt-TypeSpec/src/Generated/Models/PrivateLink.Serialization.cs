@@ -75,11 +75,11 @@ namespace MgmtTypeSpec.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PrivateLinkResourceProperties properties = default;
-            string name = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,8 +92,17 @@ namespace MgmtTypeSpec.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
@@ -131,11 +140,11 @@ namespace MgmtTypeSpec.Models
             }
             return new PrivateLink(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                name,
                 identity);
         }
 
