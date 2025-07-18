@@ -35,25 +35,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlDBProperties"/>. </summary>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="targetSqlConnection"> Target SQL DB connection details. </param>
         /// <param name="offline"> Offline configuration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, SqlDBMigrationStatusDetails migrationStatusDetails = null, SqlConnectionInformation targetSqlConnection = null, bool? offline = null, IEnumerable<string> tableList = null)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, ProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string provisioningError = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, SqlDBMigrationStatusDetails migrationStatusDetails = null, SqlConnectionInformation targetSqlConnection = null, bool? offline = null, IEnumerable<string> tableList = null)
         {
             tableList ??= new List<string>();
 
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 targetSqlConnection,
                 offline != null ? new SqlDBOfflineConfiguration(offline, serializedAdditionalRawData: null) : null,
@@ -123,37 +123,64 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationProperties"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationProperties DatabaseMigrationProperties(string kind = null, string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null)
+        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope = null, ProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string provisioningError = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null)
         {
-            return new UnknownDatabaseMigrationProperties(
+            return new DatabaseMigrationProperties(
+                new ResourceType("DatabaseMigrationProperties"),
+                scope,
+                provisioningState,
+                migrationStatus,
+                startedOn,
+                endedOn,
+                migrationService,
+                migrationOperationId,
+                migrationFailureError,
+                provisioningError,
+                serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationBaseProperties"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
+        /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
+        /// <param name="migrationStatus"> Migration status. </param>
+        /// <param name="startedOn"> Database migration start time. </param>
+        /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
+        /// <returns> A new <see cref="Models.DatabaseMigrationBaseProperties"/> instance for mocking. </returns>
+        public static DatabaseMigrationBaseProperties DatabaseMigrationBaseProperties(string kind = null, string scope = null, ProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string provisioningError = null)
+        {
+            return new UnknownDatabaseMigrationBaseProperties(
                 kind == null ? default : new ResourceType(kind),
                 scope,
                 provisioningState,
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null);
         }
@@ -186,24 +213,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlMIProperties"/>. </summary>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlMIProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
+        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = null, ProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string provisioningError = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
         {
             return new DatabaseMigrationSqlMIProperties(
                 ResourceType.SqlMI,
@@ -212,15 +239,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 backupConfiguration,
                 offlineConfiguration);
@@ -350,24 +377,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlVmProperties"/>. </summary>
-        /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
         /// <param name="migrationStatus"> Migration status. </param>
         /// <param name="startedOn"> Database migration start time. </param>
         /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID tracking current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlVmProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = null, string provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string targetDatabaseCollation = null, string provisioningError = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
+        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = null, ProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, ErrorInfo migrationFailureError = null, string provisioningError = null, SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, MigrationStatusDetails migrationStatusDetails = null, BackupConfiguration backupConfiguration = null, OfflineConfiguration offlineConfiguration = null)
         {
             return new DatabaseMigrationSqlVmProperties(
                 ResourceType.SqlVm,
@@ -376,15 +403,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData: null,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 backupConfiguration,
                 offlineConfiguration);
@@ -489,7 +516,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="Models.ResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
-        /// <param name="tier"> Specifies the tier of DMS in a scale set. </param>
+        /// <param name="tier"> Specifies the tier of DMS (classic) in a scale set. </param>
         /// <param name="size"> The Size of the SKU. </param>
         /// <param name="family"> The Family of this particular SKU. </param>
         /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>

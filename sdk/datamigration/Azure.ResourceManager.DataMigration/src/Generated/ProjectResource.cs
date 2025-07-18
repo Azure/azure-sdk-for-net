@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a task.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a task.
+        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         Offline = true,
                         LastBackupName = "last_backup_file_name",
                     },
-                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
                     SourceSqlConnection = new SqlConnectionInformation
                     {
                         DataSource = "aaa",
@@ -79,7 +78,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         TrustServerCertificate = true,
                     },
                     SourceDatabaseName = "aaa",
-                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
+                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
+                    MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
             ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +138,6 @@ namespace Azure.ResourceManager.DataMigration.Samples
                             AccountKey = "abcd",
                         },
                     },
-                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
                     SourceSqlConnection = new SqlConnectionInformation
                     {
                         DataSource = "aaa",
@@ -149,7 +148,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         TrustServerCertificate = true,
                     },
                     SourceDatabaseName = "aaa",
-                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
+                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
+                    MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
             ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/SqlVmGetDatabaseMigration.json
             // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
