@@ -145,7 +145,6 @@ namespace Azure.ResourceManager
     [ModelReaderWriterBuildable(typeof(TenantResourceProviderListResult))]
     [ModelReaderWriterBuildable(typeof(TrackedResourceExtendedData))]
     [ModelReaderWriterBuildable(typeof(ZoneMapping))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     public partial class AzureResourceManagerContext
     {
     }
