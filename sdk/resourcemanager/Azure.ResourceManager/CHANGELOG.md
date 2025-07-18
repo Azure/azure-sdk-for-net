@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Make Azure.ResourceManager AOT-compatible.
+- Make `Azure.ResourceManager` AOT-compatible.
 
 ## 1.14.0-beta.1 (2025-06-23)
 
