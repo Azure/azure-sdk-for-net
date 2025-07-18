@@ -495,10 +495,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
-            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+            return SubmitToolOutputsToStreamWitAutoFunctionCall(run, toolOutputs, Int32.MaxValue, cancellationToken);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
@@ -513,10 +510,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+            return SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, Int32.MaxValue, cancellationToken);
         }
 
         internal async Task<Response> CreateRunStreamingAsync(string threadId, RequestContent content, RequestContext context = null, IEnumerable<RunAdditionalFieldList> include = null)
@@ -537,6 +531,70 @@ namespace Azure.AI.Agents.Persistent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="currentRetry"> The count of current retry of auto function calls.  Cancel the run if reach to the maxinum. </param>
+        /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        internal virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStreamWitAutoFunctionCall(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currentRetry = 0, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(run.Id, run.AssistantId, _endpoint);
+            Argument.AssertNotNull(run, nameof(run));
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            CollectionResult<StreamingUpdate> submitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currRetry) =>
+                this.SubmitToolOutputsToStreamWitAutoFunctionCall(run, toolOutputs, currentRetry);
+            Response<ThreadRun> cancelRun(string runId) => this.CancelRun(run.ThreadId, runId);
+
+            return new StreamingUpdateCollection(
+                cancellationToken,
+                autoFunctionCallOptions,
+                currentRetry,
+                sendRequest,
+                cancelRun,
+                submitToolOutputsToStream,
+                scope);
+        }
+
+        /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+        /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="currentRetry"> The count of current retry of auto function calls.  Cancel the run if reach to the maxinum. </param>
+        /// <param name="autoFunctionCallOptions">If specified, function calls defined in tools will be called automatically.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        internal virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamWitAutoFunctionCallAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currentRetry = 0, CancellationToken cancellationToken = default, AutoFunctionCallOptions autoFunctionCallOptions = null)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(run.Id, run.AssistantId, _endpoint);
+            Argument.AssertNotNull(run, nameof(run));
+            Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currRetry) =>
+                this.SubmitToolOutputsToStreamWitAutoFunctionCallAsync(run, toolOutputs, currRetry);
+            async Task<Response<ThreadRun>> cancelRunAsync(string runId) => await this.CancelRunAsync(run.ThreadId, runId).ConfigureAwait(false);
+
+            return new AsyncStreamingUpdateCollection(
+                cancellationToken,
+                autoFunctionCallOptions,
+                currentRetry,
+                sendRequestAsync,
+                cancelRunAsync,
+                submitToolOutputsToStreamAsync,
+                scope);
         }
 
         internal Response CreateRunStreaming(string threadId, RequestContent content, RequestContext context = null, IEnumerable<RunAdditionalFieldList> include = null)
