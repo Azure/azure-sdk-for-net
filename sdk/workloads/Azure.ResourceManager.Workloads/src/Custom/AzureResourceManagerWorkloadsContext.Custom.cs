@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Workloads;
 using Azure.ResourceManager.Workloads.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Workloads;
 
@@ -124,6 +126,10 @@ namespace Azure.ResourceManager.Workloads;
 [ModelReaderWriterBuildable(typeof(UnknownThreeTierCustomResourceNames))]
 [ModelReaderWriterBuildable(typeof(UserAssignedServiceIdentity))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineResourceNames))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerWorkloadsContext
 {
 }

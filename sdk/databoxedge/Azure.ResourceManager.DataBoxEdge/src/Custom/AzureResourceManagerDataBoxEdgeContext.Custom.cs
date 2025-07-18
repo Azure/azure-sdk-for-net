@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge;
 
@@ -144,6 +146,10 @@ namespace Azure.ResourceManager.DataBoxEdge;
 [ModelReaderWriterBuildable(typeof(UserAccessRight))]
 [ModelReaderWriterBuildable(typeof(UserList))]
 [ModelReaderWriterBuildable(typeof(VmPlacementRequestResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataBoxEdgeContext
 {
 }

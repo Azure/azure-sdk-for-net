@@ -3,6 +3,8 @@
 using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.MachineLearning.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearning;
 
@@ -580,6 +582,10 @@ namespace Azure.ResourceManager.MachineLearning;
 [ModelReaderWriterBuildable(typeof(WorkspaceConnectionSharedAccessSignature))]
 [ModelReaderWriterBuildable(typeof(WorkspaceHubConfig))]
 [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMachineLearningContext
 {
 }

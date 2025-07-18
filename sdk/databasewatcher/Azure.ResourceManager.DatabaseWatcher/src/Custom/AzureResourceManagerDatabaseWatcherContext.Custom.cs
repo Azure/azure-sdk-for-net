@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DatabaseWatcher;
 using Azure.ResourceManager.DatabaseWatcher.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DatabaseWatcher;
 
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.DatabaseWatcher;
 [ModelReaderWriterBuildable(typeof(TargetListResult))]
 [ModelReaderWriterBuildable(typeof(UnknownDatabaseWatcherTargetProperties))]
 [ModelReaderWriterBuildable(typeof(WatcherListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDatabaseWatcherContext
 {
 }

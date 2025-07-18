@@ -3,6 +3,8 @@
 using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageSync;
 
@@ -69,6 +71,10 @@ namespace Azure.ResourceManager.StorageSync;
 [ModelReaderWriterBuildable(typeof(TriggerChangeDetectionContent))]
 [ModelReaderWriterBuildable(typeof(TriggerRolloverContent))]
 [ModelReaderWriterBuildable(typeof(WorkflowArray))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerStorageSyncContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NetworkCloud;
 using Azure.ResourceManager.NetworkCloud.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud;
 
@@ -162,6 +164,10 @@ namespace Azure.ResourceManager.NetworkCloud;
 [ModelReaderWriterBuildable(typeof(VolumeList))]
 [ModelReaderWriterBuildable(typeof(VulnerabilityScanningSettings))]
 [ModelReaderWriterBuildable(typeof(VulnerabilityScanningSettingsPatch))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNetworkCloudContext
 {
 }

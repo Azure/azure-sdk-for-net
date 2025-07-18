@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Fabric;
 using Azure.ResourceManager.Fabric.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Fabric;
 
@@ -20,6 +22,10 @@ namespace Azure.ResourceManager.Fabric;
 [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForNewCapacity))]
 [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForExistingResourceResult))]
 [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForNewResourceResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerFabricContext
 {
 }

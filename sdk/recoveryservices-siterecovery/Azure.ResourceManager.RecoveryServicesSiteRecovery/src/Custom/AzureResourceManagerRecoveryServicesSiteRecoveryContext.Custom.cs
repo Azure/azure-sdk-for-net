@@ -3,6 +3,8 @@
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
@@ -642,6 +644,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery;
 [ModelReaderWriterBuildable(typeof(VMwareV2FabricCreationContent))]
 [ModelReaderWriterBuildable(typeof(VMwareV2FabricSpecificDetails))]
 [ModelReaderWriterBuildable(typeof(VMwareVmDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerRecoveryServicesSiteRecoveryContext
 {
 }

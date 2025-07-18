@@ -3,6 +3,8 @@
 using Azure.ResourceManager.KubernetesConfiguration;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration;
 
@@ -40,6 +42,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration;
 [ModelReaderWriterBuildable(typeof(ScopeCluster))]
 [ModelReaderWriterBuildable(typeof(ScopeNamespace))]
 [ModelReaderWriterBuildable(typeof(SourceControlConfigurationList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerKubernetesConfigurationContext
 {
 }

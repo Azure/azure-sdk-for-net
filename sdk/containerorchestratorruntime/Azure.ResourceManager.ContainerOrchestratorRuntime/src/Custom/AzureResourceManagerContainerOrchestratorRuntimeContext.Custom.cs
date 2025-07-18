@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ContainerOrchestratorRuntime;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime;
 
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime;
 [ModelReaderWriterBuildable(typeof(StorageClassTypeProperties))]
 [ModelReaderWriterBuildable(typeof(StorageClassTypePropertiesUpdate))]
 [ModelReaderWriterBuildable(typeof(UnknownStorageClassTypeProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerContainerOrchestratorRuntimeContext
 {
 }

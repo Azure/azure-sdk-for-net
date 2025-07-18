@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ServiceLinker;
 using Azure.ResourceManager.ServiceLinker.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceLinker;
 
@@ -36,6 +38,10 @@ namespace Azure.ResourceManager.ServiceLinker;
 [ModelReaderWriterBuildable(typeof(UnknownTargetServiceBase))]
 [ModelReaderWriterBuildable(typeof(UserAssignedIdentityAuthInfo))]
 [ModelReaderWriterBuildable(typeof(VnetSolution))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerServiceLinkerContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Billing;
 using Azure.ResourceManager.Billing.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Billing;
 
@@ -230,6 +232,10 @@ namespace Azure.ResourceManager.Billing;
 [ModelReaderWriterBuildable(typeof(TransactionListResult))]
 [ModelReaderWriterBuildable(typeof(TransferDetailsListResult))]
 [ModelReaderWriterBuildable(typeof(ValidateTransferListResponse))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerBillingContext
 {
 }

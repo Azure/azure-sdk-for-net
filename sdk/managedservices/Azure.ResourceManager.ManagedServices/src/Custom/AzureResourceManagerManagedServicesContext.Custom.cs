@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ManagedServices;
 using Azure.ResourceManager.ManagedServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedServices;
 
@@ -25,6 +27,10 @@ namespace Azure.ResourceManager.ManagedServices;
 [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationListResult))]
 [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationProperties))]
 [ModelReaderWriterBuildable(typeof(MarketplaceRegistrationDefinitionList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerManagedServicesContext
 {
 }

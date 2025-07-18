@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Orbital;
 using Azure.ResourceManager.Orbital.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital;
 
@@ -29,6 +31,10 @@ namespace Azure.ResourceManager.Orbital;
 [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftLink))]
 [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftListResult))]
 [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftTags))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerOrbitalContext
 {
 }

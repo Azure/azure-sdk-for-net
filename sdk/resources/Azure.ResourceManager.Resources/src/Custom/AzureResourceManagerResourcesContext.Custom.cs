@@ -3,6 +3,7 @@
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources;
 
@@ -124,6 +125,10 @@ namespace Azure.ResourceManager.Resources;
 [ModelReaderWriterBuildable(typeof(WhatIfChange))]
 [ModelReaderWriterBuildable(typeof(WhatIfOperationResult))]
 [ModelReaderWriterBuildable(typeof(WhatIfPropertyChange))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerResourcesContext
 {
 }

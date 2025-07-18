@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation;
 
@@ -74,6 +76,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation;
 [ModelReaderWriterBuildable(typeof(TriggerEvaluationProperty))]
 [ModelReaderWriterBuildable(typeof(TriggerEvaluationResult))]
 [ModelReaderWriterBuildable(typeof(WebhookResourceListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAppComplianceAutomationContext
 {
 }

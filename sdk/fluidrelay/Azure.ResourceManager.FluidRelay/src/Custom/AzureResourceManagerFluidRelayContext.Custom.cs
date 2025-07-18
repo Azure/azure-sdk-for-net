@@ -3,6 +3,8 @@
 using Azure.ResourceManager.FluidRelay;
 using Azure.ResourceManager.FluidRelay.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FluidRelay;
 
@@ -19,6 +21,10 @@ namespace Azure.ResourceManager.FluidRelay;
 [ModelReaderWriterBuildable(typeof(FluidRelayServerList))]
 [ModelReaderWriterBuildable(typeof(FluidRelayServerPatch))]
 [ModelReaderWriterBuildable(typeof(RegenerateKeyContent))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerFluidRelayContext
 {
 }

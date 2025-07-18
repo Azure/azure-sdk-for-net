@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NeonPostgres;
 using Azure.ResourceManager.NeonPostgres.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NeonPostgres;
 
@@ -41,6 +43,10 @@ namespace Azure.ResourceManager.NeonPostgres;
 [ModelReaderWriterBuildable(typeof(PgVersion))]
 [ModelReaderWriterBuildable(typeof(PgVersionsResult))]
 [ModelReaderWriterBuildable(typeof(ProjectListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNeonPostgresContext
 {
 }

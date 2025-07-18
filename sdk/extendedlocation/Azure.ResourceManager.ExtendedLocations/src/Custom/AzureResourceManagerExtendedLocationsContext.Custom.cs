@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ExtendedLocations;
 using Azure.ResourceManager.ExtendedLocations.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations;
 
@@ -14,6 +16,10 @@ namespace Azure.ResourceManager.ExtendedLocations;
 [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceTypesResult))]
 [ModelReaderWriterBuildable(typeof(CustomLocationListResult))]
 [ModelReaderWriterBuildable(typeof(CustomLocationPatch))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerExtendedLocationsContext
 {
 }

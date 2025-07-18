@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger;
 
@@ -28,6 +30,10 @@ namespace Azure.ResourceManager.ConfidentialLedger;
 [ModelReaderWriterBuildable(typeof(ManagedCcfProperties))]
 [ModelReaderWriterBuildable(typeof(ManagedCcfRestoreContent))]
 [ModelReaderWriterBuildable(typeof(ManagedCcfRestoreResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerConfidentialLedgerContext
 {
 }

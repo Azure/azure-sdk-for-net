@@ -2,12 +2,18 @@
 
 using Azure.ResourceManager.MarketplaceOrdering;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering;
 
 [ModelReaderWriterBuildable(typeof(MarketplaceAgreementResource))]
 [ModelReaderWriterBuildable(typeof(MarketplaceAgreementTermData))]
 [ModelReaderWriterBuildable(typeof(MarketplaceAgreementTermResource))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMarketplaceOrderingContext
 {
 }

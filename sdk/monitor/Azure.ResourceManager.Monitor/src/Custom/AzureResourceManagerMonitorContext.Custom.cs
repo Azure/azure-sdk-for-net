@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor;
 
@@ -264,6 +266,10 @@ namespace Azure.ResourceManager.Monitor;
 [ModelReaderWriterBuildable(typeof(WebtestLocationAvailabilityCriteria))]
 [ModelReaderWriterBuildable(typeof(WindowsEventLogDataSource))]
 [ModelReaderWriterBuildable(typeof(WindowsFirewallLogsDataSource))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMonitorContext
 {
 }

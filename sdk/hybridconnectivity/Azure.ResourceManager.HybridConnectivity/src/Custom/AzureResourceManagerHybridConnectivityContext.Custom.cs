@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HybridConnectivity;
 using Azure.ResourceManager.HybridConnectivity.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity;
 
@@ -48,6 +50,10 @@ namespace Azure.ResourceManager.HybridConnectivity;
 [ModelReaderWriterBuildable(typeof(SolutionConfigurationPropertiesUpdate))]
 [ModelReaderWriterBuildable(typeof(SolutionTypeResourceListResult))]
 [ModelReaderWriterBuildable(typeof(TargetResourceEndpointAccess))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHybridConnectivityContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.StorageMover;
 using Azure.ResourceManager.StorageMover.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageMover;
 
@@ -52,6 +54,10 @@ namespace Azure.ResourceManager.StorageMover;
 [ModelReaderWriterBuildable(typeof(UnknownEndpointBaseProperties))]
 [ModelReaderWriterBuildable(typeof(UploadLimitSchedule))]
 [ModelReaderWriterBuildable(typeof(UploadLimitWeeklyRecurrence))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerStorageMoverContext
 {
 }

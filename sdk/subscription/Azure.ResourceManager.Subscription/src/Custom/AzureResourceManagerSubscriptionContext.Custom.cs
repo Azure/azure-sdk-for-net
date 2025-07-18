@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Subscription;
 
@@ -28,6 +30,10 @@ namespace Azure.ResourceManager.Subscription;
 [ModelReaderWriterBuildable(typeof(TenantPoliciesResult))]
 [ModelReaderWriterBuildable(typeof(TenantPolicyCreateOrUpdateContent))]
 [ModelReaderWriterBuildable(typeof(TenantPolicyProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSubscriptionContext
 {
 }

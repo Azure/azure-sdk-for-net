@@ -3,6 +3,8 @@
 using Azure.ResourceManager.StorageActions;
 using Azure.ResourceManager.StorageActions.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageActions;
 
@@ -26,6 +28,10 @@ namespace Azure.ResourceManager.StorageActions;
 [ModelReaderWriterBuildable(typeof(StorageTaskReportProperties))]
 [ModelReaderWriterBuildable(typeof(StorageTaskReportSummary))]
 [ModelReaderWriterBuildable(typeof(StorageTasksListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerStorageActionsContext
 {
 }

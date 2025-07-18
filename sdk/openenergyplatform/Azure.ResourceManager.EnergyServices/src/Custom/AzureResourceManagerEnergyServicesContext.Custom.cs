@@ -3,6 +3,8 @@
 using Azure.ResourceManager.EnergyServices;
 using Azure.ResourceManager.EnergyServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EnergyServices;
 
@@ -17,6 +19,10 @@ namespace Azure.ResourceManager.EnergyServices;
 [ModelReaderWriterBuildable(typeof(EnergyServiceNameAvailabilityResult))]
 [ModelReaderWriterBuildable(typeof(EnergyServicePatch))]
 [ModelReaderWriterBuildable(typeof(EnergyServiceProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerEnergyServicesContext
 {
 }

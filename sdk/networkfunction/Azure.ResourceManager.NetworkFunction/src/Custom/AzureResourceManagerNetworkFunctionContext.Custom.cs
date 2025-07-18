@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NetworkFunction;
 using Azure.ResourceManager.NetworkFunction.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction;
 
@@ -17,6 +19,10 @@ namespace Azure.ResourceManager.NetworkFunction;
 [ModelReaderWriterBuildable(typeof(IngestionPolicyPropertiesFormat))]
 [ModelReaderWriterBuildable(typeof(IngestionSourcesPropertiesFormat))]
 [ModelReaderWriterBuildable(typeof(TagsObject))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNetworkFunctionContext
 {
 }

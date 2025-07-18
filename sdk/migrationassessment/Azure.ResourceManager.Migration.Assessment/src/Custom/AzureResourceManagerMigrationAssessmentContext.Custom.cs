@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Migration.Assessment;
 using Azure.ResourceManager.Migration.Assessment.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Migration.Assessment;
 
@@ -130,6 +132,10 @@ namespace Azure.ResourceManager.Migration.Assessment;
 [ModelReaderWriterBuildable(typeof(SqlRecommendationReasoningContext))]
 [ModelReaderWriterBuildable(typeof(UltraDiskAssessmentConfig))]
 [ModelReaderWriterBuildable(typeof(VMwareCollectorListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMigrationAssessmentContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataLakeStore;
 using Azure.ResourceManager.DataLakeStore.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataLakeStore;
 
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.DataLakeStore;
 [ModelReaderWriterBuildable(typeof(UpdateKeyVaultMetaInfo))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataLakeStoreContext
 {
 }

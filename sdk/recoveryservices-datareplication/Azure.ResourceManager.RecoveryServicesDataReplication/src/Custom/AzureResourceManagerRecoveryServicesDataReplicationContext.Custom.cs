@@ -3,6 +3,8 @@
 using Azure.ResourceManager.RecoveryServicesDataReplication;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication;
 
@@ -136,6 +138,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication;
 [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciProtectedNicProperties))]
 [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciRecoveryPointCustomProperties))]
 [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciReplicationExtensionCustomProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerRecoveryServicesDataReplicationContext
 {
 }

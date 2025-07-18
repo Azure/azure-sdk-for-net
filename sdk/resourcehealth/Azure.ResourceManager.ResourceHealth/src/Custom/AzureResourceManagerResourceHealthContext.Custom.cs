@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ResourceHealth;
 using Azure.ResourceManager.ResourceHealth.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ResourceHealth;
 
@@ -44,6 +46,10 @@ namespace Azure.ResourceManager.ResourceHealth;
 [ModelReaderWriterBuildable(typeof(ServiceImpactingEvent))]
 [ModelReaderWriterBuildable(typeof(ServiceImpactingEventIncidentProperties))]
 [ModelReaderWriterBuildable(typeof(ServiceImpactingEventStatus))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerResourceHealthContext
 {
 }

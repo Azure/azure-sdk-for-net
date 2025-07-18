@@ -3,6 +3,8 @@
 using Azure.ResourceManager.InformaticaDataManagement;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement;
 
@@ -50,6 +52,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement;
 [ModelReaderWriterBuildable(typeof(ServerlessRuntimeTag))]
 [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextProperties))]
 [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextPropertiesUpdate))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerInformaticaDataManagementContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.PineconeVectorDB;
 using Azure.ResourceManager.PineconeVectorDB.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PineconeVectorDB;
 
@@ -16,6 +18,10 @@ namespace Azure.ResourceManager.PineconeVectorDB;
 [ModelReaderWriterBuildable(typeof(PineconeVectorDBPartnerProperties))]
 [ModelReaderWriterBuildable(typeof(PineconeVectorDBSingleSignOnPropertiesV2))]
 [ModelReaderWriterBuildable(typeof(PineconeVectorDBUserDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPineconeVectorDBContext
 {
 }

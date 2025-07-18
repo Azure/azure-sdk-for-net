@@ -2,6 +2,8 @@
 
 using Azure.ResourceManager.CarbonOptimization.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CarbonOptimization;
 
@@ -29,6 +31,10 @@ namespace Azure.ResourceManager.CarbonOptimization;
 [ModelReaderWriterBuildable(typeof(TopItemsSummaryReportQueryFilter))]
 [ModelReaderWriterBuildable(typeof(UnknownCarbonEmission))]
 [ModelReaderWriterBuildable(typeof(UnknownCarbonEmissionQueryFilter))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCarbonOptimizationContext
 {
 }

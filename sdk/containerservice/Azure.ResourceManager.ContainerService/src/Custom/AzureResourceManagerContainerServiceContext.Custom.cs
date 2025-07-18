@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.ContainerService.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService;
 
@@ -142,6 +144,10 @@ namespace Azure.ResourceManager.ContainerService;
 [ModelReaderWriterBuildable(typeof(TrustedAccessRoleListResult))]
 [ModelReaderWriterBuildable(typeof(UpgradeOverrideSettings))]
 [ModelReaderWriterBuildable(typeof(WindowsGmsaProfile))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerContainerServiceContext
 {
 }

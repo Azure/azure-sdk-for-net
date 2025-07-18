@@ -3,6 +3,8 @@
 using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.CosmosDB.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB;
 
@@ -373,6 +375,10 @@ namespace Azure.ResourceManager.CosmosDB;
 [ModelReaderWriterBuildable(typeof(UnknownServiceResourceCreateUpdateProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownServiceResourceProperties))]
 [ModelReaderWriterBuildable(typeof(VectorEmbeddingPolicy))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCosmosDBContext
 {
 }

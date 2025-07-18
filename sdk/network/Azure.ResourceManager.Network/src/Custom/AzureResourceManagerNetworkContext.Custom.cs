@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network;
 
@@ -885,6 +887,10 @@ namespace Azure.ResourceManager.Network;
 [ModelReaderWriterBuildable(typeof(WebApplicationFirewallCustomRule))]
 [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyListResult))]
 [ModelReaderWriterBuildable(typeof(WebApplicationFirewallScrubbingRules))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNetworkContext
 {
 }

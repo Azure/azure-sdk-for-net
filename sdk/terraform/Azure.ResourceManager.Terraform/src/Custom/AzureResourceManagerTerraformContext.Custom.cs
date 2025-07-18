@@ -2,6 +2,8 @@
 
 using Azure.ResourceManager.Terraform.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Terraform;
 
@@ -12,6 +14,10 @@ namespace Azure.ResourceManager.Terraform;
 [ModelReaderWriterBuildable(typeof(TerraformExportResult))]
 [ModelReaderWriterBuildable(typeof(TerraformOperationStatus))]
 [ModelReaderWriterBuildable(typeof(UnknownCommonExportProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerTerraformContext
 {
 }

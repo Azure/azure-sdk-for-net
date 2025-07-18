@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AgriculturePlatform;
 using Azure.ResourceManager.AgriculturePlatform.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgriculturePlatform;
 
@@ -22,6 +24,10 @@ namespace Azure.ResourceManager.AgriculturePlatform;
 [ModelReaderWriterBuildable(typeof(InstalledSolutionMap))]
 [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
 [ModelReaderWriterBuildable(typeof(MarketPlaceOfferDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAgriculturePlatformContext
 {
 }

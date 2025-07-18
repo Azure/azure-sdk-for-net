@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.HDInsight.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight;
 
@@ -101,6 +103,10 @@ namespace Azure.ResourceManager.HDInsight;
 [ModelReaderWriterBuildable(typeof(SshProfile))]
 [ModelReaderWriterBuildable(typeof(StorageProfile))]
 [ModelReaderWriterBuildable(typeof(UsagesListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHDInsightContext
 {
 }

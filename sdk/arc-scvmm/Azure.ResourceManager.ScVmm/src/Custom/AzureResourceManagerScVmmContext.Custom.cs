@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ScVmm;
 using Azure.ResourceManager.ScVmm.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ScVmm;
 
@@ -67,6 +69,10 @@ namespace Azure.ResourceManager.ScVmm;
 [ModelReaderWriterBuildable(typeof(VmInstanceHybridIdentityMetadataList))]
 [ModelReaderWriterBuildable(typeof(VmmCredential))]
 [ModelReaderWriterBuildable(typeof(VmmServerListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerScVmmContext
 {
 }

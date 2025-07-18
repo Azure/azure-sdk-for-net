@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Synapse;
 using Azure.ResourceManager.Synapse.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Synapse;
 
@@ -290,6 +292,10 @@ namespace Azure.ResourceManager.Synapse;
 [ModelReaderWriterBuildable(typeof(UpdateIntegrationRuntimeNodeContent))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkProfile))]
 [ModelReaderWriterBuildable(typeof(WorkspaceCustomerManagedKeyDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSynapseContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Communication;
 
@@ -34,6 +36,10 @@ namespace Azure.ResourceManager.Communication;
 [ModelReaderWriterBuildable(typeof(RegenerateCommunicationServiceKeyContent))]
 [ModelReaderWriterBuildable(typeof(SenderUsernameResourceCollection))]
 [ModelReaderWriterBuildable(typeof(VerificationDnsRecord))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCommunicationContext
 {
 }

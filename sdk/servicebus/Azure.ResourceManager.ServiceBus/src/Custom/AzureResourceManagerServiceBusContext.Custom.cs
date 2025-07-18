@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceBus;
 
@@ -59,6 +61,10 @@ namespace Azure.ResourceManager.ServiceBus;
 [ModelReaderWriterBuildable(typeof(ServiceBusSku))]
 [ModelReaderWriterBuildable(typeof(ServiceBusSqlFilter))]
 [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerServiceBusContext
 {
 }

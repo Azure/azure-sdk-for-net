@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.AppContainers.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppContainers;
 
@@ -232,6 +234,10 @@ namespace Azure.ResourceManager.AppContainers;
 [ModelReaderWriterBuildable(typeof(SpringCloudEurekaComponent))]
 [ModelReaderWriterBuildable(typeof(UnknownJavaComponentProperties))]
 [ModelReaderWriterBuildable(typeof(WorkloadProfileStatesCollection))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAppContainersContext
 {
 }

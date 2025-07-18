@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Avs;
 using Azure.ResourceManager.Avs.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs;
 
@@ -119,6 +121,10 @@ namespace Azure.ResourceManager.Avs;
 [ModelReaderWriterBuildable(typeof(WorkloadNetworkSegmentSubnet))]
 [ModelReaderWriterBuildable(typeof(WorkloadNetworkVirtualMachinesList))]
 [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupsList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAvsContext
 {
 }

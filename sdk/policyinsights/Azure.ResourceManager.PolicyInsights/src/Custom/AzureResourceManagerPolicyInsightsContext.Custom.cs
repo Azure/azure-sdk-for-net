@@ -3,6 +3,8 @@
 using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PolicyInsights;
 
@@ -52,6 +54,10 @@ namespace Azure.ResourceManager.PolicyInsights;
 [ModelReaderWriterBuildable(typeof(SlimPolicyMetadata))]
 [ModelReaderWriterBuildable(typeof(SummarizeResults))]
 [ModelReaderWriterBuildable(typeof(TrackedResourceModificationDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPolicyInsightsContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.LargeInstance;
 using Azure.ResourceManager.LargeInstance.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.LargeInstance;
 
@@ -24,6 +26,10 @@ namespace Azure.ResourceManager.LargeInstance;
 [ModelReaderWriterBuildable(typeof(LargeInstanceStorageProfile))]
 [ModelReaderWriterBuildable(typeof(LargeInstanceStorageProperties))]
 [ModelReaderWriterBuildable(typeof(LargeStorageInstancePatch))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerLargeInstanceContext
 {
 }

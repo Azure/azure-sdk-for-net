@@ -3,6 +3,8 @@
 using Azure.ResourceManager.GraphServices;
 using Azure.ResourceManager.GraphServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.GraphServices;
 
@@ -12,6 +14,10 @@ namespace Azure.ResourceManager.GraphServices;
 [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourcePatch))]
 [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourceProperties))]
 [ModelReaderWriterBuildable(typeof(GraphServicesTagUpdate))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerGraphServicesContext
 {
 }

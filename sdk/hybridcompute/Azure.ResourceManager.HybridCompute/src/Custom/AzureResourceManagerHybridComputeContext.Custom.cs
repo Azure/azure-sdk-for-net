@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.HybridCompute.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute;
 
@@ -104,6 +106,10 @@ namespace Azure.ResourceManager.HybridCompute;
 [ModelReaderWriterBuildable(typeof(RunCommandManagedIdentity))]
 [ModelReaderWriterBuildable(typeof(StorageProfile))]
 [ModelReaderWriterBuildable(typeof(VolumeLicenseDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHybridComputeContext
 {
 }

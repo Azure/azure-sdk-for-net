@@ -3,6 +3,8 @@
 using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageCache;
 
@@ -71,6 +73,10 @@ namespace Azure.ResourceManager.StorageCache;
 [ModelReaderWriterBuildable(typeof(StorageTargetSpaceAllocation))]
 [ModelReaderWriterBuildable(typeof(StorageTargetsResult))]
 [ModelReaderWriterBuildable(typeof(UnknownTarget))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerStorageCacheContext
 {
 }

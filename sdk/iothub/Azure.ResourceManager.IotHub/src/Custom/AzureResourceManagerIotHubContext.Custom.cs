@@ -3,6 +3,8 @@
 using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub;
 
@@ -84,6 +86,10 @@ namespace Azure.ResourceManager.IotHub;
 [ModelReaderWriterBuildable(typeof(RoutingTwinProperties))]
 [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRule))]
 [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerIotHubContext
 {
 }

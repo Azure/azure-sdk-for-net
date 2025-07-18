@@ -3,6 +3,8 @@
 using Azure.ResourceManager.RecoveryServicesBackup;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup;
 
@@ -304,6 +306,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup;
 [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreContent))]
 [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreWithRehydrateContent))]
 [ModelReaderWriterBuildable(typeof(YearlyRetentionSchedule))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerRecoveryServicesBackupContext
 {
 }

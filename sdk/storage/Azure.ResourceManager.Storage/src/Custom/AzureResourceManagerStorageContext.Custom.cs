@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Storage;
 
@@ -193,6 +195,10 @@ namespace Azure.ResourceManager.Storage;
 [ModelReaderWriterBuildable(typeof(StorageUsageName))]
 [ModelReaderWriterBuildable(typeof(UpdateHistoryEntry))]
 [ModelReaderWriterBuildable(typeof(UsageListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerStorageContext
 {
 }

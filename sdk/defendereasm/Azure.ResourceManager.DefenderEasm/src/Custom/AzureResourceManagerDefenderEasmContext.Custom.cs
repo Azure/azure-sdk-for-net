@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DefenderEasm;
 using Azure.ResourceManager.DefenderEasm.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DefenderEasm;
 
@@ -15,6 +17,10 @@ namespace Azure.ResourceManager.DefenderEasm;
 [ModelReaderWriterBuildable(typeof(EasmTask))]
 [ModelReaderWriterBuildable(typeof(EasmWorkspaceListResult))]
 [ModelReaderWriterBuildable(typeof(EasmWorkspacePatch))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDefenderEasmContext
 {
 }

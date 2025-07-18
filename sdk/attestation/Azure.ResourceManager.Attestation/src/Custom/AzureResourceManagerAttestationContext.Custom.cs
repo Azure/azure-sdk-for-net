@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Attestation;
 using Azure.ResourceManager.Attestation.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Attestation;
 
@@ -22,6 +24,10 @@ namespace Azure.ResourceManager.Attestation;
 [ModelReaderWriterBuildable(typeof(JsonWebKey))]
 [ModelReaderWriterBuildable(typeof(JsonWebKeySet))]
 [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAttestationContext
 {
 }

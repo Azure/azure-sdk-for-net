@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NewRelicObservability;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability;
 
@@ -55,6 +57,10 @@ namespace Azure.ResourceManager.NewRelicObservability;
 [ModelReaderWriterBuildable(typeof(NewRelicSingleSignOnProperties))]
 [ModelReaderWriterBuildable(typeof(NewRelicSwitchBillingContent))]
 [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNewRelicObservabilityContext
 {
 }

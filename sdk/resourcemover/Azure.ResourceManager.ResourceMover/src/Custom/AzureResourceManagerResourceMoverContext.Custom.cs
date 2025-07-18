@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ResourceMover;
 using Azure.ResourceManager.ResourceMover.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ResourceMover;
 
@@ -70,6 +72,10 @@ namespace Azure.ResourceManager.ResourceMover;
 [ModelReaderWriterBuildable(typeof(SubnetReferenceInfo))]
 [ModelReaderWriterBuildable(typeof(SubnetResourceSettings))]
 [ModelReaderWriterBuildable(typeof(UnknownResourceSettings))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerResourceMoverContext
 {
 }

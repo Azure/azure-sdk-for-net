@@ -3,6 +3,8 @@
 using Azure.ResourceManager.PortalServicesCopilot;
 using Azure.ResourceManager.PortalServicesCopilot.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PortalServicesCopilot;
 
@@ -11,6 +13,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot;
 [ModelReaderWriterBuildable(typeof(CopilotSettingsResourceUpdateProperties))]
 [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingPatch))]
 [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingsProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPortalServicesCopilotContext
 {
 }

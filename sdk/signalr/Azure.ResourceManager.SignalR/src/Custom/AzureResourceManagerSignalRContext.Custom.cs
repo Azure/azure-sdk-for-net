@@ -3,6 +3,8 @@
 using Azure.ResourceManager.SignalR;
 using Azure.ResourceManager.SignalR.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SignalR;
 
@@ -51,6 +53,10 @@ namespace Azure.ResourceManager.SignalR;
 [ModelReaderWriterBuildable(typeof(SignalRUsage))]
 [ModelReaderWriterBuildable(typeof(SignalRUsageList))]
 [ModelReaderWriterBuildable(typeof(SignalRUsageName))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSignalRContext
 {
 }

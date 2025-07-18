@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ServiceNetworking;
 using Azure.ResourceManager.ServiceNetworking.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking;
 
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.ServiceNetworking;
 [ModelReaderWriterBuildable(typeof(TrafficControllerListResult))]
 [ModelReaderWriterBuildable(typeof(TrafficControllerPatch))]
 [ModelReaderWriterBuildable(typeof(TrafficControllerUpdateProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerServiceNetworkingContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters;
 
@@ -115,6 +117,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters;
 [ModelReaderWriterBuildable(typeof(VmManagedIdentity))]
 [ModelReaderWriterBuildable(typeof(VmSize))]
 [ModelReaderWriterBuildable(typeof(ZoneFaultSimulationContent))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerServiceFabricManagedClustersContext
 {
 }

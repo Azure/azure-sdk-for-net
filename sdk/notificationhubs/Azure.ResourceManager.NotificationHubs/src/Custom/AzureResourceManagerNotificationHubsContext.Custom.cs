@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NotificationHubs;
 using Azure.ResourceManager.NotificationHubs.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NotificationHubs;
 
@@ -54,6 +56,10 @@ namespace Azure.ResourceManager.NotificationHubs;
 [ModelReaderWriterBuildable(typeof(RemotePrivateLinkServiceConnectionState))]
 [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleListResult))]
 [ModelReaderWriterBuildable(typeof(XiaomiCredential))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNotificationHubsContext
 {
 }

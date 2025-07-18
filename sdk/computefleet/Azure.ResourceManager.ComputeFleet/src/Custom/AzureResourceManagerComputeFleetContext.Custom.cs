@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ComputeFleet;
 using Azure.ResourceManager.ComputeFleet.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet;
 
@@ -79,6 +81,10 @@ namespace Azure.ResourceManager.ComputeFleet;
 [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListResult))]
 [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
 [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerComputeFleetContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry;
 
@@ -159,6 +161,10 @@ namespace Azure.ResourceManager.ContainerRegistry;
 [ModelReaderWriterBuildable(typeof(UnknownRunRequest))]
 [ModelReaderWriterBuildable(typeof(UnknownTaskStepProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownTaskStepUpdateParameters))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerContainerRegistryContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization;
 
@@ -85,6 +87,10 @@ namespace Azure.ResourceManager.DesktopVirtualization;
 [ModelReaderWriterBuildable(typeof(VirtualDesktopPatch))]
 [ModelReaderWriterBuildable(typeof(VirtualWorkspacePatch))]
 [ModelReaderWriterBuildable(typeof(WorkspaceList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDesktopVirtualizationContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices;
 
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices;
 [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
 [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
 [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDeviceProvisioningServicesContext
 {
 }

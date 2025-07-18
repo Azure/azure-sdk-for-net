@@ -3,6 +3,8 @@
 using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServices;
 
@@ -57,6 +59,10 @@ namespace Azure.ResourceManager.RecoveryServices;
 [ModelReaderWriterBuildable(typeof(VaultUsage))]
 [ModelReaderWriterBuildable(typeof(VaultUsageListResult))]
 [ModelReaderWriterBuildable(typeof(VaultUsageNameInfo))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerRecoveryServicesContext
 {
 }

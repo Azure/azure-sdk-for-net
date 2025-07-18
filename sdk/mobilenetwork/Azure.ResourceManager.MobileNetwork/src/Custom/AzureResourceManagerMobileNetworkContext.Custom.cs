@@ -3,6 +3,8 @@
 using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.MobileNetwork.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork;
 
@@ -112,6 +114,10 @@ namespace Azure.ResourceManager.MobileNetwork;
 [ModelReaderWriterBuildable(typeof(UnknownExtendedUEInfoProperties))]
 [ModelReaderWriterBuildable(typeof(UserConsentConfiguration))]
 [ModelReaderWriterBuildable(typeof(UserPlaneDataRoutesItem))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMobileNetworkContext
 {
 }

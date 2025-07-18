@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ConnectedCache;
 using Azure.ResourceManager.ConnectedCache.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedCache;
 
@@ -41,6 +43,10 @@ namespace Azure.ResourceManager.ConnectedCache;
 [ModelReaderWriterBuildable(typeof(MccCustomerAdditionalProperties))]
 [ModelReaderWriterBuildable(typeof(MccCustomerEntity))]
 [ModelReaderWriterBuildable(typeof(MccCustomerProperty))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerConnectedCacheContext
 {
 }

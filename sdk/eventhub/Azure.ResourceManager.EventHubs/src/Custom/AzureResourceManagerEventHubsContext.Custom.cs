@@ -3,6 +3,8 @@
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs;
 
@@ -72,6 +74,10 @@ namespace Azure.ResourceManager.EventHubs;
 [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
 [ModelReaderWriterBuildable(typeof(UnknownApplicationGroupPolicy))]
 [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerEventHubsContext
 {
 }

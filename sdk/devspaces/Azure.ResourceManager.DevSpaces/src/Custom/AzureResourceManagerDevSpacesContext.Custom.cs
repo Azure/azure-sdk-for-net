@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DevSpaces;
 using Azure.ResourceManager.DevSpaces.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevSpaces;
 
@@ -18,6 +20,10 @@ namespace Azure.ResourceManager.DevSpaces;
 [ModelReaderWriterBuildable(typeof(ListConnectionDetailsContent))]
 [ModelReaderWriterBuildable(typeof(OrchestratorSpecificConnectionDetails))]
 [ModelReaderWriterBuildable(typeof(UnknownOrchestratorSpecificConnectionDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDevSpacesContext
 {
 }

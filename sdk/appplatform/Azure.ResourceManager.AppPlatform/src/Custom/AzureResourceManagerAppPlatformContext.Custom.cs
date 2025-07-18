@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform;
 
@@ -200,6 +202,10 @@ namespace Azure.ResourceManager.AppPlatform;
 [ModelReaderWriterBuildable(typeof(UnknownProbeAction))]
 [ModelReaderWriterBuildable(typeof(UnknownStorageProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownUserSourceInfo))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAppPlatformContext
 {
 }

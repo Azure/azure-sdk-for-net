@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Advisor.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Advisor;
 
@@ -21,6 +23,10 @@ namespace Azure.ResourceManager.Advisor;
 [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseListResult))]
 [ModelReaderWriterBuildable(typeof(ShortDescription))]
 [ModelReaderWriterBuildable(typeof(SuppressionContractListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAdvisorContext
 {
 }

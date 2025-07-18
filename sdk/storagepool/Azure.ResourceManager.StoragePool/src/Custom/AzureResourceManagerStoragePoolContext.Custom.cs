@@ -3,6 +3,8 @@
 using Azure.ResourceManager.StoragePool;
 using Azure.ResourceManager.StoragePool.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StoragePool;
 
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.StoragePool;
 [ModelReaderWriterBuildable(typeof(StoragePoolSkuRestrictionInfo))]
 [ModelReaderWriterBuildable(typeof(StoragePoolSkuRestrictions))]
 [ModelReaderWriterBuildable(typeof(StoragePoolSkuZoneDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerStoragePoolContext
 {
 }

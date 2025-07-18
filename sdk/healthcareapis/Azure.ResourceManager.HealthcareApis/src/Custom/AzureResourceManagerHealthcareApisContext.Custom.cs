@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HealthcareApis;
 using Azure.ResourceManager.HealthcareApis.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthcareApis;
 
@@ -68,6 +70,10 @@ namespace Azure.ResourceManager.HealthcareApis;
 [ModelReaderWriterBuildable(typeof(SmartIdentityProviderApplication))]
 [ModelReaderWriterBuildable(typeof(SmartIdentityProviderConfiguration))]
 [ModelReaderWriterBuildable(typeof(WorkspaceList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHealthcareApisContext
 {
 }

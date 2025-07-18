@@ -3,6 +3,8 @@
 using Azure.ResourceManager.RedisEnterprise;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise;
 
@@ -44,6 +46,10 @@ namespace Azure.ResourceManager.RedisEnterprise;
 [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetails))]
 [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
 [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerRedisEnterpriseContext
 {
 }

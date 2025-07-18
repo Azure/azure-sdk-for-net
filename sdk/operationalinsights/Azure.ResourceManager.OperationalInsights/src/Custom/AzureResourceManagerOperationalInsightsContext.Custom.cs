@@ -3,6 +3,8 @@
 using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.OperationalInsights.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.OperationalInsights;
 
@@ -82,6 +84,10 @@ namespace Azure.ResourceManager.OperationalInsights;
 [ModelReaderWriterBuildable(typeof(WorkspaceListManagementGroupsResult))]
 [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
 [ModelReaderWriterBuildable(typeof(WorkspaceListUsagesResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerOperationalInsightsContext
 {
 }

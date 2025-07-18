@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Elastic;
 using Azure.ResourceManager.Elastic.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Elastic;
 
@@ -58,6 +60,10 @@ namespace Azure.ResourceManager.Elastic;
 [ModelReaderWriterBuildable(typeof(VmCollectionContent))]
 [ModelReaderWriterBuildable(typeof(VmHostListResponse))]
 [ModelReaderWriterBuildable(typeof(VmIngestionDetailsResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerElasticContext
 {
 }

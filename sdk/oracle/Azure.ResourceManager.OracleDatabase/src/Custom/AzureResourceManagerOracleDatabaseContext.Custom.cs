@@ -3,6 +3,8 @@
 using Azure.ResourceManager.OracleDatabase;
 using Azure.ResourceManager.OracleDatabase.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.OracleDatabase;
 
@@ -150,6 +152,10 @@ namespace Azure.ResourceManager.OracleDatabase;
 [ModelReaderWriterBuildable(typeof(SystemVersionListResult))]
 [ModelReaderWriterBuildable(typeof(UnknownAutonomousDatabaseBaseProperties))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkAddressListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerOracleDatabaseContext
 {
 }

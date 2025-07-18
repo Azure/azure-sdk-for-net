@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric;
 
@@ -182,6 +184,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric;
 [ModelReaderWriterBuildable(typeof(VpnConfigurationPatchableOptionAProperties))]
 [ModelReaderWriterBuildable(typeof(VpnConfigurationPatchableProperties))]
 [ModelReaderWriterBuildable(typeof(VpnConfigurationProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerManagedNetworkFabricContext
 {
 }

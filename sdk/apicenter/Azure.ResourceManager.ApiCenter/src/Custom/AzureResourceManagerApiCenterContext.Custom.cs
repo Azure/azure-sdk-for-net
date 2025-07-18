@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ApiCenter;
 using Azure.ResourceManager.ApiCenter.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiCenter;
 
@@ -53,6 +55,10 @@ namespace Azure.ResourceManager.ApiCenter;
 [ModelReaderWriterBuildable(typeof(ServiceListResult))]
 [ModelReaderWriterBuildable(typeof(TermsOfService))]
 [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerApiCenterContext
 {
 }

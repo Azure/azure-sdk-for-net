@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService;
 
@@ -627,6 +629,10 @@ namespace Azure.ResourceManager.AppService;
 [ModelReaderWriterBuildable(typeof(WorkflowTriggerListResult))]
 [ModelReaderWriterBuildable(typeof(WorkflowTriggerRecurrence))]
 [ModelReaderWriterBuildable(typeof(WorkflowVersionListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAppServiceContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.TrafficManager;
 
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.TrafficManager;
 [ModelReaderWriterBuildable(typeof(TrafficManagerRelativeDnsNameAvailabilityContent))]
 [ModelReaderWriterBuildable(typeof(TrafficManagerResourceData))]
 [ModelReaderWriterBuildable(typeof(TrafficManagerTrackedResourceData))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerTrafficManagerContext
 {
 }

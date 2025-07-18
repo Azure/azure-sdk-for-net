@@ -3,6 +3,8 @@
 using Azure.ResourceManager.SiteManager;
 using Azure.ResourceManager.SiteManager.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SiteManager;
 
@@ -13,6 +15,10 @@ namespace Azure.ResourceManager.SiteManager;
 [ModelReaderWriterBuildable(typeof(EdgeSiteProperties))]
 [ModelReaderWriterBuildable(typeof(SiteAddressProperties))]
 [ModelReaderWriterBuildable(typeof(SiteListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSiteManagerContext
 {
 }
