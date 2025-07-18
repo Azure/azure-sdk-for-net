@@ -10,6 +10,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,5 +25,6 @@
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>
