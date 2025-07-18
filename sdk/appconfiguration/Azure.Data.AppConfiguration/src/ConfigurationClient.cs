@@ -99,13 +99,6 @@ namespace Azure.Data.AppConfiguration
         private readonly string _syncToken;
 
         /// <summary>
-        /// Protected constructor to allow mocking.
-        /// </summary>
-        protected ConfigurationClient()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
@@ -132,16 +125,6 @@ namespace Azure.Data.AppConfiguration
             Pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
-        /// <param name="credential">The token credential used to sign requests.</param>
-        public ConfigurationClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, new ConfigurationClientOptions())
-        {
         }
 
         /// <summary>

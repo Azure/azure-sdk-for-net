@@ -39,7 +39,7 @@ namespace Azure.Data.AppConfiguration
             /// <summary>
             /// Version 2023-11-01.
             /// </summary>
-            V2023_11_01 = 2,
+            V2023_11_01 = 2
         }
 
         /// <summary>

@@ -26,6 +26,19 @@ namespace Azure.Data.AppConfiguration
         private static readonly string[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
         private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of ConfigurationClient for mocking. </summary>
+        protected ConfigurationClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConfigurationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConfigurationClientOptions())
+        {
+        }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
 
