@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -45,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            ((IJsonModel<DataFactoryLinkedServiceReference>)LinkedService).Write(writer, options);
+            JsonSerializer.Serialize(writer, LinkedService);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -168,13 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedService"u8))
                         {
-                            linkedService =
-#if NET9_0_OR_GREATER
-				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerDataFactoryContext.Default)
-#else
-                ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default)
-#endif
-;
+                            linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
                             continue;
                         }
                     }

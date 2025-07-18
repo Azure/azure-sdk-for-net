@@ -86,6 +86,7 @@ public partial class AzureResourceManagerEventHubsContext
     {
         factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
         factories.Add(typeof(SubResource), () => ArmContext.GetTypeBuilder(typeof(SubResource)));
+        factories.Add(typeof(SystemData), () => ArmContext.GetTypeBuilder(typeof(SystemData)));
         factories.Add(typeof(WritableSubResource), () => ArmContext.GetTypeBuilder(typeof(WritableSubResource)));
     }
 }

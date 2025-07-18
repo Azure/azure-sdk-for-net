@@ -4,6 +4,7 @@ using Azure.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -521,5 +522,6 @@ public partial class AzureResourceManagerComputeContext
     partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
     {
         factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+        factories.Add(typeof(WritableSubResource), () => ArmContext.GetTypeBuilder(typeof(WritableSubResource)));
     }
 }

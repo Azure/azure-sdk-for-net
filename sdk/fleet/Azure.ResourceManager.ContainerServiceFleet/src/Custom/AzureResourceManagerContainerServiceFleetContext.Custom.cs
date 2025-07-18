@@ -3,6 +3,7 @@
 using Azure.ResourceManager.ContainerServiceFleet;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -61,5 +62,6 @@ public partial class AzureResourceManagerContainerServiceFleetContext
     partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
     {
         factories.Add(typeof(SystemData), () => ArmContext.GetTypeBuilder(typeof(SystemData)));
+        factories.Add(typeof(WritableSubResource), () => ArmContext.GetTypeBuilder(typeof(WritableSubResource)));
     }
 }
