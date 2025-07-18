@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
@@ -86,6 +87,101 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await channel.Value.DeleteAsync(WaitUntil.Completed);
             flag = await _partnerNamespaceChannelCollection.ExistsAsync(channelName);
             Assert.IsFalse(flag);
+        }
+
+        [Ignore("Could not create a valid external partner source")]
+        [Test]
+        public async Task CreateOrUpdateAsync_CreatesChannel()
+        {
+            // Arrange
+            string channelName = Recording.GenerateAssetName("channel-createorupdate");
+            var data = new PartnerNamespaceChannelData
+            {
+                ChannelType = PartnerNamespaceChannelType.PartnerTopic,
+                PartnerTopicInfo = new PartnerTopicInfo
+                {
+                    AzureSubscriptionId = new Guid("5b4b650e-28b9-4790-b3ab-ddbd88d727c4"),
+                    ResourceGroupName = _resourceGroup.Data.Name,
+                    Name = "partner-topic",
+                    Source = "Partner Topic Source"
+                }
+            };
+
+            // Act
+            var operation = await _partnerNamespaceChannelCollection.CreateOrUpdateAsync(WaitUntil.Completed, channelName, data);
+            var channel = operation.Value;
+
+            // Assert
+            Assert.IsNotNull(channel);
+            Assert.AreEqual(channelName, channel.Data.Name);
+            Assert.AreEqual(PartnerNamespaceChannelType.PartnerTopic, channel.Data.ChannelType);
+
+            // Cleanup
+            await channel.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Ignore("Could not create a valid external partner source")]
+        [Test]
+        public async Task GetAsync_GetsChannel()
+        {
+            // Arrange
+            string channelName = Recording.GenerateAssetName("channel-get");
+            var data = new PartnerNamespaceChannelData
+            {
+                ChannelType = PartnerNamespaceChannelType.PartnerTopic,
+                PartnerTopicInfo = new PartnerTopicInfo
+                {
+                    AzureSubscriptionId = new Guid("5b4b650e-28b9-4790-b3ab-ddbd88d727c4"),
+                    ResourceGroupName = _resourceGroup.Data.Name,
+                    Name = "partner-topic",
+                    Source = "Partner Topic Source"
+                }
+            };
+            var operation = await _partnerNamespaceChannelCollection.CreateOrUpdateAsync(WaitUntil.Completed, channelName, data);
+            var createdChannel = operation.Value;
+
+            // Act
+            var getResponse = await _partnerNamespaceChannelCollection.GetAsync(channelName);
+
+            // Assert
+            Assert.IsNotNull(getResponse);
+            Assert.IsNotNull(getResponse.Value);
+            Assert.AreEqual(channelName, getResponse.Value.Data.Name);
+
+            // Cleanup
+            await createdChannel.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Ignore("Could not create a valid external partner source")]
+        [Test]
+        public async Task GetAllAsync_ReturnsChannels()
+        {
+            // Arrange
+            string channelName = Recording.GenerateAssetName("channel-getall");
+            var data = new PartnerNamespaceChannelData
+            {
+                ChannelType = PartnerNamespaceChannelType.PartnerTopic,
+                PartnerTopicInfo = new PartnerTopicInfo
+                {
+                    AzureSubscriptionId = new Guid("5b4b650e-28b9-4790-b3ab-ddbd88d727c4"),
+                    ResourceGroupName = _resourceGroup.Data.Name,
+                    Name = "partner-topic",
+                    Source = "Partner Topic Source"
+                }
+            };
+            var operation = await _partnerNamespaceChannelCollection.CreateOrUpdateAsync(WaitUntil.Completed, channelName, data);
+            var createdChannel = operation.Value;
+
+            // Act
+            var list = await _partnerNamespaceChannelCollection.GetAllAsync().ToEnumerableAsync();
+
+            // Assert
+            Assert.IsNotNull(list);
+            Assert.IsTrue(list.Count > 0);
+            Assert.IsTrue(list.Any(c => c.Data.Name == channelName));
+
+            // Cleanup
+            await createdChannel.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
