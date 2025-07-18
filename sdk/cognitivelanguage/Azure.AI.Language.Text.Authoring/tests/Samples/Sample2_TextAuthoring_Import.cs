@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_TextAuthoring_Import
-            string projectName = "LoanAgreements";
+            string projectName = "MyImportProject";
             TextAuthoringProject projectClient = client.GetProject(projectName);
             var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "CustomSingleLabelClassification",
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
                 language: "en"
             )
             {
-                Description = "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+                Description = "Sample dataset for Custom Entity Recognition",
                 Multilingual = false,
                 Settings = new TextAuthoringProjectSettings()
             };
@@ -140,6 +140,64 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Completed,
                 body: exportedProject
+            );
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Import completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void ImportRawString()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample2_TextAuthoring_ImportRawString
+            string projectName = "MyImportRawStringProject";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            string rawJson = """
+            {
+              "projectFileVersion": "2025-05-15-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "CustomSingleLabelClassification",
+                "storageInputContainerName": "single-class-example",
+                "language": "en",
+                "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+                "multilingual": false,
+                "settings": {}
+              },
+              "assets": {
+                "projectKind": "CustomSingleLabelClassification",
+                "classes": [
+                  { "category": "Date" },
+                  { "category": "LenderName" },
+                  { "category": "LenderAddress" }
+                ],
+                "documents": [
+                  {
+                    "class": { "category": "Date" },
+                    "location": "01.txt",
+                    "language": "en"
+                  },
+                  {
+                    "class": { "category": "LenderName" },
+                    "location": "02.txt",
+                    "language": "en"
+                  }
+                ]
+              }
+            }
+            """;
+
+            Operation operation = projectClient.Import(
+                waitUntil: WaitUntil.Started,
+                exportedProject: rawJson
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
