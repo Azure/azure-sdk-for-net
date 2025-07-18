@@ -39,9 +39,7 @@ namespace Azure.AI.Language.QuestionAnswering
     }
     public partial class AzureAILanguageQuestionAnsweringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAILanguageQuestionAnsweringContext() { }
-        public static Azure.AI.Language.QuestionAnswering.AzureAILanguageQuestionAnsweringContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAILanguageQuestionAnsweringContext() { }
     }
     public partial class KnowledgeBaseAnswer
     {
