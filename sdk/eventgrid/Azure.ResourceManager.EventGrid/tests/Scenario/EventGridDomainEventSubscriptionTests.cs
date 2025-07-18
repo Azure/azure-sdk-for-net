@@ -208,5 +208,84 @@ namespace Azure.ResourceManager.EventGrid.Tests
             resultFalse = (await DomainCollection.ExistsAsync(domainName)).Value;
             Assert.IsFalse(resultFalse);
         }
+
+        [Test]
+        public async Task DomainEventSubscriptionNegativeScenarios()
+        {
+            await SetCollection();
+            AzureLocation location = DefaultLocation;
+            var domainName = Recording.GenerateAssetName("sdk-Domain-");
+
+            var domain = (await DomainCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, domainName, new EventGridDomainData(location))).Value;
+
+            var eventSubscriptions = domain.GetDomainEventSubscriptions();
+
+            // Get non-existent event subscription
+            var response = await eventSubscriptions.GetIfExistsAsync("notexistentsub");
+            Assert.IsFalse(response.HasValue);
+
+            // GetAsync on non-existent subscription should throw
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await eventSubscriptions.GetAsync("notexistentsub");
+            });
+
+            // Create subscription with invalid URI
+            var invalidSubscriptionName = Recording.GenerateAssetName("sdk-BadSub-");
+            var badSub = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri("http://invalid.local")
+                },
+                Filter = new EventSubscriptionFilter()
+                {
+                    SubjectBeginsWith = "Invalid",
+                    SubjectEndsWith = "Data"
+                }
+            };
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, invalidSubscriptionName, badSub);
+            });
+
+            // Create valid subscription
+            var validSubscriptionName = Recording.GenerateAssetName("sdk-ValidSub-");
+            var validSub = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl)
+                },
+                Filter = new EventSubscriptionFilter()
+                {
+                    SubjectBeginsWith = "A",
+                    SubjectEndsWith = "Z"
+                }
+            };
+
+            var createdValidSub = (await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, validSubscriptionName, validSub)).Value;
+            Assert.NotNull(createdValidSub);
+
+            // Delete the valid subscription
+            await createdValidSub.DeleteAsync(WaitUntil.Completed);
+            var exists = await eventSubscriptions.ExistsAsync(validSubscriptionName);
+            Assert.IsFalse(exists.Value);
+
+            // Patch after deletion should throw (either 400 or 404)
+            var emptyPatch = new EventGridSubscriptionPatch();
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await createdValidSub.UpdateAsync(WaitUntil.Completed, emptyPatch);
+            });
+
+            Assert.IsTrue(ex.Status == 404 || ex.Status == 400, $"Expected 404 or 400, but was {ex.Status}");
+
+            // Delete domain
+            await domain.DeleteAsync(WaitUntil.Completed);
+        }
     }
 }

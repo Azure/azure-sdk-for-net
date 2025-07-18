@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             System.Collections.Generic.List<EventGridDomainPrivateLinkResource> list = await getDomainResponse.GetEventGridDomainPrivateLinkResources().ToEnumerableAsync();
             Assert.NotNull(list);
             //// Diable test as identity is not part of GA Version yet.
-            //// Assert.Null(getDomainResponse.Identity);
             Assert.AreEqual(getDomainResponse.Data.InboundIPRules.Count, 0);
 
             // Get all domains created within a resourceGroup

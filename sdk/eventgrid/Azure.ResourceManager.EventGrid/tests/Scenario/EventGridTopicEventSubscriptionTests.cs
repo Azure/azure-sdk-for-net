@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         //TopicEventSubscriptionResource GetAsync'
         [Test]
-        public async Task TopicEventSubscriptionResource_GetAsync_ReturnsExpectedResource()
+        public async Task TopicEventSubscriptionResourceGetAsync()
         {
             // Arrange
             string eventSubscriptionName = Recording.GenerateAssetName("topicSubscription");
-            var created = await CreateTopicEventSubscription(eventSubscriptionName);
+            var topicEventSubscriptionResource = await CreateTopicEventSubscription(eventSubscriptionName);
 
             // Act
-            var response = await created.GetAsync();
+            var response = await topicEventSubscriptionResource.GetAsync();
 
             // Assert
             Assert.IsNotNull(response);
@@ -144,6 +144,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("EventGridSchema", response.Value.Data.EventDeliverySchema.ToString());
             Assert.AreEqual("Microsoft.EventGrid/topics/eventSubscriptions", response.Value.Data.ResourceType.ToString());
             Assert.AreEqual("WebHook", response.Value.Data.Destination.EndpointType.ToString());
+
+            // Delete the event subscription resource
+            await topicEventSubscriptionResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private void ValidateTopicEventSubscription(TopicEventSubscriptionResource topicEventSubscription, string eventSubscriptionName)

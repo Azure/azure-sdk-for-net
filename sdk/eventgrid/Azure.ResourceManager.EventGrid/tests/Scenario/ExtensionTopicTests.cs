@@ -12,19 +12,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 {
-    [TestFixture(true)]
-    [TestFixture(false)]
-    internal class ExtensionTopicTests
+    internal class ExtensionTopicTests : EventGridManagementTestBase
     {
-        private readonly bool _isAsync;
-
-        public ExtensionTopicTests(bool isAsync)
-        {
-            _isAsync = isAsync;
-        }
+        public ExtensionTopicTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        public async Task GetAsync_ThrowsRequestFailedException()
+        public async Task GetAsyncThrowsRequestFailedException()
         {
             // Arrange
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
@@ -41,6 +34,26 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             });
 
             await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task ExtensionTopicResourceGetAsync()
+        {
+            // Arrange
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "sdk-eventgrid-test-rg";
+            string systemTopicName = "sdk-eventgrid-test-systemTopic";
+
+            var resourceId = SystemTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName);
+            var systemTopicResource = Client.GetSystemTopicResource(resourceId);
+
+            // Act
+            var response = await systemTopicResource.GetAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+            Assert.AreEqual(systemTopicName, response.Value.Data.Name);
         }
     }
 }

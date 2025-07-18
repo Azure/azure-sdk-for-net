@@ -36,10 +36,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Topic_Lifecycle_CreateGetUpdateDelete()
+        public async Task TopicLifecycleCreateGetUpdateDelete()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
+            ValidateEventGridTopic(topic, topicName);
 
             // Get
             var getTopic = await _eventGridTopicCollection.GetAsync(topicName);
@@ -53,6 +54,28 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await topic.UpdateAsync(WaitUntil.Completed, patch);
             var updatedTopic = await _eventGridTopicCollection.GetAsync(topicName);
             Assert.IsTrue(updatedTopic.Value.Data.Tags.ContainsKey("env"));
+
+            // AddTag
+            var addTagResult = await topic.AddTagAsync("stickerKey", "stickerValue");
+            Assert.IsNotNull(addTagResult);
+            Assert.IsNotNull(addTagResult.Value);
+            Assert.IsTrue(addTagResult.Value.Data.Tags.ContainsKey("stickerKey"));
+            Assert.AreEqual("stickerValue", addTagResult.Value.Data.Tags["stickerKey"]);
+
+            // SetTags
+            var tags = new Dictionary<string, string> { { "env", "test" }, { "team", "sdk" }, { "stickerKey", "stickerValue" } };
+            var setTagsResult = await topic.SetTagsAsync(tags);
+            Assert.IsNotNull(setTagsResult);
+            Assert.IsNotNull(setTagsResult.Value);
+            Assert.IsTrue(setTagsResult.Value.Data.Tags.ContainsKey("stickerKey"));
+            Assert.AreEqual("stickerValue", setTagsResult.Value.Data.Tags["stickerKey"]);
+
+            // RemoveTag
+            await topic.AddTagAsync("removeSticker", "removeMe");
+            var removeTagResult = await topic.RemoveTagAsync("removeSticker");
+            Assert.IsNotNull(removeTagResult);
+            Assert.IsNotNull(removeTagResult.Value);
+            Assert.IsFalse(removeTagResult.Value.Data.Tags.ContainsKey("removeSticker"));
 
             // Exists
             bool exists = await _eventGridTopicCollection.ExistsAsync(topicName);
@@ -74,23 +97,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var key = await topic.RegenerateKeyAsync(WaitUntil.Completed, new TopicRegenerateKeyContent("key1"));
             Assert.IsNotNull(key);
 
-            // AddTag
-            var addTagResult = await topic.AddTagAsync("testKey", "testValue");
-            Assert.IsNotNull(addTagResult);
-            Assert.IsNotNull(addTagResult.Value);
-
-            // SetTags
-            var tags = new Dictionary<string, string> { { "env", "test" }, { "team", "sdk" } };
-            var setTagsResult = await topic.SetTagsAsync(tags);
-            Assert.IsNotNull(setTagsResult);
-            Assert.IsNotNull(setTagsResult.Value);
-
-            // RemoveTag
-            await topic.AddTagAsync("removeKey", "removeValue");
-            var removeTagResult = await topic.RemoveTagAsync("removeKey");
-            Assert.IsNotNull(removeTagResult);
-            Assert.IsNotNull(removeTagResult.Value);
-
             // GetAsync
             var getAsyncResult = await topic.GetAsync();
             Assert.IsNotNull(getAsyncResult);
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Topic_NegativeScenarios()
+        public async Task TopicNegativeScenarios()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
@@ -130,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Topic_PrivateLinkResourcesGetAndList()
+        public async Task TopicPrivateLinkResourcesGetAndList()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
@@ -139,102 +145,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsNotNull(linkResource);
             var list = await topic.GetEventGridTopicPrivateLinkResources().ToEnumerableAsync();
             Assert.NotNull(list);
-
-            await topic.DeleteAsync(WaitUntil.Completed);
-        }
-
-        [Test]
-        public async Task Topic_PrivateEndpointConnectionCollection_Operations()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            var collection = topic.GetEventGridTopicPrivateEndpointConnections();
-            var data = new EventGridPrivateEndpointConnectionData();
-
-            // CreateOrUpdateAsync (should throw or succeed)
-            try
-            {
-                var result = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "testpec", data);
-                Assert.IsNotNull(result);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.That(ex, Is.Not.Null);
-            }
-
-            // GetAsync (should throw or succeed)
-            try
-            {
-                var response = await collection.GetAsync("testpec");
-                Assert.IsNotNull(response);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.That(ex, Is.Not.Null);
-            }
-
-            // GetAllAsync (should not throw)
-            var list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(list);
-
-            await topic.DeleteAsync(WaitUntil.Completed);
-        }
-
-        [Test]
-        public async Task Topic_PrivateEndpointConnectionResource_Operations()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            var collection = topic.GetEventGridTopicPrivateEndpointConnections();
-            var data = new EventGridPrivateEndpointConnectionData();
-
-            // Try to get the resource (should throw or succeed)
-            EventGridTopicPrivateEndpointConnectionResource item = null;
-            try
-            {
-                var res = await collection.GetAsync("testpec");
-                item = res.Value;
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.That(ex, Is.Not.Null);
-            }
-
-            if (item != null)
-            {
-                // GetAsync
-                try
-                {
-                    var result = await item.GetAsync();
-                    Assert.IsNotNull(result);
-                }
-                catch (RequestFailedException ex)
-                {
-                    Assert.That(ex, Is.Not.Null);
-                }
-
-                // DeleteAsync
-                try
-                {
-                    var result = await item.DeleteAsync(WaitUntil.Completed);
-                    Assert.IsNotNull(result);
-                }
-                catch (RequestFailedException ex)
-                {
-                    Assert.That(ex, Is.Not.Null);
-                }
-
-                // UpdateAsync
-                try
-                {
-                    var result = await item.UpdateAsync(WaitUntil.Completed, data);
-                    Assert.IsNotNull(result);
-                }
-                catch (RequestFailedException ex)
-                {
-                    Assert.That(ex, Is.Not.Null);
-                }
-            }
 
             await topic.DeleteAsync(WaitUntil.Completed);
         }

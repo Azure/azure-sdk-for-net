@@ -31,30 +31,45 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Domain_Lifecycle_CreateGetUpdateTagDelete()
+        public async Task DomainLifecycleCreateGetUpdateTagDelete()
         {
             await SetCollection();
             var domainName = Recording.GenerateAssetName("sdk-domain-");
+
             var domainData = new EventGridDomainData(DefaultLocation);
 
             // Create
             var createResponse = await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domainData);
             var domainResource = createResponse.Value;
             Assert.NotNull(domainResource);
+            Assert.AreEqual(DefaultLocation.Name, domainResource.Data.Location.Name);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(domainName));
+            Assert.IsTrue(domainName.StartsWith("sdk-domain-"));
 
             // Get
             var getResponse = await domainResource.GetAsync();
             Assert.NotNull(getResponse.Value);
+            Assert.AreEqual(domainName, getResponse.Value.Data.Name);
 
             // Add Tag
             var addTagResponse = await domainResource.AddTagAsync("testKey", "testValue");
+            Assert.NotNull(addTagResponse);
+            Assert.NotNull(addTagResponse.Value);
+            Assert.NotNull(addTagResponse.Value.Data);
+            Assert.NotNull(addTagResponse.Value.Data.Tags);
             Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("testKey"));
+            Assert.AreEqual("testValue", addTagResponse.Value.Data.Tags["testKey"]);
 
             // Set Tags
-            var tags = new Dictionary<string, string> { { "k", "v" }, { "k2", "v2" } };
-            var setTagsResponse = await domainResource.SetTagsAsync(tags);
-            Assert.IsTrue(setTagsResponse.Value.Data.Tags.ContainsKey("k"));
-            Assert.IsTrue(setTagsResponse.Value.Data.Tags.ContainsKey("k2"));
+            var domainTags = new Dictionary<string, string>
+            {
+                { "environment", "production" },
+                { "owner", "sdk-team" }
+            };
+            var setTagsResponse = await domainResource.SetTagsAsync(domainTags);
+            Assert.AreEqual(2, setTagsResponse.Value.Data.Tags.Count);
+            Assert.AreEqual("production", setTagsResponse.Value.Data.Tags["environment"]);
+            Assert.AreEqual("sdk-team", setTagsResponse.Value.Data.Tags["owner"]);
 
             // Remove Tag
             await domainResource.AddTagAsync("toremove", "value");
@@ -65,6 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var keys = await domainResource.GetSharedAccessKeysAsync();
             Assert.IsNotNull(keys.Value.Key1);
             Assert.IsNotNull(keys.Value.Key2);
+            Assert.AreNotEqual(keys.Value.Key1, keys.Value.Key2);
 
             // Regenerate Key
             var regen = new EventGridDomainRegenerateKeyContent("key1");
@@ -78,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Domain_Topic_And_PrivateEndpoint_And_NSP_Collections()
+        public async Task DomainTopicAndPrivateEndpointAndNSPCollections()
         {
             await SetCollection();
             var domainName = Recording.GenerateAssetName("sdk-domain-");
@@ -87,18 +103,26 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createResponse = await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domainData);
             var domainResource = createResponse.Value;
             Assert.NotNull(domainResource);
+            Assert.AreEqual(DefaultLocation.Name, domainResource.Data.Location.Name);
 
             // Domain Topic
             var topicCollection = domainResource.GetDomainTopics();
             var topic = await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName);
+            Assert.NotNull(topic);
+            Assert.AreEqual(topicName, topic.Value.Data.Name);
+
             var getTopic = await domainResource.GetDomainTopicAsync(topicName);
             Assert.AreEqual(topicName, getTopic.Value.Data.Name);
+
             await topic.Value.DeleteAsync(WaitUntil.Completed);
+            var exists = await topicCollection.ExistsAsync(topicName);
+            Assert.IsFalse(exists.Value);
 
             // Private Endpoint Connections
             var pecCollection = domainResource.GetEventGridDomainPrivateEndpointConnections();
             var allPecs = await pecCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(allPecs);
+            Assert.IsTrue(allPecs is IEnumerable<EventGridDomainPrivateEndpointConnectionResource>);
 
             // Domain Network Security Perimeter Configurations
             var nspCollection = domainResource.GetDomainNetworkSecurityPerimeterConfigurations();
@@ -109,7 +133,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Domain_NegativeScenarios()
+        public async Task DomainEventSubscriptionAndPrivateEndpointNegativeScenarios()
         {
             await SetCollection();
             var domainName = Recording.GenerateAssetName("sdk-domain-");
@@ -191,7 +215,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task EventGridDomainPrivateEndpointConnectionResource_DeleteAsync_Works()
+        public async Task EventGridDomainPrivateEndpointConnectionResourceDeleteAsync()
         {
             await SetCollection();
             var domainName = Recording.GenerateAssetName("sdk-domain-");
@@ -204,11 +228,22 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DefaultSubscription.Data.SubscriptionId, ResourceGroup.Data.Name, domainName, "pec1");
             var pecResource = new EventGridDomainPrivateEndpointConnectionResource(Client, pecId);
 
-            // Just call delete and assert it completes (no exception expected)
             var result = await pecResource.DeleteAsync(WaitUntil.Completed);
-            Assert.NotNull(result);
+            Assert.IsTrue(result.HasCompleted);
 
             await domainResource.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TearDown]
+        public async Task TearDown()
+        {
+            if (Mode == RecordedTestMode.Playback)
+                return;
+
+            if (ResourceGroup != null)
+            {
+                await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
         }
     }
 }

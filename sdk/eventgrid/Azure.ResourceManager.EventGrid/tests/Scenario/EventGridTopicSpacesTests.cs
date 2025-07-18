@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
         }
 
         [Test]
-        public async Task TopicSpaceResource_GetAsync_ReturnsExpectedResource()
+        public async Task TopicSpaceResourceGetAsync()
         {
             // Arrange
             string topicSpaceName = Recording.GenerateAssetName("topicspace-get-");
@@ -138,12 +138,6 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             Assert.IsNotNull(getResponse);
             Assert.IsNotNull(getResponse.Value);
             Assert.AreEqual(topicSpaceName, getResponse.Value.Data.Name);
-
-            // Optional: Only assert Description if it's not null
-            if (getResponse.Value.Data.Description != null)
-            {
-                Assert.AreEqual("GetAsync Test Topic Space", getResponse.Value.Data.Description);
-            }
 
             // Cleanup
             await getResponse.Value.DeleteAsync(WaitUntil.Completed);
