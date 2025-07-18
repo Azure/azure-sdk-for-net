@@ -238,7 +238,7 @@ namespace Azure.Core.Tests
             var ex = Assert.Throws<FormatException>(() =>
                 ModelReaderWriter.Read<ResponseError>(binaryData, options));
 
-            Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
+            Assert.IsTrue(ex.Message.Contains("does not support reading 'X' format"));
         }
 
         #endregion
@@ -330,7 +330,7 @@ namespace Azure.Core.Tests
             var ex = Assert.Throws<FormatException>(() =>
                 ModelReaderWriter.Write(error, options));
 
-            Assert.IsTrue(ex.Message.Contains("does not support 'X' format"));
+            Assert.IsTrue(ex.Message.Contains("does not support writing 'X' format"));
         }
 
         #endregion
