@@ -180,6 +180,7 @@ namespace Azure.Generator.Management
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
                 ArmOperation,
                 GenericArmOperation,
+                new ProviderConstantsProvider(),
                 .. resources,
                 .. collections,
                 .. extensions,
