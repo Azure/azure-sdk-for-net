@@ -22,7 +22,7 @@ namespace MgmtTypeSpec
     public partial class FooResource : ArmResource
     {
         private readonly ClientDiagnostics _fooClientDiagnostics;
-        private readonly Foos _fooRestClient;
+        private readonly Foos _foosRestClient;
         private readonly FooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos";
@@ -48,7 +48,7 @@ namespace MgmtTypeSpec
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
+            _foosRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -101,7 +101,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -130,7 +130,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -160,7 +160,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -190,7 +190,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -224,7 +224,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
@@ -264,7 +264,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
@@ -310,7 +310,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -354,7 +354,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -397,7 +397,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -440,7 +440,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -482,7 +482,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -524,7 +524,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -542,6 +542,13 @@ namespace MgmtTypeSpec
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of Bars in the Foo. </summary>
+        /// <returns> An object representing collection of Bars and their operations over a Foo. </returns>
+        public virtual BarCollection GetBars()
+        {
+            return GetCachedClient(client => new BarCollection(client, Id));
         }
     }
 }

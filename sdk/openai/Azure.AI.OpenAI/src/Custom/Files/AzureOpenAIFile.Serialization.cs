@@ -24,10 +24,10 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
         }
         if (instance.SerializedAdditionalRawData?.ContainsKey("bytes") != true)
         {
-            if (instance.SizeInBytes != null)
+            if (instance.SizeInBytesLong != null)
             {
                 writer.WritePropertyName("bytes"u8);
-                writer.WriteNumberValue(instance.SizeInBytes.Value);
+                writer.WriteNumberValue(instance.SizeInBytesLong.Value);
             }
             else
             {
@@ -94,7 +94,7 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
             return null;
         }
         string id = default;
-        int? bytes = default;
+        long? bytes = default;
         DateTimeOffset createdAt = default;
         DateTimeOffset? expiresAt = default;
         string filename = default;
@@ -117,7 +117,7 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
                     bytes = null;
                     continue;
                 }
-                bytes = property.Value.GetInt32();
+                bytes = property.Value.GetInt64();
                 continue;
             }
             if (property.NameEquals("created_at"u8))

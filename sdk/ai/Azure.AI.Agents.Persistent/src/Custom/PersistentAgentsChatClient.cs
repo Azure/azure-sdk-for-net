@@ -35,8 +35,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>The thread ID to use if none is supplied in <see cref="ChatOptions.ConversationId"/>.</summary>
         private readonly string? _defaultThreadId;
 
-        /// <summary>List of tools associated with the agent.</summary>
-        private IReadOnlyList<ToolDefinition>? _agentTools;
+        /// <summary>Lazily-retrieved agent instance. Used for its properties.</summary>
+        private PersistentAgent? _agent;
 
         /// <summary>Initializes a new instance of the <see cref="PersistentAgentsChatClient"/> class for the specified <see cref="PersistentAgentsClient"/>.</summary>
         public PersistentAgentsChatClient(PersistentAgentsClient client, string agentId, string? defaultThreadId = null)
@@ -233,6 +233,13 @@ namespace Azure.AI.Agents.Persistent
                 options?.RawRepresentationFactory?.Invoke(this) as ThreadAndRunOptions ??
                 new();
 
+            // Load details about the agent if not already loaded.
+            if (_agent is null)
+            {
+                PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
+                Interlocked.CompareExchange(ref _agent, agent, null);
+            }
+
             // Populate the run options from the ChatOptions, if provided.
             if (options is not null)
             {
@@ -253,13 +260,7 @@ namespace Azure.AI.Agents.Persistent
                     // along with our tools.
                     if (runOptions.OverrideTools is null || !runOptions.OverrideTools.Any())
                     {
-                        if (_agentTools is null)
-                        {
-                            PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
-                            _agentTools = agent.Tools;
-                        }
-
-                        toolDefinitions.AddRange(_agentTools);
+                        toolDefinitions.AddRange(_agent.Tools);
                     }
 
                     // The caller can provide tools in the supplied ThreadAndRunOptions.
@@ -337,6 +338,18 @@ namespace Azure.AI.Agents.Persistent
 
             runOptions.ThreadOptions ??= new();
 
+            bool treatInstructionsAsOverride = false;
+            if (runOptions.OverrideInstructions is not null)
+            {
+                treatInstructionsAsOverride = true;
+                (instructions ??= new()).Append(runOptions.OverrideInstructions);
+            }
+
+            if (options?.Instructions is not null)
+            {
+                (instructions ??= new()).Append(options.Instructions);
+            }
+
             foreach (ChatMessage chatMessage in messages)
             {
                 List<MessageInputContentBlock> messageContents = [];
@@ -392,6 +405,14 @@ namespace Azure.AI.Agents.Persistent
 
             if (instructions is not null)
             {
+                // If runOptions.OverrideInstructions was set by the caller, then all instructions are treated
+                // as an override. Otherwise, we want all of the instructions to augment the agent's instructions,
+                // so insert the agent's at the beginning.
+                if (!treatInstructionsAsOverride && !string.IsNullOrEmpty(_agent.Instructions))
+                {
+                    instructions.Insert(0, _agent.Instructions);
+                }
+
                 runOptions.OverrideInstructions = instructions.ToString();
             }
 

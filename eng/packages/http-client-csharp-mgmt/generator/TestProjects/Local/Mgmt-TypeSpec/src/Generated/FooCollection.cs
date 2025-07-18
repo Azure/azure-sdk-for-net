@@ -23,7 +23,7 @@ namespace MgmtTypeSpec
     public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
         private readonly ClientDiagnostics _fooClientDiagnostics;
-        private readonly Foos _fooRestClient;
+        private readonly Foos _foosRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
         protected FooCollection()
@@ -35,9 +35,9 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceGroupResource.ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
+            _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
+            _foosRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
@@ -115,7 +115,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
@@ -155,7 +155,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -237,7 +237,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
@@ -267,7 +267,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
@@ -297,7 +297,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)

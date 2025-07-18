@@ -13,12 +13,19 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterTextSpan"/>. </summary>
+        /// <param name="completionStartOffset"> Offset of the UTF32 code point which begins the span. </param>
+        /// <param name="completionEndOffset"> Offset of the first UTF32 code point which is excluded from the span. This field is always equal to completion_start_offset for empty spans. This field is always larger than completion_start_offset for non-empty spans. </param>
         internal ContentFilterTextSpan(int completionStartOffset, int completionEndOffset)
         {
             CompletionStartOffset = completionStartOffset;
             CompletionEndOffset = completionEndOffset;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterTextSpan"/>. </summary>
+        /// <param name="completionStartOffset"> Offset of the UTF32 code point which begins the span. </param>
+        /// <param name="completionEndOffset"> Offset of the first UTF32 code point which is excluded from the span. This field is always equal to completion_start_offset for empty spans. This field is always larger than completion_start_offset for non-empty spans. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContentFilterTextSpan(int completionStartOffset, int completionEndOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompletionStartOffset = completionStartOffset;

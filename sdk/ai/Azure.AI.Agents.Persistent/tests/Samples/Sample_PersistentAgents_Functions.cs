@@ -330,7 +330,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs);
+                run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs, null);
             }
         }
         while (run.Status == RunStatus.Queued
