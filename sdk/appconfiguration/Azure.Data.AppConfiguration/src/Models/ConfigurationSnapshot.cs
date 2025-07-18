@@ -16,17 +16,6 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationSnapshot
     {
         /// <summary> Initializes a new instance of Snapshot. </summary>
-        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
-        public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
-        {
-            Argument.AssertNotNull(filters, nameof(filters));
-
-            Filters = filters.ToList();
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of Snapshot. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>

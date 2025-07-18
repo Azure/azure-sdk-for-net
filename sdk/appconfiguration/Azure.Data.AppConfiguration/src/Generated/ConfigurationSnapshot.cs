@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 
 namespace Azure.Data.AppConfiguration
@@ -16,6 +17,17 @@ namespace Azure.Data.AppConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/>. </summary>
+        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
+        public ConfigurationSnapshot(IEnumerable<ConfigurationSettingsFilter> filters)
+        {
+            Argument.AssertNotNull(filters, nameof(filters));
+
+            Filters = filters.ToList();
+            Tags = new ChangeTrackingDictionary<string, string>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
