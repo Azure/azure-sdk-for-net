@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ForceModelsAsync(string,VoiceLiveClientEventSessionUpdate,CancellationToken)">
+      <example>
+This sample shows how to call ForceModelsAsync.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession());
+Response<VoiceLiveServerEventResponseAudioDone> response = await client.ForceModelsAsync("<accept>", session);
+]]></code>
+This sample shows how to call ForceModelsAsync with all parameters.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession
+{
+    Model = "<model>",
+    Modalities = { VoiceLiveModality.Text },
+    Animation = new VoiceLiveAnimation
+    {
+        ModelName = "<model_name>",
+        Outputs = { VoiceLiveAnimationOutputType.Blendshapes },
+        EmotionDetectionIntervalMs = 1234,
+    },
+    Voice = BinaryData.FromObjectAsJson("alloy"),
+    Instructions = "<instructions>",
+    InputAudio = new VoiceLiveInputAudio
+    {
+        PhraseList = { "<phrase_list>" },
+    },
+    InputAudioSamplingRate = 1234,
+    InputAudioFormat = VoiceLiveAudioFormat.Pcm16,
+    OutputAudioFormat = VoiceLiveAudioFormat.Pcm16,
+    TurnDetection = new VoiceLiveNoTurnDetection(),
+    InputAudioNoiseReduction = new VoiceLiveAudioNoiseReduction(),
+    InputAudioEchoCancellation = new VoiceLiveAudioEchoCancellation(),
+    Avatar = new VoiceLiveAvatarConfig("<character>", true)
+    {
+        IceServers = {new IceServer(new string[]{"<urls>"})
+        {
+            Username = "<username>",
+            Credential = "<credential>",
+        }},
+        Style = "<style>",
+        Video = new VideoParams
+        {
+            Bitrate = 1234,
+            Codec = VideoParamsCodec.H264,
+            Crop = new VideoCrop(new Point2D(1234, 1234), default),
+            Resolution = new VideoResolution(1234, 1234),
+        },
+    },
+    InputAudioTranscription = new VoiceLiveAudioInputTranscriptionSettings(VoiceLiveAudioInputTranscriptionSettingsModel.Whisper1, true, true)
+    {
+        Language = "<language>",
+    },
+    OutputAudioTimestampTypes = { VoiceLiveAudioTimestampType.Word },
+    Tools = {new VoiceLiveFunctionTool("<name>")
+    {
+        Description = "<description>",
+        Parameters = BinaryData.FromObjectAsJson(new object()),
+    }},
+    ToolChoice = BinaryData.FromObjectAsJson("auto"),
+    Temperature = 123.45F,
+    MaxResponseOutputTokens = BinaryData.FromObjectAsJson(1234),
+})
+{
+    EventId = "<event_id>",
+};
+Response<VoiceLiveServerEventResponseAudioDone> response = await client.ForceModelsAsync("<accept>", session);
+]]></code></example>
+    </member>
+    <member name="ForceModels(string,VoiceLiveClientEventSessionUpdate,CancellationToken)">
+      <example>
+This sample shows how to call ForceModels.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession());
+Response<VoiceLiveServerEventResponseAudioDone> response = client.ForceModels("<accept>", session);
+]]></code>
+This sample shows how to call ForceModels with all parameters.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession
+{
+    Model = "<model>",
+    Modalities = { VoiceLiveModality.Text },
+    Animation = new VoiceLiveAnimation
+    {
+        ModelName = "<model_name>",
+        Outputs = { VoiceLiveAnimationOutputType.Blendshapes },
+        EmotionDetectionIntervalMs = 1234,
+    },
+    Voice = BinaryData.FromObjectAsJson("alloy"),
+    Instructions = "<instructions>",
+    InputAudio = new VoiceLiveInputAudio
+    {
+        PhraseList = { "<phrase_list>" },
+    },
+    InputAudioSamplingRate = 1234,
+    InputAudioFormat = VoiceLiveAudioFormat.Pcm16,
+    OutputAudioFormat = VoiceLiveAudioFormat.Pcm16,
+    TurnDetection = new VoiceLiveNoTurnDetection(),
+    InputAudioNoiseReduction = new VoiceLiveAudioNoiseReduction(),
+    InputAudioEchoCancellation = new VoiceLiveAudioEchoCancellation(),
+    Avatar = new VoiceLiveAvatarConfig("<character>", true)
+    {
+        IceServers = {new IceServer(new string[]{"<urls>"})
+        {
+            Username = "<username>",
+            Credential = "<credential>",
+        }},
+        Style = "<style>",
+        Video = new VideoParams
+        {
+            Bitrate = 1234,
+            Codec = VideoParamsCodec.H264,
+            Crop = new VideoCrop(new Point2D(1234, 1234), default),
+            Resolution = new VideoResolution(1234, 1234),
+        },
+    },
+    InputAudioTranscription = new VoiceLiveAudioInputTranscriptionSettings(VoiceLiveAudioInputTranscriptionSettingsModel.Whisper1, true, true)
+    {
+        Language = "<language>",
+    },
+    OutputAudioTimestampTypes = { VoiceLiveAudioTimestampType.Word },
+    Tools = {new VoiceLiveFunctionTool("<name>")
+    {
+        Description = "<description>",
+        Parameters = BinaryData.FromObjectAsJson(new object()),
+    }},
+    ToolChoice = BinaryData.FromObjectAsJson("auto"),
+    Temperature = 123.45F,
+    MaxResponseOutputTokens = BinaryData.FromObjectAsJson(1234),
+})
+{
+    EventId = "<event_id>",
+};
+Response<VoiceLiveServerEventResponseAudioDone> response = client.ForceModels("<accept>", session);
+]]></code></example>
+    </member>
+    <member name="ForceModelsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ForceModelsAsync and parse the result.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    session = new
+    {
+        type = "session.update",
+        session = new object(),
+    },
+});
+Response response = await client.ForceModelsAsync("<accept>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("response_id").ToString());
+Console.WriteLine(result.GetProperty("item_id").ToString());
+Console.WriteLine(result.GetProperty("output_index").ToString());
+Console.WriteLine(result.GetProperty("content_index").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+This sample shows how to call ForceModelsAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    session = new
+    {
+        type = "session.update",
+        session = new
+        {
+            model = "<model>",
+            modalities = new object[]
+            {
+                "text"
+            },
+            animation = new
+            {
+                model_name = "<model_name>",
+                outputs = new object[]
+                {
+                    "blendshapes"
+                },
+                emotion_detection_interval_ms = 1234,
+            },
+            voice = "alloy",
+            instructions = "<instructions>",
+            input_audio = new
+            {
+                model = "azure-standard",
+                phrase_list = new object[]
+                {
+                    "<phrase_list>"
+                },
+            },
+            input_audio_sampling_rate = 1234,
+            input_audio_format = "pcm16",
+            output_audio_format = "pcm16",
+            turn_detection = new
+            {
+                type = "none",
+            },
+            input_audio_noise_reduction = new
+            {
+                type = "azure_deep_noise_suppression",
+            },
+            input_audio_echo_cancellation = new
+            {
+                type = "server_echo_cancellation",
+            },
+            avatar = new
+            {
+                ice_servers = new object[]
+                {
+                    new
+                    {
+                        urls = new object[]
+                        {
+                            "<urls>"
+                        },
+                        username = "<username>",
+                        credential = "<credential>",
+                    }
+                },
+                character = "<character>",
+                style = "<style>",
+                customized = true,
+                video = new
+                {
+                    bitrate = 1234,
+                    codec = "h264",
+                    crop = new
+                    {
+                        top_left = new
+                        {
+                            x = 1234,
+                            y = 1234,
+                        },
+                    },
+                    resolution = new
+                    {
+                        width = 1234,
+                        height = 1234,
+                    },
+                },
+            },
+            input_audio_transcription = new
+            {
+                model = "whisper-1",
+                language = "<language>",
+                enabled = true,
+                custom_model = true,
+            },
+            output_audio_timestamp_types = new object[]
+            {
+                "word"
+            },
+            tools = new object[]
+            {
+                new
+                {
+                    type = "function",
+                    name = "<name>",
+                    description = "<description>",
+                    parameters = new object(),
+                }
+            },
+            tool_choice = "auto",
+            temperature = 123.45F,
+            max_response_output_tokens = 1234,
+        },
+        event_id = "<event_id>",
+    },
+});
+Response response = await client.ForceModelsAsync("<accept>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("response_id").ToString());
+Console.WriteLine(result.GetProperty("item_id").ToString());
+Console.WriteLine(result.GetProperty("output_index").ToString());
+Console.WriteLine(result.GetProperty("content_index").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("event_id").ToString());
+]]></code></example>
+    </member>
+    <member name="ForceModels(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ForceModels and parse the result.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    session = new
+    {
+        type = "session.update",
+        session = new object(),
+    },
+});
+Response response = client.ForceModels("<accept>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("response_id").ToString());
+Console.WriteLine(result.GetProperty("item_id").ToString());
+Console.WriteLine(result.GetProperty("output_index").ToString());
+Console.WriteLine(result.GetProperty("content_index").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+This sample shows how to call ForceModels with all parameters and request content and parse the result.
+<code><![CDATA[
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+VoiceLiveClient client = new VoiceLiveClient(credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    session = new
+    {
+        type = "session.update",
+        session = new
+        {
+            model = "<model>",
+            modalities = new object[]
+            {
+                "text"
+            },
+            animation = new
+            {
+                model_name = "<model_name>",
+                outputs = new object[]
+                {
+                    "blendshapes"
+                },
+                emotion_detection_interval_ms = 1234,
+            },
+            voice = "alloy",
+            instructions = "<instructions>",
+            input_audio = new
+            {
+                model = "azure-standard",
+                phrase_list = new object[]
+                {
+                    "<phrase_list>"
+                },
+            },
+            input_audio_sampling_rate = 1234,
+            input_audio_format = "pcm16",
+            output_audio_format = "pcm16",
+            turn_detection = new
+            {
+                type = "none",
+            },
+            input_audio_noise_reduction = new
+            {
+                type = "azure_deep_noise_suppression",
+            },
+            input_audio_echo_cancellation = new
+            {
+                type = "server_echo_cancellation",
+            },
+            avatar = new
+            {
+                ice_servers = new object[]
+                {
+                    new
+                    {
+                        urls = new object[]
+                        {
+                            "<urls>"
+                        },
+                        username = "<username>",
+                        credential = "<credential>",
+                    }
+                },
+                character = "<character>",
+                style = "<style>",
+                customized = true,
+                video = new
+                {
+                    bitrate = 1234,
+                    codec = "h264",
+                    crop = new
+                    {
+                        top_left = new
+                        {
+                            x = 1234,
+                            y = 1234,
+                        },
+                    },
+                    resolution = new
+                    {
+                        width = 1234,
+                        height = 1234,
+                    },
+                },
+            },
+            input_audio_transcription = new
+            {
+                model = "whisper-1",
+                language = "<language>",
+                enabled = true,
+                custom_model = true,
+            },
+            output_audio_timestamp_types = new object[]
+            {
+                "word"
+            },
+            tools = new object[]
+            {
+                new
+                {
+                    type = "function",
+                    name = "<name>",
+                    description = "<description>",
+                    parameters = new object(),
+                }
+            },
+            tool_choice = "auto",
+            temperature = 123.45F,
+            max_response_output_tokens = 1234,
+        },
+        event_id = "<event_id>",
+    },
+});
+Response response = client.ForceModels("<accept>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("response_id").ToString());
+Console.WriteLine(result.GetProperty("item_id").ToString());
+Console.WriteLine(result.GetProperty("output_index").ToString());
+Console.WriteLine(result.GetProperty("content_index").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("event_id").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
