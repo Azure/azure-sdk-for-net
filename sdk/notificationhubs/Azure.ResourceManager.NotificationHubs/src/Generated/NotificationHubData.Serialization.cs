@@ -44,17 +44,12 @@ namespace Azure.ResourceManager.NotificationHubs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationHubName))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(NotificationHubName);
-            }
             if (Optional.IsDefined(RegistrationTtl))
             {
                 writer.WritePropertyName("registrationTtl"u8);
-                writer.WriteStringValue(RegistrationTtl.Value, "c");
+                writer.WriteStringValue(RegistrationTtl);
             }
-            if (Optional.IsCollectionDefined(AuthorizationRules))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AuthorizationRules))
             {
                 writer.WritePropertyName("authorizationRules"u8);
                 writer.WriteStartArray();
@@ -144,9 +139,8 @@ namespace Azure.ResourceManager.NotificationHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string name0 = default;
-            TimeSpan? registrationTtl = default;
-            IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
+            string registrationTtl = default;
+            IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules = default;
             NotificationHubApnsCredential apnsCredential = default;
             NotificationHubWnsCredential wnsCredential = default;
             NotificationHubGcmCredential gcmCredential = default;
@@ -222,18 +216,9 @@ namespace Azure.ResourceManager.NotificationHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"u8))
-                        {
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("registrationTtl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            registrationTtl = property0.Value.GetTimeSpan("c");
+                            registrationTtl = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("authorizationRules"u8))
@@ -356,8 +341,6 @@ namespace Azure.ResourceManager.NotificationHubs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
-                name0,
                 registrationTtl,
                 authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>(),
                 apnsCredential,
@@ -370,6 +353,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 xiaomiCredential,
                 fcmV1Credential,
                 dailyMaxActiveDevices,
+                sku,
                 serializedAdditionalRawData);
         }
 

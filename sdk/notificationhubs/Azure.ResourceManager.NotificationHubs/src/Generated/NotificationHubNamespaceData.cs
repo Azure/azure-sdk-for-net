@@ -71,10 +71,6 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <param name="namespaceName">
-        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
-        /// by the service when the namespace is created.
-        /// </param>
         /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
         /// <param name="namespaceStatus"> Namespace status. </param>
         /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
@@ -101,10 +97,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="dataCenter"> Deprecated. </param>
         /// <param name="publicNetworkAccess"> Type of public network access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string namespaceName, OperationProvisioningState? operationProvisioningState, NotificationHubNamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections, string scaleUnit, string dataCenter, NotificationHubPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, OperationProvisioningState? operationProvisioningState, NotificationHubNamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IReadOnlyList<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections, string scaleUnit, string dataCenter, NotificationHubPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
-            NamespaceName = namespaceName;
             OperationProvisioningState = operationProvisioningState;
             NamespaceStatus = namespaceStatus;
             IsEnabled = isEnabled;
@@ -134,32 +129,27 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary> The Sku description for a namespace. </summary>
         public NotificationHubSku Sku { get; set; }
-        /// <summary>
-        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
-        /// by the service when the namespace is created.
-        /// </summary>
-        public string NamespaceName { get; set; }
         /// <summary> Defines values for OperationProvisioningState. </summary>
         public OperationProvisioningState? OperationProvisioningState { get; set; }
         /// <summary> Namespace status. </summary>
         public NotificationHubNamespaceStatus? NamespaceStatus { get; set; }
         /// <summary> Gets or sets whether or not the namespace is currently enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled { get; }
         /// <summary> Gets or sets whether or not the namespace is set as Critical. </summary>
-        public bool? IsCritical { get; set; }
+        public bool? IsCritical { get; }
         /// <summary> Namespace subscription id. </summary>
-        public string SubscriptionId { get; set; }
+        public string SubscriptionId { get; }
         /// <summary>
         /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
         /// this property.
         /// </summary>
-        public string Region { get; set; }
+        public string Region { get; }
         /// <summary> Azure Insights Metrics id. </summary>
         public string MetricId { get; }
         /// <summary> Time when the namespace was created. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Time when the namespace was updated. </summary>
-        public DateTimeOffset? UpdatedOn { get; set; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Defines values for NamespaceType. </summary>
         public NotificationHubNamespaceTypeExt? HubNamespaceType { get; set; }
         /// <summary> Allowed replication region. </summary>
@@ -174,7 +164,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// Gets or sets endpoint you can use to perform NotificationHub
         /// operations.
         /// </summary>
-        public Uri ServiceBusEndpoint { get; set; }
+        public Uri ServiceBusEndpoint { get; }
         /// <summary> Private Endpoint Connections for namespace. </summary>
         public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets scaleUnit where the namespace gets created. </summary>

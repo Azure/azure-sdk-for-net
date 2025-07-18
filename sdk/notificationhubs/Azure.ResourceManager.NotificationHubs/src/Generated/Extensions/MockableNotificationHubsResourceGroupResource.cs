@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

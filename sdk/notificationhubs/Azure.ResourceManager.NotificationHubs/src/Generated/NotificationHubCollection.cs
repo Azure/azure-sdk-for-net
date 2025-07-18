@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.NotificationHubs
     /// </summary>
     public partial class NotificationHubCollection : ArmCollection, IEnumerable<NotificationHubResource>, IAsyncEnumerable<NotificationHubResource>
     {
-        private readonly ClientDiagnostics _notificationHubClientDiagnostics;
-        private readonly NotificationHubsRestOperations _notificationHubRestClient;
+        private readonly ClientDiagnostics _notificationHubNotificationHubResourcesClientDiagnostics;
+        private readonly NotificationHubResourcesRestOperations _notificationHubNotificationHubResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="NotificationHubCollection"/> class for mocking. </summary>
         protected NotificationHubCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NotificationHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _notificationHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NotificationHubResource.ResourceType, out string notificationHubApiVersion);
-            _notificationHubRestClient = new NotificationHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubApiVersion);
+            _notificationHubNotificationHubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NotificationHubResource.ResourceType, out string notificationHubNotificationHubResourcesApiVersion);
+            _notificationHubNotificationHubResourcesRestClient = new NotificationHubResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubNotificationHubResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_CreateOrUpdate</description>
+        /// <description>NotificationHubResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.CreateOrUpdate");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _notificationHubRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data);
+                var response = await _notificationHubNotificationHubResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _notificationHubNotificationHubResourcesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NotificationHubsArmOperation<NotificationHubResource>(Response.FromValue(new NotificationHubResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_CreateOrUpdate</description>
+        /// <description>NotificationHubResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.CreateOrUpdate");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data, cancellationToken);
-                var uri = _notificationHubRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data);
+                var response = _notificationHubNotificationHubResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data, cancellationToken);
+                var uri = _notificationHubNotificationHubResourcesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NotificationHubsArmOperation<NotificationHubResource>(Response.FromValue(new NotificationHubResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Get");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.Get");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Get");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.Get");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken);
+                var response = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_List</description>
+        /// <description>NotificationHubResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An async collection of <see cref="NotificationHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubResource> GetAllAsync(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubResource(Client, NotificationHubData.DeserializeNotificationHubData(e)), _notificationHubClientDiagnostics, Pipeline, "NotificationHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNotificationHubResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNotificationHubResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubResource(Client, NotificationHubData.DeserializeNotificationHubData(e)), _notificationHubNotificationHubResourcesClientDiagnostics, Pipeline, "NotificationHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_List</description>
+        /// <description>NotificationHubResource_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubResource> GetAll(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubResource(Client, NotificationHubData.DeserializeNotificationHubData(e)), _notificationHubClientDiagnostics, Pipeline, "NotificationHubCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNotificationHubResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNotificationHubResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubResource(Client, NotificationHubData.DeserializeNotificationHubData(e)), _notificationHubNotificationHubResourcesClientDiagnostics, Pipeline, "NotificationHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -336,11 +336,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Exists");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.Exists");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.Exists");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken);
+                var response = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -422,11 +422,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<NotificationHubResource>(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -467,11 +467,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken);
+                var response = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<NotificationHubResource>(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());

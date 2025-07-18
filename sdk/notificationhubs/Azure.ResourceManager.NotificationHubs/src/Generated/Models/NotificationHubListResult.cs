@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The response of the List NotificationHub operation. </summary>
+    /// <summary> Paged collection of NotificationHubResource items. </summary>
     internal partial class NotificationHubListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubListResult"/>. </summary>
-        internal NotificationHubListResult()
+        /// <param name="value"> The NotificationHubResource items on this page. </param>
+        internal NotificationHubListResult(IEnumerable<NotificationHubData> value)
         {
-            Value = new ChangeTrackingList<NotificationHubData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubListResult"/>. </summary>
-        /// <param name="value"> Gets or sets result of the List AuthorizationRules operation. </param>
-        /// <param name="nextLink"> Gets or sets link to the next set of results. </param>
+        /// <param name="value"> The NotificationHubResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubListResult(IReadOnlyList<NotificationHubData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubListResult(IReadOnlyList<NotificationHubData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets result of the List AuthorizationRules operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubListResult"/> for deserialization. </summary>
+        internal NotificationHubListResult()
+        {
+        }
+
+        /// <summary> The NotificationHubResource items on this page. </summary>
         public IReadOnlyList<NotificationHubData> Value { get; }
-        /// <summary> Gets or sets link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

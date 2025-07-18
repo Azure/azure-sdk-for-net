@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The response of the List Private Endpoint Connections operation. </summary>
+    /// <summary> The response of a PrivateEndpointConnectionResource list operation. </summary>
     internal partial class PrivateEndpointConnectionResourceListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceListResult"/>. </summary>
-        internal PrivateEndpointConnectionResourceListResult()
+        /// <param name="value"> The PrivateEndpointConnectionResource items on this page. </param>
+        internal PrivateEndpointConnectionResourceListResult(IEnumerable<NotificationHubPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceListResult"/>. </summary>
-        /// <param name="value"> Gets or sets result of the List AuthorizationRules operation. </param>
-        /// <param name="nextLink"> Gets or sets link to the next set of results. </param>
+        /// <param name="value"> The PrivateEndpointConnectionResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionResourceListResult(IReadOnlyList<NotificationHubPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnectionResourceListResult(IReadOnlyList<NotificationHubPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets result of the List AuthorizationRules operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResourceListResult"/> for deserialization. </summary>
+        internal PrivateEndpointConnectionResourceListResult()
+        {
+        }
+
+        /// <summary> The PrivateEndpointConnectionResource items on this page. </summary>
         public IReadOnlyList<NotificationHubPrivateEndpointConnectionData> Value { get; }
-        /// <summary> Gets or sets link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

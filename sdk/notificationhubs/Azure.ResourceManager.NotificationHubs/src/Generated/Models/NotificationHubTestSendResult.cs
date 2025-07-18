@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub Resource. </summary>
-    public partial class NotificationHubTestSendResult : TrackedResourceData
+    public partial class NotificationHubTestSendResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NotificationHubTestSendResult(AzureLocation location) : base(location)
+        internal NotificationHubTestSendResult()
         {
             FailureDescription = new ChangeTrackingList<NotificationHubPubRegistrationResult>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/>. </summary>
@@ -59,25 +59,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="success"> Gets or sets successful send. </param>
         /// <param name="failure"> Gets or sets send failure. </param>
         /// <param name="failureDescription"> Gets or sets actual failure description. </param>
+        /// <param name="location"> Deprecated - only for compatibility. </param>
+        /// <param name="tags"> Deprecated - only for compatibility. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? success, int? failure, IReadOnlyList<NotificationHubPubRegistrationResult> failureDescription, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? success, long? failure, IReadOnlyList<NotificationHubPubRegistrationResult> failureDescription, string location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Success = success;
             Failure = failure;
             FailureDescription = failureDescription;
+            Location = location;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubTestSendResult"/> for deserialization. </summary>
-        internal NotificationHubTestSendResult()
-        {
-        }
+        /// <summary> Gets or sets successful send. </summary>
+        public long? Success { get; }
+        /// <summary> Gets or sets send failure. </summary>
+        public long? Failure { get; }
         /// <summary> Gets or sets actual failure description. </summary>
         public IReadOnlyList<NotificationHubPubRegistrationResult> FailureDescription { get; }
+        /// <summary> Deprecated - only for compatibility. </summary>
+        public string Location { get; }
+        /// <summary> Deprecated - only for compatibility. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }
