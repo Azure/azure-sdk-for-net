@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -47,25 +48,34 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LabVhdList"/>. </summary>
-        internal LabVhdList()
+        /// <param name="value"> The LabVhd items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LabVhdList(IEnumerable<SubResource> value)
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LabVhdList"/>. </summary>
-        /// <param name="value"> Results of the list operation. </param>
-        /// <param name="nextLink"> Link for next set of results. </param>
+        /// <param name="value"> The LabVhd items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LabVhdList(IReadOnlyList<SubResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LabVhdList(IReadOnlyList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Results of the list operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVhdList"/> for deserialization. </summary>
+        internal LabVhdList()
+        {
+        }
+
+        /// <summary> The LabVhd items on this page. </summary>
         public IReadOnlyList<SubResource> Value { get; }
-        /// <summary> Link for next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.DevTestLabs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
@@ -42,6 +43,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             string name = "{virtualNetworkName}";
             DevTestLabVirtualNetworkData data = new DevTestLabVirtualNetworkData(new AzureLocation("{location}"))
             {
+                AllowedSubnets = {new DevTestLabSubnet
+{
+ResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{virtualNetworkName}Subnet"),
+LabSubnetName = "{virtualNetworkName}Subnet",
+AllowPublicIP = DevTestLabUsagePermissionType.Allow,
+}},
                 Tags =
 {
 ["tagName1"] = "tagValue1"

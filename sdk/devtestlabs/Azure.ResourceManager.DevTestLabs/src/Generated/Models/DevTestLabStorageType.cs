@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The storage type for the disk (i.e. Standard, Premium). </summary>
+    /// <summary> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </summary>
     public readonly partial struct DevTestLabStorageType : IEquatable<DevTestLabStorageType>
     {
         private readonly string _value;

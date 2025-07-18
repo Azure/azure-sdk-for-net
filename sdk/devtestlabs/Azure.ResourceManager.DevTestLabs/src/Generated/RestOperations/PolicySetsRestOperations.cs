@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Evaluates lab policy. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the policy set. </param>
+        /// <param name="name"> The name of the PolicySet. </param>
         /// <param name="content"> Request body for evaluating a policy set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Evaluates lab policy. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the policy set. </param>
+        /// <param name="name"> The name of the PolicySet. </param>
         /// <param name="content"> Request body for evaluating a policy set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>

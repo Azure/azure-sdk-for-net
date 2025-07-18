@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DevTestLabs
 namespace: Azure.ResourceManager.DevTestLabs
-require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/devtestlabs/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/471eab645d7bb83a4f54d283db5690f58d04a670/specification/devtestlabs/resource-manager/readme.md
 #tag: package-2018-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true

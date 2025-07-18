@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
-            string userName = "{userId}";
+            string userName = "@me";
             string name = "{diskName}";
             ResourceIdentifier devTestLabDiskResourceId = DevTestLabDiskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName, name);
             DevTestLabDiskResource devTestLabDisk = client.GetDevTestLabDiskResource(devTestLabDiskResourceId);

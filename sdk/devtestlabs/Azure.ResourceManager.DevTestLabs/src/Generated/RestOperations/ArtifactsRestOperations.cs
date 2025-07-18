@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/artifactsources/", false);
             uri.AppendPath(artifactSourceName, true);
             uri.AppendPath("/artifacts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -65,7 +66,6 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.AppendQuery("$orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/artifactsources/", false);
             uri.AppendPath(artifactSourceName, true);
             uri.AppendPath("/artifacts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -101,7 +102,6 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.AppendQuery("$orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> List artifacts in a given artifact source. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> List artifacts in a given artifact source. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(artifactSourceName, true);
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(artifactSourceName, true);
             uri.AppendPath("/artifacts/", false);
             uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get artifact. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the artifact. </param>
+        /// <param name="name"> The name of the Artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is null. </exception>
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get artifact. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the artifact. </param>
+        /// <param name="name"> The name of the Artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is null. </exception>
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Generates an ARM template for the given artifact, uploads the required files to a storage account, and validates the generated artifact. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the artifact. </param>
+        /// <param name="name"> The name of the Artifact. </param>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -384,11 +384,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Generates an ARM template for the given artifact, uploads the required files to a storage account, and validates the generated artifact. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the artifact. </param>
+        /// <param name="name"> The name of the Artifact. </param>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -442,8 +442,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List artifacts in a given artifact source. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
@@ -479,8 +479,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List artifacts in a given artifact source. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
