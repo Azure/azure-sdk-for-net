@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -75,6 +76,16 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("trafficWeight"u8);
                 writer.WriteNumberValue(TrafficWeight.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartArray();
+                foreach (var item in Labels)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
@@ -129,6 +140,7 @@ namespace Azure.ResourceManager.AppContainers
             bool? active = default;
             int? replicas = default;
             int? trafficWeight = default;
+            IReadOnlyList<string> labels = default;
             string provisioningError = default;
             ContainerAppRevisionHealthState? healthState = default;
             ContainerAppRevisionProvisioningState? provisioningState = default;
@@ -229,6 +241,20 @@ namespace Azure.ResourceManager.AppContainers
                             trafficWeight = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("labels"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            labels = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningError"u8))
                         {
                             provisioningError = property0.Value.GetString();
@@ -282,6 +308,7 @@ namespace Azure.ResourceManager.AppContainers
                 active,
                 replicas,
                 trafficWeight,
+                labels ?? new ChangeTrackingList<string>(),
                 provisioningError,
                 healthState,
                 provisioningState,
@@ -468,6 +495,42 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     builder.Append("    trafficWeight: ");
                     builder.AppendLine($"{TrafficWeight.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Labels), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    labels: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Labels))
+                {
+                    if (Labels.Any())
+                    {
+                        builder.Append("    labels: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Labels)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
