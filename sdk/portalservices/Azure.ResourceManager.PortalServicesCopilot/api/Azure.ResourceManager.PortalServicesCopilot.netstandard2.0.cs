@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot
     {
         public PortalServicesCopilotSettingData() { }
         public Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -72,7 +75,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     {
         public PortalServicesCopilotSettingPatch() { }
         public bool? AccessControlEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -84,7 +90,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         public PortalServicesCopilotSettingsProperties(bool accessControlEnabled) { }
         public bool AccessControlEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
