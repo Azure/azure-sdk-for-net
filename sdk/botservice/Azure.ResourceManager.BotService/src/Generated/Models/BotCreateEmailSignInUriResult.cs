@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="properties"> The set of properties specific to sign in url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotCreateEmailSignInUriResult(ResourceIdentifier id, AzureLocation? location, CreateEmailSignInUrlResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BotCreateEmailSignInUriResult(ResourceIdentifier id, string location, CreateEmailSignInUrlResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Specifies the resource ID. </summary>
         public ResourceIdentifier Id { get; }
         /// <summary> Specifies the location of the resource. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
         /// <summary> The set of properties specific to sign in url. </summary>
         internal CreateEmailSignInUrlResponseProperties Properties { get; }
         /// <summary> Sign in url. </summary>
-        public Uri CreateEmailSignInUrlResponseUri
+        public string CreateEmailSignInUrlResponseUri
         {
             get => Properties?.Uri;
         }
