@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added import feature for raw json string.
 - Added support for Conversations Authoring API Versions
   - 2025-05-15-preview
 - Added `DataGenerationSettings` in `TrainingJobDetails` when training a model.
