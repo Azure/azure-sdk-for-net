@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
 
             // this example assumes you already have this ArizeAIObservabilityEvalOrganizationResource created on azure
             // for more information of creating ArizeAIObservabilityEvalOrganizationResource, please refer to the document of ArizeAIObservabilityEvalOrganizationResource
-            string subscriptionId = "4DEBE8B4-8BA4-42F8-AE50-FBEF318751D1";
-            string resourceGroupName = "rgopenapi";
-            string organizationname = "test-organization-1";
+            string subscriptionId = "61641157-140c-4b97-b365-30ff76d9f82e";
+            string resourceGroupName = "yashika-rg-arize";
+            string organizationname = "test-org-1";
             ResourceIdentifier arizeAIObservabilityEvalOrganizationResourceId = ArizeAIObservabilityEvalOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
             ArizeAIObservabilityEvalOrganizationResource arizeAIObservabilityEvalOrganization = client.GetArizeAIObservabilityEvalOrganizationResource(arizeAIObservabilityEvalOrganizationResourceId);
 
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
 
             // this example assumes you already have this ArizeAIObservabilityEvalOrganizationResource created on azure
             // for more information of creating ArizeAIObservabilityEvalOrganizationResource, please refer to the document of ArizeAIObservabilityEvalOrganizationResource
-            string subscriptionId = "4DEBE8B4-8BA4-42F8-AE50-FBEF318751D1";
-            string resourceGroupName = "rgopenapi";
-            string organizationname = "test-organization-1";
+            string subscriptionId = "61641157-140c-4b97-b365-30ff76d9f82e";
+            string resourceGroupName = "yashika-rg-arize";
+            string organizationname = "test-org-1";
             ResourceIdentifier arizeAIObservabilityEvalOrganizationResourceId = ArizeAIObservabilityEvalOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
             ArizeAIObservabilityEvalOrganizationResource arizeAIObservabilityEvalOrganization = client.GetArizeAIObservabilityEvalOrganizationResource(arizeAIObservabilityEvalOrganizationResourceId);
 
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
 
             // this example assumes you already have this ArizeAIObservabilityEvalOrganizationResource created on azure
             // for more information of creating ArizeAIObservabilityEvalOrganizationResource, please refer to the document of ArizeAIObservabilityEvalOrganizationResource
-            string subscriptionId = "4DEBE8B4-8BA4-42F8-AE50-FBEF318751D1";
-            string resourceGroupName = "rgopenapi";
-            string organizationname = "test-organization-1";
+            string subscriptionId = "61641157-140c-4b97-b365-30ff76d9f82e";
+            string resourceGroupName = "yashika-rg-arize";
+            string organizationname = "test-org-1";
             ResourceIdentifier arizeAIObservabilityEvalOrganizationResourceId = ArizeAIObservabilityEvalOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationname);
             ArizeAIObservabilityEvalOrganizationResource arizeAIObservabilityEvalOrganization = client.GetArizeAIObservabilityEvalOrganizationResource(arizeAIObservabilityEvalOrganizationResourceId);
 
