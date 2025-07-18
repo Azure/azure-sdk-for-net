@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.ScVmm
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
@@ -123,7 +125,13 @@ namespace Azure.ResourceManager.ScVmm
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.ExtendedLocation>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerScVmmContext.Default)
+#else
+                ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerScVmmContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -166,7 +174,13 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.ScVmm.ModelSerializationExtensions.WireOptions, AzureResourceManagerScVmmContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerScVmmContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

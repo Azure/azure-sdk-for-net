@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -102,17 +104,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet"u8);
-                JsonSerializer.Serialize(writer, AvailabilitySet);
+                ((IJsonModel<WritableSubResource>)AvailabilitySet).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet"u8);
-                JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
+                ((IJsonModel<WritableSubResource>)VirtualMachineScaleSet).Write(writer, options);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
             }
             if (Optional.IsDefined(Priority))
             {
@@ -132,12 +134,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-                JsonSerializer.Serialize(writer, Host);
+                ((IJsonModel<WritableSubResource>)Host).Write(writer, options);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
-                JsonSerializer.Serialize(writer, HostGroup);
+                ((IJsonModel<WritableSubResource>)HostGroup).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -267,7 +269,13 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.ManagedServiceIdentity>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -385,7 +393,13 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            availabilitySet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            availabilitySet =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineScaleSet"u8))
@@ -394,7 +408,13 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            virtualMachineScaleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualMachineScaleSet =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("proximityPlacementGroup"u8))
@@ -403,7 +423,13 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            proximityPlacementGroup =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("priority"u8))
@@ -439,7 +465,13 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            host = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            host =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("hostGroup"u8))
@@ -448,7 +480,13 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            hostGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            hostGroup =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

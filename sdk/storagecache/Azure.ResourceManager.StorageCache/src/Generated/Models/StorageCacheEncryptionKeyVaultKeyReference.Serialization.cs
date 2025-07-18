@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault);
+            ((IJsonModel<WritableSubResource>)SourceVault).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +91,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (property.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    sourceVault =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerStorageCacheContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerStorageCacheContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

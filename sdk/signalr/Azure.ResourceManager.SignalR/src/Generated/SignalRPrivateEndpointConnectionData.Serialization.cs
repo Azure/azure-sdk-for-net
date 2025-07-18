@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.SignalR
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
             {
@@ -123,7 +124,13 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.SignalR.ModelSerializationExtensions.WireOptions, AzureResourceManagerSignalRContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSignalRContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -150,7 +157,13 @@ namespace Azure.ResourceManager.SignalR
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateEndpoint =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerSignalRContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerSignalRContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("groupIds"u8))

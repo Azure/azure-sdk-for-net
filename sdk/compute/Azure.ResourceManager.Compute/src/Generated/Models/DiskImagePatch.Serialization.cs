@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine"u8);
-                JsonSerializer.Serialize(writer, SourceVirtualMachine);
+                ((IJsonModel<WritableSubResource>)SourceVirtualMachine).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -119,7 +121,13 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            sourceVirtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            sourceVirtualMachine =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerComputeContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))

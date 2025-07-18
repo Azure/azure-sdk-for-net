@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -110,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(DefaultOriginGroup))
             {
                 writer.WritePropertyName("defaultOriginGroup"u8);
-                JsonSerializer.Serialize(writer, DefaultOriginGroup);
+                ((IJsonModel<WritableSubResource>)DefaultOriginGroup).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UriSigningKeys))
             {
@@ -291,7 +293,13 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.Cdn.ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -398,7 +406,13 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            defaultOriginGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            defaultOriginGroup =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -171,7 +173,13 @@ namespace Azure.ResourceManager.DevCenter.Models
                         }
                         else
                         {
-                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                            array.Add(
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.OperationStatusResult>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(item).ToArray()), global::Azure.ResourceManager.DevCenter.ModelSerializationExtensions.WireOptions, AzureResourceManagerDevCenterContext.Default)
+#else
+                ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevCenterContext.Default)
+#endif
+);
                         }
                     }
                     operations = array;
@@ -183,7 +191,13 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.DevCenter.ModelSerializationExtensions.WireOptions, AzureResourceManagerDevCenterContext.Default)
+#else
+                ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevCenterContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

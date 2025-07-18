@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -51,12 +53,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                JsonSerializer.Serialize(writer, LoadBalancingSettings);
+                ((IJsonModel<WritableSubResource>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                JsonSerializer.Serialize(writer, HealthProbeSettings);
+                ((IJsonModel<WritableSubResource>)HealthProbeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -149,7 +151,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancingSettings =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerFrontDoorContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -158,7 +166,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            healthProbeSettings =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerFrontDoorContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))

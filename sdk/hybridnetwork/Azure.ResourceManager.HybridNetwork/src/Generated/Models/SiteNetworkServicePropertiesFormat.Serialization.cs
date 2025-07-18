@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(SiteReference))
             {
                 writer.WritePropertyName("siteReference"u8);
-                JsonSerializer.Serialize(writer, SiteReference);
+                ((IJsonModel<WritableSubResource>)SiteReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in DesiredStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in LastStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -184,7 +186,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    siteReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    siteReference =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerHybridNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("publisherName"u8))
@@ -234,7 +242,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name,
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerHybridNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default)
+#endif
+);
                     }
                     desiredStateConfigurationGroupValueReferences = dictionary;
                     continue;
@@ -253,7 +267,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name,
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerHybridNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default)
+#endif
+);
                     }
                     lastStateConfigurationGroupValueReferences = dictionary;
                     continue;

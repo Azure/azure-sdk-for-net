@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -107,7 +109,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
-                JsonSerializer.Serialize(writer, DdosProtectionPlan);
+                ((IJsonModel<WritableSubResource>)DdosProtectionPlan).Write(writer, options);
             }
             if (Optional.IsDefined(BgpCommunities))
             {
@@ -125,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPAllocations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(DefaultPublicNatGateway))
             {
                 writer.WritePropertyName("defaultPublicNatGateway"u8);
-                JsonSerializer.Serialize(writer, DefaultPublicNatGateway);
+                ((IJsonModel<WritableSubResource>)DefaultPublicNatGateway).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -205,7 +207,13 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.ExtendedLocation>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -369,7 +377,13 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            ddosProtectionPlan =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("bgpCommunities"u8))
@@ -399,7 +413,13 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(item).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+);
                             }
                             ipAllocations = array;
                             continue;
@@ -433,7 +453,13 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            defaultPublicNatGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            defaultPublicNatGateway =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                     }

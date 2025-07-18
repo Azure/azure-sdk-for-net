@@ -145,21 +145,8 @@ namespace Azure.ResourceManager
     [ModelReaderWriterBuildable(typeof(TenantResourceProviderListResult))]
     [ModelReaderWriterBuildable(typeof(TrackedResourceExtendedData))]
     [ModelReaderWriterBuildable(typeof(ZoneMapping))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     public partial class AzureResourceManagerContext
     {
-        partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
-        {
-            factories.Add(typeof(ManagedServiceIdentity), () => new ManagedServiceIdentityTypeBuilder());
-        }
-
-        private class ManagedServiceIdentityTypeBuilder : ModelReaderWriterTypeBuilder
-        {
-            protected override Type BuilderType => typeof(ManagedServiceIdentity);
-
-            protected override object CreateInstance()
-            {
-                return new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            }
-        }
     }
 }

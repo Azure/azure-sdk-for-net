@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(MarketplaceSubscription))
             {
                 writer.WritePropertyName("marketplaceSubscription"u8);
-                JsonSerializer.Serialize(writer, MarketplaceSubscription);
+                ((IJsonModel<SubResource>)MarketplaceSubscription).Write(writer, options);
             }
             if (Optional.IsDefined(MarketplaceName))
             {
@@ -118,7 +120,13 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    marketplaceSubscription = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    marketplaceSubscription =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.SubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerElasticContext.Default)
+#else
+                ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerElasticContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("marketplaceName"u8))

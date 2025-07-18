@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -151,7 +153,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    protectionErrorDetails =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerDataProtectionBackupContext.Default)
+#else
+                ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataProtectionBackupContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

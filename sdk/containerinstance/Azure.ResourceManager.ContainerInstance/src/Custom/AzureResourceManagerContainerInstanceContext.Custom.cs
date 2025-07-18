@@ -2,7 +2,10 @@
 
 using Azure.ResourceManager.ContainerInstance;
 using Azure.ResourceManager.ContainerInstance.Models;
+using Azure.ResourceManager.Models;
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance;
 
@@ -89,4 +92,12 @@ namespace Azure.ResourceManager.ContainerInstance;
 [ModelReaderWriterBuildable(typeof(StorageProfile))]
 public partial class AzureResourceManagerContainerInstanceContext
 {
+    // TODO: This is workaround to get AzureResourceManagerContext, we will remove this when we fix the dependency context generation issue in System.ClientModel.
+    private static AzureResourceManagerContext s_managerContext;
+    private AzureResourceManagerContext ArmContext => s_managerContext ??= AzureResourceManagerContext.Default;
+
+    partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
+    {
+        factories.Add(typeof(ManagedServiceIdentity), () => ArmContext.GetTypeBuilder(typeof(ManagedServiceIdentity)));
+    }
 }

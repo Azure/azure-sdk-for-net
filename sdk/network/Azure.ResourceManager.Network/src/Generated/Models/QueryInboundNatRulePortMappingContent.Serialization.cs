@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                JsonSerializer.Serialize(writer, IPConfiguration);
+                ((IJsonModel<WritableSubResource>)IPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -94,7 +96,13 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    ipConfiguration =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))

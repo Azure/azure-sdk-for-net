@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactStoreReference))
             {
                 writer.WritePropertyName("artifactStoreReference"u8);
-                JsonSerializer.Serialize(writer, ArtifactStoreReference);
+                ((IJsonModel<WritableSubResource>)ArtifactStoreReference).Write(writer, options);
             }
             if (Optional.IsDefined(ArtifactName))
             {
@@ -100,7 +102,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStoreReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    artifactStoreReference =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerHybridNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("artifactName"u8))

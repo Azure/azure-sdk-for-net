@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedIdentityProperties))
             {
                 writer.WritePropertyName("userAssignedIdentityProperties"u8);
-                JsonSerializer.Serialize(writer, UserAssignedIdentityProperties);
+                ((IJsonModel<UserAssignedIdentity>)UserAssignedIdentityProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +112,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedIdentityProperties = JsonSerializer.Deserialize<UserAssignedIdentity>(property.Value.GetRawText());
+                    userAssignedIdentityProperties =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.UserAssignedIdentity>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerRecoveryServicesBackupContext.Default)
+#else
+                ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRecoveryServicesBackupContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

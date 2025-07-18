@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
@@ -143,7 +144,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                             {
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            privateEndpoint =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.SubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerKeyVaultContext.Default)
+#else
+                ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerKeyVaultContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))

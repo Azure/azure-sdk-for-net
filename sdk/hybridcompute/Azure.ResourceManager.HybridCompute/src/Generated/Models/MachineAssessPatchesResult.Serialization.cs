@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                JsonSerializer.Serialize(writer, ErrorDetails);
+                ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -223,7 +224,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    errorDetails =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerHybridComputeContext.Default)
+#else
+                ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridComputeContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

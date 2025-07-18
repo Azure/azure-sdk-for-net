@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -53,12 +55,12 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
-                JsonSerializer.Serialize(writer, DnsZone);
+                ((IJsonModel<WritableSubResource>)DnsZone).Write(writer, options);
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
+                ((IJsonModel<WritableSubResource>)PreValidatedCustomDomainResource).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -158,7 +160,13 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.Cdn.ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -190,7 +198,13 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            azureDnsZone = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            azureDnsZone =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("preValidatedCustomDomainResourceId"u8))
@@ -199,7 +213,13 @@ namespace Azure.ResourceManager.Cdn
                             {
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            preValidatedCustomDomainResourceId =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerCdnContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

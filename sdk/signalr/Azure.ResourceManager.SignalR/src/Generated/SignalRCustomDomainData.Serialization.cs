@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.SignalR
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             writer.WritePropertyName("customCertificate"u8);
-            JsonSerializer.Serialize(writer, CustomCertificate);
+            ((IJsonModel<WritableSubResource>)CustomCertificate).Write(writer, options);
             writer.WriteEndObject();
         }
 
@@ -105,7 +106,13 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.SystemData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.SignalR.ModelSerializationExtensions.WireOptions, AzureResourceManagerSignalRContext.Default)
+#else
+                ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSignalRContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -133,7 +140,13 @@ namespace Azure.ResourceManager.SignalR
                         }
                         if (property0.NameEquals("customCertificate"u8))
                         {
-                            customCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            customCertificate =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerSignalRContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerSignalRContext.Default)
+#endif
+;
                             continue;
                         }
                     }

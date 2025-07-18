@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<ResourceProviderData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
             {
@@ -291,7 +292,13 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResourceProviderData>(item.GetRawText()));
+                        array.Add(
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.ResourceProviderData>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(item).ToArray()), options, AzureResourceManagerResourcesContext.Default)
+#else
+                ModelReaderWriter.Read<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default)
+#endif
+);
                     }
                     providers = array;
                     continue;
@@ -417,7 +424,13 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerResourcesContext.Default)
+#else
+                ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))

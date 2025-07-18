@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             if (Optional.IsDefined(WafSecurityPolicy))
             {
                 writer.WritePropertyName("wafSecurityPolicy"u8);
-                JsonSerializer.Serialize(writer, WafSecurityPolicy);
+                ((IJsonModel<WritableSubResource>)WafSecurityPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +90,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    wafSecurityPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    wafSecurityPolicy =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerServiceNetworkingContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

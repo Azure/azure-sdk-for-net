@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -56,27 +58,27 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                JsonSerializer.Serialize(writer, BackendHttpSettings);
+                ((IJsonModel<WritableSubResource>)BackendHttpSettings).Write(writer, options);
             }
             if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration"u8);
-                JsonSerializer.Serialize(writer, RedirectConfiguration);
+                ((IJsonModel<WritableSubResource>)RedirectConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet"u8);
-                JsonSerializer.Serialize(writer, RewriteRuleSet);
+                ((IJsonModel<WritableSubResource>)RewriteRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(LoadDistributionPolicy))
             {
                 writer.WritePropertyName("loadDistributionPolicy"u8);
-                JsonSerializer.Serialize(writer, LoadDistributionPolicy);
+                ((IJsonModel<WritableSubResource>)LoadDistributionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
-                JsonSerializer.Serialize(writer, FirewallPolicy);
+                ((IJsonModel<WritableSubResource>)FirewallPolicy).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -188,7 +190,13 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendAddressPool =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("backendHttpSettings"u8))
@@ -197,7 +205,13 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendHttpSettings =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("redirectConfiguration"u8))
@@ -206,7 +220,13 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            redirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            redirectConfiguration =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("rewriteRuleSet"u8))
@@ -215,7 +235,13 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            rewriteRuleSet =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("loadDistributionPolicy"u8))
@@ -224,7 +250,13 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            loadDistributionPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadDistributionPolicy =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -242,7 +274,13 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            firewallPolicy =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property0.Value).ToArray()), options, AzureResourceManagerNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default)
+#endif
+;
                             continue;
                         }
                     }

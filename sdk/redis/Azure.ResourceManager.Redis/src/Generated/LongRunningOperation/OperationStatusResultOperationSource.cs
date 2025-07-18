@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,13 +22,25 @@ namespace Azure.ResourceManager.Redis
         OperationStatusResult IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+            return
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.OperationStatusResult>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(document.RootElement).ToArray()), global::Azure.ResourceManager.Redis.ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#else
+                ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#endif
+;
         }
 
         async ValueTask<OperationStatusResult> IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+            return
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.OperationStatusResult>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(document.RootElement).ToArray()), global::Azure.ResourceManager.Redis.ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#else
+                ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#endif
+;
         }
     }
 }

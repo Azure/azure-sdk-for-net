@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -181,7 +182,13 @@ namespace Azure.ResourceManager.Redis.Models
                         }
                         else
                         {
-                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                            array.Add(
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Models.OperationStatusResult>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(item).ToArray()), global::Azure.ResourceManager.Redis.ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#else
+                ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#endif
+);
                         }
                     }
                     operations = array;
@@ -193,7 +200,13 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResponseError>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.ResourceManager.Redis.ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#else
+                ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default)
+#endif
+;
                     continue;
                 }
                 if (options.Format != "W")

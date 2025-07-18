@@ -5,7 +5,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Azure.Core.GeoJson;
 using Azure.Maps.Common;
@@ -60,7 +64,13 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    radiiGeometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    radiiGeometry =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.GeoJson.GeoObject>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), global::Azure.Maps.Common.ModelSerializationExtensions.WireOptions, AzureMapsWeatherContext.Default)
+#else
+                ModelReaderWriter.Read<GeoObject>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureMapsWeatherContext.Default)
+#endif
+;
                     continue;
                 }
             }

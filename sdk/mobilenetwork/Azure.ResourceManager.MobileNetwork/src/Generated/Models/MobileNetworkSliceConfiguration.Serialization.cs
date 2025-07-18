@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -38,9 +39,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WritePropertyName("slice"u8);
-            JsonSerializer.Serialize(writer, Slice);
+            ((IJsonModel<WritableSubResource>)Slice).Write(writer, options);
             writer.WritePropertyName("defaultDataNetwork"u8);
-            JsonSerializer.Serialize(writer, DefaultDataNetwork);
+            ((IJsonModel<WritableSubResource>)DefaultDataNetwork).Write(writer, options);
             writer.WritePropertyName("dataNetworkConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
@@ -94,12 +95,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 if (property.NameEquals("slice"u8))
                 {
-                    slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    slice =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerMobileNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("defaultDataNetwork"u8))
                 {
-                    defaultDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    defaultDataNetwork =
+#if NET9_0_OR_GREATER
+				global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.ResourceManager.Resources.Models.WritableSubResource>(new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(property.Value).ToArray()), options, AzureResourceManagerMobileNetworkContext.Default)
+#else
+                ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default)
+#endif
+;
                     continue;
                 }
                 if (property.NameEquals("dataNetworkConfigurations"u8))
