@@ -76,7 +76,7 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions clientOptions)
             : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
-            ClientOptions = clientOptions;
+            ClientOptions = new(clientOptions);
             TransferValidation = clientOptions.TransferValidation;
         }
     }

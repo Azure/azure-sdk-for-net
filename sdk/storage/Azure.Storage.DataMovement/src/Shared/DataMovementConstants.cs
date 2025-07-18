@@ -41,6 +41,7 @@ namespace Azure.Storage.DataMovement
         internal const int DuplicateFileNameLimit = 100;
 
         internal const string DefaultCheckpointerPath = ".azstoragedml";
+        internal const string UserAgentIdentifier = "DataMovement/";
 
         /// <summary>
         ///  Constants used for logger extensions

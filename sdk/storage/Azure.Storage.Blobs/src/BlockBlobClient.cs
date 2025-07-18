@@ -362,12 +362,7 @@ namespace Azure.Storage.Blobs.Specialized
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new ClientDiagnostics(options),
-                    version: options.Version,
-                    customerProvidedKey: options.CustomerProvidedKey,
-                    transferValidation: options.TransferValidation,
-                    encryptionScope: null,
-                    trimBlobNameSlashes: options.TrimBlobNameSlashes));
+                    clientOptions: options));
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)

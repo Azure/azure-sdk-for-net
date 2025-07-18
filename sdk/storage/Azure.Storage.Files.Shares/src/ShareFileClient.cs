@@ -506,7 +506,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// Get a <see cref="ShareFileClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
@@ -536,7 +536,58 @@ namespace Azure.Storage.Files.Shares
             }
             return default;
         }
-        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class with identical configurations but with an updated User Agent string.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to clone the configurations from.
+        /// </param>
+        /// <param name="appendedUserAgent">
+        /// The string to prepend the user agent with.
+        /// </param>
+        /// <returns></returns>
+        protected static ShareFileClient WithAppendedUserAgent(
+            ShareFileClient client,
+            string appendedUserAgent)
+        {
+            // Create the pipeline policy with the user agent string updated.
+            StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
+
+            // Update the client options with the injected user agent policy.
+            ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
+            ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
+            options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
+
+            // Create a deep copy of the ShareFileClient but with updated client options
+            // and an additional injected pipeline policy with the user agent string
+            // based on the credential type.
+            if (client.ClientConfiguration?.TokenCredential != default)
+            {
+                return new ShareFileClient(
+                    client.Uri,
+                    client.ClientConfiguration.TokenCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration?.SasCredential != default)
+            {
+                return new ShareFileClient(
+                    client.Uri,
+                    client.ClientConfiguration.SasCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration?.SharedKeyCredential != default)
+            {
+                return new ShareFileClient(
+                    client.Uri,
+                    client.ClientConfiguration.SharedKeyCredential,
+                    options);
+            }
+
+            return new ShareFileClient(client.Uri, options);
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Files.Shares
 
         #region Create
         /// <summary>

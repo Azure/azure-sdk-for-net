@@ -391,7 +391,8 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobContainerClient client,
             BlobStorageResourceContainerOptions options = default)
         {
-            return new BlobStorageResourceContainer(client, options);
+            BlobContainerClient newClient = BlobContainerClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
+            return new BlobStorageResourceContainer(newClient, options);
         }
 
         /// <summary>
@@ -412,7 +413,8 @@ namespace Azure.Storage.DataMovement.Blobs
             BlockBlobClient client,
             BlockBlobStorageResourceOptions options = default)
         {
-            return new BlockBlobStorageResource(client, options);
+            BlockBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as BlockBlobClient;
+            return new BlockBlobStorageResource(newClient, options);
         }
 
         /// <summary>
@@ -433,7 +435,8 @@ namespace Azure.Storage.DataMovement.Blobs
             PageBlobClient client,
             PageBlobStorageResourceOptions options = default)
         {
-            return new PageBlobStorageResource(client, options);
+            PageBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as PageBlobClient;
+            return new PageBlobStorageResource(newClient, options);
         }
 
         /// <summary>
@@ -454,7 +457,8 @@ namespace Azure.Storage.DataMovement.Blobs
             AppendBlobClient client,
             AppendBlobStorageResourceOptions options = default)
         {
-            return new AppendBlobStorageResource(client, options);
+            AppendBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as AppendBlobClient;
+            return new AppendBlobStorageResource(newClient, options);
         }
         #endregion
 
@@ -733,7 +737,16 @@ namespace Azure.Storage.DataMovement.Blobs
         private static BlobClientOptions GetUserAgentClientOptions()
         {
             BlobClientOptions options = new BlobClientOptions();
+            StorageUserAgentPolicy policy = new(GetUserAgentVersionString());
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            return options;
+        }
 
+        /// <summary>
+        /// Gets the assembly version of Azure.Storage.DataMovement.Blobs.
+        /// </summary>
+        private static string GetUserAgentVersionString()
+        {
             // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
             // From there we can grab the version of the Assembly.
             Assembly assembly = typeof(BlobsStorageResourceProvider).Assembly;
@@ -742,11 +755,8 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 throw Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
             }
-            // Now using a policy, update the user agent string with the version and add the policy
-            // to the client options.
-            DataMovementUserAgentPolicy policy = new(versionAttribute.InformationalVersion);
-            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-            return options;
+            // Concat the version with the DataMovement user agent string identifier.
+            return string.Concat(DataMovementConstants.UserAgentIdentifier, versionAttribute.InformationalVersion);
         }
     }
 }

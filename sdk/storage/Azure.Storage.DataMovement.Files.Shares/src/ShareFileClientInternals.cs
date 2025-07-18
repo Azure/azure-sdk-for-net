@@ -4,9 +4,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
 
-namespace Azure.Storage.DataMovement.Blobs
+namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class ShareFileClientInternals : ShareFileClient
     {
@@ -14,5 +13,10 @@ namespace Azure.Storage.DataMovement.Blobs
             ShareFileClient client,
             CancellationToken cancellationToken)
             => ShareFileClient.GetCopyAuthorizationHeaderAsync(client, cancellationToken);
+
+        public static ShareFileClient WithAppendedUserAgentClient(
+            ShareFileClient client,
+            string appendedUserAgent)
+            => ShareFileClient.WithAppendedUserAgent(client, appendedUserAgent);
     }
 }

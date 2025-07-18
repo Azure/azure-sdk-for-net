@@ -177,6 +177,7 @@ namespace Azure.Storage.Blobs
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadBlob(string blobName, System.IO.Stream content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadBlobAsync(string blobName, System.BinaryData content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> UploadBlobAsync(string blobName, System.IO.Stream content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected static Azure.Storage.Blobs.BlobContainerClient WithAppendedUserAgent(Azure.Storage.Blobs.BlobContainerClient client, string appendedUserAgent) { throw null; }
     }
     public partial class BlobServiceClient
     {
@@ -1754,6 +1755,7 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo>> SyncCopyFromUriAsync(System.Uri source, Azure.Storage.Blobs.Models.BlobCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Undelete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UndeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected static Azure.Storage.Blobs.Specialized.BlobBaseClient WithAppendedUserAgent(Azure.Storage.Blobs.Specialized.BlobBaseClient client, string appendedUserAgent) { throw null; }
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithCustomerProvidedKey(Azure.Storage.Blobs.Models.CustomerProvidedKey? customerProvidedKey) { throw null; }
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithEncryptionScope(string encryptionScope) { throw null; }
         public virtual Azure.Storage.Blobs.Specialized.BlobBaseClient WithSnapshot(string snapshot) { throw null; }
