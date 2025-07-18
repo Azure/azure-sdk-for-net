@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Action Allow. </summary>
         public static InternetGatewayRuleAction Allow { get; } = new InternetGatewayRuleAction(AllowValue);
-        /// <summary> Deny. </summary>
+        /// <summary> Action Deny. </summary>
         public static InternetGatewayRuleAction Deny { get; } = new InternetGatewayRuleAction(DenyValue);
         /// <summary> Determines if two <see cref="InternetGatewayRuleAction"/> values are the same. </summary>
         public static bool operator ==(InternetGatewayRuleAction left, InternetGatewayRuleAction right) => left.Equals(right);

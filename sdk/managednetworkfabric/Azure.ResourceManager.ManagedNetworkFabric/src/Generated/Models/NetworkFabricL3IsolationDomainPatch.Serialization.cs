@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,35 +34,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RedistributeConnectedSubnets))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("redistributeConnectedSubnets"u8);
-                writer.WriteStringValue(RedistributeConnectedSubnets.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(RedistributeStaticRoutes))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("redistributeStaticRoutes"u8);
-                writer.WriteStringValue(RedistributeStaticRoutes.Value.ToString());
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            if (Optional.IsDefined(AggregateRouteConfiguration))
-            {
-                writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration, options);
-            }
-            if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
-            {
-                writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy, options);
-            }
-            writer.WriteEndObject();
         }
 
         NetworkFabricL3IsolationDomainPatch IJsonModel<NetworkFabricL3IsolationDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -86,11 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string annotation = default;
-            RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
-            RedistributeStaticRoute? redistributeStaticRoutes = default;
-            AggregateRouteConfiguration aggregateRouteConfiguration = default;
-            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
+            L3IsolationDomainPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,53 +111,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("redistributeConnectedSubnets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redistributeConnectedSubnets = new RedistributeConnectedSubnet(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("redistributeStaticRoutes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redistributeStaticRoutes = new RedistributeStaticRoute(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("aggregateRouteConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = L3IsolationDomainPatchProperties.DeserializeL3IsolationDomainPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,14 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricL3IsolationDomainPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                annotation,
-                redistributeConnectedSubnets,
-                redistributeStaticRoutes,
-                aggregateRouteConfiguration,
-                connectedSubnetRoutePolicy);
+            return new NetworkFabricL3IsolationDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options)

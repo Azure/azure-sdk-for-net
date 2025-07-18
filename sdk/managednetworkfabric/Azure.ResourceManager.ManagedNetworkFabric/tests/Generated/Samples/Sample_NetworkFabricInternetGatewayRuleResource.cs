@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_InternetGatewayRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternetGatewayRules_Get.json
             // this example is just showing the usage of "InternetGatewayRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternetGatewayRuleResource created on azure
             // for more information of creating NetworkFabricInternetGatewayRuleResource, please refer to the document of NetworkFabricInternetGatewayRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string internetGatewayRuleName = "example-internetGatewayRule";
             ResourceIdentifier networkFabricInternetGatewayRuleResourceId = NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, internetGatewayRuleName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_InternetGatewayRulesDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternetGatewayRules_Delete.json
             // this example is just showing the usage of "InternetGatewayRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternetGatewayRuleResource created on azure
             // for more information of creating NetworkFabricInternetGatewayRuleResource, please refer to the document of NetworkFabricInternetGatewayRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string internetGatewayRuleName = "example-internetGatewayRule";
             ResourceIdentifier networkFabricInternetGatewayRuleResourceId = NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, internetGatewayRuleName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_InternetGatewayRulesUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGatewayRules_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternetGatewayRules_Update.json
             // this example is just showing the usage of "InternetGatewayRules_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternetGatewayRuleResource created on azure
             // for more information of creating NetworkFabricInternetGatewayRuleResource, please refer to the document of NetworkFabricInternetGatewayRuleResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string internetGatewayRuleName = "example-internetGatewayRule";
             ResourceIdentifier networkFabricInternetGatewayRuleResourceId = NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, internetGatewayRuleName);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 Tags =
 {
-["key3311"] = "1234"
+["KeyID"] = "KeyValue1"
 },
             };
             ArmOperation<NetworkFabricInternetGatewayRuleResource> lro = await networkFabricInternetGatewayRule.UpdateAsync(WaitUntil.Completed, patch);

@@ -53,17 +53,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkPacketBrokerData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
+        /// <param name="properties"> The NetworkPacketBroker properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public NetworkPacketBrokerData(AzureLocation location, NetworkPacketBrokerProperties properties) : base(location)
         {
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            NetworkFabricId = networkFabricId;
-            NetworkDeviceIds = new ChangeTrackingList<ResourceIdentifier>();
-            SourceInterfaceIds = new ChangeTrackingList<ResourceIdentifier>();
-            NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
-            NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerData"/>. </summary>
@@ -73,21 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
-        /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
-        /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
-        /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="properties"> The NetworkPacketBroker properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkPacketBrokerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            NetworkFabricId = networkFabricId;
-            NetworkDeviceIds = networkDeviceIds;
-            SourceInterfaceIds = sourceInterfaceIds;
-            NetworkTapIds = networkTapIds;
-            NeighborGroupIds = neighborGroupIds;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,17 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> ARM resource ID of the Network Fabric. </summary>
-        public ResourceIdentifier NetworkFabricId { get; set; }
-        /// <summary> List of ARM resource IDs of Network Devices [NPB]. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkDeviceIds { get; }
-        /// <summary> List of network interfaces across NPB devices that are used to mirror source traffic. </summary>
-        public IReadOnlyList<ResourceIdentifier> SourceInterfaceIds { get; }
-        /// <summary> List of network Tap IDs configured on NPB. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; }
-        /// <summary> List of neighbor group IDs configured on NPB. </summary>
-        public IReadOnlyList<ResourceIdentifier> NeighborGroupIds { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> The NetworkPacketBroker properties. </summary>
+        public NetworkPacketBrokerProperties Properties { get; set; }
     }
 }

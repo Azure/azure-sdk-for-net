@@ -26,15 +26,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string DisabledValue = "Disabled";
         private const string MatValue = "MAT";
         private const string RmaValue = "RMA";
+        private const string UnderMaintenanceValue = "UnderMaintenance";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Enabled Administrative State. </summary>
         public static NetworkFabricAdministrativeState Enabled { get; } = new NetworkFabricAdministrativeState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Disabled Administrative State. </summary>
         public static NetworkFabricAdministrativeState Disabled { get; } = new NetworkFabricAdministrativeState(DisabledValue);
-        /// <summary> MAT. </summary>
+        /// <summary> MAT(Manual Action Taken) Administrative State. </summary>
         public static NetworkFabricAdministrativeState Mat { get; } = new NetworkFabricAdministrativeState(MatValue);
-        /// <summary> RMA. </summary>
+        /// <summary> RMA(Return Material Authorization) Administrative State. </summary>
         public static NetworkFabricAdministrativeState Rma { get; } = new NetworkFabricAdministrativeState(RmaValue);
+        /// <summary> UnderMaintenance Administrative State. </summary>
+        public static NetworkFabricAdministrativeState UnderMaintenance { get; } = new NetworkFabricAdministrativeState(UnderMaintenanceValue);
         /// <summary> Determines if two <see cref="NetworkFabricAdministrativeState"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricAdministrativeState left, NetworkFabricAdministrativeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricAdministrativeState"/> values are not the same. </summary>
