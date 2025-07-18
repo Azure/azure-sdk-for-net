@@ -30,4 +30,9 @@
     <EmbeddedResource Include="Assets\Profile\2020-09-01-hybrid.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- TODO: Temporarily pin the version of generator here to release Azure.ResourceManager firstly -->
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20250715.2" PrivateAssets="All" />
+  </ItemGroup>
+
 </Project>

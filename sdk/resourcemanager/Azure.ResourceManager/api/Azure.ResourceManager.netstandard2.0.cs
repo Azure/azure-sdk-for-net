@@ -144,6 +144,7 @@ namespace Azure.ResourceManager
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.EncryptionProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.KeyVaultProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.OperationStatusResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemAssignedServiceIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
@@ -804,7 +805,7 @@ namespace Azure.ResourceManager.Models
     }
     public partial class OperationStatusResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Models.OperationStatusResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.OperationStatusResult>
     {
-        protected OperationStatusResult() { }
+        protected internal OperationStatusResult() { }
         protected OperationStatusResult(Azure.Core.ResourceIdentifier id, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.OperationStatusResult> operations, Azure.ResponseError error) { }
         public OperationStatusResult(string status) { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
