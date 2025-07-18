@@ -138,7 +138,8 @@ namespace Azure.Generator.Tests.Visitors
 
         private static bool IsMatchConditionParameter(InputParameter parameter)
         {
-            return parameter.Location == InputRequestLocation.Header &&
+            return !parameter.IsRequired &&
+                   parameter.Location == InputRequestLocation.Header &&
                    (parameter.NameInRequest == "If-Match" ||
                     parameter.NameInRequest == "If-None-Match" ||
                     parameter.NameInRequest == "If-Modified-Since" ||

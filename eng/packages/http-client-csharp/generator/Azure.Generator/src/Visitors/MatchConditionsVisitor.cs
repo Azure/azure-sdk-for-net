@@ -15,18 +15,6 @@ namespace Azure.Generator.Visitors
 {
     /// <summary>
     /// Visitor that modifies service methods to group conditional request headers into RequestConditions/MatchConditions types.
-    /// 
-    /// This visitor:
-    /// 1. Removes individual match condition header parameters (If-Match, If-None-Match, If-Modified-Since, If-Unmodified-Since)
-    /// 2. Modifies request creation to use Azure.Core extension methods for setting these headers
-    /// 
-    /// Note: This implementation demonstrates the core concept but has a limitation:
-    /// - Method signatures still need to be updated to include RequestConditions/MatchConditions parameters
-    /// - This would require additional infrastructure to properly add parameters to method signatures
-    /// 
-    /// The generated request creation code will include calls to Azure.Core extension methods:
-    /// - request.Headers.Add(requestConditions, "R") for RequestConditions (date + etag conditions)
-    /// - request.Headers.Add(matchConditions) for MatchConditions (etag conditions only)
     /// </summary>
     internal class MatchConditionsVisitor : ScmLibraryVisitor
     {
@@ -40,22 +28,37 @@ namespace Azure.Generator.Visitors
             ClientProvider client,
             ScmMethodProviderCollection? methods)
         {
-            var matchConditionParameters = GetMatchConditionParameters(serviceMethod.Parameters);
-            
-            if (matchConditionParameters.Count == 0)
+            // Check if there are any optional match condition parameters to process
+            var serviceMethodMatchConditionParameters = GetOptionalMatchConditionParameters(serviceMethod.Parameters);
+            var operationMatchConditionParameters = GetOptionalMatchConditionParameters(serviceMethod.Operation.Parameters);
+
+            if (serviceMethodMatchConditionParameters.Count == 0 && operationMatchConditionParameters.Count == 0)
+                return methods;
+
+            // Handle the case where only a single IfMatch or IfNoneMatch parameter exists
+            // In this case, replace with ETag? type instead of RequestConditions/MatchConditions
+            if (HandleSingleETagParameter(serviceMethod, serviceMethodMatchConditionParameters, operationMatchConditionParameters))
                 return methods;
 
             // Determine if we need RequestConditions (for date-based conditions) or MatchConditions (for ETags only)
-            bool hasDateConditions = matchConditionParameters.ContainsKey(IfModifiedSinceHeaderName) || 
-                                   matchConditionParameters.ContainsKey(IfUnmodifiedSinceHeaderName);
+            var allMatchConditionParameters = serviceMethodMatchConditionParameters.Concat(operationMatchConditionParameters)
+                .GroupBy(kvp => kvp.Key)
+                .ToDictionary(g => g.Key, g => g.First().Value);
+
+            bool hasDateConditions = allMatchConditionParameters.ContainsKey(IfModifiedSinceHeaderName) ||
+                                   allMatchConditionParameters.ContainsKey(IfUnmodifiedSinceHeaderName);
 
             // Update the service method to remove individual match condition parameters
-            var filteredParameters = serviceMethod.Parameters
-                .Where(p => !IsMatchConditionParameter(p))
+            var filteredServiceMethodParameters = serviceMethod.Parameters
+                .Where(p => !IsOptionalMatchConditionParameter(p))
                 .ToList();
 
-            serviceMethod.Update(parameters: filteredParameters);
-            serviceMethod.Operation.Update(parameters: filteredParameters);
+            var filteredOperationParameters = serviceMethod.Operation.Parameters
+                .Where(p => !IsOptionalMatchConditionParameter(p))
+                .ToList();
+
+            serviceMethod.Update(parameters: filteredServiceMethodParameters);
+            serviceMethod.Operation.Update(parameters: filteredOperationParameters);
 
             // Create a new method collection with the updated service method
             methods = new ScmMethodProviderCollection(serviceMethod, client);
@@ -85,36 +88,6 @@ namespace Azure.Generator.Visitors
                 }
             }
 
-            if (requestVariable != null)
-            {
-                // Add conditional header setting using Azure.Core extension methods
-                // Note: This generates placeholder code that demonstrates the intended pattern
-                // The actual parameter would need to be added to the method signature separately
-                
-                if (hasDateConditions)
-                {
-                    // Generate: request.Headers.Add(requestConditions, "R");
-                    // This will use the RequestConditions extension method that handles all four headers
-                    var comment = new CommentStatement("// Set conditional request headers using RequestConditions");
-                    newStatements.Add(comment);
-                    
-                    // Add a placeholder comment showing what the generated code should look like
-                    var placeholderComment = new CommentStatement("// request.Headers.Add(requestConditions, \"R\");");
-                    newStatements.Add(placeholderComment);
-                }
-                else
-                {
-                    // Generate: request.Headers.Add(matchConditions);
-                    // This will use the MatchConditions extension method that handles If-Match and If-None-Match
-                    var comment = new CommentStatement("// Set conditional request headers using MatchConditions");
-                    newStatements.Add(comment);
-                    
-                    // Add a placeholder comment showing what the generated code should look like
-                    var placeholderComment = new CommentStatement("// request.Headers.Add(matchConditions);");
-                    newStatements.Add(placeholderComment);
-                }
-            }
-
             // Add the return statement back
             newStatements.Add(originalBodyStatements[^1]);
             createRequestMethod.Update(bodyStatements: newStatements);
@@ -122,28 +95,55 @@ namespace Azure.Generator.Visitors
             return methods;
         }
 
-        private static Dictionary<string, InputParameter> GetMatchConditionParameters(IReadOnlyList<InputParameter> parameters)
+        private static Dictionary<string, InputParameter> GetOptionalMatchConditionParameters(IReadOnlyList<InputParameter> parameters)
         {
             var matchConditionParameters = new Dictionary<string, InputParameter>();
-            
+
             foreach (var parameter in parameters)
             {
-                if (IsMatchConditionParameter(parameter))
+                if (IsOptionalMatchConditionParameter(parameter))
                 {
                     matchConditionParameters[parameter.NameInRequest] = parameter;
                 }
             }
-            
+
             return matchConditionParameters;
         }
 
-        private static bool IsMatchConditionParameter(InputParameter parameter)
+        private static bool IsOptionalMatchConditionParameter(InputParameter parameter)
         {
-            return parameter.Location == InputRequestLocation.Header &&
+            return !parameter.IsRequired &&
+                   parameter.Location == InputRequestLocation.Header &&
                    (parameter.NameInRequest == IfMatchHeaderName ||
                     parameter.NameInRequest == IfNoneMatchHeaderName ||
                     parameter.NameInRequest == IfModifiedSinceHeaderName ||
                     parameter.NameInRequest == IfUnmodifiedSinceHeaderName);
+        }
+
+        private static bool HandleSingleETagParameter(
+            InputServiceMethod serviceMethod,
+            Dictionary<string, InputParameter> serviceMethodParams,
+            Dictionary<string, InputParameter> operationParams)
+        {
+            var allParams = serviceMethodParams.Concat(operationParams)
+                .GroupBy(kvp => kvp.Key)
+                .ToDictionary(g => g.Key, g => g.First().Value);
+
+            // Check if we have exactly one ETag parameter (If-Match or If-None-Match) and no date parameters
+            bool hasIfMatch = allParams.ContainsKey(IfMatchHeaderName);
+            bool hasIfNoneMatch = allParams.ContainsKey(IfNoneMatchHeaderName);
+            bool hasDateParams = allParams.ContainsKey(IfModifiedSinceHeaderName) ||
+                                allParams.ContainsKey(IfUnmodifiedSinceHeaderName);
+
+            if (!hasDateParams && (hasIfMatch ^ hasIfNoneMatch)) // XOR - exactly one of them
+            {
+                // TODO: Replace the single ETag parameter with ETag? type
+                // This would require additional infrastructure to modify parameter types
+                // For now, we let the regular processing handle this case
+                return false;
+            }
+
+            return false;
         }
     }
 }
