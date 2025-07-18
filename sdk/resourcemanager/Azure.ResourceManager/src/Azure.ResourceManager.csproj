@@ -32,7 +32,7 @@
 
   <ItemGroup>
     <!-- TODO: Temporarily pin the version of generator here to release Azure.ResourceManager firstly -->
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20250715.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20250718.1" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
