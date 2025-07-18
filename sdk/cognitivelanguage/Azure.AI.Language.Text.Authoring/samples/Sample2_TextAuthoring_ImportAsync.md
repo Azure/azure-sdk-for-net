@@ -15,7 +15,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 
 ## Import Project Data Asynchronously
 
-To import project data, call ImportAsync on the TextAnalysisAuthoring client.
+To import project data asynchronously, call ImportAsync on the TextAnalysisAuthoring client. The method returns an Operation object, allowing you to track the import's status and results.
 
 ```C# Snippet:Sample2_TextAuthoring_ImportAsync
 string projectName = "MyImportProjectAsync";
@@ -140,4 +140,55 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Import completed with status: {operation.GetRawResponse().Status}");
 ```
 
-To import project data asynchronously, call ImportAsync on the TextAnalysisAuthoring client. The method returns an Operation object, allowing you to track the import's status and results.
+## Import Project Data from Raw JSON String Asynchronously
+
+To import project data from a raw JSON string asynchronously, call ImportAsync on the TextAuthoringProject client. The method accepts a raw JSON string and returns an Operation object, allowing you to track the import's status and results.
+
+```C# Snippet:Sample2_TextAuthoring_ImportRawStringAsync
+string projectName = "MyImportRawStringProjectAsync";
+TextAuthoringProject projectClient = client.GetProject(projectName);
+
+string rawJson = """
+{
+  "projectFileVersion": "2025-05-15-preview",
+  "stringIndexType": "Utf16CodeUnit",
+  "metadata": {
+    "projectKind": "CustomSingleLabelClassification",
+    "storageInputContainerName": "single-class-example",
+    "language": "en",
+    "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+    "multilingual": false,
+    "settings": {}
+  },
+  "assets": {
+    "projectKind": "CustomSingleLabelClassification",
+    "classes": [
+      { "category": "Date" },
+      { "category": "LenderName" },
+      { "category": "LenderAddress" }
+    ],
+    "documents": [
+      {
+        "class": { "category": "Date" },
+        "location": "01.txt",
+        "language": "en"
+      },
+      {
+        "class": { "category": "LenderName" },
+        "location": "02.txt",
+        "language": "en"
+      }
+    ]
+  }
+}
+""";
+
+Operation operation = await projectClient.ImportAsync(
+    waitUntil: WaitUntil.Started,
+    exportedProject: rawJson
+);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+Console.WriteLine($"Import completed with status: {operation.GetRawResponse().Status}");
+```

@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task ImportAsync()
         {
             // Arrange
-            string projectName = "MyImportTextProject";
+            string projectName = "MyImportTextProject0717";
 
             var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "CustomSingleLabelClassification",
@@ -112,6 +112,65 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Assert
             Assert.IsNotNull(operation);
             Assert.AreEqual(200, operation.GetRawResponse().Status);
+
+            // Logging for additional context
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Import completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task ImportRawStringAsync()
+        {
+            // Arrange
+            string projectName = "MyImportTextProjectRaw0718";
+
+            string rawJson = """
+            {
+              "projectFileVersion": "2025-05-15-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "CustomSingleLabelClassification",
+                "storageInputContainerName": "single-class-example",
+                "language": "en",
+                "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+                "multilingual": false,
+                "settings": {}
+              },
+              "assets": {
+                "projectKind": "CustomSingleLabelClassification",
+                "classes": [
+                  { "category": "Date" },
+                  { "category": "LenderName" },
+                  { "category": "LenderAddress" }
+                ],
+                "documents": [
+                  {
+                    "class": { "category": "Date" },
+                    "location": "01.txt",
+                    "language": "en"
+                  },
+                  {
+                    "class": { "category": "LenderName" },
+                    "location": "02.txt",
+                    "language": "en"
+                  }
+                ]
+              }
+            }
+            """;
+
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            // Act
+            Operation operation = await projectClient.ImportAsync(
+                waitUntil: WaitUntil.Started,
+                exportedProject: rawJson
+            );
+
+            // Assert
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(202, operation.GetRawResponse().Status);
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
