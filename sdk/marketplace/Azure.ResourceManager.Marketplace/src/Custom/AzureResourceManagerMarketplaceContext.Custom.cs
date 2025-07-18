@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Marketplace;
 using Azure.ResourceManager.Marketplace.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Marketplace;
 
@@ -68,6 +70,10 @@ namespace Azure.ResourceManager.Marketplace;
 [ModelReaderWriterBuildable(typeof(TransferOffersContent))]
 [ModelReaderWriterBuildable(typeof(TransferOffersResult))]
 [ModelReaderWriterBuildable(typeof(WithdrawPlanContent))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMarketplaceContext
 {
 }

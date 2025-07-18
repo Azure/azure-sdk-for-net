@@ -3,6 +3,8 @@
 using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
@@ -106,6 +108,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance;
 [ModelReaderWriterBuildable(typeof(UnknownThreeTierCustomResourceNames))]
 [ModelReaderWriterBuildable(typeof(UpdateSapVirtualInstanceProperties))]
 [ModelReaderWriterBuildable(typeof(VirtualMachineResourceNames))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerWorkloadsSapVirtualInstanceContext
 {
 }

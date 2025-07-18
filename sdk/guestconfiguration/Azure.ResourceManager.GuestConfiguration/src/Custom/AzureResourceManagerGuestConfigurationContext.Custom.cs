@@ -3,6 +3,8 @@
 using Azure.ResourceManager.GuestConfiguration;
 using Azure.ResourceManager.GuestConfiguration.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration;
 
@@ -28,6 +30,10 @@ namespace Azure.ResourceManager.GuestConfiguration;
 [ModelReaderWriterBuildable(typeof(GuestConfigurationVmInfo))]
 [ModelReaderWriterBuildable(typeof(GuestConfigurationVmssVmInfo))]
 [ModelReaderWriterBuildable(typeof(LcmConfigurationSetting))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerGuestConfigurationContext
 {
 }

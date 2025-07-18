@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Datadog.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog;
 
@@ -40,6 +42,10 @@ namespace Azure.ResourceManager.Datadog;
 [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
 [ModelReaderWriterBuildable(typeof(ResourceSku))]
 [ModelReaderWriterBuildable(typeof(UserInfo))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDatadogContext
 {
 }

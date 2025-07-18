@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Astro;
 using Azure.ResourceManager.Astro.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Astro;
 
@@ -19,6 +21,10 @@ namespace Azure.ResourceManager.Astro;
 [ModelReaderWriterBuildable(typeof(AstroUserDetails))]
 [ModelReaderWriterBuildable(typeof(AstroUserUpdateDetails))]
 [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAstroContext
 {
 }

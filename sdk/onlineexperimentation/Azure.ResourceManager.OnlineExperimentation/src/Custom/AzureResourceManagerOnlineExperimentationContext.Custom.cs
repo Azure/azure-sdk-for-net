@@ -3,6 +3,8 @@
 using Azure.ResourceManager.OnlineExperimentation;
 using Azure.ResourceManager.OnlineExperimentation.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.OnlineExperimentation;
 
@@ -16,6 +18,10 @@ namespace Azure.ResourceManager.OnlineExperimentation;
 [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceProperties))]
 [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceSku))]
 [ModelReaderWriterBuildable(typeof(ResourceEncryptionConfiguration))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerOnlineExperimentationContext
 {
 }

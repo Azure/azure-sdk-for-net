@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights;
 
@@ -58,6 +60,10 @@ namespace Azure.ResourceManager.ApplicationInsights;
 [ModelReaderWriterBuildable(typeof(WorkItemConfiguration))]
 [ModelReaderWriterBuildable(typeof(WorkItemConfigurationsListResult))]
 [ModelReaderWriterBuildable(typeof(WorkItemCreateConfiguration))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerApplicationInsightsContext
 {
 }

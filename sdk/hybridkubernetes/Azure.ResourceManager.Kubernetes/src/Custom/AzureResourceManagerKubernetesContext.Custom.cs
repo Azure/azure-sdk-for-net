@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Kubernetes;
 using Azure.ResourceManager.Kubernetes.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kubernetes;
 
@@ -14,6 +16,10 @@ namespace Azure.ResourceManager.Kubernetes;
 [ModelReaderWriterBuildable(typeof(CredentialResults))]
 [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
 [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerKubernetesContext
 {
 }

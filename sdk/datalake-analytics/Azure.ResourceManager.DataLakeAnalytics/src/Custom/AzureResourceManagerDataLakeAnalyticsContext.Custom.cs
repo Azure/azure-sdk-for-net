@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataLakeAnalytics;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics;
 
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics;
 [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent))]
 [ModelReaderWriterBuildable(typeof(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent))]
 [ModelReaderWriterBuildable(typeof(StorageAccountForDataLakeAnalyticsAccountUpdateContent))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataLakeAnalyticsContext
 {
 }

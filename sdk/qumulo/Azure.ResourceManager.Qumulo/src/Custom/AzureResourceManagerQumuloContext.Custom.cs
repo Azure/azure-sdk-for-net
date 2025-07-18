@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Qumulo;
 using Azure.ResourceManager.Qumulo.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Qumulo;
 
@@ -13,6 +15,10 @@ namespace Azure.ResourceManager.Qumulo;
 [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourceListResult))]
 [ModelReaderWriterBuildable(typeof(QumuloFileSystemResourcePatch))]
 [ModelReaderWriterBuildable(typeof(QumuloUserDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerQumuloContext
 {
 }

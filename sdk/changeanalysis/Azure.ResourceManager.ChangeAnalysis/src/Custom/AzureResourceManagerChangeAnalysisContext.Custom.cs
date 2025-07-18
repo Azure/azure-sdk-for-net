@@ -2,6 +2,8 @@
 
 using Azure.ResourceManager.ChangeAnalysis.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ChangeAnalysis;
 
@@ -9,6 +11,10 @@ namespace Azure.ResourceManager.ChangeAnalysis;
 [ModelReaderWriterBuildable(typeof(ChangeProperties))]
 [ModelReaderWriterBuildable(typeof(DetectedChangeData))]
 [ModelReaderWriterBuildable(typeof(PropertyChange))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerChangeAnalysisContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.MigrationDiscoverySap;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap;
 
@@ -27,6 +29,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap;
 [ModelReaderWriterBuildable(typeof(ServerInstanceListResult))]
 [ModelReaderWriterBuildable(typeof(ServerInstanceProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownPerformanceData))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMigrationDiscoverySapContext
 {
 }

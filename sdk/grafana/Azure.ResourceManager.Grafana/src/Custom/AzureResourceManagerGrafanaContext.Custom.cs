@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Grafana;
 using Azure.ResourceManager.Grafana.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Grafana;
 
@@ -54,6 +56,10 @@ namespace Azure.ResourceManager.Grafana;
 [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
 [ModelReaderWriterBuildable(typeof(SubscriptionTerm))]
 [ModelReaderWriterBuildable(typeof(UnifiedAlertingScreenshots))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerGrafanaContext
 {
 }

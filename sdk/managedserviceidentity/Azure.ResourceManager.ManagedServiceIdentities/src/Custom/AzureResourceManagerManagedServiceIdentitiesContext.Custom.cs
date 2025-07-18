@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities;
 
@@ -15,6 +17,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities;
 [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialsListResult))]
 [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesListResult))]
 [ModelReaderWriterBuildable(typeof(UserAssignedIdentityPatch))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerManagedServiceIdentitiesContext
 {
 }

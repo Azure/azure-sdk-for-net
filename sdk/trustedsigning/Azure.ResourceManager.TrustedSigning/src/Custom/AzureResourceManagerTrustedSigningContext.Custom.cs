@@ -3,6 +3,8 @@
 using Azure.ResourceManager.TrustedSigning;
 using Azure.ResourceManager.TrustedSigning.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.TrustedSigning;
 
@@ -18,6 +20,10 @@ namespace Azure.ResourceManager.TrustedSigning;
 [ModelReaderWriterBuildable(typeof(TrustedSigningAccountPatch))]
 [ModelReaderWriterBuildable(typeof(TrustedSigningAccountSku))]
 [ModelReaderWriterBuildable(typeof(TrustedSigningCertificate))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerTrustedSigningContext
 {
 }

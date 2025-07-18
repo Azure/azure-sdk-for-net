@@ -3,6 +3,8 @@
 using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CostManagement;
 
@@ -90,6 +92,10 @@ namespace Azure.ResourceManager.CostManagement;
 [ModelReaderWriterBuildable(typeof(ViewKpiProperties))]
 [ModelReaderWriterBuildable(typeof(ViewListResult))]
 [ModelReaderWriterBuildable(typeof(ViewPivotProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCostManagementContext
 {
 }

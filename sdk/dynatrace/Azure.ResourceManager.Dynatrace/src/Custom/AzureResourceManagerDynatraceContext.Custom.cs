@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Dynatrace;
 using Azure.ResourceManager.Dynatrace.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dynatrace;
 
@@ -39,6 +41,10 @@ namespace Azure.ResourceManager.Dynatrace;
 [ModelReaderWriterBuildable(typeof(MonitorResourceListResult))]
 [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
 [ModelReaderWriterBuildable(typeof(VmHostsListResponse))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDynatraceContext
 {
 }

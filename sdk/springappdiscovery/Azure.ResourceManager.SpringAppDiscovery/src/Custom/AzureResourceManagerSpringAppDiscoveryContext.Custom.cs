@@ -3,6 +3,8 @@
 using Azure.ResourceManager.SpringAppDiscovery;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SpringAppDiscovery;
 
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery;
 [ModelReaderWriterBuildable(typeof(SpringBootSiteProperties))]
 [ModelReaderWriterBuildable(typeof(SpringBootSiteSummariesProperties))]
 [ModelReaderWriterBuildable(typeof(SummaryList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSpringAppDiscoveryContext
 {
 }

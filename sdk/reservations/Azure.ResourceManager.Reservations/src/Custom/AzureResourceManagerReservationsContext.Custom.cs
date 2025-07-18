@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Reservations;
 using Azure.ResourceManager.Reservations.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Reservations;
 
@@ -96,6 +98,10 @@ namespace Azure.ResourceManager.Reservations;
 [ModelReaderWriterBuildable(typeof(SplitContent))]
 [ModelReaderWriterBuildable(typeof(SubContent))]
 [ModelReaderWriterBuildable(typeof(SubscriptionScopeProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerReservationsContext
 {
 }

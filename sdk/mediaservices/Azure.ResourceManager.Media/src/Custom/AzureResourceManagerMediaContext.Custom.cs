@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media;
 
@@ -228,6 +230,10 @@ namespace Azure.ResourceManager.Media;
 [ModelReaderWriterBuildable(typeof(VideoOverlay))]
 [ModelReaderWriterBuildable(typeof(VideoTrack))]
 [ModelReaderWriterBuildable(typeof(VideoTrackDescriptor))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMediaContext
 {
 }

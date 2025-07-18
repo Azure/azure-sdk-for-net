@@ -3,6 +3,8 @@
 using Azure.ResourceManager.WebPubSub;
 using Azure.ResourceManager.WebPubSub.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.WebPubSub;
 
@@ -47,6 +49,10 @@ namespace Azure.ResourceManager.WebPubSub;
 [ModelReaderWriterBuildable(typeof(WebPubSubSku))]
 [ModelReaderWriterBuildable(typeof(WebPubSubSkuCapacity))]
 [ModelReaderWriterBuildable(typeof(WebPubSubTlsSettings))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerWebPubSubContext
 {
 }

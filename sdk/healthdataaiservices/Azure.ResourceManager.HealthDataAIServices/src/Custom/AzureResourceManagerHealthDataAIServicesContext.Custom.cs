@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HealthDataAIServices;
 using Azure.ResourceManager.HealthDataAIServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices;
 
@@ -21,6 +23,10 @@ namespace Azure.ResourceManager.HealthDataAIServices;
 [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkServiceConnectionState))]
 [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
 [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHealthDataAIServicesContext
 {
 }

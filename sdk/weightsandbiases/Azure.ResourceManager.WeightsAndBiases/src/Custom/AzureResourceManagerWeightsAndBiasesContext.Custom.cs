@@ -3,6 +3,8 @@
 using Azure.ResourceManager.WeightsAndBiases;
 using Azure.ResourceManager.WeightsAndBiases.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.WeightsAndBiases;
 
@@ -16,6 +18,10 @@ namespace Azure.ResourceManager.WeightsAndBiases;
 [ModelReaderWriterBuildable(typeof(WeightsAndBiasesPartnerProperties))]
 [ModelReaderWriterBuildable(typeof(WeightsAndBiasesSingleSignOnPropertiesV2))]
 [ModelReaderWriterBuildable(typeof(WeightsAndBiasesUserDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerWeightsAndBiasesContext
 {
 }

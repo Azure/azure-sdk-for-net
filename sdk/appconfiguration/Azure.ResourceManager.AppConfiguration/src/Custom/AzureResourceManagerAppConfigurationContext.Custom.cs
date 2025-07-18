@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration;
 
@@ -38,6 +40,10 @@ namespace Azure.ResourceManager.AppConfiguration;
 [ModelReaderWriterBuildable(typeof(DeletedConfigurationStoreListResult))]
 [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
 [ModelReaderWriterBuildable(typeof(SnapshotKeyValueFilter))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAppConfigurationContext
 {
 }

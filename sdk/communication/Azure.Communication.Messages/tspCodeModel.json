@@ -14645,8 +14645,14 @@
   ],
   "auth": {
     "oAuth2": {
-      "scopes": [
-        "https://communication.azure.com/.default"
+      "flows": [
+        {
+          "scopes": [
+            "https://communication.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+          "tokenUrl": "https://login.microsoftonline.com/common/oauth2/token"
+        }
       ]
     },
     "apiKey": {

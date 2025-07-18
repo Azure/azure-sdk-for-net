@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(Vault))
             {
                 writer.WritePropertyName("vault"u8);
-                JsonSerializer.Serialize(writer, Vault);
+                ((IJsonModel<WritableSubResource>)Vault).Write(writer, options);
             }
             if (Optional.IsDefined(SecretName))
             {
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("secretName"u8))

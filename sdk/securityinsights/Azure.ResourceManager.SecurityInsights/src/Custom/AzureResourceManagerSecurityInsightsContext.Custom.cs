@@ -3,6 +3,8 @@
 using Azure.ResourceManager.SecurityInsights;
 using Azure.ResourceManager.SecurityInsights.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityInsights;
 
@@ -462,6 +464,10 @@ namespace Azure.ResourceManager.SecurityInsights;
 [ModelReaderWriterBuildable(typeof(WorkspaceManagerConfigurationList))]
 [ModelReaderWriterBuildable(typeof(WorkspaceManagerGroupList))]
 [ModelReaderWriterBuildable(typeof(WorkspaceManagerMembersList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSecurityInsightsContext
 {
 }

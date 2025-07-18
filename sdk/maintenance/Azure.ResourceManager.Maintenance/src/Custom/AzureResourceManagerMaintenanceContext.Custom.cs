@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Maintenance;
 
@@ -23,6 +25,10 @@ namespace Azure.ResourceManager.Maintenance;
 [ModelReaderWriterBuildable(typeof(MaintenanceWindowsPatchSettings))]
 [ModelReaderWriterBuildable(typeof(ScheduledEventApproveResult))]
 [ModelReaderWriterBuildable(typeof(VmTagSettings))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMaintenanceContext
 {
 }

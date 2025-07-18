@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Support;
 
@@ -45,6 +47,10 @@ namespace Azure.ResourceManager.Support;
 [ModelReaderWriterBuildable(typeof(TechnicalTicketDetails))]
 [ModelReaderWriterBuildable(typeof(UpdateSupportTicket))]
 [ModelReaderWriterBuildable(typeof(UploadFileContent))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSupportContext
 {
 }

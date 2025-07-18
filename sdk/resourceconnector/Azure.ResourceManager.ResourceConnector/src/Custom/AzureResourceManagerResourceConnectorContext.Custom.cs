@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ResourceConnector;
 using Azure.ResourceManager.ResourceConnector.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ResourceConnector;
 
@@ -24,6 +26,10 @@ namespace Azure.ResourceManager.ResourceConnector;
 [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraphProperties))]
 [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
 [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerResourceConnectorContext
 {
 }

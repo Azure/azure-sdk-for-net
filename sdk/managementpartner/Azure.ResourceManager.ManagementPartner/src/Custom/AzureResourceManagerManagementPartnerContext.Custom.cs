@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ManagementPartner;
 using Azure.ResourceManager.ManagementPartner.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagementPartner;
 
@@ -11,6 +13,10 @@ namespace Azure.ResourceManager.ManagementPartner;
 [ModelReaderWriterBuildable(typeof(OperationDisplay))]
 [ModelReaderWriterBuildable(typeof(OperationList))]
 [ModelReaderWriterBuildable(typeof(OperationResponse))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerManagementPartnerContext
 {
 }

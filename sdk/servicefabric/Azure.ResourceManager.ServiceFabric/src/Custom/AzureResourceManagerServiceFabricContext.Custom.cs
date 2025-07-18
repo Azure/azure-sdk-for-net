@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ServiceFabric;
 using Azure.ResourceManager.ServiceFabric.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceFabric;
 
@@ -69,6 +71,10 @@ namespace Azure.ResourceManager.ServiceFabric;
 [ModelReaderWriterBuildable(typeof(UpgradableVersionsDescription))]
 [ModelReaderWriterBuildable(typeof(VmSize))]
 [ModelReaderWriterBuildable(typeof(VmSizesResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerServiceFabricContext
 {
 }

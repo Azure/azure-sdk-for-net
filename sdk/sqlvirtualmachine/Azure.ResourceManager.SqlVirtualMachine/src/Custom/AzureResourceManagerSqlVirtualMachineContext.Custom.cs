@@ -3,6 +3,8 @@
 using Azure.ResourceManager.SqlVirtualMachine;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine;
 
@@ -38,6 +40,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine;
 [ModelReaderWriterBuildable(typeof(SqlWorkloadTypeUpdateSettings))]
 [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainCredentials))]
 [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainProfile))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSqlVirtualMachineContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.HybridNetwork.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork;
 
@@ -157,6 +159,10 @@ namespace Azure.ResourceManager.HybridNetwork;
 [ModelReaderWriterBuildable(typeof(VhdImageMappingRuleProfile))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkFunctionDefinitionVersion))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkFunctionTemplate))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHybridNetworkContext
 {
 }

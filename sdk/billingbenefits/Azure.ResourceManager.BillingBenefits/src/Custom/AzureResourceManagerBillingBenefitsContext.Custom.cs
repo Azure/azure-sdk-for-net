@@ -3,6 +3,8 @@
 using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BillingBenefits;
 
@@ -40,6 +42,10 @@ namespace Azure.ResourceManager.BillingBenefits;
 [ModelReaderWriterBuildable(typeof(SavingsPlanUpdateValidateContent))]
 [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResponse))]
 [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerBillingBenefitsContext
 {
 }

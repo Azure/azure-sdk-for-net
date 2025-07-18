@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kusto;
 
@@ -100,6 +102,10 @@ namespace Azure.ResourceManager.Kusto;
 [ModelReaderWriterBuildable(typeof(SuspensionDetails))]
 [ModelReaderWriterBuildable(typeof(UnknownDatabase))]
 [ModelReaderWriterBuildable(typeof(UnknownDataConnection))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerKustoContext
 {
 }

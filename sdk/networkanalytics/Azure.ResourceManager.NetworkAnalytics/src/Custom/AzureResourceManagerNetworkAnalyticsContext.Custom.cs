@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NetworkAnalytics;
 using Azure.ResourceManager.NetworkAnalytics.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkAnalytics;
 
@@ -30,6 +32,10 @@ namespace Azure.ResourceManager.NetworkAnalytics;
 [ModelReaderWriterBuildable(typeof(RoleAssignmentCommonProperties))]
 [ModelReaderWriterBuildable(typeof(RoleAssignmentDetail))]
 [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNetworkAnalyticsContext
 {
 }

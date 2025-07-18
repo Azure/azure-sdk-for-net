@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Consumption;
 
@@ -66,6 +68,10 @@ namespace Azure.ResourceManager.Consumption;
 [ModelReaderWriterBuildable(typeof(UnknownReservationRecommendation))]
 [ModelReaderWriterBuildable(typeof(UnknownUsageDetail))]
 [ModelReaderWriterBuildable(typeof(UsageDetailsListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerConsumptionContext
 {
 }

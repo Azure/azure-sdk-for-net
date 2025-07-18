@@ -3,6 +3,8 @@
 using Azure.ResourceManager.PrivateDns;
 using Azure.ResourceManager.PrivateDns.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns;
 
@@ -38,6 +40,10 @@ namespace Azure.ResourceManager.PrivateDns;
 [ModelReaderWriterBuildable(typeof(PrivateDnsTxtRecordInfo))]
 [ModelReaderWriterBuildable(typeof(PrivateZoneListResult))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPrivateDnsContext
 {
 }

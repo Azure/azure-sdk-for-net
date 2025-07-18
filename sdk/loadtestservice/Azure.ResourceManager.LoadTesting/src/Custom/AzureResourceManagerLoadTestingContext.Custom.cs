@@ -3,6 +3,8 @@
 using Azure.ResourceManager.LoadTesting;
 using Azure.ResourceManager.LoadTesting.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.LoadTesting;
 
@@ -22,6 +24,10 @@ namespace Azure.ResourceManager.LoadTesting;
 [ModelReaderWriterBuildable(typeof(LoadTestingResourcePatch))]
 [ModelReaderWriterBuildable(typeof(LoadTestResourcePageList))]
 [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerLoadTestingContext
 {
 }

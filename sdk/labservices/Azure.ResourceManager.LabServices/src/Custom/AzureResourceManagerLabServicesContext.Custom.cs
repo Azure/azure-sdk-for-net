@@ -3,6 +3,8 @@
 using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.LabServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.LabServices;
 
@@ -56,6 +58,10 @@ namespace Azure.ResourceManager.LabServices;
 [ModelReaderWriterBuildable(typeof(PagedSchedules))]
 [ModelReaderWriterBuildable(typeof(PagedUsers))]
 [ModelReaderWriterBuildable(typeof(PagedVirtualMachines))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerLabServicesContext
 {
 }

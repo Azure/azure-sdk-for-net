@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DependencyMap;
 using Azure.ResourceManager.DependencyMap.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DependencyMap;
 
@@ -25,6 +27,10 @@ namespace Azure.ResourceManager.DependencyMap;
 [ModelReaderWriterBuildable(typeof(MapsResourceListResult))]
 [ModelReaderWriterBuildable(typeof(OffAzureDiscoverySourceProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownDependencyMapDiscoverySourceProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDependencyMapContext
 {
 }

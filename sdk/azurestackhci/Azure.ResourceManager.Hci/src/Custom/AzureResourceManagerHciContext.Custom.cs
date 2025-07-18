@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Hci.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci;
 
@@ -146,6 +148,10 @@ namespace Azure.ResourceManager.Hci;
 [ModelReaderWriterBuildable(typeof(UnknownEdgeDevice))]
 [ModelReaderWriterBuildable(typeof(UpdateRunList))]
 [ModelReaderWriterBuildable(typeof(UpdateSummariesList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHciContext
 {
 }

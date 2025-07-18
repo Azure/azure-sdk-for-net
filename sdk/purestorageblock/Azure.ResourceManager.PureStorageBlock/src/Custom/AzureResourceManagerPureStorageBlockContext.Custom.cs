@@ -3,6 +3,8 @@
 using Azure.ResourceManager.PureStorageBlock;
 using Azure.ResourceManager.PureStorageBlock.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PureStorageBlock;
 
@@ -70,6 +72,10 @@ namespace Azure.ResourceManager.PureStorageBlock;
 [ModelReaderWriterBuildable(typeof(StoragePoolListResult))]
 [ModelReaderWriterBuildable(typeof(StoragePoolUpdateProperties))]
 [ModelReaderWriterBuildable(typeof(VolumeLimits))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPureStorageBlockContext
 {
 }

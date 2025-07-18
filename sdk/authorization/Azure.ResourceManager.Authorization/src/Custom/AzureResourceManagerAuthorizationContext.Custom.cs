@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Authorization;
 
@@ -69,6 +71,10 @@ namespace Azure.ResourceManager.Authorization;
 [ModelReaderWriterBuildable(typeof(RoleManagementPrincipal))]
 [ModelReaderWriterBuildable(typeof(RoleManagementUserInfo))]
 [ModelReaderWriterBuildable(typeof(UnknownRoleManagementPolicyRule))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAuthorizationContext
 {
 }

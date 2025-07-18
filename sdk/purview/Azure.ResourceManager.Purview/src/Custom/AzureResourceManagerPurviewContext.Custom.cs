@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Purview;
 
@@ -42,6 +44,10 @@ namespace Azure.ResourceManager.Purview;
 [ModelReaderWriterBuildable(typeof(PurviewUsage))]
 [ModelReaderWriterBuildable(typeof(PurviewUsageName))]
 [ModelReaderWriterBuildable(typeof(UsageList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPurviewContext
 {
 }

@@ -3,12 +3,18 @@
 using Azure.ResourceManager.EdgeZones;
 using Azure.ResourceManager.EdgeZones.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EdgeZones;
 
 [ModelReaderWriterBuildable(typeof(ExtendedZoneData))]
 [ModelReaderWriterBuildable(typeof(ExtendedZoneResource))]
 [ModelReaderWriterBuildable(typeof(ExtendedZoneListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerEdgeZonesContext
 {
 }

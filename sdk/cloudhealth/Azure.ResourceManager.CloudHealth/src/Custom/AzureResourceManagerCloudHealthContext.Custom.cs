@@ -3,6 +3,8 @@
 using Azure.ResourceManager.CloudHealth;
 using Azure.ResourceManager.CloudHealth.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CloudHealth;
 
@@ -52,6 +54,10 @@ namespace Azure.ResourceManager.CloudHealth;
 [ModelReaderWriterBuildable(typeof(SignalDefinitionListResult))]
 [ModelReaderWriterBuildable(typeof(UnknownHealthModelAuthenticationSettingProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownHealthModelSignalDefinitionProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCloudHealthContext
 {
 }

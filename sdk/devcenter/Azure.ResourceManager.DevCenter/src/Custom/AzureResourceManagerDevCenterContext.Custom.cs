@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DevCenter;
 using Azure.ResourceManager.DevCenter.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevCenter;
 
@@ -88,6 +90,10 @@ namespace Azure.ResourceManager.DevCenter;
 [ModelReaderWriterBuildable(typeof(ScheduleListResult))]
 [ModelReaderWriterBuildable(typeof(SkuListResult))]
 [ModelReaderWriterBuildable(typeof(StopOnDisconnectConfiguration))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDevCenterContext
 {
 }

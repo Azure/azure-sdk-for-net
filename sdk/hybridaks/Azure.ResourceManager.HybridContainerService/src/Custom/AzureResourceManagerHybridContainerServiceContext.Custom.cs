@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HybridContainerService;
 using Azure.ResourceManager.HybridContainerService.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridContainerService;
 
@@ -68,6 +70,10 @@ namespace Azure.ResourceManager.HybridContainerService;
 [ModelReaderWriterBuildable(typeof(VirtualMachineIPItem))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworkPropertiesStatusOperationStatus))]
 [ModelReaderWriterBuildable(typeof(VirtualNetworksListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHybridContainerServiceContext
 {
 }

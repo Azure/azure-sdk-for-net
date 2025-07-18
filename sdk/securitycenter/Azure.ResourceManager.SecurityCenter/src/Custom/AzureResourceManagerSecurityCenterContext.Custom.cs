@@ -3,6 +3,8 @@
 using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter;
 
@@ -458,6 +460,10 @@ namespace Azure.ResourceManager.SecurityCenter;
 [ModelReaderWriterBuildable(typeof(VulnerabilityAssessmentRule))]
 [ModelReaderWriterBuildable(typeof(VulnerabilityAssessmentRuleQueryCheck))]
 [ModelReaderWriterBuildable(typeof(WorkspaceSettingList))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerSecurityCenterContext
 {
 }

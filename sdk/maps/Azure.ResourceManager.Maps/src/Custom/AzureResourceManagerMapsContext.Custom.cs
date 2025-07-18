@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Maps;
 
@@ -27,6 +29,10 @@ namespace Azure.ResourceManager.Maps;
 [ModelReaderWriterBuildable(typeof(MapsKeySpecification))]
 [ModelReaderWriterBuildable(typeof(MapsLinkedResource))]
 [ModelReaderWriterBuildable(typeof(MapsSku))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerMapsContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.EdgeOrder;
 using Azure.ResourceManager.EdgeOrder.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EdgeOrder;
 
@@ -63,6 +65,10 @@ namespace Azure.ResourceManager.EdgeOrder;
 [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
 [ModelReaderWriterBuildable(typeof(TransportPreferences))]
 [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerEdgeOrderContext
 {
 }

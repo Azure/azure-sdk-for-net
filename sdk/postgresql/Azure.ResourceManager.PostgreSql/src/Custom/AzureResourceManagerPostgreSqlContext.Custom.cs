@@ -5,6 +5,8 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.PostgreSql.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql;
 
@@ -154,6 +156,10 @@ namespace Azure.ResourceManager.PostgreSql;
 [ModelReaderWriterBuildable(typeof(PostgreSqlStorageProfile))]
 [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleListResult))]
 [ModelReaderWriterBuildable(typeof(UnknownServerPropertiesForCreate))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPostgreSqlContext
 {
 }

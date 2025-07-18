@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataBox;
 
@@ -136,6 +138,10 @@ namespace Azure.ResourceManager.DataBox;
 [ModelReaderWriterBuildable(typeof(UnknownValidationInputResponse))]
 [ModelReaderWriterBuildable(typeof(UnknownValidationRequest))]
 [ModelReaderWriterBuildable(typeof(UpdateJobDetails))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataBoxContext
 {
 }

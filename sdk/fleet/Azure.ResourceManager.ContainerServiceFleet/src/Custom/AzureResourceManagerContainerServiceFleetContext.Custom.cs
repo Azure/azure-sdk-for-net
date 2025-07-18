@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ContainerServiceFleet;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet;
 
@@ -49,6 +51,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet;
 [ModelReaderWriterBuildable(typeof(NodeImageSelection))]
 [ModelReaderWriterBuildable(typeof(NodeImageSelectionStatus))]
 [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerContainerServiceFleetContext
 {
 }

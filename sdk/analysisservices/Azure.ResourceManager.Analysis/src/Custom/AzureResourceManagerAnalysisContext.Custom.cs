@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Analysis.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Analysis;
 
@@ -21,6 +23,10 @@ namespace Azure.ResourceManager.Analysis;
 [ModelReaderWriterBuildable(typeof(ExistingResourceResultSkuEnumeration))]
 [ModelReaderWriterBuildable(typeof(NewResourceResultSkuEnumeration))]
 [ModelReaderWriterBuildable(typeof(ServerAdministrators))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAnalysisContext
 {
 }

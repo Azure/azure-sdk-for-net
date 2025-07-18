@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ArizeAIObservabilityEval;
 using Azure.ResourceManager.ArizeAIObservabilityEval.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval;
 
@@ -16,6 +18,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval;
 [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalSingleSignOnPropertiesV2))]
 [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalUserDetails))]
 [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerArizeAIObservabilityEvalContext
 {
 }

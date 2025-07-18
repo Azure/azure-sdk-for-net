@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ConnectedVMwarevSphere;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere;
 
@@ -64,6 +66,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere;
 [ModelReaderWriterBuildable(typeof(VMwareVmInstancePatch))]
 [ModelReaderWriterBuildable(typeof(VMwareVmTemplateListResult))]
 [ModelReaderWriterBuildable(typeof(VMwareVmWindowsConfiguration))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerConnectedVMwarevSphereContext
 {
 }

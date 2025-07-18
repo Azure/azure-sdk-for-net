@@ -3,6 +3,8 @@
 using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.HDInsight.Containers.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers;
 
@@ -156,6 +158,10 @@ namespace Azure.ResourceManager.HDInsight.Containers;
 [ModelReaderWriterBuildable(typeof(UnknownClusterUpgradeProperties))]
 [ModelReaderWriterBuildable(typeof(UpdatableClusterProfile))]
 [ModelReaderWriterBuildable(typeof(WebConnectivityEndpoint))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerHDInsightContainersContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.ApiManagement.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement;
 
@@ -399,6 +401,10 @@ namespace Azure.ResourceManager.ApiManagement;
 [ModelReaderWriterBuildable(typeof(WikiUpdateContract))]
 [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
 [ModelReaderWriterBuildable(typeof(X509CertificateName))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerApiManagementContext
 {
 }

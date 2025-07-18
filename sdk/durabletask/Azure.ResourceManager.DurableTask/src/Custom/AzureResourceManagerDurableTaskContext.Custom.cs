@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DurableTask;
 using Azure.ResourceManager.DurableTask.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DurableTask;
 
@@ -23,6 +25,10 @@ namespace Azure.ResourceManager.DurableTask;
 [ModelReaderWriterBuildable(typeof(RetentionPolicyListResult))]
 [ModelReaderWriterBuildable(typeof(SchedulerListResult))]
 [ModelReaderWriterBuildable(typeof(TaskHubListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDurableTaskContext
 {
 }

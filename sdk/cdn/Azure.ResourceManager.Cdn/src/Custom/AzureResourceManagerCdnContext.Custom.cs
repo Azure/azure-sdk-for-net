@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Cdn.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn;
 
@@ -242,6 +244,10 @@ namespace Azure.ResourceManager.Cdn;
 [ModelReaderWriterBuildable(typeof(WafPolicySettings))]
 [ModelReaderWriterBuildable(typeof(WafRankingsResponse))]
 [ModelReaderWriterBuildable(typeof(WafRankingsResponseDataItem))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCdnContext
 {
 }

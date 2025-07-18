@@ -3,6 +3,8 @@
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
@@ -93,6 +95,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 [ModelReaderWriterBuildable(typeof(RulestackTagInfo))]
 [ModelReaderWriterBuildable(typeof(SourceAddressInfo))]
 [ModelReaderWriterBuildable(typeof(StorageAccountConfiguration))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerPaloAltoNetworksNgfwContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.AlertsManagement.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AlertsManagement;
 
@@ -46,6 +48,10 @@ namespace Azure.ResourceManager.AlertsManagement;
 [ModelReaderWriterBuildable(typeof(UnknownAction))]
 [ModelReaderWriterBuildable(typeof(UnknownAlertsMetaDataProperties))]
 [ModelReaderWriterBuildable(typeof(UnknownRecurrence))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAlertsManagementContext
 {
 }

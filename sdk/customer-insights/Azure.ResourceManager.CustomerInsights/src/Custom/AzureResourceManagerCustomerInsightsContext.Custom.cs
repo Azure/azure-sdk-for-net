@@ -3,6 +3,8 @@
 using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.CustomerInsights.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CustomerInsights;
 
@@ -90,6 +92,10 @@ namespace Azure.ResourceManager.CustomerInsights;
 [ModelReaderWriterBuildable(typeof(TypePropertiesMapping))]
 [ModelReaderWriterBuildable(typeof(ViewListResult))]
 [ModelReaderWriterBuildable(typeof(WidgetTypeListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCustomerInsightsContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.CognitiveServices.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices;
 
@@ -172,6 +174,10 @@ namespace Azure.ResourceManager.CognitiveServices;
 [ModelReaderWriterBuildable(typeof(UnknownConnectionPropertiesV2))]
 [ModelReaderWriterBuildable(typeof(UsernamePasswordAuthTypeConnectionProperties))]
 [ModelReaderWriterBuildable(typeof(UserOwnedAmlWorkspace))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerCognitiveServicesContext
 {
 }

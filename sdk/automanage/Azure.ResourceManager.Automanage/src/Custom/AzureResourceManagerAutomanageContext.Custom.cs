@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Automanage;
 using Azure.ResourceManager.Automanage.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automanage;
 
@@ -30,6 +32,10 @@ namespace Azure.ResourceManager.Automanage;
 [ModelReaderWriterBuildable(typeof(ConfigurationProfileProperties))]
 [ModelReaderWriterBuildable(typeof(ReportList))]
 [ModelReaderWriterBuildable(typeof(ServicePrincipalListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerAutomanageContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Confluent;
 
@@ -62,6 +64,10 @@ namespace Azure.ResourceManager.Confluent;
 [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterSpecEntity))]
 [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterStatusEntity))]
 [ModelReaderWriterBuildable(typeof(SCMetadataEntity))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerConfluentContext
 {
 }

@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataMigration;
 using Azure.ResourceManager.DataMigration.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataMigration;
 
@@ -321,6 +323,10 @@ namespace Azure.ResourceManager.DataMigration;
 [ModelReaderWriterBuildable(typeof(ValidateSyncMigrationInputSqlServerTaskOutput))]
 [ModelReaderWriterBuildable(typeof(ValidationError))]
 [ModelReaderWriterBuildable(typeof(WaitStatistics))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataMigrationContext
 {
 }

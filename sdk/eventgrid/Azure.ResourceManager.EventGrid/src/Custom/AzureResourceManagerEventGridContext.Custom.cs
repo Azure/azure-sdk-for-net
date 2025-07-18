@@ -3,6 +3,8 @@
 using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.EventGrid.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid;
 
@@ -240,6 +242,10 @@ namespace Azure.ResourceManager.EventGrid;
 [ModelReaderWriterBuildable(typeof(WebHookEventSubscriptionDestination))]
 [ModelReaderWriterBuildable(typeof(WebhookPartnerDestinationInfo))]
 [ModelReaderWriterBuildable(typeof(WebhookUpdatePartnerDestinationInfo))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerEventGridContext
 {
 }

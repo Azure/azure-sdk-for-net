@@ -3,6 +3,8 @@
 using Azure.ResourceManager.ProviderHub;
 using Azure.ResourceManager.ProviderHub.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ProviderHub;
 
@@ -89,6 +91,10 @@ namespace Azure.ResourceManager.ProviderHub;
 [ModelReaderWriterBuildable(typeof(TrafficRegionRolloutConfiguration))]
 [ModelReaderWriterBuildable(typeof(TrafficRegions))]
 [ModelReaderWriterBuildable(typeof(TypedErrorInfo))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerProviderHubContext
 {
 }

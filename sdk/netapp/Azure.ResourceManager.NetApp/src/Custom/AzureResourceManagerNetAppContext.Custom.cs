@@ -3,6 +3,8 @@
 using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetApp;
 
@@ -121,6 +123,10 @@ namespace Azure.ResourceManager.NetApp;
 [ModelReaderWriterBuildable(typeof(VolumePropertiesExportPolicy))]
 [ModelReaderWriterBuildable(typeof(VolumeQuotaRulesList))]
 [ModelReaderWriterBuildable(typeof(VolumeSnapshotProperties))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerNetAppContext
 {
 }

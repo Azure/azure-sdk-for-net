@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(AzureStackEdgeDevice))
             {
                 writer.WritePropertyName("azureStackEdgeDevice"u8);
-                JsonSerializer.Serialize(writer, AzureStackEdgeDevice);
+                ((IJsonModel<WritableSubResource>)AzureStackEdgeDevice).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AzureStackEdgeDevices))
             {
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureStackEdgeDevices)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureStackHciCluster))
             {
                 writer.WritePropertyName("azureStackHciCluster"u8);
-                JsonSerializer.Serialize(writer, AzureStackHciCluster);
+                ((IJsonModel<WritableSubResource>)AzureStackHciCluster).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectedCluster))
             {
                 writer.WritePropertyName("connectedCluster"u8);
-                JsonSerializer.Serialize(writer, ConnectedCluster);
+                ((IJsonModel<WritableSubResource>)ConnectedCluster).Write(writer, options);
             }
             if (Optional.IsDefined(CustomLocation))
             {
                 writer.WritePropertyName("customLocation"u8);
-                JsonSerializer.Serialize(writer, CustomLocation);
+                ((IJsonModel<WritableSubResource>)CustomLocation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    azureStackEdgeDevice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    azureStackEdgeDevice = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("azureStackEdgeDevices"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default));
                     }
                     azureStackEdgeDevices = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    azureStackHciCluster = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    azureStackHciCluster = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("connectedCluster"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    connectedCluster = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    connectedCluster = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("customLocation"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    customLocation = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    customLocation = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

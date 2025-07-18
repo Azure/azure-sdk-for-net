@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DevOpsInfrastructure;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure;
 
@@ -55,6 +57,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure;
 [ModelReaderWriterBuildable(typeof(UnknownDevOpsOrganizationProfile))]
 [ModelReaderWriterBuildable(typeof(UnknownDevOpsPoolAgentProfile))]
 [ModelReaderWriterBuildable(typeof(UnknownResourcePredictionsProfile))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDevOpsInfrastructureContext
 {
 }

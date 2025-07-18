@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Relay;
 using Azure.ResourceManager.Relay.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Relay;
 
@@ -36,6 +38,10 @@ namespace Azure.ResourceManager.Relay;
 [ModelReaderWriterBuildable(typeof(RelayRegenerateAccessKeyContent))]
 [ModelReaderWriterBuildable(typeof(RelaySku))]
 [ModelReaderWriterBuildable(typeof(WcfRelaysListResult))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerRelayContext
 {
 }

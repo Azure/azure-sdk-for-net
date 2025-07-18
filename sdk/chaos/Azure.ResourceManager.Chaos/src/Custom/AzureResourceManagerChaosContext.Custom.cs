@@ -3,6 +3,8 @@
 using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Chaos.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Chaos;
 
@@ -65,6 +67,10 @@ namespace Azure.ResourceManager.Chaos;
 [ModelReaderWriterBuildable(typeof(UnknownChaosExperimentAction))]
 [ModelReaderWriterBuildable(typeof(UnknownChaosTargetFilter))]
 [ModelReaderWriterBuildable(typeof(UnknownChaosTargetSelector))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerChaosContext
 {
 }

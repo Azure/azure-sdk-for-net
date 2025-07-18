@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataShare;
 
@@ -85,6 +87,10 @@ namespace Azure.ResourceManager.DataShare;
 [ModelReaderWriterBuildable(typeof(UnknownSourceShareSynchronizationSetting))]
 [ModelReaderWriterBuildable(typeof(UnknownSynchronizationSetting))]
 [ModelReaderWriterBuildable(typeof(UnknownTrigger))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataShareContext
 {
 }

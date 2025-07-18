@@ -2,6 +2,8 @@
 
 using Azure.ResourceManager.ResourceGraph.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ResourceGraph;
 
@@ -18,6 +20,10 @@ namespace Azure.ResourceManager.ResourceGraph;
 [ModelReaderWriterBuildable(typeof(ResourcesHistoryContent))]
 [ModelReaderWriterBuildable(typeof(ResourcesHistoryRequestOptions))]
 [ModelReaderWriterBuildable(typeof(UnknownFacet))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerResourceGraphContext
 {
 }

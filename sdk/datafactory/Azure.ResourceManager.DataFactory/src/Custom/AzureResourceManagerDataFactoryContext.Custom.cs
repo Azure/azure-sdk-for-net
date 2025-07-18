@@ -3,6 +3,8 @@
 using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory;
 
@@ -802,6 +804,10 @@ namespace Azure.ResourceManager.DataFactory;
 [ModelReaderWriterBuildable(typeof(ZohoLinkedService))]
 [ModelReaderWriterBuildable(typeof(ZohoObjectDataset))]
 [ModelReaderWriterBuildable(typeof(ZohoSource))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerDataFactoryContext
 {
 }

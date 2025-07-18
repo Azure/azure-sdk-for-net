@@ -3,6 +3,8 @@
 using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService;
 
@@ -83,6 +85,10 @@ namespace Azure.ResourceManager.BotService;
 [ModelReaderWriterBuildable(typeof(WebChatChannel))]
 [ModelReaderWriterBuildable(typeof(WebChatChannelProperties))]
 [ModelReaderWriterBuildable(typeof(WebChatSite))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerBotServiceContext
 {
 }
