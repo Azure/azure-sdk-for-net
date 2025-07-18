@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IotDpsResource_Get</description>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-05</description>
+        /// <description>2025-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
