@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added import feature for raw json string.
 - Added support for Custom Text Authoring API Versions
   - 2025-05-15-preview
 
