@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Tests.Common;
+using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -146,15 +149,21 @@ namespace Azure.Generator.Management.Tests.Providers
 
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
         {
-            var resourceClientProvider = GetResourceClientProvider();
-            var mockUpdateMethodProvider = CreateMockUpdateMethodProvider(resourceClientProvider);
+            var (resource, restClient) = GetResourceClientProvider();
+            var mockUpdateMethodProvider = CreateMockUpdateMethodProvider(resource);
 
             // Get the appropriate tag method provider based on method name and async flag
+            // find the clientDiagnosticField
+            var clientDiagnosticField = resource.Fields.SingleOrDefault(f => f.Name.EndsWith("ClientDiagnostics"))!;
+            Assert.IsNotNull(clientDiagnosticField);
+            // find the restClientField
+            var restClientField = resource.Fields.SingleOrDefault(f => f.Name.EndsWith("RestClient"))!;
+            Assert.IsNotNull(restClientField);
             BaseTagMethodProvider tagMethodProvider = methodName switch
             {
-                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resourceClientProvider, mockUpdateMethodProvider, isAsync),
-                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resourceClientProvider, mockUpdateMethodProvider, isAsync),
-                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resourceClientProvider, mockUpdateMethodProvider, isAsync),
+                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resource, mockUpdateMethodProvider, restClient, clientDiagnosticField, restClientField, isAsync),
+                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resource, mockUpdateMethodProvider, restClient, clientDiagnosticField, restClientField, isAsync),
+                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resource, mockUpdateMethodProvider, restClient, clientDiagnosticField, restClientField, isAsync),
                 _ => throw new ArgumentException($"Unknown tag method: {methodName}")
             };
 
@@ -172,10 +181,10 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Update",
                 $"Update a resource",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), resourceClientProvider.ResourceClientCSharpType),
+                new CSharpType(typeof(ArmOperation<>), resourceClientProvider.Type),
                 $"The updated resource operation",
                 [
-                    new ParameterProvider("waitUntil", $"The wait until value", typeof(Azure.WaitUntil)),
+                    new ParameterProvider("waitUntil", $"The wait until value", typeof(WaitUntil)),
                     new ParameterProvider("data", $"The resource data", resourceClientProvider.ResourceData.Type),
                     KnownParameters.CancellationTokenParameter
                 ]);
@@ -187,13 +196,15 @@ namespace Azure.Generator.Management.Tests.Providers
             return new MethodProvider(updateSignature, mockBody, resourceClientProvider);
         }
 
-        private static ResourceClientProvider GetResourceClientProvider()
+        private static (ResourceClientProvider Resource, ClientProvider RestClientProvider) GetResourceClientProvider()
         {
             var (client, models) = InputResourceData.ClientWithResource();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceClientProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
-            Assert.NotNull(resourceClientProvider);
-            return resourceClientProvider!;
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+            var clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(client);
+            Assert.IsNotNull(clientProvider);
+            return (resourceClientProvider!, clientProvider!);
         }
     }
 }
