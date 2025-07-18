@@ -2,6 +2,8 @@
 
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using System.ClientModel.Primitives;
 
 namespace Azure.ResourceManager.Compute;
@@ -507,6 +509,10 @@ namespace Azure.ResourceManager.Compute;
 [ModelReaderWriterBuildable(typeof(WindowsVmGuestPatchAutomaticByPlatformSettings))]
 [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
 [ModelReaderWriterBuildable(typeof(WinRMListener))]
+[ModelReaderWriterBuildable(typeof(SystemData))]
+[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(WritableSubResource))]
+[ModelReaderWriterBuildable(typeof(SubResource))]
 public partial class AzureResourceManagerComputeContext
 {
 }
