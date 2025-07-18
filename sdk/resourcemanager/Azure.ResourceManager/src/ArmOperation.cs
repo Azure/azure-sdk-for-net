@@ -41,7 +41,7 @@ namespace Azure.ResourceManager
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The Arm client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static ArmOperation<T> Rehydrate<T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull, new()
+        public static ArmOperation<T> Rehydrate<T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
         {
 
             Argument.AssertNotNull(client, nameof(client));
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The Arm client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static async Task<ArmOperation<T>> RehydrateAsync<T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull, new()
+        public static async Task<ArmOperation<T>> RehydrateAsync<T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
         {
 
             Argument.AssertNotNull(client, nameof(client));
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager
             return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
         }
 
-        private static bool IsResource<T>() where T : notnull, new()
+        private static bool IsResource<T>() where T : notnull
         {
             var isResource = typeof(T).GetConstructor(
                             BindingFlags.NonPublic | BindingFlags.Instance,
