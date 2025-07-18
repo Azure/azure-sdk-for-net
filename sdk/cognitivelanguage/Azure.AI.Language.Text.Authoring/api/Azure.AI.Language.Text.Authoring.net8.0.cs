@@ -45,7 +45,6 @@ namespace Azure.AI.Language.Text.Authoring
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.SingleLabelClassificationEvalSummary))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.SpanSentimentEvalSummary))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringAssignDeploymentResourcesState))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringAssignedDeploymentResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentMetadata))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringAssignedProjectDeploymentsMetadata))]
@@ -97,7 +96,6 @@ namespace Azure.AI.Language.Text.Authoring
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringTrainingJobResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringTrainingState))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesState))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary))]
     public partial class AzureAILanguageTextAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
@@ -1543,8 +1541,12 @@ namespace Azure.AI.Language.Text.Authoring
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Text.Authoring.TextAuthoringDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject body, string format = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string format = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation Import(Azure.WaitUntil waitUntil, string exportedProject, string format = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.Authoring.TextAuthoringExportedProject body, string format = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string format = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportAsync(Azure.WaitUntil waitUntil, string exportedProject, string format = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation ImportRawJson(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string format = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportRawJsonAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string format = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation SwapDeployments(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation SwapDeployments(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> SwapDeploymentsAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.Authoring.TextAuthoringSwapDeploymentsDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
