@@ -19,6 +19,12 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSetting))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSnapshot))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SettingSelector))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SnapshotSelector))]
     public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDataAppConfigurationContext() { }
@@ -41,19 +47,29 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> ArchiveSnapshot(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, Azure.MatchConditions matchConditions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual Azure.Data.AppConfiguration.CreateSnapshotOperation CreateSnapshot(Azure.WaitUntil wait, string snapshotName, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateSnapshot(Azure.WaitUntil waitUntil, string name, string contentType, Azure.Core.RequestContent content, string syncToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Data.AppConfiguration.CreateSnapshotOperation> CreateSnapshotAsync(Azure.WaitUntil wait, string snapshotName, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateSnapshotAsync(Azure.WaitUntil waitUntil, string name, string contentType, Azure.Core.RequestContent content, string syncToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteConfigurationSetting(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteConfigurationSetting(string key, string label, string syncToken, string ifMatch, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteConfigurationSetting(string key, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteConfigurationSettingAsync(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, string ifMatch, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteConfigurationSettingAsync(string key, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, Azure.RequestContext context) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSetting(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfChanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSetting(Azure.Data.AppConfiguration.ConfigurationSetting setting, System.DateTimeOffset acceptDateTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetConfigurationSetting(string key, string label, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingFields> select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, System.Collections.Generic.IEnumerable<string> tags, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSetting(string key, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> GetConfigurationSettingAsync(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfChanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> GetConfigurationSettingAsync(Azure.Data.AppConfiguration.ConfigurationSetting setting, System.DateTimeOffset acceptDateTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetConfigurationSettingAsync(string key, string label, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingFields> select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, System.Collections.Generic.IEnumerable<string> tags, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettings(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -69,7 +85,9 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetSnapshot(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> select, string syncToken, string ifMatch, string ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> GetSnapshot(string snapshotName, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSnapshotAsync(string name, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> select, string syncToken, string ifMatch, string ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> GetSnapshotAsync(string snapshotName, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SnapshotFields> fields = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSnapshot> GetSnapshots(Azure.Data.AppConfiguration.SnapshotSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSnapshot> GetSnapshotsAsync(Azure.Data.AppConfiguration.SnapshotSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -89,6 +107,8 @@ namespace Azure.Data.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> SetReadOnlyAsync(string key, string label, bool isReadOnly, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public virtual Azure.Response UpdateSnapshotStatus(string name, string contentType, Azure.Core.RequestContent content, string syncToken = null, string ifMatch = null, string ifNoneMatch = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSnapshotStatusAsync(string name, string contentType, Azure.Core.RequestContent content, string syncToken = null, string ifMatch = null, string ifNoneMatch = null, Azure.RequestContext context = null) { throw null; }
         public virtual void UpdateSyncToken(string token) { }
     }
     public static partial class ConfigurationClientExtensions
@@ -110,10 +130,11 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
         public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label = null, string contentType = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name = null, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status = default(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters = null, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition = default(Azure.Data.AppConfiguration.SnapshotComposition?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.TimeSpan? retentionPeriod = default(System.TimeSpan?), long? sizeInBytes = default(long?), long? itemCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
     }
-    public partial class ConfigurationSetting
+    public partial class ConfigurationSetting : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
         public ConfigurationSetting(string key, string value, string label, Azure.ETag etag) { }
@@ -129,6 +150,17 @@ namespace Azure.Data.AppConfiguration
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSetting (Azure.Response result) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Data.AppConfiguration.ConfigurationSetting configurationSetting) { throw null; }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.ConfigurationSetting System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.ConfigurationSetting System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -139,7 +171,7 @@ namespace Azure.Data.AppConfiguration
         public string Label { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
     }
-    public partial class ConfigurationSnapshot
+    public partial class ConfigurationSnapshot : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>
     {
         public ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -153,6 +185,17 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.SnapshotComposition? SnapshotComposition { get { throw null; } set { } }
         public Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSnapshot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Data.AppConfiguration.ConfigurationSnapshot (Azure.Response result) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Data.AppConfiguration.ConfigurationSnapshot configurationSnapshot) { throw null; }
+        protected virtual Azure.Data.AppConfiguration.ConfigurationSnapshot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.ConfigurationSnapshot System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.ConfigurationSnapshot System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfigurationSnapshotStatus : System.IEquatable<Azure.Data.AppConfiguration.ConfigurationSnapshotStatus>
