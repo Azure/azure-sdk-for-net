@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary>
-    /// Holds details about billing type and its meter guids
+    /// Holds details about billing type and its meter guids.
     /// Please note <see cref="EdgeOrderProductMeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
     /// </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, ChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingType = billingType;
             Multiplier = multiplier;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Billing unit applicable for Pav2 billing. </summary>
         public double? Multiplier { get; }
         /// <summary> Charging type. </summary>
-        public EdgeOrderProductChargingType? ChargingType { get; }
+        public ChargingType? ChargingType { get; }
     }
 }

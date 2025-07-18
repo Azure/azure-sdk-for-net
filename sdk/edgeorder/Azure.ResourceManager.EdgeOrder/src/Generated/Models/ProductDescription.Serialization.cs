@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            ProductDescriptionType? descriptionType = default;
+            DescriptionType? descriptionType = default;
             string shortDescription = default;
             string longDescription = default;
             IReadOnlyList<string> keywords = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    descriptionType = new ProductDescriptionType(property.Value.GetString());
+                    descriptionType = new DescriptionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("shortDescription"u8))

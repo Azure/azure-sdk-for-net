@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
-        /// <param name="supportedFilterType"> Type of product filter. </param>
+        /// <param name="type"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
-        public FilterableProperty(SupportedFilterType supportedFilterType, IEnumerable<string> supportedValues)
+        public FilterableProperty(SupportedFilterType type, IEnumerable<string> supportedValues)
         {
             Argument.AssertNotNull(supportedValues, nameof(supportedValues));
 
-            SupportedFilterType = supportedFilterType;
+            Type = type;
             SupportedValues = supportedValues.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
-        /// <param name="supportedFilterType"> Type of product filter. </param>
+        /// <param name="type"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FilterableProperty(SupportedFilterType type, IList<string> supportedValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SupportedFilterType = supportedFilterType;
+            Type = type;
             SupportedValues = supportedValues;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Type of product filter. </summary>
-        public SupportedFilterType SupportedFilterType { get; set; }
+        public SupportedFilterType Type { get; set; }
         /// <summary> Values to be filtered. </summary>
         public IList<string> SupportedValues { get; }
     }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string termId = default;
             BillingType billingType = default;
             double? multiplier = default;
-            EdgeOrderProductChargingType? chargingType = default;
+            ChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
+                    chargingType = new ChargingType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

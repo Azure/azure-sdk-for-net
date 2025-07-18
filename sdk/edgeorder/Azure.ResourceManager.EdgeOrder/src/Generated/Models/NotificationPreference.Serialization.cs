@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WritePropertyName("stageName"u8);
             writer.WriteStringValue(StageName.ToString());
             writer.WritePropertyName("sendNotification"u8);
-            writer.WriteBooleanValue(IsNotificationRequired);
+            writer.WriteBooleanValue(SendNotification);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

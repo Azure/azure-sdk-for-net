@@ -55,13 +55,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="productLineName"> Represents product line name that uniquely identifies product line. </param>
         /// <param name="productName"> Represents product name that uniquely identifies product. </param>
         /// <param name="configurationName"> Represents configuration name that uniquely identifies configuration. </param>
+        /// <param name="configurationIdDisplayName"> Represents Model Display Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HierarchyInformation(string productFamilyName, string productLineName, string productName, string configurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HierarchyInformation(string productFamilyName, string productLineName, string productName, string configurationName, string configurationIdDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductFamilyName = productFamilyName;
             ProductLineName = productLineName;
             ProductName = productName;
             ConfigurationName = configurationName;
+            ConfigurationIdDisplayName = configurationIdDisplayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string ProductName { get; set; }
         /// <summary> Represents configuration name that uniquely identifies configuration. </summary>
         public string ConfigurationName { get; set; }
+        /// <summary> Represents Model Display Name. </summary>
+        public string ConfigurationIdDisplayName { get; set; }
     }
 }

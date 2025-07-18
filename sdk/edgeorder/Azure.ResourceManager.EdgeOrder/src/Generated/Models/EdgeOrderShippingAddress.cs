@@ -46,15 +46,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
-        /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
-        public EdgeOrderShippingAddress(string streetAddress1, string country)
+        /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
+        public EdgeOrderShippingAddress(string country)
         {
-            Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
             Argument.AssertNotNull(country, nameof(country));
 
-            StreetAddress1 = streetAddress1;
             Country = country;
         }
 
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="companyName"> Name of the company. </param>
         /// <param name="addressType"> Type of address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, EdgeOrderAddressType? addressType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, AddressType? addressType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -109,6 +106,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Name of the company. </summary>
         public string CompanyName { get; set; }
         /// <summary> Type of address. </summary>
-        public EdgeOrderAddressType? AddressType { get; set; }
+        public AddressType? AddressType { get; set; }
     }
 }

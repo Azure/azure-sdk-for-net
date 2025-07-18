@@ -56,13 +56,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the order. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="managementResourcePreferences"> Preferences related to the Management resource. </param>
+        /// <param name="termCommitmentPreferences"> Preferences related to the Term commitment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrderItemPreferences(IList<NotificationPreference> notificationPreferences, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, ManagementResourcePreferences managementResourcePreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrderItemPreferences(IList<NotificationPreference> notificationPreferences, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, ManagementResourcePreferences managementResourcePreferences, TermCommitmentPreferences termCommitmentPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NotificationPreferences = notificationPreferences;
             TransportPreferences = transportPreferences;
             EncryptionPreferences = encryptionPreferences;
             ManagementResourcePreferences = managementResourcePreferences;
+            TermCommitmentPreferences = termCommitmentPreferences;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,5 +109,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 ManagementResourcePreferences.PreferredManagementResourceId = value;
             }
         }
+
+        /// <summary> Preferences related to the Term commitment. </summary>
+        public TermCommitmentPreferences TermCommitmentPreferences { get; set; }
     }
 }

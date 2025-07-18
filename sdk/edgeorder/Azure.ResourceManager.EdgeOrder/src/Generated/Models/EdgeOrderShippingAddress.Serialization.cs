@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("streetAddress1"u8);
-            writer.WriteStringValue(StreetAddress1);
+            if (Optional.IsDefined(StreetAddress1))
+            {
+                writer.WritePropertyName("streetAddress1"u8);
+                writer.WriteStringValue(StreetAddress1);
+            }
             if (Optional.IsDefined(StreetAddress2))
             {
                 writer.WritePropertyName("streetAddress2"u8);
@@ -124,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string postalCode = default;
             string zipExtendedCode = default;
             string companyName = default;
-            EdgeOrderAddressType? addressType = default;
+            AddressType? addressType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +183,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    addressType = new EdgeOrderAddressType(property.Value.GetString());
+                    addressType = new AddressType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

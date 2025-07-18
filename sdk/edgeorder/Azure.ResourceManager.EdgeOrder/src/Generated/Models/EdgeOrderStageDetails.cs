@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="displayName"> Display name of the resource stage. </param>
         /// <param name="startOn"> Stage start time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus, EdgeOrderStageName? stageName, string displayName, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderStageDetails(StageStatus? stageStatus, StageName? stageName, string displayName, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StageStatus = stageStatus;
             StageName = stageName;
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Stage status. </summary>
-        public EdgeOrderStageStatus? StageStatus { get; }
+        public StageStatus? StageStatus { get; }
         /// <summary> Stage name. </summary>
-        public EdgeOrderStageName? StageName { get; }
+        public StageName? StageName { get; }
         /// <summary> Display name of the resource stage. </summary>
         public string DisplayName { get; }
         /// <summary> Stage start time. </summary>

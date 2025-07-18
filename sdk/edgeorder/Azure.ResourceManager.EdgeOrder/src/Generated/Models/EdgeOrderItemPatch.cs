@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -48,32 +49,40 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemPatch"/>. </summary>
         public EdgeOrderItemPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             NotificationEmailList = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemPatch"/>. </summary>
-        /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
         /// <param name="forwardAddress"> Updates forward shipping address and contact details. </param>
         /// <param name="preferences"> Customer preference. </param>
         /// <param name="notificationEmailList"> Additional notification email list. </param>
+        /// <param name="orderItemDetails"> Represents order item details. </param>
+        /// <param name="tags"> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemPatch(IDictionary<string, string> tags, EdgeOrderItemAddressProperties forwardAddress, OrderItemPreferences preferences, IList<string> notificationEmailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderItemPatch(EdgeOrderItemAddressProperties forwardAddress, OrderItemPreferences preferences, IList<string> notificationEmailList, OrderItemDetailsUpdateParameter orderItemDetails, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             ForwardAddress = forwardAddress;
             Preferences = preferences;
             NotificationEmailList = notificationEmailList;
+            OrderItemDetails = orderItemDetails;
+            Tags = tags;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Updates forward shipping address and contact details. </summary>
         public EdgeOrderItemAddressProperties ForwardAddress { get; set; }
         /// <summary> Customer preference. </summary>
         public OrderItemPreferences Preferences { get; set; }
         /// <summary> Additional notification email list. </summary>
         public IList<string> NotificationEmailList { get; }
+        /// <summary> Represents order item details. </summary>
+        public OrderItemDetailsUpdateParameter OrderItemDetails { get; set; }
+        /// <summary> The list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> Msi identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

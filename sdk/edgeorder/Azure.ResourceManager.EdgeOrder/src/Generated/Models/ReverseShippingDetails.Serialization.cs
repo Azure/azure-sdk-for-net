@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(TrackingUri))
             {
                 writer.WritePropertyName("trackingUrl"u8);
-                writer.WriteStringValue(TrackingUri.AbsoluteUri);
+                writer.WriteStringValue(TrackingUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string carrierName = default;
             string carrierDisplayName = default;
             string trackingId = default;
-            Uri trackingUrl = default;
+            string trackingUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,11 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("trackingUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    trackingUrl = new Uri(property.Value.GetString());
+                    trackingUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

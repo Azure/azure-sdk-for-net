@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            ProductAvailabilityStage? availabilityStage = default;
-            ProductDisabledReason? disabledReason = default;
+            AvailabilityStage? availabilityStage = default;
+            DisabledReason? disabledReason = default;
             string disabledReasonMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    availabilityStage = new ProductAvailabilityStage(property.Value.GetString());
+                    availabilityStage = new AvailabilityStage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("disabledReason"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    disabledReason = new ProductDisabledReason(property.Value.GetString());
+                    disabledReason = new DisabledReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("disabledReasonMessage"u8))

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType, Uri imageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType, string imageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageType = imageType;
             ImageUri = imageUri;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Type of the image. </summary>
         public EdgeOrderProductImageType? ImageType { get; }
         /// <summary> Url of the image. </summary>
-        public Uri ImageUri { get; }
+        public string ImageUri { get; }
     }
 }

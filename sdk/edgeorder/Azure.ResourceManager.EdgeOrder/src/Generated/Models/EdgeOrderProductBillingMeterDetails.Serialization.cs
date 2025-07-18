@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency);
             }
+            if (options.Format != "W" && Optional.IsDefined(TermTypeDetails))
+            {
+                writer.WritePropertyName("termTypeDetails"u8);
+                writer.WriteObjectValue(TermTypeDetails, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -93,8 +98,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             string name = default;
             EdgeOrderProductMeterDetails meterDetails = default;
-            EdgeOrderProductMeteringType? meteringType = default;
+            MeteringType? meteringType = default;
             string frequency = default;
+            TermTypeDetails termTypeDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,12 +125,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    meteringType = new EdgeOrderProductMeteringType(property.Value.GetString());
+                    meteringType = new MeteringType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("frequency"u8))
                 {
                     frequency = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("termTypeDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termTypeDetails = TermTypeDetails.DeserializeTermTypeDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +148,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderProductBillingMeterDetails(name, meterDetails, meteringType, frequency, serializedAdditionalRawData);
+            return new EdgeOrderProductBillingMeterDetails(
+                name,
+                meterDetails,
+                meteringType,
+                frequency,
+                termTypeDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductBillingMeterDetails>.Write(ModelReaderWriterOptions options)

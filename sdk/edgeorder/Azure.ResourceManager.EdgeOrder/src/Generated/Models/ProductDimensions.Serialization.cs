@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             double? length = default;
             double? height = default;
             double? width = default;
-            ProductLengthHeightWidthUnit? lengthHeightUnit = default;
+            LengthHeightUnit? lengthHeightUnit = default;
             double? weight = default;
             double? depth = default;
-            ProductWeightMeasurementUnit? weightUnit = default;
+            WeightMeasurementUnit? weightUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    lengthHeightUnit = new ProductLengthHeightWidthUnit(property.Value.GetString());
+                    lengthHeightUnit = new LengthHeightUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("weight"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    weightUnit = new ProductWeightMeasurementUnit(property.Value.GetString());
+                    weightUnit = new WeightMeasurementUnit(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

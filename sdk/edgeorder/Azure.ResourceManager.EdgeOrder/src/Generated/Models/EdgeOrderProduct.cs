@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> List of Products. </summary>
-    public partial class EdgeOrderProduct
+    /// <summary> Basic information for any product system. </summary>
+    internal partial class EdgeOrderProduct
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,14 +43,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
         internal EdgeOrderProduct()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
-            Configurations = new ChangeTrackingList<ProductConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProduct"/>. </summary>
@@ -60,10 +58,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
-        /// <param name="configurations"> List of configurations for the product. </param>
+        /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductConfiguration> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProduct(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -71,8 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             CostInformation = costInformation;
             AvailabilityInformation = availabilityInformation;
             HierarchyInformation = hierarchyInformation;
-            FilterableProperties = filterableProperties;
-            Configurations = configurations;
+            FulfilledBy = fulfilledBy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,9 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public ProductAvailabilityInformation AvailabilityInformation { get; }
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
-        public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
-        /// <summary> List of configurations for the product. </summary>
-        public IReadOnlyList<ProductConfiguration> Configurations { get; }
+        /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
+        public FulfillmentType? FulfilledBy { get; }
     }
 }
