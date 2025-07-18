@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "templateSpecName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "location": "[resourceGroup().location]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/templateSpecs",
+        "apiVersion": "2022-02-01",
+        "name": "[parameters('templateSpecName')]",
+        "location": "[variables('location')]",
+        "properties": {
+          "displayName": "[parameters('templateSpecName')]",
+          "description": "Template Spec for RG scoped Deployment Stack Test"
+        }
+      }
+    ]
+}
