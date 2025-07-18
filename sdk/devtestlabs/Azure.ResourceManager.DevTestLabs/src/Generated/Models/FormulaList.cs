@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="FormulaList"/>. </summary>
         /// <param name="value"> The Formula items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FormulaList(IEnumerable<FormulaData> value)
+        internal FormulaList(IEnumerable<DevTestLabFormulaData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="value"> The Formula items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FormulaList(IReadOnlyList<FormulaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FormulaList(IReadOnlyList<DevTestLabFormulaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The Formula items on this page. </summary>
-        public IReadOnlyList<FormulaData> Value { get; }
+        public IReadOnlyList<DevTestLabFormulaData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

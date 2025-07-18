@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IReadOnlyList<ServiceFabricData> value = default;
+            IReadOnlyList<DevTestLabServiceFabricData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ServiceFabricData> array = new List<ServiceFabricData>();
+                    List<DevTestLabServiceFabricData> array = new List<DevTestLabServiceFabricData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricData.DeserializeServiceFabricData(item, options));
+                        array.Add(DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(item, options));
                     }
                     value = array;
                     continue;

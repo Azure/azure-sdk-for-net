@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="ServiceFabricList"/>. </summary>
         /// <param name="value"> The ServiceFabric items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServiceFabricList(IEnumerable<ServiceFabricData> value)
+        internal ServiceFabricList(IEnumerable<DevTestLabServiceFabricData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="value"> The ServiceFabric items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricList(IReadOnlyList<ServiceFabricData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricList(IReadOnlyList<DevTestLabServiceFabricData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The ServiceFabric items on this page. </summary>
-        public IReadOnlyList<ServiceFabricData> Value { get; }
+        public IReadOnlyList<DevTestLabServiceFabricData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

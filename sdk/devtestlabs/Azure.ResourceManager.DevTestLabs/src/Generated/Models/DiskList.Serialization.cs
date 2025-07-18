@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IReadOnlyList<DiskData> value = default;
+            IReadOnlyList<DevTestLabDiskData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DiskData> array = new List<DiskData>();
+                    List<DevTestLabDiskData> array = new List<DevTestLabDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskData.DeserializeDiskData(item, options));
+                        array.Add(DevTestLabDiskData.DeserializeDevTestLabDiskData(item, options));
                     }
                     value = array;
                     continue;

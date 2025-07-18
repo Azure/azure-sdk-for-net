@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IReadOnlyList<VirtualNetworkData> value = default;
+            IReadOnlyList<DevTestLabVirtualNetworkData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<VirtualNetworkData> array = new List<VirtualNetworkData>();
+                    List<DevTestLabVirtualNetworkData> array = new List<DevTestLabVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item, options));
+                        array.Add(DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(item, options));
                     }
                     value = array;
                     continue;

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IReadOnlyList<ScheduleData> value = default;
+            IReadOnlyList<DevTestLabScheduleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ScheduleData> array = new List<ScheduleData>();
+                    List<DevTestLabScheduleData> array = new List<DevTestLabScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduleData.DeserializeScheduleData(item, options));
+                        array.Add(DevTestLabScheduleData.DeserializeDevTestLabScheduleData(item, options));
                     }
                     value = array;
                     continue;

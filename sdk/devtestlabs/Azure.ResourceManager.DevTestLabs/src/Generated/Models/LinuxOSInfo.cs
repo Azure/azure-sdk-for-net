@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="LinuxOSInfo"/>. </summary>
         /// <param name="linuxOSState"> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxOSInfo(LinuxOSState? linuxOSState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LinuxOSInfo(DevTestLabLinuxOSState? linuxOSState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinuxOSState = linuxOSState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
-        public LinuxOSState? LinuxOSState { get; set; }
+        public DevTestLabLinuxOSState? LinuxOSState { get; set; }
     }
 }

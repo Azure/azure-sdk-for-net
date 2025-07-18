@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(DiskUri))
             {
                 writer.WritePropertyName("diskUri"u8);
-                writer.WriteStringValue(DiskUri);
+                writer.WriteStringValue(DiskUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ManagedDiskId))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             string name = default;
-            string diskUri = default;
+            Uri diskUri = default;
             string managedDiskId = default;
             int? diskSizeGiB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,7 +106,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (property.NameEquals("diskUri"u8))
                 {
-                    diskUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managedDiskId"u8))

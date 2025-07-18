@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            IReadOnlyList<NotificationChannelData> value = default;
+            IReadOnlyList<DevTestLabNotificationChannelData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<NotificationChannelData> array = new List<NotificationChannelData>();
+                    List<DevTestLabNotificationChannelData> array = new List<DevTestLabNotificationChannelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationChannelData.DeserializeNotificationChannelData(item, options));
+                        array.Add(DevTestLabNotificationChannelData.DeserializeDevTestLabNotificationChannelData(item, options));
                     }
                     value = array;
                     continue;

@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIPAddressConfiguration"/>. </summary>
         public SubnetSharedPublicIPAddressConfiguration()
         {
-            AllowedPorts = new ChangeTrackingList<Port>();
+            AllowedPorts = new ChangeTrackingList<DevTestLabPort>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIPAddressConfiguration"/>. </summary>
         /// <param name="allowedPorts"> Backend ports that virtual machines on this subnet are allowed to expose. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetSharedPublicIPAddressConfiguration(IList<Port> allowedPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedPorts = allowedPorts;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
-        public IList<Port> AllowedPorts { get; }
+        public IList<DevTestLabPort> AllowedPorts { get; }
     }
 }

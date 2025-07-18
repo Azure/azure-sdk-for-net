@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         /// <param name="value"> The Disk items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiskList(IEnumerable<DiskData> value)
+        internal DiskList(IEnumerable<DevTestLabDiskData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="value"> The Disk items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskList(IReadOnlyList<DiskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskList(IReadOnlyList<DevTestLabDiskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The Disk items on this page. </summary>
-        public IReadOnlyList<DiskData> Value { get; }
+        public IReadOnlyList<DevTestLabDiskData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

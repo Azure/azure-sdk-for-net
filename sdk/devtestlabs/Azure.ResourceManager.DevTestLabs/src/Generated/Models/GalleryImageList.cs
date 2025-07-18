@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="GalleryImageList"/>. </summary>
         /// <param name="value"> The GalleryImage items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GalleryImageList(IEnumerable<GalleryImage> value)
+        internal GalleryImageList(IEnumerable<DevTestLabGalleryImage> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="value"> The GalleryImage items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageList(IReadOnlyList<GalleryImage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryImageList(IReadOnlyList<DevTestLabGalleryImage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The GalleryImage items on this page. </summary>
-        public IReadOnlyList<GalleryImage> Value { get; }
+        public IReadOnlyList<DevTestLabGalleryImage> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            LinuxOSState? linuxOSState = default;
+            DevTestLabLinuxOSState? linuxOSState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    linuxOSState = new LinuxOSState(property.Value.GetString());
+                    linuxOSState = new DevTestLabLinuxOSState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="LabList"/>. </summary>
         /// <param name="value"> The Lab items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LabList(IEnumerable<LabData> value)
+        internal LabList(IEnumerable<DevTestLabData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="value"> The Lab items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LabList(IReadOnlyList<LabData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LabList(IReadOnlyList<DevTestLabData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> The Lab items on this page. </summary>
-        public IReadOnlyList<LabData> Value { get; }
+        public IReadOnlyList<DevTestLabData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
