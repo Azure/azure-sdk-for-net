@@ -110,8 +110,10 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
         public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label = null, string contentType = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters, string name = null, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status = default(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus?), Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition = default(Azure.Data.AppConfiguration.SnapshotComposition?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.TimeSpan? retentionPeriod = default(System.TimeSpan?), long? sizeInBytes = default(long?), long? itemCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
+        public static Azure.Data.AppConfiguration.SettingLabel SettingLabel(string name) { throw null; }
     }
     public partial class ConfigurationSetting
     {

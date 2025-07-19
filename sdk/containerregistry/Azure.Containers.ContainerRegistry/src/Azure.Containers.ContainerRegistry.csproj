@@ -8,6 +8,7 @@
     <PackageTags>Azure Container Registry;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
