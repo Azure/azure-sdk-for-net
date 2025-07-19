@@ -1,5 +1,12 @@
 # Release History
 
+## 1.0.1 (2025-07-18)
+
+### Features Added
+- Tracing for Agents. More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#tracing).
+- Added `include` parameter to `CreateRunStreaming` and `CreateRunStreamingAsync`.
+- Added `tool_resources` parameter to `CreateRun` and `CreateRunAsync`
+
 ## 1.0.0 (2025-05-15)
 
 ### Features Added
