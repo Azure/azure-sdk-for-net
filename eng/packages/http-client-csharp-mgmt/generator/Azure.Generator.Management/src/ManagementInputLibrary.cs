@@ -191,14 +191,14 @@ namespace Azure.Generator.Management
                     parentResource = parentResourceData.ToObjectFromJson<string>();
                 }
 
-                var methodToClientMap = new Dictionary<ResourceMethod, InputClient>();
+                var methodToClientMap = new Dictionary<string, InputClient>();
                 InputClient? primaryClient = null;
                 foreach (var method in methods)
                 {
                     var inputClient = GetClientByMethod(GetMethodByCrossLanguageDefinitionId(method.Id)!);
                     if (inputClient != null)
                     {
-                        methodToClientMap[method] = inputClient;
+                        methodToClientMap[method.Id] = inputClient;
                         if (method.Kind == ResourceOperationKind.Get)
                         {
                             var inputMethod = GetMethodByCrossLanguageDefinitionId(method.Id);

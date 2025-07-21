@@ -13,6 +13,6 @@ namespace Azure.Generator.Management.Models
         IReadOnlyList<ResourceMethod> Methods,
         string? SingletonResourceName,
         string? ParentResourceId,
-        IReadOnlyDictionary<ResourceMethod, InputClient> MethodToClientMap,
-        InputClient primaryClient);
+        IReadOnlyDictionary<string, InputClient> MethodToClientMap,
+        InputClient PrimaryClient);
 }

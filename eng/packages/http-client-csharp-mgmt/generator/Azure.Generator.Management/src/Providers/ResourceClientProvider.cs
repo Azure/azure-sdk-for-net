@@ -325,47 +325,16 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceTypeValue => _resourceMetadata.ResourceType;
 
-        // Helper methods to get the appropriate rest client for a resource method
-        internal ClientProvider GetRestClientProviderForMethod(ResourceMethod resourceMethod)
-        {
-            if (_resourceMetadata.MethodToClientMap.TryGetValue(resourceMethod, out var inputClient))
-            {
-                return _clientInfos[inputClient].Provider;
-            }
-
-            throw new InvalidOperationException($"No client mapping found for resource method {resourceMethod.Id}");
-        }
-
-        internal FieldProvider GetRestClientFieldForMethod(ResourceMethod resourceMethod)
-        {
-            if (_resourceMetadata.MethodToClientMap.TryGetValue(resourceMethod, out var inputClient))
-            {
-                return _clientInfos[inputClient].ClientField;
-            }
-
-            throw new InvalidOperationException($"No client field mapping found for resource method {resourceMethod.Id}");
-        }
-
-        internal FieldProvider GetClientDiagnosticsFieldForMethod(ResourceMethod resourceMethod)
-        {
-            if (_resourceMetadata.MethodToClientMap.TryGetValue(resourceMethod, out var inputClient))
-            {
-                return _clientInfos[inputClient].DiagnosticsField;
-            }
-
-            throw new InvalidOperationException($"No client diagnostics field mapping found for resource method {resourceMethod.Id}");
-        }
-
         // Helper method to get client provider and field for a service method
-        internal (ClientProvider Provider, FieldProvider Field, FieldProvider DiagnosticsField) GetRestClientForServiceMethod(InputServiceMethod serviceMethod)
+        private (ClientProvider Provider, FieldProvider Field, FieldProvider DiagnosticsField) GetRestClientForServiceMethod(InputServiceMethod serviceMethod)
         {
-            var resourceMethod = _resourceMetadata.Methods.FirstOrDefault(m => ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id) == serviceMethod);
-            if (resourceMethod is null)
+            if (!_resourceMetadata.MethodToClientMap.TryGetValue(serviceMethod.CrossLanguageDefinitionId, out var inputClient))
             {
-                throw new InvalidOperationException($"No resource method found for service method {serviceMethod.Name}");
+                throw new InvalidOperationException($"No client mapping found for resource method {serviceMethod.Name}");
             }
 
-            return (GetRestClientProviderForMethod(resourceMethod), GetRestClientFieldForMethod(resourceMethod), GetClientDiagnosticsFieldForMethod(resourceMethod));
+            var clientInfo = _clientInfos[inputClient];
+            return (clientInfo.Provider, clientInfo.ClientField, clientInfo.DiagnosticsField);
         }
 
         protected override CSharpType? GetBaseType() => typeof(ArmResource);
