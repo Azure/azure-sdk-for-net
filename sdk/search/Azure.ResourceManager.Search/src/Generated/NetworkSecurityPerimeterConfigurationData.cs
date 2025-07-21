@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// A class representing the NetworkSecurityPerimeterConfiguration data model.
-    /// Network security perimeter configuration for a server.
+    /// Network security perimeter (NSP) configuration resource
     /// </summary>
     public partial class NetworkSecurityPerimeterConfigurationData : ResourceData
     {
@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Search
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
         public NetworkSecurityPerimeterConfigurationData()
         {
-            ProvisioningIssues = new ChangeTrackingList<NspProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
@@ -62,36 +61,16 @@ namespace Azure.ResourceManager.Search
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
-        /// <param name="networkSecurityPerimeter"> The perimeter for a network security perimeter configuration. </param>
-        /// <param name="resourceAssociation"> The resource association for the network security perimeter. </param>
-        /// <param name="profile"> The profile for a network security perimeter configuration. </param>
-        /// <param name="provisioningIssues"></param>
+        /// <param name="properties"> Network security configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, NspConfigPerimeter networkSecurityPerimeter, NspConfigAssociation resourceAssociation, NspConfigProfile profile, IList<NspProvisioningIssue> provisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            NetworkSecurityPerimeter = networkSecurityPerimeter;
-            ResourceAssociation = resourceAssociation;
-            Profile = profile;
-            ProvisioningIssues = provisioningIssues;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
-        /// <summary> The perimeter for a network security perimeter configuration. </summary>
-        [WirePath("properties.networkSecurityPerimeter")]
-        public NspConfigPerimeter NetworkSecurityPerimeter { get; set; }
-        /// <summary> The resource association for the network security perimeter. </summary>
-        [WirePath("properties.resourceAssociation")]
-        public NspConfigAssociation ResourceAssociation { get; set; }
-        /// <summary> The profile for a network security perimeter configuration. </summary>
-        [WirePath("properties.profile")]
-        public NspConfigProfile Profile { get; set; }
-        /// <summary> Gets the provisioning issues. </summary>
-        [WirePath("properties.provisioningIssues")]
-        public IList<NspProvisioningIssue> ProvisioningIssues { get; }
+        /// <summary> Network security configuration properties. </summary>
+        [WirePath("properties")]
+        public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

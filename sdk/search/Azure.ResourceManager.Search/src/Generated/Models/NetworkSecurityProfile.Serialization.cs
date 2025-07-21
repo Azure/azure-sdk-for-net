@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NspConfigProfile : IUtf8JsonSerializable, IJsonModel<NspConfigProfile>
+    public partial class NetworkSecurityProfile : IUtf8JsonSerializable, IJsonModel<NetworkSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspConfigProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspConfigProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityProfile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(AccessRulesVersion))
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
-                writer.WriteStringValue(AccessRulesVersion);
+                writer.WriteNumberValue(AccessRulesVersion.Value);
             }
             if (Optional.IsCollectionDefined(AccessRules))
             {
@@ -53,6 +53,21 @@ namespace Azure.ResourceManager.Search.Models
                 foreach (var item in AccessRules)
                 {
                     writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiagnosticSettingsVersion))
+            {
+                writer.WritePropertyName("diagnosticSettingsVersion"u8);
+                writer.WriteNumberValue(DiagnosticSettingsVersion.Value);
+            }
+            if (Optional.IsCollectionDefined(EnabledLogCategories))
+            {
+                writer.WritePropertyName("enabledLogCategories"u8);
+                writer.WriteStartArray();
+                foreach (var item in EnabledLogCategories)
+                {
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -73,19 +88,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        NspConfigProfile IJsonModel<NspConfigProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityProfile IJsonModel<NetworkSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspConfigProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspConfigProfile(document.RootElement, options);
+            return DeserializeNetworkSecurityProfile(document.RootElement, options);
         }
 
-        internal static NspConfigProfile DeserializeNspConfigProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityProfile DeserializeNetworkSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,8 +109,10 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             string name = default;
-            string accessRulesVersion = default;
-            IList<NspConfigAccessRule> accessRules = default;
+            int? accessRulesVersion = default;
+            IList<AccessRule> accessRules = default;
+            int? diagnosticSettingsVersion = default;
+            IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +124,11 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (property.NameEquals("accessRulesVersion"u8))
                 {
-                    accessRulesVersion = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessRulesVersion = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("accessRules"u8))
@@ -116,12 +137,35 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<NspConfigAccessRule> array = new List<NspConfigAccessRule>();
+                    List<AccessRule> array = new List<AccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NspConfigAccessRule.DeserializeNspConfigAccessRule(item, options));
+                        array.Add(AccessRule.DeserializeAccessRule(item, options));
                     }
                     accessRules = array;
+                    continue;
+                }
+                if (property.NameEquals("diagnosticSettingsVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diagnosticSettingsVersion = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("enabledLogCategories"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    enabledLogCategories = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +174,13 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspConfigProfile(name, accessRulesVersion, accessRules ?? new ChangeTrackingList<NspConfigAccessRule>(), serializedAdditionalRawData);
+            return new NetworkSecurityProfile(
+                name,
+                accessRulesVersion,
+                accessRules ?? new ChangeTrackingList<AccessRule>(),
+                diagnosticSettingsVersion,
+                enabledLogCategories ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -178,15 +228,7 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(AccessRulesVersion))
                 {
                     builder.Append("  accessRulesVersion: ");
-                    if (AccessRulesVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AccessRulesVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AccessRulesVersion}'");
-                    }
+                    builder.AppendLine($"{AccessRulesVersion.Value}");
                 }
             }
 
@@ -213,13 +255,64 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiagnosticSettingsVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diagnosticSettingsVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DiagnosticSettingsVersion))
+                {
+                    builder.Append("  diagnosticSettingsVersion: ");
+                    builder.AppendLine($"{DiagnosticSettingsVersion.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledLogCategories), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabledLogCategories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EnabledLogCategories))
+                {
+                    if (EnabledLogCategories.Any())
+                    {
+                        builder.Append("  enabledLogCategories: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EnabledLogCategories)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NspConfigProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -228,26 +321,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NspConfigProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspConfigProfile IPersistableModel<NspConfigProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityProfile IPersistableModel<NetworkSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNspConfigProfile(document.RootElement, options);
+                        return DeserializeNetworkSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspConfigProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspConfigProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

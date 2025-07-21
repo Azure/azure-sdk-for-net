@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -39,39 +38,11 @@ namespace Azure.ResourceManager.Search
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(NetworkSecurityPerimeter))
-            {
-                writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
-            }
-            if (Optional.IsDefined(ResourceAssociation))
-            {
-                writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation, options);
-            }
-            if (Optional.IsDefined(Profile))
-            {
-                writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile, options);
-            }
-            if (Optional.IsCollectionDefined(ProvisioningIssues))
-            {
-                writer.WritePropertyName("provisioningIssues"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProvisioningIssues)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
         NetworkSecurityPerimeterConfigurationData IJsonModel<NetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -94,19 +65,24 @@ namespace Azure.ResourceManager.Search
             {
                 return null;
             }
+            NetworkSecurityPerimeterConfigurationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string provisioningState = default;
-            NspConfigPerimeter networkSecurityPerimeter = default;
-            NspConfigAssociation resourceAssociation = default;
-            NspConfigProfile profile = default;
-            IList<NspProvisioningIssue> provisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NetworkSecurityPerimeterConfigurationProperties.DeserializeNetworkSecurityPerimeterConfigurationProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -131,64 +107,6 @@ namespace Azure.ResourceManager.Search
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkSecurityPerimeter"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkSecurityPerimeter = NspConfigPerimeter.DeserializeNspConfigPerimeter(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceAssociation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceAssociation = NspConfigAssociation.DeserializeNspConfigAssociation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("profile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            profile = NspConfigProfile.DeserializeNspConfigProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningIssues"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NspProvisioningIssue> array = new List<NspProvisioningIssue>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NspProvisioningIssue.DeserializeNspProvisioningIssue(item, options));
-                            }
-                            provisioningIssues = array;
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -200,11 +118,7 @@ namespace Azure.ResourceManager.Search
                 name,
                 type,
                 systemData,
-                provisioningState,
-                networkSecurityPerimeter,
-                resourceAssociation,
-                profile,
-                provisioningIssues ?? new ChangeTrackingList<NspProvisioningIssue>(),
+                properties,
                 serializedAdditionalRawData);
         }
 
@@ -242,6 +156,21 @@ namespace Azure.ResourceManager.Search
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("  properties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -272,100 +201,6 @@ namespace Azure.ResourceManager.Search
                 }
             }
 
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningState}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityPerimeter), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    networkSecurityPerimeter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkSecurityPerimeter))
-                {
-                    builder.Append("    networkSecurityPerimeter: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NetworkSecurityPerimeter, options, 4, false, "    networkSecurityPerimeter: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceAssociation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceAssociation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceAssociation))
-                {
-                    builder.Append("    resourceAssociation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ResourceAssociation, options, 4, false, "    resourceAssociation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Profile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    profile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Profile))
-                {
-                    builder.Append("    profile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Profile, options, 4, false, "    profile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningIssues), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningIssues: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ProvisioningIssues))
-                {
-                    if (ProvisioningIssues.Any())
-                    {
-                        builder.Append("    provisioningIssues: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ProvisioningIssues)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    provisioningIssues: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }

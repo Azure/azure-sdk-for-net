@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NspConfigPerimeter : IUtf8JsonSerializable, IJsonModel<NspConfigPerimeter>
+    public partial class NetworkSecurityPerimeter : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigPerimeter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspConfigPerimeter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeter)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(PerimeterGuid))
             {
                 writer.WritePropertyName("perimeterGuid"u8);
-                writer.WriteStringValue(PerimeterGuid);
+                writer.WriteStringValue(PerimeterGuid.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        NspConfigPerimeter IJsonModel<NspConfigPerimeter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeter IJsonModel<NetworkSecurityPerimeter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspConfigPerimeter(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeter(document.RootElement, options);
         }
 
-        internal static NspConfigPerimeter DeserializeNspConfigPerimeter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeter DeserializeNetworkSecurityPerimeter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string id = default;
-            string perimeterGuid = default;
+            ResourceIdentifier id = default;
+            Guid? perimeterGuid = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,12 +96,20 @@ namespace Azure.ResourceManager.Search.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("perimeterGuid"u8))
                 {
-                    perimeterGuid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perimeterGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -119,7 +127,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspConfigPerimeter(id, perimeterGuid, location, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -144,15 +152,7 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
@@ -167,15 +167,7 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(PerimeterGuid))
                 {
                     builder.Append("  perimeterGuid: ");
-                    if (PerimeterGuid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PerimeterGuid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PerimeterGuid}'");
-                    }
+                    builder.AppendLine($"'{PerimeterGuid.Value.ToString()}'");
                 }
             }
 
@@ -198,9 +190,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NspConfigPerimeter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -209,26 +201,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspConfigPerimeter IPersistableModel<NspConfigPerimeter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeter IPersistableModel<NetworkSecurityPerimeter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNspConfigPerimeter(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspConfigPerimeter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

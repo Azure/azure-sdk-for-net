@@ -12,14 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NspConfigAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<NspConfigAccessRuleProperties>
+    public partial class AccessRuleProperties : IUtf8JsonSerializable, IJsonModel<AccessRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigAccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspConfigAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,16 +31,16 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
-                writer.WriteStringValue(Direction);
+                writer.WriteStringValue(Direction.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AddressPrefixes))
             {
@@ -48,6 +49,26 @@ namespace Azure.ResourceManager.Search.Models
                 foreach (var item in AddressPrefixes)
                 {
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Subscriptions))
+            {
+                writer.WritePropertyName("subscriptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subscriptions)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+            {
+                writer.WritePropertyName("networkSecurityPerimeters"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkSecurityPerimeters)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,23 +82,23 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (Optional.IsCollectionDefined(EmailAddresses))
             {
-                writer.WritePropertyName("subscriptions"u8);
+                writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in Subscriptions)
+                foreach (var item in EmailAddresses)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+            if (Optional.IsCollectionDefined(PhoneNumbers))
             {
-                writer.WritePropertyName("networkSecurityPerimeters"u8);
+                writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
-                foreach (var item in NetworkSecurityPerimeters)
+                foreach (var item in PhoneNumbers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -98,19 +119,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        NspConfigAccessRuleProperties IJsonModel<NspConfigAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AccessRuleProperties IJsonModel<AccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspConfigAccessRuleProperties(document.RootElement, options);
+            return DeserializeAccessRuleProperties(document.RootElement, options);
         }
 
-        internal static NspConfigAccessRuleProperties DeserializeNspConfigAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AccessRuleProperties DeserializeAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -118,18 +139,24 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string direction = default;
+            AccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
+            IList<WritableSubResource> subscriptions = default;
+            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
-            IList<string> subscriptions = default;
-            IList<NspConfigNetworkSecurityPerimeterRule> networkSecurityPerimeters = default;
+            IList<string> emailAddresses = default;
+            IList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
                 {
-                    direction = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    direction = new AccessRuleDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressPrefixes"u8))
@@ -146,6 +173,34 @@ namespace Azure.ResourceManager.Search.Models
                     addressPrefixes = array;
                     continue;
                 }
+                if (property.NameEquals("subscriptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                    }
+                    subscriptions = array;
+                    continue;
+                }
+                if (property.NameEquals("networkSecurityPerimeters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item, options));
+                    }
+                    networkSecurityPerimeters = array;
+                    continue;
+                }
                 if (property.NameEquals("fullyQualifiedDomainNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -160,7 +215,7 @@ namespace Azure.ResourceManager.Search.Models
                     fullyQualifiedDomainNames = array;
                     continue;
                 }
-                if (property.NameEquals("subscriptions"u8))
+                if (property.NameEquals("emailAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,21 +226,21 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         array.Add(item.GetString());
                     }
-                    subscriptions = array;
+                    emailAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("networkSecurityPerimeters"u8))
+                if (property.NameEquals("phoneNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<NspConfigNetworkSecurityPerimeterRule> array = new List<NspConfigNetworkSecurityPerimeterRule>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NspConfigNetworkSecurityPerimeterRule.DeserializeNspConfigNetworkSecurityPerimeterRule(item, options));
+                        array.Add(item.GetString());
                     }
-                    networkSecurityPerimeters = array;
+                    phoneNumbers = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,12 +249,14 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspConfigAccessRuleProperties(
+            return new AccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<string>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NspConfigNetworkSecurityPerimeterRule>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumbers ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -225,15 +282,7 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(Direction))
                 {
                     builder.Append("  direction: ");
-                    if (Direction.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Direction}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Direction}'");
-                    }
+                    builder.AppendLine($"'{Direction.Value.ToString()}'");
                 }
             }
 
@@ -267,6 +316,52 @@ namespace Azure.ResourceManager.Search.Models
                             {
                                 builder.AppendLine($"    '{item}'");
                             }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subscriptions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Subscriptions))
+                {
+                    if (Subscriptions.Any())
+                    {
+                        builder.Append("  subscriptions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Subscriptions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  subscriptions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityPerimeters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkSecurityPerimeters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+                {
+                    if (NetworkSecurityPerimeters.Any())
+                    {
+                        builder.Append("  networkSecurityPerimeters: ");
+                        builder.AppendLine("[");
+                        foreach (var item in NetworkSecurityPerimeters)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  networkSecurityPerimeters: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -309,21 +404,21 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subscriptions), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EmailAddresses), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  subscriptions: ");
+                builder.Append("  emailAddresses: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsCollectionDefined(Subscriptions))
+                if (Optional.IsCollectionDefined(EmailAddresses))
                 {
-                    if (Subscriptions.Any())
+                    if (EmailAddresses.Any())
                     {
-                        builder.Append("  subscriptions: ");
+                        builder.Append("  emailAddresses: ");
                         builder.AppendLine("[");
-                        foreach (var item in Subscriptions)
+                        foreach (var item in EmailAddresses)
                         {
                             if (item == null)
                             {
@@ -345,23 +440,36 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityPerimeters), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhoneNumbers), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  networkSecurityPerimeters: ");
+                builder.Append("  phoneNumbers: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+                if (Optional.IsCollectionDefined(PhoneNumbers))
                 {
-                    if (NetworkSecurityPerimeters.Any())
+                    if (PhoneNumbers.Any())
                     {
-                        builder.Append("  networkSecurityPerimeters: ");
+                        builder.Append("  phoneNumbers: ");
                         builder.AppendLine("[");
-                        foreach (var item in NetworkSecurityPerimeters)
+                        foreach (var item in PhoneNumbers)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  networkSecurityPerimeters: ");
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -372,9 +480,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NspConfigAccessRuleProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AccessRuleProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -383,26 +491,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspConfigAccessRuleProperties IPersistableModel<NspConfigAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AccessRuleProperties IPersistableModel<AccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNspConfigAccessRuleProperties(document.RootElement, options);
+                        return DeserializeAccessRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspConfigAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

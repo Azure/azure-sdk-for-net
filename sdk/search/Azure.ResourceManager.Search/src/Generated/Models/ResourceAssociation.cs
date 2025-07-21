@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> An object to describe any issues with provisioning network security perimeters to a search service. </summary>
-    public partial class NspProvisioningIssue
+    /// <summary> Information about resource association. </summary>
+    public partial class ResourceAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
-        public NspProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
+        public ResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="properties"> The properties to describe any issues with provisioning network security perimeters to a search service. </param>
+        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
+        /// <param name="name"> Name of the resource association. </param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspProvisioningIssue(string name, NspProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceAssociation(string name, ResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            Properties = properties;
+            AccessMode = accessMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Name of the resource association. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The properties to describe any issues with provisioning network security perimeters to a search service. </summary>
-        [WirePath("properties")]
-        public NspProvisioningIssueProperties Properties { get; set; }
+        /// <summary> Access mode of the resource association. </summary>
+        [WirePath("accessMode")]
+        public ResourceAssociationAccessMode? AccessMode { get; set; }
     }
 }

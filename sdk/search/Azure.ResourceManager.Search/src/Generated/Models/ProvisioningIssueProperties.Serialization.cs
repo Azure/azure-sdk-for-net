@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NspProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<NspProvisioningIssueProperties>
+    public partial class ProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<ProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,44 +30,49 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProvisioningIssueProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(IssueType))
+            if (options.Format != "W" && Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("issueType"u8);
-                writer.WriteStringValue(IssueType);
+                writer.WriteStringValue(IssueType.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity);
+                writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(SuggestedResourceIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedResourceIds))
             {
                 writer.WritePropertyName("suggestedResourceIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SuggestedResourceIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SuggestedAccessRules))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedAccessRules))
             {
                 writer.WritePropertyName("suggestedAccessRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in SuggestedAccessRules)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,19 +93,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        NspProvisioningIssueProperties IJsonModel<NspProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProvisioningIssueProperties IJsonModel<ProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProvisioningIssueProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspProvisioningIssueProperties(document.RootElement, options);
+            return DeserializeProvisioningIssueProperties(document.RootElement, options);
         }
 
-        internal static NspProvisioningIssueProperties DeserializeNspProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProvisioningIssueProperties DeserializeProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -108,23 +113,31 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string issueType = default;
-            string severity = default;
+            IssueType? issueType = default;
+            Severity? severity = default;
             string description = default;
-            IList<string> suggestedResourceIds = default;
-            IList<string> suggestedAccessRules = default;
+            IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
+            IReadOnlyList<AccessRule> suggestedAccessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issueType"u8))
                 {
-                    issueType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    issueType = new IssueType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"u8))
                 {
-                    severity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    severity = new Severity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -138,10 +151,17 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     suggestedResourceIds = array;
                     continue;
@@ -152,10 +172,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AccessRule> array = new List<AccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(AccessRule.DeserializeAccessRule(item, options));
                     }
                     suggestedAccessRules = array;
                     continue;
@@ -166,12 +186,12 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspProvisioningIssueProperties(
+            return new ProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
-                suggestedResourceIds ?? new ChangeTrackingList<string>(),
-                suggestedAccessRules ?? new ChangeTrackingList<string>(),
+                suggestedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                suggestedAccessRules ?? new ChangeTrackingList<AccessRule>(),
                 serializedAdditionalRawData);
         }
 
@@ -197,15 +217,7 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(IssueType))
                 {
                     builder.Append("  issueType: ");
-                    if (IssueType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IssueType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IssueType}'");
-                    }
+                    builder.AppendLine($"'{IssueType.Value.ToString()}'");
                 }
             }
 
@@ -220,15 +232,7 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(Severity))
                 {
                     builder.Append("  severity: ");
-                    if (Severity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Severity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Severity}'");
-                    }
+                    builder.AppendLine($"'{Severity.Value.ToString()}'");
                 }
             }
 
@@ -276,15 +280,7 @@ namespace Azure.ResourceManager.Search.Models
                                 builder.Append("null");
                                 continue;
                             }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -307,20 +303,7 @@ namespace Azure.ResourceManager.Search.Models
                         builder.AppendLine("[");
                         foreach (var item in SuggestedAccessRules)
                         {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  suggestedAccessRules: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -331,9 +314,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NspProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -342,26 +325,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NspProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspProvisioningIssueProperties IPersistableModel<NspProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProvisioningIssueProperties IPersistableModel<ProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNspProvisioningIssueProperties(document.RootElement, options);
+                        return DeserializeProvisioningIssueProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

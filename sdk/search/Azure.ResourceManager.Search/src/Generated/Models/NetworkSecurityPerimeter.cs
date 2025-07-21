@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The resource association for the network security perimeter. </summary>
-    public partial class NspConfigAssociation
+    /// <summary> Information about a network security perimeter (NSP). </summary>
+    public partial class NetworkSecurityPerimeter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +46,32 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspConfigAssociation"/>. </summary>
-        public NspConfigAssociation()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
+        public NetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspConfigAssociation"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="accessMode"></param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
+        /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
+        /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
+        /// <param name="location"> Location of the network security perimeter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspConfigAssociation(string name, string accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            AccessMode = accessMode;
+            Id = id;
+            PerimeterGuid = perimeterGuid;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Gets or sets the access mode. </summary>
-        [WirePath("accessMode")]
-        public string AccessMode { get; set; }
+        /// <summary> Fully qualified Azure resource ID of the NSP resource. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> Universal unique ID (UUID) of the network security perimeter. </summary>
+        [WirePath("perimeterGuid")]
+        public Guid? PerimeterGuid { get; set; }
+        /// <summary> Location of the network security perimeter. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
     }
 }

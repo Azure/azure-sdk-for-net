@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The profile for a network security perimeter configuration. </summary>
-    public partial class NspConfigProfile
+    /// <summary> Network security perimeter configuration profile. </summary>
+    public partial class NetworkSecurityProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,44 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspConfigProfile"/>. </summary>
-        public NspConfigProfile()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
+        public NetworkSecurityProfile()
         {
-            AccessRules = new ChangeTrackingList<NspConfigAccessRule>();
+            AccessRules = new ChangeTrackingList<AccessRule>();
+            EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspConfigProfile"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="accessRulesVersion"></param>
-        /// <param name="accessRules"></param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
+        /// <param name="name"> Name of the profile. </param>
+        /// <param name="accessRulesVersion"> Current access rules version. </param>
+        /// <param name="accessRules"> List of Access Rules. </param>
+        /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
+        /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspConfigProfile(string name, string accessRulesVersion, IList<NspConfigAccessRule> accessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<AccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
             AccessRules = accessRules;
+            DiagnosticSettingsVersion = diagnosticSettingsVersion;
+            EnabledLogCategories = enabledLogCategories;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Name of the profile. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Gets or sets the access rules version. </summary>
+        /// <summary> Current access rules version. </summary>
         [WirePath("accessRulesVersion")]
-        public string AccessRulesVersion { get; set; }
-        /// <summary> Gets the access rules. </summary>
+        public int? AccessRulesVersion { get; set; }
+        /// <summary> List of Access Rules. </summary>
         [WirePath("accessRules")]
-        public IList<NspConfigAccessRule> AccessRules { get; }
+        public IList<AccessRule> AccessRules { get; }
+        /// <summary> Current diagnostic settings version. </summary>
+        [WirePath("diagnosticSettingsVersion")]
+        public int? DiagnosticSettingsVersion { get; set; }
+        /// <summary> List of log categories that are enabled. </summary>
+        [WirePath("enabledLogCategories")]
+        public IList<string> EnabledLogCategories { get; }
     }
 }

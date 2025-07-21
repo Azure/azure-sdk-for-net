@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchServiceFeatureOffering : IUtf8JsonSerializable, IJsonModel<SearchServiceFeatureOffering>
+    public partial class ProvisioningIssue : IUtf8JsonSerializable, IJsonModel<ProvisioningIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceFeatureOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SearchServiceFeatureOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,21 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceFeatureOffering>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchServiceFeatureOffering)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name.Value.ToString());
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,19 +62,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        SearchServiceFeatureOffering IJsonModel<SearchServiceFeatureOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProvisioningIssue IJsonModel<ProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceFeatureOffering>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchServiceFeatureOffering)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchServiceFeatureOffering(document.RootElement, options);
+            return DeserializeProvisioningIssue(document.RootElement, options);
         }
 
-        internal static SearchServiceFeatureOffering DeserializeSearchServiceFeatureOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProvisioningIssue DeserializeProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,18 +82,24 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            SearchServiceFeatureName? name = default;
+            string name = default;
+            ProvisioningIssueProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
                 {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    name = new SearchServiceFeatureName(property.Value.GetString());
+                    properties = ProvisioningIssueProperties.DeserializeProvisioningIssueProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +108,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SearchServiceFeatureOffering(name, serializedAdditionalRawData);
+            return new ProvisioningIssue(name, properties, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -122,7 +133,30 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(Name))
                 {
                     builder.Append("  name: ");
-                    builder.AppendLine($"'{Name.Value.ToString()}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    builder.Append("  properties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
                 }
             }
 
@@ -130,9 +164,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<SearchServiceFeatureOffering>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProvisioningIssue>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceFeatureOffering>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -141,26 +175,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchServiceFeatureOffering)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SearchServiceFeatureOffering IPersistableModel<SearchServiceFeatureOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProvisioningIssue IPersistableModel<ProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceFeatureOffering>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSearchServiceFeatureOffering(document.RootElement, options);
+                        return DeserializeProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchServiceFeatureOffering)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SearchServiceFeatureOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

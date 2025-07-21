@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The SearchServiceOfferingsByRegion. </summary>
-    public partial class SearchServiceOfferingsByRegion
+    /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
+    public partial class ProvisioningIssue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,27 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceOfferingsByRegion"/>. </summary>
-        internal SearchServiceOfferingsByRegion()
+        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
+        internal ProvisioningIssue()
         {
-            Features = new ChangeTrackingList<SearchServiceFeatureOffering>();
-            Skus = new ChangeTrackingList<SearchServiceSkuOffering>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchServiceOfferingsByRegion"/>. </summary>
-        /// <param name="regionName"> The name of the region. </param>
-        /// <param name="features"> The list of features offered in this region. </param>
-        /// <param name="skus"> The list of SKUs offered in this region. </param>
+        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
+        /// <param name="name"> Name of the issue. </param>
+        /// <param name="properties"> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceOfferingsByRegion(string regionName, IReadOnlyList<SearchServiceFeatureOffering> features, IReadOnlyList<SearchServiceSkuOffering> skus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RegionName = regionName;
-            Features = features;
-            Skus = skus;
+            Name = name;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the region. </summary>
-        [WirePath("regionName")]
-        public string RegionName { get; }
-        /// <summary> The list of features offered in this region. </summary>
-        [WirePath("features")]
-        public IReadOnlyList<SearchServiceFeatureOffering> Features { get; }
-        /// <summary> The list of SKUs offered in this region. </summary>
-        [WirePath("skus")]
-        public IReadOnlyList<SearchServiceSkuOffering> Skus { get; }
+        /// <summary> Name of the issue. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
+        [WirePath("properties")]
+        public ProvisioningIssueProperties Properties { get; }
     }
 }

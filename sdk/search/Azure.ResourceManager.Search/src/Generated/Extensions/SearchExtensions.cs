@@ -33,11 +33,6 @@ namespace Azure.ResourceManager.Search
             return resource.GetCachedClient(client => new MockableSearchSubscriptionResource(client, resource.Id));
         }
 
-        private static MockableSearchTenantResource GetMockableSearchTenantResource(ArmResource resource)
-        {
-            return resource.GetCachedClient(client => new MockableSearchTenantResource(client, resource.Id));
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="SearchServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SearchServiceResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -144,7 +139,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +178,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +217,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +254,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +291,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +328,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,7 +365,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -404,7 +399,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -438,7 +433,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -473,7 +468,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -493,70 +488,6 @@ namespace Azure.ResourceManager.Search
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSearchSubscriptionResource(subscriptionResource).UsageBySubscriptionSku(location, skuName, searchManagementRequestOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Search/offerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Offerings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSearchTenantResource.GetOfferings(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SearchServiceOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SearchServiceOfferingsByRegion> GetOfferingsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSearchTenantResource(tenantResource).GetOfferingsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Search/offerings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Offerings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSearchTenantResource.GetOfferings(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SearchServiceOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SearchServiceOfferingsByRegion> GetOfferings(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSearchTenantResource(tenantResource).GetOfferings(cancellationToken);
         }
     }
 }
