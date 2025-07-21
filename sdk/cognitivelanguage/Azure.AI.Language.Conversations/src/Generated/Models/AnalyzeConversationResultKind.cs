@@ -23,9 +23,12 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         private const string ConversationResultValue = "ConversationResult";
+        private const string ConversationalAIResultValue = "ConversationalAIResult";
 
         /// <summary> Conversation result task kind. </summary>
         public static AnalyzeConversationResultKind ConversationResult { get; } = new AnalyzeConversationResultKind(ConversationResultValue);
+        /// <summary> Conversation result task kind. </summary>
+        public static AnalyzeConversationResultKind ConversationalAIResult { get; } = new AnalyzeConversationResultKind(ConversationalAIResultValue);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeConversationResultKind left, AnalyzeConversationResultKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultKind"/> values are not the same. </summary>

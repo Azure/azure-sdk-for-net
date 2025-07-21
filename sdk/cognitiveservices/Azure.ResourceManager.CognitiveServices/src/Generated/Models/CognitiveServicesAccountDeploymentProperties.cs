@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentCapacity"> The current capacity. </param>
         /// <param name="capacitySettings"> Internal use only. </param>
         /// <param name="parentDeploymentName"> The name of parent deployment. </param>
+        /// <param name="spilloverDeploymentName"> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IReadOnlyList<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Model = model;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentCapacity = currentCapacity;
             CapacitySettings = capacitySettings;
             ParentDeploymentName = parentDeploymentName;
+            SpilloverDeploymentName = spilloverDeploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -119,5 +121,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The name of parent deployment. </summary>
         [WirePath("parentDeploymentName")]
         public string ParentDeploymentName { get; set; }
+        /// <summary> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </summary>
+        [WirePath("spilloverDeploymentName")]
+        public string SpilloverDeploymentName { get; set; }
     }
 }

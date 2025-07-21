@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AvsClusterFailedEventDataConverter))]
     public partial class AvsClusterFailedEventData : IUtf8JsonSerializable, IJsonModel<AvsClusterFailedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsClusterFailedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -183,6 +185,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AvsClusterFailedEventDataConverter : JsonConverter<AvsClusterFailedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AvsClusterFailedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AvsClusterFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsClusterFailedEventData(document.RootElement);
+            }
         }
     }
 }

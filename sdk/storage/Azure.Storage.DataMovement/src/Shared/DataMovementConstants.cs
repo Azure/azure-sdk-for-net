@@ -164,6 +164,8 @@ namespace Azure.Storage.DataMovement
             internal const string Owner = "Owner";
             internal const string Group = "Group";
             internal const string FileMode = "FileMode";
+            internal const string FileType = "FileType";
+            internal const string LinkCount = "LinkCount";
         }
     }
 }

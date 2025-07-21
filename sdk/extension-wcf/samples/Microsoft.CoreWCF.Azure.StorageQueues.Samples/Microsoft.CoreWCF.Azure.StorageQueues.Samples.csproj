@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<RequiredTargetFrameworks>net6.0</RequiredTargetFrameworks>
+		<RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <ImplicitUsings>true</ImplicitUsings>

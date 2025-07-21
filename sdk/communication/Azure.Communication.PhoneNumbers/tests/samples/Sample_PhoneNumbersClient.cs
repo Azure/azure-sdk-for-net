@@ -3,10 +3,10 @@
 
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.Tests.Samples
@@ -16,8 +16,32 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
     /// </summary>
     public class Sample_PhoneNumbersClient : PhoneNumbersClientLiveTestBase
     {
+        private readonly Guid _staticReservationId = Guid.Parse("6227aeb8-8086-4824-9586-05c04e96f37b");
+        private Guid _reservationId;
+
         public Sample_PhoneNumbersClient(bool isAsync) : base(isAsync)
         {
+        }
+
+        /// <summary>
+        /// Initializes the GUID that will be used for reservations created during this test run.
+        /// It also ensures that it is properly sanitized for playback mode.
+        /// </summary>
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            _reservationId = Guid.NewGuid();
+
+            // Replace any GUIDs in the request/response bodies with a static GUID for playback mode.
+            // This will only be applied to the recordings of this test class.
+            // NOTE: We are adding the new sanitizers at the start so that they are applied before the PhoneNumbers sanitization, which can malform the GUIDs.
+            string guidPattern = @"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
+            BodyRegexSanitizers.Insert(0, new BodyRegexSanitizer(guidPattern) { Value = _staticReservationId.ToString() });
+            UriRegexSanitizers.Insert(0, new UriRegexSanitizer(guidPattern) { Value = _staticReservationId.ToString() });
+            HeaderRegexSanitizers.Insert(0, new HeaderRegexSanitizer("Location") { Regex = guidPattern, Value = _staticReservationId.ToString() });
+            HeaderRegexSanitizers.Insert(0, new HeaderRegexSanitizer("Operation-Location") { Regex = guidPattern, Value = _staticReservationId.ToString() });
+            HeaderRegexSanitizers.Insert(0, new HeaderRegexSanitizer("operation-id") { Regex = guidPattern, Value = _staticReservationId.ToString() });
+            HeaderRegexSanitizers.Insert(0, new HeaderRegexSanitizer("reservation-purchase-id") { Regex = guidPattern, Value = _staticReservationId.ToString() });
         }
 
         [Test]
@@ -216,6 +240,217 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
                 purchasedPhoneNumbersAfterReleaseStatus = e.ErrorCode;
             }
             Assert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
+        }
+
+        [TestCase]
+        [AsyncOnly]
+        [Ignore("Test is failing in playback mode due to an issue with LRO not completing")]
+        public async Task PurchaseReservationAsync()
+        {
+            if (SkipPhoneNumberLiveTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString, false);
+
+            #region Snippet:BrowseAvailablePhoneNumbersAsync
+
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
+            var browseResponse = await client.BrowseAvailableNumbersAsync(browseRequest);
+            var availablePhoneNumbers = browseResponse.Value.PhoneNumbers;
+
+            #endregion Snippet:BrowseAvailablePhoneNumbersAsync
+
+            var reservationId = GetReservationId();
+
+            #region Snippet:CreateReservationAsync
+            // Reserve the first two available phone numbers.
+            var phoneNumbersToReserve = availablePhoneNumbers.Take(2).ToList();
+
+            // The reservation ID needs to be a unique GUID.
+            //@@var reservationId = Guid.NewGuid();
+
+            var request = new CreateOrUpdateReservationOptions(reservationId)
+            {
+                PhoneNumbersToAdd = phoneNumbersToReserve
+            };
+            var response = await client.CreateOrUpdateReservationAsync(request);
+            var reservation = response.Value;
+
+            #endregion Snippet:CreateReservationAsync
+
+            Assert.IsTrue(phoneNumbersToReserve.All(n => reservation.PhoneNumbers.ContainsKey(n.Id)));
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.First().Id]);
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.Last().Id]);
+
+            #region Snippet:CheckForPartialFailure
+            var phoneNumbersWithError = reservation.PhoneNumbers.Values
+                .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+            if (phoneNumbersWithError.Any())
+            {
+                // Handle the error for the phone numbers that failed to reserve.
+                foreach (var phoneNumber in phoneNumbersWithError)
+                {
+                    Console.WriteLine($"Failed to reserve phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+                }
+            }
+            #endregion Snippet:CheckForPartialFailure
+
+            #region Snippet:StartPurchaseReservationAsync
+            var purchaseReservationOperation = await client.StartPurchaseReservationAsync(reservationId);
+            //@@ await purchaseReservationOperation.WaitForCompletionResponseAsync();
+            /*@@*/
+
+            #endregion Snippet:StartPurchaseReservationAsync
+
+            while (!purchaseReservationOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                await purchaseReservationOperation.UpdateStatusAsync();
+            }
+
+            #region Snippet:ValidateReservationPurchaseAsync
+
+            var purchasedReservationResponse = await client.GetReservationAsync(reservationId);
+            var purchasedReservation = purchasedReservationResponse.Value;
+
+            var failedPhoneNumbers = purchasedReservation.PhoneNumbers.Values
+                .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+            if (failedPhoneNumbers.Any())
+            {
+                // Handle the error for the phone numbers that failed to reserve.
+                foreach (var phoneNumber in failedPhoneNumbers)
+                {
+                    Console.WriteLine($"Failed to purchase phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+                }
+            }
+
+            #endregion Snippet:ValidateReservationPurchaseAsync
+
+            Assert.IsTrue(purchasedReservation.PhoneNumbers.All(n => n.Value.Status == PhoneNumberAvailabilityStatus.Purchased));
+
+            // Release the number to prevent additional costs.
+            foreach (var phoneNumberToReserve in phoneNumbersToReserve)
+            {
+                var releaseOperation = await client.StartReleasePhoneNumberAsync(phoneNumberToReserve.Id);
+                while (!releaseOperation.HasCompleted)
+                {
+                    SleepIfNotInPlaybackMode();
+                    await releaseOperation.UpdateStatusAsync();
+                }
+            }
+        }
+
+        [TestCase]
+        [SyncOnly]
+        [Ignore("Test is failing in playback mode due to an issue with LRO not completing")]
+        public void PurchaseReservation()
+        {
+            if (SkipPhoneNumberLiveTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            PhoneNumbersClient client = CreateClient(AuthMethod.ConnectionString, false);
+
+            #region Snippet:BrowseAvailablePhoneNumbers
+
+            var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
+            var browseResponse = client.BrowseAvailableNumbers(browseRequest);
+            var availablePhoneNumbers = browseResponse.Value.PhoneNumbers;
+
+            #endregion Snippet:BrowseAvailablePhoneNumbers
+
+            var reservationId = GetReservationId();
+
+            #region Snippet:CreateReservation
+            // Reserve the first two available phone numbers.
+            var phoneNumbersToReserve = availablePhoneNumbers.Take(2).ToList();
+
+            // The reservation ID needs to be a unique GUID.
+            //@@var reservationId = Guid.NewGuid();
+
+            var request = new CreateOrUpdateReservationOptions(reservationId)
+            {
+                PhoneNumbersToAdd = phoneNumbersToReserve
+            };
+            var response = client.CreateOrUpdateReservation(request);
+            var reservation = response.Value;
+
+            #endregion Snippet:CreateReservation
+
+            Assert.IsTrue(phoneNumbersToReserve.All(n => reservation.PhoneNumbers.ContainsKey(n.Id)));
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.First().Id]);
+            Assert.AreNotEqual(PhoneNumberAvailabilityStatus.Error, reservation.PhoneNumbers[phoneNumbersToReserve.Last().Id]);
+
+            var phoneNumbersWithError = reservation
+                .PhoneNumbers
+                .Values
+                .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+            if (phoneNumbersWithError.Any())
+            {
+                // Handle the error for the phone numbers that failed to reserve.
+                foreach (var phoneNumber in phoneNumbersWithError)
+                {
+                    Console.WriteLine($"Failed to reserve phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+                }
+            }
+
+            #region Snippet:StartPurchaseReservation
+            var purchaseReservationOperation = client.StartPurchaseReservation(reservationId);
+            //@@purchaseReservationOperation.WaitForCompletionResponse();
+
+            #endregion Snippet:StartPurchaseReservation
+
+            while (!purchaseReservationOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                purchaseReservationOperation.UpdateStatus();
+            }
+
+            #region Snippet:ValidateReservationPurchase
+
+            var purchasedReservationResponse = client.GetReservation(reservationId);
+            var purchasedReservation = purchasedReservationResponse.Value;
+
+            var failedPhoneNumbers = purchasedReservation.PhoneNumbers.Values
+                .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+            if (failedPhoneNumbers.Any())
+            {
+                // Handle the error for the phone numbers that failed to reserve.
+                foreach (var phoneNumber in failedPhoneNumbers)
+                {
+                    Console.WriteLine($"Failed to purchase phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+                }
+            }
+
+            #endregion Snippet:ValidateReservationPurchase
+
+            Assert.IsTrue(purchasedReservation.PhoneNumbers.All(n => n.Value.Status == PhoneNumberAvailabilityStatus.Purchased));
+
+            // Release the number to prevent additional costs.
+            foreach (var phoneNumberToReserve in phoneNumbersToReserve)
+            {
+                var releaseOperation = client.StartReleasePhoneNumber(phoneNumberToReserve.Id);
+                while (!releaseOperation.HasCompleted)
+                {
+                    SleepIfNotInPlaybackMode();
+                    releaseOperation.UpdateStatus();
+                }
+            }
+        }
+
+        // Gets either the static reservation ID for playback or a new reservation ID for live tests.
+        protected Guid GetReservationId()
+        {
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+                return _staticReservationId;
+            return _reservationId;
         }
     }
 }

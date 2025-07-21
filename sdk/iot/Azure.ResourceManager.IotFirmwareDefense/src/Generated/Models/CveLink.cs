@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Properties of a reference link for a CVE.
-    /// Serialized Name: CveLink
-    /// </summary>
+    /// <summary> Properties of a reference link for a CVE. </summary>
     public partial class CveLink
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CveLink"/>. </summary>
-        /// <param name="href">
-        /// The destination of the reference link.
-        /// Serialized Name: CveLink.href
-        /// </param>
-        /// <param name="label">
-        /// The label of the reference link.
-        /// Serialized Name: CveLink.label
-        /// </param>
+        /// <param name="href"> The destination of the reference link. </param>
+        /// <param name="label"> The label of the reference link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CveLink(Uri href, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The destination of the reference link.
-        /// Serialized Name: CveLink.href
-        /// </summary>
+        /// <summary> The destination of the reference link. </summary>
         public Uri Href { get; }
-        /// <summary>
-        /// The label of the reference link.
-        /// Serialized Name: CveLink.label
-        /// </summary>
+        /// <summary> The label of the reference link. </summary>
         public string Label { get; }
     }
 }

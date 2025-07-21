@@ -13,7 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using TypeSpec.Http.Streams;
 
-namespace Streaming.Jsonl
+namespace Streaming.Jsonl._Basic
 {
     public partial class Basic
     {

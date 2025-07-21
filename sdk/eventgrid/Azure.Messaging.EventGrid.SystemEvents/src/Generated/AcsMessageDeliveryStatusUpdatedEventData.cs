@@ -27,12 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
+        /// <param name="errorInternal"> The channel event error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageId"> The message id. </param>
         /// <param name="status"> The updated message status. </param>
         /// <param name="channelKind"> The updated message channel type. </param>
-        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError error, IDictionary<string, BinaryData> serializedAdditionalRawData, string messageId, AcsMessageDeliveryStatus? status, AcsMessageChannelKind? channelKind) : base(@from, to, receivedTimestamp, error, serializedAdditionalRawData)
+        internal AcsMessageDeliveryStatusUpdatedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> serializedAdditionalRawData, string messageId, AcsMessageDeliveryStatus? status, AcsMessageChannelKind? channelKind) : base(@from, to, receivedTimestamp, errorInternal, serializedAdditionalRawData)
         {
             MessageId = messageId;
             Status = status;

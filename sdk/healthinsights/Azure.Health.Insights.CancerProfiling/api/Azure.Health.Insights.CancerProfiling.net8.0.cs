@@ -1,5 +1,17 @@
 namespace Azure.Health.Insights.CancerProfiling
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.ClinicalCodedElement))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.DocumentContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.InferenceEvidence))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientDocument))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientRecord))]
     public partial class AzureHealthInsightsCancerProfilingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthInsightsCancerProfilingContext() { }
@@ -307,6 +319,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class HealthInsightsCancerProfilingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.CancerProfiling.CancerProfilingClient, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions> AddCancerProfilingClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Health.Insights.CancerProfiling.CancerProfilingClient, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions> AddCancerProfilingClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

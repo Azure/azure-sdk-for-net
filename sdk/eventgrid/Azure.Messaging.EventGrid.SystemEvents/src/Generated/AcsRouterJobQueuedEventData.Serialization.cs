@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterJobQueuedEventDataConverter))]
     public partial class AcsRouterJobQueuedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobQueuedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobQueuedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -228,6 +230,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterJobQueuedEventDataConverter : JsonConverter<AcsRouterJobQueuedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterJobQueuedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterJobQueuedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterJobQueuedEventData(document.RootElement);
+            }
         }
     }
 }

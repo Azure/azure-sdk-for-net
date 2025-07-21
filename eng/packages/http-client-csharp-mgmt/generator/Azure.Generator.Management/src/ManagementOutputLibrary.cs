@@ -1,9 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,45 +25,168 @@ namespace Azure.Generator.Management
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
-        private (IReadOnlyList<ResourceClientProvider> Resources, IReadOnlyList<ResourceCollectionClientProvider> Collection) BuildResources()
+        // TODO: replace this with CSharpType to TypeProvider mapping
+        private HashSet<CSharpType>? _resourceTypes;
+        private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+
+        // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
+        private HashSet<CSharpType>? _modelFactoryModels;
+        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
+        internal HashSet<CSharpType> BuildModelFactoryModels()
         {
-            var resources = new List<ResourceClientProvider>();
-            var collections = new List<ResourceCollectionClientProvider>();
-            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            var result = new HashSet<CSharpType>();
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
-                BuildResourceCore(resources, collections, client);
+                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                if (model is not null && IsModelFactoryModel(model))
+                {
+                    result.Add(model.Type);
+                }
             }
-            return (resources, collections);
+            return result;
         }
 
-        private static void BuildResourceCore(List<ResourceClientProvider> resources, List<ResourceCollectionClientProvider> collections, Microsoft.TypeSpec.Generator.Input.InputClient client)
+        private static bool IsModelFactoryModel(ModelProvider model)
         {
-            // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-            var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
-            if (resourceMetadata is not null)
+            // A model is a model factory model if it is public and it has at least one public property without a setter.
+            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
+
+            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
             {
-                var resource = new ResourceClientProvider(client);
-                ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
-                resources.Add(resource);
-                if (!resource.IsSingleton)
+                var currentModel = current;
+                foreach (var property in currentModel.Properties)
                 {
-                    var collection = new ResourceCollectionClientProvider(client, resource);
-                    ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
-                    collections.Add(collection);
+                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        yield return property;
+                    }
+                }
+
+                while (currentModel.BaseModelProvider is not null)
+                {
+                    currentModel = currentModel.BaseModelProvider;
+                    foreach (var property in currentModel.Properties)
+                    {
+                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                        {
+                            yield return property;
+                        }
+                    }
+                }
+            }
+        }
+
+        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
+
+        private HashSet<CSharpType> BuildResourceModels()
+        {
+            var resourceTypes = new HashSet<CSharpType>();
+
+            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+                {
+                    var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
+                    if (modelProvider is not null)
+                    {
+                        resourceTypes.Add(modelProvider.Type);
+                    }
+                }
+            }
+            return resourceTypes;
+        }
+
+        private IReadOnlyList<ResourceClientProvider> BuildResources()
+        {
+            var resources = new List<ResourceClientProvider>();
+            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                var resource = BuildResource(model);
+                if (resource is not null)
+                {
+                    resources.Add(resource);
+                }
+            }
+            return resources;
+        }
+
+        private static readonly IReadOnlyDictionary<ResourceScope, Type> _scopeToTypes = new Dictionary<ResourceScope, Type>
+        {
+            [ResourceScope.ResourceGroup] = typeof(ResourceGroupResource),
+            [ResourceScope.Subscription] = typeof(SubscriptionResource),
+            [ResourceScope.Tenant] = typeof(TenantResource),
+            [ResourceScope.ManagementGroup] = typeof(ManagementGroupResource),
+        };
+
+        private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
+        {
+            // walk through all resources to figure out their scopes
+            var scopeCandidates = new Dictionary<ResourceScope, List<ResourceClientProvider>>
+            {
+                [ResourceScope.ResourceGroup] = [],
+                [ResourceScope.Subscription] = [],
+                [ResourceScope.Tenant] = [],
+                [ResourceScope.ManagementGroup] = [],
+            };
+            foreach (var resource in resources)
+            {
+                if (resource.ParentResourceIdPattern is null)
+                {
+                    scopeCandidates[resource.ResourceScope].Add(resource);
                 }
             }
 
-            foreach (var child in client.Children)
+            var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
+            var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count)
             {
-                BuildResourceCore(resources, collections, child);
+                // add the arm client mockable resource
+                mockableArmClientResource
+            };
+            ManagementClientGenerator.Instance.AddTypeToKeep(mockableArmClientResource.Name);
+
+            foreach (var (scope, candidates) in scopeCandidates)
+            {
+                if (candidates.Count > 0)
+                {
+                    var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates);
+                    mockableResources.Add(mockableExtension);
+                    ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
+                }
             }
+
+            var extensionProvider = new ExtensionProvider(mockableResources);
+            ManagementClientGenerator.Instance.AddTypeToKeep(extensionProvider.Name);
+
+            return [.. mockableResources, extensionProvider];
+        }
+
+        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one model corresponds to one resource.
+        private static ResourceClientProvider? BuildResource(InputModelType model)
+        {
+            // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
+            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
+            return resourceMetadata is not null ?
+                ResourceClientProvider.Create(model, resourceMetadata) :
+                null;
         }
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var (resources, collections) = BuildResources();
-            return [.. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
+            var resources = BuildResources();
+            var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
+            var extensions = BuildExtensions(resources);
+            return [
+                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                ArmOperation,
+                GenericArmOperation,
+                .. resources,
+                .. collections,
+                .. extensions,
+                .. resources.Select(r => r.Source),
+                .. resources.SelectMany(r => r.SerializationProviders)];
         }
+
+        internal bool IsResourceModelType(CSharpType type) => ResourceTypes.Contains(type);
     }
 }

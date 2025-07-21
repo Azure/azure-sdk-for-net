@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPropertiesOfAMultiRolePool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_GetMultiRolePool.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_GetMultiRolePool.json
             // this example is just showing the usage of "AppServiceEnvironments_GetMultiRolePool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAMultiRolePool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_CreateOrUpdateMultiRolePool.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_CreateOrUpdateMultiRolePool.json
             // this example is just showing the usage of "AppServiceEnvironments_UpdateMultiRolePool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAMultiRolePool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_CreateOrUpdateMultiRolePool.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_CreateOrUpdateMultiRolePool.json
             // this example is just showing the usage of "AppServiceEnvironments_CreateOrUpdateMultiRolePool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMultiRolePoolInstanceMetricDefinitions_GetMetricDefinitionsForASpecificInstanceOfAMultiRolePoolOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions.json
             // this example is just showing the usage of "AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMultiRoleMetricDefinitions_GetMetricDefinitionsForAMultiRolePoolOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListMultiRoleMetricDefinitions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListMultiRoleMetricDefinitions.json
             // this example is just showing the usage of "AppServiceEnvironments_ListMultiRoleMetricDefinitions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMultiRolePoolSkus_GetAvailableSKUsForScalingAMultiRolePool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListMultiRolePoolSkus.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListMultiRolePoolSkus.json
             // this example is just showing the usage of "AppServiceEnvironments_ListMultiRolePoolSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMultiRoleUsages_GetUsageMetricsForAMultiRolePoolOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListMultiRoleUsages.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListMultiRoleUsages.json
             // this example is just showing the usage of "AppServiceEnvironments_ListMultiRoleUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

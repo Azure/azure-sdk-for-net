@@ -36,8 +36,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("communicationIdentifier"u8);
             writer.WriteObjectValue(CommunicationIdentifier, options);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +81,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             CommunicationIdentifierModel communicationIdentifier = default;
-            AcsCallEndedByKind type = default;
+            AcsCallEndedByKind? type = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,6 +94,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     type = new AcsCallEndedByKind(property.Value.GetString());
                     continue;
                 }

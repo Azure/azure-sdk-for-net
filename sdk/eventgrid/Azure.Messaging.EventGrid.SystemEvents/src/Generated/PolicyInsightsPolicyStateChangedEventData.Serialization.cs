@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(PolicyInsightsPolicyStateChangedEventDataConverter))]
     public partial class PolicyInsightsPolicyStateChangedEventData : IUtf8JsonSerializable, IJsonModel<PolicyInsightsPolicyStateChangedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyInsightsPolicyStateChangedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -200,6 +202,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class PolicyInsightsPolicyStateChangedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateChangedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, PolicyInsightsPolicyStateChangedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override PolicyInsightsPolicyStateChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePolicyInsightsPolicyStateChangedEventData(document.RootElement);
+            }
         }
     }
 }

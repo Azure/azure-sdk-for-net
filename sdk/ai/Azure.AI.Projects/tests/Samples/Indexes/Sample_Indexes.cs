@@ -32,20 +32,18 @@ namespace Azure.AI.Projects.Tests
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
 #endif
             AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-            Indexes indexesClient = projectClient.GetIndexesClient();
 
             RequestContent content = RequestContent.Create(new
             {
                 connectionName = aiSearchConnectionName,
                 indexName = aiSearchIndexName,
-                indexVersion = indexVersion,
                 type = "AzureSearch",
                 description = "Sample Index for testing",
                 displayName = "Sample Index"
             });
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            var index = indexesClient.CreateOrUpdate(
+            var index = projectClient.Indexes.CreateOrUpdate(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -53,23 +51,23 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            var retrievedIndex = indexesClient.GetIndex(name: indexName, version: indexVersion);
+            DatasetIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            foreach (var version in indexesClient.GetVersions(name: indexName))
+            foreach (DatasetIndex version in projectClient.Indexes.GetVersions(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            foreach (var version in indexesClient.GetIndices())
+            foreach (DatasetIndex version in projectClient.Indexes.GetIndices())
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine("Delete the Index version created above:");
-            indexesClient.Delete(name: indexName, version: indexVersion);
+            projectClient.Indexes.Delete(name: indexName, version: indexVersion);
             #endregion
         }
     }

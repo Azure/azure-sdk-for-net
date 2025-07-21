@@ -34,8 +34,8 @@ namespace Payload.JsonMergePatch
 
         public virtual Task<Response> UpdateResourceAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response UpdateOptionalResource(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Response UpdateOptionalResource(RequestContent content = null, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateOptionalResourceAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<Response> UpdateOptionalResourceAsync(RequestContent content = null, RequestContext context = null) => throw null;
     }
 }

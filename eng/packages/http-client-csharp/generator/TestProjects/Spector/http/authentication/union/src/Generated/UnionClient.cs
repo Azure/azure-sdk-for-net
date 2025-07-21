@@ -18,13 +18,13 @@ namespace Authentication.Union
     {
         protected UnionClient() => throw null;
 
-        public UnionClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new UnionClientOptions()) => throw null;
+        public UnionClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
 
-        public UnionClient(TokenCredential tokenCredential) : this(new Uri("http://localhost:3000"), tokenCredential, new UnionClientOptions()) => throw null;
+        public UnionClient(TokenCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
 
-        public UnionClient(Uri endpoint, AzureKeyCredential keyCredential, UnionClientOptions options) => throw null;
+        public UnionClient(Uri endpoint, AzureKeyCredential credential, UnionClientOptions options) => throw null;
 
-        public UnionClient(Uri endpoint, TokenCredential tokenCredential, UnionClientOptions options) => throw null;
+        public UnionClient(Uri endpoint, TokenCredential credential, UnionClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

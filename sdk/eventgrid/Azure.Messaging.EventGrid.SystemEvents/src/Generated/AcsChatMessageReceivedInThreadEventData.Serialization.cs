@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsChatMessageReceivedInThreadEventDataConverter))]
     public partial class AcsChatMessageReceivedInThreadEventData : IUtf8JsonSerializable, IJsonModel<AcsChatMessageReceivedInThreadEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatMessageReceivedInThreadEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -216,6 +218,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsChatMessageReceivedInThreadEventDataConverter : JsonConverter<AcsChatMessageReceivedInThreadEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatMessageReceivedInThreadEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsChatMessageReceivedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatMessageReceivedInThreadEventData(document.RootElement);
+            }
         }
     }
 }

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiManagementProductDeletedEventDataConverter))]
     public partial class ApiManagementProductDeletedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementProductDeletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementProductDeletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -140,6 +142,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiManagementProductDeletedEventDataConverter : JsonConverter<ApiManagementProductDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiManagementProductDeletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiManagementProductDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementProductDeletedEventData(document.RootElement);
+            }
         }
     }
 }

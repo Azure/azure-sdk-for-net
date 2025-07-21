@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.56 (Unreleased)
+## 12.0.0-preview.57 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.56 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
 
 ## 12.0.0-preview.55 (2025-05-06)
 

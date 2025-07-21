@@ -20,6 +20,11 @@ namespace Azure.Communication.PhoneNumbers
                 writer.WritePropertyName("searchId"u8);
                 writer.WriteStringValue(SearchId);
             }
+            if (Optional.IsDefined(AgreeToNotResell))
+            {
+                writer.WritePropertyName("agreeToNotResell"u8);
+                writer.WriteBooleanValue(AgreeToNotResell.Value);
+            }
             writer.WriteEndObject();
         }
 

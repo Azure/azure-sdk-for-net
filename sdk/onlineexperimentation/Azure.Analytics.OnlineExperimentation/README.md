@@ -2,7 +2,7 @@
 
 Azure Online Experimentation is a managed service that enables developers to create and manage experiment metrics for evaluating online A/B tests.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Analytics.OnlineExperimentation) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure) | [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/src) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure) | [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation/samples)
 
 ## Getting started
 
@@ -11,7 +11,7 @@ Azure Online Experimentation is a managed service that enables developers to cre
 Install the Azure Online Experimentation client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Analytics.OnlineExperimentation
+dotnet add package Azure.Analytics.OnlineExperimentation --prerelease
 ```
 
 ### Prerequisites

@@ -14,17 +14,32 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal class SourceCheckpointDetails
         {
-            internal const int DataSize = 0;
+            // Prior to Source Files Schema Version 1, the SourceCheckpointDetails was empty and Version was not present.
+            internal const int SchemaVersion_1 = 1;
+            internal const int SchemaVersion = SchemaVersion_1;
+
+            internal const int VersionEncodedSize = IntSizeInBytes;
+            internal const int ShareProtocolEncodedSize = OneByte;
+
+            internal const int VersionIndex = 0;
+            internal const int ShareProtocolIndex = VersionIndex + VersionEncodedSize;
+            internal const int DataSize = ShareProtocolIndex + ShareProtocolEncodedSize;
         }
 
         internal class DestinationCheckpointDetails
         {
+            // Destination Files Schema Versions 1 and 2 were the beta version of the schema and do not need to be serialized and deserialized backwards compatible.
+            // Only Destination Files Schema Versions 3 and beyond need to be backwards compatible.
             internal const int SchemaVersion_3 = 3;
-            internal const int SchemaVersion = SchemaVersion_3;
+            internal const int SchemaVersion_4 = 4;
+            internal const int SchemaVersion = SchemaVersion_4;
+            internal const int MinValidSchemaVersion = SchemaVersion_3;
+            internal const int MaxValidSchemaVersion = SchemaVersion_4;
 
             internal const int VersionEncodedSize = IntSizeInBytes;
             internal const int PreserveEncodedSize = OneByte;
             internal const int OffsetLengthEncodedSize = IntSizeInBytes;
+            internal const int ShareProtocolEncodedSize = OneByte;
 
             internal const int VersionIndex = 0;
 
@@ -74,7 +89,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             internal const int DirectoryMetadataOffsetIndex = PreserveDirectoryMetadataIndex + PreserveEncodedSize;
             internal const int DirectoryMetadataLengthIndex = DirectoryMetadataOffsetIndex + OffsetLengthEncodedSize;
 
-            internal const int VariableLengthStartIndex = DirectoryMetadataLengthIndex + OffsetLengthEncodedSize;
+            internal const int ShareProtocolIndex = DirectoryMetadataLengthIndex + OffsetLengthEncodedSize;
+
+            internal const int VariableLengthStartIndex = ShareProtocolIndex + ShareProtocolEncodedSize;
         }
     }
 }

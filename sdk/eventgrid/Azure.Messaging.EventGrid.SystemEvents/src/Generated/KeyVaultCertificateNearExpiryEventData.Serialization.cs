@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(KeyVaultCertificateNearExpiryEventDataConverter))]
     public partial class KeyVaultCertificateNearExpiryEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultCertificateNearExpiryEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultCertificateNearExpiryEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -44,15 +46,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(ObjectName);
             writer.WritePropertyName("Version"u8);
             writer.WriteStringValue(Version);
-            if (Optional.IsDefined(NBF))
+            if (Optional.IsDefined(Nbf))
             {
                 writer.WritePropertyName("NBF"u8);
-                writer.WriteNumberValue(NBF.Value);
+                writer.WriteNumberValue(Nbf.Value);
             }
-            if (Optional.IsDefined(EXP))
+            if (Optional.IsDefined(Exp))
             {
                 writer.WritePropertyName("EXP"u8);
-                writer.WriteNumberValue(EXP.Value);
+                writer.WriteNumberValue(Exp.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -207,6 +209,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class KeyVaultCertificateNearExpiryEventDataConverter : JsonConverter<KeyVaultCertificateNearExpiryEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, KeyVaultCertificateNearExpiryEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override KeyVaultCertificateNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultCertificateNearExpiryEventData(document.RootElement);
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Azure.Communication.PhoneNumbers
         private const string ReleasePhoneNumberValue = "releasePhoneNumber";
         private const string SearchValue = "search";
         private const string UpdatePhoneNumberCapabilitiesValue = "updatePhoneNumberCapabilities";
+        private const string ReservationPurchaseValue = "reservationPurchase";
 
         /// <summary> purchase. </summary>
         public static PhoneNumberOperationType Purchase { get; } = new PhoneNumberOperationType(PurchaseValue);
@@ -35,6 +36,8 @@ namespace Azure.Communication.PhoneNumbers
         public static PhoneNumberOperationType Search { get; } = new PhoneNumberOperationType(SearchValue);
         /// <summary> updatePhoneNumberCapabilities. </summary>
         public static PhoneNumberOperationType UpdatePhoneNumberCapabilities { get; } = new PhoneNumberOperationType(UpdatePhoneNumberCapabilitiesValue);
+        /// <summary> reservationPurchase. </summary>
+        public static PhoneNumberOperationType ReservationPurchase { get; } = new PhoneNumberOperationType(ReservationPurchaseValue);
         /// <summary> Determines if two <see cref="PhoneNumberOperationType"/> values are the same. </summary>
         public static bool operator ==(PhoneNumberOperationType left, PhoneNumberOperationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberOperationType"/> values are not the same. </summary>

@@ -44,10 +44,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIpAddress);
             }
-            if (Optional.IsDefined(Method))
+            if (Optional.IsDefined(MethodString))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(Method);
+                writer.WriteStringValue(MethodString);
             }
             if (Optional.IsDefined(Url))
             {

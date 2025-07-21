@@ -2,30 +2,49 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.InputTransformation;
-using Azure.Generator.Management.Providers.Abstraction;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using System.ClientModel.Primitives;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using Azure.Generator.Management.Providers;
 
 namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class ManagementTypeFactory : AzureTypeFactory
     {
+        private string? _resourceProviderName;
+
+        /// <summary>
+        /// The name for this resource provider.
+        /// For instance, if the namespace is "Azure.ResourceManager.Compute", the resource provider name will be "Compute".
+        /// </summary>
+        public string ResourceProviderName => _resourceProviderName ??= BuildResourceProviderName();
+
+        private string BuildResourceProviderName()
+        {
+            const string armNamespacePrefix = "Azure.ResourceManager.";
+            if (PrimaryNamespace.StartsWith(armNamespacePrefix))
+            {
+                return PrimaryNamespace[armNamespacePrefix.Length..].ToIdentifierName();
+            }
+            return PrimaryNamespace.ToIdentifierName();
+        }
+
         /// <inheritdoc/>
-        public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
+        public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
@@ -52,6 +71,10 @@ namespace Azure.Generator.Management
             {
                 return replacedType;
             }
+            else if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
+            {
+                return csharpType;
+            }
             return base.CreateCSharpTypeCore(inputType);
         }
 
@@ -72,6 +95,12 @@ namespace Azure.Generator.Management
             {
                 return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), [value]).Terminate();
             }
+
+            if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
+            {
+                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+            }
+
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
@@ -84,7 +113,19 @@ namespace Azure.Generator.Management
             {
                 return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), [element], [valueType], false);
             }
+
+            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
+            {
+                return deserializationExpression(valueType, element, format);
+            }
+
             return base.DeserializeJsonValue(valueType, element, format);
+        }
+
+        /// <inheritdoc/>
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
+        {
+            return new NewManagementProjectScaffolding();
         }
     }
 }

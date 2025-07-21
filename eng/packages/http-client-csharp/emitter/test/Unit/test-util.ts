@@ -10,7 +10,7 @@ import {
   CSharpEmitterContext,
   createCSharpEmitterContext,
   Logger,
-  LoggerLevel,
+  LoggerLevel
 } from "@typespec/http-client-csharp";
 import { HttpTestLibrary } from "@typespec/http/testing";
 import { RestTestLibrary } from "@typespec/rest/testing";
@@ -119,5 +119,8 @@ export async function createCSharpSdkContext(
     "@typespec/http-client-csharp",
     sdkContextOptions
   );
-  return createCSharpEmitterContext(context, new Logger(program.program, LoggerLevel.INFO));
+  return createCSharpEmitterContext(
+    context,
+    new Logger(program.program, LoggerLevel.INFO)
+  );
 }

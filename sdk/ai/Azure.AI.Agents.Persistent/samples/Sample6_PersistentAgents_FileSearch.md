@@ -70,6 +70,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -84,6 +85,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -142,7 +144,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 }
 ```
 
-6. We will ask a question to the file contents and add it to the thread, create run and wait while it will terminate. If the run was successful, we will render the response and provide the reference to the uploaded file.
+6. We will ask a question to the file contents and add it to the thread, create run and wait while it will terminate. If the run was not successful, we will throw an exception.
 
 Synchronous sample:
 ```C# Snippet:AgentsFilesSearchExample_CreateThreadAndRun_Sync
@@ -169,11 +171,6 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
-Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
-    threadId: thread.Id,
-    order: ListSortOrder.Ascending
-);
-WriteMessages(messages, fileIds);
 ```
 
 Asynchronous sample:
@@ -201,6 +198,68 @@ Assert.AreEqual(
     RunStatus.Completed,
     run.Status,
     run.LastError?.Message);
+```
+7. If the run has found a context in the file, we will print it out.
+
+Synchronous sample:
+```C# Snippet:AgentsFilesSearchExample_RunSteps_Reference_Sync
+foreach (RunStep runStep in client.Runs.GetRunSteps(
+    runId: run.Id,
+    threadId: thread.Id,
+    include: [RunAdditionalFieldList.FileSearchContents]
+    ))
+{
+    if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+    {
+        foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+        {
+            if (toolCall is RunStepFileSearchToolCall fileSearh)
+            {
+                Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
+                Console.WriteLine("===============================================================");
+            }
+        }
+    }
+}
+```
+
+Asynchronous sample:
+```C# Snippet:AgentsFilesSearchExample_RunSteps_Reference
+await foreach (RunStep runStep in client.Runs.GetRunStepsAsync(
+    runId: run.Id,
+    threadId: thread.Id,
+    include: [RunAdditionalFieldList.FileSearchContents]
+    ))
+{
+    if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+    {
+        foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+        {
+            if (toolCall is RunStepFileSearchToolCall fileSearh)
+            {
+                Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
+                Console.WriteLine("===============================================================");
+            }
+        }
+    }
+}
+```
+
+8. Now we will render the response and provide the reference to the uploaded file.
+
+Synchronous sample:
+```C# Snippet:AgentsFilesSearchExample_ShowMessages_Sync
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
+    threadId: thread.Id,
+    order: ListSortOrder.Ascending
+);
+WriteMessages(messages, fileIds);
+```
+
+Asynchronous sample:
+```C# Snippet:AgentsFilesSearchExample_ShowMessages
 List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
@@ -208,10 +267,11 @@ List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
 WriteMessages(messages, fileIds);
 ```
 
-7. Finally, we delete all the resources, we have created in this sample.
+9. Finally, we delete all the resources, we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:AgentsFilesSearchExample_Cleanup_Sync
+// NOTE: Comment out these four lines if you plan to reuse the agent later.
 client.VectorStores.DeleteVectorStore(vectorStore.Id);
 client.Files.DeleteFile(uploadedAgentFile.Id);
 client.Threads.DeleteThread(thread.Id);
@@ -220,6 +280,7 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsFilesSearchExample_Cleanup
+// NOTE: Comment out these four lines if you plan to reuse the agent later.
 await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
 await client.Files.DeleteFileAsync(uploadedAgentFile.Id);
 await client.Threads.DeleteThreadAsync(thread.Id);

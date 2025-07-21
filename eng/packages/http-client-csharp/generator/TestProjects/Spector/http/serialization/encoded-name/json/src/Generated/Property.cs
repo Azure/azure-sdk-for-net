@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Serialization.EncodedName.Json._Property;
 
-namespace Serialization.EncodedName.Json
+namespace Serialization.EncodedName.Json._Property
 {
     public partial class Property
     {

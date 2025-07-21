@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Properties for a CVE analysis summary.
-    /// Serialized Name: CveSummary
-    /// </summary>
+    /// <summary> Properties for a CVE analysis summary. </summary>
     public partial class CveSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
@@ -23,35 +20,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
-        /// <param name="summaryType">
-        /// The type of summary.
-        /// Serialized Name: SummaryResourceProperties.summaryType
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: SummaryResourceProperties.provisioningState
-        /// </param>
+        /// <param name="summaryType"> The type of summary. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="criticalCveCount">
-        /// The total number of critical severity CVEs detected
-        /// Serialized Name: CveSummary.criticalCveCount
-        /// </param>
-        /// <param name="highCveCount">
-        /// The total number of high severity CVEs detected
-        /// Serialized Name: CveSummary.highCveCount
-        /// </param>
-        /// <param name="mediumCveCount">
-        /// The total number of medium severity CVEs detected
-        /// Serialized Name: CveSummary.mediumCveCount
-        /// </param>
-        /// <param name="lowCveCount">
-        /// The total number of low severity CVEs detected
-        /// Serialized Name: CveSummary.lowCveCount
-        /// </param>
-        /// <param name="unknownCveCount">
-        /// The total number of unknown severity CVEs detected
-        /// Serialized Name: CveSummary.unknownCveCount
-        /// </param>
+        /// <param name="criticalCveCount"> The total number of critical severity CVEs detected. </param>
+        /// <param name="highCveCount"> The total number of high severity CVEs detected. </param>
+        /// <param name="mediumCveCount"> The total number of medium severity CVEs detected. </param>
+        /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
+        /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
         internal CveSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount) : base(summaryType, provisioningState, serializedAdditionalRawData)
         {
             CriticalCveCount = criticalCveCount;
@@ -62,30 +38,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             SummaryType = summaryType;
         }
 
-        /// <summary>
-        /// The total number of critical severity CVEs detected
-        /// Serialized Name: CveSummary.criticalCveCount
-        /// </summary>
+        /// <summary> The total number of critical severity CVEs detected. </summary>
         public long? CriticalCveCount { get; set; }
-        /// <summary>
-        /// The total number of high severity CVEs detected
-        /// Serialized Name: CveSummary.highCveCount
-        /// </summary>
+        /// <summary> The total number of high severity CVEs detected. </summary>
         public long? HighCveCount { get; set; }
-        /// <summary>
-        /// The total number of medium severity CVEs detected
-        /// Serialized Name: CveSummary.mediumCveCount
-        /// </summary>
+        /// <summary> The total number of medium severity CVEs detected. </summary>
         public long? MediumCveCount { get; set; }
-        /// <summary>
-        /// The total number of low severity CVEs detected
-        /// Serialized Name: CveSummary.lowCveCount
-        /// </summary>
+        /// <summary> The total number of low severity CVEs detected. </summary>
         public long? LowCveCount { get; set; }
-        /// <summary>
-        /// The total number of unknown severity CVEs detected
-        /// Serialized Name: CveSummary.unknownCveCount
-        /// </summary>
+        /// <summary> The total number of unknown severity CVEs detected. </summary>
         public long? UnknownCveCount { get; set; }
     }
 }

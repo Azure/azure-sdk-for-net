@@ -27,26 +27,6 @@ public partial class LongTermRetentionPolicy : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The BackupStorageAccessTier for the LTR backups.
-    /// </summary>
-    public BicepValue<SqlBackupStorageAccessTier> BackupStorageAccessTier 
-    {
-        get { Initialize(); return _backupStorageAccessTier!; }
-        set { Initialize(); _backupStorageAccessTier!.Assign(value); }
-    }
-    private BicepValue<SqlBackupStorageAccessTier>? _backupStorageAccessTier;
-
-    /// <summary>
-    /// The setting whether to make LTR backups immutable.
-    /// </summary>
-    public BicepValue<bool> MakeBackupsImmutable 
-    {
-        get { Initialize(); return _makeBackupsImmutable!; }
-        set { Initialize(); _makeBackupsImmutable!.Assign(value); }
-    }
-    private BicepValue<bool>? _makeBackupsImmutable;
-
-    /// <summary>
     /// The monthly retention policy for an LTR backup in an ISO 8601 format.
     /// </summary>
     public BicepValue<string> MonthlyRetention 
@@ -125,7 +105,7 @@ public partial class LongTermRetentionPolicy : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the LongTermRetentionPolicy.</param>
     public LongTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -135,8 +115,6 @@ public partial class LongTermRetentionPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _backupStorageAccessTier = DefineProperty<SqlBackupStorageAccessTier>("BackupStorageAccessTier", ["properties", "backupStorageAccessTier"]);
-        _makeBackupsImmutable = DefineProperty<bool>("MakeBackupsImmutable", ["properties", "makeBackupsImmutable"]);
         _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);
         _weeklyRetention = DefineProperty<string>("WeeklyRetention", ["properties", "weeklyRetention"]);
         _weekOfYear = DefineProperty<int>("WeekOfYear", ["properties", "weekOfYear"]);
@@ -151,6 +129,11 @@ public partial class LongTermRetentionPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

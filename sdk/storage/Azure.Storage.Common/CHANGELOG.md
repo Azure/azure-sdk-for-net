@@ -1,6 +1,6 @@
 # Release History
 
-## 12.24.0-beta.2 (Unreleased)
+## 12.25.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.24.0 (2025-07-14)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.25.0-beta.1 (2025-06-09)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
 
 ## 12.24.0-beta.1 (2025-05-06)
 

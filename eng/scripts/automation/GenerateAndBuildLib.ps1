@@ -720,10 +720,6 @@ function GeneratePackage()
     }
 
     if ($isGenerateSuccess) {
-        # update resourcemanager ci.mgmt.yml for mgmt sdk
-        if ($serviceType -eq "resource-manager") {
-            & $sdkRootPath/eng/scripts/Update-Mgmt-CI.ps1
-        }
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -921,8 +917,14 @@ function GetSDKProjectFolder()
         if ($yml["parameters"] -And $yml["parameters"]["service-dir"]) {
             $service = $yml["parameters"]["service-dir"]["default"];
         }
-        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"] -And $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]) {
-            $packageDir = $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]
+        if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"]) {
+            $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
+            if ($csharpOpts["package-dir"]) {
+                $packageDir = $csharpOpts["package-dir"]
+            }
+            if ($csharpOpts["service-dir"]) {
+                $service = $csharpOpts["service-dir"]
+            }
         }
     }
     if (!$service || !$packageDir) {

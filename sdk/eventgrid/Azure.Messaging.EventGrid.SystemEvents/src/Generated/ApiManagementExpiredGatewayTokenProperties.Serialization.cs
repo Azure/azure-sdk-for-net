@@ -34,8 +34,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ApiManagementExpiredGatewayTokenProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("expiredAtUtc"u8);
-            writer.WriteStringValue(ExpiredAtUtc, "O");
+            if (Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expiredAtUtc"u8);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,13 +76,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            DateTimeOffset expiredAtUtc = default;
+            DateTimeOffset? expiredAtUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiredAtUtc"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     expiredAtUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

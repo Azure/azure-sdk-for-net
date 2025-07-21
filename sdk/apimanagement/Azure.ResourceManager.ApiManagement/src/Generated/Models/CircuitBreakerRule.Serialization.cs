@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("tripDuration"u8);
                 writer.WriteStringValue(TripDuration.Value, "P");
             }
+            if (Optional.IsDefined(AcceptRetryAfter))
+            {
+                writer.WritePropertyName("acceptRetryAfter"u8);
+                writer.WriteBooleanValue(AcceptRetryAfter.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string name = default;
             CircuitBreakerFailureCondition failureCondition = default;
             TimeSpan? tripDuration = default;
+            bool? acceptRetryAfter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +123,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     tripDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("acceptRetryAfter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    acceptRetryAfter = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CircuitBreakerRule(name, failureCondition, tripDuration, serializedAdditionalRawData);
+            return new CircuitBreakerRule(name, failureCondition, tripDuration, acceptRetryAfter, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -188,6 +203,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     builder.Append("  tripDuration: ");
                     var formattedTimeSpan = TypeFormatters.ToString(TripDuration.Value, "P");
                     builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AcceptRetryAfter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  acceptRetryAfter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AcceptRetryAfter))
+                {
+                    builder.Append("  acceptRetryAfter: ");
+                    var boolValue = AcceptRetryAfter.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

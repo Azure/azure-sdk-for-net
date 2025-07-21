@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/5c73e496040fa9fec872
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -30,7 +30,7 @@ rename-mapping:
   AdminKeyResult: SearchServiceAdminKeyResult
   CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
   CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
-  ComputeType: SearchServiceComputeType 
+  ComputeType: SearchServiceComputeType
   DataPlaneAuthOptions: SearchAadAuthDataPlaneAuthOptions
   EncryptionWithCmk: SearchEncryptionWithCmk
   FeatureName: SearchServiceFeatureName

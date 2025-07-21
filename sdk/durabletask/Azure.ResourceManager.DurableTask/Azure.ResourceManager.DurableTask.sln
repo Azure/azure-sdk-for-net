@@ -7,8 +7,6 @@ Project("{51D55474-B532-4346-8431-4BA872A1AD11}") = "Azure.ResourceManager.Durab
 EndProject
 Project("{51D55474-B532-4346-8431-4BA872A1AD11}") = "Azure.ResourceManager.DurableTask.Tests", "tests\Azure.ResourceManager.DurableTask.Tests.csproj", "{F849C2AA-D6E9-4B9B-B68C-10B2D436AE5E}"
 EndProject
-Project("{51D55474-B532-4346-8431-4BA872A1AD11}") = "Azure.ResourceManager.DurableTask.Samples", "samples\Azure.ResourceManager.DurableTask.Samples.csproj", "{7EA44CAC-5DDC-45C1-8916-E1EB8CE1DEE2}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

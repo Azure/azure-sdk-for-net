@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -22,10 +23,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the service. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="apiCenterServiceProvisioningState"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
-        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ApiCenterProvisioningState? provisioningState = null)
+        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApiCenterProvisioningState? apiCenterServiceProvisioningState = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -36,17 +37,203 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 systemData,
                 tags,
                 location,
+                apiCenterServiceProvisioningState != null ? new ApiCenterServiceProperties(apiCenterServiceProvisioningState, serializedAdditionalRawData: null) : null,
                 identity,
-                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterServicePatch"/>. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.ApiCenterServicePatch"/> instance for mocking. </returns>
-        public static ApiCenterServicePatch ApiCenterServicePatch(ApiCenterProvisioningState? provisioningState = null)
+        /// <summary> Initializes a new instance of <see cref="Models.MetadataSchemaExportResult"/>. </summary>
+        /// <param name="format"> The export format for the schema. </param>
+        /// <param name="value"> The result of the export operation. </param>
+        /// <returns> A new <see cref="Models.MetadataSchemaExportResult"/> instance for mocking. </returns>
+        public static MetadataSchemaExportResult MetadataSchemaExportResult(MetadataSchemaExportFormat? format = null, string value = null)
         {
-            return new ApiCenterServicePatch(provisioningState, serializedAdditionalRawData: null);
+            return new MetadataSchemaExportResult(format, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterMetadataSchemaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterMetadataSchemaData"/> instance for mocking. </returns>
+        public static ApiCenterMetadataSchemaData ApiCenterMetadataSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterMetadataSchemaProperties properties = null)
+        {
+            return new ApiCenterMetadataSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterWorkspaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterWorkspaceData"/> instance for mocking. </returns>
+        public static ApiCenterWorkspaceData ApiCenterWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterWorkspaceProperties properties = null)
+        {
+            return new ApiCenterWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterApiData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiData"/> instance for mocking. </returns>
+        public static ApiCenterApiData ApiCenterApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterApiProperties properties = null)
+        {
+            return new ApiCenterApiData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterApiProperties"/>. </summary>
+        /// <param name="title"> API title. </param>
+        /// <param name="kind"> Kind of API. For example, REST or GraphQL. </param>
+        /// <param name="description"> Description of the API. </param>
+        /// <param name="summary"> Short description of the API. </param>
+        /// <param name="lifecycleStage"> Current lifecycle stage of the API. </param>
+        /// <param name="termsOfServiceUri"> Terms of service for the API. </param>
+        /// <param name="externalDocumentation"> The set of external documentation. </param>
+        /// <param name="contacts"> The set of contacts. </param>
+        /// <param name="license"> The license information for the API. </param>
+        /// <param name="customProperties"> The custom metadata defined for API catalog entities. </param>
+        /// <returns> A new <see cref="Models.ApiCenterApiProperties"/> instance for mocking. </returns>
+        public static ApiCenterApiProperties ApiCenterApiProperties(string title = null, ApiKind kind = default, string description = null, string summary = null, ApiLifecycleStage? lifecycleStage = null, Uri termsOfServiceUri = null, IEnumerable<ApiExternalDocumentation> externalDocumentation = null, IEnumerable<ApiContactInformation> contacts = null, ApiLicenseInformation license = null, BinaryData customProperties = null)
+        {
+            externalDocumentation ??= new List<ApiExternalDocumentation>();
+            contacts ??= new List<ApiContactInformation>();
+
+            return new ApiCenterApiProperties(
+                title,
+                kind,
+                description,
+                summary,
+                lifecycleStage,
+                termsOfServiceUri != null ? new TermsOfService(termsOfServiceUri, serializedAdditionalRawData: null) : null,
+                externalDocumentation?.ToList(),
+                contacts?.ToList(),
+                license,
+                customProperties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterDeploymentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterDeploymentData"/> instance for mocking. </returns>
+        public static ApiCenterDeploymentData ApiCenterDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterDeploymentProperties properties = null)
+        {
+            return new ApiCenterDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterApiVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiVersionData"/> instance for mocking. </returns>
+        public static ApiCenterApiVersionData ApiCenterApiVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterApiVersionProperties properties = null)
+        {
+            return new ApiCenterApiVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterApiDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiDefinitionData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionData ApiCenterApiDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterApiDefinitionProperties properties = null)
+        {
+            return new ApiCenterApiDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiCenterApiDefinitionProperties"/>. </summary>
+        /// <param name="title"> API definition title. </param>
+        /// <param name="description"> API definition description. </param>
+        /// <param name="specification"> API specification details. </param>
+        /// <returns> A new <see cref="Models.ApiCenterApiDefinitionProperties"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionProperties ApiCenterApiDefinitionProperties(string title = null, string description = null, ApiSpecificationDetails specification = null)
+        {
+            return new ApiCenterApiDefinitionProperties(title, description, specification, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiSpecificationDetails"/>. </summary>
+        /// <param name="name"> Specification name. </param>
+        /// <param name="version"> Specification version. </param>
+        /// <returns> A new <see cref="Models.ApiSpecificationDetails"/> instance for mocking. </returns>
+        public static ApiSpecificationDetails ApiSpecificationDetails(string name = null, string version = null)
+        {
+            return new ApiSpecificationDetails(name, version, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiSpecExportResult"/>. </summary>
+        /// <param name="format"> The format of exported result. </param>
+        /// <param name="value"> The result of the export operation. </param>
+        /// <returns> A new <see cref="Models.ApiSpecExportResult"/> instance for mocking. </returns>
+        public static ApiSpecExportResult ApiSpecExportResult(ApiSpecExportResultFormat? format = null, string value = null)
+        {
+            return new ApiSpecExportResult(format, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterEnvironmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterEnvironmentData"/> instance for mocking. </returns>
+        public static ApiCenterEnvironmentData ApiCenterEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiCenterEnvironmentProperties properties = null)
+        {
+            return new ApiCenterEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
     }
 }

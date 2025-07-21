@@ -95,12 +95,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            CommunicationIdentifierModelKind? kind = default;
+            AcsCommunicationIdentifierKind? kind = default;
             string rawId = default;
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
-            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
+            AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    kind = new CommunicationIdentifierModelKind(property.Value.GetString());
+                    kind = new AcsCommunicationIdentifierKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rawId"u8))
@@ -148,7 +148,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value, options);
+                    microsoftTeamsApp = AcsMicrosoftTeamsAppIdentifier.DeserializeAcsMicrosoftTeamsAppIdentifier(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

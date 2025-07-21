@@ -7,6 +7,8 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Payload.ContentNegotiation._DifferentBody;
+using Payload.ContentNegotiation._SameBody;
 
 namespace Payload.ContentNegotiation
 {

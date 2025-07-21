@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Common Vulnerability Scoring System values.
-    /// Serialized Name: CvssScore
-    /// </summary>
+    /// <summary> Common Vulnerability Scoring System values. </summary>
     public partial class CvssScore
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CvssScore"/>. </summary>
-        /// <param name="version">
-        /// The version of the Common Vulnerability Scoring System (CVSS).
-        /// Serialized Name: CvssScore.version
-        /// </param>
+        /// <param name="version"> The version of the Common Vulnerability Scoring System (CVSS). </param>
         public CvssScore(int version)
         {
             Version = version;
         }
 
         /// <summary> Initializes a new instance of <see cref="CvssScore"/>. </summary>
-        /// <param name="version">
-        /// The version of the Common Vulnerability Scoring System (CVSS).
-        /// Serialized Name: CvssScore.version
-        /// </param>
-        /// <param name="score">
-        /// The score of the CVE according to the CVSS specified.
-        /// Serialized Name: CvssScore.score
-        /// </param>
+        /// <param name="version"> The version of the Common Vulnerability Scoring System (CVSS). </param>
+        /// <param name="score"> The score of the CVE according to the CVSS specified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CvssScore(int version, float? score, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,15 +68,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
-        /// <summary>
-        /// The version of the Common Vulnerability Scoring System (CVSS).
-        /// Serialized Name: CvssScore.version
-        /// </summary>
+        /// <summary> The version of the Common Vulnerability Scoring System (CVSS). </summary>
         public int Version { get; set; }
-        /// <summary>
-        /// The score of the CVE according to the CVSS specified.
-        /// Serialized Name: CvssScore.score
-        /// </summary>
+        /// <summary> The score of the CVE according to the CVSS specified. </summary>
         public float? Score { get; set; }
     }
 }

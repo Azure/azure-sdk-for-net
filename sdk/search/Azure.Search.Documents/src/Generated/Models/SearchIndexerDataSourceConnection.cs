@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public SearchIndexerDataIdentity Identity { get; set; }
         /// <summary> Ingestion options with various types of permission data. </summary>
-        public IList<IndexerPermissionOption> IndexerPermissionOptions { get; set; }
+        public IList<IndexerPermissionOption> IndexerPermissionOptions { get; }
         /// <summary>
         /// The data change detection policy for the datasource.
         /// Please note <see cref="Models.DataChangeDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

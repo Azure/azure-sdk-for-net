@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.4.3 (2025-06-24)
+
+### Features Added
+
+- Updated per swagger change for StorageAction GA
+
 ## 1.4.2 (2025-04-25)
 
 ### Breaking Changes

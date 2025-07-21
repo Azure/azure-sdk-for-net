@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary>
     /// Properties of an analysis summary.
-    /// Serialized Name: SummaryResourceProperties
     /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CveSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/> and <see cref="FirmwareSummary"/>.
     /// </summary>
@@ -56,14 +55,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisSummaryProperties"/>. </summary>
-        /// <param name="summaryType">
-        /// The type of summary.
-        /// Serialized Name: SummaryResourceProperties.summaryType
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: SummaryResourceProperties.provisioningState
-        /// </param>
+        /// <param name="summaryType"> The type of summary. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirmwareAnalysisSummaryProperties(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +65,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The type of summary.
-        /// Serialized Name: SummaryResourceProperties.summaryType
-        /// </summary>
+        /// <summary> The type of summary. </summary>
         internal FirmwareAnalysisSummaryType SummaryType { get; set; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: SummaryResourceProperties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

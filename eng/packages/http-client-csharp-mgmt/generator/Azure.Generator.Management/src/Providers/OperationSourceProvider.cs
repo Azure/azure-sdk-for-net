@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Primitives;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -31,7 +30,7 @@ namespace Azure.Generator.Management.Providers
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resource.Type);
         }
 
-        protected override string BuildName() => $"{_resource.SpecName}OperationSource";
+        protected override string BuildName() => $"{_resource.ResourceName}OperationSource";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "LongRunningOperation", $"{Name}.cs");
 

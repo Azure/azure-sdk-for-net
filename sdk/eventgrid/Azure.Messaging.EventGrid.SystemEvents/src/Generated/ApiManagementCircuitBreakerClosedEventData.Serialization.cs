@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiManagementCircuitBreakerClosedEventDataConverter))]
     public partial class ApiManagementCircuitBreakerClosedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementCircuitBreakerClosedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCircuitBreakerClosedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -145,6 +147,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiManagementCircuitBreakerClosedEventDataConverter : JsonConverter<ApiManagementCircuitBreakerClosedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiManagementCircuitBreakerClosedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiManagementCircuitBreakerClosedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementCircuitBreakerClosedEventData(document.RootElement);
+            }
         }
     }
 }

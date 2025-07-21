@@ -14,12 +14,6 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceItemProperties
     {
         /// <summary>
-        /// The Uri of the resource.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri Uri { get; set; }
-
-        /// <summary>
         /// The length of the resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -10,9 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Payload.ContentNegotiation._DifferentBody;
 
-namespace Payload.ContentNegotiation
+namespace Payload.ContentNegotiation._DifferentBody
 {
     public partial class DifferentBody
     {

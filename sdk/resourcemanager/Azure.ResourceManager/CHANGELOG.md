@@ -1,14 +1,16 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.13.2 (2025-07-18)
 
 ### Features Added
 
-### Breaking Changes
+- Make `Azure.ResourceManager` AOT-compatible.
 
-### Bugs Fixed
+## 1.14.0-beta.1 (2025-06-23)
 
-### Other Changes
+### Features Added
+
+- Use ModelReaderWriter instead of System.Text.Json.JsonSerializer for serialization of ManagedServiceIdentity.
 
 ## 1.13.1 (2025-04-24)
 

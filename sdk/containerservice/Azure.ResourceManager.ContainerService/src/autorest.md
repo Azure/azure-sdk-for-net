@@ -13,7 +13,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -21,7 +21,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-singleton-resource:

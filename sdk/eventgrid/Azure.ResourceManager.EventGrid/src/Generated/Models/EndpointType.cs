@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private const string ServiceBusQueueValue = "ServiceBusQueue";
         private const string ServiceBusTopicValue = "ServiceBusTopic";
         private const string AzureFunctionValue = "AzureFunction";
+        private const string PartnerDestinationValue = "PartnerDestination";
         private const string MonitorAlertValue = "MonitorAlert";
         private const string NamespaceTopicValue = "NamespaceTopic";
 
@@ -46,6 +47,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EndpointType ServiceBusTopic { get; } = new EndpointType(ServiceBusTopicValue);
         /// <summary> AzureFunction. </summary>
         public static EndpointType AzureFunction { get; } = new EndpointType(AzureFunctionValue);
+        /// <summary> PartnerDestination. </summary>
+        public static EndpointType PartnerDestination { get; } = new EndpointType(PartnerDestinationValue);
         /// <summary> MonitorAlert. </summary>
         public static EndpointType MonitorAlert { get; } = new EndpointType(MonitorAlertValue);
         /// <summary> NamespaceTopic. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Streaming.Jsonl._Basic;
 
 namespace Streaming.Jsonl
 {

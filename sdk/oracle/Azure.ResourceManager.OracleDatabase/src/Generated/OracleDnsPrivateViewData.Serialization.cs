@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue<OracleDnsPrivateViewProperties>(Properties, options);
             }
         }
 

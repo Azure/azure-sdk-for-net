@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the service. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ApiCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApiCenterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiCenterServiceProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,9 +79,15 @@ namespace Azure.ResourceManager.ApiCenter
         {
         }
 
-        /// <summary> The identity of the service. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal ApiCenterServiceProperties Properties { get; set; }
+        /// <summary> Provisioning state of the service. </summary>
+        public ApiCenterProvisioningState? ApiCenterServiceProvisioningState
+        {
+            get => Properties is null ? default : Properties.ProvisioningState;
+        }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public ApiCenterProvisioningState? ProvisioningState { get; }
     }
 }

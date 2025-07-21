@@ -71,6 +71,19 @@ public partial class AppServicePlan : ProvisionableResource
     private HostingEnvironmentProfile? _hostingEnvironmentProfile;
 
     /// <summary>
+    /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to
+    /// scale asynchronously if there are insufficient workers to scale
+    /// synchronously.             If &lt;code&gt;false&lt;/code&gt;, this App
+    /// Service Plan will only attempt sync scaling.
+    /// </summary>
+    public BicepValue<bool> IsAsyncScalingEnabled 
+    {
+        get { Initialize(); return _isAsyncScalingEnabled!; }
+        set { Initialize(); _isAsyncScalingEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAsyncScalingEnabled;
+
+    /// <summary>
     /// ServerFarm supports ElasticScale. Apps in this plan will scale as if
     /// the ServerFarm was ElasticPremium sku.
     /// </summary>
@@ -153,7 +166,9 @@ public partial class AppServicePlan : ProvisionableResource
     private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
-    /// Kind of resource.
+    /// Kind of resource. If the resource is an app, you can refer to
+    /// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
+    /// for details supported values for kind.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -347,7 +362,7 @@ public partial class AppServicePlan : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlan.</param>
     public AppServicePlan(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/serverfarms", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.Web/serverfarms", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -361,6 +376,7 @@ public partial class AppServicePlan : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _freeOfferExpireOn = DefineProperty<DateTimeOffset>("FreeOfferExpireOn", ["properties", "freeOfferExpirationTime"]);
         _hostingEnvironmentProfile = DefineModelProperty<HostingEnvironmentProfile>("HostingEnvironmentProfile", ["properties", "hostingEnvironmentProfile"]);
+        _isAsyncScalingEnabled = DefineProperty<bool>("IsAsyncScalingEnabled", ["properties", "asyncScalingEnabled"]);
         _isElasticScaleEnabled = DefineProperty<bool>("IsElasticScaleEnabled", ["properties", "elasticScaleEnabled"]);
         _isHyperV = DefineProperty<bool>("IsHyperV", ["properties", "hyperV"]);
         _isPerSiteScaling = DefineProperty<bool>("IsPerSiteScaling", ["properties", "perSiteScaling"]);
@@ -394,6 +410,11 @@ public partial class AppServicePlan : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>

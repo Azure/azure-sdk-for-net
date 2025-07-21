@@ -79,10 +79,10 @@ public partial class KubernetesClusterExtensionStatus : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _code = DefineProperty<string>("Code", ["code"]);
-        _displayStatus = DefineProperty<string>("DisplayStatus", ["displayStatus"]);
-        _level = DefineProperty<KubernetesClusterExtensionStatusLevel>("Level", ["level"]);
-        _message = DefineProperty<string>("Message", ["message"]);
-        _time = DefineProperty<string>("Time", ["time"]);
+        _code = DefineProperty<string>("Code", ["Code"]);
+        _displayStatus = DefineProperty<string>("DisplayStatus", ["DisplayStatus"]);
+        _level = DefineProperty<KubernetesClusterExtensionStatusLevel>("Level", ["Level"]);
+        _message = DefineProperty<string>("Message", ["Message"]);
+        _time = DefineProperty<string>("Time", ["Time"]);
     }
 }

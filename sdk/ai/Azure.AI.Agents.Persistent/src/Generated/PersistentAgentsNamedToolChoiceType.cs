@@ -26,8 +26,13 @@ namespace Azure.AI.Agents.Persistent
         private const string CodeInterpreterValue = "code_interpreter";
         private const string FileSearchValue = "file_search";
         private const string BingGroundingValue = "bing_grounding";
+        private const string MicrosoftFabricValue = "fabric_dataagent";
+        private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
+        private const string BingCustomSearchValue = "bing_custom_search";
         private const string ConnectedAgentValue = "connected_agent";
+        private const string DeepResearchValue = "deep_research";
+        private const string McpValue = "mcp";
 
         /// <summary> Tool type `function`. </summary>
         public static PersistentAgentsNamedToolChoiceType Function { get; } = new PersistentAgentsNamedToolChoiceType(FunctionValue);
@@ -37,10 +42,20 @@ namespace Azure.AI.Agents.Persistent
         public static PersistentAgentsNamedToolChoiceType FileSearch { get; } = new PersistentAgentsNamedToolChoiceType(FileSearchValue);
         /// <summary> Tool type `bing_grounding`. </summary>
         public static PersistentAgentsNamedToolChoiceType BingGrounding { get; } = new PersistentAgentsNamedToolChoiceType(BingGroundingValue);
+        /// <summary> Tool type `fabric_dataagent`. </summary>
+        public static PersistentAgentsNamedToolChoiceType MicrosoftFabric { get; } = new PersistentAgentsNamedToolChoiceType(MicrosoftFabricValue);
+        /// <summary> Tool type `sharepoint_grounding`. </summary>
+        public static PersistentAgentsNamedToolChoiceType Sharepoint { get; } = new PersistentAgentsNamedToolChoiceType(SharepointValue);
         /// <summary> Tool type `azure_ai_search`. </summary>
         public static PersistentAgentsNamedToolChoiceType AzureAISearch { get; } = new PersistentAgentsNamedToolChoiceType(AzureAISearchValue);
+        /// <summary> Tool type `bing_custom_search`. </summary>
+        public static PersistentAgentsNamedToolChoiceType BingCustomSearch { get; } = new PersistentAgentsNamedToolChoiceType(BingCustomSearchValue);
         /// <summary> Tool type `connected_agent`. </summary>
         public static PersistentAgentsNamedToolChoiceType ConnectedAgent { get; } = new PersistentAgentsNamedToolChoiceType(ConnectedAgentValue);
+        /// <summary> Tool type `deep_research`. </summary>
+        public static PersistentAgentsNamedToolChoiceType DeepResearch { get; } = new PersistentAgentsNamedToolChoiceType(DeepResearchValue);
+        /// <summary> Tool type `mcp`. </summary>
+        public static PersistentAgentsNamedToolChoiceType Mcp { get; } = new PersistentAgentsNamedToolChoiceType(McpValue);
         /// <summary> Determines if two <see cref="PersistentAgentsNamedToolChoiceType"/> values are the same. </summary>
         public static bool operator ==(PersistentAgentsNamedToolChoiceType left, PersistentAgentsNamedToolChoiceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistentAgentsNamedToolChoiceType"/> values are not the same. </summary>

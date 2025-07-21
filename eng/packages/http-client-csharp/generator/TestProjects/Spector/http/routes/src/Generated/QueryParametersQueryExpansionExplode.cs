@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Routes
+namespace Routes._QueryParameters.QueryExpansion.Explode
 {
     public partial class QueryParametersQueryExpansionExplode
     {

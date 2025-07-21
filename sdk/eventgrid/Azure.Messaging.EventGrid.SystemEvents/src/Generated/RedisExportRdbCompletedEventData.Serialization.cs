@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(RedisExportRdbCompletedEventDataConverter))]
     public partial class RedisExportRdbCompletedEventData : IUtf8JsonSerializable, IJsonModel<RedisExportRdbCompletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisExportRdbCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -166,6 +168,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class RedisExportRdbCompletedEventDataConverter : JsonConverter<RedisExportRdbCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, RedisExportRdbCompletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override RedisExportRdbCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRedisExportRdbCompletedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebAppServicePlanUpdatedEventDataConverter))]
     public partial class WebAppServicePlanUpdatedEventData : IUtf8JsonSerializable, IJsonModel<WebAppServicePlanUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppServicePlanUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,10 +36,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("appServicePlanEventTypeDetail"u8);
-            writer.WriteObjectValue(AppServicePlanEventTypeDetail, options);
-            writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            if (Optional.IsDefined(AppServicePlanEventTypeDetail))
+            {
+                writer.WritePropertyName("appServicePlanEventTypeDetail"u8);
+                writer.WriteObjectValue(AppServicePlanEventTypeDetail, options);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -119,11 +127,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appServicePlanEventTypeDetail"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     appServicePlanEventTypeDetail = AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sku = WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(property.Value, options);
                     continue;
                 }
@@ -220,6 +236,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<WebAppServicePlanUpdatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebAppServicePlanUpdatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override WebAppServicePlanUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement);
+            }
         }
     }
 }

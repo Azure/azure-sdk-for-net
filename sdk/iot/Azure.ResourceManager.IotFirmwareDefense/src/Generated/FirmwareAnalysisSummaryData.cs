@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// <summary>
     /// A class representing the FirmwareAnalysisSummary data model.
     /// The object representing a firmware analysis summary resource.
-    /// Serialized Name: SummaryResource
     /// </summary>
     public partial class FirmwareAnalysisSummaryData : ResourceData
     {
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The resource-specific properties for this resource.
-        /// Serialized Name: SummaryResource.properties
         /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CveSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/> and <see cref="FirmwareSummary"/>.
         /// </param>
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// The resource-specific properties for this resource.
-        /// Serialized Name: SummaryResource.properties
         /// Please note <see cref="FirmwareAnalysisSummaryProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryHardeningSummary"/>, <see cref="CveSummary"/>, <see cref="CryptoCertificateSummary"/>, <see cref="CryptoKeySummary"/> and <see cref="FirmwareSummary"/>.
         /// </summary>

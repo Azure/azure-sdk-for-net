@@ -17,12 +17,16 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
         /// <param name="searchId"> The search id. </param>
-        internal PhoneNumberPurchaseRequest(string searchId)
+        /// <param name="agreeToNotResell"> The agreement to not resell the phone numbers. Defaults to false if not provided. </param>
+        internal PhoneNumberPurchaseRequest(string searchId, bool? agreeToNotResell)
         {
             SearchId = searchId;
+            AgreeToNotResell = agreeToNotResell;
         }
 
         /// <summary> The search id. </summary>
         public string SearchId { get; set; }
+        /// <summary> The agreement to not resell the phone numbers. Defaults to false if not provided. </summary>
+        public bool? AgreeToNotResell { get; set; }
     }
 }

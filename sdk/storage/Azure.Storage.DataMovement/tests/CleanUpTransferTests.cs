@@ -36,6 +36,8 @@ namespace Azure.Storage.DataMovement.Tests
                     }));
             mock.Setup(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<HttpAuthorization>(default));
+            mock.Setup(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(true));
             return mock;
         }
 
@@ -89,6 +91,7 @@ namespace Azure.Storage.DataMovement.Tests
             source.Verify(b => b.ResourceId, Times.Exactly(2));
             source.Verify(b => b.IsContainer, Times.Once());
             source.Verify(b => b.GetSourceCheckpointDetails(), Times.Once());
+            source.Verify(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()));
             source.Verify(b => b.GetPropertiesAsync(It.IsAny<CancellationToken>()));
             source.Verify(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()));
             source.VerifyNoOtherCalls();

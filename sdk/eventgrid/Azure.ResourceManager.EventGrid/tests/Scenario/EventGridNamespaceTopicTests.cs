@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private EventGridNamespaceCollection NamespaceCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
+        // For the webhook endpoint, replace "SANITIZED_FUNCTION_KEY" with the function key
+        // from the Logic App "mylogicappkish2" in the East US region under the
+        // "Azure Event Grid SDK" subscription.
+        private const string EventSubscriptionDestinationEndpoint = "https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
+
         private async Task SetCollection()
         {
             ResourceGroup = await CreateResourceGroupAsync(DefaultSubscription, Recording.GenerateAssetName("sdktest-"), DefaultLocation);
@@ -188,12 +193,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 DeliveryMode = DeliveryMode.Push,
                 Push = new PushInfo
                 {
-                    // For the webhook endpoint, replace "SANITIZED_FUNCTION_KEY" with the function key
-                    // from the Logic App "mylogicappkish2" in the East US region under the
-                    // "Azure Event Grid SDK" subscription.
                     Destination = new WebHookEventSubscriptionDestination
                     {
-                        Endpoint = new Uri("https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=Sanitized&sig=Sanitized"),
+                        Endpoint = new Uri(EventSubscriptionDestinationEndpoint),
                     }
                 }
             };

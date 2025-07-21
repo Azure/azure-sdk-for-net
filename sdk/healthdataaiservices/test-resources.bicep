@@ -26,10 +26,7 @@ var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 var blobStorageName = take(toLower(replace('blob-${baseName}', '-', '')), 24)
 var blobContainerName = 'container-${baseName}'
-
-var maxBaseNameLength = 24 - 5 - length(deidLocationShort) // 5 characters for 'deid-' and 1 for '-'
-var truncatedBaseName = take(baseName, maxBaseNameLength)
-var deidServiceName = 'deid-${truncatedBaseName}-${deidLocationShort}'
+var deidServiceName = take('deid-${deidLocationShort}-${baseName}', 24)
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: blobStorageName
@@ -190,7 +187,7 @@ resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-
   scope: storageAccount
 }
 
-resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-02-28-preview' = {
+resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-09-20' = {
   name: deidServiceName
   location: deidLocation
   identity: {

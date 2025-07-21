@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AvsScriptExecutionStartedEventDataConverter))]
     public partial class AvsScriptExecutionStartedEventData : IUtf8JsonSerializable, IJsonModel<AvsScriptExecutionStartedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsScriptExecutionStartedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -142,6 +144,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AvsScriptExecutionStartedEventDataConverter : JsonConverter<AvsScriptExecutionStartedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AvsScriptExecutionStartedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AvsScriptExecutionStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsScriptExecutionStartedEventData(document.RootElement);
+            }
         }
     }
 }

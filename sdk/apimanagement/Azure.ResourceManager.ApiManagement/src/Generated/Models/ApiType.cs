@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string WebSocketValue = "websocket";
         private const string GraphQLValue = "graphql";
         private const string OdataValue = "odata";
+        private const string GrpcValue = "grpc";
 
         /// <summary> http. </summary>
         public static ApiType Http { get; } = new ApiType(HttpValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiType GraphQL { get; } = new ApiType(GraphQLValue);
         /// <summary> odata. </summary>
         public static ApiType Odata { get; } = new ApiType(OdataValue);
+        /// <summary> grpc. </summary>
+        public static ApiType Grpc { get; } = new ApiType(GrpcValue);
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiType"/> values are not the same. </summary>

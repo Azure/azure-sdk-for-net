@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,6 +351,102 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary>
+        /// Uploads or downloads the list of domains for a DNS Resolver Domain List from a storage link.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverDomainLists/{dnsResolverDomainListName}/bulk</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverDomainLists_Bulk</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverDomainListResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="dnsResolverDomainListBulk"> Parameters supplied to the bulk domain list operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverDomainListBulk"/> is null. </exception>
+        public virtual async Task<ArmOperation<DnsResolverDomainListResource>> BulkAsync(WaitUntil waitUntil, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dnsResolverDomainListBulk, nameof(dnsResolverDomainListBulk));
+
+            using var scope = _dnsResolverDomainListClientDiagnostics.CreateScope("DnsResolverDomainListResource.Bulk");
+            scope.Start();
+            try
+            {
+                var response = await _dnsResolverDomainListRestClient.BulkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsResolverDomainListBulk, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(new DnsResolverDomainListOperationSource(Client), _dnsResolverDomainListClientDiagnostics, Pipeline, _dnsResolverDomainListRestClient.CreateBulkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsResolverDomainListBulk, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Uploads or downloads the list of domains for a DNS Resolver Domain List from a storage link.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverDomainLists/{dnsResolverDomainListName}/bulk</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverDomainLists_Bulk</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverDomainListResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="dnsResolverDomainListBulk"> Parameters supplied to the bulk domain list operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverDomainListBulk"/> is null. </exception>
+        public virtual ArmOperation<DnsResolverDomainListResource> Bulk(WaitUntil waitUntil, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dnsResolverDomainListBulk, nameof(dnsResolverDomainListBulk));
+
+            using var scope = _dnsResolverDomainListClientDiagnostics.CreateScope("DnsResolverDomainListResource.Bulk");
+            scope.Start();
+            try
+            {
+                var response = _dnsResolverDomainListRestClient.Bulk(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsResolverDomainListBulk, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(new DnsResolverDomainListOperationSource(Client), _dnsResolverDomainListClientDiagnostics, Pipeline, _dnsResolverDomainListRestClient.CreateBulkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsResolverDomainListBulk, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -363,7 +459,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -425,7 +521,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -487,7 +583,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +640,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -601,7 +697,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -661,7 +757,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-07-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ContainerInstance
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _containerGroupProfileRevisionContainerGroupProfileClientDiagnostics;
-        private readonly ContainerGroupProfileRestOperations _containerGroupProfileRevisionContainerGroupProfileRestClient;
+        private readonly ClientDiagnostics _containerGroupProfileRevisionCGProfileClientDiagnostics;
+        private readonly CGProfileRestOperations _containerGroupProfileRevisionCGProfileRestClient;
         private readonly ContainerGroupProfileData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupProfileRevisionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerGroupProfileRevisionContainerGroupProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string containerGroupProfileRevisionContainerGroupProfileApiVersion);
-            _containerGroupProfileRevisionContainerGroupProfileRestClient = new ContainerGroupProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileRevisionContainerGroupProfileApiVersion);
+            _containerGroupProfileRevisionCGProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerGroupProfileRevisionCGProfileApiVersion);
+            _containerGroupProfileRevisionCGProfileRestClient = new CGProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileRevisionCGProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfile_GetByRevisionNumber</description>
+        /// <description>CGProfile_GetByRevisionNumber</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupProfileRevisionContainerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionResource.Get");
+            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionResource.Get");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRevisionContainerGroupProfileRestClient.GetByRevisionNumberAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumberAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ContainerGroupProfile_GetByRevisionNumber</description>
+        /// <description>CGProfile_GetByRevisionNumber</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerGroupProfileRevisionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _containerGroupProfileRevisionContainerGroupProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionResource.Get");
+            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionResource.Get");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRevisionContainerGroupProfileRestClient.GetByRevisionNumber(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumber(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value), response.GetRawResponse());

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-");
             string systemTopicEventSubscriptionName1 = Recording.GenerateAssetName("sdk-EventSubscription-");
             string systemTopicEventSubscriptionName2 = Recording.GenerateAssetName("sdk-EventSubscription-");
-            string sourceResourceIdentifier = String.Format("/subscriptions/{0}/resourceGroups/TestRG/providers/Microsoft.KeyVault/vaults/sdktestkeyvault", SystemTopicCollection.Id.SubscriptionId);
+            string sourceResourceIdentifier = String.Format("/subscriptions/{0}/resourceGroups/TestRG/providers/Microsoft.KeyVault/vaults/sdk-test-keyvault", SystemTopicCollection.Id.SubscriptionId);
             SystemTopicData data = new SystemTopicData(new AzureLocation("eastus"))
             {
                 Source = new ResourceIdentifier(sourceResourceIdentifier),
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // List all system topics under subscription
             var systemTopicsInAzureSubscription = await DefaultSubscription.GetSystemTopicsAsync().ToEnumerableAsync();
-            Assert.AreEqual(systemTopicsInAzureSubscription.Count, 179);
+            Assert.AreEqual(systemTopicsInAzureSubscription.Count, 133);
 
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 },
                 Destination = new NamespaceTopicEventSubscriptionDestination()
                 {
-                    ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/TestRG/providers/Microsoft.EventGrid/namespaces/testnamespace/topics/testtopic"),
+                    ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testrg/providers/Microsoft.EventGrid/namespaces/sdk-test-namespace/topics/sdk-test-topic"),
                 }
             };
 

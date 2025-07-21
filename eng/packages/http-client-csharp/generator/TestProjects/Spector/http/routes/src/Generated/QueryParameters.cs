@@ -9,8 +9,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Routes._QueryParameters.QueryContinuation;
+using Routes._QueryParameters.QueryExpansion;
 
-namespace Routes
+namespace Routes._QueryParameters
 {
     public partial class QueryParameters
     {

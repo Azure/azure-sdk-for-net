@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPropertiesOfAWorkerPool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_GetWorkerPool.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_GetWorkerPool.json
             // this example is just showing the usage of "AppServiceEnvironments_GetWorkerPool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_GetPropertiesOfAWorkerPool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_CreateOrUpdateWorkerPool.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_CreateOrUpdateWorkerPool.json
             // this example is just showing the usage of "AppServiceEnvironments_UpdateWorkerPool" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetWorkerPoolInstanceMetricDefinitions_GetMetricDefinitionsForASpecificInstanceOfAWorkerPoolOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions.json
             // this example is just showing the usage of "AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetWebWorkerMetricDefinitions_GetMetricDefinitionsForAWorkerPoolOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListWebWorkerMetricDefinitions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListWebWorkerMetricDefinitions.json
             // this example is just showing the usage of "AppServiceEnvironments_ListWebWorkerMetricDefinitions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetWorkerPoolSkus_GetAvailableSKUsForScalingAWorkerPool()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListWorkerPoolSkus.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListWorkerPoolSkus.json
             // this example is just showing the usage of "AppServiceEnvironments_ListWorkerPoolSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetWebWorkerUsages_GetUsageMetricsForAWorkerPoolOfAnAppServiceEnvironment()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_ListWebWorkerUsages.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AppServiceEnvironments_ListWebWorkerUsages.json
             // this example is just showing the usage of "AppServiceEnvironments_ListWebWorkerUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

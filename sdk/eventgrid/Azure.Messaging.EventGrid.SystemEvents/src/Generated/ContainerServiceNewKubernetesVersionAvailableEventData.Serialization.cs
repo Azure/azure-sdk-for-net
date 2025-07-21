@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ContainerServiceNewKubernetesVersionAvailableEventDataConverter))]
     public partial class ContainerServiceNewKubernetesVersionAvailableEventData : IUtf8JsonSerializable, IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNewKubernetesVersionAvailableEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -164,6 +166,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ContainerServiceNewKubernetesVersionAvailableEventDataConverter : JsonConverter<ContainerServiceNewKubernetesVersionAvailableEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ContainerServiceNewKubernetesVersionAvailableEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ContainerServiceNewKubernetesVersionAvailableEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerServiceNewKubernetesVersionAvailableEventData(document.RootElement);
+            }
         }
     }
 }

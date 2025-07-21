@@ -11,7 +11,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/0cdef1ef00cf9020967d
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - LogAnalytics_GetLogAnalyticsMetrics

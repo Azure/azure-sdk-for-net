@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MachineLearningServicesModelDeployedEventDataConverter))]
     public partial class MachineLearningServicesModelDeployedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesModelDeployedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesModelDeployedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -40,51 +42,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(ServiceComputeType);
             writer.WritePropertyName("modelIds"u8);
             writer.WriteStringValue(ModelIds);
-            if (Optional.IsCollectionDefined(ServiceTags))
+            if (Optional.IsDefined(ServiceTags))
             {
                 writer.WritePropertyName("serviceTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in ServiceTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<object>(ServiceTags, options);
             }
-            if (Optional.IsCollectionDefined(ServiceProperties))
+            if (Optional.IsDefined(ServiceProperties))
             {
                 writer.WritePropertyName("serviceProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ServiceProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<object>(ServiceProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -126,8 +92,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string serviceName = default;
             string serviceComputeType = default;
             string modelIds = default;
-            IReadOnlyDictionary<string, BinaryData> serviceTags = default;
-            IReadOnlyDictionary<string, BinaryData> serviceProperties = default;
+            object serviceTags = default;
+            object serviceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,19 +119,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    serviceTags = dictionary;
+                    serviceTags = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("serviceProperties"u8))
@@ -174,19 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    serviceProperties = dictionary;
+                    serviceProperties = property.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,8 +141,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 serviceName,
                 serviceComputeType,
                 modelIds,
-                serviceTags ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                serviceProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serviceTags,
+                serviceProperties,
                 serializedAdditionalRawData);
         }
 
@@ -249,6 +191,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class MachineLearningServicesModelDeployedEventDataConverter : JsonConverter<MachineLearningServicesModelDeployedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesModelDeployedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override MachineLearningServicesModelDeployedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesModelDeployedEventData(document.RootElement);
+            }
         }
     }
 }

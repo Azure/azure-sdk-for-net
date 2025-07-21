@@ -12,12 +12,132 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApiManagementModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiGatewayData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> SKU properties of the API Management gateway. </param>
+        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="provisioningState"> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </param>
+        /// <param name="targetProvisioningState"> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </param>
+        /// <param name="createdAtUtc"> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="frontendDefaultHostname"> Information regarding how the gateway should be exposed. </param>
+        /// <param name="subnetId"> Information regarding how the gateway should integrate with backend systems. </param>
+        /// <param name="configurationApiHostname"> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </param>
+        /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiGatewayData"/> instance for mocking. </returns>
+        public static ApiGatewayData ApiGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApiManagementGatewaySkuProperties sku = null, ETag? etag = null, string provisioningState = null, string targetProvisioningState = null, DateTimeOffset? createdAtUtc = null, string frontendDefaultHostname = null, ResourceIdentifier subnetId = null, string configurationApiHostname = null, VirtualNetworkType? virtualNetworkType = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ApiGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                etag,
+                provisioningState,
+                targetProvisioningState,
+                createdAtUtc,
+                frontendDefaultHostname != null ? new FrontendConfiguration(frontendDefaultHostname, serializedAdditionalRawData: null) : null,
+                subnetId != null ? new BackendConfiguration(ResourceManagerModelFactory.WritableSubResource(subnetId), serializedAdditionalRawData: null) : null,
+                configurationApiHostname != null ? new GatewayConfigurationApi(configurationApiHostname, serializedAdditionalRawData: null) : null,
+                virtualNetworkType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ApiGatewayPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> SKU properties of the API Management gateway. </param>
+        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="provisioningState"> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </param>
+        /// <param name="targetProvisioningState"> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </param>
+        /// <param name="createdAtUtc"> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="frontendDefaultHostname"> Information regarding how the gateway should be exposed. </param>
+        /// <param name="subnetId"> Information regarding how the gateway should integrate with backend systems. </param>
+        /// <param name="configurationApiHostname"> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </param>
+        /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ApiGatewayPatch"/> instance for mocking. </returns>
+        public static ApiGatewayPatch ApiGatewayPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiManagementGatewaySkuPropertiesForPatch sku = null, ETag? etag = null, string provisioningState = null, string targetProvisioningState = null, DateTimeOffset? createdAtUtc = null, string frontendDefaultHostname = null, ResourceIdentifier subnetId = null, string configurationApiHostname = null, VirtualNetworkType? virtualNetworkType = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ApiGatewayPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                etag,
+                provisioningState,
+                targetProvisioningState,
+                createdAtUtc,
+                frontendDefaultHostname != null ? new FrontendConfiguration(frontendDefaultHostname, serializedAdditionalRawData: null) : null,
+                subnetId != null ? new BackendConfiguration(ResourceManagerModelFactory.WritableSubResource(subnetId), serializedAdditionalRawData: null) : null,
+                configurationApiHostname != null ? new GatewayConfigurationApi(configurationApiHostname, serializedAdditionalRawData: null) : null,
+                virtualNetworkType,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayResourceSkuResult"/>. </summary>
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="skuName"> Specifies API Management gateway SKU. </param>
+        /// <param name="capacity"> Specifies the number of API Management gateway units. </param>
+        /// <returns> A new <see cref="Models.GatewayResourceSkuResult"/> instance for mocking. </returns>
+        public static GatewayResourceSkuResult GatewayResourceSkuResult(string resourceType = null, ApiGatewaySkuType? skuName = null, GatewaySkuCapacity capacity = null)
+        {
+            return new GatewayResourceSkuResult(resourceType, skuName != null ? new GatewaySku(skuName, serializedAdditionalRawData: null) : null, capacity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GatewaySkuCapacity"/>. </summary>
+        /// <param name="minimum"> The minimum capacity. </param>
+        /// <param name="maximum"> The maximum capacity that can be set. </param>
+        /// <param name="default"> The default capacity. </param>
+        /// <param name="scaleType"> The scale type applicable to the sku. </param>
+        /// <returns> A new <see cref="Models.GatewaySkuCapacity"/> instance for mocking. </returns>
+        public static GatewaySkuCapacity GatewaySkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, GatewaySkuCapacityScaleType? scaleType = null)
+        {
+            return new GatewaySkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AllPoliciesContract"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="referencePolicyId"> Policy Identifier. </param>
+        /// <param name="complianceState"> Policy Restriction Compliance State. </param>
+        /// <returns> A new <see cref="Models.AllPoliciesContract"/> instance for mocking. </returns>
+        public static AllPoliciesContract AllPoliciesContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier referencePolicyId = null, PolicyComplianceState? complianceState = null)
+        {
+            return new AllPoliciesContract(
+                id,
+                name,
+                resourceType,
+                systemData,
+                referencePolicyId,
+                complianceState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -44,8 +164,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.ApiData"/> instance for mocking. </returns>
-        public static ApiData ApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
+        public static ApiData ApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -75,6 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -138,6 +260,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="value"> Content value when Importing an API. </param>
         /// <param name="format"> Format of the Content in which the API is getting imported. New formats can be added in the future. </param>
         /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
@@ -151,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </param>
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string value = null, ContentFormat? format = null, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, SoapApiType? soapApiType = null, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = null)
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null, string value = null, ContentFormat? format = null, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, SoapApiType? soapApiType = null, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -177,6 +300,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
+                provisioningState,
                 value,
                 format,
                 wsdlSelector,
@@ -431,12 +555,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="contentType"> Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema`. </param>
+        /// <param name="contentType"> Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml` &lt;/br&gt; - `OData Schema` use `application/vnd.ms-azure-apim.odata.schema` &lt;/br&gt; - `gRPC Schema` use `text/protobuf`. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="value"> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </param>
         /// <param name="definitions"> Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise. </param>
         /// <param name="components"> Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise. </param>
         /// <returns> A new <see cref="ApiManagement.ApiSchemaData"/> instance for mocking. </returns>
-        public static ApiSchemaData ApiSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentType = null, string value = null, BinaryData definitions = null, BinaryData components = null)
+        public static ApiSchemaData ApiSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string contentType = null, string provisioningState = null, string value = null, BinaryData definitions = null, BinaryData components = null)
         {
             return new ApiSchemaData(
                 id,
@@ -444,6 +569,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 resourceType,
                 systemData,
                 contentType,
+                provisioningState,
                 value,
                 definitions,
                 components,
@@ -811,16 +937,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="appIds"> The allowed Azure Active Directory Application IDs. </param>
         /// <param name="tenantId"> The Tenant Id. </param>
         /// <param name="objectId"> The Object Id. </param>
         /// <returns> A new <see cref="ApiManagement.AuthorizationAccessPolicyContractData"/> instance for mocking. </returns>
-        public static AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string objectId = null)
+        public static AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> appIds = null, Guid? tenantId = null, string objectId = null)
         {
+            appIds ??= new List<string>();
+
             return new AuthorizationAccessPolicyContractData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                appIds?.ToList(),
                 tenantId,
                 objectId,
                 serializedAdditionalRawData: null);
@@ -965,12 +1095,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="circuitBreakerRules"> Backend Circuit Breaker Configuration. </param>
+        /// <param name="poolServices"></param>
+        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
-        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, Uri resourceUri = null, BackendServiceFabricClusterProperties backendServiceFabricCluster = null, BackendCredentialsContract credentials = null, BackendProxyContract proxy = null, BackendTlsProperties tls = null, IEnumerable<CircuitBreakerRule> circuitBreakerRules = null, Uri uri = null, BackendProtocol? protocol = null)
+        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, Uri resourceUri = null, BackendServiceFabricClusterProperties backendServiceFabricCluster = null, BackendCredentialsContract credentials = null, BackendProxyContract proxy = null, BackendTlsProperties tls = null, IEnumerable<CircuitBreakerRule> circuitBreakerRules = null, IEnumerable<BackendPoolItem> poolServices = null, BackendType? typePropertiesType = null, Uri uri = null, BackendProtocol? protocol = null)
         {
             circuitBreakerRules ??= new List<CircuitBreakerRule>();
+            poolServices ??= new List<BackendPoolItem>();
 
             return new ApiManagementBackendData(
                 id,
@@ -985,6 +1118,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 proxy,
                 tls,
                 circuitBreakerRules != null ? new BackendCircuitBreaker(circuitBreakerRules?.ToList(), serializedAdditionalRawData: null) : null,
+                poolServices != null ? new BackendBaseParametersPool(poolServices?.ToList(), serializedAdditionalRawData: null) : null,
+                typePropertiesType,
                 uri,
                 protocol,
                 serializedAdditionalRawData: null);
@@ -1566,6 +1701,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiGatewayConfigConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="provisioningState"> The current provisioning state of the API Management gateway config connection. </param>
+        /// <param name="sourceId"> The link to the API Management service workspace. </param>
+        /// <param name="defaultHostname"> The default hostname of the data-plane gateway. </param>
+        /// <param name="hostnames"> The hostnames of the data-plane gateway to which requests can be sent. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiGatewayConfigConnectionData"/> instance for mocking. </returns>
+        public static ApiGatewayConfigConnectionData ApiGatewayConfigConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string provisioningState = null, ResourceIdentifier sourceId = null, string defaultHostname = null, IEnumerable<string> hostnames = null)
+        {
+            hostnames ??= new List<string>();
+
+            return new ApiGatewayConfigConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                provisioningState,
+                sourceId,
+                defaultHostname,
+                hostnames?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1657,8 +1820,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.GatewayApiData"/> instance for mocking. </returns>
-        public static GatewayApiData GatewayApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
+        public static GatewayApiData GatewayApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -1688,6 +1852,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -1996,8 +2161,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
         /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementNamedValueData"/> instance for mocking. </returns>
-        public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractProperties keyVaultDetails = null)
+        public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractProperties keyVaultDetails = null, string provisioningState = null)
         {
             tags ??= new List<string>();
 
@@ -2011,6 +2177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 displayName,
                 value,
                 keyVaultDetails,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -2246,8 +2413,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Contents of the policy fragment. </param>
         /// <param name="description"> Policy fragment description. </param>
         /// <param name="format"> Format of the policy fragment content. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.PolicyFragmentContractData"/> instance for mocking. </returns>
-        public static PolicyFragmentContractData PolicyFragmentContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, PolicyFragmentContentFormat? format = null)
+        public static PolicyFragmentContractData PolicyFragmentContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, PolicyFragmentContentFormat? format = null, string provisioningState = null)
         {
             return new PolicyFragmentContractData(
                 id,
@@ -2257,6 +2425,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 value,
                 description,
                 format,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -2269,6 +2438,74 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ResourceCollectionValueItem ResourceCollectionValueItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
             return new ResourceCollectionValueItem(id, name, resourceType, systemData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.PolicyRestrictionContractData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="scope"> Path to the policy document. </param>
+        /// <param name="requireBase"> Indicates if base policy should be enforced for the policy document. </param>
+        /// <returns> A new <see cref="ApiManagement.PolicyRestrictionContractData"/> instance for mocking. </returns>
+        public static PolicyRestrictionContractData PolicyRestrictionContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string scope = null, PolicyRestrictionRequireBase? requireBase = null)
+        {
+            return new PolicyRestrictionContractData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scope,
+                requireBase,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GitOperationResultContractData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="operationResultIdentifier"> Operation result identifier. </param>
+        /// <param name="status"> Status of an async operation. </param>
+        /// <param name="startedOn">
+        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+        ///
+        /// </param>
+        /// <param name="updatedOn">
+        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+        ///
+        /// </param>
+        /// <param name="resultInfo"> Optional result info. </param>
+        /// <param name="error"> Error Body Contract. </param>
+        /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
+        /// <returns> A new <see cref="Models.GitOperationResultContractData"/> instance for mocking. </returns>
+        public static GitOperationResultContractData GitOperationResultContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string operationResultIdentifier = null, AsyncOperationStatus? status = null, DateTimeOffset? startedOn = null, DateTimeOffset? updatedOn = null, string resultInfo = null, ErrorResponseBody error = null, IEnumerable<OperationResultLogItemContract> actionLog = null)
+        {
+            actionLog ??= new List<OperationResultLogItemContract>();
+
+            return new GitOperationResultContractData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationResultIdentifier,
+                status,
+                startedOn,
+                updatedOn,
+                resultInfo,
+                error,
+                actionLog?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationResultLogItemContract"/>. </summary>
+        /// <param name="objectType"> The type of entity contract. </param>
+        /// <param name="action"> Action like create/update/delete. </param>
+        /// <param name="objectKey"> Identifier of the entity being created/updated/deleted. </param>
+        /// <returns> A new <see cref="Models.OperationResultLogItemContract"/> instance for mocking. </returns>
+        public static OperationResultLogItemContract OperationResultLogItemContract(string objectType = null, string action = null, string objectKey = null)
+        {
+            return new OperationResultLogItemContract(objectType, action, objectKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagement.PortalConfigContractData"/>. </summary>
@@ -2312,8 +2549,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
         /// <param name="createdOn"> Portal's revision creation date and time. </param>
         /// <param name="updatedOn"> Last updated date and time. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalRevisionData"/> instance for mocking. </returns>
-        public static ApiManagementPortalRevisionData ApiManagementPortalRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string statusDetails = null, PortalRevisionStatus? status = null, bool? isCurrent = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
+        public static ApiManagementPortalRevisionData ApiManagementPortalRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string statusDetails = null, PortalRevisionStatus? status = null, bool? isCurrent = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string provisioningState = null)
         {
             return new ApiManagementPortalRevisionData(
                 id,
@@ -2326,6 +2564,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 isCurrent,
                 createdOn,
                 updatedOn,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -2500,8 +2739,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.ProductApiData"/> instance for mocking. </returns>
-        public static ProductApiData ProductApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
+        public static ProductApiData ProductApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string provisioningState = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -2531,6 +2771,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -2812,8 +3053,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Free-form schema entity description. </param>
         /// <param name="value"> Json-encoded string for non json-based schema. </param>
         /// <param name="document"> Global Schema document object for json-based schema formats(e.g. json schema). </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementGlobalSchemaData"/> instance for mocking. </returns>
-        public static ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiSchemaType? schemaType = null, string description = null, BinaryData value = null, BinaryData document = null)
+        public static ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiSchemaType? schemaType = null, string description = null, BinaryData value = null, BinaryData document = null, string provisioningState = null)
         {
             return new ApiManagementGlobalSchemaData(
                 id,
@@ -2824,6 +3066,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 description,
                 value,
                 document,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -3071,54 +3314,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GitOperationResultContractData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationResultIdentifier"> Operation result identifier. </param>
-        /// <param name="status"> Status of an async operation. </param>
-        /// <param name="startedOn">
-        /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="updatedOn">
-        /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        ///
-        /// </param>
-        /// <param name="resultInfo"> Optional result info. </param>
-        /// <param name="error"> Error Body Contract. </param>
-        /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
-        /// <returns> A new <see cref="Models.GitOperationResultContractData"/> instance for mocking. </returns>
-        public static GitOperationResultContractData GitOperationResultContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string operationResultIdentifier = null, AsyncOperationStatus? status = null, DateTimeOffset? startedOn = null, DateTimeOffset? updatedOn = null, string resultInfo = null, ErrorResponseBody error = null, IEnumerable<OperationResultLogItemContract> actionLog = null)
-        {
-            actionLog ??= new List<OperationResultLogItemContract>();
-
-            return new GitOperationResultContractData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                operationResultIdentifier,
-                status,
-                startedOn,
-                updatedOn,
-                resultInfo,
-                error,
-                actionLog?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationResultLogItemContract"/>. </summary>
-        /// <param name="objectType"> The type of entity contract. </param>
-        /// <param name="action"> Action like create/update/delete. </param>
-        /// <param name="objectKey"> Identifier of the entity being created/updated/deleted. </param>
-        /// <returns> A new <see cref="Models.OperationResultLogItemContract"/> instance for mocking. </returns>
-        public static OperationResultLogItemContract OperationResultLogItemContract(string objectType = null, string action = null, string objectKey = null)
-        {
-            return new OperationResultLogItemContract(objectType, action, objectKey, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.TenantConfigurationSyncStateContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3173,6 +3368,66 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new UserTokenResult(value, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DiagnosticUpdateContract"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alwaysLog"> Specifies for what type of messages sampling settings should not apply. </param>
+        /// <param name="loggerId"> Resource Id of a target logger. </param>
+        /// <param name="sampling"> Sampling settings for Diagnostic. </param>
+        /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
+        /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
+        /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
+        /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
+        /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
+        /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
+        /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
+        /// <returns> A new <see cref="Models.DiagnosticUpdateContract"/> instance for mocking. </returns>
+        public static DiagnosticUpdateContract DiagnosticUpdateContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlwaysLog? alwaysLog = null, string loggerId = null, SamplingSettings sampling = null, PipelineDiagnosticSettings frontend = null, PipelineDiagnosticSettings backend = null, bool? isLogClientIPEnabled = null, HttpCorrelationProtocol? httpCorrelationProtocol = null, TraceVerbosityLevel? verbosity = null, OperationNameFormat? operationNameFormat = null, bool? metrics = null)
+        {
+            return new DiagnosticUpdateContract(
+                id,
+                name,
+                resourceType,
+                systemData,
+                alwaysLog,
+                loggerId,
+                sampling,
+                frontend,
+                backend,
+                isLogClientIPEnabled,
+                httpCorrelationProtocol,
+                verbosity,
+                operationNameFormat,
+                metrics,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementWorkspaceLinksData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> ETag of the resource. </param>
+        /// <param name="workspaceId"> The link to the API Management service workspace. </param>
+        /// <param name="gateways"> The array of linked gateways. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiManagementWorkspaceLinksData"/> instance for mocking. </returns>
+        public static ApiManagementWorkspaceLinksData ApiManagementWorkspaceLinksData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier workspaceId = null, IEnumerable<WritableSubResource> gateways = null)
+        {
+            gateways ??= new List<WritableSubResource>();
+
+            return new ApiManagementWorkspaceLinksData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                workspaceId,
+                gateways?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ApiManagement.WorkspaceContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3193,6 +3448,109 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiData ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet)
+        {
+            return ApiData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, authenticationSettings: authenticationSettings, subscriptionKeyParameterNames: subscriptionKeyParameterNames, apiType: apiType, apiRevision: apiRevision, apiVersion: apiVersion, isCurrent: isCurrent, isOnline: isOnline, apiRevisionDescription: apiRevisionDescription, apiVersionDescription: apiVersionDescription, apiVersionSetId: apiVersionSetId, isSubscriptionRequired: isSubscriptionRequired, termsOfServiceLink: termsOfServiceLink, contact: contact, license: license, sourceApiId: sourceApiId, displayName: displayName, serviceLink: serviceLink, path: path, protocols: protocols, apiVersionSet: apiVersionSet, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdateContent" />. </summary>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="value"> Content value when Importing an API. </param>
+        /// <param name="format"> Format of the Content in which the API is getting imported. </param>
+        /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
+        /// <param name="soapApiType">
+        /// Type of API to create.
+        /// * `http` creates a REST API
+        /// * `soap` creates a SOAP pass-through API
+        /// * `websocket` creates websocket API
+        /// * `graphql` creates GraphQL API.
+        /// </param>
+        /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.Models.ApiCreateOrUpdateContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct)
+        {
+            return ApiCreateOrUpdateContent(description: description, authenticationSettings: authenticationSettings, subscriptionKeyParameterNames: subscriptionKeyParameterNames, apiType: apiType, apiRevision: apiRevision, apiVersion: apiVersion, isCurrent: isCurrent, isOnline: isOnline, apiRevisionDescription: apiRevisionDescription, apiVersionDescription: apiVersionDescription, apiVersionSetId: apiVersionSetId, isSubscriptionRequired: isSubscriptionRequired, termsOfServiceLink: termsOfServiceLink, contact: contact, license: license, sourceApiId: sourceApiId, displayName: displayName, serviceLink: serviceLink, path: path, protocols: protocols, apiVersionSet: apiVersionSet, provisioningState: default, value: value, format: format, wsdlSelector: wsdlSelector, soapApiType: soapApiType, translateRequiredQueryParametersConduct: translateRequiredQueryParametersConduct);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiSchemaData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="contentType"> Must be a valid a media type used in a Content-Type header as defined in the RFC 2616. Media type of the schema document (e.g. application/json, application/xml). &lt;/br&gt; - `Swagger` Schema use `application/vnd.ms-azure-apim.swagger.definitions+json` &lt;/br&gt; - `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi` Schema use `application/vnd.oai.openapi.components+json` &lt;/br&gt; - `WADL Schema` use `application/vnd.ms-azure-apim.wadl.grammars+xml`. </param>
+        /// <param name="value"> Json escaped string defining the document representing the Schema. Used for schemas other than Swagger/OpenAPI. </param>
+        /// <param name="definitions"> Types definitions. Used for Swagger/OpenAPI v1 schemas only, null otherwise. </param>
+        /// <param name="components"> Types definitions. Used for Swagger/OpenAPI v2/v3 schemas only, null otherwise. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiSchemaData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiSchemaData ApiSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentType, string value, BinaryData definitions, BinaryData components)
+        {
+            return ApiSchemaData(id: id, name: name, resourceType: resourceType, systemData: systemData, contentType: contentType, provisioningState: default, value: value, definitions: definitions, components: components);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.AuthorizationAccessPolicyContractData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenantId"> The Tenant Id. </param>
+        /// <param name="objectId"> The Object Id. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.AuthorizationAccessPolicyContractData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AuthorizationAccessPolicyContractData AuthorizationAccessPolicyContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string objectId)
+        {
+            return AuthorizationAccessPolicyContractData(id: id, name: name, resourceType: resourceType, systemData: systemData, appIds: default, tenantId: tenantId, objectId: objectId);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementBackendData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3211,7 +3569,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendServiceFabricClusterProperties backendServiceFabricCluster, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol)
         {
-            return ApiManagementBackendData(id: id, name: name, resourceType: resourceType, systemData: systemData, title: title, description: description, resourceUri: resourceUri, backendServiceFabricCluster: backendServiceFabricCluster, credentials: credentials, proxy: proxy, tls: tls, circuitBreakerRules: default, uri: uri, protocol: protocol);
+            return ApiManagementBackendData(id: id, name: name, resourceType: resourceType, systemData: systemData, title: title, description: description, resourceUri: resourceUri, backendServiceFabricCluster: backendServiceFabricCluster, credentials: credentials, proxy: proxy, tls: tls, circuitBreakerRules: default, poolServices: default, typePropertiesType: default, uri: uri, protocol: protocol);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementServiceData" />. </summary>
@@ -3307,6 +3665,138 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static ApiManagementServicePatch ApiManagementServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IEnumerable<HostnameConfiguration> hostnameConfigurations, IEnumerable<IPAddress> publicIPAddresses, IEnumerable<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, VirtualNetworkConfiguration virtualNetworkConfiguration, IEnumerable<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IEnumerable<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IEnumerable<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, string publisherEmail, string publisherName, IDictionary<string, string> tags)
         {
             return ApiManagementServicePatch(id: id, name: name, resourceType: resourceType, systemData: systemData, sku: sku, identity: identity, etag: etag, zones: zones, notificationSenderEmail: notificationSenderEmail, provisioningState: provisioningState, targetProvisioningState: targetProvisioningState, createdAtUtc: createdAtUtc, gatewayUri: gatewayUri, gatewayRegionalUri: gatewayRegionalUri, portalUri: portalUri, managementApiUri: managementApiUri, scmUri: scmUri, developerPortalUri: developerPortalUri, hostnameConfigurations: hostnameConfigurations, publicIPAddresses: publicIPAddresses, privateIPAddresses: privateIPAddresses, publicIPAddressId: publicIPAddressId, publicNetworkAccess: publicNetworkAccess, legacyApi: default, virtualNetworkConfiguration: virtualNetworkConfiguration, additionalLocations: additionalLocations, customProperties: customProperties, certificates: certificates, enableClientCertificate: enableClientCertificate, natGatewayState: natGatewayState, outboundPublicIPAddresses: outboundPublicIPAddresses, disableGateway: disableGateway, virtualNetworkType: virtualNetworkType, minApiVersion: minApiVersion, restore: restore, privateEndpointConnections: privateEndpointConnections, platformVersion: platformVersion, legacyPortalStatus: default, developerPortalStatus: default, publisherEmail: publisherEmail, publisherName: publisherName, tags: tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.Models.GatewayApiData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.Models.GatewayApiData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GatewayApiData GatewayApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet)
+        {
+            return GatewayApiData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, authenticationSettings: authenticationSettings, subscriptionKeyParameterNames: subscriptionKeyParameterNames, apiType: apiType, apiRevision: apiRevision, apiVersion: apiVersion, isCurrent: isCurrent, isOnline: isOnline, apiRevisionDescription: apiRevisionDescription, apiVersionDescription: apiVersionDescription, apiVersionSetId: apiVersionSetId, isSubscriptionRequired: isSubscriptionRequired, termsOfServiceLink: termsOfServiceLink, contact: contact, license: license, sourceApiId: sourceApiId, displayName: displayName, serviceLink: serviceLink, path: path, protocols: protocols, apiVersionSet: apiVersionSet, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
+        /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
+        /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
+        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementNamedValueData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementNamedValueData ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails)
+        {
+            return ApiManagementNamedValueData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, isSecret: isSecret, displayName: displayName, value: value, keyVaultDetails: keyVaultDetails, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.PolicyFragmentContractData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="value"> Contents of the policy fragment. </param>
+        /// <param name="description"> Policy fragment description. </param>
+        /// <param name="format"> Format of the policy fragment content. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.PolicyFragmentContractData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PolicyFragmentContractData PolicyFragmentContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, PolicyFragmentContentFormat? format)
+        {
+            return PolicyFragmentContractData(id: id, name: name, resourceType: resourceType, systemData: systemData, value: value, description: description, format: format, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Portal revision description. </param>
+        /// <param name="statusDetails"> Portal revision publishing status details. </param>
+        /// <param name="status"> Status of the portal's revision. </param>
+        /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
+        /// <param name="createdOn"> Portal's revision creation date and time. </param>
+        /// <param name="updatedOn"> Last updated date and time. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementPortalRevisionData ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn)
+        {
+            return ApiManagementPortalRevisionData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, statusDetails: statusDetails, status: status, isCurrent: isCurrent, createdOn: createdOn, updatedOn: updatedOn, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.Models.ProductApiData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
+        /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
+        /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
+        /// <param name="apiType"> Type of API. </param>
+        /// <param name="apiRevision"> Describes the revision of the API. If no value is provided, default revision 1 is created. </param>
+        /// <param name="apiVersion"> Indicates the version identifier of the API if the API is versioned. </param>
+        /// <param name="isCurrent"> Indicates if API revision is current api revision. </param>
+        /// <param name="isOnline"> Indicates if API revision is accessible via the gateway. </param>
+        /// <param name="apiRevisionDescription"> Description of the API Revision. </param>
+        /// <param name="apiVersionDescription"> Description of the API Version. </param>
+        /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
+        /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="contact"> Contact information for the API. </param>
+        /// <param name="license"> License information for the API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
+        /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.Models.ProductApiData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProductApiData ProductApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet)
+        {
+            return ProductApiData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, authenticationSettings: authenticationSettings, subscriptionKeyParameterNames: subscriptionKeyParameterNames, apiType: apiType, apiRevision: apiRevision, apiVersion: apiVersion, isCurrent: isCurrent, isOnline: isOnline, apiRevisionDescription: apiRevisionDescription, apiVersionDescription: apiVersionDescription, apiVersionSetId: apiVersionSetId, isSubscriptionRequired: isSubscriptionRequired, termsOfServiceLink: termsOfServiceLink, contact: contact, license: license, sourceApiId: sourceApiId, displayName: displayName, serviceLink: serviceLink, path: path, protocols: protocols, apiVersionSet: apiVersionSet, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementGlobalSchemaData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="schemaType"> Schema Type. Immutable. </param>
+        /// <param name="description"> Free-form schema entity description. </param>
+        /// <param name="value"> Json-encoded string for non json-based schema. </param>
+        /// <param name="document"> Global Schema document object for json-based schema formats(e.g. json schema). </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ApiManagement.ApiManagementGlobalSchemaData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementGlobalSchemaData ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document)
+        {
+            return ApiManagementGlobalSchemaData(id: id, name: name, resourceType: resourceType, systemData: systemData, schemaType: schemaType, description: description, value: value, document: document, provisioningState: default);
         }
 
         /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>

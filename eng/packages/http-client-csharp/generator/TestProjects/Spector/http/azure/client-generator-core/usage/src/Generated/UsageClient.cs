@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {

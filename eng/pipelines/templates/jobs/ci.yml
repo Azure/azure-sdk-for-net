@@ -58,6 +58,10 @@ jobs:
       parameters:
         GenerateJobName: generate_build_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
         MatrixConfigs:
         - Name: NET_ci_build_base
           Path: eng/pipelines/templates/stages/build-matrix.json

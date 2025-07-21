@@ -64,7 +64,7 @@ public partial class CosmosDBAccount : ProvisionableResource
     private BicepValue<AnalyticalStorageSchemaType>? _analyticalStorageSchemaType;
 
     /// <summary>
-    /// Describes the ServerVersion of an a MongoDB account.
+    /// Describes the version of the MongoDB account.
     /// </summary>
     public BicepValue<CosmosDBServerVersion> ApiServerVersion 
     {
@@ -100,6 +100,16 @@ public partial class CosmosDBAccount : ProvisionableResource
         set { Initialize(); _capabilities!.Assign(value); }
     }
     private BicepList<CosmosDBAccountCapability>? _capabilities;
+
+    /// <summary>
+    /// Indicates the capacityMode of the Cosmos DB account.
+    /// </summary>
+    public BicepValue<CapacityMode> CapacityMode 
+    {
+        get { Initialize(); return _capacityMode!; }
+        set { Initialize(); _capacityMode!.Assign(value); }
+    }
+    private BicepValue<CapacityMode>? _capacityMode;
 
     /// <summary>
     /// The total throughput limit imposed on the account. A
@@ -467,6 +477,16 @@ public partial class CosmosDBAccount : ProvisionableResource
     private BicepList<CosmosDBVirtualNetworkRule>? _virtualNetworkRules;
 
     /// <summary>
+    /// The object that represents the migration state for the CapacityMode of
+    /// the Cosmos DB account.
+    /// </summary>
+    public CapacityModeChangeTransitionState CapacityModeChangeTransitionState 
+    {
+        get { Initialize(); return _capacityModeChangeTransitionState!; }
+    }
+    private CapacityModeChangeTransitionState? _capacityModeChangeTransitionState;
+
+    /// <summary>
     /// The connection endpoint for the Cosmos DB database account.
     /// </summary>
     public BicepValue<string> DocumentEndpoint 
@@ -524,16 +544,7 @@ public partial class CosmosDBAccount : ProvisionableResource
     private BicepList<CosmosDBPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
-    /// The status of the Cosmos DB account at the time the operation was
-    /// called. The status can be one of following. &apos;Creating&apos; – the
-    /// Cosmos DB account is being created. When an account is in Creating
-    /// state, only properties that are specified as input for the Create
-    /// Cosmos DB account operation are returned. &apos;Succeeded&apos; – the
-    /// Cosmos DB account is active for use. &apos;Updating&apos; – the Cosmos
-    /// DB account is being updated. &apos;Deleting&apos; – the Cosmos DB
-    /// account is being deleted. &apos;Failed&apos; – the Cosmos DB account
-    /// failed creation. &apos;DeletionFailed&apos; – the Cosmos DB account
-    /// deletion failed.
+    /// The provisioning state of the resource.
     /// </summary>
     public BicepValue<string> ProvisioningState 
     {
@@ -580,7 +591,7 @@ public partial class CosmosDBAccount : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CosmosDBAccount.</param>
     public CosmosDBAccount(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2024-08-15")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts", resourceVersion ?? "2025-04-15")
     {
     }
 
@@ -596,6 +607,7 @@ public partial class CosmosDBAccount : ProvisionableResource
         _apiServerVersion = DefineProperty<CosmosDBServerVersion>("ApiServerVersion", ["properties", "apiProperties", "serverVersion"]);
         _backupPolicy = DefineModelProperty<CosmosDBAccountBackupPolicy>("BackupPolicy", ["properties", "backupPolicy"]);
         _capabilities = DefineListProperty<CosmosDBAccountCapability>("Capabilities", ["properties", "capabilities"]);
+        _capacityMode = DefineProperty<CapacityMode>("CapacityMode", ["properties", "capacityMode"]);
         _capacityTotalThroughputLimit = DefineProperty<int>("CapacityTotalThroughputLimit", ["properties", "capacity", "totalThroughputLimit"]);
         _connectorOffer = DefineProperty<ConnectorOffer>("ConnectorOffer", ["properties", "connectorOffer"]);
         _consistencyPolicy = DefineModelProperty<ConsistencyPolicy>("ConsistencyPolicy", ["properties", "consistencyPolicy"]);
@@ -630,6 +642,7 @@ public partial class CosmosDBAccount : ProvisionableResource
         _restoreParameters = DefineModelProperty<CosmosDBAccountRestoreParameters>("RestoreParameters", ["properties", "restoreParameters"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _virtualNetworkRules = DefineListProperty<CosmosDBVirtualNetworkRule>("VirtualNetworkRules", ["properties", "virtualNetworkRules"]);
+        _capacityModeChangeTransitionState = DefineModelProperty<CapacityModeChangeTransitionState>("CapacityModeChangeTransitionState", ["properties", "capacityModeChangeTransitionState"], isOutput: true);
         _documentEndpoint = DefineProperty<string>("DocumentEndpoint", ["properties", "documentEndpoint"], isOutput: true);
         _failoverPolicies = DefineListProperty<CosmosDBFailoverPolicy>("FailoverPolicies", ["properties", "failoverPolicies"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -647,6 +660,16 @@ public partial class CosmosDBAccount : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-15.
+        /// </summary>
+        public static readonly string V2025_04_15 = "2025-04-15";
+
+        /// <summary>
+        /// 2024-11-15.
+        /// </summary>
+        public static readonly string V2024_11_15 = "2024-11-15";
+
         /// <summary>
         /// 2024-08-15.
         /// </summary>

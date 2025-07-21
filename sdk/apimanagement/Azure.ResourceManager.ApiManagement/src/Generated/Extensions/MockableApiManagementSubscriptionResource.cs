@@ -18,12 +18,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableApiManagementSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _apiGatewayClientDiagnostics;
+        private ApiGatewayRestOperations _apiGatewayRestClient;
         private ClientDiagnostics _apiManagementDeletedServiceDeletedServicesClientDiagnostics;
         private DeletedServicesRestOperations _apiManagementDeletedServiceDeletedServicesRestClient;
         private ClientDiagnostics _apiManagementServiceClientDiagnostics;
         private ApiManagementServiceRestOperations _apiManagementServiceRestClient;
         private ClientDiagnostics _apiManagementSkusClientDiagnostics;
         private ApiManagementSkusRestOperations _apiManagementSkusRestClient;
+        private ClientDiagnostics _operationsResultsClientDiagnostics;
+        private OperationsResultsRestOperations _operationsResultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableApiManagementSubscriptionResource"/> class for mocking. </summary>
         protected MockableApiManagementSubscriptionResource()
@@ -37,12 +41,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         {
         }
 
+        private ClientDiagnostics ApiGatewayClientDiagnostics => _apiGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiGatewayResource.ResourceType.Namespace, Diagnostics);
+        private ApiGatewayRestOperations ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGatewayRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiGatewayResource.ResourceType));
         private ClientDiagnostics ApiManagementDeletedServiceDeletedServicesClientDiagnostics => _apiManagementDeletedServiceDeletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementDeletedServiceResource.ResourceType.Namespace, Diagnostics);
         private DeletedServicesRestOperations ApiManagementDeletedServiceDeletedServicesRestClient => _apiManagementDeletedServiceDeletedServicesRestClient ??= new DeletedServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiManagementDeletedServiceResource.ResourceType));
         private ClientDiagnostics ApiManagementServiceClientDiagnostics => _apiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementServiceResource.ResourceType.Namespace, Diagnostics);
         private ApiManagementServiceRestOperations ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiManagementServiceResource.ResourceType));
         private ClientDiagnostics ApiManagementSkusClientDiagnostics => _apiManagementSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ApiManagementSkusRestOperations ApiManagementSkusRestClient => _apiManagementSkusRestClient ??= new ApiManagementSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OperationsResultsClientDiagnostics => _operationsResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OperationsResultsRestOperations OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -70,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -102,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,6 +130,66 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
+        /// List all API Management gateways within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiGateway_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiGatewayRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiGatewayResource(Client, ApiGatewayData.DeserializeApiGatewayData(e)), ApiGatewayClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all API Management gateways within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiGateway_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiGatewayResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiGatewayResource> GetApiGateways(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiGatewayRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiGatewayResource(Client, ApiGatewayData.DeserializeApiGatewayData(e)), ApiGatewayClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiGateways", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Lists all soft-deleted services available for undelete for the given subscription.
         /// <list type="bullet">
         /// <item>
@@ -134,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +364,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,7 +406,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,7 +444,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +482,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,7 +508,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,6 +519,86 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApiManagementSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiManagementSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApiManagementSku.DeserializeApiManagementSku(e), ApiManagementSkusClientDiagnostics, Pipeline, "MockableApiManagementSubscriptionResource.GetApiManagementSkus", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns operation results for long running operations executing DELETE or PATCH on the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsResults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public virtual async Task<Response> GetOperationsResultAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = OperationsResultsClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetOperationsResult");
+            scope.Start();
+            try
+            {
+                var response = await OperationsResultsRestClient.GetAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns operation results for long running operations executing DELETE or PATCH on the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/operationResults/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationsResults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public virtual Response GetOperationsResult(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = OperationsResultsClientDiagnostics.CreateScope("MockableApiManagementSubscriptionResource.GetOperationsResult");
+            scope.Start();
+            try
+            {
+                var response = OperationsResultsRestClient.Get(Id.SubscriptionId, location, operationId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

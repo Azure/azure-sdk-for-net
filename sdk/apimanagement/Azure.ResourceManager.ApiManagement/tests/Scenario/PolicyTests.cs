@@ -11,7 +11,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class PolicyTests : ApiManagementManagementTestBase
     {
         public PolicyTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -83,8 +82,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
-            var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };

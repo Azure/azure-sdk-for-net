@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// The response of a Workspace list operation.
-    /// Serialized Name: WorkspaceListResult
-    /// </summary>
+    /// <summary> The response of a Workspace list operation. </summary>
     internal partial class WorkspaceListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
-        /// <param name="value">
-        /// The Workspace items on this page
-        /// Serialized Name: WorkspaceListResult.value
-        /// </param>
+        /// <param name="value"> The Workspace items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkspaceListResult(IEnumerable<FirmwareAnalysisWorkspaceData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
-        /// <param name="value">
-        /// The Workspace items on this page
-        /// Serialized Name: WorkspaceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: WorkspaceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The Workspace items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceListResult(IReadOnlyList<FirmwareAnalysisWorkspaceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
-        /// <summary>
-        /// The Workspace items on this page
-        /// Serialized Name: WorkspaceListResult.value
-        /// </summary>
+        /// <summary> The Workspace items on this page. </summary>
         public IReadOnlyList<FirmwareAnalysisWorkspaceData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: WorkspaceListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

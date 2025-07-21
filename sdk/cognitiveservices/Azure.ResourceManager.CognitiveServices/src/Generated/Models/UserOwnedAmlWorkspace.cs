@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The user owned AML workspace for Cognitive Services account. </summary>
+    /// <summary> The user owned AML account for Cognitive Services account. </summary>
     public partial class UserOwnedAmlWorkspace
     {
         /// <summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserOwnedAmlWorkspace"/>. </summary>
-        /// <param name="resourceId"> Full resource id of a AML workspace resource. </param>
-        /// <param name="identityClientId"> Identity Client id of a AML workspace resource. </param>
+        /// <param name="resourceId"> Full resource id of a AML account resource. </param>
+        /// <param name="identityClientId"> Identity Client id of a AML account resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserOwnedAmlWorkspace(ResourceIdentifier resourceId, Guid? identityClientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Full resource id of a AML workspace resource. </summary>
+        /// <summary> Full resource id of a AML account resource. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> Identity Client id of a AML workspace resource. </summary>
+        /// <summary> Identity Client id of a AML account resource. </summary>
         [WirePath("identityClientId")]
         public Guid? IdentityClientId { get; set; }
     }

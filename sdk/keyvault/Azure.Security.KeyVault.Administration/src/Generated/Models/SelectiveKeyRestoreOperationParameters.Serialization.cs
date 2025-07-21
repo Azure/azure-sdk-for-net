@@ -5,28 +5,158 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class SelectiveKeyRestoreOperationParameters : IUtf8JsonSerializable
+    internal partial class SelectiveKeyRestoreOperationParameters : IJsonModel<SelectiveKeyRestoreOperationParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperationParameters"/> for deserialization. </summary>
+        internal SelectiveKeyRestoreOperationParameters()
+        {
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<SelectiveKeyRestoreOperationParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sasTokenParameters"u8);
-            writer.WriteObjectValue(SasTokenParameters);
-            writer.WritePropertyName("folder"u8);
-            writer.WriteStringValue(Folder);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperationParameters)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("sasTokenParameters"u8);
+            writer.WriteObjectValue(SasTokenParameters, options);
+            writer.WritePropertyName("folder"u8);
+            writer.WriteStringValue(Folder);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SelectiveKeyRestoreOperationParameters IJsonModel<SelectiveKeyRestoreOperationParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SelectiveKeyRestoreOperationParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperationParameters)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelectiveKeyRestoreOperationParameters(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SelectiveKeyRestoreOperationParameters DeserializeSelectiveKeyRestoreOperationParameters(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SASTokenParameter sasTokenParameters = default;
+            string folder = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("sasTokenParameters"u8))
+                {
+                    sasTokenParameters = SASTokenParameter.DeserializeSASTokenParameter(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("folder"u8))
+                {
+                    folder = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new SelectiveKeyRestoreOperationParameters(sasTokenParameters, folder, additionalBinaryDataProperties);
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SelectiveKeyRestoreOperationParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperationParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SelectiveKeyRestoreOperationParameters IPersistableModel<SelectiveKeyRestoreOperationParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SelectiveKeyRestoreOperationParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeSelectiveKeyRestoreOperationParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperationParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SelectiveKeyRestoreOperationParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="selectiveKeyRestoreOperationParameters"> The <see cref="SelectiveKeyRestoreOperationParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SelectiveKeyRestoreOperationParameters selectiveKeyRestoreOperationParameters)
+        {
+            if (selectiveKeyRestoreOperationParameters == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(selectiveKeyRestoreOperationParameters, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

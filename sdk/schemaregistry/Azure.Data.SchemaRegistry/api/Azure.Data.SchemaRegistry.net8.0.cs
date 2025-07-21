@@ -107,3 +107,12 @@ namespace Azure.Data.SchemaRegistry.Serialization
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class SchemaRegistryClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.SchemaRegistry.SchemaRegistryClient, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.SchemaRegistry.SchemaRegistryClient, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}

@@ -45,7 +45,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
         /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
         /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
+        /// <param name="virtualNetworkGatewayMigrationStatus"> The reference to the VirtualNetworkGatewayMigrationStatus which represents the status of migration. </param>
         /// <param name="active"> ActiveActive flag. </param>
+        /// <param name="enableHighBandwidthVpnGateway"> To enable Advanced Connectivity feature for VPN gateway. </param>
         /// <param name="disableIPSecReplayProtection"> disableIPSecReplayProtection flag. </param>
         /// <param name="gatewayDefaultSite"> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </param>
         /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
         /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
         /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, ManagedServiceIdentity identity, VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, ManagedServiceIdentity identity, VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus, bool? active, bool? enableHighBandwidthVpnGateway, bool? disableIPSecReplayProtection, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -76,7 +78,9 @@ namespace Azure.ResourceManager.Network
             VpnGatewayGeneration = vpnGatewayGeneration;
             EnableBgp = enableBgp;
             EnablePrivateIPAddress = enablePrivateIPAddress;
+            VirtualNetworkGatewayMigrationStatus = virtualNetworkGatewayMigrationStatus;
             Active = active;
+            EnableHighBandwidthVpnGateway = enableHighBandwidthVpnGateway;
             DisableIPSecReplayProtection = disableIPSecReplayProtection;
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
@@ -129,8 +133,12 @@ namespace Azure.ResourceManager.Network
         public bool? EnableBgp { get; set; }
         /// <summary> Whether private IP needs to be enabled on this gateway for connections or not. </summary>
         public bool? EnablePrivateIPAddress { get; set; }
+        /// <summary> The reference to the VirtualNetworkGatewayMigrationStatus which represents the status of migration. </summary>
+        public VirtualNetworkGatewayMigrationStatus VirtualNetworkGatewayMigrationStatus { get; set; }
         /// <summary> ActiveActive flag. </summary>
         public bool? Active { get; set; }
+        /// <summary> To enable Advanced Connectivity feature for VPN gateway. </summary>
+        public bool? EnableHighBandwidthVpnGateway { get; set; }
         /// <summary> disableIPSecReplayProtection flag. </summary>
         public bool? DisableIPSecReplayProtection { get; set; }
         /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>

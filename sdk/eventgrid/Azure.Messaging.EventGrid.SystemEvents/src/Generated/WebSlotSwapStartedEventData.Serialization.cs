@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebSlotSwapStartedEventDataConverter))]
     public partial class WebSlotSwapStartedEventData : IUtf8JsonSerializable, IJsonModel<WebSlotSwapStartedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSlotSwapStartedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,8 +36,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(WebSlotSwapStartedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("appEventTypeDetail"u8);
-            writer.WriteObjectValue(AppEventTypeDetail, options);
+            if (Optional.IsDefined(AppEventTypeDetail))
+            {
+                writer.WritePropertyName("appEventTypeDetail"u8);
+                writer.WriteObjectValue(AppEventTypeDetail, options);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -116,6 +121,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value, options);
                     continue;
                 }
@@ -211,6 +220,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class WebSlotSwapStartedEventDataConverter : JsonConverter<WebSlotSwapStartedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebSlotSwapStartedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override WebSlotSwapStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebSlotSwapStartedEventData(document.RootElement);
+            }
         }
     }
 }

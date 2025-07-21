@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(EventGridMqttClientEventDataConverter))]
     public partial class EventGridMqttClientEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -36,8 +38,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("clientAuthenticationName"u8);
             writer.WriteStringValue(ClientAuthenticationName);
-            writer.WritePropertyName("clientName"u8);
-            writer.WriteStringValue(ClientName);
+            if (Optional.IsDefined(ClientName))
+            {
+                writer.WritePropertyName("clientName"u8);
+                writer.WriteStringValue(ClientName);
+            }
             writer.WritePropertyName("namespaceName"u8);
             writer.WriteStringValue(NamespaceName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -153,6 +158,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class EventGridMqttClientEventDataConverter : JsonConverter<EventGridMqttClientEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, EventGridMqttClientEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override EventGridMqttClientEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEventGridMqttClientEventData(document.RootElement);
+            }
         }
     }
 }

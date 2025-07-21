@@ -8,11 +8,11 @@ csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
 require: https://github.com/Azure/azure-rest-api-specs/blob/24b224b17e698746d3c34e32f84dab7de5e4f2a8/specification/app/resource-manager/readme.md
-tag: package-2025-01-01
+#tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:

@@ -22,7 +22,7 @@ namespace Azure.Generator.Tests.TestHelpers
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
 
-        public static Mock<AzureClientGenerator> LoadMockPlugin(
+        public static Mock<AzureClientGenerator> LoadMockGenerator(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,
@@ -32,10 +32,12 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
+            Func<InputClient, ClientProvider?>? createClientCore = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
-            string? configurationJson = null)
+            string? configurationJson = null,
+            string? inputNamespace = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -44,7 +46,7 @@ namespace Azure.Generator.Tests.TestHelpers
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
-                "Samples",
+                inputNamespace ?? "Samples",
                 inputNsApiVersions,
                 inputNsLiterals,
                 inputNsEnums,
@@ -59,6 +61,12 @@ namespace Azure.Generator.Tests.TestHelpers
             {
                 mockTypeFactory = new Mock<AzureTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
+            }
+
+            if (createClientCore is not null)
+            {
+                mockTypeFactory ??= new Mock<AzureTypeFactory>() { CallBase = true };
+                mockTypeFactory.Protected().Setup<ClientProvider?>("CreateClientCore", ItExpr.IsAny<InputClient>()).Returns(createClientCore);
             }
 
             // initialize the mock singleton instance of the plugin
@@ -89,6 +97,14 @@ namespace Azure.Generator.Tests.TestHelpers
             );
             configureMethod!.Invoke(mockPluginInstance.Object, null);
             return mockPluginInstance;
+        }
+
+        public static void SetCustomCodeView(ModelProvider modelProvider, TypeProvider customCodeTypeProvider)
+        {
+            modelProvider.GetType().BaseType!.GetField(
+                    "_customCodeView",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
+                .SetValue(modelProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
         }
     }
 }

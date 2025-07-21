@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The update gateway settings request parameters. </summary>
+    /// <summary> The update gateway settings request parameters. Note either basic or entra user should be provided at a time. </summary>
     public partial class HDInsightClusterUpdateGatewaySettingsContent
     {
         /// <summary>
@@ -48,18 +48,21 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
         public HDInsightClusterUpdateGatewaySettingsContent()
         {
+            RestAuthEntraUsers = new ChangeTrackingList<EntraUserInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
         /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
         /// <param name="userName"> The gateway settings user name. </param>
         /// <param name="password"> The gateway settings user password. </param>
+        /// <param name="restAuthEntraUsers"> List of Entra users for gateway access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled, string userName, string password, IList<EntraUserInfo> restAuthEntraUsers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCredentialEnabled = isCredentialEnabled;
             UserName = userName;
             Password = password;
+            RestAuthEntraUsers = restAuthEntraUsers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string UserName { get; set; }
         /// <summary> The gateway settings user password. </summary>
         public string Password { get; set; }
+        /// <summary> List of Entra users for gateway access. </summary>
+        public IList<EntraUserInfo> RestAuthEntraUsers { get; }
     }
 }

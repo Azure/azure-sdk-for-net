@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { InputClient, InputModelType } from "@typespec/http-client-csharp";
-
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
@@ -10,7 +8,7 @@ const TenantScopePrefix = "/tenants";
 const Providers = "/providers";
 
 export function calculateResourceTypeFromPath(path: string): string {
-  const providerIndex = path.indexOf(Providers);
+  const providerIndex = path.lastIndexOf(Providers);
   if (providerIndex === -1) {
     if (path.startsWith(ResourceGroupScopePrefix)) {
       return "Microsoft.Resources/resourceGroups";
@@ -32,9 +30,46 @@ export function calculateResourceTypeFromPath(path: string): string {
     }, "");
 }
 
+export enum ResourceScope {
+  Tenant = "Tenant",
+  Subscription = "Subscription",
+  ResourceGroup = "ResourceGroup"
+}
+
 export interface ResourceMetadata {
+  resourceIdPattern: string;
   resourceType: string;
-  resourceModel: InputModelType;
-  resourceClient: InputClient;
-  isSingleton: boolean;
+  methods: ResourceMethod[];
+  resourceScope: ResourceScope;
+  parentResourceId?: string;
+  singletonResourceName?: string;
+  // TODO -- add parent resource support in the same RP case
+}
+
+export function convertResourceMetadataToArguments(
+  metadata: ResourceMetadata
+): Record<string, any> {
+  return {
+    resourceIdPattern: metadata.resourceIdPattern,
+    resourceType: metadata.resourceType,
+    methods: metadata.methods,
+    resourceScope: metadata.resourceScope,
+    parentResourceId: metadata.parentResourceId,
+    singletonResourceName: metadata.singletonResourceName
+  };
+}
+
+export interface ResourceMethod {
+  id: string;
+  kind: ResourceOperationKind;
+}
+
+export enum ResourceOperationKind {
+  Action = "Action",
+  Create = "Create",
+  Delete = "Delete",
+  Get = "Get",
+  List = "List",
+  Update = "Update"
+  // ListBySubscription = "ListBySubscription",
 }

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// The response of a SummaryResource list operation.
-    /// Serialized Name: SummaryResourceListResult
-    /// </summary>
+    /// <summary> The response of a SummaryResource list operation. </summary>
     internal partial class SummaryResourceListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SummaryResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// The SummaryResource items on this page
-        /// Serialized Name: SummaryResourceListResult.value
-        /// </param>
+        /// <param name="value"> The SummaryResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SummaryResourceListResult(IEnumerable<FirmwareAnalysisSummaryData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SummaryResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// The SummaryResource items on this page
-        /// Serialized Name: SummaryResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: SummaryResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The SummaryResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SummaryResourceListResult(IReadOnlyList<FirmwareAnalysisSummaryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
-        /// <summary>
-        /// The SummaryResource items on this page
-        /// Serialized Name: SummaryResourceListResult.value
-        /// </summary>
+        /// <summary> The SummaryResource items on this page. </summary>
         public IReadOnlyList<FirmwareAnalysisSummaryData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: SummaryResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

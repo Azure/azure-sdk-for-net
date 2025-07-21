@@ -6,8 +6,10 @@
 #nullable disable
 
 using Azure.Core.Pipeline;
+using Routes._PathParameters.LabelExpansion.Explode;
+using Routes._PathParameters.LabelExpansion.Standard;
 
-namespace Routes
+namespace Routes._PathParameters.LabelExpansion
 {
     public partial class PathParametersLabelExpansion
     {

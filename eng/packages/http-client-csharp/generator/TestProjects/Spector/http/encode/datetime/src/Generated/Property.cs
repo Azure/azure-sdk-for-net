@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Encode.Datetime;
 
-namespace Encode.Datetime
+namespace Encode.Datetime._Property
 {
     public partial class Property
     {

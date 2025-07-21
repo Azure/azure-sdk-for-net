@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Encode.Bytes;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._Property
 {
     public partial class Property
     {

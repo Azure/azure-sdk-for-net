@@ -40,7 +40,7 @@ internal class ServiceBusTopicFeature : AzureProjectFeature
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         ServiceBusNamespace serviceBusNamespace = infrastructure.GetConstruct<ServiceBusNamespace>(_namespace!.Id);
-        var topic = new ServiceBusTopic(Name, "2021-11-01")
+        var topic = new ServiceBusTopic(Name, ServiceBusTopic.ResourceVersions.V2021_11_01)
         {
             Name = Name,
             Parent = serviceBusNamespace,

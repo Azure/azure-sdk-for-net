@@ -3785,7 +3785,7 @@ namespace Azure.Messaging.EventGrid.Tests
                                         ""code"": ""InnerFailure"",
                                         ""message"": ""Classification failed due to <reason>"",
                                         ""target"": null},
-                        ""details"": null
+                        ""details"": []
                       }
                     ],
                     ""jobId"": ""7f1df17b-570b-4ae5-9cf5-fe6ff64cc712"",

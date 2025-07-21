@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message Channel Event Error. </summary>
-    public partial class AcsMessageChannelEventError
+    internal partial class AcsMessageChannelEventError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

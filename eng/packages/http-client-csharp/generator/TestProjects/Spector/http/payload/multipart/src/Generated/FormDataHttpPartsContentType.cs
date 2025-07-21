@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Payload.MultiPart
+namespace Payload.MultiPart._FormData.HttpParts.ContentType
 {
     public partial class FormDataHttpPartsContentType
     {

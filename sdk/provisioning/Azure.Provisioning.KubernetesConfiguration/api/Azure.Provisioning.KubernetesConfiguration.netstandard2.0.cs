@@ -76,6 +76,7 @@ namespace Azure.Provisioning.KubernetesConfiguration
             public static readonly string V2022_07_01;
             public static readonly string V2022_11_01;
             public static readonly string V2023_05_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class KubernetesClusterExtensionScope : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -218,6 +219,7 @@ namespace Azure.Provisioning.KubernetesConfiguration
             public static readonly string V2022_07_01;
             public static readonly string V2022_11_01;
             public static readonly string V2023_05_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class KubernetesGitRepository : Azure.Provisioning.Primitives.ProvisionableConstruct

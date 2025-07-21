@@ -88,11 +88,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
-        /// <param name="isVnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
-        /// <param name="isVnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
-        /// <param name="isVnetContentShareEnabled"> To enable accessing content over virtual network. </param>
-        /// <param name="isVnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
-        /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="outboundVnetRouting"> Property to configure various outbound traffic routing options over virtual network for a site. </param>
+        /// <param name="siteConfig"> Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
         /// <param name="daprConfig"> Dapr configuration of the app. </param>
         /// <param name="workloadProfileName"> Workload profile name for function app to execute on. </param>
@@ -102,6 +99,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
         /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
         /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityPartitioningEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
@@ -112,6 +111,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
         /// <param name="ipMode"> Specifies the IP mode of the app. </param>
         /// <param name="isEndToEndEncryptionEnabled"> Whether to use end to end encryption between the FrontEnd and the Worker. </param>
+        /// <param name="isSshEnabled"> Whether to enable ssh access. </param>
         /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sku"> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, bool? isVnetRouteAllEnabled, bool? isVnetImagePullEnabled, bool? isVnetContentShareEnabled, bool? isVnetBackupRestoreEnabled, SiteConfigProperties siteConfig, FunctionAppConfig functionAppConfig, AppDaprConfig daprConfig, string workloadProfileName, FunctionAppResourceConfig resourceConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, AppServiceIPMode? ipMode, bool? isEndToEndEncryptionEnabled, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, string publicNetworkAccess, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, ResourceIdentifier virtualNetworkSubnetId, string managedEnvironmentId, string sku, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, OutboundVnetRouting outboundVnetRouting, SiteConfigProperties siteConfig, FunctionAppConfig functionAppConfig, AppDaprConfig daprConfig, string workloadProfileName, FunctionAppResourceConfig resourceConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityPartitioningEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, AppServiceIPMode? ipMode, bool? isEndToEndEncryptionEnabled, bool? isSshEnabled, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, string publicNetworkAccess, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, ResourceIdentifier virtualNetworkSubnetId, string managedEnvironmentId, string sku, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ExtendedLocation = extendedLocation;
@@ -167,10 +167,7 @@ namespace Azure.ResourceManager.AppService
             IsHyperV = isHyperV;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             DnsConfiguration = dnsConfiguration;
-            IsVnetRouteAllEnabled = isVnetRouteAllEnabled;
-            IsVnetImagePullEnabled = isVnetImagePullEnabled;
-            IsVnetContentShareEnabled = isVnetContentShareEnabled;
-            IsVnetBackupRestoreEnabled = isVnetBackupRestoreEnabled;
+            OutboundVnetRouting = outboundVnetRouting;
             SiteConfig = siteConfig;
             FunctionAppConfig = functionAppConfig;
             DaprConfig = daprConfig;
@@ -181,11 +178,14 @@ namespace Azure.ResourceManager.AppService
             TargetSwapSlot = targetSwapSlot;
             HostingEnvironmentProfile = hostingEnvironmentProfile;
             IsClientAffinityEnabled = isClientAffinityEnabled;
+            IsClientAffinityPartitioningEnabled = isClientAffinityPartitioningEnabled;
+            IsClientAffinityProxyEnabled = isClientAffinityProxyEnabled;
             IsClientCertEnabled = isClientCertEnabled;
             ClientCertMode = clientCertMode;
             ClientCertExclusionPaths = clientCertExclusionPaths;
             IPMode = ipMode;
             IsEndToEndEncryptionEnabled = isEndToEndEncryptionEnabled;
+            IsSshEnabled = isSshEnabled;
             IsHostNameDisabled = isHostNameDisabled;
             CustomDomainVerificationId = customDomainVerificationId;
             OutboundIPAddresses = outboundIPAddresses;
@@ -269,19 +269,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Property to configure various DNS related settings for a site. </summary>
         [WirePath("properties.dnsConfiguration")]
         public SiteDnsConfig DnsConfiguration { get; set; }
-        /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>
-        [WirePath("properties.vnetRouteAllEnabled")]
-        public bool? IsVnetRouteAllEnabled { get; set; }
-        /// <summary> To enable pulling image over Virtual Network. </summary>
-        [WirePath("properties.vnetImagePullEnabled")]
-        public bool? IsVnetImagePullEnabled { get; set; }
-        /// <summary> To enable accessing content over virtual network. </summary>
-        [WirePath("properties.vnetContentShareEnabled")]
-        public bool? IsVnetContentShareEnabled { get; set; }
-        /// <summary> To enable Backup and Restore operations over virtual network. </summary>
-        [WirePath("properties.vnetBackupRestoreEnabled")]
-        public bool? IsVnetBackupRestoreEnabled { get; set; }
-        /// <summary> Configuration of the app. </summary>
+        /// <summary> Property to configure various outbound traffic routing options over virtual network for a site. </summary>
+        [WirePath("properties.outboundVnetRouting")]
+        public OutboundVnetRouting OutboundVnetRouting { get; set; }
+        /// <summary> Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
         [WirePath("properties.siteConfig")]
         public SiteConfigProperties SiteConfig { get; set; }
         /// <summary> Configuration specific of the Azure Function app. </summary>
@@ -311,6 +302,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </summary>
         [WirePath("properties.clientAffinityEnabled")]
         public bool? IsClientAffinityEnabled { get; set; }
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.clientAffinityPartitioningEnabled")]
+        public bool? IsClientAffinityPartitioningEnabled { get; set; }
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.clientAffinityProxyEnabled")]
+        public bool? IsClientAffinityProxyEnabled { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.clientCertEnabled")]
         public bool? IsClientCertEnabled { get; set; }
@@ -331,6 +328,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Whether to use end to end encryption between the FrontEnd and the Worker. </summary>
         [WirePath("properties.endToEndEncryptionEnabled")]
         public bool? IsEndToEndEncryptionEnabled { get; set; }
+        /// <summary> Whether to enable ssh access. </summary>
+        [WirePath("properties.sshEnabled")]
+        public bool? IsSshEnabled { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.

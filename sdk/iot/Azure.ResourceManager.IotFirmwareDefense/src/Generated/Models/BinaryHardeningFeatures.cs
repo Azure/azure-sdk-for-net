@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Binary hardening features.
-    /// Serialized Name: BinaryHardeningFeatures
-    /// </summary>
+    /// <summary> Binary hardening features. </summary>
     public partial class BinaryHardeningFeatures
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningFeatures"/>. </summary>
-        /// <param name="noExecute">
-        /// Flag indicating the binary's stack is set to NX (no-execute).
-        /// Serialized Name: BinaryHardeningFeatures.noExecute
-        /// </param>
-        /// <param name="positionIndependentExecutable">
-        /// Flag indicating the binary was compiled to be a position independent executable.
-        /// Serialized Name: BinaryHardeningFeatures.positionIndependentExecutable
-        /// </param>
-        /// <param name="relocationReadOnly">
-        /// Flag indicating the binary has enabled relocation read-only protections.
-        /// Serialized Name: BinaryHardeningFeatures.relocationReadOnly
-        /// </param>
-        /// <param name="canary">
-        /// Flag indicating if the binary was compiled with stack canaries enabled.
-        /// Serialized Name: BinaryHardeningFeatures.canary
-        /// </param>
-        /// <param name="stripped">
-        /// Flag indicating if debug symbols have been stripped from the binary.
-        /// Serialized Name: BinaryHardeningFeatures.stripped
-        /// </param>
+        /// <param name="noExecute"> Flag indicating the binary's stack is set to NX (no-execute). </param>
+        /// <param name="positionIndependentExecutable"> Flag indicating the binary was compiled to be a position independent executable. </param>
+        /// <param name="relocationReadOnly"> Flag indicating the binary has enabled relocation read-only protections. </param>
+        /// <param name="canary"> Flag indicating if the binary was compiled with stack canaries enabled. </param>
+        /// <param name="stripped"> Flag indicating if debug symbols have been stripped from the binary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BinaryHardeningFeatures(bool? noExecute, bool? positionIndependentExecutable, bool? relocationReadOnly, bool? canary, bool? stripped, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Flag indicating the binary's stack is set to NX (no-execute).
-        /// Serialized Name: BinaryHardeningFeatures.noExecute
-        /// </summary>
+        /// <summary> Flag indicating the binary's stack is set to NX (no-execute). </summary>
         public bool? NoExecute { get; set; }
-        /// <summary>
-        /// Flag indicating the binary was compiled to be a position independent executable.
-        /// Serialized Name: BinaryHardeningFeatures.positionIndependentExecutable
-        /// </summary>
+        /// <summary> Flag indicating the binary was compiled to be a position independent executable. </summary>
         public bool? PositionIndependentExecutable { get; set; }
-        /// <summary>
-        /// Flag indicating the binary has enabled relocation read-only protections.
-        /// Serialized Name: BinaryHardeningFeatures.relocationReadOnly
-        /// </summary>
+        /// <summary> Flag indicating the binary has enabled relocation read-only protections. </summary>
         public bool? RelocationReadOnly { get; set; }
-        /// <summary>
-        /// Flag indicating if the binary was compiled with stack canaries enabled.
-        /// Serialized Name: BinaryHardeningFeatures.canary
-        /// </summary>
+        /// <summary> Flag indicating if the binary was compiled with stack canaries enabled. </summary>
         public bool? Canary { get; set; }
-        /// <summary>
-        /// Flag indicating if debug symbols have been stripped from the binary.
-        /// Serialized Name: BinaryHardeningFeatures.stripped
-        /// </summary>
+        /// <summary> Flag indicating if debug symbols have been stripped from the binary. </summary>
         public bool? Stripped { get; set; }
     }
 }

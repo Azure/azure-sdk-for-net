@@ -6,8 +6,10 @@
 #nullable disable
 
 using Azure.Core.Pipeline;
+using Routes._PathParameters.MatrixExpansion.Explode;
+using Routes._PathParameters.MatrixExpansion.Standard;
 
-namespace Routes
+namespace Routes._PathParameters.MatrixExpansion
 {
     public partial class PathParametersMatrixExpansion
     {

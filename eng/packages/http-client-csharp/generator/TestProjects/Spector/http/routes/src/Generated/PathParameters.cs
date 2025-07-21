@@ -9,8 +9,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Routes._PathParameters.LabelExpansion;
+using Routes._PathParameters.MatrixExpansion;
+using Routes._PathParameters.PathExpansion;
+using Routes._PathParameters.ReservedExpansion;
+using Routes._PathParameters.SimpleExpansion;
 
-namespace Routes
+namespace Routes._PathParameters
 {
     public partial class PathParameters
     {

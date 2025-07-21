@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiCenter.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetApiCenterServices_ServicesListBySubscription()
         {
-            // Generated from example definition: specification/apicenter/resource-manager/Microsoft.ApiCenter/preview/2023-07-01-preview/examples/Services_ListBySubscription.json
+            // Generated from example definition: specification/apicenter/resource-manager/Microsoft.ApiCenter/stable/2024-03-01/examples/Services_ListBySubscription.json
             // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

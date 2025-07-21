@@ -11,6 +11,6 @@ namespace Streaming.Jsonl
 {
     public static partial class StreamingJsonlModelFactory
     {
-        public static JsonlStreamInfo JsonlStreamInfo(JsonlStreamInfoContentType contentType = default) => throw null;
+        public static JsonlStreamInfo JsonlStreamInfo(string contentType = default) => throw null;
     }
 }

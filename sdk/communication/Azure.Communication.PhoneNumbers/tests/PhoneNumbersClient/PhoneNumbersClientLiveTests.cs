@@ -500,6 +500,84 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         [Test]
         [AsyncOnly]
+        public async Task StartPurchaseWithoutAgreementToNotResellAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            var client = CreateClient();
+
+            // France doesn't allow reselling phone numbers.
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("FR", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            await searchOperation.WaitForCompletionAsync();
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            try
+            {
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchId, agreeToNotResell: false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [SyncOnly]
+        public void StartPurchaseWithoutAgreementToNotResell()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+
+            var client = CreateClient();
+
+            // France doesn't allow reselling phone numbers.
+            var searchOperation = client.StartSearchAvailablePhoneNumbers("FR", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var searchId = searchOperation.Value.SearchId;
+
+            try
+            {
+                var purchaseOperation = client.StartPurchasePhoneNumbers(searchId, agreeToNotResell: false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(IsClientError(ex.Status), $"Status code {ex.Status} does not indicate a client error.");
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task GetPurchasedPhoneNumbersNextPageAsync()
         {
             var client = CreateClient();

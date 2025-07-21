@@ -43,20 +43,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(IndexerPermissionOptions))
             {
-                if (IndexerPermissionOptions != null)
+                writer.WritePropertyName("indexerPermissionOptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in IndexerPermissionOptions)
                 {
-                    writer.WritePropertyName("indexerPermissionOptions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in IndexerPermissionOptions)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("indexerPermissionOptions");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
@@ -160,7 +153,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        indexerPermissionOptions = null;
                         continue;
                     }
                     List<IndexerPermissionOption> array = new List<IndexerPermissionOption>();

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// String to indicate if the executable is 32 or 64 bit.
-    /// Serialized Name: ExecutableClass
-    /// </summary>
+    /// <summary> String to indicate if the executable is 32 or 64 bit. </summary>
     public readonly partial struct ExecutableClass : IEquatable<ExecutableClass>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private const string X86Value = "x86";
         private const string X64Value = "x64";
 
-        /// <summary>
-        /// The binary is 32-bit.
-        /// Serialized Name: ExecutableClass.x86
-        /// </summary>
+        /// <summary> The binary is 32-bit. </summary>
         public static ExecutableClass X86 { get; } = new ExecutableClass(X86Value);
-        /// <summary>
-        /// The binary is 64-bit.
-        /// Serialized Name: ExecutableClass.x64
-        /// </summary>
+        /// <summary> The binary is 64-bit. </summary>
         public static ExecutableClass X64 { get; } = new ExecutableClass(X64Value);
         /// <summary> Determines if two <see cref="ExecutableClass"/> values are the same. </summary>
         public static bool operator ==(ExecutableClass left, ExecutableClass right) => left.Equals(right);

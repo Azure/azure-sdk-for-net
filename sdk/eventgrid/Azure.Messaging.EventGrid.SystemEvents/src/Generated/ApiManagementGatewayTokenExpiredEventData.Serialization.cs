@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiManagementGatewayTokenExpiredEventDataConverter))]
     public partial class ApiManagementGatewayTokenExpiredEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayTokenExpiredEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayTokenExpiredEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,9 +37,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("gatewayInfo"u8);
-            writer.WriteObjectValue(GatewayInfo, options);
+            writer.WriteObjectValue(Gateway, options);
             writer.WritePropertyName("tokenInfo"u8);
-            writer.WriteObjectValue(TokenInfo, options);
+            writer.WriteObjectValue(Token, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -145,6 +147,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiManagementGatewayTokenExpiredEventDataConverter : JsonConverter<ApiManagementGatewayTokenExpiredEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiManagementGatewayTokenExpiredEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiManagementGatewayTokenExpiredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementGatewayTokenExpiredEventData(document.RootElement);
+            }
         }
     }
 }

@@ -44,25 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteStartObject();
-                foreach (var item0 in item.Value)
-                {
-                    writer.WritePropertyName(item0.Key);
-                    if (item0.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item0.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item0.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<object>(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -102,14 +84,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            IReadOnlyDictionary<string, IDictionary<string, BinaryData>> rules = default;
+            IReadOnlyDictionary<string, object> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"u8))
                 {
-                    Dictionary<string, IDictionary<string, BinaryData>> dictionary = new Dictionary<string, IDictionary<string, BinaryData>>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -118,19 +100,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         }
                         else
                         {
-                            Dictionary<string, BinaryData> dictionary0 = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary0.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary0.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            dictionary.Add(property0.Name, dictionary0);
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
                         }
                     }
                     rules = dictionary;

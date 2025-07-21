@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     options: new() { Traits = traits },
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    string destinationPermissionKey = string.Empty;
+                    string destinationPermissionKey = default;
                     if (destinationShare != default && item.PermissionKey != default)
                     {
                         // Check if the permission key is already created.
