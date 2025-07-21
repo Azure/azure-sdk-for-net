@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ComputeSchedule.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ScheduledActionsRestOperations ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private string GetApiVersionOrNull(Core.ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +301,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,7 +342,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +383,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,7 +424,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +465,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -505,7 +506,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,6 +535,170 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         }
 
         /// <summary>
+        /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteCreate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_VirtualMachinesExecuteCreate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateScheduledActionAsync(string locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = await ScheduledActionsRestClient.VirtualMachinesExecuteCreateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteCreate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_VirtualMachinesExecuteCreate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<CreateResourceOperationResult> VirtualMachinesExecuteCreateScheduledAction(string locationparameter, ExecuteCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteCreateScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = ScheduledActionsRestClient.VirtualMachinesExecuteCreate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteDelete</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_VirtualMachinesExecuteDelete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteScheduledActionAsync(string locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = await ScheduledActionsRestClient.VirtualMachinesExecuteDeleteAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteDelete</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_VirtualMachinesExecuteDelete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationparameter"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationparameter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationparameter"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<DeleteResourceOperationResult> VirtualMachinesExecuteDeleteScheduledAction(string locationparameter, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(locationparameter, nameof(locationparameter));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.VirtualMachinesExecuteDeleteScheduledAction");
+            scope.Start();
+            try
+            {
+                var response = ScheduledActionsRestClient.VirtualMachinesExecuteDelete(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
         /// <list type="bullet">
         /// <item>
@@ -546,7 +711,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,7 +752,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,7 +793,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -669,7 +834,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -710,7 +875,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -751,7 +916,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -777,6 +942,58 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List ScheduledAction resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/scheduledActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ScheduledAction"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledAction> GetScheduledActionsBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ScheduledAction.DeserializeScheduledAction(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActionsBySubscription", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List ScheduledAction resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/scheduledActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScheduledAction"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledAction> GetScheduledActionsBySubscription(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ScheduledAction.DeserializeScheduledAction(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActionsBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }
