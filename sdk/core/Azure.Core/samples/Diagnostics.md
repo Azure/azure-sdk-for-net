@@ -213,7 +213,7 @@ Azure SDK traces all HTTP calls using `Azure.Core.Http` source. If you enable it
 
 Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure services in `x-ms-client-request-id`, `x-ms-request-id` or similar request and response headers. This data may be important when correlating client and server telemetry or creating support tickets.
 
-To avoid double-collection you may either
+To avoid double-collection you may either:
 - enrich generic HTTP client activities with Azure request identifiers and disable Azure SDK HTTP activities.
 - filter out duplicated generic HTTP client activities.
 
