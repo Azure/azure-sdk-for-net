@@ -14,5 +14,10 @@ namespace Azure.Generator.Snippets
     {
         public static MethodBodyStatement SetHeaderValue(this ScopedApi<Request> request, string name, ValueExpression value)
             => request.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.SetValue), Literal(name), value).Terminate();
+
+        public static MethodBodyStatement AddHeaderValue(this ScopedApi<Request> request, string name, ValueExpression value)
+            => request.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.Add), Literal(name), value).Terminate();
+        public static MethodBodyStatement AddHeader(this ScopedApi<Request> request, ValueExpression value)
+            => request.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.Add), value).Terminate();
     }
 }

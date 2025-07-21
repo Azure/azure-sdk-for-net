@@ -2,11 +2,17 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Primitives;
+using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -14,136 +20,311 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Visitors
 {
     /// <summary>
-    /// Visitor that modifies service methods to group conditional request headers into RequestConditions/MatchConditions types.
+    /// Visitor that modifies service methods to group conditional request headers into MatchConditions/RequestConditions types.
     /// </summary>
     internal class MatchConditionsVisitor : ScmLibraryVisitor
     {
-        private const string IfMatchHeaderName = "If-Match";
-        private const string IfNoneMatchHeaderName = "If-None-Match";
-        private const string IfModifiedSinceHeaderName = "If-Modified-Since";
-        private const string IfUnmodifiedSinceHeaderName = "If-Unmodified-Since";
+        private static CSharpType ETagType => new CSharpType(typeof(ETag)).WithNullable(true);
+        private const string IfMatch = "If-Match";
+        private const string IfNoneMatch = "If-None-Match";
+        private const string IfModifiedSince = "If-Modified-Since";
+        private const string IfUnmodifiedSince = "If-Unmodified-Since";
 
-        protected override ScmMethodProviderCollection? Visit(
-            InputServiceMethod serviceMethod,
-            ClientProvider client,
-            ScmMethodProviderCollection? methods)
+        private static readonly HashSet<string> _matchConditionsHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
-            // Check if there are any optional match condition parameters to process
-            var serviceMethodMatchConditionParameters = GetOptionalMatchConditionParameters(serviceMethod.Parameters);
-            var operationMatchConditionParameters = GetOptionalMatchConditionParameters(serviceMethod.Operation.Parameters);
+            IfMatch, IfNoneMatch, IfModifiedSince, IfUnmodifiedSince
+        };
 
-            if (serviceMethodMatchConditionParameters.Count == 0 && operationMatchConditionParameters.Count == 0)
-                return methods;
-
-            // Handle the case where only a single IfMatch or IfNoneMatch parameter exists
-            // In this case, replace with ETag? type instead of RequestConditions/MatchConditions
-            if (HandleSingleETagParameter(serviceMethod, serviceMethodMatchConditionParameters, operationMatchConditionParameters))
-                return methods;
-
-            // Determine if we need RequestConditions (for date-based conditions) or MatchConditions (for ETags only)
-            var allMatchConditionParameters = serviceMethodMatchConditionParameters.Concat(operationMatchConditionParameters)
-                .GroupBy(kvp => kvp.Key)
-                .ToDictionary(g => g.Key, g => g.First().Value);
-
-            bool hasDateConditions = allMatchConditionParameters.ContainsKey(IfModifiedSinceHeaderName) ||
-                                   allMatchConditionParameters.ContainsKey(IfUnmodifiedSinceHeaderName);
-
-            // Update the service method to remove individual match condition parameters
-            var filteredServiceMethodParameters = serviceMethod.Parameters
-                .Where(p => !IsOptionalMatchConditionParameter(p))
-                .ToList();
-
-            var filteredOperationParameters = serviceMethod.Operation.Parameters
-                .Where(p => !IsOptionalMatchConditionParameter(p))
-                .ToList();
-
-            serviceMethod.Update(parameters: filteredServiceMethodParameters);
-            serviceMethod.Operation.Update(parameters: filteredOperationParameters);
-
-            // Create a new method collection with the updated service method
-            methods = new ScmMethodProviderCollection(serviceMethod, client);
-
-            // Reset the rest client so that its methods are rebuilt
-            client.RestClient.Reset();
-            var createRequestMethod = client.RestClient.GetCreateRequestMethod(serviceMethod.Operation);
-            var originalBodyStatements = createRequestMethod.BodyStatements!.ToList();
-
-            // Exclude the last statement which is the return statement. We will add it back later.
-            var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
-
-            // Find the request variable
-            VariableExpression? requestVariable = null;
-            foreach (var statement in newStatements)
+        protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
+        {
+            if (method.ServiceMethod == null)
             {
-                if (statement is ExpressionStatement
-                    {
-                        Expression: AssignmentExpression { Variable: DeclarationExpression declaration }
-                    })
+                return base.VisitMethod(method);
+            }
+
+            // Check if there are any optional match condition parameters to process
+            if (!ContainsOptionalMatchConditionParameters(method.ServiceMethod))
+            {
+                return base.VisitMethod(method);
+            }
+
+            var matchConditionParams = GetMatchConditionParameters(method.Signature.Parameters);
+            if (matchConditionParams.Count == 1)
+            {
+                // Handle the case where only a single IfMatch or IfNoneMatch parameter exists
+                // In this case, replace with ETag? type instead of RequestConditions/MatchConditions
+                matchConditionParams[0].Update(type: ETagType);
+            }
+            else if (matchConditionParams.Count > 1)
+            {
+                // Handle the case where both IfMatch/IfNoneMatch parameters are present
+                // Group them into a single MatchConditions parameter
+                var matchConditionsParameter = KnownAzureParameters.MatchConditionsParameter;
+                matchConditionsParameter.Update(wireInfo: matchConditionParams[0].WireInfo);
+
+                // Remove the other match condition parameters
+                var updatedParams = new List<ParameterProvider>();
+                bool addedMatchConditionsParameter = false;
+                foreach (var param in method.Signature.Parameters)
                 {
-                    var variable = declaration.Variable;
-                    if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
+                    if (IsMatchConditionHeader(param.WireInfo.SerializedName) && !addedMatchConditionsParameter)
                     {
-                        requestVariable = variable;
+                        updatedParams.Add(matchConditionsParameter);
+                        addedMatchConditionsParameter = true;
+                    }
+                    else if (!IsMatchConditionHeader(param.WireInfo.SerializedName))
+                    {
+                        updatedParams.Add(param);
+                    }
+                }
+
+                // Update the method signature with the new parameters
+                method.Signature.Update(parameters: updatedParams);
+            }
+
+            // Update the CreateRequest method body if this is a RestClient method
+            if (IsCreateRequestMethod(method))
+            {
+                UpdateCreateRequestMethodBody(method, matchConditionParams);
+            }
+            else if (matchConditionParams.Count > 1 && method.IsProtocolMethod)
+            {
+                UpdateProtocolMethod(method);
+            }
+
+            return method;
+        }
+
+        private static void UpdateProtocolMethod(ScmMethodProvider method)
+        {
+            if (method.BodyStatements == null)
+            {
+                return;
+            }
+
+            var updatedStatements = new List<MethodBodyStatement>();
+
+            foreach (var statement in method.BodyStatements)
+            {
+                var updatedStatement = UpdateCreateRequestInvocationStatement(statement);
+                updatedStatements.Add(updatedStatement);
+            }
+
+            method.Update(bodyStatements: updatedStatements, signature: method.Signature);
+        }
+
+        private static MethodBodyStatement UpdateCreateRequestInvocationStatement(MethodBodyStatement statement)
+        {
+            if (statement is TryCatchFinallyStatement tryCatchFinallyStatement)
+            {
+                foreach (var tryBodyStatement in tryCatchFinallyStatement.Try.Body)
+                {
+                    if (tryBodyStatement is ExpressionStatement expressionStatement)
+                    {
+                        if (expressionStatement.Expression is AssignmentExpression assignmentExpression &&
+                            assignmentExpression.Value is InvokeMethodExpression invokeExpression &&
+                            IsCreateRequestMethodInvocation(invokeExpression))
+                        {
+                            var updatedArguments = new List<ValueExpression>();
+                            bool addedMatchConditions = false;
+                            foreach (var argument in invokeExpression.Arguments)
+                            {
+                                if (argument is VariableExpression variable)
+                                {
+                                    if (variable.Declaration.RequestedName == "ifMatch" ||
+                                        variable.Declaration.RequestedName == "ifNoneMatch")
+                                    {
+                                        if (addedMatchConditions)
+                                        {
+                                            continue;
+                                        }
+
+                                        updatedArguments.Add(KnownAzureParameters.MatchConditionsParameter);
+                                        addedMatchConditions = true;
+                                    }
+                                    else
+                                    {
+                                        updatedArguments.Add(argument);
+                                    }
+                                }
+                                else
+                                {
+                                    updatedArguments.Add(argument);
+                                }
+                            }
+                            invokeExpression.Update(arguments: updatedArguments);
+                            var updatedAssignment = new AssignmentExpression(
+                                assignmentExpression.Variable,
+                                invokeExpression);
+                            expressionStatement.Update(expression: updatedAssignment);
+                        }
                     }
                 }
             }
 
-            // Add the return statement back
-            newStatements.Add(originalBodyStatements[^1]);
-            createRequestMethod.Update(bodyStatements: newStatements);
-
-            return methods;
+            return statement;
         }
 
-        private static Dictionary<string, InputParameter> GetOptionalMatchConditionParameters(IReadOnlyList<InputParameter> parameters)
+        private static bool IsCreateRequestMethodInvocation(InvokeMethodExpression invocation)
         {
-            var matchConditionParameters = new Dictionary<string, InputParameter>();
+            // Check if the method name suggests it's a CreateRequest method
+            var methodName = invocation.MethodSignature?.Name;
+            return methodName?.StartsWith("Create") == true &&
+                   methodName?.EndsWith("Request") == true;
+        }
 
-            foreach (var parameter in parameters)
+        private static void UpdateCreateRequestMethodBody(ScmMethodProvider method, List<ParameterProvider> matchConditionParams)
+        {
+            if (method.BodyStatements == null)
             {
-                if (IsOptionalMatchConditionParameter(parameter))
+                return;
+            }
+
+            var updatedStatements = new List<MethodBodyStatement>();
+            bool updatedIfStatement = false;
+
+            foreach (var statement in method.BodyStatements)
+            {
+                if (!TryUpdateIfStatementForMatchConditions(statement, matchConditionParams, out var updatedStatement))
                 {
-                    matchConditionParameters[parameter.NameInRequest] = parameter;
+                    updatedStatements.Add(statement);
+                }
+                else if (!updatedIfStatement)
+                {
+                    updatedIfStatement = true;
+                    updatedStatements.Add(updatedStatement);
                 }
             }
 
-            return matchConditionParameters;
+            method.Update(bodyStatements: updatedStatements);
+        }
+
+        private static bool TryUpdateIfStatementForMatchConditions(
+            MethodBodyStatement statement,
+            List<ParameterProvider> matchConditionParams,
+            out MethodBodyStatement updatedStatement)
+        {
+            updatedStatement = statement;
+            if (statement is not IfStatement ifStatement)
+            {
+                return false;
+            }
+
+            var updatedIfStatement = ifStatement;
+            var ifBody = updatedIfStatement.Body;
+            if (ifBody == null)
+            {
+                return false;
+            }
+
+            foreach (var bodyStatement in ifBody)
+            {
+                if (bodyStatement is ExpressionStatement expressionStatement &&
+                    expressionStatement.Expression is InvokeMethodExpression invokeExpression &&
+                    invokeExpression.InstanceReference is MemberExpression { Inner: VariableExpression variableExpression })
+                {
+                    if (variableExpression.Type.Equals(variableExpression.ToApi<HttpRequestApi>().Type))
+                    {
+                        var headerInfo = ExtractHeaderInfo(invokeExpression);
+                        if (headerInfo.HasValue)
+                        {
+                            var (headerName, headerValue) = headerInfo.Value;
+
+                            if (IsMatchConditionHeader(headerName))
+                            {
+                                if (matchConditionParams.Count > 1)
+                                {
+                                    // For MatchConditions, use AddHeader which will handle the header addition appropriately
+                                    updatedIfStatement.Update(
+                                        condition: KnownAzureParameters.MatchConditionsParameter.NotEqual(Null),
+                                        body: variableExpression.As<Request>().AddHeader(KnownAzureParameters.MatchConditionsParameter));
+                                    return true;
+                                }
+                                else if (matchConditionParams.Count == 1)
+                                {
+                                    // For single ETag parameter, use AddHeaderValue with the header name and Value property
+                                    updatedIfStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(
+                                        headerName,
+                                        headerValue.Property("Value")));
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsCreateRequestMethod(ScmMethodProvider method)
+        {
+            return method.EnclosingType is RestClientProvider &&
+                method.ServiceMethod != null &&
+                !method.IsProtocolMethod &&
+                method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                method.Signature.ReturnType?.Equals(typeof(HttpMessage)) == true;
+        }
+
+        private static bool IsMatchConditionHeader(string headerName)
+        {
+            return string.Equals(headerName, IfMatch, StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(headerName, IfNoneMatch, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static List<ParameterProvider> GetMatchConditionParameters(IReadOnlyList<ParameterProvider> parameters)
+        {
+            var matchConditionParams = new List<ParameterProvider>();
+
+            foreach (var parameter in parameters)
+            {
+                if (IsMatchConditionParameter(parameter))
+                {
+                    matchConditionParams.Add(parameter);
+                }
+            }
+
+            return matchConditionParams;
+        }
+
+        private static (string HeaderName, ValueExpression HeaderValue)? ExtractHeaderInfo(InvokeMethodExpression invokeExpression)
+        {
+            if (invokeExpression.Arguments.FirstOrDefault() is ScopedApi<string> scopedApi &&
+                scopedApi.Original is LiteralExpression literalExpression &&
+                literalExpression.Literal is string headerName &&
+                _matchConditionsHeaders.Contains(headerName))
+            {
+                var headerValue = invokeExpression.Arguments.Count > 1
+                    ? invokeExpression.Arguments[1]
+                    : null;
+
+                if (headerValue != null)
+                {
+                    return (headerName, headerValue);
+                }
+            }
+
+            return null;
+        }
+
+        private static bool IsMatchConditionParameter(ParameterProvider parameter)
+        {
+            return parameter.Type.IsNullable &&
+                   parameter.Location == ParameterLocation.Header &&
+                   IsMatchConditionHeader(parameter.WireInfo.SerializedName);
+        }
+
+        private static bool ContainsOptionalMatchConditionParameters(InputServiceMethod inputServiceMethod)
+        {
+            return inputServiceMethod.Parameters.Any(IsOptionalMatchConditionParameter) ||
+                   inputServiceMethod.Operation.Parameters.Any(IsOptionalMatchConditionParameter);
         }
 
         private static bool IsOptionalMatchConditionParameter(InputParameter parameter)
         {
             return !parameter.IsRequired &&
-                   parameter.Location == InputRequestLocation.Header &&
-                   (parameter.NameInRequest == IfMatchHeaderName ||
-                    parameter.NameInRequest == IfNoneMatchHeaderName ||
-                    parameter.NameInRequest == IfModifiedSinceHeaderName ||
-                    parameter.NameInRequest == IfUnmodifiedSinceHeaderName);
-        }
-
-        private static bool HandleSingleETagParameter(
-            InputServiceMethod serviceMethod,
-            Dictionary<string, InputParameter> serviceMethodParams,
-            Dictionary<string, InputParameter> operationParams)
-        {
-            var allParams = serviceMethodParams.Concat(operationParams)
-                .GroupBy(kvp => kvp.Key)
-                .ToDictionary(g => g.Key, g => g.First().Value);
-
-            // Check if we have exactly one ETag parameter (If-Match or If-None-Match) and no date parameters
-            bool hasIfMatch = allParams.ContainsKey(IfMatchHeaderName);
-            bool hasIfNoneMatch = allParams.ContainsKey(IfNoneMatchHeaderName);
-            bool hasDateParams = allParams.ContainsKey(IfModifiedSinceHeaderName) ||
-                                allParams.ContainsKey(IfUnmodifiedSinceHeaderName);
-
-            if (!hasDateParams && (hasIfMatch ^ hasIfNoneMatch)) // XOR - exactly one of them
-            {
-                // TODO: Replace the single ETag parameter with ETag? type
-                // This would require additional infrastructure to modify parameter types
-                // For now, we let the regular processing handle this case
-                return false;
-            }
-
-            return false;
+                parameter.Location == InputRequestLocation.Header &&
+                _matchConditionsHeaders.Contains(parameter.NameInRequest);
         }
     }
 }

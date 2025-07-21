@@ -40,10 +40,9 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(responseModelProvider);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
-            
+
             // Verify the parameters before visitor transformation
             Assert.AreEqual(4, serviceMethod.Parameters.Count);
-            
             methodCollection = visitor.InvokeVisitServiceMethod(serviceMethod, clientProvider!, methodCollection);
 
             // Verify that individual match condition headers are removed from serviceMethod.Parameters
@@ -75,10 +74,10 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(responseModelProvider);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
-            
+
             // Should have 2 parameters initially
             Assert.AreEqual(2, serviceMethod.Parameters.Count);
-            
+
             methodCollection = visitor.InvokeVisitServiceMethod(serviceMethod, clientProvider!, methodCollection);
 
             // Should have 1 parameter (the non-match condition one) after transformation
@@ -102,12 +101,12 @@ namespace Azure.Generator.Tests.Visitors
                     location: InputRequestLocation.Header),
                 InputFactory.Parameter(
                     "ifModifiedSince",
-                    type: InputPrimitiveType.DateTimeRFC7231,
+                    type: InputPrimitiveType.String,
                     nameInRequest: "If-Modified-Since",
                     location: InputRequestLocation.Header),
                 InputFactory.Parameter(
                     "ifUnmodifiedSince",
-                    type: InputPrimitiveType.DateTimeRFC7231,
+                    type: InputPrimitiveType.String,
                     nameInRequest: "If-Unmodified-Since",
                     location: InputRequestLocation.Header)
             ];
@@ -136,7 +135,7 @@ namespace Azure.Generator.Tests.Visitors
         public void IdentifiesIfMatchParameter()
         {
             var parameter = CreateTestParameter("ifMatch", "If-Match", InputRequestLocation.Header);
-            
+
             Assert.IsTrue(IsMatchConditionParameter(parameter));
         }
 
@@ -144,7 +143,7 @@ namespace Azure.Generator.Tests.Visitors
         public void IdentifiesIfNoneMatchParameter()
         {
             var parameter = CreateTestParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header);
-            
+
             Assert.IsTrue(IsMatchConditionParameter(parameter));
         }
 
@@ -152,7 +151,7 @@ namespace Azure.Generator.Tests.Visitors
         public void IdentifiesIfModifiedSinceParameter()
         {
             var parameter = CreateTestParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header);
-            
+
             Assert.IsTrue(IsMatchConditionParameter(parameter));
         }
 
@@ -160,7 +159,7 @@ namespace Azure.Generator.Tests.Visitors
         public void IdentifiesIfUnmodifiedSinceParameter()
         {
             var parameter = CreateTestParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header);
-            
+
             Assert.IsTrue(IsMatchConditionParameter(parameter));
         }
 
@@ -168,7 +167,7 @@ namespace Azure.Generator.Tests.Visitors
         public void IgnoresNonMatchConditionHeaders()
         {
             var parameter = CreateTestParameter("authorization", "Authorization", InputRequestLocation.Header);
-            
+
             Assert.IsFalse(IsMatchConditionParameter(parameter));
         }
 
@@ -176,7 +175,7 @@ namespace Azure.Generator.Tests.Visitors
         public void IgnoresNonHeaderParameters()
         {
             var parameter = CreateTestParameter("ifMatch", "If-Match", InputRequestLocation.Query);
-            
+
             Assert.IsFalse(IsMatchConditionParameter(parameter));
         }
 
@@ -192,7 +191,7 @@ namespace Azure.Generator.Tests.Visitors
             };
 
             var matchConditionParams = GetMatchConditionParameters(parameters);
-            
+
             Assert.AreEqual(2, matchConditionParams.Count);
             Assert.IsTrue(matchConditionParams.ContainsKey("If-Match"));
             Assert.IsTrue(matchConditionParams.ContainsKey("If-None-Match"));
@@ -208,9 +207,9 @@ namespace Azure.Generator.Tests.Visitors
             };
 
             var matchConditionParams = GetMatchConditionParameters(parameters);
-            bool hasDateConditions = matchConditionParams.ContainsKey("If-Modified-Since") || 
-                                   matchConditionParams.ContainsKey("If-Unmodified-Since");
-            
+            bool hasDateConditions = matchConditionParams.ContainsKey("If-Modified-Since") ||
+                matchConditionParams.ContainsKey("If-Unmodified-Since");
+
             Assert.IsTrue(hasDateConditions, "Should detect that RequestConditions is needed for date-based conditions");
         }
 
@@ -224,9 +223,9 @@ namespace Azure.Generator.Tests.Visitors
             };
 
             var matchConditionParams = GetMatchConditionParameters(parameters);
-            bool hasDateConditions = matchConditionParams.ContainsKey("If-Modified-Since") || 
+            bool hasDateConditions = matchConditionParams.ContainsKey("If-Modified-Since") ||
                                    matchConditionParams.ContainsKey("If-Unmodified-Since");
-            
+
             Assert.IsFalse(hasDateConditions, "Should detect that only MatchConditions is needed for ETag-only conditions");
         }
 
@@ -241,16 +240,16 @@ namespace Azure.Generator.Tests.Visitors
                 InputPrimitiveType.String,
                 location,
                 defaultValue: null,
-                kind: InputOperationParameterKind.Method,
+                kind: InputParameterKind.Method,
                 isRequired: false,
                 isApiVersion: false,
-                isResourceParameter: false,
                 isContentType: false,
                 isEndpoint: false,
                 skipUrlEncoding: false,
                 explode: false,
                 arraySerializationDelimiter: null,
-                headerCollectionPrefix: null);
+                headerCollectionPrefix: null,
+                serverUrlTemplate: null);
         }
 
         private static bool IsMatchConditionParameter(InputParameter parameter)
@@ -266,7 +265,7 @@ namespace Azure.Generator.Tests.Visitors
         private static Dictionary<string, InputParameter> GetMatchConditionParameters(IReadOnlyList<InputParameter> parameters)
         {
             var matchConditionParameters = new Dictionary<string, InputParameter>();
-            
+
             foreach (var parameter in parameters)
             {
                 if (IsMatchConditionParameter(parameter))
@@ -274,7 +273,7 @@ namespace Azure.Generator.Tests.Visitors
                     matchConditionParameters[parameter.NameInRequest] = parameter;
                 }
             }
-            
+
             return matchConditionParameters;
         }
 

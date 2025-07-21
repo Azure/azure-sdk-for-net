@@ -2029,5 +2029,65 @@ namespace BasicTypeSpec
         {
             return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
+
+        /// <summary> PostIfMatchNoneMatch. </summary>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response PostIfMatchNoneMatch(MatchConditions matchConditions, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PostIfMatchNoneMatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfMatchNoneMatchRequest(matchConditions, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> PostIfMatchNoneMatch. </summary>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> PostIfMatchNoneMatchAsync(MatchConditions matchConditions, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.PostIfMatchNoneMatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfMatchNoneMatchRequest(matchConditions, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> PostIfMatchNoneMatch. </summary>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="ifNoneMatch"> The request should only proceed if an entity does not match this string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response PostIfMatchNoneMatch(MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            return this.PostIfMatchNoneMatch(ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> PostIfMatchNoneMatch. </summary>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="ifNoneMatch"> The request should only proceed if an entity does not match this string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> PostIfMatchNoneMatchAsync(MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        {
+            return await this.PostIfMatchNoneMatchAsync(ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

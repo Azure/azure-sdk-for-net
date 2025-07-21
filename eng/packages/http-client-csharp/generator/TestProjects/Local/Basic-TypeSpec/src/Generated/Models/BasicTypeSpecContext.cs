@@ -15,5 +15,6 @@ namespace BasicTypeSpec
     /// </summary>
     public partial class BasicTypeSpecContext : ModelReaderWriterContext
     {
+        public static ModelReaderWriterContext Default { get; internal set; }
     }
 }

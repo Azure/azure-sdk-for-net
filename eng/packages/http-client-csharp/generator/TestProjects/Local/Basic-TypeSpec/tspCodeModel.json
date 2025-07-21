@@ -6321,15 +6321,145 @@
               "items"
             ]
           }
+        },
+        {
+          "$id": "448",
+          "kind": "basic",
+          "name": "postIfMatchNoneMatch",
+          "accessibility": "public",
+          "apiVersions": [
+            "2024-07-16-preview",
+            "2024-08-16-preview"
+          ],
+          "operation": {
+            "$id": "449",
+            "name": "postIfMatchNoneMatch",
+            "resourceName": "BasicTypeSpec",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "450",
+                "name": "ifMatch",
+                "nameInRequest": "If-Match",
+                "doc": "The request should only proceed if an entity matches this string.",
+                "type": {
+                  "$id": "451",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "452",
+                "name": "ifNoneMatch",
+                "nameInRequest": "If-None-Match",
+                "doc": "The request should only proceed if an entity does not match this string.",
+                "type": {
+                  "$id": "453",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{basicTypeSpecUrl}",
+            "path": "/if-match-none-match",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "BasicTypeSpec.postIfMatchNoneMatch",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "454",
+              "name": "ifMatch",
+              "nameInRequest": "If-Match",
+              "doc": "The request should only proceed if an entity matches this string.",
+              "type": {
+                "$id": "455",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "456",
+              "name": "ifNoneMatch",
+              "nameInRequest": "If-None-Match",
+              "doc": "The request should only proceed if an entity does not match this string.",
+              "type": {
+                "$id": "457",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "BasicTypeSpec.postIfMatchNoneMatch"
         }
       ],
       "parameters": [
         {
-          "$id": "448",
+          "$id": "458",
           "name": "basicTypeSpecUrl",
           "nameInRequest": "basicTypeSpecUrl",
           "type": {
-            "$id": "449",
+            "$id": "459",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"

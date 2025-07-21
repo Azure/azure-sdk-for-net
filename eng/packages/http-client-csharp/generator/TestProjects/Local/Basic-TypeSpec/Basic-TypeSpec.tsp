@@ -443,3 +443,15 @@ model Page<T> {
 @convenientAPI(true)
 @list
 op ListWithPaging(): Page<ThingModel>;
+
+@post
+@route("/if-match-none-match")
+op postIfMatchNoneMatch(
+  @header("If-Match")
+  @doc("The request should only proceed if an entity matches this string.")
+  ifMatch?: string,
+
+  @header("If-None-Match")
+  @doc("The request should only proceed if an entity does not match this string.")
+  ifNoneMatch?: string,
+): NoContentResponse;
