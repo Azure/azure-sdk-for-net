@@ -68,15 +68,30 @@ namespace System.ClientModel.SourceGeneration
         {
             foreach (var attribute in symbol.GetAttributes())
             {
-                if (attribute.AttributeClass?.Name == "ExperimentalAttribute" &&
-                    attribute.AttributeClass.ContainingNamespace?.ToString() == "System.Diagnostics.CodeAnalysis")
+                if (attribute.AttributeClass is
+                    {
+                        Name: "ExperimentalAttribute",
+                        ContainingType: null,
+                        ContainingNamespace:
+                        {
+                            Name: "CodeAnalysis",
+                            ContainingNamespace:
+                            {
+                                Name: "Diagnostics",
+                                ContainingNamespace:
+                                {
+                                    Name: "System",
+                                    ContainingNamespace.IsGlobalNamespace: true
+                                }
+                            }
+                        }
+                    })
                 {
                     if (attribute.ConstructorArguments.Length > 0 &&
                         attribute.ConstructorArguments[0].Value is string diagnosticId)
                     {
                         return diagnosticId;
                     }
-                    break;
                 }
             }
             return null;

@@ -1128,13 +1128,21 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
 
-            // Verify the generated context includes pragma directives
-            var contextSource = generatedSources.First(s => s.HintName.Contains("LocalContext"));
+            Assert.IsNotNull(result.GenerationSpec);
+
+            var contextSource = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
             var text = contextSource.SourceText.ToString();
             StringAssert.Contains("#pragma warning disable TEST001", text);
-            StringAssert.Contains("#pragma warning disable TEST002", text);
             StringAssert.Contains("#pragma warning restore TEST001", text);
+
+            contextSource = generatedSources.First(s => s.HintName.Contains("OtherModel_Builder"));
+            text = contextSource.SourceText.ToString();
+            StringAssert.Contains("#pragma warning disable TEST002", text);
             StringAssert.Contains("#pragma warning restore TEST002", text);
+
+            Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
+            Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
+            Assert.AreEqual("TEST002", result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
         }
     }
 }
