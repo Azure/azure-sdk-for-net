@@ -28,40 +28,40 @@ var emailContent = new EmailContent("This is the subject")
 var toRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>"),
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>")
 };
 
 // Create the CC list
 var ccRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>"),
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>")
 };
 
 // Create the BCC list
 var bccRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>"),
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>")
 };
 
 var emailRecipients = new EmailRecipients(toRecipients, ccRecipients, bccRecipients);
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
     emailRecipients,
     emailContent);
 

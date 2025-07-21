@@ -16,10 +16,17 @@ EmailClient emailClient = new EmailClient(connectionString);
 ### Send email with attachments
 Azure Communication Services support sending emails with attachments. See [EmailAttachmentType][email_attachmentTypes] for a list of supported attachments
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments
+// Create the email content
+var emailContent = new EmailContent("This is the subject")
+{
+    PlainText = "This is the body",
+    Html = "<html><body>This is the html body</body></html>"
+};
+
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    recipientAddress: "<recipient email address>"
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>",
     content: emailContent);
 
 var filePath = "<path to your file>";

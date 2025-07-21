@@ -49,8 +49,8 @@ try
 {
     var emailSendOperation = emailClient.Send(
         wait: WaitUntil.Completed,
-        senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-        recipientAddress: "<recipient email address>"
+        senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+        recipientAddress: "<recipient email address>",
         subject: "This is the subject",
         htmlContent: "<html><body>This is the html body</body></html>");
     Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
@@ -72,8 +72,8 @@ To send an email message, call the simple overload of `Send` or `SendAsync` func
 /// Send the email message with WaitUntil.Started
 var emailSendOperation = await emailClient.SendAsync(
     wait: WaitUntil.Started,
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    recipientAddress: "<recipient email address>"
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>",
     subject: "This is the subject",
     htmlContent: "<html><body>This is the html body</body></html>");
 
@@ -118,8 +118,8 @@ var emailContent = new EmailContent("This is the subject")
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    recipientAddress: "<recipient email address>"
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>",
     content: emailContent);
 
 try
@@ -155,40 +155,40 @@ var emailContent = new EmailContent("This is the subject")
 var toRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>"),
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>")
 };
 
 // Create the CC list
 var ccRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>"),
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>")
 };
 
 // Create the BCC list
 var bccRecipients = new List<EmailAddress>
 {
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>"),
     new EmailAddress(
-        address: "<recipient email address>"
-        displayName: "<recipient displayname>"
+        address: "<recipient email address>",
+        displayName: "<recipient displayname>")
 };
 
 var emailRecipients = new EmailRecipients(toRecipients, ccRecipients, bccRecipients);
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
     emailRecipients,
     emailContent);
 
@@ -211,10 +211,17 @@ catch ( RequestFailedException ex )
 ### Send email with attachments
 Azure Communication Services support sending emails with attachments.
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments
+// Create the email content
+var emailContent = new EmailContent("This is the subject")
+{
+    PlainText = "This is the body",
+    Html = "<html><body>This is the html body</body></html>"
+};
+
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    recipientAddress: "<recipient email address>"
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>",
     content: emailContent);
 
 var filePath = "<path to your file>";
@@ -255,8 +262,8 @@ var emailContent = new EmailContent("This is the subject")
 
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
-    senderAddress: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-    recipientAddress: "<recipient email address>"
+    senderAddress: "<Send email address>", // The email address of the domain registered with the Communication Services resource
+    recipientAddress: "<recipient email address>",
     content: emailContent);
 
 var filePath = "<path to your file>";
