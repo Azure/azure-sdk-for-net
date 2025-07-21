@@ -174,14 +174,15 @@ Azure client libraries produce the following kinds of activities:
 - *client method calls*: for example, `BlobClient.DownloadTo` or `SecretClient.StartDeleteSecret`.
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
-Prior to November 2023, OpenTelemetry support was experimental for all Azure client libraries (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details). 
-Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental. 
+Prior to November 2023, OpenTelemetry support was experimental for all Azure client libraries (see [Enabling experimental tracing features](#enabling-experimental-tracing-features) for the details).
+Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental.
 
-More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md).
+More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md). Additional attributes emitted by
+Azure client libraries in .NET are documented [here](./SemanticConventions.md).
 
 ### OpenTelemetry configuration
 
-OpenTelemetry relies on `ActivitySource` to collect distributed traces. 
+OpenTelemetry relies on `ActivitySource` to collect distributed traces.
 Follow the [OpenTelemetry configuration guide](https://opentelemetry.io/docs/instrumentation/net/getting-started/#instrumentation) to configure collection and exporting pipeline.
 
 Your observability vendor may enable Azure SDK activities by default. For example, stable Azure SDK instrumentations are enabled by [Azure Monitor OpenTelemetry Distro](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md#enable-azure-sdk-instrumentation).
@@ -212,7 +213,7 @@ Azure SDK traces all HTTP calls using `Azure.Core.Http` source. If you enable it
 
 Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure services in `x-ms-client-request-id`, `x-ms-request-id` or similar request and response headers. This data may be important when correlating client and server telemetry or creating support tickets.
 
-To avoid double-collection you may either 
+To avoid double-collection you may either
 - enrich generic HTTP client activities with Azure request identifiers and disable Azure SDK HTTP activities.
 - filter out duplicated generic HTTP client activities.
 
