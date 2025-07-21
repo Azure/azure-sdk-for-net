@@ -41,5 +41,23 @@ namespace Azure.Core.Pipeline
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
+        /// <summary>
+        /// Creates a new instance of <see cref="HttpPipelineTransportPolicy"/> with the specified
+        /// <paramref name="transport"/>, <paramref name="sanitizer"/>, and <paramref name="errorParser"/>.
+        /// </summary>
+        /// <param name="transport">The transport to use for processing HTTP messages.</param>
+        /// <param name="sanitizer">The sanitizer to use for sanitizing HTTP messages.</param>
+        /// <param name="errorParser">The parser to use for extracting error details from HTTP responses.</param>
+        /// <returns>A new instance of <see cref="HttpPipelineTransportPolicy"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="transport"/> is null.</exception>
+        public HttpPipelineTransportPolicy Clone(HttpPipelineTransport transport, HttpMessageSanitizer? sanitizer = null, RequestFailedDetailsParser? errorParser = null)
+        {
+            if (transport == null)
+            {
+                throw new ArgumentNullException(nameof(transport));
+            }
+
+            return new HttpPipelineTransportPolicy(transport, sanitizer ?? _sanitizer, errorParser ?? _errorParser);
+        }
     }
 }
