@@ -39,8 +39,7 @@ namespace Azure.Generator.Management.Providers
         {
             // TODO: handle multiple clients in the future, for now we assume that there is only one client for the resource.
             var inputClient = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct().First();
-            // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
-            var resource = new ResourceClientProvider(model.Name.ToIdentifierName(), model, inputClient, resourceMetadata);
+            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, inputClient, resourceMetadata);
             if (!resource.IsSingleton)
             {
                 var collection = new ResourceCollectionClientProvider(resource, model, inputClient, resourceMetadata);
