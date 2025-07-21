@@ -222,7 +222,7 @@ namespace Azure.Generator.Management
                     singletonResourceName,
                     parentResource,
                     methodToClientMap,
-                    primaryClient!);
+                    primaryClient ?? throw new InvalidOperationException("primaryClient cannot be null"));
             }
         }
 
