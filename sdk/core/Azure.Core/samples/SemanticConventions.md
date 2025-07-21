@@ -46,7 +46,7 @@ additional attributes on public API spans. Such attributes are described below.
 
 | Attribute  | Type | Description  | Examples  | Requirement Level |
 |---|---|---|---|---|
-| `az.keyvault.key.id` | string | The Azure Key Vault key ID (full URL). | `"https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71` | Recommended |
+| `az.keyvault.key.id` | string | The Azure Key Vault key ID (full URL). | `"https://myvault.vault.azure.net/keys/CreateSoftKeyTest/78deebed173b48e48f55abf87ed4cf71"` | Recommended |
 | `az.keyvault.key.name` | string | The Azure Key Vault key name. | `test-key` | Recommended |
 | `az.keyvault.key.version` | string | The Azure Key Vault key version. | `3d31e6e5c4c14eaf9be8d42c00225088` | Recommended |
 
