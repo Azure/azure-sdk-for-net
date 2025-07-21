@@ -33,13 +33,27 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static CSharpType UnWrapAsync(this CSharpType type)
+        public static CSharpType UnWrap(this CSharpType type)
         {
-            if (type.IsFrameworkType && type.IsGenericType && type.FrameworkType.GetGenericTypeDefinition() == typeof(Task<>))
+            var currentType = type;
+
+            // Unwrap Task<T>
+            if (currentType.IsFrameworkType && currentType.IsGenericType && currentType.FrameworkType.GetGenericTypeDefinition() == typeof(Task<>))
             {
-                return type.Arguments[0];
+                currentType = currentType.Arguments[0];
             }
-            return type;
+
+            // Unwrap Response<T> or ArmOperation<T>
+            if (currentType.IsFrameworkType && currentType.IsGenericType)
+            {
+                var genericDef = currentType.FrameworkType.GetGenericTypeDefinition();
+                if (genericDef == typeof(Azure.Response<>) || genericDef == typeof(Azure.ResourceManager.ArmOperation<>))
+                {
+                    currentType = currentType.Arguments[0];
+                }
+            }
+
+            return currentType;
         }
     }
 }

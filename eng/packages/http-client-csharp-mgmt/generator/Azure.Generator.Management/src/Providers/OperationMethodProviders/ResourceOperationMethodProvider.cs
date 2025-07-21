@@ -297,18 +297,25 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             List<MethodBodyStatement> statements = [nullCheckStatement];
 
-            var resourceType = typeof(ArmResource);
+            var returnType = signature.ReturnType!.UnWrap();
             var returnValueExpression = New.Instance(
-                _resource.Type,
+                returnType,
                 This.Property("Client"),
                 responseVariable.Property("Value"));
-
-            var returnStatement = Return(
-                Static(typeof(Response)).Invoke(
-                    nameof(Response.FromValue),
-                    returnValueExpression,
-                    responseVariable.Invoke("GetRawResponse")));
-            statements.Add(returnStatement);
+            // If the return type is the same as the resource type, we need to the convert work (from resource data to resource)
+            if (returnType.Equals(_resource.Type))
+            {
+                var returnStatement = Return(
+                    Static(typeof(Response)).Invoke(
+                        nameof(Response.FromValue),
+                        returnValueExpression,
+                        responseVariable.Invoke("GetRawResponse")));
+                statements.Add(returnStatement);
+            }
+            else
+            {
+                statements.Add(Return(responseVariable));
+            }
 
             return statements;
         }
