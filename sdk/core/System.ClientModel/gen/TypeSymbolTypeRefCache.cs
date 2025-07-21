@@ -30,6 +30,7 @@ namespace System.ClientModel.SourceGeneration
             {
                 var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
                 var itemType = itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache);
+                string? experimentalDiagnosticId = GetExperimentalDiagnosticId(symbol);
 
                 return new TypeRef(
                     symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
@@ -38,7 +39,8 @@ namespace System.ClientModel.SourceGeneration
                     symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache),
                     itemType,
-                    obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol));
+                    obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol),
+                    experimentalDiagnosticId: experimentalDiagnosticId);
             }
             else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
             {
@@ -60,6 +62,24 @@ namespace System.ClientModel.SourceGeneration
             {
                 throw new NotSupportedException($"Unexpected type {symbol.GetType()}");
             }
+        }
+
+        private static string? GetExperimentalDiagnosticId(ITypeSymbol symbol)
+        {
+            foreach (var attribute in symbol.GetAttributes())
+            {
+                if (attribute.AttributeClass?.Name == "ExperimentalAttribute" &&
+                    attribute.AttributeClass.ContainingNamespace?.ToString() == "System.Diagnostics.CodeAnalysis")
+                {
+                    if (attribute.ConstructorArguments.Length > 0 &&
+                        attribute.ConstructorArguments[0].Value is string diagnosticId)
+                    {
+                        return diagnosticId;
+                    }
+                    break;
+                }
+            }
+            return null;
         }
 
         private IAssemblySymbol GetArrayAssembly(IArrayTypeSymbol arrayTypeSymbol)

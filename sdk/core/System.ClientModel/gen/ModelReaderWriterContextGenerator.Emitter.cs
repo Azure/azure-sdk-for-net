@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.CodeAnalysis.Text;
@@ -50,6 +51,18 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
             builder.AppendLine(indent, $"namespace {contextGenerationSpec.Type.Namespace};");
             builder.AppendLine();
+
+            // Add pragma directives for each experimental type
+            var experimentalDiagnosticIds = contextGenerationSpec.TypeBuilders
+                .Where(tb => !string.IsNullOrEmpty(tb.Type.ExperimentalDiagnosticId))
+                .Select(tb => tb.Type.ExperimentalDiagnosticId)
+                .Distinct()
+                .ToList();
+
+            foreach (var diagnosticId in experimentalDiagnosticIds)
+            {
+                builder.AppendLine(indent, $"#pragma warning disable {diagnosticId}");
+            }
 
             builder.AppendLine(indent, $"{contextGenerationSpec.Modifier} partial class {contextName} : {s_modelReaderWriterContext}");
             builder.AppendLine(indent, "{");
@@ -182,6 +195,12 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
             indent--;
             builder.AppendLine(indent, "}");
+
+            // Restore pragma directives
+            foreach (var diagnosticId in experimentalDiagnosticIds)
+            {
+                builder.AppendLine(indent, $"#pragma warning restore {diagnosticId}");
+            }
 
             AddNewFile(contextName, builder.ToString(), hintNames);
         }

@@ -1086,5 +1086,55 @@ namespace TestProject
             Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
         }
+
+        [Test]
+        public void BuilderForExperimentalPersistableHasSuppression()
+        {
+            string source =
+                """
+                  using System;
+                  using System.ClientModel.Primitives;
+                  using System.Diagnostics.CodeAnalysis;
+                  using System.Text.Json;
+
+                  namespace TestProject
+                  {
+                      [ModelReaderWriterBuildable(typeof(JsonModel))]
+                      [ModelReaderWriterBuildable(typeof(OtherModel))]
+                      public partial class LocalContext : ModelReaderWriterContext { }
+
+                      [Experimental("TEST001")]
+                      public class JsonModel : IJsonModel<JsonModel>
+                      {
+                          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+                          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+                          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+                          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+                          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+                      }
+
+                      [Experimental("TEST002")]
+                      public class OtherModel : IJsonModel<OtherModel>
+                      {
+                          OtherModel IJsonModel<OtherModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new OtherModel();
+                          OtherModel IPersistableModel<OtherModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new OtherModel();
+                          string IPersistableModel<OtherModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+                          void IJsonModel<OtherModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+                          BinaryData IPersistableModel<OtherModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+                      }
+                  }
+                  """;
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
+
+            // Verify the generated context includes pragma directives
+            var contextSource = generatedSources.First(s => s.HintName.Contains("LocalContext"));
+            var text = contextSource.SourceText.ToString();
+            StringAssert.Contains("#pragma warning disable TEST001", text);
+            StringAssert.Contains("#pragma warning disable TEST002", text);
+            StringAssert.Contains("#pragma warning restore TEST001", text);
+            StringAssert.Contains("#pragma warning restore TEST002", text);
+        }
     }
 }
