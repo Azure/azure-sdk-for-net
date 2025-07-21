@@ -19,9 +19,9 @@ namespace Azure.Generator.Management.Utilities
         /// Creates a dictionary mapping InputClient to RestClientInfo for all distinct clients used by the resource.
         /// </summary>
         /// <param name="resourceMetadata">The resource metadata containing the method to client mapping.</param>
-        /// <param name="parentProvider">The parent type provider that will own the fields.</param>
+        /// <param name="clientProvider">The client provider that will own the fields.</param>
         /// <returns>A dictionary mapping InputClient to RestClientInfo.</returns>
-        internal static Dictionary<InputClient, RestClientInfo> CreateClientInfosMap(this ResourceMetadata resourceMetadata, TypeProvider parentProvider)
+        internal static Dictionary<InputClient, RestClientInfo> CreateClientInfosMap(this ResourceMetadata resourceMetadata, TypeProvider clientProvider)
         {
             var clientInfos = new Dictionary<InputClient, RestClientInfo>();
 
@@ -29,10 +29,10 @@ namespace Azure.Generator.Management.Utilities
             foreach (var inputClient in resourceMetadata.MethodToClientMap.Values.Distinct())
             {
                 var restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
-                var restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(restClientProvider.Name), parentProvider);
+                var restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(restClientProvider.Name), clientProvider);
 
                 var clientDiagnosticsFieldName = ResourceHelpers.GetClientDiagnosticFieldName(restClientProvider.Name);
-                var clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), clientDiagnosticsFieldName, parentProvider);
+                var clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), clientDiagnosticsFieldName, clientProvider);
 
                 clientInfos[inputClient] = new RestClientInfo(restClientProvider, restClientField, clientDiagnosticsField);
             }

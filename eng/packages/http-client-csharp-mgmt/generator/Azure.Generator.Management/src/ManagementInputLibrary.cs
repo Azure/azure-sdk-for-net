@@ -192,24 +192,12 @@ namespace Azure.Generator.Management
                 }
 
                 var methodToClientMap = new Dictionary<string, InputClient>();
-                InputClient? primaryClient = null;
                 foreach (var method in methods)
                 {
                     var inputClient = GetClientByMethod(GetMethodByCrossLanguageDefinitionId(method.Id)!);
                     if (inputClient != null)
                     {
                         methodToClientMap[method.Id] = inputClient;
-                        if (method.Kind == ResourceOperationKind.Get)
-                        {
-                            var inputMethod = GetMethodByCrossLanguageDefinitionId(method.Id);
-                            foreach (var response in inputMethod?.Operation.Responses ?? [])
-                            {
-                                if (response.BodyType is InputModelType model && model.Equals(inputModel))
-                                {
-                                    primaryClient = inputClient;
-                                }
-                            }
-                        }
                     }
                 }
 
@@ -221,8 +209,7 @@ namespace Azure.Generator.Management
                     methods,
                     singletonResourceName,
                     parentResource,
-                    methodToClientMap,
-                    primaryClient ?? throw new InvalidOperationException("primaryClient cannot be null"));
+                    methodToClientMap);
             }
         }
 
