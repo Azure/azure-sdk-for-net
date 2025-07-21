@@ -8,12 +8,14 @@ using System.Text;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO
+/// Specifies the type of sanitization to apply to sensitive values during test recording.
+/// This enum is used to determine how sensitive data should be masked or transformed
+/// when recording test sessions to ensure security while maintaining test functionality.
 /// </summary>
 public enum SanitizedValue
 {
     /// <summary>
-    /// TODO.
+    /// Applies the default sanitization strategy for the value type.
     /// </summary>
     Default,
     /// <summary>

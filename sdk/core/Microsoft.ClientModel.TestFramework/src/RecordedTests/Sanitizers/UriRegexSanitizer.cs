@@ -7,17 +7,24 @@ using System.Text;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy;
 
-/// <summary>
-/// TODO.
-/// </summary>
 public partial class UriRegexSanitizer
 {
     /// <summary>
-    /// TODO.
+    /// Creates a new <see cref="UriRegexSanitizer"/> instance configured to sanitize
+    /// a specific query parameter in URIs during test recording.
     /// </summary>
-    /// <param name="queryParameter"></param>
-    /// <param name="sanitizedValue"></param>
-    /// <returns></returns>
+    /// <param name="queryParameter">
+    /// The name of the query parameter to sanitize. This should be the exact parameter
+    /// name without the '=' sign (e.g., "api-version", "subscription-id").
+    /// </param>
+    /// <param name="sanitizedValue">
+    /// The replacement value to use when sanitizing the query parameter. This value
+    /// will replace the actual parameter value in recorded test sessions.
+    /// </param>
+    /// <returns>
+    /// A configured <see cref="UriRegexSanitizer"/> that will match and sanitize
+    /// the specified query parameter in URI strings.
+    /// </returns>
     public static UriRegexSanitizer CreateWithQueryParameter(string queryParameter, string sanitizedValue) =>
         new($@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)", sanitizedValue, "group");
 }

@@ -6,15 +6,15 @@ using System;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// Provides extension methods for the <see cref="Random"/> class to generate
+/// additional types of random values useful in testing scenarios.
 /// </summary>
 public static class RandomExtensions
 {
     /// <summary>
-    /// TODO.
+    /// Generates a deterministic <see cref="Guid"/> using the specified <see cref="Random"/> instance.
     /// </summary>
-    /// <param name="random"></param>
-    /// <returns></returns>
+    /// <param name="random">The <see cref="Random"/> instance to use for generating random bytes.</param>
     public static Guid NewGuid(this Random random)
     {
         var bytes = new byte[16];
