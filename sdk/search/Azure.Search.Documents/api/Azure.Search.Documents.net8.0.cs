@@ -14,9 +14,7 @@ namespace Azure.Search.Documents
     }
     public partial class AzureSearchDocumentsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureSearchDocumentsContext() { }
-        public static Azure.Search.Documents.AzureSearchDocumentsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureSearchDocumentsContext() { }
     }
     public partial class GetDocumentOptions
     {
