@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault;
 [ModelReaderWriterBuildable(typeof(ManagedHsmResource))]
 [ModelReaderWriterBuildable(typeof(DeletedKeyVaultProperties))]
 [ModelReaderWriterBuildable(typeof(DeletedManagedHsmProperties))]
-[ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.KeyVault.Models.KeyVaultProperties))]
 [ModelReaderWriterBuildable(typeof(DeletedManagedHsmListResult))]
 [ModelReaderWriterBuildable(typeof(DeletedVaultListResult))]
 [ModelReaderWriterBuildable(typeof(IdentityAccessPermissions))]

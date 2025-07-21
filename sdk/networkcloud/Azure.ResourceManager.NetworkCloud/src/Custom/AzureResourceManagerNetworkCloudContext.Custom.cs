@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetworkCloud;
 [ModelReaderWriterBuildable(typeof(ControlPlaneNodePatchConfiguration))]
 [ModelReaderWriterBuildable(typeof(EgressEndpoint))]
 [ModelReaderWriterBuildable(typeof(EndpointDependency))]
-[ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation))]
 [ModelReaderWriterBuildable(typeof(FeatureStatus))]
 [ModelReaderWriterBuildable(typeof(HardwareInventory))]
 [ModelReaderWriterBuildable(typeof(HardwareInventoryNetworkInterface))]

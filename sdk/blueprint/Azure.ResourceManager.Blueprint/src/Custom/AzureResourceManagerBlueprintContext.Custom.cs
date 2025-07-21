@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint;
 [ModelReaderWriterBuildable(typeof(BlueprintList))]
 [ModelReaderWriterBuildable(typeof(BlueprintResourceStatusBase))]
 [ModelReaderWriterBuildable(typeof(BlueprintStatus))]
-[ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.Blueprint.Models.ManagedServiceIdentity))]
 [ModelReaderWriterBuildable(typeof(ParameterDefinition))]
 [ModelReaderWriterBuildable(typeof(ParameterValue))]
 [ModelReaderWriterBuildable(typeof(PolicyAssignmentArtifact))]

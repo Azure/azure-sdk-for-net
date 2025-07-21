@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.Dns;
 [ModelReaderWriterBuildable(typeof(DnsZoneListResult))]
 [ModelReaderWriterBuildable(typeof(DnsZonePatch))]
 [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
-[ModelReaderWriterBuildable(typeof(SystemData))]
 [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
 [ModelReaderWriterBuildable(typeof(WritableSubResource))]
 [ModelReaderWriterBuildable(typeof(SubResource))]

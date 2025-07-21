@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Batch;
 [ModelReaderWriterBuildable(typeof(DetectorListResult))]
 [ModelReaderWriterBuildable(typeof(DiffDiskSettings))]
 [ModelReaderWriterBuildable(typeof(DiskEncryptionConfiguration))]
-[ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.Batch.Models.KeyVaultProperties))]
 [ModelReaderWriterBuildable(typeof(ListApplicationPackagesResult))]
 [ModelReaderWriterBuildable(typeof(ListApplicationsResult))]
 [ModelReaderWriterBuildable(typeof(ListCertificatesResult))]

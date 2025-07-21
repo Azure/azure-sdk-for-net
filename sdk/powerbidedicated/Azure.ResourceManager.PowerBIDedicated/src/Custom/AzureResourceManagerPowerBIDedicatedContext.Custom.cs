@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.PowerBIDedicated;
 [ModelReaderWriterBuildable(typeof(SkuDetails))]
 [ModelReaderWriterBuildable(typeof(SkuEnumerationForExistingResourceResult))]
 [ModelReaderWriterBuildable(typeof(SkuEnumerationForNewResourceResult))]
-[ModelReaderWriterBuildable(typeof(SystemData))]
 [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
 [ModelReaderWriterBuildable(typeof(WritableSubResource))]
 [ModelReaderWriterBuildable(typeof(SubResource))]

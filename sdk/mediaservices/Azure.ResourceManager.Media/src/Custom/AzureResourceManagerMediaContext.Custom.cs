@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media;
 [ModelReaderWriterBuildable(typeof(JpgFormat))]
 [ModelReaderWriterBuildable(typeof(JpgImage))]
 [ModelReaderWriterBuildable(typeof(JpgLayer))]
-[ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.Media.Models.KeyVaultProperties))]
 [ModelReaderWriterBuildable(typeof(ListContentKeysResponse))]
 [ModelReaderWriterBuildable(typeof(ListStreamingLocatorsResponse))]
 [ModelReaderWriterBuildable(typeof(LiveEventActionContent))]

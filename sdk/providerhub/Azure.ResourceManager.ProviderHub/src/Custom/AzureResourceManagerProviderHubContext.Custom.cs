@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ProviderHub;
 [ModelReaderWriterBuildable(typeof(ProviderHubMetadata))]
 [ModelReaderWriterBuildable(typeof(ProviderRegistrationListResult))]
 [ModelReaderWriterBuildable(typeof(ProviderRegistrationProperties))]
-[ModelReaderWriterBuildable(typeof(ProviderResourceType))]
+[ModelReaderWriterBuildable(typeof(Azure.ResourceManager.ProviderHub.Models.ProviderResourceType))]
 [ModelReaderWriterBuildable(typeof(ProviderSubscriptionStateRule))]
 [ModelReaderWriterBuildable(typeof(RequestHeaderOptions))]
 [ModelReaderWriterBuildable(typeof(ReRegisterSubscriptionMetadata))]
