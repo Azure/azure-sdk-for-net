@@ -60,7 +60,7 @@ public partial class RedisEnterpriseModule : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _args = DefineProperty<string>("Args", ["Args"]);
-        _version = DefineProperty<string>("Version", ["Version"], isOutput: true);
+        _args = DefineProperty<string>("Args", ["args"]);
+        _version = DefineProperty<string>("Version", ["version"], isOutput: true);
     }
 }

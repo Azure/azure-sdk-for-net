@@ -49,7 +49,7 @@ public partial class RedisEnterpriseDataAccessKeys : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _primaryKey = DefineProperty<string>("PrimaryKey", ["PrimaryKey"], isOutput: true);
-        _secondaryKey = DefineProperty<string>("SecondaryKey", ["SecondaryKey"], isOutput: true);
+        _primaryKey = DefineProperty<string>("PrimaryKey", ["primaryKey"], isOutput: true);
+        _secondaryKey = DefineProperty<string>("SecondaryKey", ["secondaryKey"], isOutput: true);
     }
 }

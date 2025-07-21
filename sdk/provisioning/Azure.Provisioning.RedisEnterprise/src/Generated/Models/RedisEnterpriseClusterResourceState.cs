@@ -79,4 +79,9 @@ public enum RedisEnterpriseClusterResourceState
     /// ScalingFailed.
     /// </summary>
     ScalingFailed,
+
+    /// <summary>
+    /// Moving.
+    /// </summary>
+    Moving,
 }

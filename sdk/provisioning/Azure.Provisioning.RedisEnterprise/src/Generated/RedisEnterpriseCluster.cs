@@ -19,7 +19,9 @@ namespace Azure.Provisioning.RedisEnterprise;
 public partial class RedisEnterpriseCluster : ProvisionableResource
 {
     /// <summary>
-    /// The name of the RedisEnterprise cluster.
+    /// The name of the Redis Enterprise cluster. Name must be 1-60 characters
+    /// long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no
+    /// leading nor trailing nor consecutive hyphens.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -60,6 +62,18 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     private RedisEnterpriseCustomerManagedKeyEncryption? _customerManagedKeyEncryption;
 
     /// <summary>
+    /// Enabled by default. If highAvailability is disabled, the data set is
+    /// not replicated. This affects the availability SLA, and increases the
+    /// risk of data loss.
+    /// </summary>
+    public BicepValue<RedisEnterpriseHighAvailability> HighAvailability 
+    {
+        get { Initialize(); return _highAvailability!; }
+        set { Initialize(); _highAvailability!.Assign(value); }
+    }
+    private BicepValue<RedisEnterpriseHighAvailability>? _highAvailability;
+
+    /// <summary>
     /// The identity of the resource.
     /// </summary>
     public ManagedServiceIdentity Identity 
@@ -71,7 +85,10 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
 
     /// <summary>
     /// The minimum TLS version for the cluster to support, e.g.
-    /// &apos;1.2&apos;.
+    /// &apos;1.2&apos;. Newer versions can be added in the future. Note that
+    /// TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use
+    /// them. They are mentioned only for the sake of consistency with old API
+    /// versions.
     /// </summary>
     public BicepValue<RedisEnterpriseTlsVersion> MinimumTlsVersion 
     {
@@ -119,8 +136,17 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
+    /// Distinguishes the kind of cluster. Read-only.
+    /// </summary>
+    public BicepValue<RedisEnterpriseKind> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<RedisEnterpriseKind>? _kind;
+
+    /// <summary>
     /// List of private endpoint connections associated with the specified
-    /// RedisEnterprise cluster.
+    /// Redis Enterprise cluster.
     /// </summary>
     public BicepList<RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections 
     {
@@ -145,6 +171,16 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
         get { Initialize(); return _redisVersion!; }
     }
     private BicepValue<string>? _redisVersion;
+
+    /// <summary>
+    /// Explains the current redundancy strategy of the cluster, which affects
+    /// the expected SLA.
+    /// </summary>
+    public BicepValue<RedisEnterpriseRedundancyMode> RedundancyMode 
+    {
+        get { Initialize(); return _redundancyMode!; }
+    }
+    private BicepValue<RedisEnterpriseRedundancyMode>? _redundancyMode;
 
     /// <summary>
     /// Current resource status of the cluster.
@@ -187,18 +223,21 @@ public partial class RedisEnterpriseCluster : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
-        _sku = DefineModelProperty<RedisEnterpriseSku>("Sku", ["Sku"], isRequired: true);
-        _customerManagedKeyEncryption = DefineModelProperty<RedisEnterpriseCustomerManagedKeyEncryption>("CustomerManagedKeyEncryption", ["CustomerManagedKeyEncryption"]);
-        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["Identity"]);
-        _minimumTlsVersion = DefineProperty<RedisEnterpriseTlsVersion>("MinimumTlsVersion", ["MinimumTlsVersion"]);
+        _sku = DefineModelProperty<RedisEnterpriseSku>("Sku", ["sku"], isRequired: true);
+        _customerManagedKeyEncryption = DefineModelProperty<RedisEnterpriseCustomerManagedKeyEncryption>("CustomerManagedKeyEncryption", ["properties", "encryption", "customerManagedKeyEncryption"]);
+        _highAvailability = DefineProperty<RedisEnterpriseHighAvailability>("HighAvailability", ["properties", "highAvailability"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _minimumTlsVersion = DefineProperty<RedisEnterpriseTlsVersion>("MinimumTlsVersion", ["properties", "minimumTlsVersion"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _zones = DefineListProperty<string>("Zones", ["Zones"]);
-        _hostName = DefineProperty<string>("HostName", ["HostName"], isOutput: true);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
+        _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<RedisEnterprisePrivateEndpointConnectionData>("PrivateEndpointConnections", ["PrivateEndpointConnections"], isOutput: true);
-        _provisioningState = DefineProperty<RedisEnterpriseProvisioningStatus>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _redisVersion = DefineProperty<string>("RedisVersion", ["RedisVersion"], isOutput: true);
-        _resourceState = DefineProperty<RedisEnterpriseClusterResourceState>("ResourceState", ["ResourceState"], isOutput: true);
+        _kind = DefineProperty<RedisEnterpriseKind>("Kind", ["kind"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<RedisEnterprisePrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _provisioningState = DefineProperty<RedisEnterpriseProvisioningStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _redisVersion = DefineProperty<string>("RedisVersion", ["properties", "redisVersion"], isOutput: true);
+        _redundancyMode = DefineProperty<RedisEnterpriseRedundancyMode>("RedundancyMode", ["properties", "redundancyMode"], isOutput: true);
+        _resourceState = DefineProperty<RedisEnterpriseClusterResourceState>("ResourceState", ["properties", "resourceState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 

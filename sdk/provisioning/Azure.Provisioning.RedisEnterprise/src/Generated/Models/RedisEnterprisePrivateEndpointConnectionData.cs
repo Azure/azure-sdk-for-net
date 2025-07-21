@@ -97,9 +97,9 @@ public partial class RedisEnterprisePrivateEndpointConnectionData : Provisionabl
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["PrivateEndpointId"], isOutput: true);
-        _connectionState = DefineModelProperty<RedisEnterprisePrivateLinkServiceConnectionState>("ConnectionState", ["ConnectionState"]);
-        _provisioningState = DefineProperty<RedisEnterprisePrivateEndpointConnectionProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _connectionState = DefineModelProperty<RedisEnterprisePrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _provisioningState = DefineProperty<RedisEnterprisePrivateEndpointConnectionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);

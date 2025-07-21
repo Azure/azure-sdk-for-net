@@ -8,17 +8,20 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.RedisEnterprise;
 
 /// <summary>
-/// Clustering policy - default is OSSCluster. Specified at create time.
+/// Clustering policy - default is OSSCluster. This property must be chosen at
+/// create time, and cannot be changed without deleting the database.
 /// </summary>
 public enum RedisEnterpriseClusteringPolicy
 {
     /// <summary>
-    /// EnterpriseCluster.
+    /// Enterprise clustering policy uses only the classic redis protocol,
+    /// which does not support redis cluster commands.
     /// </summary>
     EnterpriseCluster,
 
     /// <summary>
-    /// OSSCluster.
+    /// OSS clustering policy follows the redis cluster specification, and
+    /// requires all clients to support redis clustering.
     /// </summary>
     [DataMember(Name = "OSSCluster")]
     OssCluster,

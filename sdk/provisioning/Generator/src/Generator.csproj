@@ -38,6 +38,7 @@
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="Azure.ResourceManager.Redis" />
+		<ProjectReference Include="..\..\..\redisenterprise\Azure.ResourceManager.RedisEnterprise\src\Azure.ResourceManager.RedisEnterprise.csproj" />
     <PackageReference Include="Azure.ResourceManager.RedisEnterprise" />
     <PackageReference Include="Azure.ResourceManager.Search" />
     <PackageReference Include="Azure.ResourceManager.ServiceBus" />

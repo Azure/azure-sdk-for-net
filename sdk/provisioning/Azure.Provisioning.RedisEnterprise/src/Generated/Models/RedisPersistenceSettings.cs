@@ -11,12 +11,13 @@ using System;
 namespace Azure.Provisioning.RedisEnterprise;
 
 /// <summary>
-/// Persistence-related configuration for the RedisEnterprise database.
+/// Persistence-related configuration for the Redis Enterprise database.
 /// </summary>
 public partial class RedisPersistenceSettings : ProvisionableConstruct
 {
     /// <summary>
-    /// Sets whether AOF is enabled.
+    /// Sets whether AOF is enabled. Note that at most one of AOF or RDB
+    /// persistence may be enabled.
     /// </summary>
     public BicepValue<bool> IsAofEnabled 
     {
@@ -26,7 +27,8 @@ public partial class RedisPersistenceSettings : ProvisionableConstruct
     private BicepValue<bool>? _isAofEnabled;
 
     /// <summary>
-    /// Sets whether RDB is enabled.
+    /// Sets whether RDB is enabled. Note that at most one of AOF or RDB
+    /// persistence may be enabled.
     /// </summary>
     public BicepValue<bool> IsRdbEnabled 
     {
@@ -36,7 +38,10 @@ public partial class RedisPersistenceSettings : ProvisionableConstruct
     private BicepValue<bool>? _isRdbEnabled;
 
     /// <summary>
-    /// Sets the frequency at which data is written to disk.
+    /// Sets the frequency at which data is written to disk. Defaults to
+    /// &apos;1s&apos;, meaning &apos;every second&apos;. Note that the
+    /// &apos;always&apos; setting is deprecated, because of its performance
+    /// impact.
     /// </summary>
     public BicepValue<PersistenceSettingAofFrequency> AofFrequency 
     {
@@ -68,9 +73,9 @@ public partial class RedisPersistenceSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isAofEnabled = DefineProperty<bool>("IsAofEnabled", ["IsAofEnabled"]);
-        _isRdbEnabled = DefineProperty<bool>("IsRdbEnabled", ["IsRdbEnabled"]);
-        _aofFrequency = DefineProperty<PersistenceSettingAofFrequency>("AofFrequency", ["AofFrequency"]);
-        _rdbFrequency = DefineProperty<PersistenceSettingRdbFrequency>("RdbFrequency", ["RdbFrequency"]);
+        _isAofEnabled = DefineProperty<bool>("IsAofEnabled", ["aofEnabled"]);
+        _isRdbEnabled = DefineProperty<bool>("IsRdbEnabled", ["rdbEnabled"]);
+        _aofFrequency = DefineProperty<PersistenceSettingAofFrequency>("AofFrequency", ["aofFrequency"]);
+        _rdbFrequency = DefineProperty<PersistenceSettingRdbFrequency>("RdbFrequency", ["rdbFrequency"]);
     }
 }

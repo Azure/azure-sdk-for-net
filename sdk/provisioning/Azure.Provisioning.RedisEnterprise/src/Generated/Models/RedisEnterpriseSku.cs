@@ -11,13 +11,16 @@ using System;
 namespace Azure.Provisioning.RedisEnterprise;
 
 /// <summary>
-/// SKU parameters supplied to the create RedisEnterprise operation.
+/// SKU parameters supplied to the create Redis Enterprise cluster operation.
 /// </summary>
 public partial class RedisEnterpriseSku : ProvisionableConstruct
 {
     /// <summary>
-    /// The type of RedisEnterprise cluster to deploy. Possible values:
-    /// (Enterprise_E10, EnterpriseFlash_F300 etc.).
+    /// The level of Redis Enterprise cluster to deploy. Possible values:
+    /// (&apos;Balanced_B5&apos;, &apos;MemoryOptimized_M10&apos;,
+    /// &apos;ComputeOptimized_X5&apos;, etc.). For more information on SKUs
+    /// see the latest pricing documentation. Note that additional SKUs may
+    /// become supported in the future.
     /// </summary>
     public BicepValue<RedisEnterpriseSkuName> Name 
     {
@@ -27,9 +30,9 @@ public partial class RedisEnterpriseSku : ProvisionableConstruct
     private BicepValue<RedisEnterpriseSkuName>? _name;
 
     /// <summary>
-    /// The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending
-    /// on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9,
-    /// 15, ...) for Flash SKUs.
+    /// This property is only used with Enterprise and EnterpriseFlash SKUs.
+    /// Determines the size of the cluster. Valid values are (2, 4, 6, ...)
+    /// for Enterprise SKUs and (3, 9, 15, ...) for EnterpriseFlash SKUs.
     /// </summary>
     public BicepValue<int> Capacity 
     {
@@ -51,7 +54,7 @@ public partial class RedisEnterpriseSku : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<RedisEnterpriseSkuName>("Name", ["Name"]);
-        _capacity = DefineProperty<int>("Capacity", ["Capacity"]);
+        _name = DefineProperty<RedisEnterpriseSkuName>("Name", ["name"]);
+        _capacity = DefineProperty<int>("Capacity", ["capacity"]);
     }
 }

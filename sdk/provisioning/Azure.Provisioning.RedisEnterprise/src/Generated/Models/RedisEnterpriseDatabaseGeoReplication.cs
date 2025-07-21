@@ -51,7 +51,7 @@ public partial class RedisEnterpriseDatabaseGeoReplication : ProvisionableConstr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _groupNickname = DefineProperty<string>("GroupNickname", ["GroupNickname"]);
-        _linkedDatabases = DefineListProperty<RedisEnterpriseLinkedDatabase>("LinkedDatabases", ["LinkedDatabases"]);
+        _groupNickname = DefineProperty<string>("GroupNickname", ["groupNickname"]);
+        _linkedDatabases = DefineListProperty<RedisEnterpriseLinkedDatabase>("LinkedDatabases", ["linkedDatabases"]);
     }
 }

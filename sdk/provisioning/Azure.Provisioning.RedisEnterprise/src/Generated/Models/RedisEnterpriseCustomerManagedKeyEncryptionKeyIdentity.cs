@@ -53,7 +53,7 @@ public partial class RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity : Pr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _userAssignedIdentityResourceId = DefineProperty<ResourceIdentifier>("UserAssignedIdentityResourceId", ["UserAssignedIdentityResourceId"]);
-        _identityType = DefineProperty<RedisEnterpriseCustomerManagedKeyIdentityType>("IdentityType", ["IdentityType"]);
+        _userAssignedIdentityResourceId = DefineProperty<ResourceIdentifier>("UserAssignedIdentityResourceId", ["userAssignedIdentityResourceId"]);
+        _identityType = DefineProperty<RedisEnterpriseCustomerManagedKeyIdentityType>("IdentityType", ["identityType"]);
     }
 }

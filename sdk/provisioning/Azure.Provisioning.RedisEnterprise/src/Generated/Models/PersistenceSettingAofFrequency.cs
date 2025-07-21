@@ -8,7 +8,10 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.RedisEnterprise;
 
 /// <summary>
-/// Sets the frequency at which data is written to disk.
+/// Sets the frequency at which data is written to disk. Defaults to
+/// &apos;1s&apos;, meaning &apos;every second&apos;. Note that the
+/// &apos;always&apos; setting is deprecated, because of its performance
+/// impact.
 /// </summary>
 public enum PersistenceSettingAofFrequency
 {

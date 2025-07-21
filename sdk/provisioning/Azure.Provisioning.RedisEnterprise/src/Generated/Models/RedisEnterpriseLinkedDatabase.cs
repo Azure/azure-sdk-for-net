@@ -49,6 +49,6 @@ public partial class RedisEnterpriseLinkedDatabase : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _state = DefineProperty<RedisEnterpriseDatabaseLinkState>("State", ["State"], isOutput: true);
+        _state = DefineProperty<RedisEnterpriseDatabaseLinkState>("State", ["state"], isOutput: true);
     }
 }

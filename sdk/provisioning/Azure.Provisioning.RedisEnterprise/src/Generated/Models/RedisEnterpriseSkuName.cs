@@ -8,11 +8,20 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.RedisEnterprise;
 
 /// <summary>
-/// The type of RedisEnterprise cluster to deploy. Possible values:
-/// (Enterprise_E10, EnterpriseFlash_F300 etc.).
+/// The level of Redis Enterprise cluster to deploy. Possible values:
+/// (&apos;Balanced_B5&apos;, &apos;MemoryOptimized_M10&apos;,
+/// &apos;ComputeOptimized_X5&apos;, etc.). For more information on SKUs see
+/// the latest pricing documentation. Note that additional SKUs may become
+/// supported in the future.
 /// </summary>
 public enum RedisEnterpriseSkuName
 {
+    /// <summary>
+    /// Enterprise_E1.
+    /// </summary>
+    [DataMember(Name = "Enterprise_E1")]
+    EnterpriseE1,
+
     /// <summary>
     /// Enterprise_E5.
     /// </summary>
@@ -44,6 +53,18 @@ public enum RedisEnterpriseSkuName
     EnterpriseE100,
 
     /// <summary>
+    /// Enterprise_E200.
+    /// </summary>
+    [DataMember(Name = "Enterprise_E200")]
+    EnterpriseE200,
+
+    /// <summary>
+    /// Enterprise_E400.
+    /// </summary>
+    [DataMember(Name = "Enterprise_E400")]
+    EnterpriseE400,
+
+    /// <summary>
     /// EnterpriseFlash_F300.
     /// </summary>
     [DataMember(Name = "EnterpriseFlash_F300")]
@@ -60,4 +81,268 @@ public enum RedisEnterpriseSkuName
     /// </summary>
     [DataMember(Name = "EnterpriseFlash_F1500")]
     EnterpriseFlashF1500,
+
+    /// <summary>
+    /// Balanced_B0.
+    /// </summary>
+    [DataMember(Name = "Balanced_B0")]
+    BalancedB0,
+
+    /// <summary>
+    /// Balanced_B1.
+    /// </summary>
+    [DataMember(Name = "Balanced_B1")]
+    BalancedB1,
+
+    /// <summary>
+    /// Balanced_B3.
+    /// </summary>
+    [DataMember(Name = "Balanced_B3")]
+    BalancedB3,
+
+    /// <summary>
+    /// Balanced_B5.
+    /// </summary>
+    [DataMember(Name = "Balanced_B5")]
+    BalancedB5,
+
+    /// <summary>
+    /// Balanced_B10.
+    /// </summary>
+    [DataMember(Name = "Balanced_B10")]
+    BalancedB10,
+
+    /// <summary>
+    /// Balanced_B20.
+    /// </summary>
+    [DataMember(Name = "Balanced_B20")]
+    BalancedB20,
+
+    /// <summary>
+    /// Balanced_B50.
+    /// </summary>
+    [DataMember(Name = "Balanced_B50")]
+    BalancedB50,
+
+    /// <summary>
+    /// Balanced_B100.
+    /// </summary>
+    [DataMember(Name = "Balanced_B100")]
+    BalancedB100,
+
+    /// <summary>
+    /// Balanced_B150.
+    /// </summary>
+    [DataMember(Name = "Balanced_B150")]
+    BalancedB150,
+
+    /// <summary>
+    /// Balanced_B250.
+    /// </summary>
+    [DataMember(Name = "Balanced_B250")]
+    BalancedB250,
+
+    /// <summary>
+    /// Balanced_B350.
+    /// </summary>
+    [DataMember(Name = "Balanced_B350")]
+    BalancedB350,
+
+    /// <summary>
+    /// Balanced_B500.
+    /// </summary>
+    [DataMember(Name = "Balanced_B500")]
+    BalancedB500,
+
+    /// <summary>
+    /// Balanced_B700.
+    /// </summary>
+    [DataMember(Name = "Balanced_B700")]
+    BalancedB700,
+
+    /// <summary>
+    /// Balanced_B1000.
+    /// </summary>
+    [DataMember(Name = "Balanced_B1000")]
+    BalancedB1000,
+
+    /// <summary>
+    /// MemoryOptimized_M10.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M10")]
+    MemoryOptimizedM10,
+
+    /// <summary>
+    /// MemoryOptimized_M20.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M20")]
+    MemoryOptimizedM20,
+
+    /// <summary>
+    /// MemoryOptimized_M50.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M50")]
+    MemoryOptimizedM50,
+
+    /// <summary>
+    /// MemoryOptimized_M100.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M100")]
+    MemoryOptimizedM100,
+
+    /// <summary>
+    /// MemoryOptimized_M150.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M150")]
+    MemoryOptimizedM150,
+
+    /// <summary>
+    /// MemoryOptimized_M250.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M250")]
+    MemoryOptimizedM250,
+
+    /// <summary>
+    /// MemoryOptimized_M350.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M350")]
+    MemoryOptimizedM350,
+
+    /// <summary>
+    /// MemoryOptimized_M500.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M500")]
+    MemoryOptimizedM500,
+
+    /// <summary>
+    /// MemoryOptimized_M700.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M700")]
+    MemoryOptimizedM700,
+
+    /// <summary>
+    /// MemoryOptimized_M1000.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M1000")]
+    MemoryOptimizedM1000,
+
+    /// <summary>
+    /// MemoryOptimized_M1500.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M1500")]
+    MemoryOptimizedM1500,
+
+    /// <summary>
+    /// MemoryOptimized_M2000.
+    /// </summary>
+    [DataMember(Name = "MemoryOptimized_M2000")]
+    MemoryOptimizedM2000,
+
+    /// <summary>
+    /// ComputeOptimized_X3.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X3")]
+    ComputeOptimizedX3,
+
+    /// <summary>
+    /// ComputeOptimized_X5.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X5")]
+    ComputeOptimizedX5,
+
+    /// <summary>
+    /// ComputeOptimized_X10.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X10")]
+    ComputeOptimizedX10,
+
+    /// <summary>
+    /// ComputeOptimized_X20.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X20")]
+    ComputeOptimizedX20,
+
+    /// <summary>
+    /// ComputeOptimized_X50.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X50")]
+    ComputeOptimizedX50,
+
+    /// <summary>
+    /// ComputeOptimized_X100.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X100")]
+    ComputeOptimizedX100,
+
+    /// <summary>
+    /// ComputeOptimized_X150.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X150")]
+    ComputeOptimizedX150,
+
+    /// <summary>
+    /// ComputeOptimized_X250.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X250")]
+    ComputeOptimizedX250,
+
+    /// <summary>
+    /// ComputeOptimized_X350.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X350")]
+    ComputeOptimizedX350,
+
+    /// <summary>
+    /// ComputeOptimized_X500.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X500")]
+    ComputeOptimizedX500,
+
+    /// <summary>
+    /// ComputeOptimized_X700.
+    /// </summary>
+    [DataMember(Name = "ComputeOptimized_X700")]
+    ComputeOptimizedX700,
+
+    /// <summary>
+    /// FlashOptimized_A250.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A250")]
+    FlashOptimizedA250,
+
+    /// <summary>
+    /// FlashOptimized_A500.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A500")]
+    FlashOptimizedA500,
+
+    /// <summary>
+    /// FlashOptimized_A700.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A700")]
+    FlashOptimizedA700,
+
+    /// <summary>
+    /// FlashOptimized_A1000.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A1000")]
+    FlashOptimizedA1000,
+
+    /// <summary>
+    /// FlashOptimized_A1500.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A1500")]
+    FlashOptimizedA1500,
+
+    /// <summary>
+    /// FlashOptimized_A2000.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A2000")]
+    FlashOptimizedA2000,
+
+    /// <summary>
+    /// FlashOptimized_A4500.
+    /// </summary>
+    [DataMember(Name = "FlashOptimized_A4500")]
+    FlashOptimizedA4500,
 }

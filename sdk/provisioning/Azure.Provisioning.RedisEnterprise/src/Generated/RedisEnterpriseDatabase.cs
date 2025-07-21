@@ -21,7 +21,7 @@ namespace Azure.Provisioning.RedisEnterprise;
 public partial class RedisEnterpriseDatabase : ProvisionableResource
 {
     /// <summary>
-    /// The name of the database.
+    /// The name of the Redis Enterprise database.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -29,6 +29,17 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// This property can be Enabled/Disabled to allow or deny access with the
+    /// current access keys. Can be updated even after database is created.
+    /// </summary>
+    public BicepValue<AccessKeysAuthentication> AccessKeysAuthentication 
+    {
+        get { Initialize(); return _accessKeysAuthentication!; }
+        set { Initialize(); _accessKeysAuthentication!.Assign(value); }
+    }
+    private BicepValue<AccessKeysAuthentication>? _accessKeysAuthentication;
 
     /// <summary>
     /// Specifies whether redis clients can connect using TLS-encrypted or
@@ -42,7 +53,8 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
     private BicepValue<RedisEnterpriseClientProtocol>? _clientProtocol;
 
     /// <summary>
-    /// Clustering policy - default is OSSCluster. Specified at create time.
+    /// Clustering policy - default is OSSCluster. This property must be chosen
+    /// at create time, and cannot be changed without deleting the database.
     /// </summary>
     public BicepValue<RedisEnterpriseClusteringPolicy> ClusteringPolicy 
     {
@@ -50,6 +62,17 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
         set { Initialize(); _clusteringPolicy!.Assign(value); }
     }
     private BicepValue<RedisEnterpriseClusteringPolicy>? _clusteringPolicy;
+
+    /// <summary>
+    /// Option to defer upgrade when newest version is released - default is
+    /// NotDeferred. Learn more: https://aka.ms/redisversionupgrade.
+    /// </summary>
+    public BicepValue<DeferUpgradeSetting> DeferUpgrade 
+    {
+        get { Initialize(); return _deferUpgrade!; }
+        set { Initialize(); _deferUpgrade!.Assign(value); }
+    }
+    private BicepValue<DeferUpgradeSetting>? _deferUpgrade;
 
     /// <summary>
     /// Redis eviction policy - default is VolatileLRU.
@@ -123,6 +146,15 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
     private BicepValue<RedisEnterpriseProvisioningStatus>? _provisioningState;
 
     /// <summary>
+    /// Version of Redis the database is running on, e.g. &apos;6.0&apos;.
+    /// </summary>
+    public BicepValue<string> RedisVersion 
+    {
+        get { Initialize(); return _redisVersion!; }
+    }
+    private BicepValue<string>? _redisVersion;
+
+    /// <summary>
     /// Current resource status of the database.
     /// </summary>
     public BicepValue<RedisEnterpriseClusterResourceState> ResourceState 
@@ -172,16 +204,19 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _clientProtocol = DefineProperty<RedisEnterpriseClientProtocol>("ClientProtocol", ["ClientProtocol"]);
-        _clusteringPolicy = DefineProperty<RedisEnterpriseClusteringPolicy>("ClusteringPolicy", ["ClusteringPolicy"]);
-        _evictionPolicy = DefineProperty<RedisEnterpriseEvictionPolicy>("EvictionPolicy", ["EvictionPolicy"]);
-        _geoReplication = DefineModelProperty<RedisEnterpriseDatabaseGeoReplication>("GeoReplication", ["GeoReplication"]);
-        _modules = DefineListProperty<RedisEnterpriseModule>("Modules", ["Modules"]);
-        _persistence = DefineModelProperty<RedisPersistenceSettings>("Persistence", ["Persistence"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
+        _accessKeysAuthentication = DefineProperty<AccessKeysAuthentication>("AccessKeysAuthentication", ["properties", "accessKeysAuthentication"]);
+        _clientProtocol = DefineProperty<RedisEnterpriseClientProtocol>("ClientProtocol", ["properties", "clientProtocol"]);
+        _clusteringPolicy = DefineProperty<RedisEnterpriseClusteringPolicy>("ClusteringPolicy", ["properties", "clusteringPolicy"]);
+        _deferUpgrade = DefineProperty<DeferUpgradeSetting>("DeferUpgrade", ["properties", "deferUpgrade"]);
+        _evictionPolicy = DefineProperty<RedisEnterpriseEvictionPolicy>("EvictionPolicy", ["properties", "evictionPolicy"]);
+        _geoReplication = DefineModelProperty<RedisEnterpriseDatabaseGeoReplication>("GeoReplication", ["properties", "geoReplication"]);
+        _modules = DefineListProperty<RedisEnterpriseModule>("Modules", ["properties", "modules"]);
+        _persistence = DefineModelProperty<RedisPersistenceSettings>("Persistence", ["properties", "persistence"]);
+        _port = DefineProperty<int>("Port", ["properties", "port"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _provisioningState = DefineProperty<RedisEnterpriseProvisioningStatus>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _resourceState = DefineProperty<RedisEnterpriseClusterResourceState>("ResourceState", ["ResourceState"], isOutput: true);
+        _provisioningState = DefineProperty<RedisEnterpriseProvisioningStatus>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _redisVersion = DefineProperty<string>("RedisVersion", ["properties", "redisVersion"], isOutput: true);
+        _resourceState = DefineProperty<RedisEnterpriseClusterResourceState>("ResourceState", ["properties", "resourceState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<RedisEnterpriseCluster>("Parent", ["parent"], isRequired: true);
     }

@@ -109,10 +109,10 @@ public partial class RedisEnterprisePrivateEndpointConnection : ProvisionableRes
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _connectionState = DefineModelProperty<RedisEnterprisePrivateLinkServiceConnectionState>("ConnectionState", ["ConnectionState"]);
+        _connectionState = DefineModelProperty<RedisEnterprisePrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["PrivateEndpointId"], isOutput: true);
-        _provisioningState = DefineProperty<RedisEnterprisePrivateEndpointConnectionProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"], isOutput: true);
+        _provisioningState = DefineProperty<RedisEnterprisePrivateEndpointConnectionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<RedisEnterpriseCluster>("Parent", ["parent"], isRequired: true);
     }

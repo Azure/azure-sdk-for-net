@@ -53,7 +53,7 @@ public partial class RedisEnterpriseCustomerManagedKeyEncryption : Provisionable
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _keyEncryptionKeyIdentity = DefineModelProperty<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>("KeyEncryptionKeyIdentity", ["KeyEncryptionKeyIdentity"]);
-        _keyEncryptionKeyUri = DefineProperty<Uri>("KeyEncryptionKeyUri", ["KeyEncryptionKeyUri"]);
+        _keyEncryptionKeyIdentity = DefineModelProperty<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>("KeyEncryptionKeyIdentity", ["keyEncryptionKeyIdentity"]);
+        _keyEncryptionKeyUri = DefineProperty<Uri>("KeyEncryptionKeyUri", ["keyEncryptionKeyUrl"]);
     }
 }
