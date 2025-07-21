@@ -207,7 +207,7 @@ namespace Azure.Generator.Management
                     methods,
                     singletonResourceName,
                     parentResource,
-                    resourceName);
+                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"));
             }
         }
 

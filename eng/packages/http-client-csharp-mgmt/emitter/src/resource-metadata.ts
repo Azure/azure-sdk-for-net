@@ -43,7 +43,7 @@ export interface ResourceMetadata {
   resourceScope: ResourceScope;
   parentResourceId?: string;
   singletonResourceName?: string;
-  resourceName?: string;
+  resourceName: string;
   // TODO -- add parent resource support in the same RP case
 }
 
