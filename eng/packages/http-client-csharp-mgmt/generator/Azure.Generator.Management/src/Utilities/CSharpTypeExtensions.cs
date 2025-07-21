@@ -37,20 +37,11 @@ namespace Azure.Generator.Management.Utilities
         {
             var currentType = type;
 
-            // Unwrap Task<T>
-            if (currentType.IsFrameworkType && currentType.IsGenericType && currentType.FrameworkType.GetGenericTypeDefinition() == typeof(Task<>))
+            // Recursively unwrap any generic type with a single type argument
+            // This will find the innermost type regardless of nesting level or specific generic types
+            while (currentType.IsGenericType && currentType.Arguments.Count == 1)
             {
                 currentType = currentType.Arguments[0];
-            }
-
-            // Unwrap Response<T> or ArmOperation<T>
-            if (currentType.IsFrameworkType && currentType.IsGenericType)
-            {
-                var genericDef = currentType.FrameworkType.GetGenericTypeDefinition();
-                if (genericDef == typeof(Azure.Response<>) || genericDef == typeof(Azure.ResourceManager.ArmOperation<>))
-                {
-                    currentType = currentType.Arguments[0];
-                }
             }
 
             return currentType;
