@@ -60,26 +60,24 @@ internal class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IP
     {
         var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object? Parameter)>();
 
-        void AddResult(object parameter)
+        void AddResult(object? parameter)
         {
+            List<object> parameters =[ true ];
+
+            if (parameter != null)
+            {
+                parameters.Add(parameter);
+            }
+
             if (includeAsync)
             {
-                var asyncParameters = new List<object> { true }; // isAsync flag
-                if (parameter != null)
-                {
-                    asyncParameters.Add(parameter);
-                }
-                result.Add((new TestFixtureAttribute(asyncParameters.ToArray()), true, parameter));
+                result.Add((new TestFixtureAttribute(parameters.ToArray()), true, parameter));
             }
 
             if (includeSync)
             {
-                var syncParameters = new List<object> { false }; // isAsync flag
-                if (parameter != null)
-                {
-                    syncParameters.Add(parameter);
-                }
-                result.Add((new TestFixtureAttribute(syncParameters.ToArray()), false, parameter));
+                parameters[0] = false;
+                result.Add((new TestFixtureAttribute(parameters.ToArray()), false, parameter));
             }
         }
 

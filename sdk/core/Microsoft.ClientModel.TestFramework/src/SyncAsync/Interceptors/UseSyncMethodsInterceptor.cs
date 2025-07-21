@@ -16,7 +16,7 @@ namespace Microsoft.ClientModel.TestFramework;
 /// <summary>
 /// TODO.
 /// </summary>
-public class UseSyncMethodsInterceptor : IInterceptor
+internal class UseSyncMethodsInterceptor : IInterceptor
 {
     private readonly bool _forceSync;
 
@@ -91,7 +91,15 @@ public class UseSyncMethodsInterceptor : IInterceptor
                 methodInfo = methodInfo.MakeGenericMethod(invocation.Method.GetGenericArguments());
                 returnType = methodInfo.ReturnType;
             }
-            object? result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
+
+            // Get the original target to avoid infinite recursion
+            object? target = invocation.InvocationTarget;
+            if (target is IWrappedClient wrapped)
+            {
+                target = wrapped.Original;
+            }
+
+            object? result = methodInfo.Invoke(target, invocation.Arguments);
 
             // Map IEnumerable to IAsyncEnumerable
             if (returnsSyncCollection)

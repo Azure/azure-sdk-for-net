@@ -6,7 +6,7 @@ using Castle.DynamicProxy;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// Implements the <see cref="IWrapped"/> for instrumented objects. Returns the original value when <see cref="IWrapped.Original"/> is called.
+/// Implements the <see cref="IWrappedClient"/> for instrumented objects. Returns the original value when <see cref="IWrappedClient.Original"/> is called.
 /// </summary>
 internal class GetOriginalInterceptor : IInterceptor
 {
@@ -19,7 +19,7 @@ internal class GetOriginalInterceptor : IInterceptor
 
     public void Intercept(IInvocation invocation)
     {
-        if (invocation.Method.DeclaringType == typeof(IWrapped))
+        if (invocation.Method.DeclaringType == typeof(IWrappedClient))
         {
             invocation.ReturnValue = _original;
         }

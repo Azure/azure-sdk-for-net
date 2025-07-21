@@ -4,9 +4,12 @@
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// An interface implemented by instrumented clients and LROs that allows to retrieve the original value.
+/// An interface implemented by instrumented clients that allows interceptors to retrieve the original value.
 /// </summary>
-internal interface IWrapped
+public interface IWrappedClient
 {
+    /// <summary>
+    /// Gets the original value.
+    /// </summary>
     public object Original { get; }
 }

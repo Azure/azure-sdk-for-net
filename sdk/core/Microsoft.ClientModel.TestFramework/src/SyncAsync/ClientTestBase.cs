@@ -204,6 +204,7 @@ public abstract class ClientTestBase
 
         return ProxyGenerator.CreateClassProxyWithTarget(
             clientType,
+            new[] { typeof(IWrappedClient) },
             client,
             interceptors.ToArray());
     }
@@ -219,7 +220,7 @@ public abstract class ClientTestBase
     protected T GetOriginal<T>(T instrumented)
     {
         if (instrumented == null) throw new ArgumentNullException(nameof(instrumented));
-        var i = instrumented as IWrapped ?? throw new InvalidOperationException($"{instrumented.GetType()} is not an instrumented type");
+        var i = instrumented as IWrappedClient ?? throw new InvalidOperationException($"{instrumented.GetType()} is not an instrumented type");
         return (T)i.Original;
     }
 }

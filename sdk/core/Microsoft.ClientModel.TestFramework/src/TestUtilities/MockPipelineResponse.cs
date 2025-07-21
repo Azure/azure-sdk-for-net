@@ -82,8 +82,19 @@ public class MockPipelineResponse : PipelineResponse
     /// <inheritdoc/>
     public override Stream? ContentStream
     {
-        get => _contentStream;
-        set => _contentStream = value;
+        get
+        {
+            if (_contentStream is not null)
+            {
+                return _contentStream;
+            }
+            return BufferContent().ToStream();
+        }
+        set
+        {
+            _contentStream = value;
+            _bufferedContent = null;
+        }
     }
 
     /// <inheritdoc/>
@@ -91,24 +102,17 @@ public class MockPipelineResponse : PipelineResponse
     {
         get
         {
-            if (_contentStream is null)
+            if (_bufferedContent is not null)
             {
-                return new BinaryData(Array.Empty<byte>());
+                return _bufferedContent;
             }
 
-            if (ContentStream is not MemoryStream memoryContent)
+            if (_contentStream is null || _contentStream is MemoryStream)
             {
-                throw new InvalidOperationException($"The response is not buffered.");
+                return BufferContent();
             }
 
-            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(memoryContent.ToArray());
-            }
+            throw new InvalidOperationException($"The response is not buffered.");
         }
     }
 
@@ -132,6 +136,12 @@ public class MockPipelineResponse : PipelineResponse
     {
         if (disposing && !_disposed)
         {
+            if (_contentStream is MemoryStream)
+            {
+                // Ensure content is buffered before disposing the stream
+                BufferContent();
+            }
+
             Stream? content = _contentStream;
             if (content != null)
             {
@@ -146,6 +156,7 @@ public class MockPipelineResponse : PipelineResponse
     /// <inheritdoc/>
     public override BinaryData BufferContent(CancellationToken cancellationToken = default)
     {
+        Console.WriteLine("Buffering content sync");
         if (_bufferedContent is not null)
         {
             return _bufferedContent;
@@ -160,18 +171,20 @@ public class MockPipelineResponse : PipelineResponse
         MemoryStream bufferStream = new();
         _contentStream.CopyTo(bufferStream);
         _contentStream.Dispose();
-        _contentStream = bufferStream;
+        _contentStream = null;
+        bufferStream.Position = 0;
 
         // Less efficient FromStream method called here because it is a mock.
         // For intended production implementation, see HttpClientTransportResponse.
         _bufferedContent = BinaryData.FromStream(bufferStream);
-        _contentStream.Seek(0, SeekOrigin.Begin);
         return _bufferedContent;
     }
 
     /// <inheritdoc/>
     public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
     {
+        Console.WriteLine("Buffering content async");
+
         if (_bufferedContent is not null)
         {
             return _bufferedContent;
@@ -193,12 +206,12 @@ public class MockPipelineResponse : PipelineResponse
         await _contentStream.DisposeAsync().ConfigureAwait(false);
 #endif
 
-        _contentStream = bufferStream;
+        _contentStream = null;
+        bufferStream.Position = 0;
 
         // Less efficient FromStream method called here because it is a mock.
         // For intended production implementation, see HttpClientTransportResponse.
         _bufferedContent = BinaryData.FromStream(bufferStream);
-        _contentStream.Seek(0, SeekOrigin.Begin);
         return _bufferedContent;
     }
 }

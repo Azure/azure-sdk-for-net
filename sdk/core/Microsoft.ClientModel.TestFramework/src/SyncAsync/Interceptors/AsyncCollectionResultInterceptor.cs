@@ -12,7 +12,7 @@ namespace Microsoft.ClientModel.TestFramework;
 /// TODO.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class AsyncCollectionResultInterceptor<T> : IAsyncEnumerator<T>
+internal class AsyncCollectionResultInterceptor<T> : IAsyncEnumerator<T>
         where T : class
 {
     private ClientTestBase _testBase;

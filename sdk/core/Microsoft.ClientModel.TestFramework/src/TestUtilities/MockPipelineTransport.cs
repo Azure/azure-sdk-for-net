@@ -72,40 +72,29 @@ public class MockPipelineTransport : PipelineTransport
     /// <inheritdoc/>
     protected override void ProcessCore(PipelineMessage message)
     {
-        OnSendingRequest?.Invoke((MockPipelineMessage)message);
-
         if (ExpectSyncPipeline == false)
         {
             throw new InvalidOperationException("MockPipelineTransport does not support synchronous processing when ExpectSyncPipeline is set to false.");
         }
 
         ProcessCoreInternal(message).EnsureCompleted();
-
-        if (_addDelay)
-        {
-            Task.Delay(TimeSpan.FromSeconds(4)).Wait();
-        }
-
-        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
     /// <inheritdoc/>
     protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        OnSendingRequest?.Invoke((MockPipelineMessage)message);
-
-        await ProcessCoreInternal(message).ConfigureAwait(false);
-
-        if (_addDelay)
+        if (ExpectSyncPipeline == true)
         {
-            await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+            throw new InvalidOperationException("MockPipelineTransport does not support asynchronous processing when ExpectSyncPipeline is set to true.");
         }
 
-        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
+        await ProcessCoreInternal(message).ConfigureAwait(false);
     }
 
     private async Task ProcessCoreInternal(PipelineMessage message)
     {
+        OnSendingRequest?.Invoke((MockPipelineMessage)message);
+
         if (message is not MockPipelineMessage mockMessage)
         {
             throw new InvalidOperationException("MockPipelineTransport can only process MockPipelineMessage messages.");
@@ -116,7 +105,7 @@ public class MockPipelineTransport : PipelineTransport
             throw new InvalidOperationException("MockPipelineTransport can only process MockPipelineRequest messages.");
         }
 
-        // TOOD - mockMessage.SetResponse(null);
+        // TODO - mockMessage.SetResponse(null);
 
         lock (_syncObj)
         {
@@ -140,5 +129,12 @@ public class MockPipelineTransport : PipelineTransport
         {
             mockMessage.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, mockMessage.Response.ContentStream);
         }
+
+        if (_addDelay)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+        }
+
+        OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 }
