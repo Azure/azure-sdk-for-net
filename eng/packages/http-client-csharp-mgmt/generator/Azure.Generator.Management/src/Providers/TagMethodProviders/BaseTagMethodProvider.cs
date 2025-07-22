@@ -35,9 +35,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
             MethodProvider updateMethodProvider,
-            ClientProvider restClient,
-            FieldProvider clientDiagnosticsField,
-            FieldProvider restClientField,
+            RestClientInfo restClientInfo,
             bool isAsync,
             string methodName,
             string methodDescription)
@@ -46,10 +44,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _updateMethodProvider = updateMethodProvider;
             _contextualPath = resource.ContextualPath;
             _enclosingType = resource;
-            _restClient = restClient;
+            _restClient = restClientInfo.RestClientProvider;
             _isAsync = isAsync;
-            _clientDiagnosticsField = clientDiagnosticsField;
-            _restClientField = restClientField;
+            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
+            _restClientField = restClientInfo.RestClientField;
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();

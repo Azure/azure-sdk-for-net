@@ -1,7 +1,7 @@
 global::Samples.Argument.AssertNotNull(key, nameof(key));
 global::Samples.Argument.AssertNotNull(value, nameof(value));
 
-using global::Azure.Core.Pipeline.DiagnosticScope scope = _responseTypeClientDiagnostics.CreateScope("ResponseTypeResource.AddTag");
+using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeResource.AddTag");
 scope.Start();
 try
 {
