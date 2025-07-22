@@ -1,5 +1,6 @@
 namespace Azure.Data.SchemaRegistry
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureDataSchemaRegistryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDataSchemaRegistryContext() { }
