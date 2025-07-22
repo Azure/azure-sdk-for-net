@@ -1087,6 +1087,7 @@ namespace TestProject
             Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
         }
 
+#if NET8_0_OR_GREATER
         [Test]
         public void BuilderForExperimentalPersistableHasSuppression()
         {
@@ -1146,3 +1147,4 @@ namespace TestProject
         }
     }
 }
+#endif
