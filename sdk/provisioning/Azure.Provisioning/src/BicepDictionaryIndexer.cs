@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -36,7 +37,7 @@ internal class BicepDictionaryIndexer<T> : BicepValue<T>
     {
         if (_kind == BicepValueKind.Unset)
         {
-            throw new ArgumentOutOfRangeException($"Key '{Key}' is out of range on {_self?.GetReference(false)}.");
+            throw new KeyNotFoundException($"Key '{Key}' is out of range on {_self?.GetReference(false)}.");
         }
         return base.Compile();
     }

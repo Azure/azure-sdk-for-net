@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using NUnit.Framework;
@@ -182,6 +183,7 @@ namespace Azure.Provisioning.Tests.Expressions
             Assert.AreEqual("test.dictionary['key1']", validIndexer.ToBicepExpression().ToString());
 
             var invalidIndexer = resource.Dictionary["missingKey"];
+            Assert.Throws<KeyNotFoundException>(() => invalidIndexer.ToString());
             Assert.AreEqual("test.dictionary['missingKey']", invalidIndexer.ToBicepExpression().ToString());
         }
 
