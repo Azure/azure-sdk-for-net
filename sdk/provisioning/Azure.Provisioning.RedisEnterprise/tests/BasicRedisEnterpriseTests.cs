@@ -18,6 +18,11 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
             ctx =>
             {
                 Infrastructure infra = new();
+                ProvisioningParameter principalId = new ProvisioningParameter("principalId", typeof(string))
+                {
+                    Description = "The principal ID of the user assigned identity to use for the Redis Enterprise cluster."
+                };
+                infra.Add(principalId);
                 RedisEnterpriseCluster redisEnterprise =
                     new("redisEnterprise", "2022-01-01")
                     {
@@ -43,10 +48,21 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
                         Port = 10000
                     };
                 infra.Add(database);
+                AccessPolicyAssignment accessPolicyAssignment =
+                    new("accessPolicyAssignment", "2022-01-01")
+                    {
+                        Parent = database,
+                        AccessPolicyName = "default",
+                        UserObjectId = principalId
+                    };
+                infra.Add(accessPolicyAssignment);
                 return infra;
             })
         .Compare(
             """
+            @description('The principal ID of the user assigned identity to use for the Redis Enterprise cluster.')
+            param principalId string
+
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
@@ -75,6 +91,17 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
                 port: 10000
               }
               parent: redisEnterprise
+            }
+
+            resource accessPolicyAssignment 'Microsoft.Cache/redisEnterprise/databases/accessPolicyAssignments@2022-01-01' = {
+              name: take('accesspolicyassignment${uniqueString(resourceGroup().id)}', 24)
+              properties: {
+                accessPolicyName: 'default'
+                user: {
+                  objectId: principalId
+                }
+              }
+              parent: redisDatabase
             }
             """)
         .Lint()
