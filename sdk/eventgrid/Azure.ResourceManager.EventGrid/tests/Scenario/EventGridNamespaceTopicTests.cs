@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task NamespaceTopicsSubscriptionCreateUpdateDelete()
         {
             await SetCollection();
-            var namespaceName = Recording.GenerateAssetName("sdk-eventgrid-test-");
-            var namespaceTopicName = Recording.GenerateAssetName("sdk-eventgrid-test-topic");
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");
             var namespaceTopicSubscriptionName1 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
             var namespaceTopicSubscriptionName2 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
             var namespaceTopicSubscriptionName3 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
@@ -180,7 +180,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var namespaceTopicsCollection = createNamespaceResponse.GetNamespaceTopics();
             Assert.NotNull(namespaceTopicsCollection);
 
-            var namespaceTopic = new NamespaceTopicData() { EventRetentionInDays = 1 };
+            var namespaceTopic = new NamespaceTopicData()
+            {
+                EventRetentionInDays = 1
+            };
             var namespaceTopicsResponse1 = (await namespaceTopicsCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceTopicName, namespaceTopic)).Value;
             Assert.NotNull(namespaceTopicsResponse1);
             Assert.AreEqual(namespaceTopicsResponse1.Data.ProvisioningState, NamespaceTopicProvisioningState.Succeeded);

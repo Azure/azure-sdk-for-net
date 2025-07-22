@@ -18,7 +18,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
     {
         private TopicTypeCollection _topicTypeCollection;
 
-        public TopicTypeTests(bool isAsync) : base(isAsync) { }
+        public TopicTypeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
 
         [SetUp]
         public async Task TestSetUp()
@@ -33,8 +35,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             _topicTypeCollection = tenant.GetTopicTypes();
         }
 
-        [Ignore("This test is ignored because it requires a specific topic type to exist.")]
         [Test]
+        [Ignore("System.FormatException : The ResourceIdentifier must start with /subscriptions/ or /providers/")]
         public async Task TopicTypeCollection_GetAsync_ReturnsResource()
         {
             string topicTypeName = "Microsoft.Storage.StorageAccounts";
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [Test]
         public async Task TopicTypeCollection_GetAllAsync_ReturnsList()
         {
+            // actually: {providers/Microsoft.EventGrid/topicTypes/Microsoft.Eventhub.Namespaces}
             var list = await _topicTypeCollection.GetAllAsync().ToEnumerableAsync();
 
             Assert.IsNotNull(list);

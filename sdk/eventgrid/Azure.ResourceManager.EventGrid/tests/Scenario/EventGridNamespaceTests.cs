@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
-            {"originalTag1", "originalValue1"},
-            {"originalTag2", "originalValue2"}
-        },
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                },
                 Sku = namespaceSku,
                 IsZoneRedundant = true
             };
@@ -87,9 +87,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(createNamespaceResponse);
             Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
 
+            // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getNamespaceResponse);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"));
+            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag1"], "originalValue1");
+            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"));
+            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
 
             // Validate original tags
             var tagsAfterCreate = getNamespaceResponse.Data.Tags;
@@ -100,8 +105,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
             Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
 
-            // Update tags and capacity
-            namespaceSku = new NamespaceSku() { Name = namespaceSkuName, Capacity = 2 };
+            // update the tags and capacity
+            namespaceSku = new NamespaceSku()
+            {
+                Name = namespaceSkuName,
+                Capacity = 2,
+            };
             var namespacePatch = new EventGridNamespacePatch()
             {
                 Tags = {
@@ -115,9 +124,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(updateNamespaceResponse);
             Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
 
+            // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getUpdatedNamespaceResponse);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"));
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], "updatedValue1");
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"));
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], "updatedValue2");
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
 
             // Validate updated tags
             var tagsAfterUpdate = getUpdatedNamespaceResponse.Data.Tags;
@@ -126,51 +141,103 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("updatedValue2", tagsAfterUpdate["updatedTag2"]);
 
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value);
 
-            // Create second and third namespaces
+            //Create 2nd and 3rd Namespace
             var createNamespaceResponse2 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse2);
+            Assert.AreEqual(createNamespaceResponse2.Data.Name, namespaceName2);
             var createNamespaceResponse3 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName3, nameSpace)).Value;
+            Assert.NotNull(createNamespaceResponse3);
+            Assert.AreEqual(createNamespaceResponse3.Data.Name, namespaceName3);
+
+            // Get the created namespaces
+            var getNamespace2Response = (await NamespaceCollection.GetAsync(namespaceName2)).Value;
+            Assert.NotNull(getNamespace2Response);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespace2Response.Data.ProvisioningState);
+            var getNamespace3Response = (await NamespaceCollection.GetAsync(namespaceName3)).Value;
+            Assert.NotNull(getNamespace3Response);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespace3Response.Data.ProvisioningState);
 
             // Validate created namespaces
-            Assert.NotNull((await NamespaceCollection.GetAsync(namespaceName2)).Value);
-            Assert.NotNull((await NamespaceCollection.GetAsync(namespaceName3)).Value);
+            Assert.AreEqual(getNamespace2Response.Data.Name, namespaceName2);
+            Assert.AreEqual(getNamespace3Response.Data.Name, namespaceName3);
+            Assert.AreEqual(getNamespace2Response.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.AreEqual(getNamespace3Response.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.AreEqual(getNamespace2Response.Data.Sku.Capacity.Value, 1);
+            Assert.AreEqual(getNamespace3Response.Data.Sku.Capacity.Value, 1);
+            Assert.IsTrue(getNamespace2Response.Data.IsZoneRedundant.Value);
+            Assert.IsTrue(getNamespace3Response.Data.IsZoneRedundant.Value);
+            Assert.IsTrue(getNamespace2Response.Data.Tags.Keys.Contains("originalTag1"));
+            Assert.AreEqual(getNamespace2Response.Data.Tags["originalTag1"], "originalValue1");
+            Assert.IsTrue(getNamespace3Response.Data.Tags.Keys.Contains("originalTag1"));
+            Assert.AreEqual(getNamespace3Response.Data.Tags["originalTag1"], "originalValue1");
 
             // Tag operations
-            var updated = await getNamespaceResponse.AddTagAsync("env", "test");
-            Assert.IsTrue(updated.Value.Data.Tags.ContainsKey("env"));
-            Assert.AreEqual("test", updated.Value.Data.Tags["env"]);
+            var addTagResponse = await getNamespaceResponse.AddTagAsync("env", "test");
+            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("env"));
+            Assert.AreEqual("test", addTagResponse.Value.Data.Tags["env"]);
 
-            updated = await getNamespaceResponse.SetTagsAsync(new Dictionary<string, string> { { "project", "sdk" } });
-            Assert.IsTrue(updated.Value.Data.Tags.ContainsKey("project"));
-            Assert.IsFalse(updated.Value.Data.Tags.ContainsKey("env"));
+            addTagResponse = await getNamespaceResponse.SetTagsAsync(new Dictionary<string, string> { { "project", "sdk" } });
+            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("project"));
+            Assert.IsFalse(addTagResponse.Value.Data.Tags.ContainsKey("env"));
 
-            updated = await getNamespaceResponse.RemoveTagAsync("project");
-            Assert.IsFalse(updated.Value.Data.Tags.ContainsKey("project"));
+            addTagResponse = await getNamespaceResponse.RemoveTagAsync("project");
+            Assert.IsFalse(addTagResponse.Value.Data.Tags.ContainsKey("project"));
 
-            // Shared access keys validation
+            // List Shared Access Keys and Regenerate keys
             var sharedAccessKeys = (await getNamespaceResponse.GetSharedAccessKeysAsync()).Value;
-            var key1Before = sharedAccessKeys.Key1;
-            var key2Before = sharedAccessKeys.Key2;
+            var sharedAccessKey1Before = sharedAccessKeys.Key1;
+            var sharedAccessKey2Before = sharedAccessKeys.Key2;
+            NamespaceRegenerateKeyContent namespaceRegenerateKeyContent = new NamespaceRegenerateKeyContent("key1");
+            var regenKeysResponse = (await getNamespaceResponse.RegenerateKeyAsync(WaitUntil.Completed, namespaceRegenerateKeyContent)).Value;
+            Assert.AreNotEqual(regenKeysResponse.Key1, sharedAccessKey1Before);
+            Assert.AreEqual(regenKeysResponse.Key2, sharedAccessKey2Before);
 
-            var regenResponse = (await getNamespaceResponse.RegenerateKeyAsync(WaitUntil.Completed, new NamespaceRegenerateKeyContent("key1"))).Value;
-            Assert.AreNotEqual(regenResponse.Key1, key1Before);
-            Assert.AreEqual(regenResponse.Key2, key2Before);
-
+            // List all namespaces
             var namespacesInResourceGroup = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(3, namespacesInResourceGroup.Count);
+            Assert.NotNull(namespacesInResourceGroup);
+            Assert.AreEqual(namespacesInResourceGroup.Count, 3);
 
-            Assert.True(await NamespaceCollection.ExistsAsync(namespaceName3));
+            // Check Exists method
+            var namespaceExists = await NamespaceCollection.ExistsAsync(namespaceName3);
+            Assert.True(namespaceExists);
 
-            await (await NamespaceCollection.GetAsync(namespaceName3)).Value.DeleteAsync(WaitUntil.Completed);
+            // Delete namespace3
+            await getNamespace3Response.DeleteAsync(WaitUntil.Completed);
 
-            var updatedList = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(2, updatedList.Count);
+            // List all namespaces under resourc group again to check updated number of namespaces.
+            var namespacesInResourceGroupUpdated = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(namespacesInResourceGroupUpdated);
+            Assert.AreEqual(namespacesInResourceGroupUpdated.Count, 2);
 
-            var namespacesInSub = await DefaultSubscription.GetEventGridNamespacesAsync().ToEnumerableAsync();
-            Assert.IsTrue(namespacesInSub.Any(n => n.Data.Name == namespaceName));
+            // Get all namespaces created within the subscription irrespective of the resourceGroup
+            var namespacesInAzureSubscription = await DefaultSubscription.GetEventGridNamespacesAsync().ToEnumerableAsync();
+            Assert.NotNull(namespacesInAzureSubscription);
+            Assert.GreaterOrEqual(namespacesInAzureSubscription.Count, 1);
+            var falseFlag = false;
+            foreach (var item in namespacesInAzureSubscription)
+            {
+                if (item.Data.Name == namespaceName)
+                {
+                    falseFlag = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(falseFlag);
 
+            // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
-            await (await NamespaceCollection.GetAsync(namespaceName2)).Value.DeleteAsync(WaitUntil.Completed);
+            await getNamespace2Response.DeleteAsync(WaitUntil.Completed);
+            var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
+            Assert.False(namespace1Exists);
+            var namespace2Exists = await NamespaceCollection.ExistsAsync(namespaceName2);
+            Assert.False(namespace2Exists);
+
+            // List all namespaces under resource group again to check updated number of namespaces.
+            var namespacesInResourceGroupDeleted = await NamespaceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.NotNull(namespacesInResourceGroupDeleted);
+            Assert.AreEqual(namespacesInResourceGroupDeleted.Count, 0);
 
             Assert.False(await NamespaceCollection.ExistsAsync(namespaceName));
             Assert.False(await NamespaceCollection.ExistsAsync(namespaceName2));
@@ -184,87 +251,112 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             await SetCollection();
             var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceSkuName = "Standard";
             var namespaceSku = new NamespaceSku()
             {
-                Name = "Standard",
+                Name = namespaceSkuName,
                 Capacity = 1,
             };
-
             AzureLocation location = new AzureLocation("eastus2", "eastus2");
-            UserAssignedIdentity identity = new UserAssignedIdentity();
+            UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
-                    { "originalTag1", "originalValue1" },
-                    { "originalTag2", "originalValue2" }
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
                 },
                 Sku = namespaceSku,
-                IsZoneRedundant = true,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned),
+                IsZoneRedundant = true
             };
-
-            nameSpace.Identity.UserAssignedIdentities.Add(
-                new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"),
-                identity);
+            nameSpace.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"), userAssignedIdentity);
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
             Assert.NotNull(createNamespaceResponse);
+            Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
 
+            // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getNamespaceResponse);
-            Assert.AreEqual("originalValue1", getNamespaceResponse.Data.Tags["originalTag1"]);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"));
+            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag1"], "originalValue1");
+            Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"));
+            Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
+            Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
+            Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
 
-            // Identity validation
-            Assert.IsNotNull(getNamespaceResponse.Data.Identity);
-            Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, getNamespaceResponse.Data.Identity.ManagedServiceIdentityType);
-
-            // Validate Custom Domain Ownership
-            var domainValidation = await createNamespaceResponse.ValidateCustomDomainOwnershipAsync(WaitUntil.Completed, new CancellationToken());
-            Assert.NotNull(domainValidation.Value);
-
-            // Update tags, capacity and add custom domain
-            var patch = new EventGridNamespacePatch
+            // update the tags and capacity
+            namespaceSku = new NamespaceSku()
             {
-                Tags = {
-                    { "updatedTag1", "updatedValue1" },
-                    { "updatedTag2", "updatedValue2" }
-                },
-                Sku = new NamespaceSku { Name = "Standard", Capacity = 2 },
-                TopicsConfiguration = new UpdateTopicsConfigurationInfo()
+                Name = namespaceSkuName,
+                Capacity = 2,
             };
 
-            patch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration
+            EventGridNamespacePatch namespacePatch = new EventGridNamespacePatch()
+            {
+                Tags = {
+                    {"updatedTag1", "updatedValue1"},
+                    {"updatedTag2", "updatedValue2"}
+                },
+                Sku = namespaceSku,
+                TopicsConfiguration = new UpdateTopicsConfigurationInfo(),
+            };
+
+            // Validate Custom Domain Ownership
+            var customDomainValidationResponse = await createNamespaceResponse.ValidateCustomDomainOwnershipAsync(
+              WaitUntil.Completed,
+             new CancellationToken()
+            ).ConfigureAwait(false);
+
+            Assert.NotNull(customDomainValidationResponse);
+            Assert.IsNotNull(customDomainValidationResponse.Value);
+            namespacePatch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration()
             {
                 FullyQualifiedDomainName = "www.contoso.com",
-                Identity = new CustomDomainIdentity
+                Identity = new CustomDomainIdentity()
                 {
                     IdentityType = CustomDomainIdentityType.UserAssigned,
                     UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk_test_centraleaup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test_identity"
                 },
-                CertificateUri = new Uri("https://sdk-centraleuap-testakv.vault.azure.net/certificates/test-custom-domain/")
+                CertificateUri = new Uri("https://sdk-centraleuap-testakv.vault.azure.net/certificates/test-custom-domain/"),
             });
+            var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
+            Assert.NotNull(updateNamespaceResponse);
+            Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
 
-            var updated = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            Assert.NotNull(updated);
+            // Get the updated namespace
+            var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            Assert.NotNull(getUpdatedNamespaceResponse);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"));
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], "updatedValue1");
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"));
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], "updatedValue2");
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
+            // verify custom domain
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.Count, 1);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, "www.contoso.com");
 
-            var getUpdated = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.AreEqual("updatedValue1", getUpdated.Data.Tags["updatedTag1"]);
-            Assert.AreEqual(2, getUpdated.Data.Sku.Capacity.Value);
+            // Delete 1st custom domain
+            namespacePatch.TopicsConfiguration.CustomDomains.RemoveAt(0);
+            var updateNamespaceResponse2 = (await getUpdatedNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
+            Assert.NotNull(updateNamespaceResponse2);
+            Assert.AreEqual(NamespaceProvisioningState.Succeeded, updateNamespaceResponse2.Data.ProvisioningState);
 
-            // Validate custom domain
-            var domains = getUpdated.Data.TopicsConfiguration.CustomDomains;
-            Assert.AreEqual(1, domains.Count);
-            Assert.AreEqual("www.contoso.com", domains.First().FullyQualifiedDomainName);
+            var getUpdatedNamespaceResponse2 = (await NamespaceCollection.GetAsync(namespaceName)).Value;
+            // verify 1st custom domain is deleted
+            Assert.NotNull(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains);
+            Assert.AreEqual(getUpdatedNamespaceResponse2.Data.TopicsConfiguration.CustomDomains.Count, 0);
 
-            // Remove custom domain
-            patch.TopicsConfiguration.CustomDomains.RemoveAt(0);
-            var updated2 = (await getUpdated.UpdateAsync(WaitUntil.Completed, patch)).Value;
-            var afterRemoval = (await NamespaceCollection.GetAsync(namespaceName)).Value;
-            Assert.AreEqual(0, afterRemoval.Data.TopicsConfiguration.CustomDomains.Count);
-
-            // Delete namespace and validate deletion
+            // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
-            Assert.False(await NamespaceCollection.ExistsAsync(namespaceName));
+            var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
+            Assert.False(namespace1Exists);
+
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -382,6 +474,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
             AzureLocation location = new AzureLocation("eastus2", "eastus2");
 
+            // Enable managed identity for the namespace
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -441,16 +534,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(updateNamespaceResponse);
             Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
 
+            // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getUpdatedNamespaceResponse);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
 
+            // Verify custom Webhook authentication
             Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, EventSubscriptionDestinationEndpoint);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, AzureActiveDirectoryApplicationId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, AzureActiveDirectoryTenantId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType, CustomWebhookAuthenticationManagedIdentityType.UserAssigned);
 
+            // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
             Assert.False(namespace1Exists);
@@ -944,12 +1040,22 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsNotNull(createCaCertificateResponse3);
             Assert.AreEqual(createCaCertificateResponse3.Data.ProvisioningState, CaCertificateProvisioningState.Succeeded);
 
-            // Validate GetAsync on CA certificate
-            var getCaCertificate1AsyncResponse = await createCaCertificateResponse1.GetAsync();
-            Assert.IsNotNull(getCaCertificate1AsyncResponse);
-            Assert.IsNotNull(getCaCertificate1AsyncResponse.Value);
-            Assert.AreEqual("TestCertificate1", getCaCertificate1AsyncResponse.Value.Data.Description);
-            Assert.AreEqual(encodedCertificate, getCaCertificate1AsyncResponse.Value.Data.EncodedCertificate);
+            //Get CaCertificate
+            var getCaCertificate1Response = (await caCertificatesCollection.GetAsync("testCertificate1")).Value;
+            Assert.IsNotNull(getCaCertificate1Response);
+            Assert.AreEqual(getCaCertificate1Response.Data.Name, "testCertificate1");
+            Assert.AreEqual(getCaCertificate1Response.Data.EncodedCertificate, caCertificateData1.EncodedCertificate);
+
+            //List CaCertificates
+            var listCaCertificatesBeforeDeletion = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotNull(listCaCertificatesBeforeDeletion);
+            Assert.AreEqual(listCaCertificatesBeforeDeletion.Count, 3);
+
+            await getCaCertificate1Response.DeleteAsync(WaitUntil.Completed);
+
+            var listCaCertificatesAfterDeletion = await caCertificatesCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotNull(listCaCertificatesAfterDeletion);
+            Assert.AreEqual(listCaCertificatesAfterDeletion.Count, 2);
 
             // Update certificate by deleting and recreating with a new description
             await createCaCertificateResponse1.DeleteAsync(WaitUntil.Completed);
@@ -1044,7 +1150,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsNotNull(getClientGroup1Response);
             Assert.AreEqual(getClientGroup1Response.Data.Name, "clientGroupName1");
 
-            //List Client Groups ==> extra default client group is added by the service.
+            //List Client Groups ==> Note : 1 extra default client group is added by the service.
             var listCientGroupBeforeDeletion = await clientGroupCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(listCientGroupBeforeDeletion);
             Assert.AreEqual(listCientGroupBeforeDeletion.Count, 3);

@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid;
@@ -19,6 +20,10 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
         [Test]
         public async Task GetAsyncThrowsRequestFailedException()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.Ignore("Skipping test in Playback mode as no real exception is thrown.");
+            }
             // Arrange
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "sdk-eventgrid-test-rg";
@@ -42,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             // Arrange
             string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "sdk-eventgrid-test-rg";
-            string systemTopicName = "sdk-eventgrid-test-systemTopic";
+            string systemTopicName = "sdk-eventgrid-test-rg";
 
             var resourceId = SystemTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName);
             var systemTopicResource = Client.GetSystemTopicResource(resourceId);

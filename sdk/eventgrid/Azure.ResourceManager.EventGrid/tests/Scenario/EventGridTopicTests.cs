@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource _resourceGroup;
         private EventGridTopicCollection _eventGridTopicCollection;
 
-        public EventGridTopicTests(bool isAsync) : base(isAsync) { }
+        public EventGridTopicTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
 
         [SetUp]
         public async Task TestSetUp()
@@ -32,7 +35,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             Assert.IsNotNull(topic);
             Assert.IsNotNull(topic.Data);
+            Assert.IsNotNull(topic.Data.Id);
             Assert.AreEqual(expectedName, topic.Data.Name);
+            Assert.AreEqual("Microsoft.EventGrid/topics", topic.Data.ResourceType.ToString());
+            Assert.AreEqual("Succeeded", topic.Data.ProvisioningState.ToString());
+            Assert.AreEqual(_resourceGroup.Data.Location, topic.Data.Location);
         }
 
         [Test]

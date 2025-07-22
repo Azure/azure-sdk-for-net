@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task DomainLifecycleCreateGetUpdateTagDelete()
+        public async Task Domain_CRUD_TagsAndKeysOperations()
         {
             await SetCollection();
             var domainName = Recording.GenerateAssetName("sdk-domain-");
@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Get
             var getResponse = await domainResource.GetAsync();
+            Assert.NotNull(getResponse);
             Assert.NotNull(getResponse.Value);
+            Assert.NotNull(getResponse.Value.Data);
+            Assert.NotNull(getResponse.Value.Data.Id);
             Assert.AreEqual(domainName, getResponse.Value.Data.Name);
 
             // Add Tag
@@ -74,6 +77,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Remove Tag
             await domainResource.AddTagAsync("toremove", "value");
             var removeTagResponse = await domainResource.RemoveTagAsync("toremove");
+            Assert.NotNull(removeTagResponse);
+            Assert.NotNull(removeTagResponse.Value);
             Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey("toremove"));
 
             // Shared Access Keys

@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(regionalEventSubscriptionsByTopicTypeResourceGroup);
 
             // Get regional event subscriptions by topic type at subscription level for given location
-            var regionalEventSubscriptionsByTopicTypeBySubscription = DefaultSubscription.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).ConfigureAwait(false);
+            var regionalEventSubscriptionsByTopicTypeBySubscription = DefaultSubscription.GetRegionalEventSubscriptionsDataForTopicTypeAsync(DefaultLocation, topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
             Assert.NotNull(regionalEventSubscriptionsByTopicTypeBySubscription);
 
             // Get global event subscriptions by topic type at resource group level
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(globalEventSubscriptionsByResourceGroup);
 
             // Get global event subscriptions by topic type at subscription level
-            var globalEventSubscriptionsBySubscription = DefaultSubscription.GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter: null, top: null).ConfigureAwait(false);
+            var globalEventSubscriptionsBySubscription = DefaultSubscription.GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter: null, top: null).WithCancellation(CancellationToken.None).ConfigureAwait(false);
             Assert.NotNull(globalEventSubscriptionsBySubscription);
 
             // Delete the event subscription
