@@ -13,6 +13,18 @@ namespace BasicTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ThingModel))]
+    [ModelReaderWriterBuildable(typeof(RoundTripModel))]
+    [ModelReaderWriterBuildable(typeof(ModelWithRequiredNullableProperties))]
+    [ModelReaderWriterBuildable(typeof(FriendModel))]
+    [ModelReaderWriterBuildable(typeof(RenamedModel))]
+    [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithNextLinkResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithStringNextLinkResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithHeaderNextLinkResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenResponse))]
+    [ModelReaderWriterBuildable(typeof(ListWithContinuationTokenHeaderResponseResponse))]
+    [ModelReaderWriterBuildable(typeof(PageThingModel))]
     public partial class BasicTypeSpecContext : ModelReaderWriterContext
     {
         public static ModelReaderWriterContext Default { get; internal set; }
