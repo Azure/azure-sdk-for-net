@@ -106,8 +106,32 @@ public static partial class JsonPointer
     /// <param name="json"></param>
     /// <param name="pointer"></param>
     /// <returns></returns>
+    public static int? GetNullableInt32(this BinaryData json, ReadOnlySpan<byte> pointer)
+    {
+        var reader = json.Find(pointer);
+        return reader.TokenType == JsonTokenType.Null ? default : reader.GetInt32();
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="json"></param>
+    /// <param name="pointer"></param>
+    /// <returns></returns>
     public static int GetInt32(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetInt32();
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="json"></param>
+    /// <param name="pointer"></param>
+    /// <returns></returns>
+    public static int? GetNullableInt32(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
+    {
+        var reader = json.Find(pointer);
+        return reader.TokenType == JsonTokenType.Null ? default : reader.GetInt32();
+    }
 
     /// <summary>
     /// .

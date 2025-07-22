@@ -19,15 +19,21 @@ public partial struct AdditionalProperties
     private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
     // Value kinds for encoding type information in byte arrays
+    [Flags]
     private enum ValueKind : byte
     {
-        Json = 1,
-        Int32 = 2,
-        Utf8String = 3,
-        Removed = 4,
-        Null = 5,
-        BooleanTrue = 6,
-        BooleanFalse = 7,
+        None = 0,
+        Json = 1 << 0,
+        Int32 = 1 << 1,
+        Utf8String = 1 << 2,
+        Removed = 1 << 3,
+        Null = 1 << 4,
+        BooleanTrue = 1 << 5,
+        BooleanFalse = 1 << 6,
+        Boolean = BooleanTrue | BooleanFalse,
+        NullableInt32 = Int32 | Null,
+        NullableBoolean = Boolean | Null,
+        NullableUtf8String = Utf8String | Null,
     }
 
     // Singleton arrays for common values
@@ -298,7 +304,7 @@ public partial struct AdditionalProperties
         {
             case ValueKind.Utf8String:
                 // valueBytes contains JSON string representation, parse and write properly
-                writer.WriteStringValue(valueBytes);
+                writer.WriteRawValue(valueBytes);
                 break;
 
             case ValueKind.Int32:

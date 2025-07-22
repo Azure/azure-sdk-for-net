@@ -11,6 +11,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public partial struct AdditionalProperties
 {
+    private delegate T? SpanParser<T>(ReadOnlySpan<byte> buffer, ReadOnlySpan<byte> span);
+
     // Marker classes for special values
     internal sealed class RemovedValue
     {
@@ -95,48 +97,46 @@ public partial struct AdditionalProperties
         Set(name, (object)value);
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPointer"></param>
-    /// <returns></returns>
-    public string GetString(ReadOnlySpan<byte> jsonPointer)
+    private T? GetPrimitive<T>(ReadOnlySpan<byte> propertyName, SpanParser<T?> parser, ValueKind expectedKind)
     {
-        // TODO: all these methods should take JSON pointer, not just property names
-
-        // Check if this is a JSON pointer (contains '/')
-        int slashIndex = jsonPointer.IndexOf((byte)'/');
-        if (slashIndex >= 0)
+        if (TryGetFromPointer(propertyName, parser, default, out T? result))
         {
-            // This is a JSON pointer - extract the base property name
-            ReadOnlySpan<byte> baseName = jsonPointer.Slice(0, slashIndex);
-            ReadOnlySpan<byte> pointer = jsonPointer.Slice(slashIndex);
-
-            // Get the encoded value for the base property
-            byte[] baseEncodedValue = GetEncodedValue(baseName);
-            if (baseEncodedValue.Length == 0 || (ValueKind)baseEncodedValue[0] != ValueKind.Json)
-                ThrowPropertyNotFoundException(jsonPointer);
-
-            // Extract JSON bytes (skip the first byte which is the kind)
-            byte[] jsonBytes = baseEncodedValue.AsSpan(1).ToArray();
-
-            // Use JsonPointer to navigate to the specific element
-            return JsonPointer.GetString(jsonBytes, pointer) ?? string.Empty;
+            return result;
         }
 
         // Direct property access
-        byte[] encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Length == 0 || (ValueKind)encodedValue[0] != ValueKind.Utf8String)
-            ThrowPropertyNotFoundException(jsonPointer);
+        byte[] encodedValue = GetEncodedValue(propertyName);
+        if (encodedValue.Length == 0)
+        {
+            if (TryGetValueFromSard(propertyName, out T? value))
+            {
+                return value;
+            }
+            ThrowPropertyNotFoundException(propertyName);
+            return default;
+        }
+        else
+        {
+            ValueKind kind = (ValueKind)encodedValue[0];
+            if (kind == ValueKind.Null && expectedKind.HasFlag(ValueKind.Null))
+            {
+                return default;
+            }
+            else
+            {
+                return JsonSerializer.Deserialize<T>(encodedValue.AsSpan(1));
+            }
+        }
+    }
 
-        // Parse JSON string representation (skip the first byte which is the kind)
-        ReadOnlySpan<byte> valueBytes = encodedValue.AsSpan(1);
-#if NET6_0_OR_GREATER
-        string jsonString = Encoding.UTF8.GetString(valueBytes);
-#else
-        string jsonString = Encoding.UTF8.GetString(valueBytes.ToArray());
-#endif
-        return JsonSerializer.Deserialize<string>(jsonString) ?? string.Empty;
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="propertyName"></param>
+    /// <returns></returns>
+    public string? GetString(ReadOnlySpan<byte> propertyName)
+    {
+        return GetPrimitive(propertyName, JsonPointer.GetString, ValueKind.NullableUtf8String);
     }
 
     // Helper method to get raw encoded value bytes
@@ -153,7 +153,7 @@ public partial struct AdditionalProperties
             return Array.Empty<byte>();
         }
 
-        return encodedValue!;
+        return encodedValue;
     }
 
     private bool TryGetValueFromSard<T>(ReadOnlySpan<byte> name, out T? value)
@@ -212,6 +212,40 @@ public partial struct AdditionalProperties
         Set(name, (object)value);
     }
 
+    private bool TryGetFromPointer<T>(ReadOnlySpan<byte> name, SpanParser<T> parser, T defaultValue, out T? result)
+    {
+        // Check if this is a JSON pointer (contains '/')
+        int slashIndex = name.IndexOf((byte)'/');
+        if (slashIndex >= 0)
+        {
+            // This is a JSON pointer - extract the base property name
+            ReadOnlySpan<byte> baseName = name.Slice(0, slashIndex);
+            ReadOnlySpan<byte> pointer = name.Slice(slashIndex);
+
+            // Get the encoded value for the base property
+            byte[] baseEncodedValue = GetEncodedValue(baseName);
+            if (baseEncodedValue.Length == 0 || (ValueKind)baseEncodedValue[0] != ValueKind.Json)
+                ThrowPropertyNotFoundException(name);
+
+            // Use JsonPointer to navigate to the specific element
+            result = parser(baseEncodedValue.AsSpan(1), pointer) ?? defaultValue;
+            return true;
+        }
+
+        result = default;
+        return false;
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPointer"></param>
+    /// <returns></returns>
+    public int? GetNullableInt32(ReadOnlySpan<byte> jsonPointer)
+    {
+        return GetPrimitive(jsonPointer, JsonPointer.GetNullableInt32, ValueKind.NullableInt32);
+    }
+
     /// <summary>
     /// .
     /// </summary>
@@ -219,45 +253,17 @@ public partial struct AdditionalProperties
     /// <returns></returns>
     public int GetInt32(ReadOnlySpan<byte> jsonPointer)
     {
-        // Check if this is a JSON pointer (contains '/')
-        int slashIndex = jsonPointer.IndexOf((byte)'/');
-        if (slashIndex >= 0)
-        {
-            // This is a JSON pointer - extract the base property name
-            ReadOnlySpan<byte> baseName = jsonPointer.Slice(0, slashIndex);
-            ReadOnlySpan<byte> pointer = jsonPointer.Slice(slashIndex);
+        return GetPrimitive(jsonPointer, JsonPointer.GetInt32, ValueKind.Int32);
+    }
 
-            // Get the encoded value for the base property
-            byte[] baseEncodedValue = GetEncodedValue(baseName);
-            if (baseEncodedValue.Length == 0 || (ValueKind)baseEncodedValue[0] != ValueKind.Json)
-                ThrowPropertyNotFoundException(jsonPointer);
-
-            // Extract JSON bytes (skip the first byte which is the kind)
-            byte[] jsonBytes = baseEncodedValue.AsSpan(1).ToArray();
-
-            // Use JsonPointer to navigate to the specific element
-            return JsonPointer.GetInt32(jsonBytes, pointer);
-        }
-
-        // Direct property access
-        byte[] encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Length == 0 || (ValueKind)encodedValue[0] != ValueKind.Int32)
-        {
-            if (TryGetValueFromSard<int>(jsonPointer, out int value))
-            {
-                return value;
-            }
-            ThrowPropertyNotFoundException(jsonPointer);
-        }
-
-        // Parse JSON number representation (skip the first byte which is the kind)
-        ReadOnlySpan<byte> valueBytes = encodedValue.AsSpan(1);
-#if NET6_0_OR_GREATER
-        string jsonNumber = Encoding.UTF8.GetString(valueBytes);
-#else
-        string jsonNumber = Encoding.UTF8.GetString(valueBytes.ToArray());
-#endif
-        return int.Parse(jsonNumber);
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPointer"></param>
+    /// <returns></returns>
+    public bool GetBoolean(ReadOnlySpan<byte> jsonPointer)
+    {
+        return GetPrimitive(jsonPointer, JsonPointer.GetBoolean, ValueKind.Boolean);
     }
 
     /// <summary>
