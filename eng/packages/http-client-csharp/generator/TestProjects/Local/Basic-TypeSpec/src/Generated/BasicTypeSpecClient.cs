@@ -2030,9 +2030,17 @@ namespace BasicTypeSpec
             return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> PostIfMatchNoneMatch. </summary>
+        /// <summary>
+        /// [Protocol Method] PostIfMatchNoneMatch
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PostIfMatchNoneMatch(MatchConditions matchConditions, RequestContext context)
         {
@@ -2050,9 +2058,17 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <summary> PostIfMatchNoneMatch. </summary>
+        /// <summary>
+        /// [Protocol Method] PostIfMatchNoneMatch
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PostIfMatchNoneMatchAsync(MatchConditions matchConditions, RequestContext context)
         {
@@ -2071,23 +2087,21 @@ namespace BasicTypeSpec
         }
 
         /// <summary> PostIfMatchNoneMatch. </summary>
-        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
-        /// <param name="ifNoneMatch"> The request should only proceed if an entity does not match this string. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response PostIfMatchNoneMatch(MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        public virtual Response PostIfMatchNoneMatch(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            return this.PostIfMatchNoneMatch(ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return PostIfMatchNoneMatch(matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> PostIfMatchNoneMatch. </summary>
-        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
-        /// <param name="ifNoneMatch"> The request should only proceed if an entity does not match this string. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> PostIfMatchNoneMatchAsync(MatchConditions matchConditions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostIfMatchNoneMatchAsync(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            return await this.PostIfMatchNoneMatchAsync(ifMatch, ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await PostIfMatchNoneMatchAsync(matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
     }
 }

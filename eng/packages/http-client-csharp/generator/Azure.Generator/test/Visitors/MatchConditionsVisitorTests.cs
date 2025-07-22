@@ -277,7 +277,7 @@ namespace Azure.Generator.Tests.Visitors
             return matchConditionParameters;
         }
 
-        private class TestMatchConditionsVisitor : MatchConditionsVisitor
+        private class TestMatchConditionsVisitor : MatchConditionsHeaderVisitor
         {
             public ScmMethodProviderCollection? InvokeVisitServiceMethod(
                 InputServiceMethod serviceMethod,

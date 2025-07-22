@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 
@@ -50,7 +49,7 @@ namespace SpecialHeaders.ConditionalRequest
             return message;
         }
 
-        internal HttpMessage CreateHeadIfModifiedSinceRequest(DateTimeOffset? ifModifiedSince, RequestContext context)
+        internal HttpMessage CreateHeadIfModifiedSinceRequest(RequestConditions requestConditions, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -66,7 +65,7 @@ namespace SpecialHeaders.ConditionalRequest
             return message;
         }
 
-        internal HttpMessage CreatePostIfUnmodifiedSinceRequest(DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        internal HttpMessage CreatePostIfUnmodifiedSinceRequest(RequestConditions requestConditions, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;

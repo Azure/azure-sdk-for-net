@@ -201,21 +201,17 @@ namespace SpecialHeaders.ConditionalRequest
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ifModifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince, RequestContext context)
+        public virtual Response HeadIfModifiedSince(RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.HeadIfModifiedSince");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateHeadIfModifiedSinceRequest(ifModifiedSince, context);
+                using HttpMessage message = CreateHeadIfModifiedSinceRequest(requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -233,21 +229,17 @@ namespace SpecialHeaders.ConditionalRequest
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ifModifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince, RequestContext context)
+        public virtual async Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.HeadIfModifiedSince");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateHeadIfModifiedSinceRequest(ifModifiedSince, context);
+                using HttpMessage message = CreateHeadIfModifiedSinceRequest(requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -258,29 +250,21 @@ namespace SpecialHeaders.ConditionalRequest
         }
 
         /// <summary> Check when only If-Modified-Since in header is defined. </summary>
-        /// <param name="ifModifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince = default, CancellationToken cancellationToken = default)
+        public virtual Response HeadIfModifiedSince(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return HeadIfModifiedSince(ifModifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return HeadIfModifiedSince(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Check when only If-Modified-Since in header is defined. </summary>
-        /// <param name="ifModifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await HeadIfModifiedSinceAsync(ifModifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await HeadIfModifiedSinceAsync(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -291,21 +275,17 @@ namespace SpecialHeaders.ConditionalRequest
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ifUnmodifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// not been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfUnmodifiedSince");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostIfUnmodifiedSinceRequest(ifUnmodifiedSince, context);
+                using HttpMessage message = CreatePostIfUnmodifiedSinceRequest(requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -323,21 +303,17 @@ namespace SpecialHeaders.ConditionalRequest
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ifUnmodifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// not been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        public virtual async Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfUnmodifiedSince");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePostIfUnmodifiedSinceRequest(ifUnmodifiedSince, context);
+                using HttpMessage message = CreatePostIfUnmodifiedSinceRequest(requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -348,29 +324,21 @@ namespace SpecialHeaders.ConditionalRequest
         }
 
         /// <summary> Check when only If-Unmodified-Since in header is defined. </summary>
-        /// <param name="ifUnmodifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// not been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince = default, CancellationToken cancellationToken = default)
+        public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return PostIfUnmodifiedSince(ifUnmodifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return PostIfUnmodifiedSince(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Check when only If-Unmodified-Since in header is defined. </summary>
-        /// <param name="ifUnmodifiedSince">
-        /// A timestamp indicating the last modified time of the resource known to the
-        /// client. The operation will be performed only if the resource on the service has
-        /// not been modified since the specified time.
-        /// </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await PostIfUnmodifiedSinceAsync(ifUnmodifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await PostIfUnmodifiedSinceAsync(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
     }
 }
