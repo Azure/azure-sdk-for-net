@@ -91,7 +91,28 @@ public class BicepList<T> :
             }
             else
             {
-                return _values[index];
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+                }
+                // ensure there is a value
+                if (index >= _values.Count)
+                {
+                    return new BicepListIndexer<T>(_self, index);
+                }
+                // now we have a value
+                var value = (IBicepValue)_values[index];
+                switch (value.Kind)
+                {
+                    case BicepValueKind.Unset:
+                        return new BicepListIndexer<T>(_self, index);
+                    case BicepValueKind.Expression:
+                        return new BicepListIndexer<T>(_self, index, value.Expression!);
+                    case BicepValueKind.Literal:
+                        return new BicepListIndexer<T>(_self, index, (T)value.LiteralValue!);
+                    default:
+                        throw new InvalidOperationException($"Unknown {value.Kind}!");
+                }
             }
         }
         set
