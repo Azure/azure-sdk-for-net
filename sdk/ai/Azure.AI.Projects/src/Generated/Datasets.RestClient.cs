@@ -102,25 +102,6 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateDeleteRequest(string name, string version, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier204;
-            PipelineRequest request = message.Request;
-            request.Method = "DELETE";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/datasets/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(version, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
         internal PipelineMessage CreateCreateOrUpdateRequest(string name, string version, BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
