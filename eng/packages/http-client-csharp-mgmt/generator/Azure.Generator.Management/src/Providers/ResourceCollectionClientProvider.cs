@@ -190,7 +190,7 @@ namespace Azure.Generator.Management.Providers
 
             bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
 
-            return new ConstructorProvider(signature, bodyStatements.ToArray(), this);
+            return new ConstructorProvider(signature, bodyStatements, this);
         }
 
         // TODO -- this expression currently is incorrect. Maybe we need to leave an API in OutputLibrary for us to query the parent resource, because when construct the collection, we do not know it yet.
