@@ -8,7 +8,7 @@ public static class BicepValueReferenceExtensions
     /// <summary>
     /// Converts a <see cref="IBicepValue" /> to a BicepValue.
     /// </summary>
-    /// <param name="value">The BicepValueReference to convert.</param>
+    /// <param name="value">The bicep value to convert.</param>
     /// <returns>A BicepValue representing the same value.</returns>
     public static BicepExpression ToBicepExpression(this IBicepValue value)
     {
@@ -25,8 +25,8 @@ public static class BicepValueReferenceExtensions
     /// <summary>
     /// Convert a <see cref="BicepValue{T}" /> to a BicepExpression.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="value"></param>
+    /// <param name="value">The bicep value to convert.</param>
+    /// <returns>A BicepValue representing the same value.</returns>
     /// <returns></returns>
     public static BicepExpression ToBicepExpression<T>(this BicepValue<T> value)
     {
