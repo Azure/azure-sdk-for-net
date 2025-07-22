@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

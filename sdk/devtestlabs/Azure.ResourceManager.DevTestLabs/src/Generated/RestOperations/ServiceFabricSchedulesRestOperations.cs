@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="data"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="patch"> A schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="labName"> labs. </param>
         /// <param name="userName"> users. </param>
         /// <param name="serviceFabricName"> servicefabrics. </param>
-        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="name"> The name of the schedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/>, <paramref name="serviceFabricName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

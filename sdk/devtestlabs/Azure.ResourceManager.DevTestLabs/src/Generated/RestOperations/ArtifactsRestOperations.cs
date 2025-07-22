@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="name"> The name of the artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is null. </exception>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="name"> The name of the artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/> or <paramref name="name"/> is null. </exception>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="name"> The name of the artifact. </param>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="artifactSourceName"> The name of the artifact source. </param>
-        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="name"> The name of the artifact. </param>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="artifactSourceName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
