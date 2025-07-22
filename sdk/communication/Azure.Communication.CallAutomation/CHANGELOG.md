@@ -1,14 +1,10 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1 (2025-07-22)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue when using the event processor connect call result for the `CallConnected` event, which was not being returned correctly.
 
 ## 1.4.0 (2025-06-04)
 
