@@ -48,15 +48,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateInfo"/>. </summary>
         internal DevTestLabArmTemplateInfo()
         {
-            Template = new ChangeTrackingDictionary<string, BinaryData>();
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateInfo"/>. </summary>
         /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabArmTemplateInfo(IReadOnlyDictionary<string, BinaryData> template, IReadOnlyDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevTestLabArmTemplateInfo(BinaryData template, BinaryData parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Template = template;
             Parameters = parameters;
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary>
         /// The template's contents.
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -93,11 +91,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Template { get; }
+        public BinaryData Template { get; }
         /// <summary>
         /// The parameters of the ARM template.
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -124,6 +122,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Parameters { get; }
+        public BinaryData Parameters { get; }
     }
 }

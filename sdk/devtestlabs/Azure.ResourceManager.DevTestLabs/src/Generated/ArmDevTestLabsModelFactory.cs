@@ -211,10 +211,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
         /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArmTemplateData"/> instance for mocking. </returns>
-        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, string description = null, string publisher = null, string icon = null, IReadOnlyDictionary<string, BinaryData> contents = null, DateTimeOffset? createdOn = null, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = null, bool? isEnabled = null)
+        public static DevTestLabArmTemplateData DevTestLabArmTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, string description = null, string publisher = null, string icon = null, BinaryData contents = null, DateTimeOffset? createdOn = null, IEnumerable<DevTestLabParametersValueFileInfo> parametersValueFilesInfo = null, bool? isEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
-            contents ??= new Dictionary<string, BinaryData>();
             parametersValueFilesInfo ??= new List<DevTestLabParametersValueFileInfo>();
 
             return new DevTestLabArmTemplateData(
@@ -239,10 +238,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         /// <returns> A new <see cref="Models.DevTestLabParametersValueFileInfo"/> instance for mocking. </returns>
-        public static DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, IReadOnlyDictionary<string, BinaryData> parametersValueInfo = null)
+        public static DevTestLabParametersValueFileInfo DevTestLabParametersValueFileInfo(string fileName = null, BinaryData parametersValueInfo = null)
         {
-            parametersValueInfo ??= new Dictionary<string, BinaryData>();
-
             return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo, serializedAdditionalRawData: null);
         }
 
@@ -262,10 +259,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="parameters"> The artifact's parameters. </param>
         /// <param name="createdOn"> The artifact's creation date. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabArtifactData"/> instance for mocking. </returns>
-        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOSType = null, IReadOnlyDictionary<string, BinaryData> parameters = null, DateTimeOffset? createdOn = null)
+        public static DevTestLabArtifactData DevTestLabArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string title = null, string description = null, string publisher = null, string filePath = null, string icon = null, string targetOSType = null, BinaryData parameters = null, DateTimeOffset? createdOn = null)
         {
             tags ??= new Dictionary<string, string>();
-            parameters ??= new Dictionary<string, BinaryData>();
 
             return new DevTestLabArtifactData(
                 id,
@@ -289,11 +285,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         /// <returns> A new <see cref="Models.DevTestLabArmTemplateInfo"/> instance for mocking. </returns>
-        public static DevTestLabArmTemplateInfo DevTestLabArmTemplateInfo(IReadOnlyDictionary<string, BinaryData> template = null, IReadOnlyDictionary<string, BinaryData> parameters = null)
+        public static DevTestLabArmTemplateInfo DevTestLabArmTemplateInfo(BinaryData template = null, BinaryData parameters = null)
         {
-            template ??= new Dictionary<string, BinaryData>();
-            parameters ??= new Dictionary<string, BinaryData>();
-
             return new DevTestLabArmTemplateInfo(template, parameters, serializedAdditionalRawData: null);
         }
 
