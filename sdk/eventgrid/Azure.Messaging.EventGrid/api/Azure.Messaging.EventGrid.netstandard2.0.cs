@@ -2,7 +2,8 @@ namespace Azure.Messaging.EventGrid
 {
     public partial class AzureMessagingEventGridContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        public AzureMessagingEventGridContext() { }
+        internal AzureMessagingEventGridContext() { }
+        public static Azure.Messaging.EventGrid.AzureMessagingEventGridContext Default { get { throw null; } }
     }
     public partial class EventGridEvent
     {
