@@ -48,26 +48,22 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// </summary>
         /// <param name="enclosingType">The enclosing type of this operation. </param>
         /// <param name="contextualPath">The contextual path of the enclosing type. </param>
-        /// <param name="restClient">The client provider for this operation to send the request. </param>
+        /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
-        /// <param name="clientDiagnosticsField">The field that holds the client diagnostics instance. </param>
-        /// <param name="restClientField">The field that holds the rest client instance. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
-            ClientProvider restClient,
+            RestClientInfo restClientInfo,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
-            FieldProvider clientDiagnosticsField, // we must pass this field in because in mockable resources (holding the extension methods) have multiple such fields
-            FieldProvider restClientField,
             bool isAsync)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
             _resource = InitializeResource(enclosingType);
-            _restClient = restClient;
+            _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
@@ -75,8 +71,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
-            _clientDiagnosticsField = clientDiagnosticsField;
-            _restClientField = restClientField;
+            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
+            _restClientField = restClientInfo.RestClientField;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
@@ -297,18 +293,25 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             List<MethodBodyStatement> statements = [nullCheckStatement];
 
-            var resourceType = typeof(ArmResource);
+            var returnType = signature.ReturnType!.UnWrap();
             var returnValueExpression = New.Instance(
-                _resource.Type,
+                returnType,
                 This.Property("Client"),
                 responseVariable.Property("Value"));
-
-            var returnStatement = Return(
-                Static(typeof(Response)).Invoke(
-                    nameof(Response.FromValue),
-                    returnValueExpression,
-                    responseVariable.Invoke("GetRawResponse")));
-            statements.Add(returnStatement);
+            // If the return type is the same as the resource type, we need to the convert work (from resource data to resource)
+            if (returnType.Equals(_resource.Type))
+            {
+                var returnStatement = Return(
+                    Static(typeof(Response)).Invoke(
+                        nameof(Response.FromValue),
+                        returnValueExpression,
+                        responseVariable.Invoke("GetRawResponse")));
+                statements.Add(returnStatement);
+            }
+            else
+            {
+                statements.Add(Return(responseVariable));
+            }
 
             return statements;
         }

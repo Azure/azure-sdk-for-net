@@ -22,8 +22,10 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class ZooCollection : ArmCollection, IEnumerable<ZooResource>, IAsyncEnumerable<ZooResource>
     {
-        private readonly ClientDiagnostics _zooClientDiagnostics;
+        private readonly ClientDiagnostics _zoosClientDiagnostics;
         private readonly Zoos _zoosRestClient;
+        private readonly ClientDiagnostics _zooRecommendationClientDiagnostics;
+        private readonly ZooRecommendation _zooRecommendationRestClient;
 
         /// <summary> Initializes a new instance of ZooCollection for mocking. </summary>
         protected ZooCollection()
@@ -35,9 +37,12 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ZooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _zooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
+            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion);
-            _zoosRestClient = new Zoos(_zooClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
+            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
+            _zooRecommendationClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion0);
+            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion0);
             ValidateResourceId(id);
         }
 
@@ -63,7 +68,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdateAsync");
             scope.Start();
             try
             {
@@ -76,7 +81,7 @@ namespace MgmtTypeSpec
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
-                    _zooClientDiagnostics,
+                    _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -106,7 +111,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -119,7 +124,7 @@ namespace MgmtTypeSpec
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
-                    _zooClientDiagnostics,
+                    _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -146,7 +151,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.GetAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.GetAsync");
             scope.Start();
             try
             {
@@ -180,7 +185,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.Get");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.Get");
             scope.Start();
             try
             {
@@ -228,7 +233,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.ExistsAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.ExistsAsync");
             scope.Start();
             try
             {
@@ -258,7 +263,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.Exists");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.Exists");
             scope.Start();
             try
             {
@@ -288,7 +293,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
@@ -322,7 +327,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zooClientDiagnostics.CreateScope("ZooCollection.GetIfExists");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.GetIfExists");
             scope.Start();
             try
             {
