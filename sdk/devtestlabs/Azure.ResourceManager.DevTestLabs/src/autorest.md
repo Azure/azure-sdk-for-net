@@ -215,48 +215,6 @@ directive:
     where: $.definitions.ArmTemplateInfo.properties.template
     transform: >
       delete $["additionalProperties"];
-#   # Bulk update for all 'name' parameters in ARM template paths
-#   - from: swagger-document
-#     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
-#     transform: >
-#       if ($["description"] && $["description"].includes("ArmTemplate")) {
-#         $["description"] = "The name of the azure resource manager template";
-#       }
-#   # Bulk update for all 'name' parameters in ArtifactSource paths
-#   - from: swagger-document
-#     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
-#     transform: >
-#       if ($["description"] && $["description"].includes("ArtifactSource")) {
-#         $["description"] = " The name of the artifact source";
-#       }
-#   # Bulk update for all 'name' parameters in Artifact paths
-#   - from: swagger-document
-#     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
-#     transform: >
-#       if ($["description"] && $["description"].includes("Artifact")) {
-#         $["description"] = " The name of the artifact";
-#       }
-#   # Bulk update for all 'name' parameters in Cost paths
-#   - from: swagger-document
-#     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
-#     transform: >
-#       if ($["description"] && $["description"].includes("LabCost")) {
-#         $["description"] = " The name of the cost";
-#       }
-#   # Bulk update for all 'name' parameters in Custom Image paths
-#   - from: swagger-document
-#     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
-#     transform: >
-#       if ($["description"] && $["description"].includes("CustomImage")) {
-#         $["description"] = " The name of the custom image";
-#       }
-#   # Bulk update for all 'name' parameters in Disk paths
-#   - from: swagger-document
-#     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
-#     transform: >
-#       if ($["description"] && $["description"].includes("Disk")) {
-#         $["description"] = " The name of the disk";
-#       }
   # Bulk update for all 'name' parameters in paths
   - from: swagger-document
     where: $.paths[*][*].parameters[?(@.name == "name" && @.in == "path")]
@@ -290,5 +248,26 @@ directive:
       }
       if ($["description"] && $["description"].includes("NotificationChannel")) {
         $["description"] = "The name of the notification channel";
+      }
+      if ($["description"] && $["description"].includes("LabVirtualMachine")) {
+        $["description"] = "The name of the virtual machine";
+      }
+      if ($["description"] && $["description"].includes("VirtualNetwork")) {
+        $["description"] = "The name of the virtual network";
+      }
+      if ($["description"] && $["description"].includes("Secret")) {
+        $["description"] = "The name of the secret";
+      }
+      if ($["description"] && $["description"].includes("ServiceFabric")) {
+        $["description"] = "The name of the service fabric";
+      }
+      if ($["description"] && $["description"].includes("User")) {
+        $["description"] = "The name of the user profile";
+      }
+      if ($["description"] && $["description"].includes("ServiceRunner")) {
+        $["description"] = "The name of the service runner";
+      }
+      if ($["description"] && $["description"].includes("PolicySet")) {
+        $["description"] = "The name of the policy set";
       }
 ```
