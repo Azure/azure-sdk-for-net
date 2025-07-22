@@ -139,6 +139,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("externalGovernanceStatus"u8);
                 writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
             }
+            if (Optional.IsDefined(RetentionDays))
+            {
+                writer.WritePropertyName("retentionDays"u8);
+                writer.WriteNumberValue(RetentionDays.Value);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -195,6 +205,8 @@ namespace Azure.ResourceManager.Sql.Models
             ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
             ServerNetworkAccessFlag? isIPv6Enabled = default;
             ExternalGovernanceStatus? externalGovernanceStatus = default;
+            int? retentionDays = default;
+            ServerCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -361,6 +373,24 @@ namespace Azure.ResourceManager.Sql.Models
                             externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("retentionDays"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            retentionDays = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("createMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createMode = new ServerCreateMode(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -389,6 +419,8 @@ namespace Azure.ResourceManager.Sql.Models
                 restrictOutboundNetworkAccess,
                 isIPv6Enabled,
                 externalGovernanceStatus,
+                retentionDays,
+                createMode,
                 serializedAdditionalRawData);
         }
 
