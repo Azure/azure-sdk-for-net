@@ -14,9 +14,21 @@ namespace Azure.Provisioning.Tests.Expressions
         [Test]
         public void ValidateLiteralValue()
         {
-            var literal = new BicepValue<string>("literal");
-            Assert.AreEqual("'literal'", literal.ToString());
-            Assert.AreEqual("'literal'", literal.ToBicepExpression().ToString());
+            var stringLiteral = new BicepValue<string>("literal");
+            Assert.AreEqual("'literal'", stringLiteral.ToString());
+            Assert.AreEqual("'literal'", stringLiteral.ToBicepExpression().ToString());
+
+            var intLiteral = new BicepValue<int>(42);
+            Assert.AreEqual("42", intLiteral.ToString());
+            Assert.AreEqual("42", intLiteral.ToBicepExpression().ToString());
+
+            var boolLiteral = new BicepValue<bool>(true);
+            Assert.AreEqual("true", boolLiteral.ToString());
+            Assert.AreEqual("true", boolLiteral.ToBicepExpression().ToString());
+
+            var doubleLiteral = new BicepValue<double>(3.14);
+            Assert.AreEqual("json('3.14')", doubleLiteral.ToString());
+            Assert.AreEqual("json('3.14')", doubleLiteral.ToBicepExpression().ToString());
         }
 
         [Test]
@@ -185,6 +197,20 @@ namespace Azure.Provisioning.Tests.Expressions
             var invalidIndexer = resource.Dictionary["missingKey"];
             Assert.Throws<KeyNotFoundException>(() => invalidIndexer.ToString());
             Assert.AreEqual("test.dictionary['missingKey']", invalidIndexer.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateFailsForPropertyOnUnnamedConstruct()
+        {
+            var properties = new TestProperties();
+            properties.WithValue = "foo";
+            var withValue = properties.WithValue;
+            Assert.AreEqual("'foo'", withValue.ToString());
+            Assert.Throws<InvalidOperationException>(() => withValue.ToBicepExpression().ToString());
+
+            var withoutValue = properties.WithoutValue;
+            Assert.Throws<InvalidOperationException>(() => withoutValue.ToString());
+            Assert.Throws<InvalidOperationException>(() => withoutValue.ToBicepExpression().ToString());
         }
 
         private class TestResource : ProvisionableResource
