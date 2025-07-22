@@ -55,7 +55,7 @@ namespace Azure.Generator.Visitors
 
             protected override string BuildNamespace() => $"{_serializationProvider.Type.Namespace}.{_serializationProvider.Name}";
 
-            protected override CSharpType GetBaseType() => new CSharpType(typeof(JsonConverter<>), _serializationProvider.Type);
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(JsonConverter<>), _serializationProvider.Type);
 
             protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
 
