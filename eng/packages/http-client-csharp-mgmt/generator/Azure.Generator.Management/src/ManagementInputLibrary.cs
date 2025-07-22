@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
@@ -119,13 +118,13 @@ namespace Azure.Generator.Management
                 var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator != null)
                 {
-                    var metadata = BuildResourceMetadata(decorator);
+                    var metadata = BuildResourceMetadata(decorator, model);
                     resourceMetadata.Add(model, metadata);
                 }
             }
             return resourceMetadata;
 
-            ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator)
+            ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator, InputModelType inputModel)
             {
                 var args = decorator.Arguments ?? throw new InvalidOperationException();
                 string? resourceIdPattern = null;
@@ -199,6 +198,16 @@ namespace Azure.Generator.Management
                     resourceName = resourceNameData.ToObjectFromJson<string>();
                 }
 
+                var methodToClientMap = new Dictionary<string, InputClient>();
+                foreach (var method in methods)
+                {
+                    var inputClient = GetClientByMethod(GetMethodByCrossLanguageDefinitionId(method.Id)!);
+                    if (inputClient != null)
+                    {
+                        methodToClientMap[method.Id] = inputClient;
+                    }
+                }
+
                 // TODO -- I know we should never throw the exception, but here we just put it here and refine it later
                 return new(
                     resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
@@ -207,7 +216,8 @@ namespace Azure.Generator.Management
                     methods,
                     singletonResourceName,
                     parentResource,
-                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"));
+                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
+                    methodToClientMap);
             }
         }
 

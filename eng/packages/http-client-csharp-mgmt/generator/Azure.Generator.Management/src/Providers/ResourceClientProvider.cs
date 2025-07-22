@@ -37,12 +37,11 @@ namespace Azure.Generator.Management.Providers
     {
         internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            // TODO: handle multiple clients in the future, for now we assume that there is only one client for the resource.
-            var inputClient = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct().First();
-            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, inputClient, resourceMetadata);
+            // Create a resource that supports multiple clients, using ResourceName from metadata
+            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, resourceMetadata);
             if (!resource.IsSingleton)
             {
-                var collection = new ResourceCollectionClientProvider(resource, model, inputClient, resourceMetadata);
+                var collection = new ResourceCollectionClientProvider(resource, model, resourceMetadata);
                 resource.ResourceCollection = collection;
             }
 
@@ -57,11 +56,10 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
-        private readonly ClientProvider _restClientProvider;
-        private readonly FieldProvider _clientDiagnosticsField;
-        private readonly FieldProvider _restClientField;
+        // Support for multiple rest clients
+        private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
-        private ResourceClientProvider(string resourceName, InputModelType model, InputClient inputClient, ResourceMetadata resourceMetadata)
+        private ResourceClientProvider(string resourceName, InputModelType model, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
             ContextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
@@ -75,11 +73,10 @@ namespace Azure.Generator.Management.Providers
             _resourceServiceMethods = resourceMetadata.Methods.Select(m => (m.Kind, ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!));
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
-            _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            // Initialize client info dictionary using extension method
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
-            _clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), ResourceHelpers.GetClientDiagnosticFieldName(ResourceName), this);
-            _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(_restClientProvider.Name), this);
         }
 
         public RequestPathPattern ContextualPath { get; }
@@ -127,7 +124,18 @@ namespace Azure.Generator.Management.Providers
             return childResources;
         }
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _restClientField, _dataField, _resourceTypeField];
+        protected override FieldProvider[] BuildFields()
+        {
+            List<FieldProvider> fields = new();
+            foreach (var clientInfo in _clientInfos.Values)
+            {
+                fields.Add(clientInfo.DiagnosticsField);
+                fields.Add(clientInfo.RestClientField);
+            }
+            fields.Add(_dataField);
+            fields.Add(_resourceTypeField);
+            return fields.ToArray();
+        }
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -205,15 +213,19 @@ namespace Azure.Generator.Management.Providers
 
             var thisResource = This.As<ArmResource>();
 
-            var bodyStatements = new MethodBodyStatement[]
-            {
-                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate(),
-                thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate(),
-                Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate()
-            };
+            var bodyStatements = new List<MethodBodyStatement>();
 
-            return new ConstructorProvider(signature, bodyStatements, this);
+            // Initialize all client diagnostics and rest client fields
+            foreach (var (inputClient, clientInfo) in _clientInfos)
+            {
+                bodyStatements.Add(clientInfo.DiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate());
+                bodyStatements.Add(thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate());
+                bodyStatements.Add(clientInfo.RestClientField.Assign(New.Instance(clientInfo.RestClientProvider.Type, clientInfo.DiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate());
+            }
+
+            bodyStatements.Add(Static(Type).As<ArmResource>().ValidateResourceId(idParameter).Terminate());
+
+            return new ConstructorProvider(signature, bodyStatements.ToArray(), this);
         }
 
         // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
@@ -307,7 +319,10 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var (methodKind, method) in _resourceServiceMethods)
             {
-                var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
+                // Get the appropriate rest client for this specific method
+                var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
+
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
                 var returnType = convenienceMethod.Signature.ReturnType!;
                 if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
@@ -326,18 +341,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, convenienceMethod, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true);
+                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, restClientInfo, method, asyncConvenienceMethod, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false));
-                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false));
+                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true));
                 }
             }
 
@@ -351,14 +366,22 @@ namespace Azure.Generator.Management.Providers
             // Only generate tag methods if the resource model has tag properties, has get and update methods
             if (HasTags() && _resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get) && updateMethodProvider is not null)
             {
-                methods.AddRange([
-                    new AddTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
-                    new AddTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
-                    new SetTagsMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
-                    new SetTagsMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
-                    new RemoveTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
-                    new RemoveTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, false)
-                ]);
+                // Find the update method to get its rest client
+                var updateMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update || m.Kind == ResourceOperationKind.Create);
+                if (updateMethod is not null)
+                {
+                    var updateRestClientInfo = _resourceMetadata.GetRestClientForServiceMethod(
+                        ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(updateMethod.Id)!, _clientInfos);
+
+                    methods.AddRange([
+                        new AddTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
+                        new AddTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, false),
+                        new SetTagsMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
+                        new SetTagsMethodProvider(this, updateMethodProvider, updateRestClientInfo, false),
+                        new RemoveTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, true),
+                        new RemoveTagMethodProvider(this, updateMethodProvider, updateRestClientInfo, false)
+                    ]);
+                }
             }
 
             // add method to get the child resource collection from the current resource.

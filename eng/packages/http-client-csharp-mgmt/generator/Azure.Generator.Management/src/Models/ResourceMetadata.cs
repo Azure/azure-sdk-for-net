@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Management.Models
 {
@@ -12,5 +13,6 @@ namespace Azure.Generator.Management.Models
         IReadOnlyList<ResourceMethod> Methods,
         string? SingletonResourceName,
         string? ParentResourceId,
-        string ResourceName);
+        string ResourceName,
+        IReadOnlyDictionary<string, InputClient> MethodToClientMap);
 }
