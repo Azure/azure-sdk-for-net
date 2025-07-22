@@ -3,6 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -14,9 +15,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken)
             => ShareFileClient.GetCopyAuthorizationHeaderAsync(client, cancellationToken);
 
-        public static ShareFileClient WithAppendedUserAgentClient(
+        public static ShareFileClient WithAdditionalPoliciesClient(
             ShareFileClient client,
-            string appendedUserAgent)
-            => ShareFileClient.WithAppendedUserAgent(client, appendedUserAgent);
+            params HttpPipelinePolicy[] policies)
+            => ShareFileClient.WithAdditonalPolicies(client, policies);
     }
 }

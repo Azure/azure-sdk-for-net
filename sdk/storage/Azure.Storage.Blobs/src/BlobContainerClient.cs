@@ -4076,26 +4076,28 @@ namespace Azure.Storage.Blobs
         #region internal accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class with identical configurations but with an updated User Agent string.
+        /// class with identical configurations but with additional Http Pipeline Policies.
         /// </summary>
         /// <param name="client">
         /// The storage client which to clone the configurations from.
         /// </param>
-        /// <param name="appendedUserAgent">
-        /// The string to prepend the user agent with.
+        /// <param name="policies">
+        /// The additional policies to add to the client.
         /// </param>
         /// <returns></returns>
-        protected static BlobContainerClient WithAppendedUserAgent(
+        protected static BlobContainerClient WithAdditionalPolicies(
             BlobContainerClient client,
-            string appendedUserAgent)
+            params HttpPipelinePolicy[] policies)
         {
-            // Create the pipeline policy with the user agent string updated.
-            StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
+            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
-            // Update the client options with the injected user agent policy.
+            // Update the client options with the injected policies.
             BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
-            options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
+            foreach (HttpPipelinePolicy policy in policies)
+            {
+                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            }
 
             // Create a deep copy of the BlobContainerClient but with an updated client options
             // with an additional injected pipeline policy with the user agent string

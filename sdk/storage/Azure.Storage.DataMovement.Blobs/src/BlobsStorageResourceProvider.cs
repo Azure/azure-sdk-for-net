@@ -391,7 +391,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobContainerClient client,
             BlobStorageResourceContainerOptions options = default)
         {
-            BlobContainerClient newClient = BlobContainerClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
+            BlobContainerClient newClient = BlobContainerClientInternals.WithAdditionalPoliciesClient(client, new StorageUserAgentPolicy(GetUserAgentVersionString()));
             return new BlobStorageResourceContainer(newClient, options);
         }
 
@@ -413,7 +413,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlockBlobClient client,
             BlockBlobStorageResourceOptions options = default)
         {
-            BlockBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as BlockBlobClient;
+            BlockBlobClient newClient = BlockBlobClientInternals.WithAdditionalPoliciesClient(client, new StorageUserAgentPolicy(GetUserAgentVersionString()));
             return new BlockBlobStorageResource(newClient, options);
         }
 
@@ -435,7 +435,7 @@ namespace Azure.Storage.DataMovement.Blobs
             PageBlobClient client,
             PageBlobStorageResourceOptions options = default)
         {
-            PageBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as PageBlobClient;
+            PageBlobClient newClient = PageBlobClientInternals.WithAdditionalPoliciesClient(client, new StorageUserAgentPolicy(GetUserAgentVersionString()));
             return new PageBlobStorageResource(newClient, options);
         }
 
@@ -457,7 +457,7 @@ namespace Azure.Storage.DataMovement.Blobs
             AppendBlobClient client,
             AppendBlobStorageResourceOptions options = default)
         {
-            AppendBlobClient newClient = BlobBaseClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString()) as AppendBlobClient;
+            AppendBlobClient newClient = AppendBlobClientInternals.WithAdditionalPoliciesClient(client, new StorageUserAgentPolicy(GetUserAgentVersionString()));
             return new AppendBlobStorageResource(newClient, options);
         }
         #endregion

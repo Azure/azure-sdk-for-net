@@ -361,7 +361,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareDirectoryClient client,
             ShareFileStorageResourceOptions options = default)
         {
-            ShareDirectoryClient newClient = ShareDirectoryClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
+            ShareDirectoryClient newClient = ShareDirectoryClientInternals.WithAdditionalPoliciesClient(client, new StorageUserAgentPolicy(GetUserAgentVersionString()));
             return new ShareDirectoryStorageResourceContainer(newClient, options);
         }
 
@@ -383,7 +383,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient client,
             ShareFileStorageResourceOptions options = default)
         {
-            ShareFileClient newClient = ShareFileClientInternals.WithAppendedUserAgentClient(client, GetUserAgentVersionString());
+            ShareFileClient newClient = ShareFileClientInternals.WithAdditionalPoliciesClient(client, new StorageUserAgentPolicy(GetUserAgentVersionString()));
             return new ShareFileStorageResource(newClient, options);
         }
         #endregion

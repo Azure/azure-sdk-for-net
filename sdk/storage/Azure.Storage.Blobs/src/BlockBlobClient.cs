@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -471,6 +472,61 @@ namespace Azure.Storage.Blobs.Specialized
                 blobUri: Uri,
                 clientConfiguration: newClientConfiguration);
         }
+
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class with identical configurations but with additional Http Pipeline Policies.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to clone the configurations from.
+        /// </param>
+        /// <param name="policies">
+        /// The additional policies to add to the client.
+        /// </param>
+        /// <returns></returns>
+        protected static BlockBlobClient WithAdditionalPolicies(
+            BlockBlobClient client,
+            params HttpPipelinePolicy[] policies)
+        {
+            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
+
+            // Update the client options with the injected policies.
+            BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
+            BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
+            foreach (HttpPipelinePolicy policy in policies)
+            {
+                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            }
+
+            // Create a deep copy of the BlobBaseClient but with updated client options
+            // and an additional injected pipeline policy with the user agent string
+            // based on the credential type.
+            if (client.ClientConfiguration?.TokenCredential != default)
+            {
+                return new BlockBlobClient(
+                    client.Uri,
+                    client.ClientConfiguration.TokenCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration?.SasCredential != default)
+            {
+                return new BlockBlobClient(
+                    client.Uri,
+                    client.ClientConfiguration.SasCredential,
+                    options);
+            }
+            else if (client.ClientConfiguration?.SharedKeyCredential != default)
+            {
+                return new BlockBlobClient(
+                    client.Uri,
+                    client.ClientConfiguration.SharedKeyCredential,
+                    options);
+            }
+
+            return new BlockBlobClient(client.Uri, options);
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a new BlockBlobURL object identical to the source but with the specified version ID.

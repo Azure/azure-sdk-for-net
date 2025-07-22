@@ -537,26 +537,28 @@ namespace Azure.Storage.Files.Shares
         #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
-        /// class with identical configurations but with an updated User Agent string.
+        /// class with identical configurations but with additional Http Pipeline Policies.
         /// </summary>
         /// <param name="client">
         /// The storage client which to clone the configurations from.
         /// </param>
-        /// <param name="appendedUserAgent">
-        /// The string to prepend the user agent with.
+        /// <param name="policies">
+        /// The additional policies to add to the client.
         /// </param>
         /// <returns></returns>
-        protected static ShareDirectoryClient WithAppendedUserAgent(
+        protected static ShareDirectoryClient WithAdditionalPolicies(
             ShareDirectoryClient client,
-            string appendedUserAgent)
+            params HttpPipelinePolicy[] policies)
         {
-            // Create the pipeline policy with the user agent string updated.
-            StorageUserAgentPolicy userAgentPolicy = new(appendedUserAgent);
+            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
             // Update the client options with the injected user agent policy.
             ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
-            options.AddPolicy(userAgentPolicy, HttpPipelinePosition.PerCall);
+            foreach (HttpPipelinePolicy policy in policies)
+            {
+                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            }
 
             // Create a deep copy of the ShareDirectoryClient but with updated client options
             // and an additional injected pipeline policy with the user agent string

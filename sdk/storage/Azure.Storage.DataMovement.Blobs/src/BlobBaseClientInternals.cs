@@ -13,10 +13,5 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobBaseClient client,
             CancellationToken cancellationToken)
             => BlobBaseClient.GetCopyAuthorizationHeaderAsync(client, cancellationToken);
-
-        public static BlobBaseClient WithAppendedUserAgentClient(
-            BlobBaseClient client,
-            string appendedUserAgent)
-            => BlobBaseClient.WithAppendedUserAgent(client, appendedUserAgent);
     }
 }
