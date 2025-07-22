@@ -1,6 +1,6 @@
 global::Samples.Argument.AssertNotNull(key, nameof(key));
 
-using global::Azure.Core.Pipeline.DiagnosticScope scope = _responseTypeClientDiagnostics.CreateScope("ResponseTypeResource.RemoveTag");
+using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeResource.RemoveTag");
 scope.Start();
 try
 {

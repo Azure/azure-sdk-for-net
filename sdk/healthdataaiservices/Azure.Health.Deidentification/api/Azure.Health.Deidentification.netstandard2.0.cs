@@ -13,6 +13,7 @@ namespace Azure.Health.Deidentification
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.SourceStorageLocation))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.StringIndex))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.TargetStorageLocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureHealthDeidentificationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthDeidentificationContext() { }

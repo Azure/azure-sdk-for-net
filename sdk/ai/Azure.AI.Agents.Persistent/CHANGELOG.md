@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed the [issue](https://github.com/Azure/azure-sdk-for-net/issues/51342) with ignoring `after` parameter when getting pageable lists.
 
 ### Other Changes
 

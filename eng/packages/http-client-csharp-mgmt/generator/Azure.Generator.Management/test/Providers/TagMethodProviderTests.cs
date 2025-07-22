@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Tests.Common;
@@ -159,11 +160,13 @@ namespace Azure.Generator.Management.Tests.Providers
             // find the restClientField
             var restClientField = resource.Fields.SingleOrDefault(f => f.Name.EndsWith("RestClient"))!;
             Assert.IsNotNull(restClientField);
+
+            var restClientInfo = new RestClientInfo(restClient, restClientField, clientDiagnosticField);
             BaseTagMethodProvider tagMethodProvider = methodName switch
             {
-                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resource, mockUpdateMethodProvider, restClient, clientDiagnosticField, restClientField, isAsync),
-                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resource, mockUpdateMethodProvider, restClient, clientDiagnosticField, restClientField, isAsync),
-                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resource, mockUpdateMethodProvider, restClient, clientDiagnosticField, restClientField, isAsync),
+                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resource, mockUpdateMethodProvider, restClientInfo, isAsync),
+                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resource, mockUpdateMethodProvider, restClientInfo, isAsync),
+                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resource, mockUpdateMethodProvider, restClientInfo, isAsync),
                 _ => throw new ArgumentException($"Unknown tag method: {methodName}")
             };
 
