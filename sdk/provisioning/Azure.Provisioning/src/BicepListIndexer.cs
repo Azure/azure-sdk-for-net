@@ -36,7 +36,7 @@ internal class BicepListIndexer<T> : BicepValue<T>
     {
         if (_kind == BicepValueKind.Unset)
         {
-            throw new ArgumentOutOfRangeException($"Index '{Index}' is out of range on {_self?.GetReference(false)}.");
+            throw new ArgumentOutOfRangeException(nameof(Index), $"Index '{Index}' is out of range on {_self?.GetReference(false)}.");
         }
         return base.Compile();
     }
