@@ -42,7 +42,6 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Assert.IsNotNull(projectMetadata.CreatedOn);
             Assert.IsNotNull(projectMetadata.LastModifiedOn);
             Assert.IsNotNull(projectMetadata.StorageInputContainerName);
-            //Assert.IsNotNull(projectMetadata.StorageAccountResourceId);
 
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Language: {projectMetadata.Language}");
