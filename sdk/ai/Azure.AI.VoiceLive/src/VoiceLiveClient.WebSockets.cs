@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
+#pragma warning disable AZC0015, AZC0107 // Client methods should return approved types
     public partial class VoiceLiveClient
     {
         /// <summary>
@@ -36,7 +37,7 @@ namespace Azure.AI.VoiceLive
             Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint);
 
             VoiceLiveSession session = new(this, webSocketEndpoint, _keyCredential);
-            
+
             // Wire up events
             session.SendingCommand += OnSendingCommand;
             session.ReceivingMessage += OnReceivingMessage;
@@ -149,4 +150,5 @@ namespace Azure.AI.VoiceLive
             return builder.Uri;
         }
     }
+    #pragma warning restore AZC0015, AZC0107
 }

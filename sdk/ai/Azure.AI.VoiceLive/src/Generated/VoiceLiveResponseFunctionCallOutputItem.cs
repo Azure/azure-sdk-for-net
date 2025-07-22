@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));
 
-            Type = VoiceLive.VoiceLiveItemType?.FunctionCallOutput;
+            Type = VoiceLive.VoiceLiveItemType.FunctionCallOutput;
             CallId = callId;
             Output = output;
         }

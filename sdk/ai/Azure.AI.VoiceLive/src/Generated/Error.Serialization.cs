@@ -13,7 +13,9 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
+#pragma warning disable AZC0012 // Avoid single word type names
     public partial class Error : IUtf8JsonSerializable, IJsonModel<Error>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Error>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -149,7 +151,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
+                    return ModelReaderWriter.Write(this, options, new AzureAIVoiceLiveContext());
                 default:
                     throw new FormatException($"The model {nameof(Error)} does not support writing '{options.Format}' format.");
             }

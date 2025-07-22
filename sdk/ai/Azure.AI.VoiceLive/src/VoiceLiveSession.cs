@@ -245,6 +245,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+#pragma warning disable AZC0107 // Client methods should return approved types
         /// <summary>
         /// Sends raw data to the service.
         /// </summary>
@@ -256,6 +257,7 @@ namespace Azure.AI.VoiceLive
             // ClientWebSocket does not include a synchronous Send()
             SendCommandAsync(data, cancellationToken).EnsureCompleted();
         }
+#pragma warning restore AZC0107
 
         /// <summary>
         /// Receives updates from the service asynchronously.

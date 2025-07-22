@@ -19,14 +19,14 @@ var session = await client.CreateSessionAsync(sessionOptions);
 await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync())
 {
     Console.WriteLine($"Received update: {update.Kind}");
-    
+
     // Handle specific update types
     switch (update)
     {
         case SessionStartedUpdate sessionStarted:
             Console.WriteLine($"Session started: {sessionStarted.SessionId}");
             break;
-            
+
         case OutputDeltaUpdate deltaUpdate:
             if (deltaUpdate.IsTextDelta)
             {
@@ -37,7 +37,7 @@ await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync())
                 ProcessAudioData(deltaUpdate.AudioDelta); // Process audio chunks
             }
             break;
-            
+
         case InputAudioUpdate inputUpdate:
             if (inputUpdate.IsSpeechStarted)
             {
@@ -48,7 +48,7 @@ await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync())
                 Console.WriteLine($"Transcription delta: {inputUpdate.TranscriptionDelta}");
             }
             break;
-            
+
         case ErrorUpdate errorUpdate:
             Console.WriteLine($"Error: {errorUpdate.ErrorMessage}");
             break;
@@ -70,8 +70,8 @@ await foreach (OutputDeltaUpdate delta in session.GetUpdatesAsync<OutputDeltaUpd
 
 // Get updates of specific kinds
 await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync(
-    cancellationToken, 
-    VoiceLiveUpdateKind.ResponseTextDelta, 
+    cancellationToken,
+    VoiceLiveUpdateKind.ResponseTextDelta,
     VoiceLiveUpdateKind.ResponseAudioDelta))
 {
     // Process only text and audio deltas
@@ -95,7 +95,7 @@ foreach (VoiceLiveUpdate update in session.GetUpdates())
 SessionStartedUpdate sessionStarted = await session.WaitForUpdateAsync<SessionStartedUpdate>();
 Console.WriteLine($"Session {sessionStarted.SessionId} is ready");
 
-// Wait for a specific update kind  
+// Wait for a specific update kind
 VoiceLiveUpdate errorUpdate = await session.WaitForUpdateAsync(VoiceLiveUpdateKind.Error);
 
 // Get only delta updates (streaming content)

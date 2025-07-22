@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// Gets or sets the voice configuration for the conversation.
         /// </summary>
         /// <value>
-        /// The voice configuration to use for generating spoken responses. If not specified, 
+        /// The voice configuration to use for generating spoken responses. If not specified,
         /// the service will use a default voice.
         /// </value>
         public BinaryData Voice { get; set; }

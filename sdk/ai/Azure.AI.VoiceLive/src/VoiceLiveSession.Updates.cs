@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
         /// <remarks>
         /// This method provides streaming access to all updates from the service, including session events,
         /// input audio processing updates, response streaming, and error notifications.
-        /// 
+        ///
         /// The method handles WebSocket message fragmentation automatically and ensures that complete
         /// messages are processed before yielding updates.
         /// </remarks>
@@ -144,7 +144,7 @@ namespace Azure.AI.VoiceLive
             {
                 return update;
             }
-            
+
             throw new OperationCanceledException("No update received before cancellation.", cancellationToken);
         }
 
@@ -160,7 +160,7 @@ namespace Azure.AI.VoiceLive
             {
                 return update;
             }
-            
+
             throw new OperationCanceledException("No update received before cancellation.", cancellationToken);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.AI.VoiceLive
                 {
                     update = VoiceLiveUpdate.FromServerEvent(serverEvent);
                 }
-                
+
                 // If that failed, try to deserialize directly as an update
                 if (update == null)
                 {

@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// Gets or sets the transcription model to use.
         /// </summary>
         /// <value>
-        /// The model identifier for transcription processing. If not specified, 
+        /// The model identifier for transcription processing. If not specified,
         /// the service will use a default transcription model.
         /// </value>
         public string Model { get; set; }

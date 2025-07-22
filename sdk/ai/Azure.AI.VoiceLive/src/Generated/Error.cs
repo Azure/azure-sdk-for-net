@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
+#pragma warning disable AZC0012 // Client methods should return approved types
     /// <summary> Error object returned in case of API failure. </summary>
     public partial class Error
     {
@@ -88,4 +89,5 @@ namespace Azure.AI.VoiceLive
         /// <summary> Event id of the error. </summary>
         public string EventId { get; }
     }
+#pragma warning restore AZC0012
 }

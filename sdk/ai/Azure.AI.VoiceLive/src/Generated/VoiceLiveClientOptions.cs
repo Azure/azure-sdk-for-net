@@ -10,7 +10,9 @@ using Azure.Core;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Client options for VoiceLiveClient. </summary>
+#pragma warning disable AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     public partial class VoiceLiveClientOptions : ClientOptions
+#pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
     }
 }

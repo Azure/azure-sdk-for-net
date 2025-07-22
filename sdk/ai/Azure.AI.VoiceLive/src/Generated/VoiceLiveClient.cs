@@ -14,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
+#pragma warning disable AZC0006, AZC0007
     // Data plane generated client.
     /// <summary> The VoiceLive service client. </summary>
     public partial class VoiceLiveClient
@@ -204,4 +205,5 @@ namespace Azure.AI.VoiceLive
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
+#pragma warning restore AZC0006, AZC0007
 }

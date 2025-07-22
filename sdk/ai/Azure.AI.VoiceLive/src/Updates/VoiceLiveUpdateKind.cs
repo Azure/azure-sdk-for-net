@@ -26,108 +26,108 @@ namespace Azure.AI.VoiceLive
         // Session events
         /// <summary>A session was started.</summary>
         public static VoiceLiveUpdateKind SessionStarted { get; } = new VoiceLiveUpdateKind("session.created");
-        
+
         /// <summary>A session was updated/configured.</summary>
         public static VoiceLiveUpdateKind SessionUpdated { get; } = new VoiceLiveUpdateKind("session.updated");
-        
+
         /// <summary>Avatar connection is being established.</summary>
         public static VoiceLiveUpdateKind SessionAvatarConnecting { get; } = new VoiceLiveUpdateKind("session.avatar.connecting");
 
         // Input audio events
         /// <summary>Input audio buffer was committed.</summary>
         public static VoiceLiveUpdateKind InputAudioBufferCommitted { get; } = new VoiceLiveUpdateKind("input_audio_buffer.committed");
-        
+
         /// <summary>Input audio buffer was cleared.</summary>
         public static VoiceLiveUpdateKind InputAudioBufferCleared { get; } = new VoiceLiveUpdateKind("input_audio_buffer.cleared");
-        
+
         /// <summary>Speech started in input audio buffer.</summary>
         public static VoiceLiveUpdateKind InputAudioSpeechStarted { get; } = new VoiceLiveUpdateKind("input_audio_buffer.speech_started");
-        
+
         /// <summary>Speech stopped in input audio buffer.</summary>
         public static VoiceLiveUpdateKind InputAudioSpeechStopped { get; } = new VoiceLiveUpdateKind("input_audio_buffer.speech_stopped");
 
         // Conversation item events
         /// <summary>A conversation item was created.</summary>
         public static VoiceLiveUpdateKind ConversationItemCreated { get; } = new VoiceLiveUpdateKind("conversation.item.created");
-        
+
         /// <summary>A conversation item was retrieved.</summary>
         public static VoiceLiveUpdateKind ConversationItemRetrieved { get; } = new VoiceLiveUpdateKind("conversation.item.retrieved");
-        
+
         /// <summary>A conversation item was truncated.</summary>
         public static VoiceLiveUpdateKind ConversationItemTruncated { get; } = new VoiceLiveUpdateKind("conversation.item.truncated");
-        
+
         /// <summary>A conversation item was deleted.</summary>
         public static VoiceLiveUpdateKind ConversationItemDeleted { get; } = new VoiceLiveUpdateKind("conversation.item.deleted");
 
         // Input audio transcription events
         /// <summary>Input audio transcription completed.</summary>
         public static VoiceLiveUpdateKind InputAudioTranscriptionCompleted { get; } = new VoiceLiveUpdateKind("conversation.item.input_audio_transcription.completed");
-        
+
         /// <summary>Input audio transcription delta.</summary>
         public static VoiceLiveUpdateKind InputAudioTranscriptionDelta { get; } = new VoiceLiveUpdateKind("conversation.item.input_audio_transcription.delta");
-        
+
         /// <summary>Input audio transcription failed.</summary>
         public static VoiceLiveUpdateKind InputAudioTranscriptionFailed { get; } = new VoiceLiveUpdateKind("conversation.item.input_audio_transcription.failed");
 
         // Response events
         /// <summary>A response was created/started.</summary>
         public static VoiceLiveUpdateKind ResponseStarted { get; } = new VoiceLiveUpdateKind("response.created");
-        
+
         /// <summary>A response was completed/done.</summary>
         public static VoiceLiveUpdateKind ResponseCompleted { get; } = new VoiceLiveUpdateKind("response.done");
 
         // Response output item events
         /// <summary>A response output item was added.</summary>
         public static VoiceLiveUpdateKind ResponseOutputItemAdded { get; } = new VoiceLiveUpdateKind("response.output_item.added");
-        
+
         /// <summary>A response output item was completed.</summary>
         public static VoiceLiveUpdateKind ResponseOutputItemDone { get; } = new VoiceLiveUpdateKind("response.output_item.done");
 
         // Response content part events
         /// <summary>A response content part was added.</summary>
         public static VoiceLiveUpdateKind ResponseContentPartAdded { get; } = new VoiceLiveUpdateKind("response.content_part.added");
-        
+
         /// <summary>A response content part was completed.</summary>
         public static VoiceLiveUpdateKind ResponseContentPartDone { get; } = new VoiceLiveUpdateKind("response.content_part.done");
 
         // Response streaming events
         /// <summary>Response text delta (streaming text).</summary>
         public static VoiceLiveUpdateKind ResponseTextDelta { get; } = new VoiceLiveUpdateKind("response.text.delta");
-        
+
         /// <summary>Response text completed.</summary>
         public static VoiceLiveUpdateKind ResponseTextDone { get; } = new VoiceLiveUpdateKind("response.text.done");
-        
+
         /// <summary>Response audio delta (streaming audio).</summary>
         public static VoiceLiveUpdateKind ResponseAudioDelta { get; } = new VoiceLiveUpdateKind("response.audio.delta");
-        
+
         /// <summary>Response audio completed.</summary>
         public static VoiceLiveUpdateKind ResponseAudioDone { get; } = new VoiceLiveUpdateKind("response.audio.done");
-        
+
         /// <summary>Response audio transcript delta (streaming transcript).</summary>
         public static VoiceLiveUpdateKind ResponseAudioTranscriptDelta { get; } = new VoiceLiveUpdateKind("response.audio_transcript.delta");
-        
+
         /// <summary>Response audio transcript completed.</summary>
         public static VoiceLiveUpdateKind ResponseAudioTranscriptDone { get; } = new VoiceLiveUpdateKind("response.audio_transcript.done");
 
         // Animation and visual events
         /// <summary>Response animation blendshapes delta.</summary>
         public static VoiceLiveUpdateKind ResponseAnimationBlendshapesDelta { get; } = new VoiceLiveUpdateKind("response.animation_blendshapes.delta");
-        
+
         /// <summary>Response animation blendshapes completed.</summary>
         public static VoiceLiveUpdateKind ResponseAnimationBlendshapesDone { get; } = new VoiceLiveUpdateKind("response.animation_blendshapes.done");
-        
+
         /// <summary>Response animation viseme delta.</summary>
         public static VoiceLiveUpdateKind ResponseAnimationVisemeDelta { get; } = new VoiceLiveUpdateKind("response.animation_viseme.delta");
-        
+
         /// <summary>Response animation viseme completed.</summary>
         public static VoiceLiveUpdateKind ResponseAnimationVisemeDone { get; } = new VoiceLiveUpdateKind("response.animation_viseme.done");
-        
+
         /// <summary>Response audio timestamp delta.</summary>
         public static VoiceLiveUpdateKind ResponseAudioTimestampDelta { get; } = new VoiceLiveUpdateKind("response.audio_timestamp.delta");
-        
+
         /// <summary>Response audio timestamp completed.</summary>
         public static VoiceLiveUpdateKind ResponseAudioTimestampDone { get; } = new VoiceLiveUpdateKind("response.audio_timestamp.done");
-        
+
         /// <summary>Response emotion hypothesis.</summary>
         public static VoiceLiveUpdateKind ResponseEmotionHypothesis { get; } = new VoiceLiveUpdateKind("response.emotion_hypothesis");
 
