@@ -33,13 +33,18 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static CSharpType UnWrapAsync(this CSharpType type)
+        public static CSharpType UnWrap(this CSharpType type)
         {
-            if (type.IsFrameworkType && type.IsGenericType && type.FrameworkType.GetGenericTypeDefinition() == typeof(Task<>))
+            var currentType = type;
+
+            // Recursively unwrap any generic type with a single type argument
+            // This will find the innermost type regardless of nesting level or specific generic types
+            while (currentType.IsGenericType && currentType.Arguments.Count == 1)
             {
-                return type.Arguments[0];
+                currentType = currentType.Arguments[0];
             }
-            return type;
+
+            return currentType;
         }
     }
 }

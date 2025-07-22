@@ -1087,6 +1087,60 @@ namespace TestProject
             Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
         }
 
+        [Test]
+        public void TwoPartialClassesShouldPass()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    [ModelReaderWriterBuildable(typeof(JsonModel2))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel2 : IJsonModel<JsonModel2>
+    {
+        public JsonModel2 Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel2();
+        public JsonModel2 Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel2();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+            Assert.AreEqual("JsonModel2", result.GenerationSpec.TypeBuilders[1].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+        }
+
 #if NET8_0_OR_GREATER
         [Test]
         public void BuilderForExperimentalPersistableHasSuppression()

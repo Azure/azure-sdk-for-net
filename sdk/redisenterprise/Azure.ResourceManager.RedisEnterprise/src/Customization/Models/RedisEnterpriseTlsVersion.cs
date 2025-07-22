@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// </summary>
     public readonly partial struct RedisEnterpriseTlsVersion : IEquatable<RedisEnterpriseTlsVersion>
     {
-  #pragma warning disable CA1707
+#pragma warning disable CA1707
         /// <summary>
         /// 1.0
         /// Serialized Name: TlsVersion.1.0

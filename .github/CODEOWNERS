@@ -950,10 +950,10 @@
 # AzureSdkOwners:                                                  @ArthurMa1978
 
 # PRLabel: %API Center
-/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @azaslonov
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @ArthurMa1978
 
 # ServiceLabel: %API Center %Mgmt
-# ServiceOwners:                                                   @alexyaang @azaslonov
+# ServiceOwners:                                                   @alexyaang
 
 # PRLabel: %ARM
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
@@ -1103,10 +1103,10 @@
 # ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @thisisdevanshu
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978
 
 # ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @shaktichetan23 @thisisdevanshu
+# ServiceOwners:                                                   @shaktichetan23
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
