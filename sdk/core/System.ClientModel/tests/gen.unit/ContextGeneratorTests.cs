@@ -1205,7 +1205,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                   """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
-            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
+            var result =
+ CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
 
             Assert.IsNotNull(result.GenerationSpec);
 
@@ -1223,6 +1224,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
             Assert.AreEqual("TEST002", result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
         }
-    }
 #endif
+    }
 }
