@@ -209,7 +209,6 @@ namespace Azure.Provisioning.Tests.Expressions
             public BicepList<string> List
             {
                 get { Initialize(); return _list!; }
-                //set { Initialize(); _bicep!.Assign(value); }
             }
 
             private TestProperties? _properties;
