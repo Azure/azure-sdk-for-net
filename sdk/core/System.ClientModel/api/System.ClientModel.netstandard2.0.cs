@@ -438,7 +438,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class UserAgentPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public UserAgentPolicy(System.Reflection.Assembly assembly, string? applicationId = null) { }
+        public UserAgentPolicy(System.Reflection.Assembly callerAssembly, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Reflection.Assembly Assembly { get { throw null; } }
         public static string GenerateUserAgentString(System.Reflection.Assembly clientAssembly, string? applicationId = null) { throw null; }

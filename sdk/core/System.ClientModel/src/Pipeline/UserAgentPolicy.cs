@@ -31,21 +31,21 @@ public class UserAgentPolicy : PipelinePolicy
     public string? ApplicationId { get; }
 
     /// <summary>
-    /// Initialize an instance of <see cref="UserAgentPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
+    /// Initialize an instance of <see cref="UserAgentPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="callerAssembly"/>.
     /// </summary>
-    /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the user agent.</param>
+    /// <param name="callerAssembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the user agent.</param>
     /// <param name="applicationId">An optional value to be prepended to the user agent string.</param>
-    public UserAgentPolicy(Assembly assembly, string? applicationId = null)
+    public UserAgentPolicy(Assembly callerAssembly, string? applicationId = null)
     {
-        Argument.AssertNotNull(assembly, nameof(assembly));
+        Argument.AssertNotNull(callerAssembly, nameof(callerAssembly));
         if (applicationId?.Length > MaxApplicationIdLength)
         {
             throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
         }
 
-        Assembly = assembly;
+        Assembly = callerAssembly;
         ApplicationId = applicationId;
-        _defaultHeader = GenerateUserAgentString(assembly, applicationId);
+        _defaultHeader = GenerateUserAgentString(callerAssembly, applicationId);
     }
 
     /// <summary>
