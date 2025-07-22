@@ -7,12 +7,30 @@ using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IJsonModel<AvailabilitySetData>
     {
+        private AdditionalProperties _json;
+        private bool _isJsonInitialized = false;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ref AdditionalProperties Json
+        {
+            get
+            {
+                if (!_isJsonInitialized)
+                {
+                    _json = new AdditionalProperties(_serializedAdditionalRawData);
+                    _isJsonInitialized = true;
+                }
+                return ref _json;
+            }
+        }
+
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
@@ -84,6 +102,30 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             writer.WriteEndObject();
+
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    if (Json.Contains(Encoding.UTF8.GetBytes(item.Key)))
+                    {
+                        continue;
+                    }
+
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+
+            Json.Write(writer);
+
             writer.WriteEndObject();
         }
 
@@ -107,6 +149,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<IList<WritableSubResource>> virtualMachines = default;
             OptionalProperty<WritableSubResource> proximityPlacementGroup = default;
             OptionalProperty<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -228,8 +271,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses));
+            return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses), rawDataDictionary);
         }
 
         AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)

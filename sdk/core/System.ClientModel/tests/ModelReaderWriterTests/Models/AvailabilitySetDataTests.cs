@@ -75,5 +75,26 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
             Assert.AreEqual(model.Sku.Name, model2.Sku.Name);
         }
+
+        [Test]
+        public void RoundTripWithAdditionalProperty()
+        {
+            var model = ModelReaderWriter.Read<AvailabilitySetData>(BinaryData.FromString(JsonPayload));
+            Assert.IsNotNull(model);
+            model!.Json.Set("foobar"u8, 5);
+            Assert.AreEqual(5, model.Json.GetInt32("foobar"u8));
+            var data = ModelReaderWriter.Write(model);
+            var json = data.ToString();
+            Assert.IsTrue(json.Contains("\"foobar\":5"), $"Did not find \"foobar\":5, json was:\n{json}");
+            var model2 = ModelReaderWriter.Read<AvailabilitySetData>(data);
+            Assert.IsNotNull(model2);
+            Assert.AreEqual(5, model2!.Json.GetInt32("foobar"u8));
+            CompareAvailabilitySetData(model, model2!, "J");
+            var rawData = GetRawData(model2!);
+            //will contain 2 from the TestData and 1 from the additional property we injected
+            Assert.AreEqual(3, rawData.Count);
+            Assert.IsTrue(rawData.ContainsKey("foobar"));
+            Assert.AreEqual(5, rawData["foobar"].ToObjectFromJson<int>());
+        }
     }
 }
