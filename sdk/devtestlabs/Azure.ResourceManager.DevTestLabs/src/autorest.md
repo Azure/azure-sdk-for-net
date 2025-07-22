@@ -195,5 +195,20 @@ rename-mapping:
 
 directive:
   - remove-operation: ProviderOperations_List
-
+  - from: swagger-document
+    where: $.definitions.ArmTemplateInfo.properties.template
+    transform: >
+      $["type"] = "object";
+  - from: swagger-document
+    where: $.definitions.ArmTemplateInfo.properties.parameters
+    transform: >
+      $["type"] = "object";
+  - from: swagger-document
+    where: $.definitions.ParametersValueFileInfo.properties.parametersValueInfo
+    transform: >
+      $["type"] = "object";
+  - from: swagger-document
+    where: $.definitions.ArtifactProperties.properties.parameters
+    transform: >
+      $["type"] = "object";
 ```
