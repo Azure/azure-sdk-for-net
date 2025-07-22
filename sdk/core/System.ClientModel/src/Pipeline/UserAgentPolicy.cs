@@ -81,21 +81,21 @@ public class UserAgentPolicy : PipelinePolicy
     /// <summary>
     /// Generates a user agent string from the provided assembly and optional application ID.
     /// </summary>
-    /// <param name="clientAssembly">The client assembly to extract name and version information from.</param>
+    /// <param name="callerAssembly">The caller assembly to extract name and version information from.</param>
     /// <param name="applicationId">An optional application ID to prepend to the user agent string.</param>
     /// <returns>A formatted user agent string.</returns>
-    public static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
+    public static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId = null)
     {
-        AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+        AssemblyInformationalVersionAttribute? versionAttribute = callerAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
         if (versionAttribute == null)
         {
             throw new InvalidOperationException(
-                $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}'.");
+                $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{callerAssembly.FullName}'.");
         }
 
         string version = versionAttribute.InformationalVersion;
 
-        string assemblyName = clientAssembly.GetName().Name!;
+        string assemblyName = callerAssembly.GetName().Name!;
 
         int hashSeparator = version.IndexOf('+');
         if (hashSeparator != -1)
