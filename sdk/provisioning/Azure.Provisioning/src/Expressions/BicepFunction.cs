@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Provisioning.Resources;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning.Expressions;
 
@@ -317,4 +318,28 @@ public static class BicepFunction
     /// <returns>An interpolated string.</returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
+
+    /// <summary>
+    /// Convert a <see cref="FormattableString"/> with literal text, C# expressions,
+    /// and Bicep expressions into an interpolated Bicep string.
+    /// </summary>
+    /// <param name="formattableString"></param>
+    /// <returns></returns>
+    public static BicepValue<string> Interpolate(FormattableString formattableString)
+    {
+        // TODO -- maybe it makes more sense that we instantiate a bicep string builder here, by adding an overload to accept FormattableString.
+        var handler = new BicepInterpolatedStringHandler();
+        foreach (var (span, isLiteral) in StringExtensions.GetFormattableStringFormatParts(formattableString.Format.AsSpan()))
+        {
+            if (isLiteral)
+            {
+                handler.AppendLiteral(span.ToString());
+            }
+            else
+            {
+                handler.AppendFormatted(span);
+            }
+        }
+        return Interpolate(handler);
+    }
 }

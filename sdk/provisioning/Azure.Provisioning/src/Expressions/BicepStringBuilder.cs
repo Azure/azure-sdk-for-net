@@ -76,8 +76,8 @@ public class BicepStringBuilder
 /// <summary>
 /// Interpolated string handler for building interpolated Bicep string
 /// expressions.  This is an implementation detail for the C# compiler.  Users
-/// should prefer either <see cref="BicepFunction.Interpolate"/> or
-/// <see cref="BicepStringBuilder"/> for constructing interpolated strings.
+/// should prefer either <see cref="BicepFunction.Interpolate(BicepInterpolatedStringHandler)"/>
+/// <see cref="BicepFunction.Interpolate(System.FormattableString)"/> or <see cref="BicepStringBuilder"/> for constructing interpolated strings.
 /// </summary>
 /// <param name="literalLength">Combined length of all literal segments.</param>
 /// <param name="formattedCount">Number of formatted segments.</param>
