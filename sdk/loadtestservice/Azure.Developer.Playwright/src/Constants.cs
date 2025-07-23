@@ -162,6 +162,7 @@ internal class Constants
     internal static readonly string s_playwright_service_expose_network_environment_variable = "PLAYWRIGHT_SERVICE_EXPOSE_NETWORK";
     internal static readonly string s_playwright_service_os_environment_variable = "PLAYWRIGHT_SERVICE_OS";
     internal static readonly string s_playwright_service_run_id_environment_variable = "PLAYWRIGHT_SERVICE_RUN_ID";
+    internal static readonly string s_playwright_service_run_name_environment_variable = "PLAYWRIGHT_SERVICE_RUN_NAME";
 }
 
 internal class OSConstants

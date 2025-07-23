@@ -60,11 +60,45 @@ namespace Azure.Developer.Playwright
             get => _runId ?? _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable) ?? _clientUtility.GetDefaultRunId();
             set
             {
-                _runId = value;
+                if (value != null && value.Length > 200)
+                {
+                    throw new ArgumentException(Constants.s_playwright_service_runId_length_exceeded_error_message);
+                }
+                else
+                {
+                    _runId = value;
+                }
                 // Set run id if not already set in the environment
                 if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable)))
                 {
                     _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable, value);
+                }
+            }
+        }
+
+        private string? _runName;
+
+        /// <summary>
+        /// Gets or sets the run name.
+        /// </summary>
+        public string RunName
+        {
+            get => _runName ?? _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable) ?? _clientUtility.GetDefaultRunName();
+            set
+            {
+                if (value != null && value.Length > 200)
+                {
+                    Console.WriteLine(Constants.s_playwright_service_runName_truncated_warning);
+                    _runName = value.Substring(0, 200);
+                }
+                else
+                {
+                    _runName = value;
+                }
+                // Set run name if not already set in the environment
+                if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable)))
+                {
+                    _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable, _runName);
                 }
             }
         }
