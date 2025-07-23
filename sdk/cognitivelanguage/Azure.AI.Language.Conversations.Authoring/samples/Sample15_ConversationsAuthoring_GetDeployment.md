@@ -13,6 +13,9 @@ ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAut
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
+Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+For details on how to set up AAD authentication, refer to the [Create a client using AAD](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/README.md#create-a-client-using-azure-active-directory-authentication).
+
 ## Get Deployment Information
 
 To retrieve deployment details, call `GetDeployment` on the `ConversationAuthoringDeployment` client. This allows you to access metadata such as the model ID, timestamps, and assigned resource configuration.

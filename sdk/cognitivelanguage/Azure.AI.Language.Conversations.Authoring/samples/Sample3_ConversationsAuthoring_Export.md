@@ -15,6 +15,9 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
+Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+For details on how to set up AAD authentication, refer to the [Create a client using AAD](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/README.md#create-a-client-using-azure-active-directory-authentication).
+
 ## Export a Project
 
 To export a project, call Export on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the export operation.

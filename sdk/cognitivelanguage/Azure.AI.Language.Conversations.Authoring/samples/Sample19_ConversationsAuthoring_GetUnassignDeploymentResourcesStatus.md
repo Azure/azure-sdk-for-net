@@ -4,13 +4,8 @@ This sample demonstrates how to retrieve the status of a previously initiated Un
 
 ## Create a `ConversationAnalysisAuthoringClient` using AAD Authentication
 
-To create a `ConversationAnalysisAuthoringClient`, use the service endpoint of a custom subdomain Language resource and authenticate with `DefaultAzureCredential`.
-
-```C# Snippet:AnalyzeConversationAuthoring_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("{endpoint}");
-DefaultAzureCredential credential = new DefaultAzureCredential();
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
-```
+This operation is supported only via AAD authentication and requires the caller to be assigned the Cognitive Service Language Owner role for this assigned resource.
+For details on how to set up AAD authentication, refer to the [Create a client using AAD](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/README.md#create-a-client-using-azure-active-directory-authentication).
 
 ## Get the Status of an Unassign Deployment Resources Job
 
