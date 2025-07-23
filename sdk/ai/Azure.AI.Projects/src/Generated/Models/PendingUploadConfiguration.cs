@@ -8,22 +8,22 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Represents a request for a pending upload. </summary>
-    public partial class PendingUploadRequest
+    public partial class PendingUploadConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PendingUploadRequest"/>. </summary>
-        public PendingUploadRequest()
+        /// <summary> Initializes a new instance of <see cref="PendingUploadConfiguration"/>. </summary>
+        public PendingUploadConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PendingUploadRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadConfiguration"/>. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PendingUploadRequest(string pendingUploadId, string connectionName, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PendingUploadConfiguration(string pendingUploadId, string connectionName, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PendingUploadId = pendingUploadId;
             ConnectionName = connectionName;

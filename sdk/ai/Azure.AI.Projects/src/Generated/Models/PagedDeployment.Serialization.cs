@@ -39,7 +39,7 @@ namespace Azure.Core.Foundations
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AIDeployment item in Value)
+            foreach (AssetDeployment item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -91,7 +91,7 @@ namespace Azure.Core.Foundations
             {
                 return null;
             }
-            IList<AIDeployment> value = default;
+            IList<AssetDeployment> value = default;
             Uri nextLink = default;
             string clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -99,10 +99,10 @@ namespace Azure.Core.Foundations
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AIDeployment> array = new List<AIDeployment>();
+                    List<AssetDeployment> array = new List<AssetDeployment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AIDeployment.DeserializeAIDeployment(item, options));
+                        array.Add(AssetDeployment.DeserializeAssetDeployment(item, options));
                     }
                     value = array;
                     continue;

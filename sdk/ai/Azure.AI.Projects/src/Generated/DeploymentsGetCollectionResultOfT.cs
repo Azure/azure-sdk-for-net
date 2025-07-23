@@ -10,7 +10,7 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class DeploymentsGetCollectionResultOfT : CollectionResult<AIDeployment>
+    internal partial class DeploymentsGetCollectionResultOfT : CollectionResult<AssetDeployment>
     {
         private readonly Deployments _client;
         private readonly string _modelPublisher;
@@ -75,7 +75,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<AIDeployment> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<AssetDeployment> GetValuesFromPage(ClientResult page)
         {
             return ((PagedDeployment)page).Value;
         }

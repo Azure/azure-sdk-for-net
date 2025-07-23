@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            DatasetIndex index = projectClient.Indexes.CreateOrUpdate(
+            SearchIndex index = projectClient.Indexes.CreateOrUpdate(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -55,17 +55,17 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            DatasetIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
+            SearchIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            foreach (DatasetIndex version in projectClient.Indexes.GetVersions(name: indexName))
+            foreach (SearchIndex version in projectClient.Indexes.GetVersions(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            foreach (DatasetIndex version in projectClient.Indexes.Get())
+            foreach (SearchIndex version in projectClient.Indexes.Get())
             {
                 Console.WriteLine(version);
             }
@@ -105,7 +105,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            DatasetIndex index = await projectClient.Indexes.CreateOrUpdateAsync(
+            SearchIndex index = await projectClient.Indexes.CreateOrUpdateAsync(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -113,17 +113,17 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            DatasetIndex retrievedIndex = await projectClient.Indexes.GetAsync(name: indexName, version: indexVersion);
+            SearchIndex retrievedIndex = await projectClient.Indexes.GetAsync(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            await foreach (DatasetIndex version in projectClient.Indexes.GetVersionsAsync(name: indexName))
+            await foreach (SearchIndex version in projectClient.Indexes.GetVersionsAsync(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            await foreach (DatasetIndex version in projectClient.Indexes.GetAsync())
+            await foreach (SearchIndex version in projectClient.Indexes.GetAsync())
             {
                 Console.WriteLine(version);
             }

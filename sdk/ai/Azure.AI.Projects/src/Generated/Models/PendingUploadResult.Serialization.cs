@@ -10,17 +10,17 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Represents a reference to a blob for consumption. </summary>
-    public partial class AssetCredentialResponse : IJsonModel<AssetCredentialResponse>
+    /// <summary> Represents the response for a pending upload request. </summary>
+    public partial class PendingUploadResult : IJsonModel<PendingUploadResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AssetCredentialResponse"/> for deserialization. </summary>
-        internal AssetCredentialResponse()
+        /// <summary> Initializes a new instance of <see cref="PendingUploadResult"/> for deserialization. </summary>
+        internal PendingUploadResult()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetCredentialResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PendingUploadResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,13 +31,22 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetCredentialResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PendingUploadResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetCredentialResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PendingUploadResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("blobReference"u8);
             writer.WriteObjectValue(BlobReference, options);
+            writer.WritePropertyName("pendingUploadId"u8);
+            writer.WriteStringValue(PendingUploadId);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            writer.WritePropertyName("pendingUploadType"u8);
+            writer.WriteStringValue(PendingUploadType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -57,30 +66,33 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetCredentialResponse IJsonModel<AssetCredentialResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PendingUploadResult IJsonModel<PendingUploadResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetCredentialResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PendingUploadResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetCredentialResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PendingUploadResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetCredentialResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PendingUploadResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetCredentialResponse(document.RootElement, options);
+            return DeserializePendingUploadResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AssetCredentialResponse DeserializeAssetCredentialResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static PendingUploadResult DeserializePendingUploadResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BlobReference blobReference = default;
+            string pendingUploadId = default;
+            string version = default;
+            PendingUploadType pendingUploadType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -89,60 +101,75 @@ namespace Azure.AI.Projects
                     blobReference = BlobReference.DeserializeBlobReference(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("pendingUploadId"u8))
+                {
+                    pendingUploadId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("version"u8))
+                {
+                    version = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("pendingUploadType"u8))
+                {
+                    pendingUploadType = new PendingUploadType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AssetCredentialResponse(blobReference, additionalBinaryDataProperties);
+            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetCredentialResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PendingUploadResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetCredentialResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PendingUploadResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetCredentialResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PendingUploadResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetCredentialResponse IPersistableModel<AssetCredentialResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PendingUploadResult IPersistableModel<PendingUploadResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetCredentialResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PendingUploadResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetCredentialResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PendingUploadResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeAssetCredentialResponse(document.RootElement, options);
+                        return DeserializePendingUploadResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetCredentialResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PendingUploadResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetCredentialResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PendingUploadResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AssetCredentialResponse"/> from. </param>
-        public static explicit operator AssetCredentialResponse(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PendingUploadResult"/> from. </param>
+        public static explicit operator PendingUploadResult(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeAssetCredentialResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePendingUploadResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class DeploymentsGetAsyncCollectionResultOfT : AsyncCollectionResult<AIDeployment>
+    internal partial class DeploymentsGetAsyncCollectionResultOfT : AsyncCollectionResult<AssetDeployment>
     {
         private readonly Deployments _client;
         private readonly string _modelPublisher;
@@ -76,9 +76,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<AIDeployment> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<AssetDeployment> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (AIDeployment item in ((PagedDeployment)page).Value)
+            foreach (AssetDeployment item in ((PagedDeployment)page).Value)
             {
                 yield return item;
                 await Task.Yield();

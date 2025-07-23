@@ -29,7 +29,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.CONNECTIONNAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -62,7 +62,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.CONNECTIONNAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {

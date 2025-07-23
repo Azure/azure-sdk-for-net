@@ -177,10 +177,10 @@ namespace Azure.AI.Projects
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
-        /// <returns> A new <see cref="Projects.PendingUploadRequest"/> instance for mocking. </returns>
-        public static PendingUploadRequest PendingUploadRequest(string pendingUploadId = default, string connectionName = default, PendingUploadType pendingUploadType = default)
+        /// <returns> A new <see cref="Projects.PendingUploadConfiguration"/> instance for mocking. </returns>
+        public static PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = default, string connectionName = default, PendingUploadType pendingUploadType = default)
         {
-            return new PendingUploadRequest(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadConfiguration(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a pending upload request. </summary>
@@ -188,10 +188,10 @@ namespace Azure.AI.Projects
         /// <param name="pendingUploadId"> ID for this upload request. </param>
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
-        /// <returns> A new <see cref="Projects.PendingUploadResponse"/> instance for mocking. </returns>
-        public static PendingUploadResponse PendingUploadResponse(BlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
+        /// <returns> A new <see cref="Projects.PendingUploadResult"/> instance for mocking. </returns>
+        public static PendingUploadResult PendingUploadResult(BlobReference blobReference = default, string pendingUploadId = default, string version = default, PendingUploadType pendingUploadType = default)
         {
-            return new PendingUploadResponse(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
+            return new PendingUploadResult(blobReference, pendingUploadId, version, pendingUploadType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Blob reference details. </summary>
@@ -215,10 +215,10 @@ namespace Azure.AI.Projects
 
         /// <summary> Represents a reference to a blob for consumption. </summary>
         /// <param name="blobReference"> Credential info to access the storage account. </param>
-        /// <returns> A new <see cref="Projects.AssetCredentialResponse"/> instance for mocking. </returns>
-        public static AssetCredentialResponse AssetCredentialResponse(BlobReference blobReference = default)
+        /// <returns> A new <see cref="Projects.DatasetCredential"/> instance for mocking. </returns>
+        public static DatasetCredential DatasetCredential(BlobReference blobReference = default)
         {
-            return new AssetCredentialResponse(blobReference, additionalBinaryDataProperties: null);
+            return new DatasetCredential(blobReference, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -231,12 +231,12 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <returns> A new <see cref="Projects.DatasetIndex"/> instance for mocking. </returns>
-        public static DatasetIndex DatasetIndex(string @type = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Projects.SearchIndex"/> instance for mocking. </returns>
+        public static SearchIndex SearchIndex(string @type = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new UnknownDatasetIndex(
+            return new UnknownSearchIndex(
                 new IndexType(@type),
                 id,
                 name,
@@ -366,10 +366,10 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
-        /// <returns> A new <see cref="Projects.AIDeployment"/> instance for mocking. </returns>
-        public static AIDeployment AIDeployment(string @type = default, string name = default)
+        /// <returns> A new <see cref="Projects.AssetDeployment"/> instance for mocking. </returns>
+        public static AssetDeployment AssetDeployment(string @type = default, string name = default)
         {
-            return new UnknownAIDeployment(new DeploymentType(@type), name, additionalBinaryDataProperties: null);
+            return new UnknownAssetDeployment(new DeploymentType(@type), name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Model Deployment Definition. </summary>

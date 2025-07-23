@@ -26,7 +26,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult<DatasetIndex> CreateOrUpdate(string name, string version, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult<SearchIndex> CreateOrUpdate(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
 
             using PipelineMessage message = CreateCreateOrUpdateRequest(name, version, content, options);
             ClientResult result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            return ClientResult.FromValue((DatasetIndex)result, result.GetRawResponse());
+            return ClientResult.FromValue((SearchIndex)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult<DatasetIndex>> CreateOrUpdateAsync(string name, string version, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult<SearchIndex>> CreateOrUpdateAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -61,7 +61,7 @@ namespace Azure.AI.Projects
 
             using PipelineMessage message = CreateCreateOrUpdateRequest(name, version, content, options);
             ClientResult result =  ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            return ClientResult.FromValue((DatasetIndex)result, result.GetRawResponse());
+            return ClientResult.FromValue((SearchIndex)result, result.GetRawResponse());
         }
     }
 }

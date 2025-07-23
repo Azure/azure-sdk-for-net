@@ -11,20 +11,20 @@ namespace Azure.AI.Projects
     /// Index resource Definition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="CosmosDBIndex"/>.
     /// </summary>
-    public abstract partial class DatasetIndex
+    public abstract partial class SearchIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatasetIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
-        private protected DatasetIndex(IndexType @type)
+        private protected SearchIndex(IndexType @type)
         {
             Type = @type;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
