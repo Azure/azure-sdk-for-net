@@ -1,3 +1,13 @@
+# Project Overview
+
+This repo contains azure SDKs for various Azure services and tools that generates them.
+
+## Folder Structure
+
+- `/eng/packages/http-client-csharp`: Contains the source code of the generator for Azure Data Plane SDKs (aka Azure Generator).
+- `/eng/packages/http-client-csharp-mgmt`: Contains the source code of the generator for Azure Management Plane SDKs (aka Azure Management Generator).
+- `/sdk`: Contains the individual SDKs for Azure services.
+
 ## SDK release
 
 There are two tools to help with SDK releases:
