@@ -18,12 +18,10 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(ArmDisasterRecoveryListResult))]
     [ModelReaderWriterBuildable(typeof(AuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(AvailableCluster))]
-    [ModelReaderWriterBuildable(typeof(AvailableClustersList))]
     [ModelReaderWriterBuildable(typeof(CaptureDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterQuotaConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ConsumerGroupListResult))]
-    [ModelReaderWriterBuildable(typeof(EHNamespaceIdListResult))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(EventHubData))]
@@ -74,14 +72,10 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsSchemaGroupResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsSku))]
     [ModelReaderWriterBuildable(typeof(EventHubsThrottlingPolicy))]
-    [ModelReaderWriterBuildable(typeof(NetworkRuleSetListResult))]
-    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationList))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(RetentionDescription))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownApplicationGroupPolicy))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
     public partial class AzureResourceManagerEventHubsContext : ModelReaderWriterContext
     {
     }

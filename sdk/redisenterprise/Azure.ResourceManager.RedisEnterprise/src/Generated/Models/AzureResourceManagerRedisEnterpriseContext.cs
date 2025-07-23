@@ -17,10 +17,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentData))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentList))]
-    [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentPropertiesUser))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentResource))]
-    [ModelReaderWriterBuildable(typeof(ClusterPropertiesEncryption))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExportRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(FlushRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(ForceLinkContent))]
@@ -50,8 +47,6 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterprisePrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSku))]
-    [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetails))]
-    [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerRedisEnterpriseContext : ModelReaderWriterContext

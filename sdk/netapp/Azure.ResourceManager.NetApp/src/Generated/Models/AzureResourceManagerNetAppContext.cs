@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyMonthlySchedule))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyResource))]
-    [ModelReaderWriterBuildable(typeof(SnapshotPolicyVolumeList))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyWeeklySchedule))]
     [ModelReaderWriterBuildable(typeof(SnapshotsList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaItemList))]
@@ -124,10 +123,7 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
     [ModelReaderWriterBuildable(typeof(VolumeGroupList))]
     [ModelReaderWriterBuildable(typeof(VolumeList))]
-    [ModelReaderWriterBuildable(typeof(VolumePatchPropertiesExportPolicy))]
-    [ModelReaderWriterBuildable(typeof(VolumePropertiesExportPolicy))]
     [ModelReaderWriterBuildable(typeof(VolumeQuotaRulesList))]
-    [ModelReaderWriterBuildable(typeof(VolumeSnapshotProperties))]
     public partial class AzureResourceManagerNetAppContext : ModelReaderWriterContext
     {
     }

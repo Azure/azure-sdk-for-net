@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PlanetaryComputer.Models;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {
@@ -13,6 +15,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogData))]
+    [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogPatch))]
+    [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogProperties))]
+    [ModelReaderWriterBuildable(typeof(PlanetaryComputerGeoCatalogResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPlanetaryComputerContext : ModelReaderWriterContext
     {
     }

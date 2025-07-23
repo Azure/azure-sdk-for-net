@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Consumption
     [ModelReaderWriterBuildable(typeof(BudgetForecastSpend))]
     [ModelReaderWriterBuildable(typeof(BudgetsListResult))]
     [ModelReaderWriterBuildable(typeof(BudgetTimePeriod))]
-    [ModelReaderWriterBuildable(typeof(ChargesListResult))]
     [ModelReaderWriterBuildable(typeof(ConsumptionAggregatedCostResult))]
     [ModelReaderWriterBuildable(typeof(ConsumptionAmount))]
     [ModelReaderWriterBuildable(typeof(ConsumptionAmountWithExchangeRate))]

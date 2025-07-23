@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BackendPoolsSettings))]
     [ModelReaderWriterBuildable(typeof(CustomHttpsConfiguration))]
-    [ModelReaderWriterBuildable(typeof(CustomRuleList))]
     [ModelReaderWriterBuildable(typeof(ExperimentList))]
     [ModelReaderWriterBuildable(typeof(ForwardingConfiguration))]
     [ModelReaderWriterBuildable(typeof(FrontDoorBackend))]
@@ -42,7 +41,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(FrontDoorResourceData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorRulesEngineData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorRulesEngineResource))]
-    [ModelReaderWriterBuildable(typeof(FrontDoorSku))]
     [ModelReaderWriterBuildable(typeof(FrontDoorTimeSeriesDataPoint))]
     [ModelReaderWriterBuildable(typeof(FrontDoorTimeSeriesInfo))]
     [ModelReaderWriterBuildable(typeof(FrontDoorValidateCustomDomainContent))]
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(ManagedRuleSet))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetDefinition))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetDefinitionList))]
-    [ModelReaderWriterBuildable(typeof(ManagedRuleSetList))]
     [ModelReaderWriterBuildable(typeof(PreconfiguredEndpoint))]
     [ModelReaderWriterBuildable(typeof(PreconfiguredEndpointList))]
     [ModelReaderWriterBuildable(typeof(ProfileList))]

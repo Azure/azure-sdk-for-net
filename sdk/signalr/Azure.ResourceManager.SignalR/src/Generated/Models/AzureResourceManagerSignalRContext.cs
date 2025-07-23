@@ -15,11 +15,8 @@ namespace Azure.ResourceManager.SignalR
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ManagedIdentitySettings))]
-    [ModelReaderWriterBuildable(typeof(ServerlessUpstreamSettings))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceType))]
-    [ModelReaderWriterBuildable(typeof(SignalRCorsSettings))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateData))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateResource))]
@@ -46,15 +43,12 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(SignalRResource))]
     [ModelReaderWriterBuildable(typeof(SignalRResourceList))]
     [ModelReaderWriterBuildable(typeof(SignalRResourceLogCategory))]
-    [ModelReaderWriterBuildable(typeof(SignalRResourceLogCategoryListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRResourceSku))]
     [ModelReaderWriterBuildable(typeof(SignalRSharedPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SignalRSharedPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(SignalRSharedPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SignalRSku))]
     [ModelReaderWriterBuildable(typeof(SignalRSkuCapacity))]
-    [ModelReaderWriterBuildable(typeof(SignalRSkuListResult))]
-    [ModelReaderWriterBuildable(typeof(SignalRTlsSettings))]
     [ModelReaderWriterBuildable(typeof(SignalRUpstreamAuthSettings))]
     [ModelReaderWriterBuildable(typeof(SignalRUpstreamTemplate))]
     [ModelReaderWriterBuildable(typeof(SignalRUsage))]

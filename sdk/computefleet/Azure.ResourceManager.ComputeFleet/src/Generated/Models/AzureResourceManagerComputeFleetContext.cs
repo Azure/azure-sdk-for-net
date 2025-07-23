@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ComputeFleet.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet
 {
@@ -13,6 +15,69 @@ namespace Azure.ResourceManager.ComputeFleet
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AdditionalCapabilities))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetApiError))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetApiErrorInfo))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetBootDiagnostics))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetComputeProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetData))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetDiffDiskSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetImageReference))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetInnerError))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetKeyVaultSecretReference))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetLinuxConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetLinuxPatchSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetLinuxVmGuestPatchAutomaticByPlatformSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetOSImageNotificationProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetPatch))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetProxyAgentSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetPublicIPAddressSku))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetResource))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetScheduledEventsProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetSecurityPostureReference))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetSecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetSshPublicKey))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetTerminateNotificationProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetUefiSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVaultCertificate))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVaultSecretGroup))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmAttributeMinMaxDouble))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmAttributeMinMaxInteger))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmAttributes))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmDiskSecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmGalleryApplication))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmGuestPatchSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmSizeProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmSizeProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmss))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssDataDisk))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssExtension))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssExtensionProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssExtensionProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssIPConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssIPConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssIPTag))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssManagedDisk))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssNetworkConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssNetworkConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssOSDisk))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssOSProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssPublicIPAddressConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssPublicIPAddressConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssPublicIPAddressDnsSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetVmssStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings))]
+    [ModelReaderWriterBuildable(typeof(ComputeFleetWinRMListener))]
+    [ModelReaderWriterBuildable(typeof(LocationProfile))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(RegularPriorityProfile))]
+    [ModelReaderWriterBuildable(typeof(SpotPriorityProfile))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
     public partial class AzureResourceManagerComputeFleetContext : ModelReaderWriterContext
     {
     }

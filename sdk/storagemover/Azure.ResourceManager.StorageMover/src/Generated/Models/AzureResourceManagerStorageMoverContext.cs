@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(UnknownCredentials))]
     [ModelReaderWriterBuildable(typeof(UnknownEndpointBaseProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownEndpointBaseUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(UploadLimitSchedule))]
     [ModelReaderWriterBuildable(typeof(UploadLimitWeeklyRecurrence))]
     public partial class AzureResourceManagerStorageMoverContext : ModelReaderWriterContext
     {

@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Orbital
     [ModelReaderWriterBuildable(typeof(AvailableGroundStationListResult))]
     [ModelReaderWriterBuildable(typeof(AvailableGroundStationResource))]
     [ModelReaderWriterBuildable(typeof(ContactProfileListResult))]
-    [ModelReaderWriterBuildable(typeof(ContactProfilesPropertiesNetworkConfiguration))]
     [ModelReaderWriterBuildable(typeof(OrbitalAvailableContact))]
     [ModelReaderWriterBuildable(typeof(OrbitalAvailableContactsContent))]
     [ModelReaderWriterBuildable(typeof(OrbitalAvailableContactsResult))]

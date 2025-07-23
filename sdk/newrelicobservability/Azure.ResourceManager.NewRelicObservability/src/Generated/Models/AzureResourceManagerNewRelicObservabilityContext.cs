@@ -46,7 +46,6 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityFilteringTag))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityLogRules))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityMetricRules))]
-    [ModelReaderWriterBuildable(typeof(NewRelicObservabilityOrganizationInfo))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleData))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(NewRelicObservabilityTagRulePatch))]

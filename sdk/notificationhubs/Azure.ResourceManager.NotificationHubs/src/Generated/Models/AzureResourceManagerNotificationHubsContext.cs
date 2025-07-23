@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.NotificationHubs
     [ModelReaderWriterBuildable(typeof(NotificationHubWnsCredential))]
     [ModelReaderWriterBuildable(typeof(PnsCredentials))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(PublicInternetAuthorizationRule))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SharedAccessAuthorizationRuleProperties))]

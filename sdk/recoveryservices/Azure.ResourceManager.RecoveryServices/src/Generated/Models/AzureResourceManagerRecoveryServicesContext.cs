@@ -15,17 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AzureMonitorAlertSettings))]
-    [ModelReaderWriterBuildable(typeof(CapabilitiesProperties))]
     [ModelReaderWriterBuildable(typeof(CapabilitiesResult))]
-    [ModelReaderWriterBuildable(typeof(CapabilitiesResultProperties))]
-    [ModelReaderWriterBuildable(typeof(ClassicAlertSettings))]
     [ModelReaderWriterBuildable(typeof(CmkKekIdentity))]
-    [ModelReaderWriterBuildable(typeof(CmkKeyVaultProperties))]
-    [ModelReaderWriterBuildable(typeof(CrossSubscriptionRestoreSettings))]
     [ModelReaderWriterBuildable(typeof(DnsZone))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResult))]
-    [ModelReaderWriterBuildable(typeof(ImmutabilitySettings))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(RawCertificateData))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesCertificateContent))]
@@ -54,7 +47,6 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAadDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAcsDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateDetails))]
-    [ModelReaderWriterBuildable(typeof(RestoreSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceCertificateDetails))]
     [ModelReaderWriterBuildable(typeof(VaultCertificateResult))]

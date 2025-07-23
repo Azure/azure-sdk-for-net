@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(MigrationConfigurationData))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(NetworkRuleSetListResult))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(RuleListResult))]
     [ModelReaderWriterBuildable(typeof(SBAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SBNamespaceListResult))]
@@ -68,7 +67,6 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
     public partial class AzureResourceManagerServiceBusContext : ModelReaderWriterContext
     {
     }

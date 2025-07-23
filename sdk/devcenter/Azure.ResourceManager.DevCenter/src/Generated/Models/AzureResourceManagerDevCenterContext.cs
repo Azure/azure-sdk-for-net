@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.DevCenter
     [ModelReaderWriterBuildable(typeof(ProjectAttachedNetworkConnectionResource))]
     [ModelReaderWriterBuildable(typeof(ProjectDevBoxDefinitionResource))]
     [ModelReaderWriterBuildable(typeof(ProjectEnvironmentTypeListResult))]
-    [ModelReaderWriterBuildable(typeof(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
     [ModelReaderWriterBuildable(typeof(RecommendedMachineConfiguration))]
     [ModelReaderWriterBuildable(typeof(ScheduleListResult))]

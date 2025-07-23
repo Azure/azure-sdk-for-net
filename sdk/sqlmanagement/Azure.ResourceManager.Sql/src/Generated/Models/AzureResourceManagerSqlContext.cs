@@ -109,7 +109,6 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ImportExportOperationResult))]
     [ModelReaderWriterBuildable(typeof(InstanceFailoverGroupData))]
     [ModelReaderWriterBuildable(typeof(InstanceFailoverGroupListResult))]
-    [ModelReaderWriterBuildable(typeof(InstanceFailoverGroupReadOnlyEndpoint))]
     [ModelReaderWriterBuildable(typeof(InstanceFailoverGroupReadWriteEndpoint))]
     [ModelReaderWriterBuildable(typeof(InstanceFailoverGroupResource))]
     [ModelReaderWriterBuildable(typeof(InstancePoolData))]

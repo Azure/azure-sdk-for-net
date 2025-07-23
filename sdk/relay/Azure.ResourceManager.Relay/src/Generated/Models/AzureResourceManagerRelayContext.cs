@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionListResult))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(RelayAccessKeys))]
     [ModelReaderWriterBuildable(typeof(RelayAuthorizationRuleData))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionAuthorizationRuleResource))]

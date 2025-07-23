@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Grafana.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -13,6 +15,39 @@ namespace Azure.ResourceManager.Grafana
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EnterpriseConfigurations))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseDetails))]
+    [ModelReaderWriterBuildable(typeof(GrafanaAvailablePlugin))]
+    [ModelReaderWriterBuildable(typeof(GrafanaConfigurations))]
+    [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricData))]
+    [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricPatch))]
+    [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricProperties))]
+    [ModelReaderWriterBuildable(typeof(GrafanaIntegrationFabricResource))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPlugin))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(GrafanaPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(GrafanaSmtpSettings))]
+    [ModelReaderWriterBuildable(typeof(GrafanaUserSettings))]
+    [ModelReaderWriterBuildable(typeof(ManagedDashboardData))]
+    [ModelReaderWriterBuildable(typeof(ManagedDashboardPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedDashboardResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedGrafanaData))]
+    [ModelReaderWriterBuildable(typeof(ManagedGrafanaPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedGrafanaPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedGrafanaProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedGrafanaResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelData))]
+    [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelResource))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceTrialQuota))]
+    [ModelReaderWriterBuildable(typeof(MonitorWorkspaceIntegration))]
+    [ModelReaderWriterBuildable(typeof(SaasSubscriptionDetails))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionTerm))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerGrafanaContext : ModelReaderWriterContext
     {
     }

@@ -42,11 +42,9 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(EdgeOrderResource))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderShippingAddress))]
     [ModelReaderWriterBuildable(typeof(EdgeOrderStageDetails))]
-    [ModelReaderWriterBuildable(typeof(EncryptionPreferences))]
     [ModelReaderWriterBuildable(typeof(FilterableProperty))]
     [ModelReaderWriterBuildable(typeof(ForwardShippingDetails))]
     [ModelReaderWriterBuildable(typeof(HierarchyInformation))]
-    [ModelReaderWriterBuildable(typeof(ManagementResourcePreferences))]
     [ModelReaderWriterBuildable(typeof(NotificationPreference))]
     [ModelReaderWriterBuildable(typeof(OrderItemPreferences))]
     [ModelReaderWriterBuildable(typeof(OrderItemResourceList))]
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(ResourceProviderDetails))]
     [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TransportPreferences))]
     [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
     public partial class AzureResourceManagerEdgeOrderContext : ModelReaderWriterContext
     {

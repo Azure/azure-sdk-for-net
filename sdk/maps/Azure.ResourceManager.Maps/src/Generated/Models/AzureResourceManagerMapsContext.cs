@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Maps
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CorsRules))]
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(MapsAccountData))]

@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkResource))]
-    [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(StorageSyncPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(StorageSyncRegisteredServerCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(StorageSyncRegisteredServerData))]

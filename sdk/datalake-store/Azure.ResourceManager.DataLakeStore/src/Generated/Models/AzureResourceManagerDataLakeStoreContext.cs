@@ -51,8 +51,6 @@ namespace Azure.ResourceManager.DataLakeStore
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(TrustedIdProviderForDataLakeStoreAccountUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(UpdateEncryptionConfig))]
-    [ModelReaderWriterBuildable(typeof(UpdateKeyVaultMetaInfo))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent))]
     public partial class AzureResourceManagerDataLakeStoreContext : ModelReaderWriterContext

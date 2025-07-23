@@ -143,7 +143,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(BillingPropertyResource))]
     [ModelReaderWriterBuildable(typeof(BillingPurchaseProperties))]
     [ModelReaderWriterBuildable(typeof(BillingRegistrationNumber))]
-    [ModelReaderWriterBuildable(typeof(BillingRenewProperties))]
     [ModelReaderWriterBuildable(typeof(BillingRequestCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(BillingRequestData))]
     [ModelReaderWriterBuildable(typeof(BillingRequestListResult))]
@@ -166,7 +165,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(BillingSavingsPlanModelPatch))]
     [ModelReaderWriterBuildable(typeof(BillingSavingsPlanModelResource))]
     [ModelReaderWriterBuildable(typeof(BillingSku))]
-    [ModelReaderWriterBuildable(typeof(BillingSkuName))]
     [ModelReaderWriterBuildable(typeof(BillingSubscriptionAliasCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(BillingSubscriptionAliasData))]
     [ModelReaderWriterBuildable(typeof(BillingSubscriptionAliasListResult))]
@@ -206,7 +204,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(DetailedTransferStatus))]
     [ModelReaderWriterBuildable(typeof(EnrollmentAccountListResult))]
     [ModelReaderWriterBuildable(typeof(EnterpriseAgreementPolicies))]
-    [ModelReaderWriterBuildable(typeof(ExtendedStatusDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ExtendedStatusInfo))]
     [ModelReaderWriterBuildable(typeof(IndirectRelationshipInfo))]
     [ModelReaderWriterBuildable(typeof(InvoiceDocument))]
@@ -217,7 +214,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(MoveProductContent))]
     [ModelReaderWriterBuildable(typeof(MoveProductEligibilityResult))]
     [ModelReaderWriterBuildable(typeof(MoveProductErrorDetails))]
-    [ModelReaderWriterBuildable(typeof(NextBillingCycleDetails))]
     [ModelReaderWriterBuildable(typeof(PartnerTransferDetailCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(PartnerTransferDetailData))]
     [ModelReaderWriterBuildable(typeof(PartnerTransferDetailResource))]
@@ -244,7 +240,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(ReservationPaymentDetail))]
     [ModelReaderWriterBuildable(typeof(ReservationPurchaseRequest))]
     [ModelReaderWriterBuildable(typeof(ReservationRenewProperties))]
-    [ModelReaderWriterBuildable(typeof(ReservationSkuProperty))]
     [ModelReaderWriterBuildable(typeof(ReservationsListResult))]
     [ModelReaderWriterBuildable(typeof(ReservationSplitProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationSummary))]
@@ -273,7 +268,6 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransactionListResult))]
     [ModelReaderWriterBuildable(typeof(TransferDetailsListResult))]
-    [ModelReaderWriterBuildable(typeof(ValidateTransferListResponse))]
     public partial class AzureResourceManagerBillingContext : ModelReaderWriterContext
     {
     }

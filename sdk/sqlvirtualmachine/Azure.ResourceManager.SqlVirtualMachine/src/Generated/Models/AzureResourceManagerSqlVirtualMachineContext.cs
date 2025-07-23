@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AdditionalFeaturesServerConfigurations))]
-    [ModelReaderWriterBuildable(typeof(AvailabilityGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerData))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerListResult))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerLoadBalancerConfiguration))]
@@ -44,7 +42,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     [ModelReaderWriterBuildable(typeof(SqlVmPatch))]
     [ModelReaderWriterBuildable(typeof(SqlVmResource))]
     [ModelReaderWriterBuildable(typeof(SqlVmStorageConfigurationSettings))]
-    [ModelReaderWriterBuildable(typeof(SqlWorkloadTypeUpdateSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainCredentials))]
     [ModelReaderWriterBuildable(typeof(WindowsServerFailoverClusterDomainProfile))]

@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.GuestConfiguration
     [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReport))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportDetails))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportInfo))]
-    [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportList))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationAssignmentReportProperties))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationHcrpAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationInfo))]

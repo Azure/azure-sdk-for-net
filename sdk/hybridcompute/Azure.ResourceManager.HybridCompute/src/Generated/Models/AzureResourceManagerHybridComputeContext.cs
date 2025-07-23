@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(ExtensionValueListResult))]
     [ModelReaderWriterBuildable(typeof(GatewaysListResult))]
     [ModelReaderWriterBuildable(typeof(HybridComputeAccessRule))]
-    [ModelReaderWriterBuildable(typeof(HybridComputeCloudMetadata))]
     [ModelReaderWriterBuildable(typeof(HybridComputeConfigurationExtension))]
     [ModelReaderWriterBuildable(typeof(HybridComputeConnectionDetail))]
     [ModelReaderWriterBuildable(typeof(HybridComputeDisk))]
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(HybridComputeResourceUpdate))]
     [ModelReaderWriterBuildable(typeof(HybridComputeServiceStatus))]
     [ModelReaderWriterBuildable(typeof(HybridComputeServiceStatuses))]
-    [ModelReaderWriterBuildable(typeof(HybridComputeSubnet))]
     [ModelReaderWriterBuildable(typeof(HybridComputeWindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(HybridComputeWindowsParameters))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileArmEsuPropertiesWithoutAssignedLicense))]
@@ -111,7 +109,6 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(PrivateLinkScopeValidationDetails))]
     [ModelReaderWriterBuildable(typeof(RunCommandInputParameter))]
     [ModelReaderWriterBuildable(typeof(RunCommandManagedIdentity))]
-    [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VolumeLicenseDetails))]
     public partial class AzureResourceManagerHybridComputeContext : ModelReaderWriterContext

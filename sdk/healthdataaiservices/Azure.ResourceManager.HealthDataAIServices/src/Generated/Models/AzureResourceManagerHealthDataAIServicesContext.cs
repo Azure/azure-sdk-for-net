@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.HealthDataAIServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices
 {
@@ -13,6 +15,18 @@ namespace Azure.ResourceManager.HealthDataAIServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DeidServiceData))]
+    [ModelReaderWriterBuildable(typeof(DeidServicePatch))]
+    [ModelReaderWriterBuildable(typeof(DeidServiceProperties))]
+    [ModelReaderWriterBuildable(typeof(DeidServiceResource))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnection))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnectionResourceData))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHealthDataAIServicesContext : ModelReaderWriterContext
     {
     }
