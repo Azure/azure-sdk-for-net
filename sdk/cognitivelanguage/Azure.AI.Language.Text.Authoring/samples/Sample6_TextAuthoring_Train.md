@@ -1,4 +1,4 @@
-# Training a Project Synchronously in Azure AI Language
+# Training a Project in Azure AI Language
 
 This sample demonstrates how to train a project synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -48,3 +48,36 @@ Console.WriteLine($"Training completed with status: {operation.GetRawResponse().
 ```
 
 To train a project, the Train method sends a request with the necessary training job configuration. The method returns an Operation<TrainingJobResult> object indicating the training status.
+
+## Train a Project Asynchronously
+
+To train a project, call TrainAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample6_TextAuthoring_TrainAsync
+string projectName = "{projectName}";
+TextAuthoringProject projectClient = client.GetProject(projectName);
+
+var trainingJobConfig = new TextAuthoringTrainingJobDetails(
+    modelLabel: "{modelLabel}",
+    trainingConfigVersion: "latest"
+)
+{
+    EvaluationOptions = new TextAuthoringEvaluationDetails
+    {
+        Kind = TextAuthoringEvaluationKind.Percentage,
+        TestingSplitPercentage = 20,
+        TrainingSplitPercentage = 80
+    }
+};
+
+Operation<TextAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+    waitUntil: WaitUntil.Completed,
+    details: trainingJobConfig
+);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
+```
+
+To train a project, the TrainAsync method sends a request with the necessary training job configuration. The method returns an Operation<TrainingJobResult> object indicating the training status.

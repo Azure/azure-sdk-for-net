@@ -41,5 +41,34 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(201, response.Status, "Expected the status to indicate project creation success.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CreateProjectAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample1_TextAuthoring_CreateProjectAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+            var projectData = new TextAuthoringCreateProjectDetails(
+                projectKind: "{projectKind}",
+                storageInputContainerName: "{storageInputContainerName}",
+                language: "{language}"
+            )
+            {
+                Description = "Project description for a Custom Entity Recognition project",
+                Multilingual = true
+            };
+
+            Response response = await projectClient.CreateProjectAsync(projectData);
+
+            Console.WriteLine($"Project created with status: {response.Status}");
+            #endregion
+
+            Assert.AreEqual(201, response.Status, "Expected the status to indicate project creation success.");
+        }
     }
 }

@@ -1,4 +1,4 @@
-# Retrieving Deployment Details Synchronously in Azure AI Language
+# Retrieving Deployment Details in Azure AI Language
 
 This sample demonstrates how to retrieve deployment details synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -26,6 +26,27 @@ string deploymentName = "{deploymentName}";
 TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 Response<TextAuthoringProjectDeployment> response = deploymentClient.GetDeployment();
+
+TextAuthoringProjectDeployment deployment = response.Value;
+
+Console.WriteLine($"Deployment Name: {deployment.DeploymentName}");
+Console.WriteLine($"Model Id: {deployment.ModelId}");
+Console.WriteLine($"Last Trained On: {deployment.LastTrainedOn}");
+Console.WriteLine($"Last Deployed On: {deployment.LastDeployedOn}");
+Console.WriteLine($"Deployment Expired On: {deployment.DeploymentExpiredOn}");
+Console.WriteLine($"Model Training Config Version: {deployment.ModelTrainingConfigVersion}");
+```
+
+## Retrieve Deployment Details Asynchronously
+
+To retrieve deployment details, call `GetDeploymentAsync` on the `TextAuthoringDeployment` client. The method returns a `Response<TextAuthoringProjectDeployment>` containing the deployment details.
+
+```C# Snippet:Sample15_TextAuthoring_GetDeploymentAsync
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
+TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+Response<TextAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
 
 TextAuthoringProjectDeployment deployment = response.Value;
 

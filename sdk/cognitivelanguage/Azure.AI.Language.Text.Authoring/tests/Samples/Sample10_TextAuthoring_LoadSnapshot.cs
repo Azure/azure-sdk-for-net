@@ -37,5 +37,30 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful snapshot loading.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task LoadSnapshotAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample10_TextAuthoring_LoadSnapshotAsync
+            string projectName = "{projectName}";
+            string trainedModelLabel = "{modelLabel}"; // Replace with your actual model label.
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(
+                waitUntil: WaitUntil.Completed
+            );
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Snapshot loading completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful snapshot loading.");
+        }
     }
 }

@@ -42,5 +42,36 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful swap.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task SwapDeploymentsAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample12_TextAuthoring_SwapDeploymentsAsync
+            string projectName = "{projectName}";
+            string firstDeploymentName = "{deploymentName1}";
+            string secondDeploymentName = "{deploymentName2}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            var swapDetails = new TextAuthoringSwapDeploymentsDetails
+            (
+                firstDeploymentName: firstDeploymentName,
+                secondDeploymentName: secondDeploymentName
+                );
+
+            Operation operation = await projectClient.SwapDeploymentsAsync(
+                waitUntil: WaitUntil.Completed,
+                details: swapDetails
+            );
+
+            Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful swap.");
+        }
     }
 }

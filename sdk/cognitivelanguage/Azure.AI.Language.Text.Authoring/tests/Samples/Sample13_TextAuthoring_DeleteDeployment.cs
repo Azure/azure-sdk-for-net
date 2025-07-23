@@ -35,5 +35,28 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(204, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task DeleteDeploymentAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample13_TextAuthoring_DeleteDeploymentAsync
+            string projectName = "{projectName}";
+            string deploymentName = "{deploymentName}";
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            Operation operation = await deploymentClient.DeleteDeploymentAsync(
+                waitUntil: WaitUntil.Completed
+            );
+
+            Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(204, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
+        }
     }
 }

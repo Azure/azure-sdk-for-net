@@ -1,4 +1,4 @@
-# Retrieving Project Metadata Synchronously in Azure AI Language
+# Retrieving Project Metadata in Azure AI Language
 This sample demonstrates how to retrieve metadata of a project synchronously using the Azure.AI.Language.Text.Authoring SDK.
 
 ## Create a TextAnalysisAuthoringClient
@@ -33,3 +33,23 @@ Console.WriteLine($"Description: {projectMetadata.Description}");
 ```
 
 To retrieve project metadata synchronously, call GetProject on the TextAnalysisAuthoring client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
+
+## Retrieve Project Metadata Asynchronously
+
+To retrieve metadata of a project, call GetProjectAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample4_TextAuthoring_GetProjectAsync
+string projectName = "{projectName}";
+TextAuthoringProject projectClient = client.GetProject(projectName);
+
+Response<TextAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
+TextAuthoringProjectMetadata projectMetadata = response.Value;
+
+Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
+Console.WriteLine($"Language: {projectMetadata.Language}");
+Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
+Console.WriteLine($"Description: {projectMetadata.Description}");
+```
+
+To retrieve project metadata asynchronously, call GetProjectAsync on the TextAnalysisAuthoring client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.

@@ -39,5 +39,32 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful cancellation.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task CancelTrainingJobAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample7_TextAuthoring_CancelTrainingJobAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            string jobId = "{jobId}"; // Replace with an actual job ID.
+
+            Operation<TextAuthoringTrainingJobResult> operation = await projectClient.CancelTrainingJobAsync(
+                waitUntil: WaitUntil.Completed,
+                jobId: jobId
+            );
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Training job cancellation completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful cancellation.");
+        }
     }
 }

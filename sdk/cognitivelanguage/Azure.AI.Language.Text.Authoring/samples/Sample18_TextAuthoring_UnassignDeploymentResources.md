@@ -1,4 +1,4 @@
-# Unassigning Deployment Resources Synchronously in Azure AI Language
+# Unassigning Deployment Resources in Azure AI Language
 
 This sample demonstrates how to unassign deployment resources synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -19,11 +19,34 @@ TextAuthoringProject projectClient = client.GetProject(projectName);
 var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(
     new List<string>
     {
-        "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account"
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
     }
 );
 
 Operation operation = projectClient.UnassignDeploymentResources(
+    waitUntil: WaitUntil.Completed,
+    details: unassignDetails
+);
+
+Console.WriteLine($"Unassign operation completed with status: {operation.GetRawResponse().Status}");
+```
+
+## Unassign Deployment Resources Asynchronously
+
+To unassign deployment resources, call `UnassignDeploymentResourcesAsync` on the `TextAuthoringProject` client. The method returns an `Operation` object containing the unassignment status.
+
+```C# Snippet:Sample18_TextAuthoring_UnassignDeploymentResourcesAsync
+string projectName = "{projectName}";
+TextAuthoringProject projectClient = client.GetProject(projectName);
+
+var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(
+    new List<string>
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    }
+);
+
+Operation operation = await projectClient.UnassignDeploymentResourcesAsync(
     waitUntil: WaitUntil.Completed,
     details: unassignDetails
 );

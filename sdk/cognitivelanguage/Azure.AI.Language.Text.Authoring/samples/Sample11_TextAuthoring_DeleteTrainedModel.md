@@ -1,4 +1,4 @@
-# Deleting a Trained Model Synchronously in Azure AI Language
+# Deleting a Trained Model in Azure AI Language
 
 This sample demonstrates how to delete a trained model synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -31,3 +31,19 @@ Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
 ```
 
 To delete a trained model, the DeleteTrainedModel method sends a request with the project name and the model label. The method returns a Response object indicating the deletion status.
+
+## Delete a Trained Model Asynchronously
+
+To delete a trained model, call DeleteTrainedModelAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample11_TextAuthoring_DeleteTrainedModelAsync
+string projectName = "{projectName}";
+string trainedModelLabel = "{modelLabel}";
+TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+Response response = await trainedModelClient.DeleteTrainedModelAsync();
+
+Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
+```
+
+To delete a trained model, the DeleteTrainedModelAsync method sends a request with the project name and the model label. The method returns a Response object indicating the deletion status.

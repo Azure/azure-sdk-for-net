@@ -1,4 +1,4 @@
-# Swapping Deployments Synchronously in Azure AI Language
+# Swapping Deployments in Azure AI Language
 
 This sample demonstrates how to swap deployments synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -40,3 +40,29 @@ Console.WriteLine($"Swap operation completed with status: {operation.GetRawRespo
 ```
 
 To swap deployments, the SwapDeployments method sends a request with the project name and the deployment swap configuration. The method returns an Operation object indicating the swap status.
+
+## Swap Deployments Asynchronously
+
+To swap deployments, call SwapDeploymentsAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample12_TextAuthoring_SwapDeploymentsAsync
+string projectName = "{projectName}";
+string firstDeploymentName = "{deploymentName1}";
+string secondDeploymentName = "{deploymentName2}";
+TextAuthoringProject projectClient = client.GetProject(projectName);
+
+var swapDetails = new TextAuthoringSwapDeploymentsDetails
+(
+    firstDeploymentName: firstDeploymentName,
+    secondDeploymentName: secondDeploymentName
+    );
+
+Operation operation = await projectClient.SwapDeploymentsAsync(
+    waitUntil: WaitUntil.Completed,
+    details: swapDetails
+);
+
+Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
+```
+
+To swap deployments, the SwapDeploymentsAsync method sends a request with the project name and the deployment swap configuration. The method returns an Operation object indicating the swap status.

@@ -44,5 +44,36 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Deployment resources assigned with status: {operation.GetRawResponse().Status}");
             #endregion
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task AssignDeploymentResourcesAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample16_TextAuthoring_AssignDeploymentResourcesAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            var resourceMetadata = new TextAuthoringResourceMetadata(
+                azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
+                customDomain: "{customDomain}",
+                region: "{Region}"
+            );
+
+            var assignDetails = new TextAuthoringAssignDeploymentResourcesDetails(
+                new List<TextAuthoringResourceMetadata> { resourceMetadata }
+            );
+
+            Operation operation = await projectClient.AssignDeploymentResourcesAsync(
+                waitUntil: WaitUntil.Completed,
+                details: assignDetails
+            );
+
+            Console.WriteLine($"Deployment resources assigned with status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
     }
 }

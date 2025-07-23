@@ -1,4 +1,4 @@
-# Loading a Snapshot Synchronously in Azure AI Language
+# Loading a Snapshot in Azure AI Language
 
 This sample demonstrates how to load a snapshot synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -35,3 +35,23 @@ Console.WriteLine($"Snapshot loading completed with status: {operation.GetRawRes
 ```
 
 To load a snapshot, the LoadSnapshot method sends a request with the project name and trained model label. The method returns an Operation object indicating the status of the snapshot loading.
+
+## Load a Snapshot Asynchronously
+
+To load a snapshot, call LoadSnapshotAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample10_TextAuthoring_LoadSnapshotAsync
+string projectName = "{projectName}";
+string trainedModelLabel = "{modelLabel}"; // Replace with your actual model label.
+TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+Operation operation = await trainedModelClient.LoadSnapshotAsync(
+    waitUntil: WaitUntil.Completed
+);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+Console.WriteLine($"Snapshot loading completed with status: {operation.GetRawResponse().Status}");
+```
+
+To load a snapshot, the LoadSnapshotAsync method sends a request with the project name and trained model label. The method returns an Operation object indicating the status of the snapshot loading.

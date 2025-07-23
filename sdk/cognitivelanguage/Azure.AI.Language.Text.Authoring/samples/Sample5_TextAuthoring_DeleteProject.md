@@ -1,4 +1,4 @@
-# Deleting a Project Synchronously in Azure AI Language
+# Deleting a Project in Azure AI Language
 
 This sample demonstrates how to delete a project synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -34,3 +34,22 @@ Console.WriteLine($"Project deletion completed with status: {operation.GetRawRes
 ```
 
 To delete a project, the DeleteProject method sends a request with the project name. The method returns an Operation object indicating the deletion status.
+
+## Delete a Project Asynchronously
+
+To delete a project, call DeleteProjectAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample5_TextAuthoring_DeleteProjectAsync
+string projectName = "{projectName}";
+TextAuthoringProject projectClient = client.GetProject(projectName);
+
+Operation operation = await projectClient.DeleteProjectAsync(
+    waitUntil: WaitUntil.Completed
+);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+Console.WriteLine($"Project deletion completed with status: {operation.GetRawResponse().Status}");
+```
+
+To delete a project, the DeleteProjectAsync method sends a request with the project name. The method returns an Operation object indicating the deletion status.

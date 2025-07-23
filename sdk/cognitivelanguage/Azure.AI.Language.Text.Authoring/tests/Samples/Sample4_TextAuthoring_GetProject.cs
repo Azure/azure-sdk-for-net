@@ -35,5 +35,28 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Description: {projectMetadata.Description}");
             #endregion
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetProjectAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample4_TextAuthoring_GetProjectAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            Response<TextAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
+            TextAuthoringProjectMetadata projectMetadata = response.Value;
+
+            Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
+            Console.WriteLine($"Language: {projectMetadata.Language}");
+            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
+            Console.WriteLine($"Description: {projectMetadata.Description}");
+            #endregion
+        }
     }
 }

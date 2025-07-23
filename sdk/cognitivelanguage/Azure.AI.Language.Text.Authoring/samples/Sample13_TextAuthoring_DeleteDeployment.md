@@ -1,4 +1,4 @@
-# Deleting a Deployment Synchronously in Azure AI Language
+# Deleting a Deployment in Azure AI Language
 
 This sample demonstrates how to delete a deployment synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -33,3 +33,21 @@ Console.WriteLine($"Deployment deletion completed with status: {operation.GetRaw
 ```
 
 To delete a deployment, the DeleteDeployment method sends a request with the project name and deployment name. The method returns an Operation object indicating the deletion status.
+
+## Delete a Deployment Asynchronously
+
+To delete a deployment, call DeleteDeploymentAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample13_TextAuthoring_DeleteDeploymentAsync
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
+TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+Operation operation = await deploymentClient.DeleteDeploymentAsync(
+    waitUntil: WaitUntil.Completed
+);
+
+Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
+```
+
+To delete a deployment, the DeleteDeploymentAsync method sends a request with the project name and deployment name. The method returns an Operation object indicating the deletion status.

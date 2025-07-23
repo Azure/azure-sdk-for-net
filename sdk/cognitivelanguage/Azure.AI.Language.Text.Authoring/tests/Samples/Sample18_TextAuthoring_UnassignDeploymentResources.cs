@@ -29,11 +29,41 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(
                 new List<string>
                 {
-                    "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account"
+                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
                 }
             );
 
             Operation operation = projectClient.UnassignDeploymentResources(
+                waitUntil: WaitUntil.Completed,
+                details: unassignDetails
+            );
+
+            Console.WriteLine($"Unassign operation completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful unassignment of deployment resources.");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task UnassignDeploymentResourcesAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample18_TextAuthoring_UnassignDeploymentResourcesAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(
+                new List<string>
+                {
+                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                }
+            );
+
+            Operation operation = await projectClient.UnassignDeploymentResourcesAsync(
                 waitUntil: WaitUntil.Completed,
                 details: unassignDetails
             );

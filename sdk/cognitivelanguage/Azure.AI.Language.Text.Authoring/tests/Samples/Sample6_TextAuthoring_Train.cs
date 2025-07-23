@@ -50,5 +50,43 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task TrainAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample6_TextAuthoring_TrainAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            var trainingJobConfig = new TextAuthoringTrainingJobDetails(
+                modelLabel: "{modelLabel}",
+                trainingConfigVersion: "latest"
+            )
+            {
+                EvaluationOptions = new TextAuthoringEvaluationDetails
+                {
+                    Kind = TextAuthoringEvaluationKind.Percentage,
+                    TestingSplitPercentage = 20,
+                    TrainingSplitPercentage = 80
+                }
+            };
+
+            Operation<TextAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+                waitUntil: WaitUntil.Completed,
+                details: trainingJobConfig
+            );
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
+        }
     }
 }

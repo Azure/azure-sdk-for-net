@@ -38,5 +38,30 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task ExportAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample3_TextAuthoring_ExportAsync
+            string projectName = "{projectName}";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
+
+            Operation operation = await projectClient.ExportAsync(
+                waitUntil: WaitUntil.Completed,
+                stringIndexType: StringIndexType.Utf16CodeUnit
+            );
+
+            // Extract the operation-location header
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+
+            Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
     }
 }

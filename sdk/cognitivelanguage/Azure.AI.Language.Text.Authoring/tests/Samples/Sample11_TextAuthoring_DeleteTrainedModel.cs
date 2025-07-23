@@ -33,5 +33,26 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(204, response.Status, "Expected the status to indicate successful deletion.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task DeleteTrainedModelAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample11_TextAuthoring_DeleteTrainedModelAsync
+            string projectName = "{projectName}";
+            string trainedModelLabel = "{modelLabel}";
+            TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            Response response = await trainedModelClient.DeleteTrainedModelAsync();
+
+            Console.WriteLine($"Trained model deleted. Response status: {response.Status}");
+            #endregion
+
+            Assert.AreEqual(204, response.Status, "Expected the status to indicate successful deletion.");
+        }
     }
 }

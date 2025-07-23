@@ -1,4 +1,4 @@
-# Deploying a Project Synchronously in Azure AI Language
+# Deploying a Project in Azure AI Language
 
 This sample demonstrates how to deploy a project synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -36,3 +36,24 @@ Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Sta
 ```
 
 To deploy a project, the DeployProject method sends a request with the project name, deployment name, and deployment configuration. The method returns an Operation object indicating the deployment status.
+
+## Deploy a Project Asynchronously
+
+To deploy a project, call DeployProjectAsync on the TextAnalysisAuthoring client.
+
+```C# Snippet:Sample14_TextAuthoring_DeployProjectAsync
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
+TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+var deploymentConfig = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "{modelLabel}");
+
+Operation operation = await deploymentClient.DeployProjectAsync(
+    waitUntil: WaitUntil.Completed,
+    details: deploymentConfig
+);
+
+Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
+```
+
+To deploy a project, the DeployProjectAsync method sends a request with the project name, deployment name, and deployment configuration. The method returns an Operation object indicating the deployment status.

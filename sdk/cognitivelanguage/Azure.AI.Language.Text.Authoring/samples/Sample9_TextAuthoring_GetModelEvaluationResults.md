@@ -1,4 +1,4 @@
-# Retrieving Model Evaluation Results Synchronously in Azure AI Language
+# Retrieving Model Evaluation Results in Azure AI Language
 
 This sample demonstrates how to retrieve model evaluation results synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
@@ -32,6 +32,37 @@ Pageable<TextAuthoringDocumentEvalResult> results = trainedModelClient.GetModelE
 );
 
 foreach (TextAuthoringDocumentEvalResult result in results)
+{
+    Console.WriteLine($"Document Location: {result.Location}");
+    Console.WriteLine($"Language: {result.Language}");
+
+    // Example: handle single-label classification results
+    if (result is CustomSingleLabelClassificationDocumentEvalResult singleLabelResult)
+    {
+        var classification = singleLabelResult.CustomSingleLabelClassificationResult;
+        Console.WriteLine($"Expected Class: {classification.ExpectedClass}");
+        Console.WriteLine($"Predicted Class: {classification.PredictedClass}");
+    }
+    // Add handling for other result types as needed
+}
+```
+
+## Retrieve Model Evaluation Results Asynchronously
+
+To retrieve model evaluation results, call `GetModelEvaluationResultsAsync` on the `TextAuthoringTrainedModel` client. The method returns an `AsyncPageable<TextAuthoringDocumentEvalResult>` that allows you to enumerate the evaluation results for each document asynchronously.
+
+```C# Snippet:Sample9_TextAuthoring_GetModelEvaluationResultsAsync
+string projectName = "{projectName}";
+string trainedModelLabel = "{modelLabel}";
+StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+
+TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+AsyncPageable<TextAuthoringDocumentEvalResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
+    stringIndexType: stringIndexType
+);
+
+await foreach (TextAuthoringDocumentEvalResult result in results)
 {
     Console.WriteLine($"Document Location: {result.Location}");
     Console.WriteLine($"Language: {result.Language}");

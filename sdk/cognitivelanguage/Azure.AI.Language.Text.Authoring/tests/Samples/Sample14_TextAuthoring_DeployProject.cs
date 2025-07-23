@@ -38,5 +38,31 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task DeployProjectAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample14_TextAuthoring_DeployProjectAsync
+            string projectName = "{projectName}";
+            string deploymentName = "{deploymentName}";
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            var deploymentConfig = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "{modelLabel}");
+
+            Operation operation = await deploymentClient.DeployProjectAsync(
+                waitUntil: WaitUntil.Completed,
+                details: deploymentConfig
+            );
+
+            Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
+            #endregion
+
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+        }
     }
 }
