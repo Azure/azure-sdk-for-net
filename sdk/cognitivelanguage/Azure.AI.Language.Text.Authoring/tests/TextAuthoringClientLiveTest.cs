@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Act
             Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Started,
-                exportedProject: rawJson
+                projectJson: rawJson
             );
 
             // Assert
