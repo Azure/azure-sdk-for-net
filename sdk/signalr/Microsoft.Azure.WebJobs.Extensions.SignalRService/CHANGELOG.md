@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0 (2025-07-23)
+## 2.1.0 (2025-07-25)
 
 ### Features Added
 * Enable retry policy for HTTP requests with transient errors by default.
