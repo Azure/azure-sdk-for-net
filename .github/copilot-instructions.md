@@ -1,6 +1,6 @@
 # Project Overview
 
-This repo contains azure SDKs for various Azure services and tools that generates them.
+This repo contains azure SDKs for various Azure services and tools that generate them.
 
 ## Folder Structure
 
