@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecretsStoreExtension.Models;
 
 namespace Azure.ResourceManager.SecretsStoreExtension
 {
@@ -13,6 +15,20 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AzureKeyVaultSecretProviderClassUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassData))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassPatch))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassResource))]
+    [ModelReaderWriterBuildable(typeof(KubernetesSecretObjectMapping))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncCondition))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncData))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncPatch))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncProperties))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncResource))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncStatus))]
+    [ModelReaderWriterBuildable(typeof(SecretSyncUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSecretsStoreExtensionContext : ModelReaderWriterContext
     {
     }
