@@ -8,6 +8,7 @@ using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 {

@@ -7,6 +7,7 @@ using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 {
