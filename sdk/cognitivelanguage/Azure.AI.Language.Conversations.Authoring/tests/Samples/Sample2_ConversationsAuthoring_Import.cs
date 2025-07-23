@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
