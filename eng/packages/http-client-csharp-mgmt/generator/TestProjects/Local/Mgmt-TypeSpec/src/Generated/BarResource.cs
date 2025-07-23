@@ -21,7 +21,7 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class BarResource : ArmResource
     {
-        private readonly ClientDiagnostics _barClientDiagnostics;
+        private readonly ClientDiagnostics _barsClientDiagnostics;
         private readonly Bars _barsRestClient;
         private readonly BarData _data;
         /// <summary> Gets the resource type for the operations. </summary>
@@ -46,9 +46,9 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BarResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _barClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string barApiVersion);
-            _barsRestClient = new Bars(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion);
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Get");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.GetAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.GetAsync");
             scope.Start();
             try
             {
@@ -152,7 +152,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Delete");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Delete");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace MgmtTypeSpec
                 ;
                 HttpMessage message = _barsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -182,7 +182,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.DeleteAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.DeleteAsync");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace MgmtTypeSpec
                 ;
                 HttpMessage message = _barsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_barsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -216,7 +216,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.Update");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.Update");
             scope.Start();
             try
             {
@@ -229,7 +229,7 @@ namespace MgmtTypeSpec
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
                     new BarOperationSource(Client),
-                    _barClientDiagnostics,
+                    _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -256,7 +256,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.UpdateAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -269,7 +269,7 @@ namespace MgmtTypeSpec
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
                     new BarOperationSource(Client),
-                    _barClientDiagnostics,
+                    _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -297,7 +297,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.AddTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.AddTag");
             scope.Start();
             try
             {
@@ -341,7 +341,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.AddTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.AddTag");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.SetTags");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.SetTags");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.SetTags");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.SetTags");
             scope.Start();
             try
             {
@@ -469,7 +469,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.RemoveTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.RemoveTag");
             scope.Start();
             try
             {
@@ -511,7 +511,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _barClientDiagnostics.CreateScope("BarResource.RemoveTag");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarResource.RemoveTag");
             scope.Start();
             try
             {

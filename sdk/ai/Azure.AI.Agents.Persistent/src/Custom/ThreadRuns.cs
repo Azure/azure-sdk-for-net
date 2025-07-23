@@ -595,14 +595,21 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(threadId, limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(
+                threadId: threadId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             return new ContinuationTokenPageableAsync<ThreadRun>(
                 createPageRequest: PageRequest,
                 valueFactory: e => ThreadRun.DeserializeThreadRun(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
@@ -620,14 +627,21 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(threadId, limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(
+                threadId: threadId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context:context);
             return new ContinuationTokenPageable<ThreadRun>(
                 createPageRequest: PageRequest,
                 valueFactory: e => ThreadRun.DeserializeThreadRun(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context
+                requestContext: context,
+                after: after
             );
         }
 
