@@ -2,6 +2,9 @@
 
 ## 2.1.0 (2025-07-23)
 
+### Features Added
+* Enable retry policy for HTTP requests with transient errors by default.
+
 ### Other Changes
 * Upgrade `Microsoft.Extensions.Azure` to 1.12.0.
 
