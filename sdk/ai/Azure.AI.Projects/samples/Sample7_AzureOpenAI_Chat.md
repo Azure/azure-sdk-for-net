@@ -18,7 +18,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+ChatClient chatClient = projectClient.GetOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
 Console.WriteLine("Complete a chat");
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
@@ -32,7 +32,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+ChatClient chatClient = projectClient.GetOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
 Console.WriteLine("Complete a chat");
 ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");
