@@ -282,6 +282,14 @@ public partial class RedisEnterpriseDatabase : ProvisionableResource
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
+    /// Get the requirements for naming this RedisEnterpriseDatabase resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 1, maxLength: 60, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+
+    /// <summary>
     /// Get access keys for this RedisEnterpriseDatabase resource.
     /// </summary>
     /// <returns>The keys for this RedisEnterpriseDatabase resource.</returns>
