@@ -2,15 +2,11 @@
 
 This sample demonstrates how to retrieve the status of deployment resources assignment asynchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
-## Create an `AuthoringClient` using AAD Authentication
+## Create a TextAnalysisAuthoringClient using AAD Authentication
 
-To create a `AuthoringClient`, use the service endpoint of a custom subdomain Language resource and authenticate with `DefaultAzureCredential`.
+This operation is supported only via AAD authentication and requires the caller to be assigned the Cognitive Service Language Owner role for this assigned resource.
 
-```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("{endpoint}");;
-DefaultAzureCredential credential = new DefaultAzureCredential();
-TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
-```
+For details on how to set up AAD authentication, refer to the [Create a client using AAD](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/README.md#create-a-client-using-azure-active-directory-authentication).
 
 ## Retrieve Deployment Resources Assignment Status Asynchronously
 
