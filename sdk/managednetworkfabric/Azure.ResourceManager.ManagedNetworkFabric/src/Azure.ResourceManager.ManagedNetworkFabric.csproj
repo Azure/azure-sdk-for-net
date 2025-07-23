@@ -7,9 +7,4 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider Azure.ResourceManager.ManagedNetworkFabric.</Description>
     <PackageTags>azure;management;arm;resource manager;azure.resourcemanager.managednetworkfabric</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <!-- TODO: Temporarily pin the version of generator here untile we fix SCM0002 for custom MRWContext -->
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20250718.1" PrivateAssets="All" />
-  </ItemGroup>
 </Project>
