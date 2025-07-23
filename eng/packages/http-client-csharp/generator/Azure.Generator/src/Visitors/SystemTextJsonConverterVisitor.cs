@@ -29,6 +29,7 @@ namespace Azure.Generator.Visitors
         {
             if (model.Decorators.Any(d => d.Name == SystemTextJsonConverterDecoratorName) && type?.SerializationProviders.Count > 0)
             {
+                AzureClientGenerator.Instance.AddTypeToKeep(type);
                 var serializationProvider = type.SerializationProviders[0];
                 var converter = new ConverterTypeProvider(serializationProvider);
                 serializationProvider.Update(
@@ -46,7 +47,6 @@ namespace Azure.Generator.Visitors
             public ConverterTypeProvider(TypeProvider serializationProvider)
             {
                 _serializationProvider = serializationProvider;
-                AzureClientGenerator.Instance.AddTypeToKeep(this);
             }
 
             protected override string BuildRelativeFilePath() => _serializationProvider.RelativeFilePath;
