@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
-        /// <param name="resourcegroup"> The resource group of the resource. </param>
+        /// <param name="resourceGroup"> The resource group of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string resourcegroup = null, string subscriptionId = null, DeviceProvisioningServiceProperties properties = null, DeviceProvisioningServicesSkuInfo sku = null, ManagedServiceIdentity identity = null)
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string resourceGroup = null, string subscriptionId = null, DeviceProvisioningServiceProperties properties = null, DeviceProvisioningServicesSkuInfo sku = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 tags,
                 location,
                 etag,
-                resourcegroup,
+                resourceGroup,
                 subscriptionId,
                 properties,
                 sku,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku)
         {
-            return DeviceProvisioningServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, resourcegroup: default, subscriptionId: default, properties: properties, sku: sku, identity: default);
+            return DeviceProvisioningServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, resourceGroup: default, subscriptionId: default, properties: properties, sku: sku, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties" />. </summary>

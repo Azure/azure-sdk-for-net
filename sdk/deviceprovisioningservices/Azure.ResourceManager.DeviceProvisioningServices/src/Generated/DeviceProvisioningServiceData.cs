@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
-        /// <param name="resourcegroup"> The resource group of the resource. </param>
+        /// <param name="resourceGroup"> The resource group of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string resourcegroup, string subscriptionId, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string resourceGroup, string subscriptionId, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
-            Resourcegroup = resourcegroup;
+            ResourceGroup = resourceGroup;
             SubscriptionId = subscriptionId;
             Properties = properties;
             Sku = sku;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <summary> The Etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </summary>
         public ETag? ETag { get; set; }
         /// <summary> The resource group of the resource. </summary>
-        public string Resourcegroup { get; set; }
+        public string ResourceGroup { get; set; }
         /// <summary> The subscription id of the resource. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Service specific properties for a provisioning service. </summary>

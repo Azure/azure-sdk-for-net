@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Resourcegroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourcegroup"u8);
-                writer.WriteStringValue(Resourcegroup);
+                writer.WriteStringValue(ResourceGroup);
             }
             if (Optional.IsDefined(SubscriptionId))
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="connectionString"> Connection string of the IoT hub. </param>
         /// <param name="location"> ARM region of the IoT hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
-        public IotHubDefinitionDescription(string connectionString, AzureLocation location):this(location)
+        public IotHubDefinitionDescription(string connectionString, AzureLocation location) : this(location)
         {
             ConnectionString = connectionString;
         }
