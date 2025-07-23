@@ -37,8 +37,8 @@ namespace Azure.Generator.Management.Providers
     {
         internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            // Create a resource that supports multiple clients
-            var resource = new ResourceClientProvider(model.Name.ToIdentifierName(), model, resourceMetadata);
+            // Create a resource that supports multiple clients, using ResourceName from metadata
+            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, resourceMetadata);
             if (!resource.IsSingleton)
             {
                 var collection = new ResourceCollectionClientProvider(resource, model, resourceMetadata);

@@ -15,24 +15,24 @@ using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal partial class DpsCertificateRestOperations
+    internal partial class CertificateResponsesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DpsCertificateRestOperations. </summary>
+        /// <summary> Initializes a new instance of CertificateResponsesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DpsCertificateRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public CertificateResponsesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-02-05";
+            _apiVersion = apiVersion ?? "2025-02-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Get the certificate from the provisioning service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> Name of the provisioning service the certificate is associated with. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Get the certificate from the provisioning service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> Name of the provisioning service the certificate is associated with. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Add new certificate or update an existing certificate. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> The name of the provisioning service. </param>
-        /// <param name="certificateName"> The name of the certificate create or update. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="data"> The certificate body. </param>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Add new certificate or update an existing certificate. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> The name of the provisioning service. </param>
-        /// <param name="certificateName"> The name of the certificate create or update. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="data"> The certificate body. </param>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,9 +272,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath(provisioningServiceName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (certificateCommonName != null)
             {
-                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+                uri.AppendQuery("certificate.name", certificateCommonName, true);
             }
             if (certificateRawBytes != null)
             {
@@ -290,11 +291,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificateCreatedOn != null)
             {
-                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.created", certificateCreatedOn.Value, "O", true);
             }
             if (certificateLastUpdatedOn != null)
             {
-                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.lastUpdated", certificateLastUpdatedOn.Value, "O", true);
             }
             if (certificateHasPrivateKey != null)
             {
@@ -304,7 +305,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 uri.AppendQuery("certificate.nonce", certificateNonce, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -323,9 +323,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath(provisioningServiceName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (certificateCommonName != null)
             {
-                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+                uri.AppendQuery("certificate.name", certificateCommonName, true);
             }
             if (certificateRawBytes != null)
             {
@@ -341,11 +342,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificateCreatedOn != null)
             {
-                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.created", certificateCreatedOn.Value, "O", true);
             }
             if (certificateLastUpdatedOn != null)
             {
-                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.lastUpdated", certificateLastUpdatedOn.Value, "O", true);
             }
             if (certificateHasPrivateKey != null)
             {
@@ -355,7 +356,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 uri.AppendQuery("certificate.nonce", certificateNonce, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
@@ -364,17 +364,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Deletes the specified certificate associated with the Provisioning Service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> The name of the provisioning service. </param>
-        /// <param name="certificateName"> This is a mandatory field, and is the logical name of the certificate that the provisioning service will access by. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="certificateCommonName"> This is optional, and it is the Common Name of the certificate. </param>
         /// <param name="certificateRawBytes"> Raw data within the certificate. </param>
         /// <param name="certificateIsVerified"> Indicates if certificate has been verified by owner of the private key. </param>
         /// <param name="certificatePurpose"> A description that mentions the purpose of the certificate. </param>
         /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
-        /// <param name="certificateLastUpdatedOn"> Time the certificate is last updated. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
         /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains a private key. </param>
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -401,17 +401,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Deletes the specified certificate associated with the Provisioning Service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group identifier. </param>
-        /// <param name="provisioningServiceName"> The name of the provisioning service. </param>
-        /// <param name="certificateName"> This is a mandatory field, and is the logical name of the certificate that the provisioning service will access by. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="certificateCommonName"> This is optional, and it is the Common Name of the certificate. </param>
         /// <param name="certificateRawBytes"> Raw data within the certificate. </param>
         /// <param name="certificateIsVerified"> Indicates if certificate has been verified by owner of the private key. </param>
         /// <param name="certificatePurpose"> A description that mentions the purpose of the certificate. </param>
         /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
-        /// <param name="certificateLastUpdatedOn"> Time the certificate is last updated. </param>
+        /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
         /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains a private key. </param>
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -474,9 +474,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Get all the certificates tied to the provisioning service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Name of resource group. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service to retrieve certificates for. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -503,9 +503,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Get all the certificates tied to the provisioning service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Name of resource group. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service to retrieve certificates for. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -544,9 +544,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
             uri.AppendPath("/generateVerificationCode", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (certificateCommonName != null)
             {
-                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+                uri.AppendQuery("certificate.name", certificateCommonName, true);
             }
             if (certificateRawBytes != null)
             {
@@ -562,11 +563,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificateCreatedOn != null)
             {
-                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.created", certificateCreatedOn.Value, "O", true);
             }
             if (certificateLastUpdatedOn != null)
             {
-                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.lastUpdated", certificateLastUpdatedOn.Value, "O", true);
             }
             if (certificateHasPrivateKey != null)
             {
@@ -576,7 +577,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 uri.AppendQuery("certificate.nonce", certificateNonce, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -596,9 +596,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
             uri.AppendPath("/generateVerificationCode", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (certificateCommonName != null)
             {
-                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+                uri.AppendQuery("certificate.name", certificateCommonName, true);
             }
             if (certificateRawBytes != null)
             {
@@ -614,11 +615,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificateCreatedOn != null)
             {
-                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.created", certificateCreatedOn.Value, "O", true);
             }
             if (certificateLastUpdatedOn != null)
             {
-                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.lastUpdated", certificateLastUpdatedOn.Value, "O", true);
             }
             if (certificateHasPrivateKey != null)
             {
@@ -628,7 +629,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 uri.AppendQuery("certificate.nonce", certificateNonce, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
@@ -637,16 +637,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Generate verification code for Proof of Possession. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> name of resource group. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service. </param>
-        /// <param name="certificateName"> The mandatory logical name of the certificate, that the provisioning service uses to access. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="certificateCommonName"> Common Name for the certificate. </param>
         /// <param name="certificateRawBytes"> Raw data of certificate. </param>
         /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
         /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
-        /// <param name="certificateCreatedOn"> Certificate creation time. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
         /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
         /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
@@ -678,16 +678,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Generate verification code for Proof of Possession. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> name of resource group. </param>
-        /// <param name="provisioningServiceName"> Name of provisioning service. </param>
-        /// <param name="certificateName"> The mandatory logical name of the certificate, that the provisioning service uses to access. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </param>
         /// <param name="certificateCommonName"> Common Name for the certificate. </param>
         /// <param name="certificateRawBytes"> Raw data of certificate. </param>
         /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
         /// <param name="certificatePurpose"> Description mentioning the purpose of the certificate. </param>
-        /// <param name="certificateCreatedOn"> Certificate creation time. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
         /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
         /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
@@ -731,9 +731,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
             uri.AppendPath("/verify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (certificateCommonName != null)
             {
-                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+                uri.AppendQuery("certificate.name", certificateCommonName, true);
             }
             if (certificateRawBytes != null)
             {
@@ -749,11 +750,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificateCreatedOn != null)
             {
-                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.created", certificateCreatedOn.Value, "O", true);
             }
             if (certificateLastUpdatedOn != null)
             {
-                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.lastUpdated", certificateLastUpdatedOn.Value, "O", true);
             }
             if (certificateHasPrivateKey != null)
             {
@@ -763,7 +764,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 uri.AppendQuery("certificate.nonce", certificateNonce, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -783,9 +783,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
             uri.AppendPath("/verify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (certificateCommonName != null)
             {
-                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+                uri.AppendQuery("certificate.name", certificateCommonName, true);
             }
             if (certificateRawBytes != null)
             {
@@ -801,11 +802,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
             if (certificateCreatedOn != null)
             {
-                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.created", certificateCreatedOn.Value, "O", true);
             }
             if (certificateLastUpdatedOn != null)
             {
-                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+                uri.AppendQuery("certificate.lastUpdated", certificateLastUpdatedOn.Value, "O", true);
             }
             if (certificateHasPrivateKey != null)
             {
@@ -815,7 +816,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 uri.AppendQuery("certificate.nonce", certificateNonce, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
@@ -828,17 +828,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="provisioningServiceName"> Provisioning service name. </param>
-        /// <param name="certificateName"> The mandatory logical name of the certificate, that the provisioning service uses to access. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="content"> The name of the certificate. </param>
         /// <param name="certificateCommonName"> Common Name for the certificate. </param>
         /// <param name="certificateRawBytes"> Raw data of certificate. </param>
         /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
         /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
-        /// <param name="certificateCreatedOn"> Certificate creation time. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
         /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
         /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
@@ -871,17 +871,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary> Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="provisioningServiceName"> Provisioning service name. </param>
-        /// <param name="certificateName"> The mandatory logical name of the certificate, that the provisioning service uses to access. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
         /// <param name="ifMatch"> ETag of the certificate. </param>
         /// <param name="content"> The name of the certificate. </param>
         /// <param name="certificateCommonName"> Common Name for the certificate. </param>
         /// <param name="certificateRawBytes"> Raw data of certificate. </param>
         /// <param name="certificateIsVerified"> Indicates if the certificate has been verified by owner of the private key. </param>
         /// <param name="certificatePurpose"> Describe the purpose of the certificate. </param>
-        /// <param name="certificateCreatedOn"> Certificate creation time. </param>
+        /// <param name="certificateCreatedOn"> Time the certificate is created. </param>
         /// <param name="certificateLastUpdatedOn"> Certificate last updated time. </param>
         /// <param name="certificateHasPrivateKey"> Indicates if the certificate contains private key. </param>
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>

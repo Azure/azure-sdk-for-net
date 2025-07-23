@@ -21,6 +21,7 @@ namespace Azure.Generator.Management
         private const string ResourceScope = "resourceScope";
         private const string Methods = "methods";
         private const string ParentResourceId = "parentResourceId";
+        private const string ResourceName = "resourceName";
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
@@ -132,6 +133,7 @@ namespace Azure.Generator.Management
                 ResourceScope? resourceScope = null;
                 var methods = new List<ResourceMethod>();
                 string? parentResource = null;
+                string? resourceName = null;
                 if (args.TryGetValue(ResourceIdPattern, out var resourceIdPatternData))
                 {
                     resourceIdPattern = resourceIdPatternData.ToObjectFromJson<string>();
@@ -191,6 +193,11 @@ namespace Azure.Generator.Management
                     parentResource = parentResourceData.ToObjectFromJson<string>();
                 }
 
+                if (args.TryGetValue(ResourceName, out var resourceNameData))
+                {
+                    resourceName = resourceNameData.ToObjectFromJson<string>();
+                }
+
                 var methodToClientMap = new Dictionary<string, InputClient>();
                 foreach (var method in methods)
                 {
@@ -209,6 +216,7 @@ namespace Azure.Generator.Management
                     methods,
                     singletonResourceName,
                     parentResource,
+                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
                     methodToClientMap);
             }
         }
