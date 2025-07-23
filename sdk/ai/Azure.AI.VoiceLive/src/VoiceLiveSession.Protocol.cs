@@ -29,11 +29,11 @@ namespace Azure.AI.VoiceLive
             try
             {
                 // Configure the WebSocket connection
-                clientWebSocket.Options.AddSubProtocol("voicelive-v1");
+                //clientWebSocket.Options.AddSubProtocol("voicelive-v1");
 
                 // Add authorization header
                 string credentialValue = _credential.Key;
-                clientWebSocket.Options.SetRequestHeader("Authorization", $"Bearer {credentialValue}");
+                clientWebSocket.Options.SetRequestHeader("api-key", $"{credentialValue}");
 
                 // Add any additional headers required by the VoiceLive service
                 clientWebSocket.Options.SetRequestHeader("User-Agent", "Azure-VoiceLive-SDK/.NET");

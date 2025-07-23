@@ -19,9 +19,9 @@ namespace Azure.AI.VoiceLive
     /// <summary> The VoiceLive service client. </summary>
     public partial class VoiceLiveClient
     {
-        private const string AuthorizationHeader = "Authorization";
+        private const string AuthorizationHeader = "api-key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "Bearer";
+        private const string AuthorizationApiKeyPrefix = "";
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
 

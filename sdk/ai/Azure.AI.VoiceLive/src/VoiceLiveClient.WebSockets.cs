@@ -144,7 +144,7 @@ namespace Azure.AI.VoiceLive
             // Ensure the path includes the WebSocket endpoint
             if (!builder.Path.EndsWith("/realtime", StringComparison.OrdinalIgnoreCase))
             {
-                builder.Path = builder.Path.TrimEnd('/') + "/realtime";
+                builder.Path = builder.Path.TrimEnd('/') + "/voice-agent/realtime";
             }
 
             return builder.Uri;
