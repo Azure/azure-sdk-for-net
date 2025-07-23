@@ -10,9 +10,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.TestProxy;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework
 {
     /// <summary> The AddHeaderTransformRequest. </summary>
     internal partial class AddHeaderTransformRequest : IJsonModel<AddHeaderTransformRequest>
@@ -39,13 +39,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AddHeaderTransformRequest)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("transformType"u8);
-            writer.WriteStringValue(TransformType);
-            if (Optional.IsDefined(RecordingId))
-            {
-                writer.WritePropertyName("recordingId"u8);
-                writer.WriteStringValue(RecordingId);
             }
             writer.WritePropertyName("transform"u8);
             writer.WriteObjectValue(Transform, options);
@@ -91,22 +84,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 return null;
             }
-            string transformType = default;
-            string recordingId = default;
             HeaderTransform transform = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("transformType"u8))
-                {
-                    transformType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("recordingId"u8))
-                {
-                    recordingId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("transform"u8))
                 {
                     transform = HeaderTransform.DeserializeHeaderTransform(prop.Value, options);
@@ -117,7 +98,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddHeaderTransformRequest(transformType, recordingId, transform, additionalBinaryDataProperties);
+            return new AddHeaderTransformRequest(transform, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

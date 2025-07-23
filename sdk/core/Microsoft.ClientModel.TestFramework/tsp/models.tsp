@@ -27,9 +27,9 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy {
   }
   model HeaderRegexSanitizer {
     key: string;
-    value: string;
-    regex: string;
-    groupForReplace: string;
+    value?: string;
+    regex?: string;
+    groupForReplace?: string;
   }
   model HeaderTransform {
     key: string;
@@ -59,8 +59,9 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy {
     bodyKeySanitizer: 0,
     headerRegexSanitizer: 1,
     uriRegexSanitizer: 2,
+    BodyRegexSanitizer: 3,
   }
-  model StartInformation {
+  model TestProxyStartInformation {
     xRecordingFile: string;
     xRecodingAssetsFiles: string;
   }

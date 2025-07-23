@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.ClientModel.TestFramework.TestProxy;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework
 {
     /// <summary> The AddBodyRegexSanitizerRequest. </summary>
     internal partial class AddBodyRegexSanitizerRequest
@@ -24,23 +25,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         }
 
         /// <summary> Initializes a new instance of <see cref="AddBodyRegexSanitizerRequest"/>. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="recordingId"></param>
         /// <param name="sanitizer"> The body for a body regex sanitizer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddBodyRegexSanitizerRequest(string sanitizerType, string recordingId, BodyRegexSanitizer sanitizer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddBodyRegexSanitizerRequest(BodyRegexSanitizer sanitizer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SanitizerType = sanitizerType;
-            RecordingId = recordingId;
             Sanitizer = sanitizer;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the SanitizerType. </summary>
-        public string SanitizerType { get; } = "BodyRegexSanitizer";
-
-        /// <summary> Gets the RecordingId. </summary>
-        public string RecordingId { get; }
 
         /// <summary> The body for a body regex sanitizer. </summary>
         public BodyRegexSanitizer Sanitizer { get; }

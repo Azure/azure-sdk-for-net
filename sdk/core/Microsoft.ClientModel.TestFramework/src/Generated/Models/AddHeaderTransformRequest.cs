@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.ClientModel.TestFramework.TestProxy;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework
 {
     /// <summary> The AddHeaderTransformRequest. </summary>
     internal partial class AddHeaderTransformRequest
@@ -24,23 +25,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         }
 
         /// <summary> Initializes a new instance of <see cref="AddHeaderTransformRequest"/>. </summary>
-        /// <param name="transformType"></param>
-        /// <param name="recordingId"></param>
         /// <param name="transform"> The body for a header transform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddHeaderTransformRequest(string transformType, string recordingId, HeaderTransform transform, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddHeaderTransformRequest(HeaderTransform transform, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TransformType = transformType;
-            RecordingId = recordingId;
             Transform = transform;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the TransformType. </summary>
-        public string TransformType { get; } = "HeaderTransform";
-
-        /// <summary> Gets the RecordingId. </summary>
-        public string RecordingId { get; }
 
         /// <summary> The body for a header transform. </summary>
         public HeaderTransform Transform { get; }

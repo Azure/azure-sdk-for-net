@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The CustomDefaultMatcher. </summary>
-    public partial class CustomDefaultMatcher
+    internal partial class CustomDefaultMatcher
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

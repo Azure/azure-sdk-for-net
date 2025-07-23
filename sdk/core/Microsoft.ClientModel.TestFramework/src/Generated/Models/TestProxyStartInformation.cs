@@ -11,17 +11,17 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The StartInformation. </summary>
-    public partial class StartInformation
+    /// <summary> The TestProxyStartInformation. </summary>
+    public partial class TestProxyStartInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
         /// <param name="xRecodingAssetsFiles"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> or <paramref name="xRecodingAssetsFiles"/> is null. </exception>
-        public StartInformation(string xRecordingFile, string xRecodingAssetsFiles)
+        public TestProxyStartInformation(string xRecordingFile, string xRecodingAssetsFiles)
         {
             Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
             Argument.AssertNotNull(xRecodingAssetsFiles, nameof(xRecodingAssetsFiles));
@@ -30,11 +30,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             XRecodingAssetsFiles = xRecodingAssetsFiles;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
         /// <param name="xRecodingAssetsFiles"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartInformation(string xRecordingFile, string xRecodingAssetsFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProxyStartInformation(string xRecordingFile, string xRecodingAssetsFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             XRecordingFile = xRecordingFile;
             XRecodingAssetsFiles = xRecodingAssetsFiles;

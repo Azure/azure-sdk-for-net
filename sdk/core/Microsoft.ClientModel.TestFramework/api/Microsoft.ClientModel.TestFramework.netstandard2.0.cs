@@ -4,13 +4,16 @@ namespace Microsoft.ClientModel.TestFramework
     {
         public static System.Threading.Tasks.Task<T> ThrowsAsync<T>(System.Func<System.Threading.Tasks.Task> action) where T : System.Exception { throw null; }
     }
-    public delegate System.Threading.Tasks.ValueTask<T> AsyncCallInterceptor<T>(Castle.DynamicProxy.IInvocation invocation, System.Func<System.Threading.Tasks.ValueTask<T>> innerTask);
-    public partial class AsyncCollectionResultInterceptor<T> : System.Collections.Generic.IAsyncEnumerator<T>, System.IAsyncDisposable where T : class
+    public partial class AsyncMethodInterceptor : Castle.DynamicProxy.IInterceptor
     {
-        public AsyncCollectionResultInterceptor(Microsoft.ClientModel.TestFramework.ClientTestBase testBase, System.Collections.Generic.IAsyncEnumerator<T> inner) { }
-        public T Current { get { throw null; } }
-        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
-        public System.Threading.Tasks.ValueTask<bool> MoveNextAsync() { throw null; }
+        protected AsyncMethodInterceptor(System.Reflection.MethodInfo asyncCallInterceptorMethod, object? target = null) { }
+        public virtual void Intercept(Castle.DynamicProxy.IInvocation invocation) { }
+        protected static bool IsAsyncCollectionResult(System.Type type) { throw null; }
+        protected static bool IsAsyncEnumerable(System.Type type) { throw null; }
+        protected static bool IsCollectionResult(System.Type type) { throw null; }
+        protected virtual object? WrapAsyncCollectionResult(Castle.DynamicProxy.IInvocation invocation) { throw null; }
+        protected static void WrapAsyncResult(Castle.DynamicProxy.IInvocation invocation, object target, System.Reflection.MethodInfo interceptorMethod) { }
+        protected virtual object? WrapCollectionResult(Castle.DynamicProxy.IInvocation invocation) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Method, AllowMultiple=false, Inherited=true)]
     public partial class AsyncOnlyAttribute : NUnit.Framework.NUnitAttribute
@@ -27,6 +30,7 @@ namespace Microsoft.ClientModel.TestFramework
         protected virtual System.DateTime TestStartTime { get { throw null; } }
         public int TestTimeoutInSeconds { get { throw null; } set { } }
         protected TClient CreateClient<TClient>(params object[] args) where TClient : class { throw null; }
+        protected T GetOriginal<T>(T instrumented) { throw null; }
         [NUnit.Framework.TearDownAttribute]
         public virtual void GlobalTimeoutTearDown() { }
         protected internal virtual object InstrumentClient(System.Type clientType, object client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor>? preInterceptors) { throw null; }
@@ -38,6 +42,10 @@ namespace Microsoft.ClientModel.TestFramework
         Record = 0,
         DoNotRecord = 1,
         RecordWithoutRequestBody = 2,
+    }
+    public partial interface IWrappedClient
+    {
+        object Original { get; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Method, AllowMultiple=false, Inherited=true)]
     public partial class LiveOnlyAttribute : NUnit.Framework.NUnitAttribute, NUnit.Framework.Interfaces.IApplyToTest
@@ -59,6 +67,20 @@ namespace Microsoft.ClientModel.TestFramework
         [NUnit.Framework.OneTimeSetUpAttribute]
         public System.Threading.Tasks.ValueTask WaitForEnvironment() { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransport))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.StopPlaybackResponse))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer))]
     public partial class MicrosoftClientModelTestFrameworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal MicrosoftClientModelTestFrameworkContext() { }
@@ -69,7 +91,6 @@ namespace Microsoft.ClientModel.TestFramework
     {
         public static Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer BodyKeySanitizer(string jsonPath = null, string value = null, string regex = null, string groupForReplace = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer BodyRegexSanitizer(string regex = null, string value = null, string groupForReplace = null, Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition condition = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher CustomDefaultMatcher(string excludedHeaders = null, bool? compareBodies = default(bool?), string ignoredHeaders = null, string ignoredQueryParameters = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition HeaderCondition(string key = null, string valueRegex = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer HeaderRegexSanitizer(string key = null, string value = null, string regex = null, string groupForReplace = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform HeaderTransform(string key = null, string value = null, Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition condition = null) { throw null; }
@@ -78,12 +99,17 @@ namespace Microsoft.ClientModel.TestFramework
         public static Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptionsTransportCertificationsItem ProxyOptionsTransportCertificationsItem(string pemValue = null, string pemKey = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.SanitizerCondition SanitizerCondition(string uriRegex = null, Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition responseHeader = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove SanitizersToRemove(System.Collections.Generic.IEnumerable<string> sanitizers = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.StartInformation StartInformation(string xRecordingFile = null, string xRecodingAssetsFiles = null) { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse StartPlaybackResponse() { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse StartRecordResponse() { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.StopPlaybackResponse StopPlaybackResponse() { throw null; }
-        public static Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest StopRecordRequest() { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = null, string xRecodingAssetsFiles = null) { throw null; }
         public static Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer UriRegexSanitizer(string regex = null, string value = null, string groupForReplace = null) { throw null; }
+    }
+    public partial class MockCredential : System.ClientModel.AuthenticationTokenProvider
+    {
+        public MockCredential() { }
+        public override System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
+        public override System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Method, AllowMultiple=true, Inherited=true)]
     public partial class PlaybackOnlyAttribute : NUnit.Framework.NUnitAttribute, NUnit.Framework.Interfaces.IApplyToTest
@@ -109,12 +135,13 @@ namespace Microsoft.ClientModel.TestFramework
         public NUnit.Framework.Internal.Commands.TestCommand Wrap(NUnit.Framework.Internal.Commands.TestCommand command) { throw null; }
     }
     [NUnit.Framework.NonParallelizableAttribute]
-    public partial class RecordedTestBase : Microsoft.ClientModel.TestFramework.ClientTestBase
+    public abstract partial class RecordedTestBase : Microsoft.ClientModel.TestFramework.ClientTestBase
     {
+        public const string AssetsJson = "assets.json";
         public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform> HeaderTransforms;
         public System.Collections.Generic.HashSet<string> IgnoredHeaders;
         public System.Collections.Generic.HashSet<string> IgnoredQueryParameters;
-        public RecordedTestBase(bool isAsync) : base (default(bool)) { }
+        public const string SanitizeValue = "Sanitized";
         protected RecordedTestBase(bool isAsync, Microsoft.ClientModel.TestFramework.RecordedTestMode? mode = default(Microsoft.ClientModel.TestFramework.RecordedTestMode?)) : base (default(bool)) { }
         public virtual string? AssetsJsonPath { get { throw null; } }
         public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer> BodyKeySanitizers { get { throw null; } }
@@ -128,8 +155,11 @@ namespace Microsoft.ClientModel.TestFramework
         public System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } }
         public System.Collections.Generic.List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get { throw null; } }
         public System.Collections.Generic.List<string> SanitizersToRemove { get { throw null; } }
+        public bool SaveDebugRecordingsOnFailure { get { throw null; } set { } }
+        protected Microsoft.ClientModel.TestFramework.TestRetryHelper TestRetryHelper { get { throw null; } }
         protected override System.DateTime TestStartTime { get { throw null; } }
         public System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
+        public bool UseDefaultGuidFormatForClientRequestId { get { throw null; } set { } }
         protected bool UseLocalDebugProxy { get { throw null; } set { } }
         protected bool ValidateClientInstrumentation { get { throw null; } set { } }
         protected System.Threading.Tasks.Task<Microsoft.ClientModel.TestFramework.TestRecording> CreateTestRecordingAsync(Microsoft.ClientModel.TestFramework.RecordedTestMode mode, string sessionFile) { throw null; }
@@ -151,7 +181,7 @@ namespace Microsoft.ClientModel.TestFramework
     }
     public abstract partial class RecordedTestBase<TEnvironment> : Microsoft.ClientModel.TestFramework.RecordedTestBase where TEnvironment : Microsoft.ClientModel.TestFramework.TestEnvironment, new()
     {
-        protected RecordedTestBase(bool isAsync, Microsoft.ClientModel.TestFramework.RecordedTestMode? mode = default(Microsoft.ClientModel.TestFramework.RecordedTestMode?)) : base (default(bool)) { }
+        protected RecordedTestBase(bool isAsync, Microsoft.ClientModel.TestFramework.RecordedTestMode? mode = default(Microsoft.ClientModel.TestFramework.RecordedTestMode?)) : base (default(bool), default(Microsoft.ClientModel.TestFramework.RecordedTestMode?)) { }
         public TEnvironment TestEnvironment { get { throw null; } }
     }
     public enum RecordedTestMode
@@ -159,6 +189,15 @@ namespace Microsoft.ClientModel.TestFramework
         Live = 0,
         Record = 1,
         Playback = 2,
+    }
+    public partial class RecordedVariableOptions
+    {
+        public RecordedVariableOptions() { }
+        public string Apply(string value) { throw null; }
+        public Microsoft.ClientModel.TestFramework.RecordedVariableOptions HasSecretConnectionStringParameter(string name, Microsoft.ClientModel.TestFramework.SanitizedValue sanitizedValue = Microsoft.ClientModel.TestFramework.SanitizedValue.Default) { throw null; }
+        public Microsoft.ClientModel.TestFramework.RecordedVariableOptions HasSecretConnectionStringParameter(string name, string sanitizedValue) { throw null; }
+        public Microsoft.ClientModel.TestFramework.RecordedVariableOptions IsSecret(Microsoft.ClientModel.TestFramework.SanitizedValue sanitizedValue = Microsoft.ClientModel.TestFramework.SanitizedValue.Default) { throw null; }
+        public Microsoft.ClientModel.TestFramework.RecordedVariableOptions IsSecret(string sanitizedValue) { throw null; }
     }
     public partial class RecordEntryMessage
     {
@@ -202,23 +241,35 @@ namespace Microsoft.ClientModel.TestFramework
     {
         public SyncOnlyAttribute() { }
     }
+    public partial class TelemetryValidatingInterceptor : Microsoft.ClientModel.TestFramework.AsyncMethodInterceptor
+    {
+        public TelemetryValidatingInterceptor() : base (default(System.Reflection.MethodInfo), default(object)) { }
+    }
     public static partial class TestAsyncEnumerableExtensions
     {
         public static System.Threading.Tasks.Task<System.Collections.Generic.List<T>> ToEnumerableAsync<T>(this System.Collections.Generic.IAsyncEnumerable<T> asyncEnumerable) { throw null; }
     }
     public abstract partial class TestEnvironment
     {
-        protected TestEnvironment(string serviceName, string[] pathsToEnvironmentFiles) { }
-        public static string? DevCertPassword { get { throw null; } set { } }
-        public static string? DevCertPath { get { throw null; } set { } }
-        public bool LocalRun { get { throw null; } set { } }
+        public const string DevCertPassword = "password";
+        protected TestEnvironment() { }
+        public virtual System.ClientModel.AuthenticationTokenProvider Credential { get { throw null; } }
+        public static string? DevCertPath { get { throw null; } }
+        public static bool IsWindows { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode? Mode { get { throw null; } set { } }
+        public string? PathToTestResourceBootstrappingScript { get { throw null; } set { } }
         public static string? RepositoryRoot { get { throw null; } }
-        public string ServiceName { get { throw null; } }
-        public virtual System.ClientModel.AuthenticationTokenProvider TokenProvider { get { throw null; } }
-        protected string GetRecordedOptionalVariable(string name) { throw null; }
-        public abstract System.Threading.Tasks.Task InitializeEnvironmentAsync();
-        public System.Threading.Tasks.ValueTask WaitForEnvironmentAsync() { throw null; }
+        public void BootStrapTestResources() { }
+        protected string? GetOptionalVariable(string name) { throw null; }
+        protected string? GetRecordedOptionalVariable(string name) { throw null; }
+        protected string? GetRecordedOptionalVariable(string name, System.Action<Microsoft.ClientModel.TestFramework.RecordedVariableOptions>? options) { throw null; }
+        protected string GetRecordedVariable(string name) { throw null; }
+        protected string GetRecordedVariable(string name, System.Action<Microsoft.ClientModel.TestFramework.RecordedVariableOptions>? options) { throw null; }
+        public static string GetSourcePath(System.Reflection.Assembly assembly) { throw null; }
+        protected string GetVariable(string name) { throw null; }
+        public abstract System.Collections.Generic.Dictionary<string, string> ParseEnvironmentFile();
+        public void SetRecording(Microsoft.ClientModel.TestFramework.TestRecording recording) { }
+        public abstract System.Threading.Tasks.Task WaitForEnvironmentAsync();
     }
     public partial class TestFrameworkClient
     {
@@ -251,22 +302,24 @@ namespace Microsoft.ClientModel.TestFramework
     {
         internal TestRecording() { }
         public bool HasRequests { get { throw null; } }
+        public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } }
         public System.DateTimeOffset Now { get { throw null; } }
+        public Microsoft.ClientModel.TestFramework.TestRandom Random { get { throw null; } }
         public string? RecordingId { get { throw null; } }
-        public Microsoft.ClientModel.TestFramework.RecordedTestMode TestMode { get { throw null; } }
         public System.DateTimeOffset UtcNow { get { throw null; } }
         public System.Collections.Generic.SortedDictionary<string, string> Variables { get { throw null; } }
-        public static System.Threading.Tasks.Task<Microsoft.ClientModel.TestFramework.TestRecording> CreateAsync(Microsoft.ClientModel.TestFramework.TestProxyProcess proxy, Microsoft.ClientModel.TestFramework.RecordedTestMode mode, Microsoft.ClientModel.TestFramework.TestProxy.StartInformation startInformation, Microsoft.ClientModel.TestFramework.TestRecordingOptions? options = null) { throw null; }
-        public System.ClientModel.Primitives.HttpClientPipelineTransport CreateTransport() { throw null; }
+        public static System.Threading.Tasks.Task<Microsoft.ClientModel.TestFramework.TestRecording> CreateAsync(Microsoft.ClientModel.TestFramework.RecordedTestMode mode, string sessionFile, Microsoft.ClientModel.TestFramework.TestProxyProcess proxy, Microsoft.ClientModel.TestFramework.RecordedTestBase recordedTestBase, System.Threading.CancellationToken? cancellationToken = default(System.Threading.CancellationToken?)) { throw null; }
+        public System.ClientModel.Primitives.PipelineTransport CreateTransport(System.ClientModel.Primitives.PipelineTransport currentTransport) { throw null; }
         public Microsoft.ClientModel.TestFramework.TestRecording.DisableRecordingScope DisableRecording() { throw null; }
         public Microsoft.ClientModel.TestFramework.TestRecording.DisableRecordingScope DisableRequestBodyRecording() { throw null; }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         public System.Threading.Tasks.ValueTask DisposeAsync(bool save) { throw null; }
-        public string GenerateAlphaNumericId() { throw null; }
-        public string GenerateAssetName() { throw null; }
+        public string GenerateAlphaNumericId(string prefix, int? maxLength = default(int?), bool useOnlyLowercase = false) { throw null; }
+        public string GenerateAssetName(string prefix, [System.Runtime.CompilerServices.CallerMemberNameAttribute] string callerMethodName = "testframework_failed") { throw null; }
         public string GenerateId() { throw null; }
-        public string GetVariable() { throw null; }
-        public void SetVariable() { }
+        public string GenerateId(string prefix, int maxLength) { throw null; }
+        public string? GetVariable(string variableName, string defaultValue, System.Func<string, string>? sanitizer = null) { throw null; }
+        public void SetVariable(string variableName, string? value, System.Func<string, string>? sanitizer = null) { }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct DisableRecordingScope : System.IDisposable
         {
@@ -282,35 +335,16 @@ namespace Microsoft.ClientModel.TestFramework
         public TestRecordingMismatchException(string message) { }
         public TestRecordingMismatchException(string message, System.Exception innerException) { }
     }
-    public partial class TestRecordingOptions
+    public partial class TestRetryHelper
     {
-        public TestRecordingOptions() { }
-        public bool CompareBodies { get { throw null; } set { } }
-        public System.Collections.Generic.List<string> IgnoredHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.List<string> IgnoredQueryParameters { get { throw null; } set { } }
-        public System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } set { } }
-        public System.Collections.Generic.List<string> SanitizedHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } set { } }
+        public TestRetryHelper(bool noWait) { }
+        public System.Threading.Tasks.Task<T> RetryAsync<T>(System.Func<System.Threading.Tasks.Task<T>> operation, int maxIterations = 20, System.TimeSpan delay = default(System.TimeSpan)) { throw null; }
     }
     public partial class TestTimeoutException : System.Exception
     {
         public TestTimeoutException() { }
         public TestTimeoutException(string message) { }
         public TestTimeoutException(string message, System.Exception innerException) { }
-    }
-    public partial class UseSyncMethodsInterceptor : Castle.DynamicProxy.IInterceptor
-    {
-        public UseSyncMethodsInterceptor(bool forceSync) { }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
-        public void Intercept(Castle.DynamicProxy.IInvocation invocation) { }
-        public partial class SyncPageableWrapper<T> : System.ClientModel.AsyncCollectionResult<T>
-        {
-            protected SyncPageableWrapper() { }
-            public SyncPageableWrapper(System.ClientModel.CollectionResult<T> enumerable) { }
-            public override System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page) { throw null; }
-            public override System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync() { throw null; }
-            protected override System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page) { throw null; }
-        }
     }
 }
 namespace Microsoft.ClientModel.TestFramework.Mocks
@@ -396,23 +430,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomDefaultMatcher : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>
-    {
-        public CustomDefaultMatcher() { }
-        public bool? CompareBodies { get { throw null; } set { } }
-        public string ExcludedHeaders { get { throw null; } set { } }
-        public string IgnoredHeaders { get { throw null; } set { } }
-        public string IgnoredQueryParameters { get { throw null; } set { } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class HeaderCondition : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderCondition>
     {
         public HeaderCondition(string key, string valueRegex) { }
@@ -430,11 +447,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
     }
     public partial class HeaderRegexSanitizer : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer>
     {
-        public HeaderRegexSanitizer(string key, string value, string regex, string groupForReplace) { }
-        public string GroupForReplace { get { throw null; } }
+        public HeaderRegexSanitizer(string key) { }
+        public string GroupForReplace { get { throw null; } set { } }
         public string Key { get { throw null; } }
-        public string Regex { get { throw null; } }
-        public string Value { get { throw null; } }
+        public string Regex { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
         public static Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer CreateWithQueryParameter(string headerKey, string queryParameter, string sanitizedValue) { throw null; }
         protected virtual Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -538,36 +555,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StartInformation : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>
-    {
-        public StartInformation(string xRecordingFile, string xRecodingAssetsFiles) { }
-        public string XRecodingAssetsFiles { get { throw null; } }
-        public string XRecordingFile { get { throw null; } }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.StartInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.StartInformation startInformation) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.StartInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.StartInformation System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.StartInformation System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class StartPlaybackResponse : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>
-    {
-        internal StartPlaybackResponse() { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse (System.ClientModel.ClientResult result) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class StartRecordResponse : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse>
     {
         internal StartRecordResponse() { }
@@ -596,92 +583,58 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StopPlaybackResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StopPlaybackResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StopRecordRequest : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>
-    {
-        public StopRecordRequest() { }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest stopRecordRequest) { throw null; }
-        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TestProxyClient
     {
         protected TestProxyClient() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult AddBodilessMatcher(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddBodilessMatcher(string matcherType, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddBodilessMatcherAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddBodilessMatcherAsync(string matcherType, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddBodyKeySanitizer(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddBodyKeySanitizer(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddBodyKeySanitizerAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddBodyKeySanitizerAsync(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.BodyKeySanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddBodyRegexSanitizer(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddBodyRegexSanitizer(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddBodyRegexSanitizerAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddBodyRegexSanitizerAsync(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.BodyRegexSanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddCustomMatcher(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddCustomMatcher(string matcherType, Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher matcher, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddCustomMatcherAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddCustomMatcherAsync(string matcherType, Microsoft.ClientModel.TestFramework.TestProxy.CustomDefaultMatcher matcher, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddHeaderSanitizer(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddHeaderSanitizer(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddHeaderSanitizerAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddHeaderSanitizerAsync(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.HeaderRegexSanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddHeaderTransform(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddHeaderTransform(string transformType, Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform transform, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddHeaderTransformAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddHeaderTransformAsync(string transformType, Microsoft.ClientModel.TestFramework.TestProxy.HeaderTransform transform, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddSanitizer(string sanitizerType, System.BinaryData sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult AddSanitizer(string sanitizerType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddSanitizerAsync(string sanitizerType, System.BinaryData sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddSanitizerAsync(string sanitizerType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult AddTransform(string transformType, System.BinaryData transform, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult AddTransform(string transformType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddTransformAsync(string transformType, System.BinaryData transform, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddTransformAsync(string transformType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddUriSanitizer(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult AddUriSanitizer(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddUriSanitizerAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddUriSanitizerAsync(string sanitizerType, Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer sanitizer, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult RemoveSanitizers(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove sanitizers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult RemoveSanitizers(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> RemoveSanitizersAsync(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.SanitizersToRemove sanitizers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> RemoveSanitizersAsync(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult SetMatcher(string matcherType, System.BinaryData matcher = null, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult SetMatcher(string matcherType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetMatcherAsync(string matcherType, System.BinaryData matcher = null, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetMatcherAsync(string matcherType, System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult SetRecordingTransportOptions(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions proxyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult SetRecordingTransportOptions(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetRecordingTransportOptionsAsync(string recordingId, Microsoft.ClientModel.TestFramework.TestProxy.ProxyOptions proxyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> SetRecordingTransportOptionsAsync(string recordingId, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse> StartPlayback(Microsoft.ClientModel.TestFramework.TestProxy.StartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>> StartPlayback(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult StartPlayback(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StartPlaybackResponse>> StartPlaybackAsync(Microsoft.ClientModel.TestFramework.TestProxy.StartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>>> StartPlaybackAsync(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StartPlaybackAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse> StartRecord(Microsoft.ClientModel.TestFramework.TestProxy.StartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse> StartRecord(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult StartRecord(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse>> StartRecordAsync(Microsoft.ClientModel.TestFramework.TestProxy.StartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StartRecordResponse>> StartRecordAsync(Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StartRecordAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult StopPlayback(string recordingId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StopPlaybackResponse> StopPlayback(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StopPlaybackAsync(string recordingId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Microsoft.ClientModel.TestFramework.TestProxy.StopPlaybackResponse>> StopPlaybackAsync(string recordingId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult StopRecord(string recordingId, string recordingSkip, Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest variables, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult StopRecord(string recordingId, string recordingSkip, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StopRecordAsync(string recordingId, string recordingSkip, Microsoft.ClientModel.TestFramework.TestProxy.StopRecordRequest variables, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>> StopRecord(string recordingId, string recordingSkip, System.Collections.Generic.IDictionary<string, string> variables, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> StopRecordAsync(string recordingId, string recordingSkip, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<System.Collections.Generic.IReadOnlyDictionary<string, string>>> StopRecordAsync(string recordingId, string recordingSkip, System.Collections.Generic.IDictionary<string, string> variables, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TestProxyClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
         public TestProxyClientOptions() { }
+    }
+    public partial class TestProxyStartInformation : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>
+    {
+        public TestProxyStartInformation(string xRecordingFile, string xRecodingAssetsFiles) { }
+        public string XRecodingAssetsFiles { get { throw null; } }
+        public string XRecordingFile { get { throw null; } }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation testProxyStartInformation) { throw null; }
+        protected virtual Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.TestProxyStartInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UriRegexSanitizer : System.ClientModel.Primitives.IJsonModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>, System.ClientModel.Primitives.IPersistableModel<Microsoft.ClientModel.TestFramework.TestProxy.UriRegexSanitizer>
     {

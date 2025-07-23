@@ -15,11 +15,11 @@ namespace TestProxy {
   @post
   op StartPlayback(
     @doc("File location of the recording.")
-    @body body: StartInformation
+    @body body: TestProxyStartInformation
     ): {
     @statusCode statusCode: 200;
     @header("x-recording-id") recordingId: string;
-    @body response: {};
+    @body response: Record<string>;
   } | TestProxyErrorResponse;
 
   @doc("Stop playback for a test.")
@@ -39,7 +39,7 @@ namespace TestProxy {
   @post
   op StartRecord(
     @doc("File location of the recording.")
-    @body body: StartInformation
+    @body body: TestProxyStartInformation
     ): {
     @statusCode statusCode: 200;
     @header("x-recording-id") recordingId: string;
@@ -57,9 +57,10 @@ namespace TestProxy {
     @header("x-recording-skip")
     recordingSkip: string,
     @doc("Variables for the recording.")
-    @body variables: {}
+    @body variables: Record<string>
     ): {
     @statusCode statusCode: 200;
+    @body response: Record<string>;
   } | TestProxyErrorResponse;
 
   @doc("Set the proxy recording options.")
@@ -90,11 +91,13 @@ namespace TestProxy {
 
   // Base operation for overloading
 @route("/admin/addsanitizer")
+@access(Access.internal)
 @summary("Add a sanitizer.")
+@post
 op addSanitizer(
   @header("x-abstraction-identifier") 
   @doc("The type of sanitizer.")
-  sanitizerType: string,
+  sanitizerType: SanitizerType,
   
   @header("x-recording-id")
   @doc("The recording ID to apply the sanitizer to.")
@@ -107,11 +110,17 @@ op addSanitizer(
 
 // Body Key Sanitizer overload
 @overload(addSanitizer)
+@access(Access.internal)
 @doc("Stop recording for a test.")
+@post
 op addBodyKeySanitizer(
-  sanitizerType: "BodyKeySanitizer",
+  @header("x-abstraction-identifier")
+  sanitizerType: SanitizerType,
+
+  @header("x-recording-id")
+  @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
-  
+
   @doc("The body for a header regex sanitizer.")
   sanitizer: BodyKeySanitizer
 ): {
@@ -121,8 +130,14 @@ op addBodyKeySanitizer(
 // Header Regex Sanitizer overload
 @overload(addSanitizer)
 @doc("Add header sanitizer.")
+@access(Access.internal)
+@post
 op addHeaderSanitizer(
-  sanitizerType: "HeaderRegexSanitizer",
+  @header("x-abstraction-identifier")
+  sanitizerType: SanitizerType,
+
+  @header("x-recording-id")
+  @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
   
   @doc("The body for a header regex sanitizer.")
@@ -133,8 +148,14 @@ op addHeaderSanitizer(
 
 // URI Regex Sanitizer overload
 @overload(addSanitizer)
+@access(Access.internal)
+@post
 op addUriSanitizer(
-  sanitizerType: "UriRegexSanitizer",
+  @header("x-abstraction-identifier")
+  sanitizerType: SanitizerType,
+
+  @header("x-recording-id")
+  @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
   
   @doc("The body for a URI regex sanitizer.")
@@ -146,8 +167,14 @@ op addUriSanitizer(
 // Body Regex Sanitizer overload
 @overload(addSanitizer)
 @doc("Add a sanitizer.")
+@access(Access.internal)
+@post
 op addBodyRegexSanitizer(
-  sanitizerType: "BodyRegexSanitizer",
+  @header("x-abstraction-identifier")
+  sanitizerType: SanitizerType,
+
+  @header("x-recording-id")
+  @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
   
   @doc("The body for a body regex sanitizer.")
@@ -156,50 +183,30 @@ op addBodyRegexSanitizer(
   @statusCode statusCode: 200;
 } | TestProxyErrorResponse;
 
-// Base operation for overloading
+@access(Access.internal)
 @route("/admin/setmatcher")
+@post
 @summary("Add a matcher.")
+@doc("Add a matcher.")
 op setMatcher(
-  @header("x-abstraction-identifier") 
-  @doc("The type of matcher.")
-  matcherType: string,
+  @header("x-abstraction-identifier")
+  @doc("The type of matcher to add.")
+  matcherType: MatcherType,
   
   @header("x-recording-id")
   @doc("The recording ID to apply the matcher to.")
   recordingId?: string,
   
-  @body matcher?: unknown
-): {
-  @statusCode statusCode: 200;
-} | TestProxyErrorResponse;
-
-// Bodiless Matcher overload
-@overload(setMatcher)
-@summary("Add a bodiless matcher.")
-@doc("Add a bodiless matcher.")
-op addBodilessMatcher(
-  matcherType: "BodilessMatcher",
-  recordingId?: string
-): {
-  @statusCode statusCode: 200;
-} | TestProxyErrorResponse;
-
-// Custom Default Matcher overload
-@overload(setMatcher)
-@summary("Add a custom matcher.")
-@doc("Add a custom matcher.")
-op addCustomMatcher(
-  matcherType: "CustomDefaultMatcher",
-  recordingId?: string,
-  
-  @doc("The body for a custom matcher.")
-  matcher: CustomDefaultMatcher
+  @body 
+  @doc("The matcher configuration (only required for CustomDefaultMatcher).")
+  matcher?: CustomDefaultMatcher
 ): {
   @statusCode statusCode: 200;
 } | TestProxyErrorResponse;
 
 @route("/admin/addtransform")
 @summary("Add a transform.")
+@post
 op addTransform(
   @header("x-abstraction-identifier") 
   @doc("The type of transform.")
@@ -218,8 +225,15 @@ op addTransform(
 @overload(addTransform)
 @summary("Add a header transform.")
 @doc("Add a header transform.")
+@access(Access.internal)
+@post
 op addHeaderTransform(
-  transformType: "HeaderTransform",
+  @header("x-abstraction-identifier")
+  @doc("The type of transform.")
+  transformType: string,
+
+  @header("x-recording-id")
+  @doc("The recording ID to apply the transform to.")
   recordingId?: string,
   
   @doc("The body for a header transform.")

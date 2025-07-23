@@ -10,9 +10,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.TestProxy;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework
 {
     /// <summary> The AddUriSanitizerRequest. </summary>
     internal partial class AddUriSanitizerRequest : IJsonModel<AddUriSanitizerRequest>
@@ -39,13 +39,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AddUriSanitizerRequest)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("sanitizerType"u8);
-            writer.WriteStringValue(SanitizerType);
-            if (Optional.IsDefined(RecordingId))
-            {
-                writer.WritePropertyName("recordingId"u8);
-                writer.WriteStringValue(RecordingId);
             }
             writer.WritePropertyName("sanitizer"u8);
             writer.WriteObjectValue(Sanitizer, options);
@@ -91,22 +84,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 return null;
             }
-            string sanitizerType = default;
-            string recordingId = default;
             UriRegexSanitizer sanitizer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("sanitizerType"u8))
-                {
-                    sanitizerType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("recordingId"u8))
-                {
-                    recordingId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("sanitizer"u8))
                 {
                     sanitizer = UriRegexSanitizer.DeserializeUriRegexSanitizer(prop.Value, options);
@@ -117,7 +98,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddUriSanitizerRequest(sanitizerType, recordingId, sanitizer, additionalBinaryDataProperties);
+            return new AddUriSanitizerRequest(sanitizer, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

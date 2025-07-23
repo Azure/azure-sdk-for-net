@@ -45,14 +45,14 @@ public class TestProxyProcess
     public int? ProxyPortHttp => _proxyPortHttp;
 
     /// <summary>
-    /// TODO.
+    /// The port used for HTTP connections to the proxy.
     /// </summary>
     public int? ProxyPortHttps => _proxyPortHttps;
 
     internal TestProxyClient? Client { get; }
 
     /// <summary>
-    /// TODO.
+    /// Initializes static members of the <see cref="TestProxyProcess"/> class.
     /// </summary>
     /// <exception cref="InvalidOperationException"></exception>
     static TestProxyProcess()

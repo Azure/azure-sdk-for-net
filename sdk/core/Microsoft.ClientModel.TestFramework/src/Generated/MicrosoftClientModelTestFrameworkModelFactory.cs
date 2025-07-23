@@ -14,20 +14,13 @@ namespace Microsoft.ClientModel.TestFramework
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MicrosoftClientModelTestFrameworkModelFactory
     {
-        /// <summary> The StartInformation. </summary>
+        /// <summary> The TestProxyStartInformation. </summary>
         /// <param name="xRecordingFile"></param>
         /// <param name="xRecodingAssetsFiles"></param>
-        /// <returns> A new <see cref="TestProxy.StartInformation"/> instance for mocking. </returns>
-        public static StartInformation StartInformation(string xRecordingFile = default, string xRecodingAssetsFiles = default)
+        /// <returns> A new <see cref="TestProxy.TestProxyStartInformation"/> instance for mocking. </returns>
+        public static TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = default, string xRecodingAssetsFiles = default)
         {
-            return new StartInformation(xRecordingFile, xRecodingAssetsFiles, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The StartPlaybackResponse. </summary>
-        /// <returns> A new <see cref="TestProxy.StartPlaybackResponse"/> instance for mocking. </returns>
-        public static StartPlaybackResponse StartPlaybackResponse()
-        {
-            return new StartPlaybackResponse(additionalBinaryDataProperties: null);
+            return new TestProxyStartInformation(xRecordingFile, xRecodingAssetsFiles, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The StopPlaybackResponse. </summary>
@@ -42,13 +35,6 @@ namespace Microsoft.ClientModel.TestFramework
         public static StartRecordResponse StartRecordResponse()
         {
             return new StartRecordResponse(additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The StopRecordRequest. </summary>
-        /// <returns> A new <see cref="TestProxy.StopRecordRequest"/> instance for mocking. </returns>
-        public static StopRecordRequest StopRecordRequest()
-        {
-            return new StopRecordRequest(additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProxyOptions. </summary>
@@ -107,9 +93,9 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="regex"></param>
         /// <param name="groupForReplace"></param>
         /// <returns> A new <see cref="TestProxy.HeaderRegexSanitizer"/> instance for mocking. </returns>
-        public static TestProxy.HeaderRegexSanitizer HeaderRegexSanitizer(string key = default, string value = default, string regex = default, string groupForReplace = default)
+        public static HeaderRegexSanitizer HeaderRegexSanitizer(string key = default, string value = default, string regex = default, string groupForReplace = default)
         {
-            return new TestProxy.HeaderRegexSanitizer(key, value, regex, groupForReplace, additionalBinaryDataProperties: null);
+            return new HeaderRegexSanitizer(key, value, regex, groupForReplace, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The UriRegexSanitizer. </summary>
@@ -117,9 +103,9 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="value"></param>
         /// <param name="groupForReplace"></param>
         /// <returns> A new <see cref="TestProxy.UriRegexSanitizer"/> instance for mocking. </returns>
-        public static TestProxy.UriRegexSanitizer UriRegexSanitizer(string regex = default, string value = default, string groupForReplace = default)
+        public static UriRegexSanitizer UriRegexSanitizer(string regex = default, string value = default, string groupForReplace = default)
         {
-            return new TestProxy.UriRegexSanitizer(regex, value, groupForReplace, additionalBinaryDataProperties: null);
+            return new UriRegexSanitizer(regex, value, groupForReplace, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BodyRegexSanitizer. </summary>
@@ -149,17 +135,6 @@ namespace Microsoft.ClientModel.TestFramework
         public static HeaderCondition HeaderCondition(string key = default, string valueRegex = default)
         {
             return new HeaderCondition(key, valueRegex, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The CustomDefaultMatcher. </summary>
-        /// <param name="excludedHeaders"></param>
-        /// <param name="compareBodies"></param>
-        /// <param name="ignoredHeaders"></param>
-        /// <param name="ignoredQueryParameters"></param>
-        /// <returns> A new <see cref="TestProxy.CustomDefaultMatcher"/> instance for mocking. </returns>
-        public static CustomDefaultMatcher CustomDefaultMatcher(string excludedHeaders = default, bool? compareBodies = default, string ignoredHeaders = default, string ignoredQueryParameters = default)
-        {
-            return new CustomDefaultMatcher(excludedHeaders, compareBodies, ignoredHeaders, ignoredQueryParameters, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The HeaderTransform. </summary>

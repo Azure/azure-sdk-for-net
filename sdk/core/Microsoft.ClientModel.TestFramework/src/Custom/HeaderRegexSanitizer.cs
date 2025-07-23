@@ -26,5 +26,10 @@ public partial class HeaderRegexSanitizer
     /// the specified query parameter within the specified header value.
     /// </returns>
     public static HeaderRegexSanitizer CreateWithQueryParameter(string headerKey, string queryParameter, string sanitizedValue) =>
-        new(headerKey, sanitizedValue, $@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)", "group");
+        new(headerKey)
+        {
+            Value = sanitizedValue,
+            Regex = $@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)",
+            GroupForReplace = "group"
+        };
 }

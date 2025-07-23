@@ -41,12 +41,21 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             }
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Value);
-            writer.WritePropertyName("regex"u8);
-            writer.WriteStringValue(Regex);
-            writer.WritePropertyName("groupForReplace"u8);
-            writer.WriteStringValue(GroupForReplace);
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(Regex))
+            {
+                writer.WritePropertyName("regex"u8);
+                writer.WriteStringValue(Regex);
+            }
+            if (Optional.IsDefined(GroupForReplace))
+            {
+                writer.WritePropertyName("groupForReplace"u8);
+                writer.WriteStringValue(GroupForReplace);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

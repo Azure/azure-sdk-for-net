@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -14,7 +15,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The CustomDefaultMatcher. </summary>
-    public partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
+    internal partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -174,5 +175,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomDefaultMatcher>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="customDefaultMatcher"> The <see cref="CustomDefaultMatcher"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(CustomDefaultMatcher customDefaultMatcher)
+        {
+            if (customDefaultMatcher == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(customDefaultMatcher, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

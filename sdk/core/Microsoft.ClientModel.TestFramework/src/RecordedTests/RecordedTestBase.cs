@@ -5,12 +5,14 @@ using Castle.DynamicProxy;
 using Microsoft.ClientModel.TestFramework.TestProxy;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,19 +21,11 @@ using System.Threading.Tasks;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// TODO>
 /// </summary>
 [NonParallelizable]
-public class RecordedTestBase : ClientTestBase
+public abstract class RecordedTestBase : ClientTestBase
 {
-    private static string EmptyGuid = Guid.Empty.ToString();
-    private static readonly object s_syncLock = new();
-    //private static bool s_ranTestProxyValidation;
-    //private TestProxyProcess? _proxy;
-    private DateTime _testStartTime = DateTime.Now; // TODO
-    internal const string SanitizeValue = "Sanitized";
-    internal const string AssetsJson = "assets.json";
-
     // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
     // as it is the most restrictive of all platforms
     private static readonly HashSet<char> s_invalidChars = new HashSet<char>(new char[]
@@ -42,9 +36,29 @@ public class RecordedTestBase : ClientTestBase
             (char)21, (char)22, (char)23, (char)24, (char)25, (char)26, (char)27, (char)28, (char)29, (char)30,
             (char)31, ':', '*', '?', '\\', '/'
     });
+    private static string EmptyGuid = Guid.Empty.ToString();
+    private static readonly object s_syncLock = new();
+    private static bool s_ranTestProxyValidation;
+    private TestProxyProcess? _proxy;
+    private DateTime _testStartTime;
 
     /// <summary>
-    /// TODO
+    /// TODO.
+    /// </summary>
+    public const string SanitizeValue = "Sanitized";
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public const string AssetsJson = "assets.json";
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public virtual string? AssetsJsonPath { get; }
+
+    /// <summary>
+    /// TODO.
     /// </summary>
     public TestRecording? Recording { get; private set; }
 
@@ -56,7 +70,12 @@ public class RecordedTestBase : ClientTestBase
     /// <summary>
     /// TODO.
     /// </summary>
-    public virtual string? AssetsJsonPath { get; }
+    protected bool ValidateClientInstrumentation { get; set; }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    protected override DateTime TestStartTime => _testStartTime;
 
     /// <summary>
     /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
@@ -125,7 +144,40 @@ public class RecordedTestBase : ClientTestBase
     /// The list of sanitizers to remove. Sanitizer IDs can be found in Test Proxy docs.
     /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md
     /// </summary>
-    public List<string> SanitizersToRemove { get; } = new() { };
+    public List<string> SanitizersToRemove { get; } = new()
+        {
+            "AZSDK2003", // Location header
+            "AZSDK2006", // x-ms-rename-source
+            "AZSDK2007", // x-ms-file-rename-source
+            "AZSDK2008", // x-ms-copy-source
+            "AZSDK2020", // x-ms-request-id
+            "AZSDK2030", // Operation-location header
+            "AZSDK3420", // $..targetResourceId
+            "AZSDK3423", // $..source
+            "AZSDK3424", // $..to
+            "AZSDK3425", // $..from
+            "AZSDK3430", // $..id
+            "AZSDK3433", // $..userId
+            "AZSDK3447", // $.key - app config key - not a secret
+            "AZSDK3448", // $.value[*].key - search key - not a secret
+            "AZSDK3451", // $..storageContainerUri - used for mixed reality - no sas token
+            "AZSDK3478", // $..accountName
+            "AZSDK3488", // $..targetResourceRegion
+            "AZSDK3490", // $..etag
+            "AZSDK3491", // $..functionUri
+            "AZSDK3493", // $..name
+            "AZSDK3494", // $..friendlyName
+            "AZSDK3495", // $..targetModelLocation
+            "AZSDK3496", // $..resourceLocation
+            "AZSDK4001", // host name regex
+        };
+
+    /// <summary>
+    /// Flag you can (temporarily) enable to save failed test recordings
+    /// and debug/re-run at the point of failure without re-running
+    /// potentially lengthy live tests.
+    /// </summary>
+    public bool SaveDebugRecordingsOnFailure { get; set; }
 
     /// <summary>
     /// Whether or not to compare bodies from the request and the recorded request during playback.
@@ -134,12 +186,21 @@ public class RecordedTestBase : ClientTestBase
     public bool CompareBodies { get; set; } = true;
 
     /// <summary>
+    /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
+    /// should use the default Guid format. The default Guid format contains hyphens.
+    /// The default value is <value>false</value>.
+    /// </summary>
+    public bool UseDefaultGuidFormatForClientRequestId { get; set; } = false;
+
+    /// <summary>
     /// Request headers whose values can change between recording and playback without causing request matching
     /// to fail. The presence or absence of the header itself is still respected in matching.
     /// </summary>
     public HashSet<string> IgnoredHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Date",
+            "x-ms-date",
+            "x-ms-client-request-id",
             "User-Agent",
             "Request-Id",
             "traceparent"
@@ -156,34 +217,16 @@ public class RecordedTestBase : ClientTestBase
     /// <summary>
     /// If set to true, the proxy will be configured to connect on ports 5000 and 5001. This is useful when running the proxy locally for debugging recorded test issues.
     /// </summary>
-    protected bool UseLocalDebugProxy { get; set; } = false;
+    protected bool UseLocalDebugProxy { get; set; }
 
     /// <summary>
-    /// TODO.
-    /// </summary>
-    protected bool ValidateClientInstrumentation { get; set; }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    protected override DateTime TestStartTime => _testStartTime;
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="isAsync"></param>
-    public RecordedTestBase(bool isAsync) : base(isAsync)
-    {
-    }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="RecordedTestBase"/>.
+    /// Creats a new instance of <see cref="RecordedTestBase"/>.
     /// </summary>
     /// <param name="isAsync">True if this instance is testing the async API variants false otherwise.</param>
     /// <param name="mode">Indicates which <see cref="RecordedTestMode" /> this instance should run under.</param>
     protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
     {
-        Mode = mode ?? RecordedTestMode.Playback; // TODO.
+        Mode = mode ?? TestEnvironment.GlobalTestMode;
         AssetsJsonPath = GetAssetsJson();
     }
 
@@ -193,8 +236,14 @@ public class RecordedTestBase : ClientTestBase
     /// <param name="mode"></param>
     /// <param name="sessionFile"></param>
     /// <returns></returns>
-    protected Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) => throw new NotImplementedException();
-                //await TestRecording.CreateAsync(_proxy ?? throw new InvalidOperationException("test proxy cannot be null"), mode, new StartInformation("", sessionFile)).ConfigureAwait(false);
+    protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile)
+    {
+        if (_proxy is null)
+        {
+            throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
+        }
+        return await TestRecording.CreateAsync(mode, sessionFile, _proxy, this).ConfigureAwait(false);
+    }
 
     /// <summary>
     /// TODO.
@@ -209,14 +258,15 @@ public class RecordedTestBase : ClientTestBase
 
         if (Mode == RecordedTestMode.Playback)
         {
-            // Not making the timeout zero so retry code still goes async
-            // TODO clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
-            // TODO clientOptions.Retry.Mode = RetryMode.Fixed;
+            // TODO
+            //// Not making the timeout zero so retry code still goes async
+            //clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
+            //clientOptions.Retry.Mode = RetryMode.Fixed;
         }
         // No need to set the transport if we are in Live mode
         if (Mode != RecordedTestMode.Live)
         {
-            // TODO - clientOptions.Transport = recording.CreateTransport(clientOptions.Transport);
+            clientOptions.Transport = recording?.CreateTransport(clientOptions.Transport ?? throw new ArgumentNullException(nameof(clientOptions.Transport)));
         }
 
         return clientOptions;
@@ -236,7 +286,7 @@ public class RecordedTestBase : ClientTestBase
 
         string fileName = $"{name}{async}.json";
 
-        var repoRoot = TestEnvironment.RepositoryRoot ?? throw new InvalidOperationException("repository root is null"); // TODO;
+        var repoRoot = TestEnvironment.RepositoryRoot ?? throw new InvalidOperationException("TestEnvironment.RepositoryRoot cannot be null");
 
         // this needs to be updated to purely relative to repo root
         var result = Path.Combine(
@@ -255,19 +305,19 @@ public class RecordedTestBase : ClientTestBase
 
     private string? GetAssetsJson()
     {
-        var path = GetSessionFileDirectory();
+        string? path = GetSessionFileDirectory();
 
         while (true)
         {
-            var assetsJsonPresent = path == null ? false : File.Exists(Path.Combine(path, "assets.json"));
+            var assetsJsonPresent = File.Exists(Path.Combine(path ?? string.Empty, "assets.json"));
 
             // Check for root .git directory or, less commonly, a .git file for git worktrees.
-            string? gitRootPath = path == null ? null : Path.Combine(path, ".git");
+            string gitRootPath = Path.Combine(path ?? string.Empty, ".git");
             var isGitRoot = Directory.Exists(gitRootPath) || File.Exists(gitRootPath);
 
             if (assetsJsonPresent)
             {
-                return Path.Combine(path!, AssetsJson);
+                return Path.Combine(path ?? string.Empty, AssetsJson);
             }
             else if (isGitRoot)
             {
@@ -290,7 +340,7 @@ public class RecordedTestBase : ClientTestBase
             testAdapter.Properties.Get(ClientTestFixtureAttribute.RecordingDirectorySuffixKey)?.ToString() :
             null;
         return Path.Combine(
-            "", // TODO - TestEnvironment.GetSourcePath(GetType().Assembly),
+            TestEnvironment.GetSourcePath(GetType().Assembly),
             "SessionRecords",
             additionalParameterName == null ? className : $"{className}({additionalParameterName})");
     }
@@ -307,7 +357,7 @@ public class RecordedTestBase : ClientTestBase
         }
     }
 
-    // TODO
+    // TODO - add diagnostics stuff
     ///// <summary>
     ///// Add a static <see cref="Diagnostics.AzureEventSourceListener"/> which will redirect SDK logging
     ///// to Console.Out for easy debugging.
@@ -321,16 +371,15 @@ public class RecordedTestBase : ClientTestBase
     [OneTimeSetUp]
     public void InitializeRecordedTestClass()
     {
-        // TODO
         //if (Mode == RecordedTestMode.Live || Debugger.IsAttached)
         //{
         //    Logger = new TestLogger();
         //}
 
-        //if (Mode != RecordedTestMode.Live)
-        //{
-        //    _proxy = TestProxy.Start(UseLocalDebugProxy);
-        //}
+        if (Mode != RecordedTestMode.Live)
+        {
+            _proxy = TestProxyProcess.Start(UseLocalDebugProxy);
+        }
     }
 
     /// <summary>
@@ -343,53 +392,53 @@ public class RecordedTestBase : ClientTestBase
         //Logger?.Dispose();
         //Logger = null;
 
-        //// Clean up unused test files
-        //if (Mode == RecordedTestMode.Record)
-        //{
-        //    var testClassDirectory = new DirectoryInfo(GetSessionFileDirectory());
-        //    if (!testClassDirectory.Exists)
-        //    {
-        //        return;
-        //    }
+        // Clean up unused test files
+        if (Mode == RecordedTestMode.Record)
+        {
+            var testClassDirectory = new DirectoryInfo(GetSessionFileDirectory());
+            if (!testClassDirectory.Exists)
+            {
+                return;
+            }
 
-        //    var knownMethods = new HashSet<string>();
+            var knownMethods = new HashSet<string>();
 
-        //    // Management tests record in ctor
-        //    knownMethods.Add(GetType().Name);
+            // Management tests record in ctor
+            knownMethods.Add(GetType().Name);
 
-        //    // Collect all method names
-        //    foreach (var method in GetType()
-        //                 .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
-        //    {
-        //        // TestCase attribute allows specifying a test name
-        //        foreach (var attribute in method.GetCustomAttributes(true))
-        //        {
-        //            if (attribute is ITestData { TestName: { } name })
-        //            {
-        //                knownMethods.Add(name);
-        //            }
-        //        }
+            // Collect all method names
+            foreach (var method in GetType()
+                         .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance))
+            {
+                // TestCase attribute allows specifying a test name
+                foreach (var attribute in method.GetCustomAttributes(true))
+                {
+                    if (attribute is ITestData { TestName: { } name })
+                    {
+                        knownMethods.Add(name);
+                    }
+                }
 
-        //        knownMethods.Add(method.Name);
-        //    }
+                knownMethods.Add(method.Name);
+            }
 
-        //    foreach (var fileInfo in testClassDirectory.EnumerateFiles())
-        //    {
-        //        bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
+            foreach (var fileInfo in testClassDirectory.EnumerateFiles())
+            {
+                bool used = knownMethods.Any(knownMethod => fileInfo.Name.StartsWith(knownMethod, StringComparison.CurrentCulture));
 
-        //        if (!used)
-        //        {
-        //            try
-        //            {
-        //                fileInfo.Delete();
-        //            }
-        //            catch
-        //            {
-        //                // Ignore
-        //            }
-        //        }
-        //    }
-        //}
+                if (!used)
+                {
+                    try
+                    {
+                        fileInfo.Delete();
+                    }
+                    catch
+                    {
+                        // Ignore
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -397,49 +446,48 @@ public class RecordedTestBase : ClientTestBase
     /// </summary>
     /// <param name="options"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     protected async Task SetProxyOptionsAsync(ProxyOptions options)
     {
-        await Task.Yield();
-        throw new NotImplementedException();
-        //if (Mode == RecordedTestMode.Record && options != null)
-        //{
-        //    await _proxy.Client.SetRecordingTransportOptionsAsync(Recording.RecordingId, options).ConfigureAwait(false);
-        //}
+        if (Mode == RecordedTestMode.Record && options != null)
+        {
+            if (_proxy?.Client is null)
+            {
+                throw new InvalidOperationException("proxy options cannot be set because the test proxy has not been started.");
+            }
+            await _proxy.Client.SetRecordingTransportOptionsAsync(Recording?.RecordingId, options).ConfigureAwait(false);
+        }
     }
 
     /// <summary>
     /// TODO.
     /// </summary>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <exception cref="IgnoreException"></exception>
     [SetUp]
     public virtual async Task StartTestRecordingAsync()
     {
-        await Task.Yield();
-        throw new NotImplementedException();
-        //// initialize test start time in case test is skipped
-        //_testStartTime = DateTime.UtcNow;
+        // initialize test start time in case test is skipped
+        _testStartTime = DateTime.UtcNow;
 
-        //// Only create test recordings for the latest version of the service
-        //TestContext.TestAdapter test = TestContext.CurrentContext.Test;
-        //if (Mode != RecordedTestMode.Live &&
-        //    test.Properties.ContainsKey("_SkipRecordings"))
-        //{
-        //    throw new IgnoreException((string)test.Properties.Get("_SkipRecordings"));
-        //}
+        // Only create test recordings for the latest version of the service
+        TestContext.TestAdapter test = TestContext.CurrentContext.Test;
+        if (Mode != RecordedTestMode.Live &&
+            test.Properties.ContainsKey("_SkipRecordings"))
+        {
+            throw new IgnoreException((string?)test.Properties.Get("_SkipRecordings"));
+        }
 
-        //if (Mode == RecordedTestMode.Live &&
-        //    test.Properties.ContainsKey("_SkipLive"))
-        //{
-        //    throw new IgnoreException((string)test.Properties.Get("_SkipLive"));
-        //}
+        if (Mode == RecordedTestMode.Live &&
+            test.Properties.ContainsKey("_SkipLive"))
+        {
+            throw new IgnoreException((string?)test.Properties.Get("_SkipLive"));
+        }
 
-        //Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath());
-        //ValidateClientInstrumentation = Recording.HasRequests;
+        Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath()).ConfigureAwait(false);
+        ValidateClientInstrumentation = Recording.HasRequests;
 
-        //// don't include test proxy overhead as part of test time
-        //_testStartTime = DateTime.UtcNow;
+        // don't include test proxy overhead as part of test time
+        _testStartTime = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -450,32 +498,30 @@ public class RecordedTestBase : ClientTestBase
     [TearDown]
     public virtual async Task StopTestRecordingAsync()
     {
-        await Task.Yield();
-        throw new NotImplementedException();
-        //        bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
-        //        if (ValidateClientInstrumentation && testPassed)
-        //        {
-        //            throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
-        //        }
+        bool testPassed = TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Passed;
+        if (ValidateClientInstrumentation && testPassed)
+        {
+            throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
+        }
 
-        //        bool save = testPassed;
-        //#if DEBUG
-        //        save |= SaveDebugRecordingsOnFailure;
-        //#endif
-        //        if (Recording != null)
-        //        {
-        //            await Recording.DisposeAsync(save);
+        bool save = testPassed;
+#if DEBUG
+        save |= SaveDebugRecordingsOnFailure;
+#endif
+        if (Recording != null)
+        {
+            await Recording.DisposeAsync(save).ConfigureAwait(false);
 
-        //            if (Mode == RecordedTestMode.Record && save)
-        //            {
-        //                AssertTestProxyToolIsInstalled();
-        //            }
-        //        }
+            if (Mode == RecordedTestMode.Record && save)
+            {
+                AssertTestProxyToolIsInstalled();
+            }
+        }
 
-        //        if (_proxy != null)
-        //        {
-        //            await _proxy.CheckProxyOutputAsync();
-        //        }
+        if (_proxy != null)
+        {
+            await _proxy.CheckProxyOutputAsync().ConfigureAwait(false);
+        }
     }
 
     /// <summary>
@@ -485,31 +531,28 @@ public class RecordedTestBase : ClientTestBase
     /// <param name="client"></param>
     /// <param name="preInterceptors"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor>? preInterceptors)
     {
-        throw new NotImplementedException();
-        //ValidateClientInstrumentation = false;
-        //return base.InstrumentClient(clientType, client, preInterceptors);
+        ValidateClientInstrumentation = false;
+        return base.InstrumentClient(clientType, client, preInterceptors);
     }
 
+    // TODO
     ///// <summary>
     ///// TODO.
     ///// </summary>
     ///// <param name="operationType"></param>
     ///// <param name="operation"></param>
     ///// <returns></returns>
-    ///// <exception cref="NotImplementedException"></exception>
     //protected internal override object InstrumentOperation(Type operationType, object operation)
     //{
-    //    throw new NotImplementedException();
-    //    //var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
-    //    //var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
-    //    //return ProxyGenerator.CreateClassProxyWithTarget(
-    //    //    operationType,
-    //    //    new[] { typeof(IInstrumented) },
-    //    //    operation,
-    //    //    interceptorArray);
+    //    var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+    //    var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
+    //    return ProxyGenerator.CreateClassProxyWithTarget(
+    //        operationType,
+    //        new[] { typeof(IInstrumented) },
+    //        operation,
+    //        interceptorArray);
     //}
 
     /// <summary>
@@ -557,75 +600,75 @@ public class RecordedTestBase : ClientTestBase
 
     private void AssertTestProxyToolIsInstalled()
     {
-        throw new NotImplementedException();
-        //if (s_ranTestProxyValidation ||
-        //    TestEnvironment.GlobalIsRunningInCI ||
-        //    !TestEnvironment.IsWindows ||
-        //    AssetsJsonPath == null)
-        //{
-        //    return;
-        //}
+        if (s_ranTestProxyValidation ||
+            !TestEnvironment.IsWindows ||
+            AssetsJsonPath == null)
+        {
+            return;
+        }
 
-        //lock (s_syncLock)
-        //{
-        //    if (s_ranTestProxyValidation)
-        //    {
-        //        return;
-        //    }
+        lock (s_syncLock)
+        {
+            if (s_ranTestProxyValidation)
+            {
+                return;
+            }
 
-        //    s_ranTestProxyValidation = true;
+            s_ranTestProxyValidation = true;
 
-        //    try
-        //    {
-        //        if (IsTestProxyToolInstalled())
-        //        {
-        //            return;
-        //        }
+            try
+            {
+                if (IsTestProxyToolInstalled())
+                {
+                    return;
+                }
 
-        //        string path = Path.Combine(
-        //            TestEnvironment.RepositoryRoot,
-        //            "eng",
-        //            "scripts",
-        //            "Install-TestProxyTool.ps1");
+                string path = Path.Combine(
+                    TestEnvironment.RepositoryRoot ?? throw new InvalidOperationException("TestEnvironment.RepositoryRoot is null"),
+                    "eng",
+                    "scripts",
+                    "Install-TestProxyTool.ps1");
 
-        //        var processInfo = new ProcessStartInfo("pwsh.exe", path)
-        //        {
-        //            UseShellExecute = true
-        //        };
+                var processInfo = new ProcessStartInfo("pwsh.exe", path)
+                {
+                    UseShellExecute = true
+                };
 
-        //        var process = Process.Start(processInfo);
+                var process = Process.Start(processInfo);
 
-        //        if (process != null)
-        //        {
-        //            process.WaitForExit();
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // Ignore
-        //    }
-        //}
+                if (process != null)
+                {
+                    process.WaitForExit();
+                }
+            }
+            catch (Exception)
+            {
+                // Ignore
+            }
+        }
     }
 
     private bool IsTestProxyToolInstalled()
     {
-        throw new NotImplementedException();
-        //var processInfo = new ProcessStartInfo("dotnet.exe", "tool list --global")
-        //{
-        //    RedirectStandardOutput = true,
-        //    UseShellExecute = false
-        //};
+        var processInfo = new ProcessStartInfo("dotnet.exe", "tool list --global")
+        {
+            RedirectStandardOutput = true,
+            UseShellExecute = false
+        };
 
-        //var process = Process.Start(processInfo);
-        //var output = process.StandardOutput.ReadToEnd();
+        var process = Process.Start(processInfo);
+        var output = process?.StandardOutput.ReadToEnd();
 
-        //if (process != null)
-        //{
-        //    process.WaitForExit();
-        //}
+        if (process != null)
+        {
+            process.WaitForExit();
+        }
 
-        //return output != null && output.Contains("azure.sdk.tools.testproxy");
+        return output != null && output.Contains("azure.sdk.tools.testproxy");
     }
 
-    //protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
 }
