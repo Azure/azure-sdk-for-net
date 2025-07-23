@@ -38,7 +38,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
-        private readonly string? _methodName;
+        private readonly string _methodName;
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
-            _methodName = methodName;
+            _methodName = methodName ?? convenienceMethod.Signature.Name ?? "Operation";
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
@@ -113,9 +113,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual MethodSignature CreateSignature()
         {
-            var methodName = _methodName ?? _convenienceMethod.Signature.Name;
             return new MethodSignature(
-                methodName,
+                _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
                 _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
