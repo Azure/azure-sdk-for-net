@@ -676,7 +676,23 @@ directive:
               'Registering',
               'TimedOut'
           ];
-          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState'
+          $['x-ms-enum']['name'] = 'ManagedInstancePropertiesProvisioningState';
+    - from: ManagedInstanceOperations.json
+      where: $.definitions.UpsertManagedServerOperationStepWithEstimatesAndDuration.properties.status
+      transform: >
+          $['enum'] = [
+              'NotStarted',
+              'InProgress',
+              'SlowedDown',
+              'Completed',
+              'Failed',
+              'Canceled'
+          ];
+          $['readOnly'] = true;
+          $['x-ms-enum'] = {
+            "name": "ManagementOperationStepState",
+            "modelAsString": true
+          };
     - from: DatabaseSecurityAlertPolicies.json
       where: $.paths
       transform: >

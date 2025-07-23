@@ -4295,7 +4295,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="Models.UpsertManagedServerOperationStep"/> instance for mocking. </returns>
-        public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, UpsertManagedServerOperationStepWithEstimatesAndDurationStatus? status = null)
+        public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = null, DateTimeOffset? stepEndOn = null, string timeElapsed = null, int? order = null, string name = null, UpsertManagedServerOperationStepStatus? status = null)
         {
             return new UpsertManagedServerOperationStep(
                 stepStartOn,
