@@ -9,14 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec;
+using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Models
+namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     internal partial class PrivateLinkResourceData : IJsonModel<PrivateLinkResourceData>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -179,25 +178,5 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="data"> The <see cref="PrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PrivateLinkResourceData data)
-        {
-            if (data == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResourceData"/> from. </param>
-        public static explicit operator PrivateLinkResourceData(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.Generator.Management
         private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
         {
             // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
-            systemType.Type.Update(@namespace: systemType._type.Namespace);
+            systemType.Update(@namespace: systemType._type.Namespace);
         }
 
         private HashSet<ModelProvider> _updated = new();

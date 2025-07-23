@@ -146,7 +146,7 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 string poolID = "HelloWorldPool";
 
-ImageReference imageReference = new ImageReference()
+BatchVmImageReference imageReference = new BatchVmImageReference()
 {
     Publisher = "MicrosoftWindowsServer",
     Offer = "WindowsServer",
@@ -156,7 +156,7 @@ ImageReference imageReference = new ImageReference()
 
 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
 
-BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
+BatchPoolCreateOptions batchPoolCreateOptions = new BatchPoolCreateOptions(
 poolID, "STANDARD_D1_v2")
 {
     VirtualMachineConfiguration = virtualMachineConfiguration,
@@ -240,19 +240,27 @@ using BatchClient batchClient = BatchClient.Open(cred);
 
 ## Error Handling
 
-In `Azure.Compute.Batch` when a command fails due to an error on the server side an exception of type RequestFailedException will be thrown.  Inside that exception will be the rest response json from the Batch Service which contains the details about the error.  This json conforms to the structure of the BatchError object found under the Generated folder.  You can  
+In `Azure.Compute.Batch` when a command fails due to an error on the server side an exception of type RequestFailedException will be thrown.  Inside that exception will an "ErrorCode" property which is a string representation of the error, a "Status" property which represents the HTTP status code, a "Message" which provides a summary of the error, and in some cases their will be additional information in the "Data" Dictionary.  
 
 ```C# Snippet:Batch_Migration_Exception
 try
 {
-    Response response = batchClient.ResizePool("fakepool", resizeContent);
+    batchClient.ResizePool("fakepool", resizeOptions);
 }
 catch (Azure.RequestFailedException e)
 {
-    BatchError err = BatchError.FromException(e);
-    if (err.Code == BatchErrorCodeStrings.PoolNotFound)
+    if ((e.ErrorCode == BatchErrorCode.PoolNotFound) &&
+        (e.Status == 404))
     {
-        // do something
+        // write out the summary message
+        Console.WriteLine(e.Message);
+
+        // additional message details
+        foreach (DictionaryEntry item in e.Data)
+        {
+            Console.WriteLine(item.Key);
+            Console.WriteLine(item.Value);
+        }
     }
 }
 ```
@@ -323,7 +331,7 @@ using Azure.ResourceManager.Batch.Models;
     BatchAccountResource batchAccount = _armClient.GetBatchAccountResource(batchAccountIdentifier);
 
     var poolName = "HelloWorldPool";
-    var imageReference = new BatchImageReference()
+    var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
     {
         Publisher = "canonical",
         Offer = "0001-com-ubuntu-server-jammy",
@@ -367,7 +375,7 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 string poolID = "HelloWorldPool";
 
-ImageReference imageReference = new ImageReference()
+BatchVmImageReference imageReference = new BatchVmImageReference()
 {
     Publisher = "MicrosoftWindowsServer",
     Offer = "WindowsServer",
@@ -377,7 +385,7 @@ ImageReference imageReference = new ImageReference()
 
 VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
 
-BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
+BatchPoolCreateOptions batchPoolCreateOptions = new BatchPoolCreateOptions(
 poolID, "STANDARD_D1_v2")
 {
     VirtualMachineConfiguration = virtualMachineConfiguration,
@@ -409,7 +417,7 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 BatchPool batchPool = batchClient.GetPool("poolID");
 
 Console.WriteLine(batchPool.Id);
-Console.WriteLine(batchPool.Url);
+Console.WriteLine(batchPool.Uri);
 Console.WriteLine(batchPool.AllocationState);
 ```
 #### ListPools 
@@ -453,6 +461,17 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 batchClient.DeletePool("poolID");
 ```
+Optionally you can use the returned `DeletePoolOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeletePool_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+DeletePoolOperation operation = batchClient.DeletePool("poolID");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
+```
 
 #### PatchPool
 
@@ -470,10 +489,10 @@ With `Azure.Compute.Batch` call `UpdatePool`.
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchPoolUpdateContent updateContent = new BatchPoolUpdateContent();
-updateContent.Metadata.Add(new MetadataItem("name", "value"));
+BatchPoolUpdateOptions updateOptions = new BatchPoolUpdateOptions();
+updateOptions.Metadata.Add(new BatchMetadataItem("name", "value"));
 
-batchClient.UpdatePool("poolID", updateContent);
+batchClient.UpdatePool("poolID", updateOptions);
 ```
 
 #### UpdatePool
@@ -493,8 +512,8 @@ With `Azure.Compute.Batch` call `ReplacePoolProperties`.
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-MetadataItem[] metadataItems = new MetadataItem[] {
-  new MetadataItem("name", "value")};
+BatchMetadataItem[] metadataItems = new BatchMetadataItem[] {
+  new BatchMetadataItem("name", "value")};
 
 BatchApplicationPackageReference[] batchApplicationPackageReferences = new BatchApplicationPackageReference[] {
         new BatchApplicationPackageReference("applicationPackage")
@@ -511,8 +530,8 @@ BatchCertificateReference[] certificateReferences = new BatchCertificateReferenc
         }
 };
 
-BatchPoolReplaceContent replaceContent = new BatchPoolReplaceContent(certificateReferences, batchApplicationPackageReferences, metadataItems);
-batchClient.ReplacePoolProperties("poolID", replaceContent);
+BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataItems);
+batchClient.ReplacePoolProperties("poolID", replaceOptions);
 ```
 #### ResizePool
 
@@ -532,13 +551,13 @@ With `Azure.Compute.Batch` call `ResizePool`.
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchPoolResizeContent resizeContent = new BatchPoolResizeContent()
+BatchPoolResizeOptions resizeOptions = new BatchPoolResizeOptions()
 {
     TargetDedicatedNodes = 1,
     ResizeTimeout = TimeSpan.FromMinutes(10),
 };
 
-batchClient.ResizePool("poolID", resizeContent);
+batchClient.ResizePool("poolID", resizeOptions);
 ```
                     
 #### StopResizePool
@@ -573,7 +592,7 @@ string autoscaleFormula1 = "$TargetDedicatedNodes=0;$TargetLowPriorityNodes=0;$N
 boundPool.EnableAutoScale(autoscaleFormula1);
 ```
 
-With `Azure.Compute.Batch` call `EnablePoolAutoScale` and pass in a `BatchPoolEnableAutoScaleContent` object.
+With `Azure.Compute.Batch` call `EnablePoolAutoScale` and pass in a `BatchPoolEnableAutoScaleOptions` object.
 
 ```C# Snippet:Batch_Migration_EnableAutoScalePool
 BatchClient batchClient = new BatchClient(
@@ -581,13 +600,13 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 TimeSpan evalInterval = TimeSpan.FromMinutes(6);
 string poolASFormulaNew = "$TargetDedicated = 1;";
 
-BatchPoolEnableAutoScaleContent batchPoolEnableAutoScaleContent = new BatchPoolEnableAutoScaleContent()
+BatchPoolEnableAutoScaleOptions batchPoolEnableAutoScaleOptions = new BatchPoolEnableAutoScaleOptions()
 {
     AutoScaleEvaluationInterval = evalInterval,
     AutoScaleFormula = poolASFormulaNew,
 };
 
-batchClient.EnablePoolAutoScale("poolId", batchPoolEnableAutoScaleContent);
+batchClient.EnablePoolAutoScale("poolId", batchPoolEnableAutoScaleOptions);
 ```
 
 #### DisableAutoScalePool
@@ -598,7 +617,7 @@ Previously in `Microsoft.Azure.Batch` to disable auto scale in a pool you could 
 boundPool.DisableAutoScale();
 ```
 
-With `Azure.Compute.Batch` call `DisablePoolAutoScale` and pass in a `BatchPoolEnableAutoScaleContent` object.
+With `Azure.Compute.Batch` call `DisablePoolAutoScale`.
 
 ```C# Snippet:Batch_Migration_DisableAutoScalePool
 BatchClient batchClient = new BatchClient(
@@ -616,15 +635,15 @@ const string poolASFormula2 = "$TargetDedicatedNodes=1;";
 AutoScaleRun eval = boundPool.EvaluateAutoScale(poolASFormula2);
 ```
 
-With `Azure.Compute.Batch` call `EvaluatePoolAutoScale` and pass in a `BatchPoolEvaluateAutoScaleContent` object.
+With `Azure.Compute.Batch` call `EvaluatePoolAutoScale` and pass in a `BatchPoolEvaluateAutoScaleOptions` object.
 
 ```C# Snippet:Batch_Migration_EvaluatePoolAutoScale
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 string poolASFormulaNew = "$TargetDedicated = 1;";
-BatchPoolEvaluateAutoScaleContent batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleContent(poolASFormulaNew);
-AutoScaleRun eval = batchClient.EvaluatePoolAutoScale("poolId", batchPoolEvaluateAutoScaleContent);
+BatchPoolEvaluateAutoScaleOptions batchPoolEvaluateAutoScaleOptions = new BatchPoolEvaluateAutoScaleOptions(poolASFormulaNew);
+AutoScaleRun eval = batchClient.EvaluatePoolAutoScale("poolId", batchPoolEvaluateAutoScaleOptions);
 ```
 
 #### ListPoolNodeCounts
@@ -713,13 +732,13 @@ unboundJob.PoolInformation = new PoolInformation() { PoolId = "poolID" };
 unboundJob.Commit();
 ```
 
-With `Azure.Compute.Batch` call `CreateJob` with a parameter of type `BatchJobCreateContent`.
+With `Azure.Compute.Batch` call `CreateJob` with a parameter of type `BatchJobCreateOptions`.
 
 ```C# Snippet:Batch_Readme_JobCreation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+batchClient.CreateJob(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
 
 #### GetJob
@@ -774,7 +793,7 @@ Previously in `Microsoft.Azure.Batch` to delete a job you could call the `Delete
 batchClient.JobOperations.DeleteJob("jobID");
 ```
 
-With `Azure.Compute.Batch` call `DeleteJob`.
+With `Azure.Compute.Batch` call `DeleteJob`. 
 
 ```C# Snippet:Batch_Migration_DeleteJob
 BatchClient batchClient = new BatchClient(
@@ -782,7 +801,17 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 batchClient.DeleteJob("jobID");
 ```
+Optionally you can use the returned `DeleteJobOperation` object to wait for the operation to complete.
 
+```C# Snippet:Batch_Migration_DeleteJob_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+DeleteJobOperation operation = batchClient.DeleteJob("jobID");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
+```
 #### Replace Job
 
 Previously in `Microsoft.Azure.Batch` to replace a job you could call the `Commit` method from the JobOperations object on a modified `CloudJob`.
@@ -801,7 +830,7 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 BatchJob job = batchClient.GetJob("jobID");
-job.OnAllTasksComplete = OnAllBatchTasksComplete.TerminateJob;
+job.AllTasksCompleteMode = BatchAllTasksCompleteMode.TerminateJob;
 batchClient.ReplaceJob("jobID", job);
 ```
 
@@ -815,16 +844,16 @@ refreshableJob.NetworkConfiguration = new JobNetworkConfiguration("0.0.0.0", fal
 refreshableJob.CommitChanges();
 ```
 
-With `Azure.Compute.Batch` call `UpdateJob` with a parameter of type `BatchJobUpdateContent`.
+With `Azure.Compute.Batch` call `UpdateJob` with a parameter of type `BatchJobUpdateOptions`.
 
 ```C# Snippet:Batch_Migration_UpdateJob
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchJobUpdateContent batchUpdateContent = new BatchJobUpdateContent();
-batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+BatchJobUpdateOptions batchUpdateOptions = new BatchJobUpdateOptions();
+batchUpdateOptions.Metadata.Add(new BatchMetadataItem("name", "value"));
 
-batchClient.UpdateJob("jobID", batchUpdateContent);
+batchClient.UpdateJob("jobID", batchUpdateOptions);
 ```
 
 #### Disable Job
@@ -836,14 +865,26 @@ CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
 updatedJob.Disable(DisableJobOption.Terminate);
 ```
 
-With `Azure.Compute.Batch` call `DisableJob` with a parameter of type `BatchJobDisableContent`.
+With `Azure.Compute.Batch` call `DisableJob` with a parameter of type `BatchJobDisableOptions`. 
 
 ```C# Snippet:Batch_Migration_DisableJob
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
-batchClient.DisableJob("jobID", content);
+BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
+batchClient.DisableJob("jobID", options);
+```
+Optionally you can use the returned `DisableJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DisableJob_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
+DisableJobOperation operation = batchClient.DisableJob("jobID", options);
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
 ```
 
 #### Enable Job
@@ -855,13 +896,24 @@ CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
 updatedJob.Enable();
 ```
 
-With `Azure.Compute.Batch` call `EnableJob`.
+With `Azure.Compute.Batch` call `EnableJob`. 
 
 ```C# Snippet:Batch_Migration_EnableJob
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 batchClient.EnableJob("jobID");
+```
+Optionally you can use the returned `EnableJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_EnableJob_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+EnableJobOperation operation = batchClient.EnableJob("jobID");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
 ```
 
 #### ListJobPreparationAndReleaseTaskStatus
@@ -915,13 +967,24 @@ CloudJob job = batchClient.JobOperations.GetJob("jobID");
 job.Terminate("need some reason");
 ```
 
-With `Azure.Compute.Batch` call `TerminateJob`.
+With `Azure.Compute.Batch` call `TerminateJob`. 
 
 ```C# Snippet:Batch_Migration_TerminateJob
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 batchClient.TerminateJob("jobID");
+```
+Optionally you can use the returned `TerminateJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_TerminateJob_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+TerminateJobOperation operation = batchClient.TerminateJob("jobID");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
 ```
 
 ### Job Schedule Operations
@@ -949,7 +1012,7 @@ jobSchedule.Metadata = metadata;
 jobSchedule.Commit();
 ```
 
-With `Azure.Compute.Batch` call `CreateJobSchedule` with a parameter of type `BatchJobScheduleCreateContent`.
+With `Azure.Compute.Batch` call `CreateJobSchedule` with a parameter of type `BatchJobScheduleCreateOptions`.
 
 ```C# Snippet:Batch_Migration_CreateJobSchedule
 BatchClient batchClient = new BatchClient(
@@ -968,7 +1031,7 @@ BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo)
     JobManagerTask = batchJobManagerTask,
 };
 
-BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", schedule, jobSpecification);
+BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", schedule, jobSpecification);
 
 batchClient.CreateJobSchedule(jobSchedule);
 ```
@@ -1004,7 +1067,7 @@ foreach (CloudJobSchedule item in jobSchedules)
 
 ```
 
-With `Azure.Compute.Batch` call `GetJobSchedules` with a parameter of type `BatchJobScheduleCreateContent`.
+With `Azure.Compute.Batch` call `GetJobSchedules`.
 
 ```C# Snippet:Batch_Migration_GetJobSchedules
 BatchClient batchClient = new BatchClient(
@@ -1024,13 +1087,24 @@ Previously in `Microsoft.Azure.Batch` to delete a job schedule you could call th
 batchClient.JobScheduleOperations.DeleteJobSchedule("jobScheduleId");
 ```
 
-With `Azure.Compute.Batch` call `DeleteJobSchedule`.
+With `Azure.Compute.Batch` call `DeleteJobSchedule`. 
 
 ```C# Snippet:Batch_Migration_DeleteJobSchedule
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 batchClient.DeleteJobSchedule("jobScheduleId");
+```
+Optionally you can use the returned `DeleteJobScheduleOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeleteJobSchedule_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+DeleteJobScheduleOperation operation = batchClient.DeleteJobSchedule("jobScheduleId");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
 ```
 
 #### Replace Job Schedule
@@ -1078,16 +1152,16 @@ jobSchedule.Metadata = new List<MetadataItem>()
 jobSchedule.CommitChanges();
 ```
 
-With `Azure.Compute.Batch` call `UpdateJobSchedule` with a parameter of type `BatchJobScheduleUpdateContent`.
+With `Azure.Compute.Batch` call `UpdateJobSchedule` with a parameter of type `BatchJobScheduleUpdateOptions`.
 
 ```C# Snippet:Batch_Migration_UpdateJobSchedule
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchJobScheduleUpdateContent batchUpdateContent = new BatchJobScheduleUpdateContent();
-batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+BatchJobScheduleUpdateOptions batchUpdateOptions = new BatchJobScheduleUpdateOptions();
+batchUpdateOptions.Metadata.Add(new BatchMetadataItem("name", "value"));
 
-batchClient.UpdateJobSchedule("jobID", batchUpdateContent);
+batchClient.UpdateJobSchedule("jobID", batchUpdateOptions);
 ```
 
 #### Disable Job Schedule
@@ -1134,7 +1208,7 @@ Previously in `Microsoft.Azure.Batch` to termainate a job schedule you could cal
 batchClient.JobScheduleOperations.TerminateJobSchedule("jobScheduleId");
 ```
 
-With `Azure.Compute.Batch` call `TerminateJobSchedule`.
+With `Azure.Compute.Batch` call `TerminateJobSchedule`. 
 
 ```C# Snippet:Batch_Migration_TerminateJobSchedule
 BatchClient batchClient = new BatchClient(
@@ -1142,7 +1216,17 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 batchClient.TerminateJobSchedule("jobScheduleId");
 ```
+Optionally you can use the returned `TerminateJobScheduleOperation` object to wait for the operation to complete.
 
+```C# Snippet:Batch_Migration_TerminateJobSchedule_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+TerminateJobScheduleOperation operation = batchClient.TerminateJobSchedule("jobScheduleId");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
+```
 ### Task Operations
 
 #### AddTask
@@ -1180,12 +1264,12 @@ batchClient.JobOperations.AddTask("jobId", tasksToAdd);
 
 With `Azure.Compute.Batch` there are three ways to add a task to a job.
 
-You can call `CreateTask` with a parameter of type `BatchTaskCreateContent` to create a single task
+You can call `CreateTask` with a parameter of type `BatchTaskCreateOptions` to create a single task
 ```C# Snippet:Batch_Readme_TaskCreation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+batchClient.CreateTask("jobId", new BatchTaskCreateOptions("taskId", $"echo Hello world"));
 ```
 
 You can call `CreateTaskCollection` with a `BatchTaskGroup` param to create up to 100 tasks.  This method represents the /jobs/{jobId}/addtaskcollection api
@@ -1194,30 +1278,29 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 BatchTaskGroup taskCollection = new BatchTaskGroup(
-    new BatchTaskCreateContent[]
+    new BatchTaskCreateOptions[]
     {
-        new BatchTaskCreateContent("task1", "cmd / c echo Hello World"),
-        new BatchTaskCreateContent("task2", "cmd / c echo Hello World")
+        new BatchTaskCreateOptions("task1", "cmd / c echo Hello World"),
+        new BatchTaskCreateOptions("task2", "cmd / c echo Hello World")
     });
 
-BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
+BatchCreateTaskCollectionResult batchCreateTaskCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
 ```
-Lastly you can call `CreateTasks` which is the replacement for the utility method found in `Microsoft.Azure.Batch`.  This method will package up the list of `BatchTaskCreateContent` tasks passed in and repeatly call the `batchClient.CreateTaskCollection()` with groups of tasks bundled into `BatchTaskGroup` objects.  This utility method allowed the user
-to select the number of parallel calls to `batchClient.CreateTaskCollection()`. See [Creating multiple Task](https://github.com/Azure/azure-sdk-for-net/blob/50a965255278aa2ca604daef81e26632f5b668f3/sdk/batch/Azure.Compute.Batch/samples/Sample2_Creating_Multiple_Tasks.md)
+Lastly you can call `CreateTasks` which has no limit to the number of tasks.  This method will package up the list of `BatchTaskCreateOptions` tasks passed in and repeatly call the `batchClient.CreateTaskCollection()` with groups of tasks bundled into `BatchTaskGroup` objects.  This utility method allows you to select the number of parallel calls to `batchClient.CreateTaskCollection()`. See [Creating multiple Task](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/samples/Sample2_Creating_Multiple_Tasks.md)
 
 ```C# Snippet:Batch_Sample02_CreateTasks_Default
 int tasksCount = 1000;
-List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create 1000 tasks in a single request using the default settings
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks);
 
 // Print the results
-Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.Pass, result.Fail);
+Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.PassCount, result.FailCount);
 ```
 
 #### GetTask
@@ -1366,7 +1449,7 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 BatchNode batchNode = batchClient.GetNode("<poolId>", "<nodeId>");
 Console.WriteLine(batchNode.Id);
-Console.WriteLine(batchNode.Url);
+Console.WriteLine(batchNode.Uri);
 Console.WriteLine(batchNode.State);
 ```
 
@@ -1404,7 +1487,7 @@ ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode("poolId", "c
 computeNode.Reboot();
 ```
 
-With `Azure.Compute.Batch` call `RebootNode`.
+With `Azure.Compute.Batch` call `RebootNode`. 
 
 ```C# Snippet:Batch_Migration_RebootNode
 BatchClient batchClient = new BatchClient(
@@ -1412,7 +1495,17 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 batchClient.RebootNode("poolId", "computeNodeId");
 ```
+Optionally you can use the returned `RebootNodeOperation` object to wait for the operation to complete.
 
+```C# Snippet:Batch_Migration_RebootNode_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+RebootNodeOperation operation = batchClient.RebootNode("poolId", "computeNodeId");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
+```
 #### CreateComputeNodeUser
 
 Previously in `Microsoft.Azure.Batch` to create a node user you could call the `CreateComputeNodeUser` method from `PoolOperations`.
@@ -1421,13 +1514,13 @@ Previously in `Microsoft.Azure.Batch` to create a node user you could call the `
 ComputeNodeUser bob = batchClient.PoolOperations.CreateComputeNodeUser("poolID", "batchNodeID");
 ```
 
-With `Azure.Compute.Batch` call `CreateNodeUserAsync` with a `BatchNodeUserCreateContent` param.
+With `Azure.Compute.Batch` call `CreateNodeUserAsync` with a `BatchNodeUserCreateOptions` param.
 
 ```C# Snippet:Batch_Migration_CreateNodeUser
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("userName")
+BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
 {
     Password = "userPassWord"
 };
@@ -1554,15 +1647,15 @@ Previously in `Microsoft.Azure.Batch` to upload logs to a node you could call th
 UploadBatchServiceLogsResult results = batchClient.PoolOperations.UploadComputeNodeBatchServiceLogs("poolId", "computeNodeId","containerUrl");
 ```
 
-With `Azure.Compute.Batch` call `UploadNodeLogs` with a param of type `UploadBatchServiceLogsContent`.
+With `Azure.Compute.Batch` call `UploadNodeLogs` with a param of type `UploadBatchServiceLogsOptions`.
 
 ```C# Snippet:Batch_Migration_UploadNodeLogs
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("containerUrl", DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
+UploadBatchServiceLogsOptions uploadBatchServiceLogsOptions = new UploadBatchServiceLogsOptions(new Uri("containerUrl"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
-UploadBatchServiceLogsResult uploadBatchServiceLogsResult = batchClient.UploadNodeLogs("poolId", "computeNodeId", uploadBatchServiceLogsContent);
+UploadBatchServiceLogsResult uploadBatchServiceLogsResult = batchClient.UploadNodeLogs("poolId", "computeNodeId", uploadBatchServiceLogsOptions);
 ```
 
 ### Certificate Operations
@@ -1583,7 +1676,7 @@ With `Azure.Compute.Batch` call `CreateCertificate` with a `BatchCertificate` pa
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 byte[] certData = File.ReadAllBytes("certPath");
-BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", Convert.ToBase64String(certData))
+BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
 {
     CertificateFormat = BatchCertificateFormat.Cer,
     Password = "",
@@ -1607,7 +1700,7 @@ BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
 byte[] certData = File.ReadAllBytes("certPath");
-BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", Convert.ToBase64String(certData))
+BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
 {
     CertificateFormat = BatchCertificateFormat.Pfx,
     Password = "password",
@@ -1652,7 +1745,7 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 foreach (BatchCertificate item in batchClient.GetCertificates())
 {
-        // do something
+    // do something
 }
 ```
 
@@ -1664,7 +1757,7 @@ Previously in `Microsoft.Azure.Batch` to delete a Certificate you could call the
 batchClient.CertificateOperations.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
 ```
 
-With `Azure.Compute.Batch` call `DeleteCertificate` to delete a certificate.
+With `Azure.Compute.Batch` call `DeleteCertificate` to delete a certificate. 
 
 ```C# Snippet:Batch_Migration_DeleteCertificate
 BatchClient batchClient = new BatchClient(
@@ -1672,7 +1765,17 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
 ```
+Optionally you can use the returned `DeleteCertificateOperation` object to wait for the operation to complete.
 
+```C# Snippet:Batch_Migration_DeleteCertificate_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+DeleteCertificateOperation operation = batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
+```
 #### CancelDeleteCertificate
 
 Previously in `Microsoft.Azure.Batch` to cancel a delete of a Certificate you could call the `CancelDeleteCertificate` method from `CertificateOperations`.

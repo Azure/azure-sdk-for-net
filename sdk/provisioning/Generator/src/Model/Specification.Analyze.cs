@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -11,6 +12,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Generator.Model;
 
 namespace Azure.Provisioning.Generator.Model;
 
@@ -145,7 +147,7 @@ public abstract partial class Specification
             });
     }
 
-    private Dictionary<Type, MethodInfo> FindConstructibleResources()
+    protected virtual Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         // Find constructible resources
         Dictionary<Type, MethodInfo> resources = [];
@@ -332,14 +334,15 @@ public abstract partial class Specification
             GetOrCreateModelType(property.PropertyType, resource),
             property,
             armParameter: null)
-            {
-                IsReadOnly = !required && !property.CanWrite,
-                IsRequired = required,
-                Description = resource.Spec!.DocComments.GetSummary(property)
-            };
+        {
+            IsReadOnly = !required && !property.CanWrite,
+            IsRequired = required,
+            Description = resource.Spec!.DocComments.GetSummary(property)
+        };
 
         // Fish out any path attributes
-        string? path = property.GetCustomAttributes().Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
+        var attributes = property.GetCustomAttributes();
+        string? path = attributes.Where(a => a.GetType().Name == "WirePathAttribute").FirstOrDefault()?.ToString();
         if (path is not null)
         {
             prop.Path = path.Split('.');
@@ -357,6 +360,13 @@ public abstract partial class Specification
                 ("Tags", "IDictionary<String,String>") => ["tags"],
                 _ => null
             };
+        }
+
+        // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
+        var editorBrowsableAttribute = attributes.FirstOrDefault(a => a.GetType() == typeof(EditorBrowsableAttribute));
+        if (editorBrowsableAttribute is not null)
+        {
+            prop.HideLevel = PropertyHideLevel.HideProperty | PropertyHideLevel.HideField;
         }
 
         // Collections always appear readonly so we should look at whether the
@@ -515,7 +525,7 @@ public abstract partial class Specification
                     }
                 }
             }
-            
+
             return model;
         }
     }

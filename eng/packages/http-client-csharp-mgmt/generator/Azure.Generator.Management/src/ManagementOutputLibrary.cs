@@ -81,11 +81,13 @@ namespace Azure.Generator.Management
                 scopeCandidates[resource.ResourceScope].Add(resource);
             }
 
+            var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
             var mockableResources = new List<MockableResourceProvider>(scopeCandidates.Count)
             {
                 // add the arm client mockable resource
-                new MockableArmClientProvider(typeof(ArmClient), resources)
+                mockableArmClientResource
             };
+            ManagementClientGenerator.Instance.AddTypeToKeep(mockableArmClientResource.Name);
 
             foreach (var (scope, candidates) in scopeCandidates)
             {
@@ -93,6 +95,7 @@ namespace Azure.Generator.Management
                 {
                     var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates);
                     mockableResources.Add(mockableExtension);
+                    ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
                 }
             }
 

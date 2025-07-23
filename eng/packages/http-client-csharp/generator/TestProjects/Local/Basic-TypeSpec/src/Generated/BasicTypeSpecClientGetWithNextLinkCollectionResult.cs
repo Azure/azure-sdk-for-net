@@ -58,7 +58,7 @@ namespace BasicTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListWithNextLinkRequest(nextLink, _context) : _client.CreateListWithNextLinkRequest(_context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWithNextLinkRequest(nextLink, _context) : _client.CreateGetWithNextLinkRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
             scope.Start();
             try

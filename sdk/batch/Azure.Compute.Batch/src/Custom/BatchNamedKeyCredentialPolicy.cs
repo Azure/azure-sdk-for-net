@@ -120,7 +120,7 @@ namespace Azure.Compute.Batch.Custom
             {
                 if (header.Name.StartsWith(Constants.HeaderNames.OCPPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    headers.Add(new HttpHeader(header.Name.ToLowerInvariant(), header.Value,null));
+                    headers.Add(new HttpHeader(header.Name.ToLowerInvariant(), header.Value));
                 }
             }
 

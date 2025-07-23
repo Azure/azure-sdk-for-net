@@ -7,25 +7,26 @@
 - Management Plane (TSP-Old): 35
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Data Plane (Swagger): 114
-- Data Plane (TSP-Old): 31
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 3
+- Data Plane (TSP-Old): 30
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 4
 - No generator: 40
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 3
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 4
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk\eventgrid\Azure.Messaging.EventGrid.Namespaces |
 | healthdataaiservices | Azure.Health.Deidentification | sdk\healthdataaiservices\Azure.Health.Deidentification |
 | openai | Azure.AI.OpenAI | sdk\openai\Azure.AI.OpenAI |
+| schemaregistry | Azure.Data.SchemaRegistry | sdk\schemaregistry\Azure.Data.SchemaRegistry |
 
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 31
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 30
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -56,7 +57,6 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | sdk\onlineexperimentation\Azure.Analytics.OnlineExperimentation |
 | openai | Azure.AI.OpenAI.Assistants | sdk\openai\Azure.AI.OpenAI.Assistants |
 | purview | Azure.Analytics.Purview.DataMap | sdk\purview\Azure.Analytics.Purview.DataMap |
-| schemaregistry | Azure.Data.SchemaRegistry | sdk\schemaregistry\Azure.Data.SchemaRegistry |
 | translation | Azure.AI.Translation.Document | sdk\translation\Azure.AI.Translation.Document |
 | translation | Azure.AI.Translation.Text | sdk\translation\Azure.AI.Translation.Text |
 | vision | Azure.AI.Vision.ImageAnalysis | sdk\vision\Azure.AI.Vision.ImageAnalysis |

@@ -28,6 +28,8 @@ namespace Azure.Generator.Management.Providers
         }
         internal CSharpType ArmCoreType { get; }
 
+        protected override string BuildNamespace() => $"{base.BuildNamespace()}.Mocking";
+
         protected override string BuildName() => $"Mockable{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{ArmCoreType.Name}";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");

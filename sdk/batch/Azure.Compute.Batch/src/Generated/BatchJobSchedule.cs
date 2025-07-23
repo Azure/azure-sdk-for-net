@@ -56,13 +56,13 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNull(jobSpecification, nameof(jobSpecification));
 
             JobSpecification = jobSpecification;
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<BatchMetadataItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchJobSchedule"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the schedule within the Account. </param>
         /// <param name="displayName"> The display name for the schedule. </param>
-        /// <param name="url"> The URL of the Job Schedule. </param>
+        /// <param name="uri"> The URL of the Job Schedule. </param>
         /// <param name="eTag"> The ETag of the Job Schedule. This is an opaque string. You can use it to detect whether the Job Schedule has changed between requests. In particular, you can be pass the ETag with an Update Job Schedule request to specify that your changes should take effect only if nobody else has modified the schedule in the meantime. </param>
         /// <param name="lastModified"> The last modified time of the Job Schedule. This is the last time at which the schedule level data, such as the Job specification or recurrence information, changed. It does not factor in job-level changes such as new Jobs being created or Jobs changing state. </param>
         /// <param name="creationTime"> The creation time of the Job Schedule. </param>
@@ -74,13 +74,13 @@ namespace Azure.Compute.Batch
         /// <param name="jobSpecification"> The details of the Jobs to be created on this schedule. </param>
         /// <param name="executionInfo"> Information about Jobs that have been and will be run under this schedule. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
-        /// <param name="stats"> The lifetime resource usage statistics for the Job Schedule. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
+        /// <param name="jobScheduleStatistics"> The lifetime resource usage statistics for the Job Schedule. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSchedule(string id, string displayName, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobScheduleState? state, DateTimeOffset? stateTransitionTime, BatchJobScheduleState? previousState, DateTimeOffset? previousStateTransitionTime, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, BatchJobScheduleExecutionInfo executionInfo, IList<MetadataItem> metadata, BatchJobScheduleStatistics stats, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJobSchedule(string id, string displayName, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobScheduleState? state, DateTimeOffset? stateTransitionTime, BatchJobScheduleState? previousState, DateTimeOffset? previousStateTransitionTime, BatchJobScheduleConfiguration schedule, BatchJobSpecification jobSpecification, BatchJobScheduleExecutionInfo executionInfo, IList<BatchMetadataItem> metadata, BatchJobScheduleStatistics jobScheduleStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
-            Url = url;
+            Uri = uri;
             ETag = eTag;
             LastModified = lastModified;
             CreationTime = creationTime;
@@ -92,7 +92,7 @@ namespace Azure.Compute.Batch
             JobSpecification = jobSpecification;
             ExecutionInfo = executionInfo;
             Metadata = metadata;
-            Stats = stats;
+            JobScheduleStatistics = jobScheduleStatistics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -106,9 +106,9 @@ namespace Azure.Compute.Batch
         /// <summary> The display name for the schedule. </summary>
         public string DisplayName { get; }
         /// <summary> The URL of the Job Schedule. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> The ETag of the Job Schedule. This is an opaque string. You can use it to detect whether the Job Schedule has changed between requests. In particular, you can be pass the ETag with an Update Job Schedule request to specify that your changes should take effect only if nobody else has modified the schedule in the meantime. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> The last modified time of the Job Schedule. This is the last time at which the schedule level data, such as the Job specification or recurrence information, changed. It does not factor in job-level changes such as new Jobs being created or Jobs changing state. </summary>
         public DateTimeOffset? LastModified { get; }
         /// <summary> The creation time of the Job Schedule. </summary>
@@ -128,8 +128,8 @@ namespace Azure.Compute.Batch
         /// <summary> Information about Jobs that have been and will be run under this schedule. </summary>
         public BatchJobScheduleExecutionInfo ExecutionInfo { get; }
         /// <summary> A list of name-value pairs associated with the schedule as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<MetadataItem> Metadata { get; }
+        public IList<BatchMetadataItem> Metadata { get; }
         /// <summary> The lifetime resource usage statistics for the Job Schedule. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
-        public BatchJobScheduleStatistics Stats { get; }
+        public BatchJobScheduleStatistics JobScheduleStatistics { get; }
     }
 }

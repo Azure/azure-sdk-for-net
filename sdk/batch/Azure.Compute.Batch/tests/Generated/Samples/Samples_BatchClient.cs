@@ -148,9 +148,9 @@ namespace Azure.Compute.Batch.Samples
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool01", "Standard_D1_v2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D1_v2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
@@ -174,9 +174,9 @@ namespace Azure.Compute.Batch.Samples
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool01", "Standard_D1_v2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D1_v2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
@@ -362,9 +362,9 @@ mountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -384,7 +384,7 @@ AccountKey = "accountKey",
 },
 }, new MountConfiguration
 {
-AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "https://myaccount.file.core.windows.net/fileshare", "accountKey", "filesharepath")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "accountKey", new Uri("https://myaccount.file.core.windows.net/fileshare"), "filesharepath")
 {
 MountOptions = "mount options ver=1.0",
 },
@@ -413,9 +413,9 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -435,7 +435,7 @@ AccountKey = "accountKey",
 },
 }, new MountConfiguration
 {
-AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "https://myaccount.file.core.windows.net/fileshare", "accountKey", "filesharepath")
+AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "accountKey", new Uri("https://myaccount.file.core.windows.net/fileshare"), "filesharepath")
 {
 MountOptions = "mount options ver=1.0",
 },
@@ -556,18 +556,18 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "standard_d2s_v3")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
                     Sku = "20_04-lts",
                 }, "batch.node.ubuntu 20.04")
                 {
-                    OsDisk = new OSDisk
+                    OsDisk = new BatchOsDisk
                     {
-                        EphemeralOSDiskSettings = new DiffDiskSettings
+                        EphemeralOSDiskSettings = new BatchDiffDiskSettings
                         {
                             Placement = DiffDiskPlacement.CacheDisk,
                         },
@@ -596,18 +596,18 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "standard_d2s_v3")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
                     Sku = "20_04-lts",
                 }, "batch.node.ubuntu 20.04")
                 {
-                    OsDisk = new OSDisk
+                    OsDisk = new BatchOsDisk
                     {
-                        EphemeralOSDiskSettings = new DiffDiskSettings
+                        EphemeralOSDiskSettings = new BatchDiffDiskSettings
                         {
                             Placement = DiffDiskPlacement.CacheDisk,
                         },
@@ -706,9 +706,9 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -733,9 +733,9 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -838,9 +838,9 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -848,10 +848,15 @@ MountOptions = "mount options ver=1.0",
                     Version = "latest",
                 }, "batch.node.ubuntu 18.04")
                 {
-                    SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new UefiSettings
+                    SecurityProfile = new SecurityProfile
                     {
-                        SecureBootEnabled = false,
-                    }),
+                        EncryptionAtHost = true,
+                        SecurityType = SecurityTypes.TrustedLaunch,
+                        UefiSettings = new BatchUefiSettings
+                        {
+                            SecureBootEnabled = false,
+                        },
+                    },
                 },
                 TargetDedicatedNodes = 1,
             };
@@ -866,9 +871,9 @@ MountOptions = "mount options ver=1.0",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -876,10 +881,15 @@ MountOptions = "mount options ver=1.0",
                     Version = "latest",
                 }, "batch.node.ubuntu 18.04")
                 {
-                    SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new UefiSettings
+                    SecurityProfile = new SecurityProfile
                     {
-                        SecureBootEnabled = false,
-                    }),
+                        EncryptionAtHost = true,
+                        SecurityType = SecurityTypes.TrustedLaunch,
+                        UefiSettings = new BatchUefiSettings
+                        {
+                            SecureBootEnabled = false,
+                        },
+                    },
                 },
                 TargetDedicatedNodes = 1,
             };
@@ -986,9 +996,9 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
@@ -1001,7 +1011,7 @@ value = "myvalue",
                 EnableInterNodeCommunication = true,
                 TaskSlotsPerNode = 3,
                 TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
             };
             Response response = client.CreatePool(pool);
         }
@@ -1014,9 +1024,9 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
@@ -1029,7 +1039,7 @@ value = "myvalue",
                 EnableInterNodeCommunication = true,
                 TaskSlotsPerNode = 3,
                 TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
             };
             Response response = await client.CreatePoolAsync(pool);
         }
@@ -1132,16 +1142,16 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
                     Sku = "120_04-lts",
                 }, "batch.node.ubuntu 20.04")
                 {
-                    ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
+                    ContainerConfiguration = new BatchContainerConfiguration(ContainerType.DockerCompatible)
                     {
                         ContainerImageNames = { "busybox" },
                     },
@@ -1164,16 +1174,16 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
                     Sku = "120_04-lts",
                 }, "batch.node.ubuntu 20.04")
                 {
-                    ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
+                    ContainerConfiguration = new BatchContainerConfiguration(ContainerType.DockerCompatible)
                     {
                         ContainerImageNames = { "busybox" },
                     },
@@ -1324,9 +1334,9 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
@@ -1352,7 +1362,7 @@ Settings =
                 EnableInterNodeCommunication = true,
                 TaskSlotsPerNode = 3,
                 TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
                 TargetNodeCommunicationMode = BatchNodeCommunicationMode.Simplified,
             };
             Response response = client.CreatePool(pool);
@@ -1366,9 +1376,9 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "0001-com-ubuntu-server-focal",
@@ -1394,7 +1404,7 @@ Settings =
                 EnableInterNodeCommunication = true,
                 TaskSlotsPerNode = 3,
                 TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
                 TargetNodeCommunicationMode = BatchNodeCommunicationMode.Simplified,
             };
             Response response = await client.CreatePoolAsync(pool);
@@ -1484,9 +1494,9 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool002", "Standard_A1_v2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
@@ -1513,9 +1523,9 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool002", "Standard_A1_v2")
+            BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
             {
-                VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
@@ -1532,32 +1542,6 @@ Settings =
                 TargetDedicatedNodes = 2,
             };
             Response response = await client.CreatePoolAsync(pool);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeletePool_PoolDelete()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.DeletePool("poolId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeletePool_PoolDelete_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.DeletePoolAsync("poolId");
-
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -1970,12 +1954,12 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent
+            BatchPoolEnableAutoScaleOptions enableAutoScaleOptions = new BatchPoolEnableAutoScaleOptions
             {
                 AutoScaleFormula = "$TargetDedicated=0",
                 AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT8M"),
             };
-            Response response = client.EnablePoolAutoScale("poolId", content);
+            Response response = client.EnablePoolAutoScale("poolId", enableAutoScaleOptions);
         }
 
         [Test]
@@ -1986,12 +1970,12 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent
+            BatchPoolEnableAutoScaleOptions enableAutoScaleOptions = new BatchPoolEnableAutoScaleOptions
             {
                 AutoScaleFormula = "$TargetDedicated=0",
                 AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT8M"),
             };
-            Response response = await client.EnablePoolAutoScaleAsync("poolId", content);
+            Response response = await client.EnablePoolAutoScaleAsync("poolId", enableAutoScaleOptions);
         }
 
         [Test]
@@ -2038,8 +2022,8 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("$TargetDedicated=1");
-            Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("poolId", content);
+            BatchPoolEvaluateAutoScaleOptions evaluateAutoScaleOptions = new BatchPoolEvaluateAutoScaleOptions("$TargetDedicated=1");
+            Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("poolId", evaluateAutoScaleOptions);
         }
 
         [Test]
@@ -2050,102 +2034,8 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("$TargetDedicated=1");
-            Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("poolId", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ResizePool_PoolResize()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                targetDedicatedNodes = 1,
-                targetLowPriorityNodes = 0,
-            });
-            Response response = client.ResizePool("resizePool", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ResizePool_PoolResize_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                targetDedicatedNodes = 1,
-                targetLowPriorityNodes = 0,
-            });
-            Response response = await client.ResizePoolAsync("resizePool", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ResizePool_PoolResize_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            BatchPoolResizeContent content = new BatchPoolResizeContent
-            {
-                TargetDedicatedNodes = 1,
-                TargetLowPriorityNodes = 0,
-            };
-            Response response = client.ResizePool("resizePool", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ResizePool_PoolResize_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            BatchPoolResizeContent content = new BatchPoolResizeContent
-            {
-                TargetDedicatedNodes = 1,
-                TargetLowPriorityNodes = 0,
-            };
-            Response response = await client.ResizePoolAsync("resizePool", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_StopPoolResize_PoolStopResize()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.StopPoolResize("poolId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_StopPoolResize_PoolStopResize_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.StopPoolResizeAsync("poolId");
-
-            Console.WriteLine(response.Status);
+            BatchPoolEvaluateAutoScaleOptions evaluateAutoScaleOptions = new BatchPoolEvaluateAutoScaleOptions("$TargetDedicated=1");
+            Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("poolId", evaluateAutoScaleOptions);
         }
 
         [Test]
@@ -2202,7 +2092,7 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolReplaceContent pool = new BatchPoolReplaceContent(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<MetadataItem>())
+            BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
             {
                 StartTask = new BatchStartTask("/bin/bash -c 'echo start task'"),
             };
@@ -2217,103 +2107,11 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchPoolReplaceContent pool = new BatchPoolReplaceContent(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<MetadataItem>())
+            BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
             {
                 StartTask = new BatchStartTask("/bin/bash -c 'echo start task'"),
             };
             Response response = await client.ReplacePoolPropertiesAsync("poolId", pool);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RemoveNodes_PoolRemoveNodes()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                nodeList = new object[]
-            {
-"tvm-1695681911_1-20161122t224741z",
-"tvm-1695681911_2-20161122t224741z"
-            },
-            });
-            Response response = client.RemoveNodes("poolId", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RemoveNodes_PoolRemoveNodes_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                nodeList = new object[]
-            {
-"tvm-1695681911_1-20161122t224741z",
-"tvm-1695681911_2-20161122t224741z"
-            },
-            });
-            Response response = await client.RemoveNodesAsync("poolId", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RemoveNodes_PoolRemoveNodes_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "tvm-1695681911_1-20161122t224741z", "tvm-1695681911_2-20161122t224741z" });
-            Response response = client.RemoveNodes("poolId", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RemoveNodes_PoolRemoveNodes_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "tvm-1695681911_1-20161122t224741z", "tvm-1695681911_2-20161122t224741z" });
-            Response response = await client.RemoveNodesAsync("poolId", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteJob_DeleteJob()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.DeleteJob("jobId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteJob_DeleteJob_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.DeleteJobAsync("jobId");
-
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -2518,140 +2316,6 @@ Settings =
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJob_JobDisable()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                disableTasks = "terminate",
-            });
-            Response response = client.DisableJob("jobId", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJob_JobDisable_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                disableTasks = "terminate",
-            });
-            Response response = await client.DisableJobAsync("jobId", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DisableJob_JobDisable_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Terminate);
-            Response response = client.DisableJob("jobId", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DisableJob_JobDisable_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Terminate);
-            Response response = await client.DisableJobAsync("jobId", content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_EnableJob_JobEnable()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.EnableJob("jobId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_EnableJob_JobEnable_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.EnableJobAsync("jobId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJob_JobTerminate()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = client.TerminateJob("jobId", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJob_JobTerminate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = await client.TerminateJobAsync("jobId", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJob_JobTerminate_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.TerminateJob("jobId");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJob_JobTerminate_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.TerminateJobAsync("jobId");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_BatchClient_CreateJob_CreatesABasicJob()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2702,7 +2366,7 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
+            BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
                 PoolId = "poolId",
             })
@@ -2720,7 +2384,7 @@ Settings =
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
+            BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
                 PoolId = "poolId",
             })
@@ -3074,14 +2738,14 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
+            BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
                 AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
                 {
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
                     {
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
@@ -3109,7 +2773,7 @@ value = "myvalue",
                         {
                             ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
 FilePath = "myprogram2.exe",
 }},
                             EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3133,7 +2797,7 @@ StoreLocation = BatchCertificateStoreLocation.LocalMachine,
 StoreName = "Root",
 Visibility = {BatchCertificateVisibility.Task},
 }},
-                        Metadata = { new MetadataItem("myproperty", "myvalue") },
+                        Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
                         TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
                     },
                 },
@@ -3149,11 +2813,11 @@ Visibility = {BatchCertificateVisibility.Task},
                 {
                     ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
 FilePath = "myprogram.exe",
 }, new ResourceFile
 {
-StorageContainerUrl = "http://mystorage1.blob.core.windows.net/data?sas",
+StorageContainerUri = new Uri("http://mystorage1.blob.core.windows.net/data?sas"),
 FilePath = "datafolder",
 }},
                     EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3178,7 +2842,7 @@ Value = "myvalue",
                     },
                     RunExclusive = true,
                 },
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
             };
             Response response = client.CreateJob(job);
         }
@@ -3191,14 +2855,14 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
+            BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
                 AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
                 {
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
                     {
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
@@ -3226,7 +2890,7 @@ Value = "myvalue",
                         {
                             ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
 FilePath = "myprogram2.exe",
 }},
                             EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3250,7 +2914,7 @@ StoreLocation = BatchCertificateStoreLocation.LocalMachine,
 StoreName = "Root",
 Visibility = {BatchCertificateVisibility.Task},
 }},
-                        Metadata = { new MetadataItem("myproperty", "myvalue") },
+                        Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
                         TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
                     },
                 },
@@ -3266,11 +2930,11 @@ Visibility = {BatchCertificateVisibility.Task},
                 {
                     ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
 FilePath = "myprogram.exe",
 }, new ResourceFile
 {
-StorageContainerUrl = "http://mystorage1.blob.core.windows.net/data?sas",
+StorageContainerUri = new Uri("http://mystorage1.blob.core.windows.net/data?sas"),
 FilePath = "datafolder",
 }},
                     EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3295,7 +2959,7 @@ Value = "myvalue",
                     },
                     RunExclusive = true,
                 },
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
             };
             Response response = await client.CreateJobAsync(job);
         }
@@ -3380,7 +3044,7 @@ Value = "myvalue",
             {
                 thumbprintAlgorithm = "sha1",
                 thumbprint = "0123456789abcdef0123456789abcdef01234567",
-                data = "#####...",
+                data = "U3dhZ2dlciByb2Nrcw==",
                 certificateFormat = "pfx",
                 password = "<ExamplePassword>",
             });
@@ -3401,7 +3065,7 @@ Value = "myvalue",
             {
                 thumbprintAlgorithm = "sha1",
                 thumbprint = "0123456789abcdef0123456789abcdef01234567",
-                data = "#####...",
+                data = "U3dhZ2dlciByb2Nrcw==",
                 certificateFormat = "pfx",
                 password = "<ExamplePassword>",
             });
@@ -3418,7 +3082,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", "#####...")
+            BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", BinaryData.FromObjectAsJson("U3dhZ2dlciByb2Nrcw=="))
             {
                 CertificateFormat = BatchCertificateFormat.Pfx,
                 Password = "<ExamplePassword>",
@@ -3434,7 +3098,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", "#####...")
+            BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", BinaryData.FromObjectAsJson("U3dhZ2dlciByb2Nrcw=="))
             {
                 CertificateFormat = BatchCertificateFormat.Pfx,
                 Password = "<ExamplePassword>",
@@ -3464,32 +3128,6 @@ Value = "myvalue",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response response = await client.CancelCertificateDeletionAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteCertificate_CertificateDelete()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.DeleteCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteCertificate_CertificateDelete_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.DeleteCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
 
             Console.WriteLine(response.Status);
         }
@@ -3546,32 +3184,6 @@ Value = "myvalue",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response<BatchCertificate> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeleteJobSchedule_JobScheduleDelete()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.DeleteJobSchedule("jobScheduleId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeleteJobSchedule_JobScheduleDelete_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.DeleteJobScheduleAsync("jobScheduleId");
-
-            Console.WriteLine(response.Status);
         }
 
         [Test]
@@ -3874,32 +3486,6 @@ Value = "myvalue",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_TerminateJobSchedule_JobScheduleTerminate()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.TerminateJobSchedule("jobScheduleId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_TerminateJobSchedule_JobScheduleTerminate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.TerminateJobScheduleAsync("jobScheduleId");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_BatchClient_CreateJobSchedule_CreatesABasicJobSchedule()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -3962,7 +3548,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
             {
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
             }, new BatchJobSpecification(new BatchPoolInfo
@@ -3980,7 +3566,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
             {
                 RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
             }, new BatchJobSpecification(new BatchPoolInfo
@@ -4354,7 +3940,7 @@ value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
             {
                 DoNotRunUntil = DateTimeOffset.Parse("2014-09-10T02:30:00.000Z"),
                 DoNotRunAfter = DateTimeOffset.Parse("2014-09-10T06:30:00.000Z"),
@@ -4367,7 +3953,7 @@ value = "myvalue",
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
                     {
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
@@ -4395,7 +3981,7 @@ value = "myvalue",
                         {
                             ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
 FilePath = "myprogram2.exe",
 }},
                             EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -4419,7 +4005,7 @@ StoreLocation = BatchCertificateStoreLocation.LocalMachine,
 StoreName = "Root",
 Visibility = {BatchCertificateVisibility.Task},
 }},
-                        Metadata = { new MetadataItem("myproperty", "myvalue") },
+                        Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
                         TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
                     },
                 },
@@ -4435,11 +4021,11 @@ Visibility = {BatchCertificateVisibility.Task},
                 {
                     ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
 FilePath = "myprogram.exe",
 }, new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/test.txt?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/test.txt?sas"),
 FilePath = "test.txt",
 }},
                     EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -4466,7 +4052,7 @@ Value = "myvalue",
                 },
             })
             {
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
             };
             Response response = client.CreateJobSchedule(jobSchedule);
         }
@@ -4479,7 +4065,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
+            BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
             {
                 DoNotRunUntil = DateTimeOffset.Parse("2014-09-10T02:30:00.000Z"),
                 DoNotRunAfter = DateTimeOffset.Parse("2014-09-10T06:30:00.000Z"),
@@ -4492,7 +4078,7 @@ Value = "myvalue",
                     AutoPoolIdPrefix = "mypool",
                     Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
                     {
-                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
+                        VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
                         {
                             Publisher = "MicrosoftWindowsServer",
                             Offer = "WindowsServer",
@@ -4520,7 +4106,7 @@ Value = "myvalue",
                         {
                             ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
 FilePath = "myprogram2.exe",
 }},
                             EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -4544,7 +4130,7 @@ StoreLocation = BatchCertificateStoreLocation.LocalMachine,
 StoreName = "Root",
 Visibility = {BatchCertificateVisibility.Task},
 }},
-                        Metadata = { new MetadataItem("myproperty", "myvalue") },
+                        Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
                         TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
                     },
                 },
@@ -4560,11 +4146,11 @@ Visibility = {BatchCertificateVisibility.Task},
                 {
                     ResourceFiles = {new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
 FilePath = "myprogram.exe",
 }, new ResourceFile
 {
-HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/test.txt?sas",
+HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/test.txt?sas"),
 FilePath = "test.txt",
 }},
                     EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -4591,7 +4177,7 @@ Value = "myvalue",
                 },
             })
             {
-                Metadata = { new MetadataItem("myproperty", "myvalue") },
+                Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
             };
             Response response = await client.CreateJobScheduleAsync(jobSchedule);
         }
@@ -4640,7 +4226,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1");
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1");
             Response response = client.CreateTask("jobId", task);
         }
 
@@ -4652,7 +4238,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1");
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1");
             Response response = await client.CreateTaskAsync("jobId", task);
         }
 
@@ -4726,7 +4312,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
             {
                 ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                 {
@@ -4752,7 +4338,7 @@ Value = "myvalue",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
             {
                 ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                 {
@@ -4854,7 +4440,7 @@ isReadOnly = true,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
             {
                 ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                 {
@@ -4884,7 +4470,7 @@ IsReadOnly = true,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
             {
                 ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                 {
@@ -5000,7 +4586,7 @@ isReadOnly = true,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
             {
                 ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                 {
@@ -5034,7 +4620,7 @@ IsReadOnly = true,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
             {
                 ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                 {
@@ -5150,13 +4736,13 @@ jobAction = "terminate",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "cmd /c exit 3")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "cmd /c exit 3")
             {
                 ExitConditions = new ExitConditions
                 {
                     ExitCodeRanges = {new ExitCodeRangeMapping(2, 4, new ExitOptions
 {
-JobAction = BatchJobAction.Terminate,
+JobAction = BatchJobActionKind.Terminate,
 })},
                 },
                 UserIdentity = new UserIdentity
@@ -5179,13 +4765,13 @@ JobAction = BatchJobAction.Terminate,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "cmd /c exit 3")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "cmd /c exit 3")
             {
                 ExitConditions = new ExitConditions
                 {
                     ExitCodeRanges = {new ExitCodeRangeMapping(2, 4, new ExitOptions
 {
-JobAction = BatchJobAction.Terminate,
+JobAction = BatchJobActionKind.Terminate,
 })},
                 },
                 UserIdentity = new UserIdentity
@@ -5246,7 +4832,7 @@ JobAction = BatchJobAction.Terminate,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1")
             {
                 RequiredSlots = 2,
             };
@@ -5261,7 +4847,7 @@ JobAction = BatchJobAction.Terminate,
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1")
+            BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1")
             {
                 RequiredSlots = 2,
             };
@@ -5336,12 +4922,12 @@ commandLine = "cmd /c dir /s",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
+            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
             {
-new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
-new BatchTaskCreateContent("simple2", "cmd /c dir /s")
+new BatchTaskCreateOptions("simple1", "cmd /c dir /s"),
+new BatchTaskCreateOptions("simple2", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
         }
 
         [Test]
@@ -5352,12 +4938,12 @@ new BatchTaskCreateContent("simple2", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
+            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
             {
-new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
-new BatchTaskCreateContent("simple2", "cmd /c dir /s")
+new BatchTaskCreateOptions("simple1", "cmd /c dir /s"),
+new BatchTaskCreateOptions("simple2", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
         }
 
         [Test]
@@ -5518,9 +5104,9 @@ commandLine = "cmd /c dir /s",
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
+            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
             {
-new BatchTaskCreateContent("complex1", "cmd /c dir /s")
+new BatchTaskCreateOptions("complex1", "cmd /c dir /s")
 {
 ResourceFiles = {new ResourceFile
 {
@@ -5534,7 +5120,7 @@ Value = "value1",
 {
 Value = "value2",
 }},
-AffinityInfo = new AffinityInfo("affinityId"),
+AffinityInfo = new BatchAffinityInfo("affinityId"),
 Constraints = new BatchTaskConstraints
 {
 MaxWallClockTime = XmlConvert.ToTimeSpan("P1D"),
@@ -5547,14 +5133,14 @@ MultiInstanceSettings = new MultiInstanceSettings("cmd /c echo coordinating")
 NumberOfInstances = 3,
 CommonResourceFiles = {new ResourceFile
 {
-HttpUrl = "https://common.blob.core.windows.net/",
+HttpUri = new Uri("https://common.blob.core.windows.net/"),
 FilePath = "common.exe",
 }},
 },
 },
-new BatchTaskCreateContent("simple3", "cmd /c dir /s")
+new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
         }
 
         [Test]
@@ -5565,9 +5151,9 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
+            BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
             {
-new BatchTaskCreateContent("complex1", "cmd /c dir /s")
+new BatchTaskCreateOptions("complex1", "cmd /c dir /s")
 {
 ResourceFiles = {new ResourceFile
 {
@@ -5581,7 +5167,7 @@ Value = "value1",
 {
 Value = "value2",
 }},
-AffinityInfo = new AffinityInfo("affinityId"),
+AffinityInfo = new BatchAffinityInfo("affinityId"),
 Constraints = new BatchTaskConstraints
 {
 MaxWallClockTime = XmlConvert.ToTimeSpan("P1D"),
@@ -5594,14 +5180,14 @@ MultiInstanceSettings = new MultiInstanceSettings("cmd /c echo coordinating")
 NumberOfInstances = 3,
 CommonResourceFiles = {new ResourceFile
 {
-HttpUrl = "https://common.blob.core.windows.net/",
+HttpUri = new Uri("https://common.blob.core.windows.net/"),
 FilePath = "common.exe",
 }},
 },
 },
-new BatchTaskCreateContent("simple3", "cmd /c dir /s")
+new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
             });
-            Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+            Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
         }
 
         [Test]
@@ -5940,7 +5526,7 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("userName")
+            BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
             {
                 IsAdmin = false,
                 ExpiryTime = DateTimeOffset.Parse("2017-08-01T00:00:00Z"),
@@ -5957,7 +5543,7 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("userName")
+            BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
             {
                 IsAdmin = false,
                 ExpiryTime = DateTimeOffset.Parse("2017-08-01T00:00:00Z"),
@@ -6036,12 +5622,12 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
+            BatchNodeUserUpdateOptions updateOptions = new BatchNodeUserUpdateOptions
             {
                 Password = "12345",
                 ExpiryTime = DateTimeOffset.Parse("2016-11-27T00:45:48.7320857Z"),
             };
-            Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", "userName", content);
+            Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", "userName", updateOptions);
         }
 
         [Test]
@@ -6052,12 +5638,12 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
+            BatchNodeUserUpdateOptions updateOptions = new BatchNodeUserUpdateOptions
             {
                 Password = "12345",
                 ExpiryTime = DateTimeOffset.Parse("2016-11-27T00:45:48.7320857Z"),
             };
-            Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", "userName", content);
+            Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", "userName", updateOptions);
         }
 
         [Test]
@@ -6108,182 +5694,6 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response<BatchNode> response = await client.GetNodeAsync("poolId", "tvm-1695681911_2-20161122t193202z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RebootNode_NodeReboot()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RebootNode_NodeReboot_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_RebootNode_NodeReboot_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_RebootNode_NodeReboot_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_StartNode_NodeStart()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.StartNode("poolId", "tvm-1695681911_1-20161122t193202z");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_StartNode_NodeStart_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.StartNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReimageNode_NodeReimage()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReimageNode_NodeReimage_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_ReimageNode_NodeReimage_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_ReimageNode_NodeReimage_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeallocateNode_NodeDeallocate()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeallocateNode_NodeDeallocate_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            using RequestContent content = null;
-            Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_BatchClient_DeallocateNode_NodeDeallocate_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_BatchClient_DeallocateNode_NodeDeallocate_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
         }
 
         [Test]
@@ -6462,8 +5872,8 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig", DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
-            Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("poolId", "tvm-1695681911_1-20161121t182739z", content);
+            UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig"), DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
+            Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("poolId", "tvm-1695681911_1-20161121t182739z", uploadOptions);
         }
 
         [Test]
@@ -6474,8 +5884,8 @@ new BatchTaskCreateContent("simple3", "cmd /c dir /s")
             TokenCredential credential = new DefaultAzureCredential();
             BatchClient client = new BatchClient(endpoint, credential);
 
-            UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig", DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
-            Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("poolId", "tvm-1695681911_1-20161121t182739z", content);
+            UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig"), DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
+            Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("poolId", "tvm-1695681911_1-20161121t182739z", uploadOptions);
         }
 
         [Test]

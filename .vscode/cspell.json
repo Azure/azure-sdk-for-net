@@ -429,6 +429,14 @@
       ]
     },
     {
+      "filename": "**/sdk/connectedcache/**/*",
+      "words": [
+        "Gbps",
+        "Mbps",
+        "Eflow"
+      ]
+    },
+    {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
         "Cpus",

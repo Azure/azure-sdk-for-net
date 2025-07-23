@@ -23,12 +23,12 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ClientBuilderExtensionsDefinition : TypeProvider
     {
-        private readonly IEnumerable<ClientProvider> _clients;
+        private readonly IEnumerable<ClientProvider> _publicClients;
         private readonly string _resourceProviderName;
 
-        public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> clients)
+        public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> publicClients)
         {
-            _clients = clients;
+            _publicClients = publicClients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
             AzureClientGenerator.Instance.AddTypeToKeep(this);
         }
@@ -47,7 +47,7 @@ namespace Azure.Generator.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
-            foreach (var client in _clients)
+            foreach (var client in _publicClients)
             {
                 if (client.ClientOptionsParameter == null)
                 {

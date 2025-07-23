@@ -84,6 +84,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
     Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'
     Join-Path 'http' 'azure' 'resource-manager' 'resources'
+    Join-Path 'http' 'azure' 'resource-manager' 'large-header'
 
 )
 

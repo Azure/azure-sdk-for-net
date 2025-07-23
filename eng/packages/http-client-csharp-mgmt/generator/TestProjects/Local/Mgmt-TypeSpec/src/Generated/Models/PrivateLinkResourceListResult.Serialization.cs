@@ -10,12 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary></summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class PrivateLinkResourceListResult : IJsonModel<PrivateLinkResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceListResult"/> for deserialization. </summary>
@@ -166,18 +165,6 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="privateLinkResourceListResult"> The <see cref="PrivateLinkResourceListResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PrivateLinkResourceListResult privateLinkResourceListResult)
-        {
-            if (privateLinkResourceListResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(privateLinkResourceListResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResourceListResult"/> from. </param>
         public static explicit operator PrivateLinkResourceListResult(Response result)

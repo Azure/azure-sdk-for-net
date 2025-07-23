@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element, options);
                 }
             }
-            return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);
+            return UnknownManagedServiceProperties.DeserializeUnknownManagedServiceProperties(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)
