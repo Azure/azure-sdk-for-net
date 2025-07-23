@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
            });
 
            // Sanitize certificateUrl property
-           BodyKeySanitizers.Add(new BodyKeySanitizer("..certificateUrl") { Value = "https://sdk-pre-generated-kv.vault.azure.net/certificates/sdk-test-cert/SANITIZED_CERTIFICATE_URL"
+           BodyKeySanitizers.Add(new BodyKeySanitizer("..certificateUrl") { Value = "https://sdk-eg-pre-generated-kv.vault.azure.net/certificates/sdk-eventgrid-test-certificate/SANITIZED_CERTIFICATE_URL"
            });
 
             // Sanitize for the AAD Application ID used in the tests

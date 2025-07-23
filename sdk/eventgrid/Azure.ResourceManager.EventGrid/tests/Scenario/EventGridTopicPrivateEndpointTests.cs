@@ -25,11 +25,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [SetUp]
         public async Task SetUpResourceGroupAndCollection()
         {
-            const string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
-            const string resourceGroupName = "DevExpRg";
-            var resourceGroupId = new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
-            var armClient = new ArmClient(new DefaultAzureCredential(), subscriptionId);
-            _resourceGroup = await armClient.GetResourceGroupResource(resourceGroupId).GetAsync();
+            // This test relies on the existence of the 'DevExpRg' resource group within the subscription, ensuring that system topics and related resources (such as Key Vault) are deployed within the same resource group for validation
+            // Subscription: 5b4b650e-28b9-4790-b3ab-ddbd88d727c4 (Azure Event Grid SDK Subscription)
+            // Use shared DevExpRg resource group
+            _resourceGroup = await GetResourceGroupAsync(DefaultSubscription, "DevExpRg");
             _topicCollection = _resourceGroup.GetEventGridTopics();
         }
 
@@ -71,10 +70,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [Test]
         public async Task TopicPrivateEndpointConnectionResourceTest()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                Assert.Ignore("Test skipped in Playback mode due to timing sensitivity or resource creation delays.");
-            }
             const string existingTopicName = "securedwebhooktopic";
 
             // Retrieve the topic

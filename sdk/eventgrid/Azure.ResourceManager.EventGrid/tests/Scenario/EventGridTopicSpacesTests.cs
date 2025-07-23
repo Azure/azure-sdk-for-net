@@ -137,6 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             // Assert
             Assert.IsNotNull(getResponse);
             Assert.IsNotNull(getResponse.Value);
+            Assert.IsNotNull(getResponse.Value.Data);
             Assert.AreEqual(topicSpaceName, getResponse.Value.Data.Name);
 
             // Cleanup

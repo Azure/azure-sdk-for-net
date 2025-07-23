@@ -32,29 +32,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private async Task SetCollection()
         {
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-            SubscriptionResource subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
-            Console.WriteLine("Using subscription: " + subscription.Data.SubscriptionId);
-
-            ResourceGroup = await GetResourceGroupAsync(subscription, "sdk-eventgrid-test-rg");
+            // This test relies on the existence of the 'sdk-eventgrid-test-rg' resource group within the subscription, ensuring that system topics and related resources (such as Key Vault) are deployed within the same resource group for validation
+            // Subscription: 5b4b650e-28b9-4790-b3ab-ddbd88d727c4 (Azure Event Grid SDK Subscription)
+            ResourceGroup = await GetResourceGroupAsync(DefaultSubscription, "sdk-eventgrid-test-rg");
             SystemTopicCollection = ResourceGroup.GetSystemTopics();
-            var existingTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
+            NamespaceCollection = ResourceGroup.GetEventGridNamespaces();
         }
 
         [Test]
         public async Task SystemTopicWithMonitorDestinationCreateGetUpdateDelete()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                Assert.Ignore("Skipping test in playback mode as it requires live resources.");
-            }
             await SetCollection();
             string systemTopicName = Recording.GenerateAssetName("sdk-eventgrid-SystemTopic-");
             string systemTopicEventSubscriptionName1 = Recording.GenerateAssetName("sdk-eventgrid-EventSubscription-");
             string systemTopicEventSubscriptionName2 = Recording.GenerateAssetName("sdk-eventgrid-EventSubscription-");
-            string sourceResourceIdentifier = String.Format("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.KeyVault/vaults/sdk-eventgrid-test-kv");
+            string sourceResourceIdentifier = String.Format("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.KeyVault/vaults/sdkeventgridtestkeyvault");
             SystemTopicData data = new SystemTopicData(new AzureLocation("centraluseuap"))
             {
                 Source = new ResourceIdentifier(sourceResourceIdentifier),
@@ -65,6 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                          ["tag2"] = "value2",
                      },
             };
+
             var beforeCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
             Console.WriteLine($"System topics before creation: {beforeCreateSystemTopics.Count}");
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
@@ -158,10 +151,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [Test]
         public async Task SystemTopicWithNamespaceTopicDestinationCreateGetUpdateDelete()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                Assert.Ignore("Skipping test in playback mode as it requires live resources.");
-            }
             await SetCollection();
             await foreach (var existingTopic in SystemTopicCollection.GetAllAsync())
             {
@@ -282,10 +271,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [Test]
         public async Task SystemTopicLifecycleCreateGetUpdateDeleteTags()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                Assert.Ignore("Skipping test in playback mode as it requires live resources.");
-            }
             await SetCollection();
             string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-Lifecycle-");
             string sourceResourceIdentifier = $"/subscriptions/{SystemTopicCollection.Id.SubscriptionId}/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.KeyVault/vaults/sdkeventgridtestkeyvault";
@@ -347,6 +332,19 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey("tagA"));
             Assert.IsTrue(removeTagResponse.Value.Data.Tags.ContainsKey("tagB"));
 
+            // ExtensionTopicResourceGetAsync
+            var resourceId = SystemTopicResource.CreateResourceIdentifier(
+                SystemTopicCollection.Id.SubscriptionId,
+                ResourceGroup.Data.Name,
+                systemTopicName);
+
+            var systemTopicFromId = Client.GetSystemTopicResource(resourceId);
+            var response = await systemTopicFromId.GetAsync();
+
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+            Assert.AreEqual(systemTopicName, response.Value.Data.Name);
+
             // Cleanup
             await systemTopicResource.DeleteAsync(WaitUntil.Completed);
         }
@@ -354,10 +352,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [Test]
         public async Task SystemTopicEventSubscriptionLifecycleGetAttributesUriAndResource()
         {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                Assert.Ignore("Skipping test in playback mode as it requires live resources.");
-            }
             await SetCollection();
             string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-EventSubLifecycle-");
             string eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-EventSubLifecycle-");
@@ -434,6 +428,28 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 await systemTopicResource.DeleteAsync(WaitUntil.Completed);
             }
+        }
+
+        [Test]
+        public async Task ExtensionTopicGetAsyncThrowsRequestFailedException()
+        {
+            await SetCollection();
+
+            // Arrange
+            string nonExistentSystemTopicName = "nonexistent-system-topic";
+            string subscriptionId = SystemTopicCollection.Id.SubscriptionId;
+            string resourceGroupName = ResourceGroup.Data.Name;
+
+            var resourceId = SystemTopicResource.CreateResourceIdentifier(
+                subscriptionId, resourceGroupName, nonExistentSystemTopicName);
+
+            var systemTopicResource = Client.GetSystemTopicResource(resourceId);
+
+            // Act & Assert
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await systemTopicResource.GetAsync();
+            });
         }
     }
 }

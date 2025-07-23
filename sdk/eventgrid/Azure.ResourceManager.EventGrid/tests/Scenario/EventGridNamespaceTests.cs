@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         // Pre-generated Key Vault Certificate URL for testing purposes. This URL is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the SANITIZED_CERTIFICATE_URL with the actual URL of a valid certificate in your Key Vault.
         // Go to Azure Portal -> Key Vault -> Select sdk-pre-generated-kv -> Certificates -> sdk-test-cert -> Properties -> Certificate URL
-        private const string KeyVaultCertificateUrl = "https://sdk-pre-generated-kv.vault.azure.net/certificates/sdk-test-cert/SANITIZED_CERTIFICATE_URL";
+        private const string KeyVaultCertificateUrl = "https://sdk-eg-pre-generated-kv.vault.azure.net/certificates/sdk-eventgrid-test-certificate/SANITIZED_CERTIFICATE_URL";
 
         // AAD Application ID. This is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the SANITIZED_APPLICATION_ID with the actual AAD Application ID used in your Azure Active Directory.
@@ -47,6 +47,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         // Go to Azure Portal -> Logic Apps -> sdk-test-logic-app -> Overview -> Workflow URL
         private const string EventSubscriptionDestinationEndpoint = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
 
+        private AzureLocation location = new AzureLocation("eastus2", "eastus2");
+
         private async Task SetCollection()
         {
             ResourceGroup = await CreateResourceGroupAsync(DefaultSubscription, Recording.GenerateAssetName("sdktest-"), DefaultLocation);
@@ -58,21 +60,20 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                Assert.Ignore("Test skipped in Playback mode due to timing sensitivity or resource creation delays.");
+                // Skip the test in playback mode as it it taking more time
+                Assert.Ignore("Skipping test in playback mode.");
             }
             await SetCollection();
             var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
             var namespaceName2 = Recording.GenerateAssetName("sdk-Namespace-");
             var namespaceName3 = Recording.GenerateAssetName("sdk-Namespace-");
             var namespaceSkuName = "Standard";
-
             var namespaceSku = new NamespaceSku()
             {
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
 
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -85,25 +86,33 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
             Assert.NotNull(createNamespaceResponse);
+            Assert.NotNull(createNamespaceResponse.Data);
+            Assert.NotNull(createNamespaceResponse.Data.Name);
             Assert.AreEqual(createNamespaceResponse.Data.Name, namespaceName);
 
             // Get the created namespace
             var getNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getNamespaceResponse);
+            Assert.NotNull(getNamespaceResponse.Data);
+            Assert.NotNull(getNamespaceResponse.Data.ProvisioningState);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespaceResponse.Data.ProvisioningState);
+            Assert.NotNull(getNamespaceResponse.Data.Tags);
             Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag1"));
             Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag1"], "originalValue1");
             Assert.IsTrue(getNamespaceResponse.Data.Tags.Keys.Contains("originalTag2"));
             Assert.AreEqual(getNamespaceResponse.Data.Tags["originalTag2"], "originalValue2");
+            Assert.NotNull(getNamespaceResponse.Data.Sku);
+            Assert.NotNull(getNamespaceResponse.Data.Sku.Name);
+            Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.NotNull(getNamespaceResponse.Data.Sku.Capacity);
+            Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
+            Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
 
             // Validate original tags
             var tagsAfterCreate = getNamespaceResponse.Data.Tags;
             Assert.AreEqual(2, tagsAfterCreate.Count);
             Assert.AreEqual("originalValue1", tagsAfterCreate["originalTag1"]);
             Assert.AreEqual("originalValue2", tagsAfterCreate["originalTag2"]);
-            Assert.AreEqual(getNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
-            Assert.AreEqual(getNamespaceResponse.Data.Sku.Capacity.Value, 1);
-            Assert.IsTrue(getNamespaceResponse.Data.IsZoneRedundant.Value);
 
             // update the tags and capacity
             namespaceSku = new NamespaceSku()
@@ -111,7 +120,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 2,
             };
-            var namespacePatch = new EventGridNamespacePatch()
+            EventGridNamespacePatch namespacePatch = new EventGridNamespacePatch()
             {
                 Tags = {
                     {"updatedTag1", "updatedValue1"},
@@ -122,17 +131,27 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             var updateNamespaceResponse = (await getNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
             Assert.NotNull(updateNamespaceResponse);
+            Assert.NotNull(updateNamespaceResponse.Data);
+            Assert.NotNull(updateNamespaceResponse.Data.Name);
             Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
 
             // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getUpdatedNamespaceResponse);
+            Assert.NotNull(getUpdatedNamespaceResponse.Data);
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.ProvisioningState);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.Tags);
             Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag1"));
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag1"], "updatedValue1");
             Assert.IsTrue(getUpdatedNamespaceResponse.Data.Tags.Keys.Contains("updatedTag2"));
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.Tags["updatedTag2"], "updatedValue2");
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.Sku);
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.Sku.Name);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.NotNull(getUpdatedNamespaceResponse.Data.Sku.Capacity);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
+            Assert.IsTrue(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value);
 
             // Validate updated tags
             var tagsAfterUpdate = getUpdatedNamespaceResponse.Data.Tags;
@@ -140,31 +159,44 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("updatedValue1", tagsAfterUpdate["updatedTag1"]);
             Assert.AreEqual("updatedValue2", tagsAfterUpdate["updatedTag2"]);
 
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.Sku.Capacity.Value, 2);
-            Assert.IsTrue(getUpdatedNamespaceResponse.Data.IsZoneRedundant.Value);
-
             //Create 2nd and 3rd Namespace
             var createNamespaceResponse2 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, nameSpace)).Value;
             Assert.NotNull(createNamespaceResponse2);
+            Assert.NotNull(createNamespaceResponse2.Data);
+            Assert.NotNull(createNamespaceResponse2.Data.Name);
             Assert.AreEqual(createNamespaceResponse2.Data.Name, namespaceName2);
             var createNamespaceResponse3 = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName3, nameSpace)).Value;
             Assert.NotNull(createNamespaceResponse3);
+            Assert.NotNull(createNamespaceResponse3.Data);
+            Assert.NotNull(createNamespaceResponse3.Data.Name);
             Assert.AreEqual(createNamespaceResponse3.Data.Name, namespaceName3);
 
             // Get the created namespaces
             var getNamespace2Response = (await NamespaceCollection.GetAsync(namespaceName2)).Value;
             Assert.NotNull(getNamespace2Response);
+            Assert.NotNull(getNamespace2Response.Data);
+            Assert.NotNull(getNamespace2Response.Data.ProvisioningState);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespace2Response.Data.ProvisioningState);
             var getNamespace3Response = (await NamespaceCollection.GetAsync(namespaceName3)).Value;
             Assert.NotNull(getNamespace3Response);
+            Assert.NotNull(getNamespace3Response.Data);
+            Assert.NotNull(getNamespace3Response.Data.ProvisioningState);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getNamespace3Response.Data.ProvisioningState);
 
             // Validate created namespaces
             Assert.AreEqual(getNamespace2Response.Data.Name, namespaceName2);
             Assert.AreEqual(getNamespace3Response.Data.Name, namespaceName3);
+            Assert.NotNull(getNamespace2Response.Data.Tags);
+            Assert.NotNull(getNamespace2Response.Data.Sku);
+            Assert.NotNull(getNamespace2Response.Data.Sku.Name);
             Assert.AreEqual(getNamespace2Response.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.NotNull(getNamespace3Response.Data.Tags);
+            Assert.NotNull(getNamespace3Response.Data.Sku);
+            Assert.NotNull(getNamespace3Response.Data.Sku.Name);
             Assert.AreEqual(getNamespace3Response.Data.Sku.Name.Value.ToString(), namespaceSkuName);
+            Assert.NotNull(getNamespace2Response.Data.Sku.Capacity);
             Assert.AreEqual(getNamespace2Response.Data.Sku.Capacity.Value, 1);
+            Assert.NotNull(getNamespace3Response.Data.Sku.Capacity);
             Assert.AreEqual(getNamespace3Response.Data.Sku.Capacity.Value, 1);
             Assert.IsTrue(getNamespace2Response.Data.IsZoneRedundant.Value);
             Assert.IsTrue(getNamespace3Response.Data.IsZoneRedundant.Value);
@@ -175,6 +207,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Tag operations
             var addTagResponse = await getNamespaceResponse.AddTagAsync("env", "test");
+            Assert.NotNull(addTagResponse);
+            Assert.NotNull(addTagResponse.Value);
+            Assert.NotNull(addTagResponse.Value.Data);
+            Assert.NotNull(addTagResponse.Value.Data.Tags);
             Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("env"));
             Assert.AreEqual("test", addTagResponse.Value.Data.Tags["env"]);
 
@@ -257,7 +293,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -361,7 +396,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         // Enabling CustomJwtAuthenticationSettings feature for 2025-04-01-preview API version
-        [Ignore("This test is ignored because it requires a valid Key Vault certificate URL and user-assigned identity. Please update the KeyVaultCertificateUrl and user-assigned identity in the test before running it.")]
         [Test]
         public async Task NamespaceCustomJwtAuthCreateGetUpdateDelete()
         {
@@ -373,7 +407,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
 
             // Enable managed identity for the namespace
             var nameSpace = new EventGridNamespaceData(location)
@@ -460,7 +493,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         // Test case for WebhookAuthentication. This feature is added in 2025-04-01-preview API version
-        [Ignore("This test is ignored because it requires a valid Azure Function endpoint URL and user-assigned identity. Please update the AzureFunctionEndpointUrl and user-assigned identity in the test before running it.")]
         [Test]
         public async Task NamespaceCustomWebhookAuthCreateGetUpdateDelete()
         {
@@ -472,7 +504,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
 
             // Enable managed identity for the namespace
             var nameSpace = new EventGridNamespaceData(location)
@@ -571,7 +602,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -705,7 +735,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -850,7 +879,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -989,7 +1017,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {

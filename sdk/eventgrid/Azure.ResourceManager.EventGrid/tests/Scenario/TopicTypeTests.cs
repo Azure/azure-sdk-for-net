@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         [Test]
         [Ignore("System.FormatException : The ResourceIdentifier must start with /subscriptions/ or /providers/")]
-        public async Task TopicTypeCollection_GetAsync_ReturnsResource()
+        public async Task TopicTypeCollectionGetAsync()
         {
             string topicTypeName = "Microsoft.Storage.StorageAccounts";
             Console.WriteLine($"Testing TopicType: {topicTypeName}");
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         [Ignore("This test is ignored because it requires a specific topic type to exist.")]
         [Test]
-        public async Task TopicTypeCollection_GetAllAsync_ReturnsList()
+        public async Task TopicTypeCollectionGetAllAsync()
         {
             // actually: {providers/Microsoft.EventGrid/topicTypes/Microsoft.Eventhub.Namespaces}
             var list = await _topicTypeCollection.GetAllAsync().ToEnumerableAsync();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         [Ignore("This test is ignored because it requires a specific topic type to exist.")]
         [Test]
-        public async Task TopicTypeResource_GetAsync_ReturnsResource()
+        public async Task TopicTypeResourceGetAsync()
         {
             string topicTypeName = "Microsoft.Storage.StorageAccounts";
             var response = await _topicTypeCollection.GetAsync(topicTypeName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         [Ignore("This test is ignored because it requires a specific topic type to exist.")]
         [Test]
-        public async Task TopicTypeResource_GetEventTypesAsync_ReturnsEventTypes()
+        public async Task TopicTypeResourceGetEventTypesAsync()
         {
             string topicTypeName = "Microsoft.Storage.StorageAccounts";
             var response = await _topicTypeCollection.GetAsync(topicTypeName);
@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Assert.IsNotNull(eventType);
                 Assert.IsFalse(string.IsNullOrEmpty(eventType.Name));
-                TestContext.Out.WriteLine($"Event Type Name: {eventType.Name}");
             }
         }
     }

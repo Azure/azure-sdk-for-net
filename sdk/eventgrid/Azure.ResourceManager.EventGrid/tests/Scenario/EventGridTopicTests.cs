@@ -143,14 +143,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task TopicPrivateLinkResourcesGetAndList()
+        public async Task PrivateLinkResourcesGetAndList()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-
+            ValidateEventGridTopic(topic, topicName);
+            // get private link resources
             var linkResource = await topic.GetEventGridTopicPrivateLinkResourceAsync("topic");
             Assert.IsNotNull(linkResource);
-            var list = await topic.GetEventGridTopicPrivateLinkResources().ToEnumerableAsync();
+            // list all private link resources
+            System.Collections.Generic.List<EventGridTopicPrivateLinkResource> list = await topic.GetEventGridTopicPrivateLinkResources().ToEnumerableAsync();
             Assert.NotNull(list);
 
             await topic.DeleteAsync(WaitUntil.Completed);

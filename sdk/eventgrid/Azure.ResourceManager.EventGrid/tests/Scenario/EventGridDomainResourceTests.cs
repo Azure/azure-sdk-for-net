@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private EventGridDomainCollection DomainCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
+        private const string TagKeyTest = "testKey";
+        private const string TagValueTest = "testValue";
+        private const string TagKeyEnvironment = "environment";
+        private const string TagValueEnvironment = "production";
+        private const string TagKeyOwner = "owner";
+        private const string TagValueOwner = "sdk-team";
+        private const string TagKeyToRemove = "toremove";
+        private const string TagValueToRemove = "value";
+
         private async Task SetCollection()
         {
             ResourceGroup = await CreateResourceGroupAsync(DefaultSubscription, Recording.GenerateAssetName("sdktest-"), DefaultLocation);
@@ -31,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task Domain_CRUD_TagsAndKeysOperations()
+        public async Task DomainCRUDTagsAndKeysOperations()
         {
             await SetCollection();
             var domainName = Recording.GenerateAssetName("sdk-domain-");
@@ -55,31 +64,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(domainName, getResponse.Value.Data.Name);
 
             // Add Tag
-            var addTagResponse = await domainResource.AddTagAsync("testKey", "testValue");
+            var addTagResponse = await domainResource.AddTagAsync(TagKeyTest, TagValueTest);
             Assert.NotNull(addTagResponse);
             Assert.NotNull(addTagResponse.Value);
             Assert.NotNull(addTagResponse.Value.Data);
             Assert.NotNull(addTagResponse.Value.Data.Tags);
-            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("testKey"));
-            Assert.AreEqual("testValue", addTagResponse.Value.Data.Tags["testKey"]);
+            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey(TagKeyTest));
+            Assert.AreEqual(TagValueTest, addTagResponse.Value.Data.Tags[TagKeyTest]);
 
             // Set Tags
             var domainTags = new Dictionary<string, string>
             {
-                { "environment", "production" },
-                { "owner", "sdk-team" }
+                { TagKeyEnvironment, TagValueEnvironment },
+                { TagKeyOwner, TagValueOwner }
             };
             var setTagsResponse = await domainResource.SetTagsAsync(domainTags);
             Assert.AreEqual(2, setTagsResponse.Value.Data.Tags.Count);
-            Assert.AreEqual("production", setTagsResponse.Value.Data.Tags["environment"]);
-            Assert.AreEqual("sdk-team", setTagsResponse.Value.Data.Tags["owner"]);
+            Assert.AreEqual(TagValueEnvironment, setTagsResponse.Value.Data.Tags[TagKeyEnvironment]);
+            Assert.AreEqual(TagValueOwner, setTagsResponse.Value.Data.Tags[TagKeyOwner]);
 
             // Remove Tag
-            await domainResource.AddTagAsync("toremove", "value");
-            var removeTagResponse = await domainResource.RemoveTagAsync("toremove");
+            await domainResource.AddTagAsync(TagKeyToRemove, TagValueToRemove);
+            var removeTagResponse = await domainResource.RemoveTagAsync(TagKeyToRemove);
             Assert.NotNull(removeTagResponse);
             Assert.NotNull(removeTagResponse.Value);
-            Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey("toremove"));
+            Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey(TagKeyToRemove));
 
             // Shared Access Keys
             var keys = await domainResource.GetSharedAccessKeysAsync();
@@ -147,39 +156,34 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var domainResource = createResponse.Value;
             Assert.NotNull(domainResource);
 
-            // GetDomainEventSubscriptionAsync (should throw)
+            // All the following calls are expected to throw RequestFailedException
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await domainResource.GetDomainEventSubscriptionAsync("notexistingsub");
             });
 
-            // GetDomainNetworkSecurityPerimeterConfigurationAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await domainResource.GetDomainNetworkSecurityPerimeterConfigurationAsync("perimeterGuid", "association");
             });
 
-            // GetEventGridDomainPrivateEndpointConnectionAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await domainResource.GetEventGridDomainPrivateEndpointConnectionAsync("pec1");
             });
 
-            // PrivateEndpointConnectionCollection GetAsync (should throw)
             var pecCollection = domainResource.GetEventGridDomainPrivateEndpointConnections();
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await pecCollection.GetAsync("pec1");
             });
 
-            // PrivateEndpointConnectionCollection CreateOrUpdateAsync (should throw)
             var pecData = new EventGridPrivateEndpointConnectionData();
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await pecCollection.CreateOrUpdateAsync(WaitUntil.Completed, "pec1", pecData);
             });
 
-            // PrivateEndpointConnectionResource GetAsync (should throw)
             var pecId = EventGridDomainPrivateEndpointConnectionResource.CreateResourceIdentifier(
                 DefaultSubscription.Data.SubscriptionId, ResourceGroup.Data.Name, domainName, "pec1");
             var pecResource = new EventGridDomainPrivateEndpointConnectionResource(Client, pecId);
@@ -188,20 +192,17 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 await pecResource.GetAsync();
             });
 
-            // PrivateEndpointConnectionResource UpdateAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await pecResource.UpdateAsync(WaitUntil.Completed, pecData);
             });
 
-            // DomainNetworkSecurityPerimeterConfigurationCollection GetAsync (should throw)
             var nspCollection = domainResource.GetDomainNetworkSecurityPerimeterConfigurations();
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await nspCollection.GetAsync("perimeterGuid", "association");
             });
 
-            // DomainNetworkSecurityPerimeterConfigurationResource GetAsync (should throw)
             var nspResourceId = DomainNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier(
                 DefaultSubscription.Data.SubscriptionId, ResourceGroup.Data.Name, domainName, "perimeterGuid", "association");
             var nspResource = new DomainNetworkSecurityPerimeterConfigurationResource(Client, nspResourceId);
@@ -210,7 +211,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 await nspResource.GetAsync();
             });
 
-            // DomainNetworkSecurityPerimeterConfigurationResource ReconcileAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await nspResource.ReconcileAsync(WaitUntil.Completed);

@@ -144,6 +144,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [Test]
         public async Task NamespaceTopicsSubscriptionCreateUpdateDelete()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.Ignore("Ignoring Test in Playback mode as the test exceeding global time limit of 10 seconds ");
+            }
             await SetCollection();
             var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
             var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");

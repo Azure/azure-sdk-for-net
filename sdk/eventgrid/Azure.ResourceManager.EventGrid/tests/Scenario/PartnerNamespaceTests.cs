@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         [Test]
-        public async Task GetPartnerNamespacePrivateLinkResourceAsync_ReturnsResource()
+        public async Task GetPartnerNamespacePrivateLinkResourceAsync()
         {
             // Arrange
             string partnerNamespaceName = Recording.GenerateAssetName("PartnerNamespace");
