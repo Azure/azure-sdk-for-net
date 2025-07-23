@@ -109,8 +109,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual MethodSignature CreateSignature()
         {
+            var methodName = GetMethodNameForOperation();
             return new MethodSignature(
-                _convenienceMethod.Signature.Name,
+                methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
                 _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
@@ -121,6 +122,56 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
+        }
+
+        /// <summary>
+        /// Gets the method name for the operation, ensuring Create operations always use "CreateOrUpdate" name.
+        /// </summary>
+        /// <returns>The method name to use for this operation.</returns>
+        protected virtual string GetMethodNameForOperation()
+        {
+            if (IsCreateOperation())
+            {
+                return _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
+            }
+            return _convenienceMethod.Signature.Name;
+        }
+
+        /// <summary>
+        /// Determines if the current operation is a Create operation.
+        /// </summary>
+        /// <returns>True if this is a Create operation, false otherwise.</returns>
+        protected virtual bool IsCreateOperation()
+        {
+            // Get the resource metadata to find the operation kind
+            var resourceMetadata = GetResourceMetadata();
+            if (resourceMetadata == null)
+                return false;
+
+            // Look up the operation by cross-language definition ID
+            foreach (var method in resourceMetadata.Methods)
+            {
+                if (method.Id == _serviceMethod.CrossLanguageDefinitionId && method.Kind == ResourceOperationKind.Create)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the resource metadata from the enclosing type.
+        /// </summary>
+        /// <returns>The resource metadata if available, null otherwise.</returns>
+        private ResourceMetadata? GetResourceMetadata()
+        {
+            // Access the resource metadata from the enclosing type
+            return _enclosingType switch
+            {
+                ResourceClientProvider resourceProvider => resourceProvider.ResourceMetadata,
+                ResourceCollectionClientProvider collectionProvider => collectionProvider.ResourceMetadata,
+                _ => null
+            };
         }
 
         private TryExpression BuildTryExpression()

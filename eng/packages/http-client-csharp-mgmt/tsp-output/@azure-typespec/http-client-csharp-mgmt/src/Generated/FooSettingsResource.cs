@@ -148,11 +148,11 @@ namespace MgmtTypeSpec
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<FooSettingsResource> CreateFooSettings(FooSettingsData data, CancellationToken cancellationToken = default)
+        public virtual Response<FooSettingsResource> CreateOrUpdate(FooSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateFooSettings");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -181,11 +181,11 @@ namespace MgmtTypeSpec
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<FooSettingsResource>> CreateFooSettingsAsync(FooSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooSettingsResource>> CreateOrUpdateAsync(FooSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateFooSettingsAsync");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdateAsync");
             scope.Start();
             try
             {

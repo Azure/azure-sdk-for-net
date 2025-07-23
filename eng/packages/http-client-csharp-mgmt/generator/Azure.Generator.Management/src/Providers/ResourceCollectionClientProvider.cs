@@ -30,6 +30,8 @@ namespace Azure.Generator.Management.Providers
     {
         private readonly ResourceMetadata _resourceMetadata;
 
+        internal ResourceMetadata ResourceMetadata => _resourceMetadata;
+
         private readonly ResourceClientProvider _resource;
         private readonly InputServiceMethod? _getAll;
         private readonly InputServiceMethod? _create;

@@ -56,6 +56,8 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
+        internal ResourceMetadata ResourceMetadata => _resourceMetadata;
+
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 

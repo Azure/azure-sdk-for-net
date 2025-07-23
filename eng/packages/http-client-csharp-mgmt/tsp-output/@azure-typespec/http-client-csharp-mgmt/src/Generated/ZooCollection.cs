@@ -63,12 +63,12 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ZooResource>> CreateZooAsync(WaitUntil waitUntil, string zooName, ZooData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ZooResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string zooName, ZooData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateZooAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdateAsync");
             scope.Start();
             try
             {
@@ -106,12 +106,12 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zooName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ZooResource> CreateZoo(WaitUntil waitUntil, string zooName, ZooData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ZooResource> CreateOrUpdate(WaitUntil waitUntil, string zooName, ZooData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateZoo");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
