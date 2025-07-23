@@ -38,6 +38,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly string? _methodName;
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
@@ -52,13 +53,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
+        /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
-            bool isAsync)
+            bool isAsync,
+            string? methodName = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -67,6 +70,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
+            _methodName = methodName;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
@@ -109,7 +113,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual MethodSignature CreateSignature()
         {
-            var methodName = GetMethodNameForOperation();
+            var methodName = _methodName ?? _convenienceMethod.Signature.Name;
             return new MethodSignature(
                 methodName,
                 _convenienceMethod.Signature.Description,
@@ -122,56 +126,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
-        }
-
-        /// <summary>
-        /// Gets the method name for the operation, ensuring Create operations always use "CreateOrUpdate" name.
-        /// </summary>
-        /// <returns>The method name to use for this operation.</returns>
-        protected virtual string GetMethodNameForOperation()
-        {
-            if (IsCreateOperation())
-            {
-                return _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
-            }
-            return _convenienceMethod.Signature.Name;
-        }
-
-        /// <summary>
-        /// Determines if the current operation is a Create operation.
-        /// </summary>
-        /// <returns>True if this is a Create operation, false otherwise.</returns>
-        protected virtual bool IsCreateOperation()
-        {
-            // Get the resource metadata to find the operation kind
-            var resourceMetadata = GetResourceMetadata();
-            if (resourceMetadata == null)
-                return false;
-
-            // Look up the operation by cross-language definition ID
-            foreach (var method in resourceMetadata.Methods)
-            {
-                if (method.Id == _serviceMethod.CrossLanguageDefinitionId && method.Kind == ResourceOperationKind.Create)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Gets the resource metadata from the enclosing type.
-        /// </summary>
-        /// <returns>The resource metadata if available, null otherwise.</returns>
-        private ResourceMetadata? GetResourceMetadata()
-        {
-            // Access the resource metadata from the enclosing type
-            return _enclosingType switch
-            {
-                ResourceClientProvider resourceProvider => resourceProvider.ResourceMetadata,
-                ResourceCollectionClientProvider collectionProvider => collectionProvider.ResourceMetadata,
-                _ => null
-            };
         }
 
         private TryExpression BuildTryExpression()

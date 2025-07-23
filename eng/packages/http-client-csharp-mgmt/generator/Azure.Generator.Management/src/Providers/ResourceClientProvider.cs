@@ -56,8 +56,6 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
-        internal ResourceMetadata ResourceMetadata => _resourceMetadata;
-
         // Support for multiple rest clients
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
@@ -352,9 +350,24 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false));
+                    // For Create operations, use "CreateOrUpdate" method name instead of spec operation name
+                    string? methodName = null;
+                    if (methodKind == ResourceOperationKind.Create)
+                    {
+                        methodName = "CreateOrUpdate";  // For sync method
+                    }
+
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
                     var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true));
+
+                    // For async method, use "CreateOrUpdateAsync"
+                    string? asyncMethodName = null;
+                    if (methodKind == ResourceOperationKind.Create)
+                    {
+                        asyncMethodName = "CreateOrUpdateAsync";  // For async method
+                    }
+
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
                 }
             }
 

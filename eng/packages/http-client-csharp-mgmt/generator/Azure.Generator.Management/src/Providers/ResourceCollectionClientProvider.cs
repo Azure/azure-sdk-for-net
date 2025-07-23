@@ -30,8 +30,6 @@ namespace Azure.Generator.Management.Providers
     {
         private readonly ResourceMetadata _resourceMetadata;
 
-        internal ResourceMetadata ResourceMetadata => _resourceMetadata;
-
         private readonly ResourceClientProvider _resource;
         private readonly InputServiceMethod? _getAll;
         private readonly InputServiceMethod? _create;
@@ -274,7 +272,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, _create, convenienceMethod, isAsync));
+                var methodName = isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
+                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, _create, convenienceMethod, isAsync, methodName));
             }
 
             return result;
