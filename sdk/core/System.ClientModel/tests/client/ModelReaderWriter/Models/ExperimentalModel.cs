@@ -5,11 +5,7 @@ using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-#if SOURCE_GENERATOR
-namespace System.ClientModel.SourceGeneration.Tests
-#else
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
-#endif
 {
 #if NET8_0_OR_GREATER
     [Experimental("TEST001")]

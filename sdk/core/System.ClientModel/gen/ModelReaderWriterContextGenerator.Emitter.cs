@@ -104,10 +104,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
             {
                 WrapInSuppress(modelInfo.Type, builder, () =>
                 {
-                    if (modelInfo.Type.ExperimentalDiagnosticId != null)
-                    {
-                        builder.AppendLine(indent, $"#pragma warning disable {modelInfo.Type.ExperimentalDiagnosticId}");
-                    }
                     builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo.Type.FullyQualifiedName}), () => ");
                     if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
                     {
@@ -116,10 +112,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     else
                     {
                         builder.AppendLine($" s_referenceContexts[typeof({modelInfo.ContextType.FullyQualifiedName})].GetTypeBuilder(typeof({modelInfo.Type.FullyQualifiedName})));");
-                    }
-                    if (modelInfo.Type.ExperimentalDiagnosticId != null)
-                    {
-                        builder.AppendLine(indent, $"#pragma warning restore {modelInfo.Type.ExperimentalDiagnosticId}");
                     }
                 });
             }
@@ -249,10 +241,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, $"namespace {innerItemType.Namespace};");
             builder.AppendLine();
 
-            if (modelInfo.Type.ExperimentalDiagnosticId != null)
-            {
-                builder.AppendLine(indent, $"#pragma warning disable {modelInfo.Type.ExperimentalDiagnosticId}");
-            }
             builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : {s_modelReaderWriterTypeBuilder}");
             builder.AppendLine(indent, "{");
             indent++;
@@ -283,10 +271,6 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
             indent--;
             builder.AppendLine(indent, "}");
-            if (modelInfo.Type.ExperimentalDiagnosticId != null)
-            {
-                builder.AppendLine(indent, $"#pragma warning restore {modelInfo.Type.ExperimentalDiagnosticId}");
-            }
 
             AddNewFile($"{innerItemType.Namespace.Replace('.', '_')}_{modelInfo.Type.TypeCaseName}Builder", builder.ToString(), hintNames);
         }

@@ -51,7 +51,6 @@
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelX.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelY.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\UnknownBaseModel.cs" LinkBase="Shared\Models" />
-    <Compile Include="..\client\ModelReaderWriter\Models\ExperimentalModel.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ClientShared\ModelReaderWriterHelper.cs" LinkBase="Shared\Helpers" />
     <Compile Include="..\client\ClientShared\OptionalProperty.cs" LinkBase="Shared\Helpers" />
     <Compile Include="..\client\ClientShared\OptionalList.cs" LinkBase="Shared\Helpers" />
