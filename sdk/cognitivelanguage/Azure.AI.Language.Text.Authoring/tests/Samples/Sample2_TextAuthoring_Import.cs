@@ -198,7 +198,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Started,
-                exportedProject: rawJson
+                projectJson: rawJson
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -388,7 +388,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Started,
-                exportedProject: rawJson
+                projectJson: rawJson
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

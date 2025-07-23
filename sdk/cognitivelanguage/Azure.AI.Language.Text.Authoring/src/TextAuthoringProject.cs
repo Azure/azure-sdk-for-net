@@ -539,18 +539,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportedProject">
+        /// <param name="projectJson">
         /// A raw JSON string representing the entire project to import.
         /// This string should match the format of an exported Text Authoring project.
         /// </param>
         /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string exportedProject, string format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectJson, string format = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
+            Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
-            using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(exportedProject));
+            using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
             RequestContext context = FromCancellationToken(cancellationToken);
             return await ImportRawJsonAsync(waitUntil, _projectName, content, format, context).ConfigureAwait(false);
         }
@@ -560,18 +560,18 @@ namespace Azure.AI.Language.Text.Authoring
         /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="exportedProject">
+        /// <param name="projectJson">
         /// A raw JSON string representing the entire project to import.
         /// This string should match the format of an exported Text Authoring project.
         /// </param>
         /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation Import(WaitUntil waitUntil, string exportedProject, string format = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string projectJson, string format = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
+            Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
 
-            using RequestContent content = RequestContentHelper.FromObject(exportedProject);
+            using RequestContent content = RequestContentHelper.FromObject(projectJson);
             RequestContext context = FromCancellationToken(cancellationToken);
             return ImportRawJson(waitUntil, _projectName, content, format, context);
         }

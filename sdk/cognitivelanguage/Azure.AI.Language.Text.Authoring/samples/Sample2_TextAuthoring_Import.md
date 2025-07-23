@@ -190,7 +190,7 @@ string rawJson = """
 
 Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Started,
-    exportedProject: rawJson
+    projectJson: rawJson
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -370,7 +370,7 @@ string rawJson = """
 
 Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Started,
-    exportedProject: rawJson
+    projectJson: rawJson
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
