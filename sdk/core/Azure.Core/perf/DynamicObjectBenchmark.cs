@@ -12,9 +12,8 @@ using BenchmarkDotNet.Jobs;
 
 namespace Azure.Core.Perf
 {
-    [SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
-    [SimpleJob(RuntimeMoniker.Net462)]
-    [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net462, baseline: true)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     public class DynamicObjectBenchmark
     {
         private static string _fileName = Path.Combine(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", "JsonFormattedString.json"));

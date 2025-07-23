@@ -40,12 +40,15 @@ function Process-File($filename) {
             $allPassed = $false
             continue
         }
-        $diffSec = ($localMean - $nugetMean) / 1000000000
-        if ($diffSec -gt 1.0) {
-            Write-Host "[$filename] FAIL: [$base]: Local is slower by $([math]::Round($diffSec,2)) seconds (local: $localMean, nuget: $nugetMean)"
+        $percentThreshold = 10
+        $absoluteThresholdNs = 1000  # 1000 nanoseconds
+        $percentDiff = (($localMean - $nugetMean) / $nugetMean) * 100
+        $absoluteDiff = [math]::Abs($localMean - $nugetMean)
+        if ($percentDiff -gt $percentThreshold -and $absoluteDiff -gt $absoluteThresholdNs) {
+            Write-Host "[$filename] FAIL: [$base]: Local is slower by $([math]::Round($percentDiff,2))% ($([math]::Round($absoluteDiff,2)) ns)"
             $allPassed = $false
         } else {
-            Write-Host "[$filename] PASS: [$base]: Local is within 1 second of Nuget (diff: $([math]::Round($diffSec,2)) seconds)"
+            Write-Host "[$filename] PASS: [$base]: Local is within $percentThreshold% or $absoluteThresholdNs ns of Nuget (diff: $([math]::Round($percentDiff,2))%, $([math]::Round($absoluteDiff,2)) ns)"
         }
     }
     return $allPassed

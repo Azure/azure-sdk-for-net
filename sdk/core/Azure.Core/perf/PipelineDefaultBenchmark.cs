@@ -19,36 +19,31 @@ namespace Azure.Core.Perf
     [SimpleJob(RuntimeMoniker.Net80)]
 
     [MemoryDiagnoser]
-    public class PipelineBenchmark
+    public class PipelineDefaultBenchmark
     {
-        private Benchmarks.Local.PipelineScenario _localScenario;
-        private Benchmarks.Nuget.PipelineScenario _nugetScenario;
+        private Benchmarks.Local.PipelineDefaultScenario _localScenario;
+        private Benchmarks.Nuget.PipelineDefaultScenario _nugetScenario;
 
         [GlobalSetup]
         public void SetUp()
         {
             // Set up local scenario
-            _localScenario = new Benchmarks.Local.PipelineScenario();
+            _localScenario = new Benchmarks.Local.PipelineDefaultScenario();
+
             // Set up NuGet scenario
-            _nugetScenario = new Benchmarks.Nuget.PipelineScenario();
-        }
-        [GlobalCleanup]
-        public void CleanUp()
-        {
-            _localScenario.Dispose();
-            _nugetScenario.Dispose();
+            _nugetScenario = new Benchmarks.Nuget.PipelineDefaultScenario();
         }
 
         [Benchmark]
-        public async Task<Response> LocalPipeline()
+        public async Task<Response> LocalDefaultPipeline()
         {
-            return await _localScenario.SendPreCreatedAsync();
+            return await _localScenario.SendAsync();
         }
 
         [Benchmark(Baseline = true)]
-        public async Task<Response> NugetPipeline()
+        public async Task<Response> NugetDefaultPipeline()
         {
-            return await _nugetScenario.SendPreCreatedAsync();
+            return await _nugetScenario.SendAsync();
         }
     }
 }

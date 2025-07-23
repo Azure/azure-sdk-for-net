@@ -6,6 +6,7 @@ $framework = "net8.0"
 
 # Run the benchmarks (ensure JSON exporter is enabled in your config)
 Write-Host "Running benchmarks..."
+dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.PipelineDefaultBenchmark*
 dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.PipelineBenchmark*
 dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.EventSourceBenchmark*
 
@@ -20,7 +21,7 @@ $compareScript = "./Compare-Benchmarks.ps1"
 & pwsh $compareScript
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Comparison failed: Local is more than 1 second slower than Nuget in at least one benchmark."
+    Write-Host "Comparison failed: Local is more than 10 percent slower than Nuget in at least one benchmark."
     exit 1
 } else {
     Write-Host "All benchmarks passed comparison."
