@@ -26,13 +26,33 @@ namespace Azure.Generator.Visitors
     {
         private static CSharpType ETagType => new CSharpType(typeof(ETag)).WithNullable(true);
         private const string IfMatch = "If-Match";
+        private const string IfMatchMemberName = "IfMatch";
         private const string IfNoneMatch = "If-None-Match";
+        private const string IfNoneMatchMemberName = "IfNoneMatch";
         private const string IfModifiedSince = "If-Modified-Since";
+        private const string IfModifiedSinceMemberName = "IfModifiedSince";
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
+        private const string IfUnmodifiedSinceMemberName = "IfUnmodifiedSince";
 
         private static readonly HashSet<string> _matchConditionsHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
-            IfMatch, IfNoneMatch, IfModifiedSince, IfUnmodifiedSince
+            IfMatch,
+            IfMatchMemberName,
+            IfNoneMatch,
+            IfNoneMatchMemberName,
+            IfModifiedSince,
+            IfModifiedSinceMemberName,
+            IfUnmodifiedSince,
+            IfUnmodifiedSinceMemberName,
+        };
+
+        private static readonly Dictionary<RequestConditionHeaders, string> _requestConditionsHeaders = new()
+        {
+            { RequestConditionHeaders.None, string.Empty },
+            { RequestConditionHeaders.IfMatch, IfMatch },
+            { RequestConditionHeaders.IfNoneMatch, IfNoneMatch },
+            { RequestConditionHeaders.IfModifiedSince, IfModifiedSince },
+            { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
@@ -123,6 +143,25 @@ namespace Azure.Generator.Visitors
             return flags;
         }
 
+        private static string? ParseRequestConditionsSerializationFormat(ScmMethodProvider method)
+        {
+            foreach (var parameter in method.Signature.Parameters)
+            {
+                if (parameter.Location == ParameterLocation.Header && IsRequestConditionHeader(parameter.WireInfo.SerializedName))
+                {
+                    var wireName = parameter.WireInfo.SerializedName.ToLowerInvariant();
+                    switch (wireName)
+                    {
+                        case "if-modified-since":
+                        case "if-unmodified-since":
+                            return parameter.WireInfo.SerializationFormat.ToFormatSpecifier();
+                    }
+                }
+            }
+
+            return null;
+        }
+
         private static bool IsSingleRequestConditionHeader(RequestConditionHeaders flags)
         {
             return flags == RequestConditionHeaders.IfMatch || flags == RequestConditionHeaders.IfNoneMatch;
@@ -133,9 +172,9 @@ namespace Azure.Generator.Visitors
             return (flags & RequestConditionHeaders.IfMatch) != 0 && (flags & RequestConditionHeaders.IfNoneMatch) != 0;
         }
 
-        private static bool HasDateHeaders(RequestConditionHeaders flags)
+        private static bool HasModificationTimeHeaders(RequestConditionHeaders headers)
         {
-            return (flags & RequestConditionHeaders.IfModifiedSince) != 0 || (flags & RequestConditionHeaders.IfUnmodifiedSince) != 0;
+            return headers.HasFlag(RequestConditionHeaders.IfModifiedSince) || headers.HasFlag(RequestConditionHeaders.IfUnmodifiedSince);
         }
 
         private static void UpdateMethodSignatureWithMatchConditionParameter(ScmMethodProvider method, List<ParameterProvider> matchConditionParams)
@@ -177,7 +216,9 @@ namespace Azure.Generator.Visitors
             method.Signature.Update(parameters: updatedParams);
         }
 
-        private static void UpdateMethodSignatureWithRequestConditionsParameter(ScmMethodProvider method, List<ParameterProvider> matchConditionParams)
+        private static void UpdateMethodSignatureWithRequestConditionsParameter(
+            ScmMethodProvider method,
+            List<ParameterProvider> matchConditionParams)
         {
             ParameterProvider requestConditionsParameter = (method.IsProtocolMethod || IsCreateRequestMethod(method)) &&
                method.Signature.Parameters.FirstOrDefault(p => p.Name == "context")?.DefaultValue == null
@@ -190,6 +231,7 @@ namespace Azure.Generator.Visitors
             var updatedParams = new List<ParameterProvider>();
             bool addedRequestConditionsParameter = false;
             List<XmlDocParamStatement> xmlParameterDocs = [];
+
             foreach (var param in method.Signature.Parameters)
             {
                 if (IsRequestConditionHeader(param.WireInfo.SerializedName) && !addedRequestConditionsParameter)
@@ -216,12 +258,53 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateClientMethod(ScmMethodProvider method, RequestConditionHeaders headerFlags)
         {
-            if (method.BodyStatements == null || (!HasMultipleRequestConditionHeaders(headerFlags) && !HasDateHeaders(headerFlags)))
+            if (method.BodyStatements == null || (!HasMultipleRequestConditionHeaders(headerFlags) && !HasModificationTimeHeaders(headerFlags)))
             {
                 return;
             }
 
             var updatedStatements = new List<MethodBodyStatement>();
+            if (method.IsProtocolMethod && HasModificationTimeHeaders(headerFlags))
+            {
+                ParameterProvider requestConditionsParameter = method.Signature.Parameters.FirstOrDefault(p => p.Name == "context")?.DefaultValue == null
+                      ? KnownAzureParameters.RequestConditionsParameter
+                      : KnownAzureParameters.OptionalRequestConditionsParameter;
+                List<MethodBodyStatement> validations = [];
+
+                foreach (RequestConditionHeaders val in Enum.GetValues(typeof(RequestConditionHeaders)).Cast<RequestConditionHeaders>())
+                {
+                    if (!headerFlags.HasFlag(val))
+                    {
+                        string? requestConditionsPropertyName = val switch
+                        {
+                            RequestConditionHeaders.IfMatch => nameof(RequestConditions.IfMatch),
+                            RequestConditionHeaders.IfNoneMatch => nameof(RequestConditions.IfNoneMatch),
+                            RequestConditionHeaders.IfModifiedSince => nameof(RequestConditions.IfModifiedSince),
+                            RequestConditionHeaders.IfUnmodifiedSince => nameof(RequestConditions.IfUnmodifiedSince),
+                            _ => null
+                        };
+
+                        if (requestConditionsPropertyName == null)
+                        {
+                            continue;
+                        }
+
+                        var validationStatement = new IfStatement(requestConditionsParameter.Property(requestConditionsPropertyName).NotEqual(Null))
+                        {
+                            Throw(
+                                New.Instance(new CSharpType(typeof(ArgumentNullException)),
+                                Literal($"Service does not support the {_requestConditionsHeaders[val]} header for this operation.")))
+                        };
+                        validations.Add(validationStatement);
+                    }
+                }
+
+                if (validations.Count > 0)
+                {
+                    validations.Add(MethodBodyStatement.EmptyLine);
+                }
+                updatedStatements.AddRange(validations);
+            }
 
             foreach (var statement in method.BodyStatements)
             {
@@ -230,7 +313,7 @@ namespace Azure.Generator.Visitors
                 {
                     updatedStatement = UpdateCreateRequestInvocationStatement(method, statement, headerFlags);
                 }
-                else if (!IsCreateRequestMethod(method))
+                else
                 {
                     updatedStatement = UpdateProtocolMethodInvocationStatement(statement, headerFlags);
                 }
@@ -267,10 +350,7 @@ namespace Azure.Generator.Visitors
                         {
                             if (argument is VariableExpression variable)
                             {
-                                if (variable.Declaration.RequestedName == "ifMatch" ||
-                                   variable.Declaration.RequestedName == "ifNoneMatch" ||
-                                   variable.Declaration.RequestedName == "ifModifiedSince" ||
-                                   variable.Declaration.RequestedName == "ifUnmodifiedSince")
+                                if (_matchConditionsHeaders.Contains(variable.Declaration.RequestedName))
                                 {
                                     if (addedMatchConditions)
                                     {
@@ -322,10 +402,7 @@ namespace Azure.Generator.Visitors
                     {
                         if (argument is VariableExpression variable)
                         {
-                            if (variable.Declaration.RequestedName == "ifMatch" ||
-                                variable.Declaration.RequestedName == "ifNoneMatch" ||
-                                variable.Declaration.RequestedName == "ifModifiedSince" ||
-                                variable.Declaration.RequestedName == "ifUnmodifiedSince")
+                            if (_matchConditionsHeaders.Contains(variable.Declaration.RequestedName))
                             {
                                 if (addedMatchConditions)
                                 {
@@ -375,7 +452,7 @@ namespace Azure.Generator.Visitors
 
             foreach (var statement in method.BodyStatements)
             {
-                if (!TryUpdateIfStatementForMatchConditions(statement, headerFlags, out var updatedStatement))
+                if (!TryUpdateIfStatementForMatchConditions(method, statement, headerFlags, out var updatedStatement))
                 {
                     updatedStatements.Add(statement);
                 }
@@ -390,6 +467,7 @@ namespace Azure.Generator.Visitors
         }
 
         private static bool TryUpdateIfStatementForMatchConditions(
+            ScmMethodProvider method,
             MethodBodyStatement statement,
             RequestConditionHeaders headerFlags,
             out MethodBodyStatement updatedStatement)
@@ -419,7 +497,7 @@ namespace Azure.Generator.Visitors
                             if (headerInfo.HasValue)
                             {
                                 var (headerName, headerValue) = headerInfo.Value;
-                                if (HasMultipleRequestConditionHeaders(headerFlags) && IsRequestConditionHeader(headerName))
+                                if (HasMultipleRequestConditionHeaders(headerFlags))
                                 {
                                     // For MatchConditions, use AddHeader which will handle the header addition appropriately
                                     updatedIfStatement.Update(
@@ -433,6 +511,15 @@ namespace Azure.Generator.Visitors
                                     updatedIfStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(
                                         headerName,
                                         headerValue.Property("Value")));
+                                    return true;
+                                }
+                                else if (HasModificationTimeHeaders(headerFlags))
+                                {
+                                    // For date-based conditions, use AddHeader with RequestConditions parameter and serialization format
+                                    string? serializationFormat = ParseRequestConditionsSerializationFormat(method);
+                                    updatedIfStatement.Update(
+                                        condition: KnownAzureParameters.RequestConditionsParameter.NotEqual(Null),
+                                        body: variableExpression.As<Request>().AddHeader(KnownAzureParameters.RequestConditionsParameter, serializationFormat));
                                     return true;
                                 }
                             }

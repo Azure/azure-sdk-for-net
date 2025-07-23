@@ -58,9 +58,9 @@ namespace SpecialHeaders.ConditionalRequest
             uri.Reset(_endpoint);
             uri.AppendPath("/special-headers/conditional-request/if-modified-since", false);
             request.Uri = uri;
-            if (ifModifiedSince != null)
+            if (requestConditions != null)
             {
-                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.Add(requestConditions, "R");
             }
             return message;
         }
@@ -74,9 +74,9 @@ namespace SpecialHeaders.ConditionalRequest
             uri.Reset(_endpoint);
             uri.AppendPath("/special-headers/conditional-request/if-unmodified-since", false);
             request.Uri = uri;
-            if (ifUnmodifiedSince != null)
+            if (requestConditions != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.Add(requestConditions, "R");
             }
             return message;
         }

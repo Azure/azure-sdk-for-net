@@ -207,6 +207,19 @@ namespace SpecialHeaders.ConditionalRequest
         /// <returns> The response returned from the service. </returns>
         public virtual Response HeadIfModifiedSince(RequestConditions requestConditions, RequestContext context)
         {
+            if (requestConditions.IfMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Match header for this operation.");
+            }
+            if (requestConditions.IfNoneMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions.IfUnmodifiedSince != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Unmodified-Since header for this operation.");
+            }
+
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.HeadIfModifiedSince");
             scope.Start();
             try
@@ -235,6 +248,19 @@ namespace SpecialHeaders.ConditionalRequest
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> HeadIfModifiedSinceAsync(RequestConditions requestConditions, RequestContext context)
         {
+            if (requestConditions.IfMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Match header for this operation.");
+            }
+            if (requestConditions.IfNoneMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions.IfUnmodifiedSince != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Unmodified-Since header for this operation.");
+            }
+
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.HeadIfModifiedSince");
             scope.Start();
             try
@@ -281,6 +307,19 @@ namespace SpecialHeaders.ConditionalRequest
         /// <returns> The response returned from the service. </returns>
         public virtual Response PostIfUnmodifiedSince(RequestConditions requestConditions, RequestContext context)
         {
+            if (requestConditions.IfMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Match header for this operation.");
+            }
+            if (requestConditions.IfNoneMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions.IfModifiedSince != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Modified-Since header for this operation.");
+            }
+
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfUnmodifiedSince");
             scope.Start();
             try
@@ -309,6 +348,19 @@ namespace SpecialHeaders.ConditionalRequest
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PostIfUnmodifiedSinceAsync(RequestConditions requestConditions, RequestContext context)
         {
+            if (requestConditions.IfMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Match header for this operation.");
+            }
+            if (requestConditions.IfNoneMatch != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-None-Match header for this operation.");
+            }
+            if (requestConditions.IfModifiedSince != null)
+            {
+                throw new ArgumentNullException("Service does not support the If-Modified-Since header for this operation.");
+            }
+
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfUnmodifiedSince");
             scope.Start();
             try

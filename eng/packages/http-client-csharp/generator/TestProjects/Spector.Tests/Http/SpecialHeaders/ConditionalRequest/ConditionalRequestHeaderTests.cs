@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using NUnit.Framework;
 using SpecialHeaders.ConditionalRequest;
 
@@ -13,16 +14,16 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
         [SpectorTest]
         public Task Special_Headers_Conditional_Request_PostIfMatch() => Test(async (host) =>
         {
-            string ifMatch = "\"valid\"";
-            var response = await new ConditionalRequestClient(host, null).PostIfMatchAsync(ifMatch);
+            ETag ifMatch = new ETag("valid");
+            Response response = await new ConditionalRequestClient(host, null).PostIfMatchAsync(ifMatch);
             Assert.AreEqual(204, response.Status);
         });
 
         [SpectorTest]
         public Task Special_Headers_Conditional_Request_PostIfNoneMatch() => Test(async (host) =>
         {
-            string ifNoneMatch = "\"invalid\"";
-            var response = await new ConditionalRequestClient(host, null).PostIfNoneMatchAsync(ifNoneMatch);
+            ETag ifNoneMatch = new ETag("invalid");
+            Response response = await new ConditionalRequestClient(host, null).PostIfNoneMatchAsync(ifNoneMatch);
             Assert.AreEqual(204, response.Status);
         });
 
@@ -30,7 +31,10 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
         public Task Special_Headers_Conditional_Request_HeadIfModifiedSince() => Test(async (host) =>
         {
             DateTimeOffset ifModifiedSince = DateTimeOffset.Parse("Fri, 26 Aug 2022 14:38:00 GMT");
-            var response = await new ConditionalRequestClient(host, null).HeadIfModifiedSinceAsync(ifModifiedSince);
+            Response response = await new ConditionalRequestClient(host, null).HeadIfModifiedSinceAsync(new RequestConditions()
+            {
+                IfModifiedSince = ifModifiedSince
+            });
             Assert.AreEqual(204, response.Status);
         });
 
@@ -38,8 +42,23 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
         public Task Special_Headers_Conditional_Request_PostIfUnmodifiedSince() => Test(async (host) =>
         {
             DateTimeOffset ifUnmodifiedSince = DateTimeOffset.Parse("Fri, 26 Aug 2022 14:38:00 GMT");
-            var response = await new ConditionalRequestClient(host, null).PostIfUnmodifiedSinceAsync(ifUnmodifiedSince);
+            Response response = await new ConditionalRequestClient(host, null).PostIfUnmodifiedSinceAsync(new RequestConditions()
+            {
+                IfUnmodifiedSince = ifUnmodifiedSince
+            });
             Assert.AreEqual(204, response.Status);
+        });
+
+        [Test]
+        public Task Special_Headers_Conditional_Request_PostIfUnmodifiedSince_ShouldThrow() => Test((host) =>
+        {
+            DateTimeOffset ifModifiedSince = DateTimeOffset.Parse("Fri, 26 Aug 2022 14:38:00 GMT");
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await new ConditionalRequestClient(host, null).PostIfUnmodifiedSinceAsync(new RequestConditions()
+            {
+                IfModifiedSince = ifModifiedSince
+            }));
+
+            return Task.CompletedTask;
         });
     }
 }
