@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.TrustedSigning
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CertificateProfileListResult))]
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountData))]

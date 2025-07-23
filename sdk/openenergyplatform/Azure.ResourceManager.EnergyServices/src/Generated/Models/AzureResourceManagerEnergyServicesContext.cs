@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.EnergyServices
     [ModelReaderWriterBuildable(typeof(EnergyServicePatch))]
     [ModelReaderWriterBuildable(typeof(EnergyServiceProperties))]
     [ModelReaderWriterBuildable(typeof(EnergyServiceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerEnergyServicesContext : ModelReaderWriterContext
     {

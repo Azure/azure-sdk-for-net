@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Dell.Storage
     [ModelReaderWriterBuildable(typeof(DellFileSystemProperties))]
     [ModelReaderWriterBuildable(typeof(DellFileSystemResource))]
     [ModelReaderWriterBuildable(typeof(DellFileSystemUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDellStorageContext : ModelReaderWriterContext
     {
     }

@@ -26,8 +26,11 @@ namespace Azure.ResourceManager.FluidRelay
     [ModelReaderWriterBuildable(typeof(FluidRelayServerList))]
     [ModelReaderWriterBuildable(typeof(FluidRelayServerPatch))]
     [ModelReaderWriterBuildable(typeof(FluidRelayServerResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegenerateKeyContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerFluidRelayContext : ModelReaderWriterContext
     {
     }

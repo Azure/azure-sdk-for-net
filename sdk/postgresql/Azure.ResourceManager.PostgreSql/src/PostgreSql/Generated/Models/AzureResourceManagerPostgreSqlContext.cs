@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlConfigurationData))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlConfigurationList))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlConfigurationResource))]
@@ -68,8 +70,10 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleData))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleListResult))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlVirtualNetworkRuleResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownServerPropertiesForCreate))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerPostgreSqlContext : ModelReaderWriterContext
     {
     }

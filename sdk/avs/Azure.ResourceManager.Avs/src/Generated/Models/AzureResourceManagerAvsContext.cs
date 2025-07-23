@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -72,12 +73,14 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(HcxEnterpriseSiteResource))]
     [ModelReaderWriterBuildable(typeof(IscsiPathData))]
     [ModelReaderWriterBuildable(typeof(IscsiPathResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PlacementPolicyData))]
     [ModelReaderWriterBuildable(typeof(PlacementPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(PlacementPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(PlacementPolicyResource))]
     [ModelReaderWriterBuildable(typeof(PrivateCloudAvailabilityProperties))]
     [ModelReaderWriterBuildable(typeof(PSCredentialExecutionParameterDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletData))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletResource))]
     [ModelReaderWriterBuildable(typeof(ScriptExecutionData))]
@@ -123,6 +126,7 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVirtualMachineResource))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupData))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupResource))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAvsContext : ModelReaderWriterContext
     {
     }

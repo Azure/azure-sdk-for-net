@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -139,9 +140,11 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(LabVmList))]
     [ModelReaderWriterBuildable(typeof(NotificationChannelList))]
     [ModelReaderWriterBuildable(typeof(PolicyList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduleList))]
     [ModelReaderWriterBuildable(typeof(SecretList))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricList))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserList))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkList))]

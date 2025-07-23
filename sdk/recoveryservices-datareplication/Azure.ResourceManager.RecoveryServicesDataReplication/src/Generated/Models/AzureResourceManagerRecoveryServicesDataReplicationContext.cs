@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -97,6 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(HyperVToAzStackHciProtectedNicProperties))]
     [ModelReaderWriterBuildable(typeof(HyperVToAzStackHciRecoveryPointCustomProperties))]
     [ModelReaderWriterBuildable(typeof(HyperVToAzStackHciReplicationExtensionCustomProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PlannedFailover))]
     [ModelReaderWriterBuildable(typeof(PlannedFailoverCustomProperties))]
     [ModelReaderWriterBuildable(typeof(PlannedFailoverProperties))]
@@ -104,6 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(ProtectedItemJobProperties))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpointConnectionDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageContainerProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TestFailoverCleanupJobCustomProperties))]
@@ -118,6 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(UnknownDataReplicationProtectedItemCustomPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(UnknownDataReplicationRecoveryPointCustomProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownPlannedFailoverCustomProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VMwareFabricAgentCustomProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareMigrateFabricCustomProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciDiskInput))]
@@ -131,6 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciProtectedNicProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciRecoveryPointCustomProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareToAzStackHciReplicationExtensionCustomProperties))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerRecoveryServicesDataReplicationContext : ModelReaderWriterContext
     {
     }

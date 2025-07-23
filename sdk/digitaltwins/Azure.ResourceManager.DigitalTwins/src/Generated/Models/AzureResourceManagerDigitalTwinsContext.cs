@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
@@ -37,6 +38,8 @@ namespace Azure.ResourceManager.DigitalTwins
     [ModelReaderWriterBuildable(typeof(DigitalTwinsPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(DigitalTwinsPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(DigitalTwinsServiceBusProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TimeSeriesDatabaseConnectionData))]
     [ModelReaderWriterBuildable(typeof(TimeSeriesDatabaseConnectionListResult))]
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.DigitalTwins
     [ModelReaderWriterBuildable(typeof(TimeSeriesDatabaseConnectionResource))]
     [ModelReaderWriterBuildable(typeof(UnknownDigitalTwinsEndpointResourceProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownTimeSeriesDatabaseConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDigitalTwinsContext : ModelReaderWriterContext
     {
     }

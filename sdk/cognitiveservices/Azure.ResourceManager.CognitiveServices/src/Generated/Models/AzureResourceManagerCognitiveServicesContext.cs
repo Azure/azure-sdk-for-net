@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -113,6 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(DeploymentSkuListResult))]
     [ModelReaderWriterBuildable(typeof(EncryptionScopeListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityAuthTypeConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ModelCapacityCalculatorWorkload))]
     [ModelReaderWriterBuildable(typeof(ModelCapacityCalculatorWorkloadRequestParam))]
     [ModelReaderWriterBuildable(typeof(ModelCapacityListResult))]
@@ -153,6 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(RaiPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(RaiPolicyResource))]
     [ModelReaderWriterBuildable(typeof(RegenerateServiceAccountKeyContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SASAuthTypeConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceAccountApiKeys))]
     [ModelReaderWriterBuildable(typeof(ServiceAccountApiProperties))]
@@ -166,10 +169,13 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(ServiceAccountUsageMetricName))]
     [ModelReaderWriterBuildable(typeof(ServiceAccountUserOwnedStorage))]
     [ModelReaderWriterBuildable(typeof(ServicePrincipalAuthTypeConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownConnectionPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UsernamePasswordAuthTypeConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(UserOwnedAmlWorkspace))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCognitiveServicesContext : ModelReaderWriterContext
     {
     }

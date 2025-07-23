@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
@@ -48,7 +49,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerNameItem))]
     [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerRoleGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCosmosDBForPostgreSqlContext : ModelReaderWriterContext
     {
     }

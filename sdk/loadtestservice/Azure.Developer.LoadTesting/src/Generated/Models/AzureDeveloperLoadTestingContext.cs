@@ -38,6 +38,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(PassFailServerMetric))]
     [ModelReaderWriterBuildable(typeof(RegionalConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceMetric))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(TargetResourceConfigurations))]
     [ModelReaderWriterBuildable(typeof(TestAppComponents))]
     [ModelReaderWriterBuildable(typeof(TestCertificate))]

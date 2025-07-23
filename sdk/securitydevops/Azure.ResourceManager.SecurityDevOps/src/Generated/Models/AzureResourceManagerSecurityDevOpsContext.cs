@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     [ModelReaderWriterBuildable(typeof(GitHubRepoListResponse))]
     [ModelReaderWriterBuildable(typeof(GitHubRepoProperties))]
     [ModelReaderWriterBuildable(typeof(GitHubRepoResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSecurityDevOpsContext : ModelReaderWriterContext
     {

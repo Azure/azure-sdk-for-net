@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -211,6 +212,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(DomainPurchaseConsent))]
     [ModelReaderWriterBuildable(typeof(DomainRecommendationSearchContent))]
     [ModelReaderWriterBuildable(typeof(ExpressionTraces))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FileSystemHttpLogsConfig))]
     [ModelReaderWriterBuildable(typeof(FlowAccessControlConfiguration))]
     [ModelReaderWriterBuildable(typeof(FlowAccessControlConfigurationPolicy))]
@@ -271,6 +273,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(LogSpecification))]
     [ModelReaderWriterBuildable(typeof(LogsSiteConfigResource))]
     [ModelReaderWriterBuildable(typeof(LogsSiteSlotConfigResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetricAvailability))]
     [ModelReaderWriterBuildable(typeof(MetricDimension))]
     [ModelReaderWriterBuildable(typeof(MetricSpecification))]
@@ -474,6 +477,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(StatusCodesRangeBasedTrigger))]
     [ModelReaderWriterBuildable(typeof(StorageMigrationContent))]
     [ModelReaderWriterBuildable(typeof(StorageMigrationResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SwiftVirtualNetworkData))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TldLegalAgreement))]
@@ -488,6 +492,7 @@ namespace Azure.ResourceManager.AppService
     [ModelReaderWriterBuildable(typeof(TriggeredWebJobData))]
     [ModelReaderWriterBuildable(typeof(TriggeredWebJobListResult))]
     [ModelReaderWriterBuildable(typeof(TwitterRegistration))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidateResponseError))]
     [ModelReaderWriterBuildable(typeof(VirtualApplication))]
     [ModelReaderWriterBuildable(typeof(VirtualDirectory))]

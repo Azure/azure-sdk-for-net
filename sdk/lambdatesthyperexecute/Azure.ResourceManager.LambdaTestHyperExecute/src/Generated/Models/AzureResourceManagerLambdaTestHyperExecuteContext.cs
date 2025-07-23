@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
     [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteSingleSignOnPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(LambdaTestHyperExecuteUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLambdaTestHyperExecuteContext : ModelReaderWriterContext
     {
     }

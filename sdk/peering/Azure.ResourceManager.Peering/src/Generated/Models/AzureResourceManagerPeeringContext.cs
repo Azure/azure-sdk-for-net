@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering
 {
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Peering
     [ModelReaderWriterBuildable(typeof(RoutingPreferenceUnbilledPrefix))]
     [ModelReaderWriterBuildable(typeof(RpUnbilledPrefixListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerPeeringContext : ModelReaderWriterContext
     {
     }

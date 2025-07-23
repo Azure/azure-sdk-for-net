@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -273,6 +274,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(KeyVaultContractProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultLastAccessStatusContractProperties))]
     [ModelReaderWriterBuildable(typeof(LoggerListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MigrateToStv2Contract))]
     [ModelReaderWriterBuildable(typeof(NamedValueListResult))]
     [ModelReaderWriterBuildable(typeof(NamedValueSecretContract))]
@@ -337,6 +339,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(ResourceLocationDataContract))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuResults))]
     [ModelReaderWriterBuildable(typeof(ResponseContract))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SamplingSettings))]
     [ModelReaderWriterBuildable(typeof(SchemaListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceApiResolverPolicyResource))]
@@ -374,6 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(ServiceWorkspaceTagOperationLinkResource))]
     [ModelReaderWriterBuildable(typeof(ServiceWorkspaceTagProductLinkResource))]
     [ModelReaderWriterBuildable(typeof(ServiceWorkspaceTagResource))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionContractData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionKeyParameterNamesContract))]
     [ModelReaderWriterBuildable(typeof(SubscriptionKeysContract))]
@@ -399,6 +403,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(TenantSettingsListResult))]
     [ModelReaderWriterBuildable(typeof(TermsOfServiceProperties))]
     [ModelReaderWriterBuildable(typeof(TokenBodyParameterContract))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserContractData))]
     [ModelReaderWriterBuildable(typeof(UserIdentityContract))]
     [ModelReaderWriterBuildable(typeof(UserIdentityListResult))]
@@ -412,6 +417,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(WorkspaceContractData))]
     [ModelReaderWriterBuildable(typeof(WorkspaceContractResource))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(X509CertificateName))]
     public partial class AzureResourceManagerApiManagementContext : ModelReaderWriterContext
     {

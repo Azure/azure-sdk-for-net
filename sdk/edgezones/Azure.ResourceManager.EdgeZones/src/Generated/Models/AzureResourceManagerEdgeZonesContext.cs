@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.EdgeZones
     [ModelReaderWriterBuildable(typeof(ExtendedZoneData))]
     [ModelReaderWriterBuildable(typeof(ExtendedZoneListResult))]
     [ModelReaderWriterBuildable(typeof(ExtendedZoneResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerEdgeZonesContext : ModelReaderWriterContext
     {

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -297,6 +298,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(ExpressRouteServiceProvider))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteServiceProviderBandwidthsOffered))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteServiceProviderListResult))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FailoverConnectionDetails))]
     [ModelReaderWriterBuildable(typeof(FirewallPacketCaptureRequestContent))]
     [ModelReaderWriterBuildable(typeof(FirewallPolicyCertificateAuthority))]
@@ -437,6 +439,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(ManagedRulesDefinition))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSet))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetRuleGroup))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagementGroupNetworkManagerConnectionResource))]
     [ModelReaderWriterBuildable(typeof(MatchCondition))]
     [ModelReaderWriterBuildable(typeof(MatchedRule))]
@@ -653,6 +656,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(RecordSet))]
     [ModelReaderWriterBuildable(typeof(ResiliencyRecommendationComponents))]
     [ModelReaderWriterBuildable(typeof(ResourceNavigationLink))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionPolicyParameters))]
     [ModelReaderWriterBuildable(typeof(RouteCriterion))]
     [ModelReaderWriterBuildable(typeof(RouteData))]
@@ -726,6 +730,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(SubnetData))]
     [ModelReaderWriterBuildable(typeof(SubnetListResult))]
     [ModelReaderWriterBuildable(typeof(SubnetResource))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionNetworkManagerConnectionResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TopologyAssociation))]
@@ -744,6 +749,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(UnknownFirewallPolicyRule))]
     [ModelReaderWriterBuildable(typeof(UnknownFirewallPolicyRuleCollection))]
     [ModelReaderWriterBuildable(typeof(UnprepareNetworkPoliciesContent))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VerificationIPFlowContent))]
     [ModelReaderWriterBuildable(typeof(VerificationIPFlowResult))]
     [ModelReaderWriterBuildable(typeof(VerifierWorkspaceListResult))]
@@ -863,6 +869,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyListResult))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyResource))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallScrubbingRules))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerNetworkContext : ModelReaderWriterContext
     {
     }

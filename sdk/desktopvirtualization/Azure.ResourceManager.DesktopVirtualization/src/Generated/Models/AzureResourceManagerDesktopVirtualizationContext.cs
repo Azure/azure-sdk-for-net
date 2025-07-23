@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(AppAttachPackageResource))]
     [ModelReaderWriterBuildable(typeof(ApplicationGroupList))]
     [ModelReaderWriterBuildable(typeof(ApplicationList))]
+    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(DesktopList))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationPrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationPrivateEndpointConnectionDataData))]
@@ -43,6 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(HostPoolResource))]
     [ModelReaderWriterBuildable(typeof(ImportPackageInfoContent))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindowPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MsixImageUri))]
     [ModelReaderWriterBuildable(typeof(MsixPackageApplications))]
     [ModelReaderWriterBuildable(typeof(MsixPackageData))]
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(MsixPackagePatch))]
     [ModelReaderWriterBuildable(typeof(MsixPackageResource))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionListResultWithSystemData))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScalingActionTime))]
     [ModelReaderWriterBuildable(typeof(ScalingHostPoolReference))]
     [ModelReaderWriterBuildable(typeof(ScalingPlanData))]
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(SessionHostPatch))]
     [ModelReaderWriterBuildable(typeof(SessionHostResource))]
     [ModelReaderWriterBuildable(typeof(StartMenuItemList))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserSessionData))]
     [ModelReaderWriterBuildable(typeof(UserSessionList))]

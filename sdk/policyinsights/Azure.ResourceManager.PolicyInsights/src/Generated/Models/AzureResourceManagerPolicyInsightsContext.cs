@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights
     [ModelReaderWriterBuildable(typeof(RemediationDeploymentsListResult))]
     [ModelReaderWriterBuildable(typeof(RemediationDeploymentSummary))]
     [ModelReaderWriterBuildable(typeof(RemediationListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SlimPolicyMetadata))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrackedResourceModificationDetails))]

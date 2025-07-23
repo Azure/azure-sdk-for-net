@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(CredentialResults))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
     [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext
     {

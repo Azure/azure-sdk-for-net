@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
@@ -18,9 +19,11 @@ namespace Azure.ResourceManager.ScVmm
     [ModelReaderWriterBuildable(typeof(AvailabilitySetListResult))]
     [ModelReaderWriterBuildable(typeof(CloudInventoryItem))]
     [ModelReaderWriterBuildable(typeof(CloudListResult))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(GuestAgentList))]
     [ModelReaderWriterBuildable(typeof(InventoryItemsList))]
     [ModelReaderWriterBuildable(typeof(OSProfileForVmInstance))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetData))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetItem))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetResource))]

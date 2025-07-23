@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(IotHubTestRouteResult))]
     [ModelReaderWriterBuildable(typeof(IotHubTypeName))]
     [ModelReaderWriterBuildable(typeof(IotHubUserSubscriptionQuota))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessagingEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(RouteCompilationError))]
     [ModelReaderWriterBuildable(typeof(RouteErrorPosition))]
@@ -87,7 +89,9 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(RoutingTwinProperties))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRule))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerIotHubContext : ModelReaderWriterContext
     {
     }

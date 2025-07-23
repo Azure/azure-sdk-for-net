@@ -29,8 +29,11 @@ namespace Azure.ResourceManager.LoadTesting
     [ModelReaderWriterBuildable(typeof(LoadTestingResourceData))]
     [ModelReaderWriterBuildable(typeof(LoadTestingResourcePatch))]
     [ModelReaderWriterBuildable(typeof(LoadTestResourcePageList))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLoadTestingContext : ModelReaderWriterContext
     {
     }

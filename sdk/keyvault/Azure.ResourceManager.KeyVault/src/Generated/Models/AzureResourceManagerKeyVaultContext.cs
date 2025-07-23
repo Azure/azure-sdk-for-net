@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -68,12 +69,15 @@ namespace Azure.ResourceManager.KeyVault
     [ModelReaderWriterBuildable(typeof(ManagedHSMSecurityDomainProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmSku))]
     [ModelReaderWriterBuildable(typeof(ManagedHsmVirtualNetworkRule))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SecretAttributes))]
     [ModelReaderWriterBuildable(typeof(SecretBaseAttributes))]
     [ModelReaderWriterBuildable(typeof(SecretListResult))]
     [ModelReaderWriterBuildable(typeof(SecretPatchProperties))]
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultListResult))]
     public partial class AzureResourceManagerKeyVaultContext : ModelReaderWriterContext
     {

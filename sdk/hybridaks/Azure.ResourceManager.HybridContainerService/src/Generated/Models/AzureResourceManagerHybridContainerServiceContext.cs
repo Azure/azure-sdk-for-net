@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HybridContainerService
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterStatus))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileData))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineIPItem))]

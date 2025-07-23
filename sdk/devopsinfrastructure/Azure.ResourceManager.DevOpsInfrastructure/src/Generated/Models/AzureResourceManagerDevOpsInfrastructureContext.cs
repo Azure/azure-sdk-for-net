@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(DevOpsStatelessAgentProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsStorageProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsVmssFabricProfile))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManualResourcePredictionsProfile))]
     [ModelReaderWriterBuildable(typeof(PoolUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResourcePredictions))]
@@ -52,12 +53,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictionInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuZoneDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretsManagementSettings))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsFabricProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsOrganizationProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsPoolAgentProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownResourcePredictionsProfile))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : ModelReaderWriterContext
     {
     }

@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.DependencyMap
     [ModelReaderWriterBuildable(typeof(GetConnectionsWithConnectedMachineForFocusedMachineContent))]
     [ModelReaderWriterBuildable(typeof(GetDependencyViewForFocusedMachineContent))]
     [ModelReaderWriterBuildable(typeof(OffAzureDiscoverySourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownDependencyMapDiscoverySourceProperties))]
     public partial class AzureResourceManagerDependencyMapContext : ModelReaderWriterContext

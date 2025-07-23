@@ -47,6 +47,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(PendingUploadRequest))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResponse))]
     [ModelReaderWriterBuildable(typeof(RedTeam))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SASCredentials))]
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
     [ModelReaderWriterBuildable(typeof(UnknownAIDeployment))]

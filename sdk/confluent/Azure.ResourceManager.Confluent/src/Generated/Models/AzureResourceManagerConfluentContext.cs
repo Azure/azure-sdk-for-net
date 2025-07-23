@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(ListSchemaRegistryClustersResponse))]
     [ModelReaderWriterBuildable(typeof(MetadataEntity))]
     [ModelReaderWriterBuildable(typeof(RegionSpecEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SCClusterByokEntity))]
     [ModelReaderWriterBuildable(typeof(SCClusterNetworkEnvironmentEntity))]
     [ModelReaderWriterBuildable(typeof(SCClusterRecord))]

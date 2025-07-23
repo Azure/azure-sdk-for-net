@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
     [ModelReaderWriterBuildable(typeof(ExcelPerformanceDetail))]
     [ModelReaderWriterBuildable(typeof(NativePerformanceDetail))]
     [ModelReaderWriterBuildable(typeof(PerformanceDetail))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapDiscoveryErrorDetail))]
     [ModelReaderWriterBuildable(typeof(SapDiscoveryExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(SapDiscoveryServerInstanceData))]

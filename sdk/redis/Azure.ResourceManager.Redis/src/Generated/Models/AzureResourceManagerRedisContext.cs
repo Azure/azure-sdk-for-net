@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ExportRdbContent))]
     [ModelReaderWriterBuildable(typeof(ImportRdbContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(RedisAccessKeys))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyAssignmentData))]
@@ -57,7 +59,10 @@ namespace Azure.ResourceManager.Redis
     [ModelReaderWriterBuildable(typeof(RedisSku))]
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotification))]
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotificationListResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerRedisContext : ModelReaderWriterContext
     {
     }

@@ -54,11 +54,14 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(DeploymentListResult))]
     [ModelReaderWriterBuildable(typeof(EnvironmentListResult))]
     [ModelReaderWriterBuildable(typeof(EnvironmentOnboardingInformation))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaExportContent))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaExportResult))]
     [ModelReaderWriterBuildable(typeof(MetadataSchemaListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
     public partial class AzureResourceManagerApiCenterContext : ModelReaderWriterContext
     {

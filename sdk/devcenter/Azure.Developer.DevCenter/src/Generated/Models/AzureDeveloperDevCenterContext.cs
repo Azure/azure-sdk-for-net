@@ -31,6 +31,7 @@ namespace Azure.Developer.DevCenter
     [ModelReaderWriterBuildable(typeof(EnvironmentDefinitionParameter))]
     [ModelReaderWriterBuildable(typeof(OSDisk))]
     [ModelReaderWriterBuildable(typeof(RemoteConnection))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StopOnDisconnectConfiguration))]
     public partial class AzureDeveloperDevCenterContext : ModelReaderWriterContext
     {

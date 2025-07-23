@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet
 {
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.ComputeFleet
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdditionalCapabilities))]
+    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetApiError))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetApiErrorInfo))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetBootDiagnostics))]
@@ -75,9 +77,12 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(LocationProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegularPriorityProfile))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SpotPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerComputeFleetContext : ModelReaderWriterContext
     {
     }

@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Synapse
     [ModelReaderWriterBuildable(typeof(KustoPoolSkuDescription))]
     [ModelReaderWriterBuildable(typeof(KustoPoolSkuDescriptionListResult))]
     [ModelReaderWriterBuildable(typeof(KustoPoolSkuLocationInfoItem))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionForPrivateLinkHubBasic))]
     [ModelReaderWriterBuildable(typeof(ReplaceAllFirewallRulesOperationResult))]
     [ModelReaderWriterBuildable(typeof(ReplaceAllIPFirewallRulesContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SqlPoolColumnListResult))]
     [ModelReaderWriterBuildable(typeof(SqlPoolCreateRestorePointContent))]
     [ModelReaderWriterBuildable(typeof(SqlPoolInfoListResult))]
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.Synapse
     [ModelReaderWriterBuildable(typeof(SqlPoolVulnerabilityAssessmentListResult))]
     [ModelReaderWriterBuildable(typeof(SqlPoolVulnerabilityAssessmentRuleBaselineItem))]
     [ModelReaderWriterBuildable(typeof(SqlPoolVulnerabilityAssessmentScansExport))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SynapseAadOnlyAuthenticationData))]
     [ModelReaderWriterBuildable(typeof(SynapseAadOnlyAuthenticationListResult))]
     [ModelReaderWriterBuildable(typeof(SynapseAadOnlyAuthenticationResource))]
@@ -292,6 +296,7 @@ namespace Azure.ResourceManager.Synapse
     [ModelReaderWriterBuildable(typeof(UnknownSecretBase))]
     [ModelReaderWriterBuildable(typeof(UnknownSsisObjectMetadata))]
     [ModelReaderWriterBuildable(typeof(UpdateIntegrationRuntimeNodeContent))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceCustomerManagedKeyDetails))]
     public partial class AzureResourceManagerSynapseContext : ModelReaderWriterContext
     {

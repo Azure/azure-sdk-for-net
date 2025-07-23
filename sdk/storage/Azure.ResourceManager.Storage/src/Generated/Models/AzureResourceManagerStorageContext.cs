@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerParameters))]
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerParametersUpdate))]
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerUpdate))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountLimits))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountUsage))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountUsageElements))]
@@ -88,6 +90,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(LocalUserKeys))]
     [ModelReaderWriterBuildable(typeof(LocalUserRegeneratePasswordResult))]
     [ModelReaderWriterBuildable(typeof(LocalUsers))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagementPolicyAction))]
     [ModelReaderWriterBuildable(typeof(ManagementPolicyBaseBlob))]
     [ModelReaderWriterBuildable(typeof(ManagementPolicyDefinition))]
@@ -114,6 +117,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ProtectedAppendWritesHistory))]
     [ModelReaderWriterBuildable(typeof(QueueServiceData))]
     [ModelReaderWriterBuildable(typeof(QueueServiceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceSasContent))]
     [ModelReaderWriterBuildable(typeof(SmbSetting))]
@@ -184,6 +188,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(StorageTaskReportSummary))]
     [ModelReaderWriterBuildable(typeof(StorageUsage))]
     [ModelReaderWriterBuildable(typeof(StorageUsageName))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TableData))]
     [ModelReaderWriterBuildable(typeof(TableResource))]
@@ -191,6 +196,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(TableServiceResource))]
     [ModelReaderWriterBuildable(typeof(UpdateHistoryEntry))]
     [ModelReaderWriterBuildable(typeof(UsageListResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerStorageContext : ModelReaderWriterContext
     {
     }

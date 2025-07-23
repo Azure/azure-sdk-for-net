@@ -23,6 +23,7 @@ namespace Azure.Communication.ProgrammableConnectivity
     [ModelReaderWriterBuildable(typeof(NumberVerificationResult))]
     [ModelReaderWriterBuildable(typeof(NumberVerificationWithCodeContent))]
     [ModelReaderWriterBuildable(typeof(NumberVerificationWithoutCodeContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SimSwapRetrievalContent))]
     [ModelReaderWriterBuildable(typeof(SimSwapRetrievalResult))]
     [ModelReaderWriterBuildable(typeof(SimSwapVerificationContent))]

@@ -30,6 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     [ModelReaderWriterBuildable(typeof(ObjectsResult))]
     [ModelReaderWriterBuildable(typeof(PeopleResult))]
     [ModelReaderWriterBuildable(typeof(ReadResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SmartCropsResult))]
     [ModelReaderWriterBuildable(typeof(TagsResult))]
     public partial class AzureAIVisionImageAnalysisContext : ModelReaderWriterContext

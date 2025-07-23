@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceResourceNames))]
     [ModelReaderWriterBuildable(typeof(Models.OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OSSapConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceData))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstancePatch))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceResource))]
@@ -88,6 +90,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(SkipFileShareConfiguration))]
     [ModelReaderWriterBuildable(typeof(StartSapInstanceContent))]
     [ModelReaderWriterBuildable(typeof(StopSapInstanceContent))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedConfigurationsDiskDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(ThreeTierConfiguration))]
@@ -102,6 +105,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(UnknownSapSoftwareConfiguration))]
     [ModelReaderWriterBuildable(typeof(UnknownSingleServerCustomResourceNames))]
     [ModelReaderWriterBuildable(typeof(UnknownThreeTierCustomResourceNames))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineResourceNames))]
     public partial class AzureResourceManagerWorkloadsSapVirtualInstanceContext : ModelReaderWriterContext
     {

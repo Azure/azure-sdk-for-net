@@ -78,6 +78,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     [ModelReaderWriterBuildable(typeof(RecommendationFinding))]
     [ModelReaderWriterBuildable(typeof(ResearchStudyArm))]
     [ModelReaderWriterBuildable(typeof(ResearchStudyObjective))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScoringAndAssessmentInference))]
     [ModelReaderWriterBuildable(typeof(SexMismatchInference))]
     [ModelReaderWriterBuildable(typeof(TimePeriod))]

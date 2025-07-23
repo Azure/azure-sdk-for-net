@@ -82,6 +82,7 @@ namespace Azure.Analytics.Defender.Easm
     [ModelReaderWriterBuildable(typeof(ReportBillableAssetSummaryResult))]
     [ModelReaderWriterBuildable(typeof(ReputationDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceUri))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavedFilter))]
     [ModelReaderWriterBuildable(typeof(SavedFilterPayload))]
     [ModelReaderWriterBuildable(typeof(ScanMetadata))]

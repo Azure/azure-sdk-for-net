@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(ManagedMaintenanceWindowStatus))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceBaseProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceCorrelation))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceLoadMetric))]
     [ModelReaderWriterBuildable(typeof(ManagedServicePartitionScheme))]
     [ModelReaderWriterBuildable(typeof(ManagedServicePlacementPolicy))]
@@ -66,6 +68,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(NodeTypeVmssExtension))]
     [ModelReaderWriterBuildable(typeof(PartitionInstanceCountScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(ResourceAzStatus))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradeMonitoringPolicy))]
     [ModelReaderWriterBuildable(typeof(RuntimeResumeApplicationUpgradeContent))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricManagedApplicationData))]
@@ -110,7 +113,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(UnknownScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(UnknownScalingTrigger))]
     [ModelReaderWriterBuildable(typeof(UnknownServicePlacementPolicy))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmImagePlan))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneFaultSimulationContent))]
     public partial class AzureResourceManagerServiceFabricManagedClustersContext : ModelReaderWriterContext
     {

@@ -23,6 +23,7 @@ namespace Azure.Analytics.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(ExperimentMetricValidationResult))]
     [ModelReaderWriterBuildable(typeof(ObservedEvent))]
     [ModelReaderWriterBuildable(typeof(PercentileMetricDefinition))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SumMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(UnknownExperimentMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(UserCountMetricDefinition))]

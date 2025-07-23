@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Automanage
     [ModelReaderWriterBuildable(typeof(ConfigurationProfileAssignmentReportResourceDetails))]
     [ModelReaderWriterBuildable(typeof(ConfigurationProfileList))]
     [ModelReaderWriterBuildable(typeof(ReportList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServicePrincipalListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAutomanageContext : ModelReaderWriterContext

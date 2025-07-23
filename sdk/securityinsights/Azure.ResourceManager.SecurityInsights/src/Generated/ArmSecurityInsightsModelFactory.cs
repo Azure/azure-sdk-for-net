@@ -4637,6 +4637,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 pollingConfig);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligence"/>. </summary>
+        /// <param name="confidence"> Confidence (must be between 0 and 1). </param>
+        /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
+        /// <param name="reportLink"> Report link. </param>
+        /// <param name="threatDescription"> Threat description (free text). </param>
+        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
+        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligence"/> instance for mocking. </returns>
+        public static SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = null, string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null)
+        {
+            return new SecurityInsightsThreatIntelligence(
+                confidence,
+                providerName,
+                reportLink,
+                threatDescription,
+                threatName,
+                threatType,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAccountEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4953,26 +4973,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 isAuthorized,
                 isProgramming,
                 isScanner);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligence"/>. </summary>
-        /// <param name="confidence"> Confidence (must be between 0 and 1). </param>
-        /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
-        /// <param name="reportLink"> Report link. </param>
-        /// <param name="threatDescription"> Threat description (free text). </param>
-        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
-        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligence"/> instance for mocking. </returns>
-        public static SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = null, string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null)
-        {
-            return new SecurityInsightsThreatIntelligence(
-                confidence,
-                providerName,
-                reportLink,
-                threatDescription,
-                threatName,
-                threatType,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIPEntity"/>. </summary>

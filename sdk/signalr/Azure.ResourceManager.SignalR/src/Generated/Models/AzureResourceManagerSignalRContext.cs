@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
@@ -15,6 +16,8 @@ namespace Azure.ResourceManager.SignalR
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkResourceType))]
     [ModelReaderWriterBuildable(typeof(SignalRCustomCertificateData))]
@@ -55,6 +58,8 @@ namespace Azure.ResourceManager.SignalR
     [ModelReaderWriterBuildable(typeof(SignalRUsageList))]
     [ModelReaderWriterBuildable(typeof(SignalRUsageName))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerSignalRContext : ModelReaderWriterContext
     {
     }

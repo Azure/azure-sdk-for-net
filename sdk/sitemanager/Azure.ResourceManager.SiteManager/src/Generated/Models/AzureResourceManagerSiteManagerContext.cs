@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.SiteManager
     [ModelReaderWriterBuildable(typeof(EdgeSitePatchProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeSiteProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeSiteResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SiteAddressProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSiteManagerContext : ModelReaderWriterContext

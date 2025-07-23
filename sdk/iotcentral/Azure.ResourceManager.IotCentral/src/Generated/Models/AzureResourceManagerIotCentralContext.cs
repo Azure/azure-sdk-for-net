@@ -7,6 +7,8 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.IotCentral.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
@@ -33,6 +35,10 @@ namespace Azure.ResourceManager.IotCentral
     [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(IotCentralPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerIotCentralContext : ModelReaderWriterContext
     {
     }

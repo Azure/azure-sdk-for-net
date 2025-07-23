@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.ExtendedLocations
     [ModelReaderWriterBuildable(typeof(CustomLocationListResult))]
     [ModelReaderWriterBuildable(typeof(CustomLocationPatch))]
     [ModelReaderWriterBuildable(typeof(CustomLocationResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerExtendedLocationsContext : ModelReaderWriterContext
     {

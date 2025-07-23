@@ -48,6 +48,7 @@ namespace Azure.AI.Inference
     [ModelReaderWriterBuildable(typeof(ImageEmbeddingInput))]
     [ModelReaderWriterBuildable(typeof(ImageEmbeddingsOptions))]
     [ModelReaderWriterBuildable(typeof(ModelInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StreamingChatChoiceUpdate))]
     [ModelReaderWriterBuildable(typeof(StreamingChatCompletionsUpdate))]
     [ModelReaderWriterBuildable(typeof(StreamingChatResponseMessageUpdate))]

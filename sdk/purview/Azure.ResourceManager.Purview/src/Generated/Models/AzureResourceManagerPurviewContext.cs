@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Purview
 {
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(CollectionAdminUpdateContent))]
     [ModelReaderWriterBuildable(typeof(DefaultPurviewAccountPayload))]
     [ModelReaderWriterBuildable(typeof(KafkaConfigurationList))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionStatusUpdateContent))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionStatusUpdateResult))]
@@ -49,7 +51,10 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(PurviewQuotaName))]
     [ModelReaderWriterBuildable(typeof(PurviewUsage))]
     [ModelReaderWriterBuildable(typeof(PurviewUsageName))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerPurviewContext : ModelReaderWriterContext
     {
     }

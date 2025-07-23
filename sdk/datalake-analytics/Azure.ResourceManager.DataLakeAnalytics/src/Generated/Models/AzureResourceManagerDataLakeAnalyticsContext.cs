@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     [ModelReaderWriterBuildable(typeof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(StorageAccountForDataLakeAnalyticsAccountUpdateContent))]
     [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetAccountsOptions))]

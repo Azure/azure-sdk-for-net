@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(LinkerValidateOperationResult))]
     [ModelReaderWriterBuildable(typeof(LinkerValidationResultItemInfo))]
     [ModelReaderWriterBuildable(typeof(RawValueSecretInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretAuthInfo))]
     [ModelReaderWriterBuildable(typeof(SecretBaseInfo))]
     [ModelReaderWriterBuildable(typeof(ServicePrincipalCertificateAuthInfo))]

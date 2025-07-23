@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(ContainerGroupInstanceCountSummary))]
     [ModelReaderWriterBuildable(typeof(PoolContainerGroupStateCount))]
     [ModelReaderWriterBuildable(typeof(PoolVirtualMachineStateCount))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolData))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolElasticityProfile))]
     [ModelReaderWriterBuildable(typeof(StandbyContainerGroupPoolPatch))]
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineProperties))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerStandbyPoolContext : ModelReaderWriterContext
     {
     }

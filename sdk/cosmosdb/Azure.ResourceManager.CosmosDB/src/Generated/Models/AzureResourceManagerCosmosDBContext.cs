@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -262,6 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
     [ModelReaderWriterBuildable(typeof(GremlinGraphThroughputSettingResource))]
     [ModelReaderWriterBuildable(typeof(ListBackups))]
     [ModelReaderWriterBuildable(typeof(ListCommands))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MaterializedViewDefinition))]
     [ModelReaderWriterBuildable(typeof(MaterializedViewsBuilderRegionalService))]
     [ModelReaderWriterBuildable(typeof(MaterializedViewsBuilderServiceProperties))]
@@ -319,6 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
     [ModelReaderWriterBuildable(typeof(RegionForOnlineOffline))]
     [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(ResourceRestoreParameters))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableCosmosDBAccountData))]
     [ModelReaderWriterBuildable(typeof(RestorableCosmosDBAccountResource))]
     [ModelReaderWriterBuildable(typeof(RestorableDatabaseAccountsListResult))]
@@ -368,6 +371,8 @@ namespace Azure.ResourceManager.CosmosDB
     [ModelReaderWriterBuildable(typeof(UnknownDataTransferDataSourceSink))]
     [ModelReaderWriterBuildable(typeof(UnknownServiceResourceCreateUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownServiceResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCosmosDBContext : ModelReaderWriterContext
     {
     }

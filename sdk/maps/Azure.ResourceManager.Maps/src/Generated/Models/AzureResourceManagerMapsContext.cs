@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Maps
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryptionKeyIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MapsAccountData))]
     [ModelReaderWriterBuildable(typeof(MapsAccountKeys))]
     [ModelReaderWriterBuildable(typeof(MapsAccountPatch))]
@@ -35,7 +36,9 @@ namespace Azure.ResourceManager.Maps
     [ModelReaderWriterBuildable(typeof(MapsKeySpecification))]
     [ModelReaderWriterBuildable(typeof(MapsLinkedResource))]
     [ModelReaderWriterBuildable(typeof(MapsSku))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMapsContext : ModelReaderWriterContext
     {
     }

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Migration.Assessment.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Migration.Assessment
 {
@@ -118,6 +119,7 @@ namespace Azure.ResourceManager.Migration.Assessment
     [ModelReaderWriterBuildable(typeof(MigrationSqlAssessmentV2Resource))]
     [ModelReaderWriterBuildable(typeof(MigrationSqlAssessmentV2SummaryData))]
     [ModelReaderWriterBuildable(typeof(MigrationSqlAssessmentV2SummaryResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerCollectorListResult))]
     [ModelReaderWriterBuildable(typeof(SharedResourcesDto))]
     [ModelReaderWriterBuildable(typeof(SqlAssessedNetworkAdapter))]
@@ -135,6 +137,7 @@ namespace Azure.ResourceManager.Migration.Assessment
     [ModelReaderWriterBuildable(typeof(SqlPaasTargetConfig))]
     [ModelReaderWriterBuildable(typeof(SqlRecommendationReasoning))]
     [ModelReaderWriterBuildable(typeof(SqlRecommendationReasoningContext))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UltraDiskAssessmentConfig))]
     [ModelReaderWriterBuildable(typeof(VMwareCollectorListResult))]

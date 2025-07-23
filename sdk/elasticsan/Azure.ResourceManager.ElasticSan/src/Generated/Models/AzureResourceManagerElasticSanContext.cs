@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
@@ -49,9 +50,13 @@ namespace Azure.ResourceManager.ElasticSan
     [ModelReaderWriterBuildable(typeof(ElasticSanVolumePatch))]
     [ModelReaderWriterBuildable(typeof(ElasticSanVolumeResource))]
     [ModelReaderWriterBuildable(typeof(IscsiTargetInfo))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotCreationInfo))]
     [ModelReaderWriterBuildable(typeof(SnapshotList))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerElasticSanContext : ModelReaderWriterContext
     {
     }

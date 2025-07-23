@@ -6,8 +6,10 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -213,10 +215,12 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(DataFactoryIntegrationRuntimeProperties))]
     [ModelReaderWriterBuildable(typeof(DataFactoryIntegrationRuntimeResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryIntegrationRuntimeStatusResult))]
+    [ModelReaderWriterBuildable(typeof(DataFactoryKeyVaultSecret))]
     [ModelReaderWriterBuildable(typeof(DataFactoryLinkedServiceData))]
     [ModelReaderWriterBuildable(typeof(DataFactoryLinkedServiceDebugInfo))]
     [ModelReaderWriterBuildable(typeof(DataFactoryLinkedServiceListResult))]
     [ModelReaderWriterBuildable(typeof(DataFactoryLinkedServiceProperties))]
+    [ModelReaderWriterBuildable(typeof(DataFactoryLinkedServiceReference))]
     [ModelReaderWriterBuildable(typeof(DataFactoryLinkedServiceResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryListResult))]
     [ModelReaderWriterBuildable(typeof(DataFactoryLogSettings))]
@@ -252,6 +256,8 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(DataFactoryScheduleTrigger))]
     [ModelReaderWriterBuildable(typeof(DataFactoryScriptAction))]
     [ModelReaderWriterBuildable(typeof(DataFactoryScriptActivity))]
+    [ModelReaderWriterBuildable(typeof(DataFactorySecret))]
+    [ModelReaderWriterBuildable(typeof(DataFactorySecretString))]
     [ModelReaderWriterBuildable(typeof(DataFactoryServiceCredentialData))]
     [ModelReaderWriterBuildable(typeof(DataFactoryServiceCredentialResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerData))]
@@ -463,6 +469,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(ManagedIntegrationRuntimeNode))]
     [ModelReaderWriterBuildable(typeof(ManagedIntegrationRuntimeOperationResult))]
     [ModelReaderWriterBuildable(typeof(ManagedIntegrationRuntimeStatus))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedVirtualNetworkReference))]
     [ModelReaderWriterBuildable(typeof(MapperAttributeMapping))]
     [ModelReaderWriterBuildable(typeof(MapperAttributeReference))]
@@ -708,6 +715,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(StagingSettings))]
     [ModelReaderWriterBuildable(typeof(StoreReadSettings))]
     [ModelReaderWriterBuildable(typeof(StoreWriteSettings))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SwitchActivity))]
     [ModelReaderWriterBuildable(typeof(SwitchCaseActivity))]
     [ModelReaderWriterBuildable(typeof(SybaseLinkedService))]
@@ -780,6 +788,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(WebLinkedServiceTypeProperties))]
     [ModelReaderWriterBuildable(typeof(WebSource))]
     [ModelReaderWriterBuildable(typeof(WebTableDataset))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(XeroLinkedService))]
     [ModelReaderWriterBuildable(typeof(XeroObjectDataset))]
     [ModelReaderWriterBuildable(typeof(XeroSource))]

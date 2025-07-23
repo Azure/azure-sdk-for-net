@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
     [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingPatch))]
     [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingResource))]
     [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPortalServicesCopilotContext : ModelReaderWriterContext
     {

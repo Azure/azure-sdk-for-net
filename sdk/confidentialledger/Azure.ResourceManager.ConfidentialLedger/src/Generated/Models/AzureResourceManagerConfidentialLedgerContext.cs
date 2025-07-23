@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
     [ModelReaderWriterBuildable(typeof(ManagedCcfResource))]
     [ModelReaderWriterBuildable(typeof(ManagedCcfRestoreContent))]
     [ModelReaderWriterBuildable(typeof(ManagedCcfRestoreResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConfidentialLedgerContext : ModelReaderWriterContext
     {

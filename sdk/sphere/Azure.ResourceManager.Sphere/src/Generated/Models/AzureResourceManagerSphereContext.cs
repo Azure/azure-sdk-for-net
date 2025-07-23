@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Sphere
     [ModelReaderWriterBuildable(typeof(ProductListResult))]
     [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceContent))]
     [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SignedCapabilityImageResponse))]
     [ModelReaderWriterBuildable(typeof(SphereCatalogData))]
     [ModelReaderWriterBuildable(typeof(SphereCatalogPatch))]

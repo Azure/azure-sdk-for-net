@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(AmlFileSystemUpdatePropertiesMaintenanceWindow))]
     [ModelReaderWriterBuildable(typeof(BlobNfsTarget))]
     [ModelReaderWriterBuildable(typeof(ImportJobsListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamespaceJunction))]
     [ModelReaderWriterBuildable(typeof(Nfs3Target))]
     [ModelReaderWriterBuildable(typeof(NfsAccessPolicy))]
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(PrimingJobContent))]
     [ModelReaderWriterBuildable(typeof(RequiredAmlFileSystemSubnetsSize))]
     [ModelReaderWriterBuildable(typeof(RequiredAmlFileSystemSubnetsSizeContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettingsCredentials))]
     [ModelReaderWriterBuildable(typeof(StorageCacheData))]
@@ -74,6 +77,8 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(StorageTargetSpaceAllocation))]
     [ModelReaderWriterBuildable(typeof(StorageTargetsResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerStorageCacheContext : ModelReaderWriterContext
     {
     }

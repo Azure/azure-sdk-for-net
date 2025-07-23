@@ -124,6 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(KubernetesClusterVaultTierRestoreCriteria))]
     [ModelReaderWriterBuildable(typeof(KubernetesPVRestoreCriteria))]
     [ModelReaderWriterBuildable(typeof(KubernetesStorageClassRestoreCriteria))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamespacedName))]
     [ModelReaderWriterBuildable(typeof(OperationalDataStoreSettings))]
     [ModelReaderWriterBuildable(typeof(RangeBasedItemLevelRestoreCriteria))]
@@ -140,6 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(ResourceGuardProxyBaseResourceList))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGuardResourceList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableTimeRange))]
     [ModelReaderWriterBuildable(typeof(RestoreFilesTargetDetails))]
     [ModelReaderWriterBuildable(typeof(RestoreFilesTargetInfo))]
@@ -174,6 +176,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(UnknownOperationExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownRestoreTargetInfoBase))]
     [ModelReaderWriterBuildable(typeof(UnknownTriggerContext))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserFacingWarningDetail))]
     [ModelReaderWriterBuildable(typeof(ValidateCrossRegionRestoreRequestObject))]
     public partial class AzureResourceManagerDataProtectionBackupContext : ModelReaderWriterContext

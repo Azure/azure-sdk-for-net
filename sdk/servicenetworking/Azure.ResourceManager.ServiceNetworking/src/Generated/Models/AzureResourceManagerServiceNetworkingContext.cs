@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
@@ -18,6 +19,8 @@ namespace Azure.ResourceManager.ServiceNetworking
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyData))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerAssociationData))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerAssociationPatch))]
@@ -28,6 +31,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendResource))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerPatch))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerResource))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerServiceNetworkingContext : ModelReaderWriterContext
     {
     }

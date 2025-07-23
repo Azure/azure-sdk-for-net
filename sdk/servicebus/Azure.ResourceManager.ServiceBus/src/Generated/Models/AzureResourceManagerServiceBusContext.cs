@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArmDisasterRecoveryListResult))]
     [ModelReaderWriterBuildable(typeof(FailoverProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageCountDetails))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigListResult))]
     [ModelReaderWriterBuildable(typeof(MigrationConfigurationData))]
@@ -67,6 +69,8 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerServiceBusContext : ModelReaderWriterContext
     {
     }

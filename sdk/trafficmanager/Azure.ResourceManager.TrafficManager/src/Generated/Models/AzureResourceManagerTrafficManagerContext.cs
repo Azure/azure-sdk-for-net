@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.TrafficManager
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ExpectedStatusCodeRangeInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerDnsConfig))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointCustomHeaderInfo))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerEndpointData))]

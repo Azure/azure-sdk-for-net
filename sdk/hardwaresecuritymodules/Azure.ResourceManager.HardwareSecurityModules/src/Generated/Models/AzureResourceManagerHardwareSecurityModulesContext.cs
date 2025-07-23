@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
@@ -44,7 +45,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     [ModelReaderWriterBuildable(typeof(DedicatedHsmProperties))]
     [ModelReaderWriterBuildable(typeof(DedicatedHsmResource))]
     [ModelReaderWriterBuildable(typeof(DedicatedHsmSku))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHardwareSecurityModulesContext : ModelReaderWriterContext
     {
     }

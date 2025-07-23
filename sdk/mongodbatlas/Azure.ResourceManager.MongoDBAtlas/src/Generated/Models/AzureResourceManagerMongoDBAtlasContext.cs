@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasOfferDetails))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationData))]
@@ -24,7 +25,9 @@ namespace Azure.ResourceManager.MongoDBAtlas
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasPartnerProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMongoDBAtlasContext : ModelReaderWriterContext
     {
     }

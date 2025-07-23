@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -44,8 +45,12 @@ namespace Azure.ResourceManager.DeviceUpdate
     [ModelReaderWriterBuildable(typeof(DiagnosticStorageProperties))]
     [ModelReaderWriterBuildable(typeof(GroupConnectivityInformation))]
     [ModelReaderWriterBuildable(typeof(InstanceList))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProxyListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDeviceUpdateContext : ModelReaderWriterContext
     {
     }

@@ -211,6 +211,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [ModelReaderWriterBuildable(typeof(RepositoryAccess))]
     [ModelReaderWriterBuildable(typeof(RepositoryAccessProperties))]
     [ModelReaderWriterBuildable(typeof(RepositoryResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerDataConnector))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerRequestConfig))]
     [ModelReaderWriterBuildable(typeof(RestApiPollerRequestPagingConfig))]

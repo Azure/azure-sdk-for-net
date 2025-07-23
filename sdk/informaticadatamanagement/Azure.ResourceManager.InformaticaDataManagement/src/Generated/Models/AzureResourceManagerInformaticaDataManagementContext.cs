@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimeResourceList))]
     [ModelReaderWriterBuildable(typeof(InformaticaUserDetails))]
     [ModelReaderWriterBuildable(typeof(InformaticaUserDetailsUpdate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerlessConfigProperties))]
     [ModelReaderWriterBuildable(typeof(ServerlessMetadataResponse))]
     [ModelReaderWriterBuildable(typeof(ServerlessRuntimeConfigProperties))]

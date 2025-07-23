@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.CarbonOptimization
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionItemDetail))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemMonthlySummary))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemsSummary))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAccessDecision))]
     [ModelReaderWriterBuildable(typeof(TopItemsMonthlySummaryReportQueryFilter))]
     [ModelReaderWriterBuildable(typeof(TopItemsSummaryReportQueryFilter))]

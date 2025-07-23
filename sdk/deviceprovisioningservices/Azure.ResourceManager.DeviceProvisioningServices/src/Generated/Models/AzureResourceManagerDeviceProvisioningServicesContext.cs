@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(IotHubDefinitionDescription))]
     [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDeviceProvisioningServicesContext : ModelReaderWriterContext
     {

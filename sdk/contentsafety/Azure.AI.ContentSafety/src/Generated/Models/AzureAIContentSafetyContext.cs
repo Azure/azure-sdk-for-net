@@ -22,6 +22,7 @@ namespace Azure.AI.ContentSafety
     [ModelReaderWriterBuildable(typeof(ContentSafetyImageData))]
     [ModelReaderWriterBuildable(typeof(ImageCategoriesAnalysis))]
     [ModelReaderWriterBuildable(typeof(RemoveTextBlocklistItemsOptions))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(TextBlocklist))]
     [ModelReaderWriterBuildable(typeof(TextBlocklistItem))]
     [ModelReaderWriterBuildable(typeof(TextBlocklistMatch))]

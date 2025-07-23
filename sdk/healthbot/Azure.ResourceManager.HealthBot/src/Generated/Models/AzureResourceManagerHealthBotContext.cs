@@ -22,7 +22,9 @@ namespace Azure.ResourceManager.HealthBot
     [ModelReaderWriterBuildable(typeof(HealthBotProperties))]
     [ModelReaderWriterBuildable(typeof(HealthBotResource))]
     [ModelReaderWriterBuildable(typeof(HealthBotSku))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHealthBotContext : ModelReaderWriterContext
     {
     }

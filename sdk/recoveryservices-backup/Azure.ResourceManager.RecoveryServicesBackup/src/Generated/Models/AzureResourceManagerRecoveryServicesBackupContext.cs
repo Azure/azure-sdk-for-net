@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(DpmErrorInfo))]
     [ModelReaderWriterBuildable(typeof(DpmProtectedItem))]
     [ModelReaderWriterBuildable(typeof(DpmProtectedItemExtendedInfo))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FeatureSupportContent))]
     [ModelReaderWriterBuildable(typeof(FetchTieringCostInfoContent))]
     [ModelReaderWriterBuildable(typeof(FetchTieringCostInfoForRehydrationContent))]
@@ -180,6 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(ResourceGuardProxyResource))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceProtectionIntent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreContent))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpecs))]
     [ModelReaderWriterBuildable(typeof(RetentionDuration))]
@@ -233,6 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(UnknownWorkloadProtectableItem))]
     [ModelReaderWriterBuildable(typeof(UnlockDeleteContent))]
     [ModelReaderWriterBuildable(typeof(UnlockDeleteResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedManagedIdentityDetails))]
     [ModelReaderWriterBuildable(typeof(VaultBackupJob))]
     [ModelReaderWriterBuildable(typeof(VaultBackupJobErrorInfo))]
@@ -307,6 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRecoveryPointExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreContent))]
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreWithRehydrateContent))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(YearlyRetentionSchedule))]
     public partial class AzureResourceManagerRecoveryServicesBackupContext : ModelReaderWriterContext
     {

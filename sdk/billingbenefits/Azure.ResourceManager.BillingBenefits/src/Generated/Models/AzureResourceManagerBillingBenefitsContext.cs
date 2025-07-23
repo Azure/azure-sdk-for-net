@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.BillingBenefits.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits
     [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanUtilizationAggregate))]
     [ModelReaderWriterBuildable(typeof(BillingBenefitsSku))]
     [ModelReaderWriterBuildable(typeof(BillingPlanInformation))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelList))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelListResult))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanOrderModelList))]
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.BillingBenefits
     [ModelReaderWriterBuildable(typeof(SavingsPlanUpdateValidateContent))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResponse))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TenantResourceGetBillingBenefitsSavingsPlansOptions))]
     public partial class AzureResourceManagerBillingBenefitsContext : ModelReaderWriterContext
     {

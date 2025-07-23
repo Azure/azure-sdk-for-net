@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(CmkKekIdentity))]
     [ModelReaderWriterBuildable(typeof(DnsZone))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(RawCertificateData))]
     [ModelReaderWriterBuildable(typeof(RecoveryServicesCertificateContent))]
@@ -47,8 +49,11 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAadDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAcsDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceCertificateDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceCertificateDetails))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultCertificateResult))]
     [ModelReaderWriterBuildable(typeof(VaultMonitoringSettings))]
     [ModelReaderWriterBuildable(typeof(VaultMonitoringSummary))]

@@ -7,6 +7,8 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.MachineLearning.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -431,6 +433,7 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(ManagedNetworkProvisionContent))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkProvisionStatus))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkSettings))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSubscriptionResourceArmPaginatedResult))]
     [ModelReaderWriterBuildable(typeof(MaterializationSettings))]
     [ModelReaderWriterBuildable(typeof(MedianStoppingPolicy))]
@@ -476,6 +479,7 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(RegistryRegionArmDetails))]
     [ModelReaderWriterBuildable(typeof(RegistryTrackedResourceArmPaginatedResult))]
     [ModelReaderWriterBuildable(typeof(RegressionTrainingSettings))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingInputData))]
     [ModelReaderWriterBuildable(typeof(SamplingAlgorithm))]
     [ModelReaderWriterBuildable(typeof(SasCredential))]
@@ -496,8 +500,10 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(SparkResourceConfiguration))]
     [ModelReaderWriterBuildable(typeof(StaticInputData))]
     [ModelReaderWriterBuildable(typeof(StorageAccountDetails))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemCreatedAcrAccount))]
     [ModelReaderWriterBuildable(typeof(SystemCreatedStorageAccount))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TableVerticalFeaturizationSettings))]
     [ModelReaderWriterBuildable(typeof(TableVerticalLimitSettings))]
     [ModelReaderWriterBuildable(typeof(TargetLags))]
@@ -550,6 +556,7 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(UnknownTriggerBase))]
     [ModelReaderWriterBuildable(typeof(UnknownWebhook))]
     [ModelReaderWriterBuildable(typeof(UnknownWorkspaceConnectionPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VolumeDefinition))]
     [ModelReaderWriterBuildable(typeof(WorkspaceConnectionAccessKey))]
     [ModelReaderWriterBuildable(typeof(WorkspaceConnectionOAuth2))]

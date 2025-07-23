@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOfferDetails))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationData))]
@@ -23,7 +24,9 @@ namespace Azure.ResourceManager.PineconeVectorDB
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBSingleSignOnPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBUserDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPineconeVectorDBContext : ModelReaderWriterContext
     {
     }

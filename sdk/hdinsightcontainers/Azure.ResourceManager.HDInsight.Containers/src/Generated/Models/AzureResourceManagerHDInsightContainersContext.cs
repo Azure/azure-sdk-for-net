@@ -130,6 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     [ModelReaderWriterBuildable(typeof(RangerAdminSpecDatabase))]
     [ModelReaderWriterBuildable(typeof(RangerProfile))]
     [ModelReaderWriterBuildable(typeof(RangerUsersyncSpec))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScalingRule))]
     [ModelReaderWriterBuildable(typeof(ScheduleBasedConfig))]
     [ModelReaderWriterBuildable(typeof(ScriptActionProfile))]

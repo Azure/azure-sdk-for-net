@@ -245,6 +245,7 @@ namespace Azure.ResourceManager.Billing
     [ModelReaderWriterBuildable(typeof(ReservationSummary))]
     [ModelReaderWriterBuildable(typeof(ReservationSwapProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationUtilizationAggregates))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelList))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanModelListResult))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanOrderModelData))]

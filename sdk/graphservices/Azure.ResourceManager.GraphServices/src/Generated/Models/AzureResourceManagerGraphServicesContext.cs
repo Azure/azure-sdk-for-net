@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.GraphServices
     [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourcePatch))]
     [ModelReaderWriterBuildable(typeof(GraphServicesAccountResourceProperties))]
     [ModelReaderWriterBuildable(typeof(GraphServicesTagUpdate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerGraphServicesContext : ModelReaderWriterContext
     {

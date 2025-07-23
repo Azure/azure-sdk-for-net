@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Workloads
     [ModelReaderWriterBuildable(typeof(PrometheusOSProviderInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(ProviderInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(ProviderSpecificProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceData))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceList))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstancePatch))]
@@ -108,6 +110,7 @@ namespace Azure.ResourceManager.Workloads
     [ModelReaderWriterBuildable(typeof(SingleServerFullResourceNames))]
     [ModelReaderWriterBuildable(typeof(SingleServerRecommendationResult))]
     [ModelReaderWriterBuildable(typeof(SkipFileShareConfiguration))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedConfigurationsDiskDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(ThreeTierConfiguration))]
@@ -123,6 +126,7 @@ namespace Azure.ResourceManager.Workloads
     [ModelReaderWriterBuildable(typeof(UnknownSingleServerCustomResourceNames))]
     [ModelReaderWriterBuildable(typeof(UnknownSoftwareConfiguration))]
     [ModelReaderWriterBuildable(typeof(UnknownThreeTierCustomResourceNames))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineResourceNames))]
     public partial class AzureResourceManagerWorkloadsContext : ModelReaderWriterContext

@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -32,10 +33,12 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(CloudTieringSpaceSavings))]
     [ModelReaderWriterBuildable(typeof(CloudTieringVolumeFreeSpacePolicyStatus))]
     [ModelReaderWriterBuildable(typeof(FilesNotTieringError))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PostRestoreContent))]
     [ModelReaderWriterBuildable(typeof(PreRestoreContent))]
     [ModelReaderWriterBuildable(typeof(RecallActionContent))]
     [ModelReaderWriterBuildable(typeof(RegisteredServerArray))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpec))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointArray))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointBackgroundDataDownloadActivity))]
@@ -73,10 +76,12 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceResource))]
     [ModelReaderWriterBuildable(typeof(StorageSyncWorkflowData))]
     [ModelReaderWriterBuildable(typeof(StorageSyncWorkflowResource))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SyncGroupArray))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TriggerChangeDetectionContent))]
     [ModelReaderWriterBuildable(typeof(TriggerRolloverContent))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkflowArray))]
     public partial class AzureResourceManagerStorageSyncContext : ModelReaderWriterContext
     {

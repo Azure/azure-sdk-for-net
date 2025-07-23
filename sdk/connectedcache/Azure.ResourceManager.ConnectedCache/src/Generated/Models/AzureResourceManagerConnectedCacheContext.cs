@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.ConnectedCache
     [ModelReaderWriterBuildable(typeof(MccCustomerAdditionalProperties))]
     [ModelReaderWriterBuildable(typeof(MccCustomerEntity))]
     [ModelReaderWriterBuildable(typeof(MccCustomerProperty))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConnectedCacheContext : ModelReaderWriterContext
     {

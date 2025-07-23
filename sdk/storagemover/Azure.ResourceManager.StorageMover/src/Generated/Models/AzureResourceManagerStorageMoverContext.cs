@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.StorageMover
     [ModelReaderWriterBuildable(typeof(NfsMountEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(NfsMountEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ProjectList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduleRecurrence))]
     [ModelReaderWriterBuildable(typeof(ScheduleTime))]
     [ModelReaderWriterBuildable(typeof(ScheduleWeeklyRecurrence))]

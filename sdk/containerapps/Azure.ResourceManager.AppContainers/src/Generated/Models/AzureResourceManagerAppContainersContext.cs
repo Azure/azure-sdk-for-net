@@ -193,6 +193,8 @@ namespace Azure.ResourceManager.AppContainers
     [ModelReaderWriterBuildable(typeof(ManagedCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedEnvironmentsCollection))]
     [ModelReaderWriterBuildable(typeof(ManagedEnvironmentStorageProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RevisionCollection))]
     [ModelReaderWriterBuildable(typeof(SecretVolumeItem))]
     [ModelReaderWriterBuildable(typeof(SessionContainer))]
@@ -212,6 +214,7 @@ namespace Azure.ResourceManager.AppContainers
     [ModelReaderWriterBuildable(typeof(SpringCloudEurekaComponent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownJavaComponentProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkloadProfileStatesCollection))]
     public partial class AzureResourceManagerAppContainersContext : ModelReaderWriterContext
     {

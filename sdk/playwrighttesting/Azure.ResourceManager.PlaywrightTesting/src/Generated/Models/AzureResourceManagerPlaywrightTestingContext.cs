@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
     [ModelReaderWriterBuildable(typeof(PlaywrightTestingQuotaData))]
     [ModelReaderWriterBuildable(typeof(PlaywrightTestingQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightTestingQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPlaywrightTestingContext : ModelReaderWriterContext
     {

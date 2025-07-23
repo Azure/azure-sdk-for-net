@@ -53,6 +53,7 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(ExportedModelManifest))]
     [ModelReaderWriterBuildable(typeof(MultiLabelClassEvalSummary))]
     [ModelReaderWriterBuildable(typeof(MultiLabelClassificationEvalSummary))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SentimentEvalSummary))]
     [ModelReaderWriterBuildable(typeof(SingleLabelClassEvalSummary))]
     [ModelReaderWriterBuildable(typeof(SingleLabelClassificationEvalSummary))]

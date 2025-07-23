@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork
     [ModelReaderWriterBuildable(typeof(PinholeTimeouts))]
     [ModelReaderWriterBuildable(typeof(PublicLandMobileNetwork))]
     [ModelReaderWriterBuildable(typeof(PublicLandMobileNetworkHomeNetworkPublicKeys))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoutingInfoListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceListResult))]
     [ModelReaderWriterBuildable(typeof(SimCloneContent))]
@@ -104,6 +106,7 @@ namespace Azure.ResourceManager.MobileNetwork
     [ModelReaderWriterBuildable(typeof(SiteListResult))]
     [ModelReaderWriterBuildable(typeof(SliceListResult))]
     [ModelReaderWriterBuildable(typeof(Snssai))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionPacketCoreControlPlaneVersionResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TenantPacketCoreControlPlaneVersionResource))]
@@ -115,7 +118,9 @@ namespace Azure.ResourceManager.MobileNetwork
     [ModelReaderWriterBuildable(typeof(UESessionInfo4G))]
     [ModelReaderWriterBuildable(typeof(UESessionInfo5G))]
     [ModelReaderWriterBuildable(typeof(UnknownExtendedUEInfoProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserPlaneDataRoutesItem))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerMobileNetworkContext : ModelReaderWriterContext
     {
     }

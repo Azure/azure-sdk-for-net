@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -91,16 +92,21 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(HDInsightVmSizeCompatibilityFilterV2))]
     [ModelReaderWriterBuildable(typeof(HDInsightVmSizeProperty))]
     [ModelReaderWriterBuildable(typeof(KafkaRestProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(QuotaCapability))]
     [ModelReaderWriterBuildable(typeof(RegionalQuotaCapability))]
     [ModelReaderWriterBuildable(typeof(RegionsCapability))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuntimeScriptAction))]
     [ModelReaderWriterBuildable(typeof(RuntimeScriptActionDetail))]
     [ModelReaderWriterBuildable(typeof(ScriptAction))]
     [ModelReaderWriterBuildable(typeof(ScriptActionExecutionHistoryList))]
     [ModelReaderWriterBuildable(typeof(ScriptActionExecutionSummary))]
     [ModelReaderWriterBuildable(typeof(ScriptActionsList))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerHDInsightContext : ModelReaderWriterContext
     {
     }

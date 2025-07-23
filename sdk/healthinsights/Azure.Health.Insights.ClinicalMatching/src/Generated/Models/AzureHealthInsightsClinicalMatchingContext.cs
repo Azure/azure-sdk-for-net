@@ -33,6 +33,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     [ModelReaderWriterBuildable(typeof(PatientDocument))]
     [ModelReaderWriterBuildable(typeof(PatientInfo))]
     [ModelReaderWriterBuildable(typeof(PatientRecord))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(TrialMatcherData))]
     [ModelReaderWriterBuildable(typeof(TrialMatcherInference))]
     [ModelReaderWriterBuildable(typeof(TrialMatcherInferenceEvidence))]

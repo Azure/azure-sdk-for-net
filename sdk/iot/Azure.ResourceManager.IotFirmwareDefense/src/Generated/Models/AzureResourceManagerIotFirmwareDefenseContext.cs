@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     [ModelReaderWriterBuildable(typeof(IotFirmwareResource))]
     [ModelReaderWriterBuildable(typeof(PasswordHashResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PasswordHashResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SbomComponentResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SbomComponentResult))]
     [ModelReaderWriterBuildable(typeof(SummaryResourceListResult))]

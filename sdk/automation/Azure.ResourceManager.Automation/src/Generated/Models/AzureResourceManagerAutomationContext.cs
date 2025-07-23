@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -164,6 +165,7 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(HybridRunbookWorkerResource))]
     [ModelReaderWriterBuildable(typeof(HybridRunbookWorkersListResult))]
     [ModelReaderWriterBuildable(typeof(LinuxUpdateConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NonAzureQueryProperties))]
     [ModelReaderWriterBuildable(typeof(QueryTagSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(RawGraphicalRunbookContent))]
@@ -195,7 +197,9 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(SourceControlSyncJobStreamListResult))]
     [ModelReaderWriterBuildable(typeof(SourceControlSyncJobStreamResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WindowsUpdateConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAutomationContext : ModelReaderWriterContext
     {
     }

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
@@ -25,6 +26,8 @@ namespace Azure.ResourceManager.NetworkFunction
     [ModelReaderWriterBuildable(typeof(EmissionPolicyDestination))]
     [ModelReaderWriterBuildable(typeof(IngestionPolicyPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(IngestionSourcesPropertiesFormat))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagsObject))]
     public partial class AzureResourceManagerNetworkFunctionContext : ModelReaderWriterContext

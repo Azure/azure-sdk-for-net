@@ -98,6 +98,7 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(JobSecrets))]
     [ModelReaderWriterBuildable(typeof(LastMitigationActionOnJob))]
     [ModelReaderWriterBuildable(typeof(ManagedDiskDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarkDevicesShippedContent))]
     [ModelReaderWriterBuildable(typeof(MitigateJobContent))]
     [ModelReaderWriterBuildable(typeof(NotificationPreference))]
@@ -108,6 +109,7 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(PreferencesValidationResult))]
     [ModelReaderWriterBuildable(typeof(RegionConfigurationContent))]
     [ModelReaderWriterBuildable(typeof(RegionConfigurationResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
     [ModelReaderWriterBuildable(typeof(ScheduleAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(ShareCredentialDetails))]
@@ -136,6 +138,7 @@ namespace Azure.ResourceManager.DataBox
     [ModelReaderWriterBuildable(typeof(UnknownValidationInputResponse))]
     [ModelReaderWriterBuildable(typeof(UnknownValidationRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateJobDetails))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDataBoxContext : ModelReaderWriterContext
     {
     }

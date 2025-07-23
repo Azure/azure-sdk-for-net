@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(QuotaSubRequestDetail))]
     [ModelReaderWriterBuildable(typeof(QuotaUsagesObject))]
     [ModelReaderWriterBuildable(typeof(QuotaUsagesProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceErrorDetail))]
     [ModelReaderWriterBuildable(typeof(SubmittedResourceRequestStatusList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAllocatedQuota))]

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(ForceLinkParametersGeoReplication))]
     [ModelReaderWriterBuildable(typeof(ForceUnlinkRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(ImportRedisEnterpriseDatabaseContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseClusterData))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseClusterList))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseClusterPatch))]
@@ -48,7 +50,10 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSku))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerRedisEnterpriseContext : ModelReaderWriterContext
     {
     }

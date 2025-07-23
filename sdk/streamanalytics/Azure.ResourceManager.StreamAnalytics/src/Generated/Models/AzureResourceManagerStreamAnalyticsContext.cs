@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     [ModelReaderWriterBuildable(typeof(MachineLearningStudioInputColumn))]
     [ModelReaderWriterBuildable(typeof(MachineLearningStudioInputs))]
     [ModelReaderWriterBuildable(typeof(MachineLearningStudioOutputColumn))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ParquetFormatSerialization))]
     [ModelReaderWriterBuildable(typeof(PostgreSQLOutputDataSource))]
     [ModelReaderWriterBuildable(typeof(PowerBIOutputDataSource))]

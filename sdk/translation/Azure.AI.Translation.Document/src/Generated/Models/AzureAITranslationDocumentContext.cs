@@ -17,6 +17,7 @@ namespace Azure.AI.Translation.Document
     [ModelReaderWriterBuildable(typeof(DocumentTranslateContent))]
     [ModelReaderWriterBuildable(typeof(DocumentTranslationFileFormat))]
     [ModelReaderWriterBuildable(typeof(DocumentTranslationInput))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SupportedFileFormats))]
     [ModelReaderWriterBuildable(typeof(TranslationBatch))]
     [ModelReaderWriterBuildable(typeof(TranslationGlossary))]

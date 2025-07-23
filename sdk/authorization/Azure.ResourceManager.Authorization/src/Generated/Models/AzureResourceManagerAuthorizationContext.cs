@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Authorization
     [ModelReaderWriterBuildable(typeof(EligibleChildResource))]
     [ModelReaderWriterBuildable(typeof(EligibleChildResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentData))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]

@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.LabServices
     [ModelReaderWriterBuildable(typeof(LabVirtualMachineProfile))]
     [ModelReaderWriterBuildable(typeof(LabVirtualMachineResetPasswordContent))]
     [ModelReaderWriterBuildable(typeof(LabVirtualMachineResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PagedImages))]
     [ModelReaderWriterBuildable(typeof(PagedLabPlans))]
     [ModelReaderWriterBuildable(typeof(PagedLabs))]
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.LabServices
     [ModelReaderWriterBuildable(typeof(PagedSchedules))]
     [ModelReaderWriterBuildable(typeof(PagedUsers))]
     [ModelReaderWriterBuildable(typeof(PagedVirtualMachines))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerLabServicesContext : ModelReaderWriterContext
     {

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(EventSubscriptionsListResult))]
     [ModelReaderWriterBuildable(typeof(EventTypesListResult))]
     [ModelReaderWriterBuildable(typeof(EventTypeUnderTopic))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(ExtensionTopicData))]
     [ModelReaderWriterBuildable(typeof(ExtensionTopicResource))]
     [ModelReaderWriterBuildable(typeof(FiltersConfiguration))]
@@ -103,6 +105,7 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(IsNullOrUndefinedFilter))]
     [ModelReaderWriterBuildable(typeof(IssuerCertificateInfo))]
     [ModelReaderWriterBuildable(typeof(JsonFieldWithDefault))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MonitorAlertEventSubscriptionDestination))]
     [ModelReaderWriterBuildable(typeof(NamespaceRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(NamespaceSharedAccessKeys))]
@@ -179,6 +182,7 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(QueueInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(ResourceMoveChangeHistory))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoutingEnrichments))]
     [ModelReaderWriterBuildable(typeof(RoutingIdentityInfo))]
     [ModelReaderWriterBuildable(typeof(ServiceBusQueueEventSubscriptionDestination))]
@@ -237,6 +241,7 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(UnknownPartnerUpdateDestinationInfo))]
     [ModelReaderWriterBuildable(typeof(UnknownStaticRoutingEnrichment))]
     [ModelReaderWriterBuildable(typeof(UpdateTopicSpacesConfigurationInfo))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VerifiedPartnerData))]
     [ModelReaderWriterBuildable(typeof(VerifiedPartnerResource))]
     [ModelReaderWriterBuildable(typeof(VerifiedPartnersListResult))]
@@ -244,6 +249,7 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(WebHookEventSubscriptionDestination))]
     [ModelReaderWriterBuildable(typeof(WebhookPartnerDestinationInfo))]
     [ModelReaderWriterBuildable(typeof(WebhookUpdatePartnerDestinationInfo))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerEventGridContext : ModelReaderWriterContext
     {
     }

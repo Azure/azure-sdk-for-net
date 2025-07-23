@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Analysis
     [ModelReaderWriterBuildable(typeof(AnalysisServerPatch))]
     [ModelReaderWriterBuildable(typeof(AnalysisServerResource))]
     [ModelReaderWriterBuildable(typeof(AnalysisServers))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAnalysisContext : ModelReaderWriterContext
     {

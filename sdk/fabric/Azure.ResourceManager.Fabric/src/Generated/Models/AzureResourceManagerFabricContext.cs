@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Fabric
     [ModelReaderWriterBuildable(typeof(FabricSku))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForExistingCapacity))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForNewCapacity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerFabricContext : ModelReaderWriterContext
     {

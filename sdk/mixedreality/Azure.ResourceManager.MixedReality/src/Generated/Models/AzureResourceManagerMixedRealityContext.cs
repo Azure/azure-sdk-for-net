@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.MixedReality
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MixedRealityAccountKeyRegenerateContent))]
     [ModelReaderWriterBuildable(typeof(MixedRealityAccountKeys))]
     [ModelReaderWriterBuildable(typeof(MixedRealityNameAvailabilityContent))]
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.MixedReality
     [ModelReaderWriterBuildable(typeof(RemoteRenderingAccountData))]
     [ModelReaderWriterBuildable(typeof(RemoteRenderingAccountListResult))]
     [ModelReaderWriterBuildable(typeof(RemoteRenderingAccountResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SpatialAnchorsAccountData))]
     [ModelReaderWriterBuildable(typeof(SpatialAnchorsAccountListResult))]
     [ModelReaderWriterBuildable(typeof(SpatialAnchorsAccountResource))]

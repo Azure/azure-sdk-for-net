@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(ResourceOperationDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceOperationError))]
     [ModelReaderWriterBuildable(typeof(ResourceOperationResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionExecutionParameterDetail))]
     [ModelReaderWriterBuildable(typeof(StartResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(SubmitDeallocateContent))]

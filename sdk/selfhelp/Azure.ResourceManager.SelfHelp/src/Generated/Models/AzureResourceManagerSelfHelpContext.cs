@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.SelfHelp
     [ModelReaderWriterBuildable(typeof(MetricsBasedChart))]
     [ModelReaderWriterBuildable(typeof(ReplacementMapsResult))]
     [ModelReaderWriterBuildable(typeof(ResponseConfig))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResponseValidationProperties))]
     [ModelReaderWriterBuildable(typeof(RestartTroubleshooterResult))]
     [ModelReaderWriterBuildable(typeof(SelfHelpDiagnosticData))]

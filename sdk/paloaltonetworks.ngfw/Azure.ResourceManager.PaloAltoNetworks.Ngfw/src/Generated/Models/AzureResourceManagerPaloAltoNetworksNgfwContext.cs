@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleData))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleResource))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MonitorLogConfiguration))]
     [ModelReaderWriterBuildable(typeof(NameDescriptionObject))]
     [ModelReaderWriterBuildable(typeof(PaloAltoNetworksFirewallData))]
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(PreRulesResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PreRulestackRuleData))]
     [ModelReaderWriterBuildable(typeof(PreRulestackRuleResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RulestackChangelog))]
     [ModelReaderWriterBuildable(typeof(RulestackCountry))]
     [ModelReaderWriterBuildable(typeof(RulestackDetails))]
@@ -99,6 +101,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(SourceAddressInfo))]
     [ModelReaderWriterBuildable(typeof(StorageAccountConfiguration))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPaloAltoNetworksNgfwContext : ModelReaderWriterContext
     {
     }

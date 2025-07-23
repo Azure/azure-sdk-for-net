@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.NeonPostgres
     [ModelReaderWriterBuildable(typeof(PartnerOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(PgVersion))]
     [ModelReaderWriterBuildable(typeof(PgVersionsResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerNeonPostgresContext : ModelReaderWriterContext
     {

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -156,6 +157,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(ManagedRuleOverrideSetting))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetDefinition))]
     [ModelReaderWriterBuildable(typeof(ManagedRuleSetDefinitionList))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetricsResponse))]
     [ModelReaderWriterBuildable(typeof(MetricsResponseSeriesItem))]
     [ModelReaderWriterBuildable(typeof(MetricsResponseSeriesPropertiesItemsItem))]
@@ -201,6 +203,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(ResourcesResponseEndpointsPropertiesItemsItem))]
     [ModelReaderWriterBuildable(typeof(ResourceUsageListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseBasedOriginErrorDetectionSettings))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteCacheCompressionSettings))]
     [ModelReaderWriterBuildable(typeof(RouteConfigurationOverrideActionProperties))]
     [ModelReaderWriterBuildable(typeof(RouteListResult))]
@@ -215,6 +218,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SocketAddressMatchCondition))]
     [ModelReaderWriterBuildable(typeof(SsoUri))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedOptimizationTypesListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownCertificateSourceParameters))]
@@ -238,6 +242,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(UriSigningKeyProperties))]
     [ModelReaderWriterBuildable(typeof(UriSigningParamIdentifier))]
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserManagedHttpsContent))]
     [ModelReaderWriterBuildable(typeof(ValidateCustomDomainContent))]
     [ModelReaderWriterBuildable(typeof(ValidateCustomDomainResult))]
@@ -252,6 +257,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(WafPolicySettings))]
     [ModelReaderWriterBuildable(typeof(WafRankingsResponse))]
     [ModelReaderWriterBuildable(typeof(WafRankingsResponseDataItem))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCdnContext : ModelReaderWriterContext
     {
     }

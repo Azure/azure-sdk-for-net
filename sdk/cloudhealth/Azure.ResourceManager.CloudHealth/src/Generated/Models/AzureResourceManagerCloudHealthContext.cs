@@ -49,12 +49,15 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(LogAnalyticsQuerySignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(LogAnalyticsSignalGroup))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityAuthenticationSettingProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ModelDiscoverySettings))]
     [ModelReaderWriterBuildable(typeof(PrometheusMetricsSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceMetricSignalDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownHealthModelAuthenticationSettingProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownHealthModelSignalDefinitionProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerCloudHealthContext : ModelReaderWriterContext
     {
     }

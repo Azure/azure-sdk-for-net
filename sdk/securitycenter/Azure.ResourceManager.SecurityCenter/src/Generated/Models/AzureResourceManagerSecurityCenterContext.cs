@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -239,6 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(ListCustomAlertRule))]
     [ModelReaderWriterBuildable(typeof(LocalUserNotAllowed))]
     [ModelReaderWriterBuildable(typeof(LogAnalyticsIdentifier))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MdeOnboarding))]
     [ModelReaderWriterBuildable(typeof(MipSensitivityLabel))]
     [ModelReaderWriterBuildable(typeof(MqttC2DMessagesNotInAllowedRange))]
@@ -266,6 +268,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(RemediationEta))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupSecurityAlertResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupSecurityTaskResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RulesResultsContent))]
     [ModelReaderWriterBuildable(typeof(SecureScoreControlDefinitionItem))]
     [ModelReaderWriterBuildable(typeof(SecureScoreControlDefinitionList))]
@@ -397,6 +400,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResult))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResultProperties))]
     [ModelReaderWriterBuildable(typeof(SubAssessmentStatus))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAssessmentMetadataResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSecurityAlertResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSecurityApplicationResource))]
@@ -435,6 +439,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(VulnerabilityAssessmentRule))]
     [ModelReaderWriterBuildable(typeof(VulnerabilityAssessmentRuleQueryCheck))]
     [ModelReaderWriterBuildable(typeof(WorkspaceSettingList))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerSecurityCenterContext : ModelReaderWriterContext
     {
     }

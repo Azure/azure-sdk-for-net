@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     [ModelReaderWriterBuildable(typeof(HostCapacity))]
     [ModelReaderWriterBuildable(typeof(ImageRepositoryCredential))]
     [ModelReaderWriterBuildable(typeof(IotEdgeAgentInfo))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MecRole))]
     [ModelReaderWriterBuildable(typeof(MonitoringMetricConfigurationData))]
     [ModelReaderWriterBuildable(typeof(MonitoringMetricConfigurationList))]
@@ -149,6 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     [ModelReaderWriterBuildable(typeof(UserAccessRight))]
     [ModelReaderWriterBuildable(typeof(UserList))]
     [ModelReaderWriterBuildable(typeof(VmPlacementRequestResult))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerDataBoxEdgeContext : ModelReaderWriterContext
     {
     }

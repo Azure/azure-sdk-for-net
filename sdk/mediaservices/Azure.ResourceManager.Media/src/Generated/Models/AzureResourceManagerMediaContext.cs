@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media
 {
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.Media
     [ModelReaderWriterBuildable(typeof(LiveEventPreview))]
     [ModelReaderWriterBuildable(typeof(LiveEventTranscription))]
     [ModelReaderWriterBuildable(typeof(LiveOutputListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MediaAccessControl))]
     [ModelReaderWriterBuildable(typeof(MediaAssetData))]
     [ModelReaderWriterBuildable(typeof(MediaAssetFileEncryptionMetadata))]
@@ -168,6 +170,7 @@ namespace Azure.ResourceManager.Media
     [ModelReaderWriterBuildable(typeof(PresentationTimeRange))]
     [ModelReaderWriterBuildable(typeof(RectangularWindow))]
     [ModelReaderWriterBuildable(typeof(ResourceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SelectAudioTrackByAttribute))]
     [ModelReaderWriterBuildable(typeof(SelectAudioTrackById))]
     [ModelReaderWriterBuildable(typeof(SelectVideoTrackByAttribute))]
@@ -195,6 +198,7 @@ namespace Azure.ResourceManager.Media
     [ModelReaderWriterBuildable(typeof(StreamingPolicyListResult))]
     [ModelReaderWriterBuildable(typeof(StreamingPolicyPlayReadyConfiguration))]
     [ModelReaderWriterBuildable(typeof(StreamingPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SyncStorageKeysContent))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TextTrack))]
@@ -215,6 +219,7 @@ namespace Azure.ResourceManager.Media
     [ModelReaderWriterBuildable(typeof(UnknownPreset))]
     [ModelReaderWriterBuildable(typeof(UnknownTrackBase))]
     [ModelReaderWriterBuildable(typeof(UnknownTrackDescriptor))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UtcClipTime))]
     [ModelReaderWriterBuildable(typeof(VideoAnalyzerPreset))]
     [ModelReaderWriterBuildable(typeof(VideoLayer))]

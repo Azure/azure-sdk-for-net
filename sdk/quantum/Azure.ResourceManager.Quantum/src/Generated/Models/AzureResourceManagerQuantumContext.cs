@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Quantum
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OfferingsListResult))]
     [ModelReaderWriterBuildable(typeof(ProviderAadInfo))]
     [ModelReaderWriterBuildable(typeof(ProviderApplicationInfo))]
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Quantum
     [ModelReaderWriterBuildable(typeof(QuantumWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(QuantumWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WorkspaceApiKey))]
     [ModelReaderWriterBuildable(typeof(WorkspaceApiKeys))]

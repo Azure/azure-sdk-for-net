@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourcesListResponse))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
     [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]
     [ModelReaderWriterBuildable(typeof(NewRelicAccountProperties))]
@@ -63,7 +65,10 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(NewRelicSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(NewRelicSwitchBillingContent))]
     [ModelReaderWriterBuildable(typeof(PartnerBillingEntity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerNewRelicObservabilityContext : ModelReaderWriterContext
     {
     }

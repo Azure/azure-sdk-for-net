@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -147,6 +148,8 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(CredentialSetListResult))]
     [ModelReaderWriterBuildable(typeof(CustomRegistryCredentials))]
     [ModelReaderWriterBuildable(typeof(GarbageCollectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScopeMapData))]
     [ModelReaderWriterBuildable(typeof(ScopeMapListResult))]
     [ModelReaderWriterBuildable(typeof(ScopeMapPatch))]
@@ -160,6 +163,8 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(UnknownRunRequest))]
     [ModelReaderWriterBuildable(typeof(UnknownTaskStepProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownTaskStepUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerContainerRegistryContext : ModelReaderWriterContext
     {
     }

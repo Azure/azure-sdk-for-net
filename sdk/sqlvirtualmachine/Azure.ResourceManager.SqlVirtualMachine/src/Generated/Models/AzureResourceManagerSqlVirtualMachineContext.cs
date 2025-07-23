@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerPrivateIPAddress))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupListenerResource))]
     [ModelReaderWriterBuildable(typeof(AvailabilityGroupReplica))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MultiSubnetIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(SqlConnectivityUpdateSettings))]
     [ModelReaderWriterBuildable(typeof(SqlInstanceSettings))]

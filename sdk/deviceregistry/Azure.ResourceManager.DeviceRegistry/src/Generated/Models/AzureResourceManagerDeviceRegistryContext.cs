@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(DeviceRegistryTopic))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryUsernamePasswordCredentials))]
     [ModelReaderWriterBuildable(typeof(MessageSchemaReference))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDeviceRegistryContext : ModelReaderWriterContext
     {

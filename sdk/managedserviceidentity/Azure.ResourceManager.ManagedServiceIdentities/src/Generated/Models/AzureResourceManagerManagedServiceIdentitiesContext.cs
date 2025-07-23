@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialData))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialResource))]
     [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialsListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityData))]
     [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

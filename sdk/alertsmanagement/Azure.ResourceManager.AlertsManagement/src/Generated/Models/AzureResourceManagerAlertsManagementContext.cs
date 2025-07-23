@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(DailyRecurrence))]
     [ModelReaderWriterBuildable(typeof(MonitorServiceDetails))]
     [ModelReaderWriterBuildable(typeof(MonitorServiceList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertCollectionGetAllOptions))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertData))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertEssentials))]

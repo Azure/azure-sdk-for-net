@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Support
     [ModelReaderWriterBuildable(typeof(ProblemClassificationResource))]
     [ModelReaderWriterBuildable(typeof(ProblemClassificationsListResult))]
     [ModelReaderWriterBuildable(typeof(QuotaTicketDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsent))]
     [ModelReaderWriterBuildable(typeof(SecondaryConsentEnabled))]
     [ModelReaderWriterBuildable(typeof(ServicesListResult))]

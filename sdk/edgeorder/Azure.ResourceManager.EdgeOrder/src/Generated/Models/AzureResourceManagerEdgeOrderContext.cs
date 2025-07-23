@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder
     [ModelReaderWriterBuildable(typeof(ProductSpecification))]
     [ModelReaderWriterBuildable(typeof(PurchaseMeterDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceProviderDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]

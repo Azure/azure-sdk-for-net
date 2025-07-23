@@ -167,6 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(OptionBLayer3Configuration))]
     [ModelReaderWriterBuildable(typeof(OptionBProperties))]
     [ModelReaderWriterBuildable(typeof(PortGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoutePoliciesListResult))]
     [ModelReaderWriterBuildable(typeof(RoutePolicyStatementProperties))]
     [ModelReaderWriterBuildable(typeof(RouteTargetInformation))]

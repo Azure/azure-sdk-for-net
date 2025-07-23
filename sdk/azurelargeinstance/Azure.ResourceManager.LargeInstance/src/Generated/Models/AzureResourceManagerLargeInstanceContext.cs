@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.LargeInstance
     [ModelReaderWriterBuildable(typeof(LargeStorageInstanceData))]
     [ModelReaderWriterBuildable(typeof(LargeStorageInstancePatch))]
     [ModelReaderWriterBuildable(typeof(LargeStorageInstanceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerLargeInstanceContext : ModelReaderWriterContext
     {

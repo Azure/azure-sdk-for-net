@@ -52,10 +52,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(FleetUpdateStrategyData))]
     [ModelReaderWriterBuildable(typeof(FleetUpdateStrategyListResult))]
     [ModelReaderWriterBuildable(typeof(FleetUpdateStrategyResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MemberUpdateStatus))]
     [ModelReaderWriterBuildable(typeof(NodeImageSelection))]
     [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerContainerServiceFleetContext : ModelReaderWriterContext
     {
     }

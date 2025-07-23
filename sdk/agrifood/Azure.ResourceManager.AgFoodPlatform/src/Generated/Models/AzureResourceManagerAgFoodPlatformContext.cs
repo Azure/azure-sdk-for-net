@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
@@ -37,7 +38,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
     [ModelReaderWriterBuildable(typeof(FarmBeatsExtensionResource))]
     [ModelReaderWriterBuildable(typeof(FarmBeatsListResponse))]
     [ModelReaderWriterBuildable(typeof(FarmBeatsUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SensorIntegration))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnitSystemsInfo))]
     public partial class AzureResourceManagerAgFoodPlatformContext : ModelReaderWriterContext

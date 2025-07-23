@@ -329,6 +329,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ResolveHealthContent))]
     [ModelReaderWriterBuildable(typeof(ResolveHealthError))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthSummary))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationContent))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationProviderSpecificContent))]

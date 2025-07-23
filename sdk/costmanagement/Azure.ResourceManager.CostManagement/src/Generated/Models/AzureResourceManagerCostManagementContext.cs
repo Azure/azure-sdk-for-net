@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(ReportConfigGrouping))]
     [ModelReaderWriterBuildable(typeof(ReportConfigSorting))]
     [ModelReaderWriterBuildable(typeof(ReportConfigTimePeriod))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SavingsPlanUtilizationSummary))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionData))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionListResult))]

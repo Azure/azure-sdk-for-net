@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoCluster.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
@@ -40,6 +41,8 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(MongoClusterRestoreContent))]
     [ModelReaderWriterBuildable(typeof(MongoClusterUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(PromoteReplicaContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerMongoClusterContext : ModelReaderWriterContext
     {

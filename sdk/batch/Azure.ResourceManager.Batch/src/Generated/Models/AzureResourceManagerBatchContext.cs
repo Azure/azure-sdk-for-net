@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(ListPrivateEndpointConnectionsResult))]
     [ModelReaderWriterBuildable(typeof(ListPrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(ManagedDisk))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeter))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationData))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
@@ -112,10 +114,14 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointCollection))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedSkusResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradePolicy))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerBatchContext : ModelReaderWriterContext
     {
     }

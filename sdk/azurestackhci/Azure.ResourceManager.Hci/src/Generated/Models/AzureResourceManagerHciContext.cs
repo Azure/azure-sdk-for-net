@@ -125,6 +125,7 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(RemoteSupportContentProperties))]
     [ModelReaderWriterBuildable(typeof(RemoteSupportNodeSettings))]
     [ModelReaderWriterBuildable(typeof(RemoteSupportProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SbeCredentials))]
     [ModelReaderWriterBuildable(typeof(SbeDeploymentInfo))]
     [ModelReaderWriterBuildable(typeof(SbeDeploymentPackageInfo))]
@@ -138,6 +139,7 @@ namespace Azure.ResourceManager.Hci
     [ModelReaderWriterBuildable(typeof(UnknownEdgeDevice))]
     [ModelReaderWriterBuildable(typeof(UpdateRunList))]
     [ModelReaderWriterBuildable(typeof(UpdateSummariesList))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHciContext : ModelReaderWriterContext
     {
     }

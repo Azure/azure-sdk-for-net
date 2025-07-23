@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -183,19 +184,24 @@ namespace Azure.ResourceManager.AppPlatform
     [ModelReaderWriterBuildable(typeof(GatewayResourceList))]
     [ModelReaderWriterBuildable(typeof(GatewayRouteConfigResourceList))]
     [ModelReaderWriterBuildable(typeof(JarUploadedUserSourceInfo))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetCoreZipUploadedUserSourceInfo))]
     [ModelReaderWriterBuildable(typeof(RegenerateAppPlatformServiceTestKeyContent))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceRegistryResourceList))]
     [ModelReaderWriterBuildable(typeof(ServiceResourceList))]
     [ModelReaderWriterBuildable(typeof(SourceUploadedUserSourceInfo))]
     [ModelReaderWriterBuildable(typeof(StorageResourceList))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownCustomPersistentDiskProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownProbeAction))]
     [ModelReaderWriterBuildable(typeof(UnknownStorageProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownUserSourceInfo))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAppPlatformContext : ModelReaderWriterContext
     {
     }

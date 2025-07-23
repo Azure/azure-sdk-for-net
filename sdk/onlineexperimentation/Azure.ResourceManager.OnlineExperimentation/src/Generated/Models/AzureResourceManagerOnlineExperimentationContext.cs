@@ -17,13 +17,16 @@ namespace Azure.ResourceManager.OnlineExperimentation
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspacePatchProperties))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceSku))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerOnlineExperimentationContext : ModelReaderWriterContext
     {
     }

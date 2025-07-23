@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.DnsResolver
     [ModelReaderWriterBuildable(typeof(InboundEndpointIPConfiguration))]
     [ModelReaderWriterBuildable(typeof(InboundEndpointListResult))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDnsServer))]
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.DnsResolver
     [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsForwardingRulesetListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsResolverResource))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkListResult))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerDnsResolverContext : ModelReaderWriterContext
     {
     }

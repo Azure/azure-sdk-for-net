@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -95,18 +96,22 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(KustoSkuLocationInfoItem))]
     [ModelReaderWriterBuildable(typeof(ListResourceSkusResult))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MigrationClusterProperties))]
     [ModelReaderWriterBuildable(typeof(OptimizedAutoscale))]
     [ModelReaderWriterBuildable(typeof(OutboundNetworkDependenciesEndpoint))]
     [ModelReaderWriterBuildable(typeof(OutboundNetworkDependenciesEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageData))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageResource))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImagesCheckNameContent))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImagesListResult))]
     [ModelReaderWriterBuildable(typeof(ScriptListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabase))]
     [ModelReaderWriterBuildable(typeof(UnknownDataConnection))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerKustoContext : ModelReaderWriterContext
     {
     }

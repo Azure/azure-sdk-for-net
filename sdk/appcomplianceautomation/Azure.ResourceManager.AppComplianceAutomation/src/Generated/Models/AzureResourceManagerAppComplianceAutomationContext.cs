@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [ModelReaderWriterBuildable(typeof(ReportResourceMetadata))]
     [ModelReaderWriterBuildable(typeof(ReportStorageInfo))]
     [ModelReaderWriterBuildable(typeof(ReportVerificationResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResponsibilityResourceItem))]
     [ModelReaderWriterBuildable(typeof(ScopingAnswer))]
     [ModelReaderWriterBuildable(typeof(ScopingConfigurationResourceListResult))]

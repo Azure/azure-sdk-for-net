@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Blueprint.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
@@ -45,12 +46,15 @@ namespace Azure.ResourceManager.Blueprint
     [ModelReaderWriterBuildable(typeof(PublishedBlueprintResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupDefinition))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupValue))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentArtifact))]
     [ModelReaderWriterBuildable(typeof(SecretValueReference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TemplateArtifact))]
     [ModelReaderWriterBuildable(typeof(UnknownArtifact))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WhoIsBlueprintContract))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerBlueprintContext : ModelReaderWriterContext
     {
     }

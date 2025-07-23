@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsZoneListResult))]
     [ModelReaderWriterBuildable(typeof(DnsZonePatch))]
     [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResourceManager.Models.SystemData))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerDnsContext : ModelReaderWriterContext

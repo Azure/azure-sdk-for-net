@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.ManagedNetwork
     [ModelReaderWriterBuildable(typeof(ScopeAssignmentListResult))]
     [ModelReaderWriterBuildable(typeof(ScopeAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerManagedNetworkContext : ModelReaderWriterContext
     {
     }

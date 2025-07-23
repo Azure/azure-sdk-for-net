@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     [ModelReaderWriterBuildable(typeof(ConnectedClusterStorageClassResource))]
     [ModelReaderWriterBuildable(typeof(NativeStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(NfsStorageClassTypeProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RwxStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(SmbStorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(StorageClassPropertiesUpdate))]

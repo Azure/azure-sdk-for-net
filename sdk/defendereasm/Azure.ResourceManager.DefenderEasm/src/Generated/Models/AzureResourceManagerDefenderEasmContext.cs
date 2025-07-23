@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DefenderEasm
     [ModelReaderWriterBuildable(typeof(EasmWorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(EasmWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(EasmWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDefenderEasmContext : ModelReaderWriterContext
     {

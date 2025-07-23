@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
@@ -62,6 +63,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(ContainerServiceTrustedAccessRoleBindingResource))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceTrustedAccessRoleRule))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceUserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(IstioComponents))]
     [ModelReaderWriterBuildable(typeof(IstioEgressGateway))]
     [ModelReaderWriterBuildable(typeof(IstioIngressGateway))]
@@ -121,6 +123,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(OSOptionProfileData))]
     [ModelReaderWriterBuildable(typeof(OSOptionProfileResource))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceMeshProfile))]
     [ModelReaderWriterBuildable(typeof(SysctlConfig))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
@@ -129,6 +132,7 @@ namespace Azure.ResourceManager.ContainerService
     [ModelReaderWriterBuildable(typeof(UpgradeOverrideSettings))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WindowsGmsaProfile))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerContainerServiceContext : ModelReaderWriterContext
     {
     }

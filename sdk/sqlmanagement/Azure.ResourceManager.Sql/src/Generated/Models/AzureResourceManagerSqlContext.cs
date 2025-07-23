@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -266,6 +267,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ManagedServerSecurityAlertPolicyData))]
     [ModelReaderWriterBuildable(typeof(ManagedServerSecurityAlertPolicyListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServerSecurityAlertPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedTransparentDataEncryptionData))]
     [ModelReaderWriterBuildable(typeof(ManagedTransparentDataEncryptionListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedTransparentDataEncryptionResource))]
@@ -309,6 +311,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(ResourceGroupLongTermRetentionManagedInstanceBackupResource))]
     [ModelReaderWriterBuildable(typeof(ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions))]
     [ModelReaderWriterBuildable(typeof(ResourceWithWritableName))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseData))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(RestorableDroppedDatabaseResource))]
@@ -495,6 +498,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResultData))]
     [ModelReaderWriterBuildable(typeof(StartStopManagedInstanceScheduleListResult))]
     [ModelReaderWriterBuildable(typeof(StorageCapability))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLongTermRetentionBackupResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLongTermRetentionManagedInstanceBackupResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions))]
@@ -532,6 +536,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(UpdateLongTermRetentionBackupContent))]
     [ModelReaderWriterBuildable(typeof(UpsertManagedServerOperationParameters))]
     [ModelReaderWriterBuildable(typeof(UpsertManagedServerOperationStep))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualClusterData))]
     [ModelReaderWriterBuildable(typeof(VirtualClusterListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualClusterPatch))]
@@ -547,6 +552,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(WorkloadGroupData))]
     [ModelReaderWriterBuildable(typeof(WorkloadGroupListResult))]
     [ModelReaderWriterBuildable(typeof(WorkloadGroupResource))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZonePinningCapability))]
     public partial class AzureResourceManagerSqlContext : ModelReaderWriterContext
     {

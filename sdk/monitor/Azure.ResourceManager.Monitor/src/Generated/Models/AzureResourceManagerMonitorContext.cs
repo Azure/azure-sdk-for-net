@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(EventDataCollection))]
     [ModelReaderWriterBuildable(typeof(EventDataHttpRequestInfo))]
     [ModelReaderWriterBuildable(typeof(EventDataInfo))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(ExtensionDataSource))]
     [ModelReaderWriterBuildable(typeof(IisLogsDataSource))]
     [ModelReaderWriterBuildable(typeof(IncidentListResult))]
@@ -105,6 +107,7 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(LogProfilePatch))]
     [ModelReaderWriterBuildable(typeof(LogProfileResource))]
     [ModelReaderWriterBuildable(typeof(LogSettings))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagementEventAggregationCondition))]
     [ModelReaderWriterBuildable(typeof(ManagementEventRuleCondition))]
     [ModelReaderWriterBuildable(typeof(MetricAlertAction))]
@@ -213,6 +216,7 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(PrometheusForwarderDataSource))]
     [ModelReaderWriterBuildable(typeof(RecurrentSchedule))]
     [ModelReaderWriterBuildable(typeof(ResourceForUpdate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(RuleDataSource))]
     [ModelReaderWriterBuildable(typeof(RuleEmailAction))]
@@ -227,6 +231,7 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(ScheduledQueryRuleResourceCollection))]
     [ModelReaderWriterBuildable(typeof(ScopedResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SenderAuthorization))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionMonitorMetric))]
     [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetMonitorMetricsOptions))]
     [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetMonitorMetricsWithPostContent))]
@@ -241,6 +246,7 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(UnknownRuleAction))]
     [ModelReaderWriterBuildable(typeof(UnknownRuleCondition))]
     [ModelReaderWriterBuildable(typeof(UnknownRuleDataSource))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VmInsightsOnboardingStatusData))]
     [ModelReaderWriterBuildable(typeof(VmInsightsOnboardingStatusResource))]
     [ModelReaderWriterBuildable(typeof(WebhookNotification))]

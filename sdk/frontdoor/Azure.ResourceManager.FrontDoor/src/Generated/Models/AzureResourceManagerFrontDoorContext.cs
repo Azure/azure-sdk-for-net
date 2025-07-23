@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -74,12 +75,14 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(RulesEngineListResult))]
     [ModelReaderWriterBuildable(typeof(RulesEngineMatchCondition))]
     [ModelReaderWriterBuildable(typeof(RulesEngineRule))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownRouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(WebApplicationCustomRule))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPolicyList))]
     [ModelReaderWriterBuildable(typeof(WebApplicationFirewallScrubbingRules))]
     [ModelReaderWriterBuildable(typeof(WebApplicationRuleMatchCondition))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerFrontDoorContext : ModelReaderWriterContext
     {
     }

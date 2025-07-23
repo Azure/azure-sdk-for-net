@@ -25,6 +25,7 @@ namespace Azure.Health.Insights.CancerProfiling
     [ModelReaderWriterBuildable(typeof(PatientDocument))]
     [ModelReaderWriterBuildable(typeof(PatientInfo))]
     [ModelReaderWriterBuildable(typeof(PatientRecord))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureHealthInsightsCancerProfilingContext : ModelReaderWriterContext
     {
     }

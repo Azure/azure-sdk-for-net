@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
@@ -93,6 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(KubernetesReplicaSet))]
     [ModelReaderWriterBuildable(typeof(KubernetesStatefulSet))]
     [ModelReaderWriterBuildable(typeof(ManagedResourceGroupConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManifestArtifactFormat))]
     [ModelReaderWriterBuildable(typeof(MappingRuleProfile))]
     [ModelReaderWriterBuildable(typeof(NetworkFunctionApplication))]
@@ -137,6 +139,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(PublisherResource))]
     [ModelReaderWriterBuildable(typeof(RequestMetadata))]
     [ModelReaderWriterBuildable(typeof(ResourceElementTemplate))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecretDeploymentResourceReference))]
     [ModelReaderWriterBuildable(typeof(SiteData))]
     [ModelReaderWriterBuildable(typeof(SiteListResult))]
@@ -160,9 +163,11 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(UnknownNFVIs))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceElementTemplate))]
     [ModelReaderWriterBuildable(typeof(UnknownVirtualNetworkFunctionTemplate))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VhdImageArtifactProfile))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkFunctionDefinitionVersion))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkFunctionTemplate))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerHybridNetworkContext : ModelReaderWriterContext
     {
     }

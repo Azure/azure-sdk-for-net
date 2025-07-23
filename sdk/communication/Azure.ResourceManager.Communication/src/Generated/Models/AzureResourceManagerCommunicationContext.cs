@@ -38,11 +38,14 @@ namespace Azure.ResourceManager.Communication
     [ModelReaderWriterBuildable(typeof(EmailServiceResourcePatch))]
     [ModelReaderWriterBuildable(typeof(LinkedNotificationHub))]
     [ModelReaderWriterBuildable(typeof(LinkNotificationHubContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegenerateCommunicationServiceKeyContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResource))]
     [ModelReaderWriterBuildable(typeof(Models.SenderUsernameResourceCollection))]
     [ModelReaderWriterBuildable(typeof(SenderUsernameResourceData))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VerificationDnsRecord))]
     public partial class AzureResourceManagerCommunicationContext : ModelReaderWriterContext
     {

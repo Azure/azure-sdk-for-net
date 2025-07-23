@@ -61,6 +61,7 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(ReactionNotificationContent))]
     [ModelReaderWriterBuildable(typeof(RemoveParticipantsOptions))]
     [ModelReaderWriterBuildable(typeof(RemoveParticipantsResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SendConversationMessageOptions))]
     [ModelReaderWriterBuildable(typeof(SendConversationMessageResult))]
     [ModelReaderWriterBuildable(typeof(SendMessageResult))]

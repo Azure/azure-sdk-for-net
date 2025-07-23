@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryData))]
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryProperties))]
     [ModelReaderWriterBuildable(typeof(PublicCloudInventoryResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SolutionConfigurationPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetResourceEndpointAccess))]

@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DataLakeStore
     [ModelReaderWriterBuildable(typeof(DataLakeStoreVirtualNetworkRuleResource))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleForDataLakeStoreAccountUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetAccountsOptions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent))]

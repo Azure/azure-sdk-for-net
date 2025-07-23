@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(FilteringTag))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(LogRules))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceContent))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRuleData))]
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitoringTagRulesProperties))]
     [ModelReaderWriterBuildable(typeof(MonitorProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserInfo))]
     public partial class AzureResourceManagerDatadogContext : ModelReaderWriterContext

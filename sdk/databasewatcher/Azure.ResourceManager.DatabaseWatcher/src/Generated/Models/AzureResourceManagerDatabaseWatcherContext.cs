@@ -35,12 +35,14 @@ namespace Azure.ResourceManager.DatabaseWatcher
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherTargetResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SqlDBElasticPoolTargetProperties))]
     [ModelReaderWriterBuildable(typeof(SqlDBSingleDatabaseTargetProperties))]
     [ModelReaderWriterBuildable(typeof(SqlMITargetProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetAuthenticationVaultSecret))]
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseWatcherTargetProperties))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDatabaseWatcherContext : ModelReaderWriterContext
     {
     }

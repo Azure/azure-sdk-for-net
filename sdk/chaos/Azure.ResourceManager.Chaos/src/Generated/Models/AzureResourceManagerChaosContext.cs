@@ -47,10 +47,13 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsError))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionActionTargetDetailsProperties))]
     [ModelReaderWriterBuildable(typeof(ExperimentExecutionDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosExperimentAction))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetFilter))]
     [ModelReaderWriterBuildable(typeof(UnknownChaosTargetSelector))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerChaosContext : ModelReaderWriterContext
     {
     }

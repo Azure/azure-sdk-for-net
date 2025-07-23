@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.DevCenter
     [ModelReaderWriterBuildable(typeof(ImageVersionListResult))]
     [ModelReaderWriterBuildable(typeof(ImageVersionResource))]
     [ModelReaderWriterBuildable(typeof(ListUsagesResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpoint))]
@@ -94,10 +95,12 @@ namespace Azure.ResourceManager.DevCenter
     [ModelReaderWriterBuildable(typeof(ProjectEnvironmentTypeListResult))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
     [ModelReaderWriterBuildable(typeof(RecommendedMachineConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduleListResult))]
     [ModelReaderWriterBuildable(typeof(SkuListResult))]
     [ModelReaderWriterBuildable(typeof(StopOnDisconnectConfiguration))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDevCenterContext : ModelReaderWriterContext
     {
     }

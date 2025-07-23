@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Terraform
     [ModelReaderWriterBuildable(typeof(ExportQueryTerraform))]
     [ModelReaderWriterBuildable(typeof(ExportResourceGroupTerraform))]
     [ModelReaderWriterBuildable(typeof(ExportResourceTerraform))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(TerraformExportResult))]
     [ModelReaderWriterBuildable(typeof(TerraformOperationStatus))]
     [ModelReaderWriterBuildable(typeof(UnknownCommonExportProperties))]

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
     [ModelReaderWriterBuildable(typeof(ChangeProperties))]
     [ModelReaderWriterBuildable(typeof(DetectedChangeData))]
     [ModelReaderWriterBuildable(typeof(PropertyChange))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerChangeAnalysisContext : ModelReaderWriterContext
     {

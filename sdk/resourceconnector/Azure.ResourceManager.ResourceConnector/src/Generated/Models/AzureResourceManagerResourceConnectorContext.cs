@@ -28,9 +28,11 @@ namespace Azure.ResourceManager.ResourceConnector
     [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraph))]
     [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraphProperties))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceData))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
     [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourceConnectorContext : ModelReaderWriterContext
     {

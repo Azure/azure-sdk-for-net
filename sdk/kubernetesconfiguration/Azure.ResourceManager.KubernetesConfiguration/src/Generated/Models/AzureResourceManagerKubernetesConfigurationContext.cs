@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(ExtensionsList))]
     [ModelReaderWriterBuildable(typeof(FluxConfigurationsList))]
     [ModelReaderWriterBuildable(typeof(HelmOperatorProperties))]
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     [ModelReaderWriterBuildable(typeof(KubernetesSourceControlConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(Kustomization))]
     [ModelReaderWriterBuildable(typeof(KustomizationUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SourceControlConfigurationList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationContext : ModelReaderWriterContext

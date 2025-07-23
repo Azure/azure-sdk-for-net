@@ -7,6 +7,7 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.StoragePool
     [ModelReaderWriterBuildable(typeof(ManagedDiskIscsiLun))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpointDependency))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpointDetail))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StoragePoolOutboundEnvironment))]
     [ModelReaderWriterBuildable(typeof(StoragePoolOutboundEnvironmentList))]
     [ModelReaderWriterBuildable(typeof(StoragePoolSku))]
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.StoragePool
     [ModelReaderWriterBuildable(typeof(StoragePoolSkuRestrictions))]
     [ModelReaderWriterBuildable(typeof(StoragePoolSkuZoneDetails))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerStoragePoolContext : ModelReaderWriterContext
     {
     }

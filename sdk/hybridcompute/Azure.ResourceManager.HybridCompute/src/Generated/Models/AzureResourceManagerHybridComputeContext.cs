@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(MachineRunCommandResource))]
     [ModelReaderWriterBuildable(typeof(MachineRunCommandScriptSource))]
     [ModelReaderWriterBuildable(typeof(MachineRunCommandsListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeter))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationData))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
@@ -107,10 +109,12 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterProfile))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionDataModel))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkScopeValidationDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RunCommandInputParameter))]
     [ModelReaderWriterBuildable(typeof(RunCommandManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VolumeLicenseDetails))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerHybridComputeContext : ModelReaderWriterContext
     {
     }

@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MySql
 {
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.MySql
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MySqlAdvisorData))]
     [ModelReaderWriterBuildable(typeof(MySqlAdvisorListResult))]
     [ModelReaderWriterBuildable(typeof(MySqlAdvisorResource))]
@@ -87,8 +89,10 @@ namespace Azure.ResourceManager.MySql
     [ModelReaderWriterBuildable(typeof(MySqlWaitStatisticResource))]
     [ModelReaderWriterBuildable(typeof(MySqlWaitStatisticsInput))]
     [ModelReaderWriterBuildable(typeof(MySqlWaitStatisticsListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownServerPropertiesForCreate))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerMySqlContext : ModelReaderWriterContext
     {
     }

@@ -31,15 +31,18 @@ namespace Azure.ResourceManager.NetworkAnalytics
     [ModelReaderWriterBuildable(typeof(DataProductVersion))]
     [ModelReaderWriterBuildable(typeof(DataTypeListResult))]
     [ModelReaderWriterBuildable(typeof(EncryptionKeyDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkAnalyticsIPRules))]
     [ModelReaderWriterBuildable(typeof(NetworkAnalyticsKeyVaultContent))]
     [ModelReaderWriterBuildable(typeof(NetworkAnalyticsManagedResourceGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkAnalyticsVirtualNetworkRule))]
     [ModelReaderWriterBuildable(typeof(PublisherInformation))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentCommonProperties))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentDetail))]
     [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerNetworkAnalyticsContext : ModelReaderWriterContext
     {
     }
