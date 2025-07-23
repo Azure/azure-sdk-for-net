@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
@@ -13,6 +15,58 @@ namespace Azure.ResourceManager.Nginx
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AutoUpgradeProfile))]
+    [ModelReaderWriterBuildable(typeof(NginxAnalysisConfig))]
+    [ModelReaderWriterBuildable(typeof(NginxAnalysisContent))]
+    [ModelReaderWriterBuildable(typeof(NginxAnalysisDiagnostic))]
+    [ModelReaderWriterBuildable(typeof(NginxAnalysisResult))]
+    [ModelReaderWriterBuildable(typeof(NginxAnalysisResultDetails))]
+    [ModelReaderWriterBuildable(typeof(NginxCertificateData))]
+    [ModelReaderWriterBuildable(typeof(NginxCertificateError))]
+    [ModelReaderWriterBuildable(typeof(NginxCertificateListResponse))]
+    [ModelReaderWriterBuildable(typeof(NginxCertificateProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxCertificateResource))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationCreateOrUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationFile))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationListResponse))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationPackage))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationProtectedFileContent))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationProtectedFileResult))]
+    [ModelReaderWriterBuildable(typeof(NginxConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentApiKeyCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentApiKeyData))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentApiKeyListResponse))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentApiKeyProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentApiKeyRequestProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentApiKeyResource))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentData))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentListResponse))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentPatch))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentPropertiesNginxAppProtect))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentResource))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentScalingProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentUpdatePropertiesNginxAppProtect))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentUserProfile))]
+    [ModelReaderWriterBuildable(typeof(NginxDiagnosticItem))]
+    [ModelReaderWriterBuildable(typeof(NginxFrontendIPConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NginxLogging))]
+    [ModelReaderWriterBuildable(typeof(NginxNetworkInterfaceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NginxNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(NginxPrivateIPAddress))]
+    [ModelReaderWriterBuildable(typeof(NginxResourceSku))]
+    [ModelReaderWriterBuildable(typeof(NginxScaleProfile))]
+    [ModelReaderWriterBuildable(typeof(NginxScaleProfileCapacity))]
+    [ModelReaderWriterBuildable(typeof(NginxStorageAccount))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WebApplicationFirewallComponentVersions))]
+    [ModelReaderWriterBuildable(typeof(WebApplicationFirewallPackage))]
+    [ModelReaderWriterBuildable(typeof(WebApplicationFirewallSettings))]
+    [ModelReaderWriterBuildable(typeof(WebApplicationFirewallStatus))]
     public partial class AzureResourceManagerNginxContext : ModelReaderWriterContext
     {
     }

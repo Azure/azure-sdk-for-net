@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
@@ -13,6 +15,58 @@ namespace Azure.ResourceManager.RecoveryServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AzureMonitorAlertSettings))]
+    [ModelReaderWriterBuildable(typeof(CapabilitiesProperties))]
+    [ModelReaderWriterBuildable(typeof(CapabilitiesResult))]
+    [ModelReaderWriterBuildable(typeof(CapabilitiesResultProperties))]
+    [ModelReaderWriterBuildable(typeof(ClassicAlertSettings))]
+    [ModelReaderWriterBuildable(typeof(CmkKekIdentity))]
+    [ModelReaderWriterBuildable(typeof(CmkKeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(CrossSubscriptionRestoreSettings))]
+    [ModelReaderWriterBuildable(typeof(DnsZone))]
+    [ModelReaderWriterBuildable(typeof(DnsZoneResult))]
+    [ModelReaderWriterBuildable(typeof(ImmutabilitySettings))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
+    [ModelReaderWriterBuildable(typeof(RawCertificateData))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesCertificateContent))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesPrivateEndpointConnection))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesPrivateEndpointConnectionVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesSecuritySettings))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesSku))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesSoftDeleteSettings))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultData))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultExtendedInfoData))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultExtendedInfoResource))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultListResult))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultPatch))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(RecoveryServicesVaultResource))]
+    [ModelReaderWriterBuildable(typeof(ReplicationJobSummary))]
+    [ModelReaderWriterBuildable(typeof(ReplicationUsage))]
+    [ModelReaderWriterBuildable(typeof(ReplicationUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceCapabilities))]
+    [ModelReaderWriterBuildable(typeof(ResourceCapabilitiesBase))]
+    [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAadDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceCertificateAndAcsDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceCertificateDetails))]
+    [ModelReaderWriterBuildable(typeof(RestoreSettings))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownResourceCertificateDetails))]
+    [ModelReaderWriterBuildable(typeof(VaultCertificateResult))]
+    [ModelReaderWriterBuildable(typeof(VaultMonitoringSettings))]
+    [ModelReaderWriterBuildable(typeof(VaultMonitoringSummary))]
+    [ModelReaderWriterBuildable(typeof(VaultPropertiesEncryption))]
+    [ModelReaderWriterBuildable(typeof(VaultPropertiesMoveDetails))]
+    [ModelReaderWriterBuildable(typeof(VaultPropertiesRedundancySettings))]
+    [ModelReaderWriterBuildable(typeof(VaultUpgradeDetails))]
+    [ModelReaderWriterBuildable(typeof(VaultUsage))]
+    [ModelReaderWriterBuildable(typeof(VaultUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(VaultUsageNameInfo))]
     public partial class AzureResourceManagerRecoveryServicesContext : ModelReaderWriterContext
     {
     }

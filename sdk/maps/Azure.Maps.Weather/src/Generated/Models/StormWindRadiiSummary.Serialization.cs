@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core.GeoJson;
 using Azure.Maps.Common;
@@ -60,7 +63,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    radiiGeometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    radiiGeometry = ModelReaderWriter.Read<GeoObject>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions);
                     continue;
                 }
             }

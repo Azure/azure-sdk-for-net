@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ManagedNetwork.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
@@ -13,6 +15,24 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ConnectivityCollection))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkData))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkGroupData))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkGroupResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkPeeringPolicyData))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkPeeringPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkPeeringPolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkPeeringPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedNetworkResource))]
+    [ModelReaderWriterBuildable(typeof(ResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(Scope))]
+    [ModelReaderWriterBuildable(typeof(ScopeAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(ScopeAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(ScopeAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerManagedNetworkContext : ModelReaderWriterContext
     {
     }

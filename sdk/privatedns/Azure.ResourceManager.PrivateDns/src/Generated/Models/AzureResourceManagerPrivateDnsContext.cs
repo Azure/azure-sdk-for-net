@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
@@ -13,6 +15,21 @@ namespace Azure.ResourceManager.PrivateDns
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(PrivateDnsAaaaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsARecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsCnameRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsMXRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsPtrRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsRecordListResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsSoaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsSrvRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsTxtRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsZoneData))]
+    [ModelReaderWriterBuildable(typeof(PrivateZoneListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkData))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkListResult))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkResource))]
     public partial class AzureResourceManagerPrivateDnsContext : ModelReaderWriterContext
     {
     }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.LoadTesting.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
@@ -13,6 +15,22 @@ namespace Azure.ResourceManager.LoadTesting
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(LoadTestingCmkEncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingEndpointDependency))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingEndpointDetail))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingOutboundEnvironmentEndpoint))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaBucketContent))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaBucketDimensions))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaData))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingResource))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingResourceData))]
+    [ModelReaderWriterBuildable(typeof(LoadTestingResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(LoadTestResourcePageList))]
+    [ModelReaderWriterBuildable(typeof(OutboundEnvironmentEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerLoadTestingContext : ModelReaderWriterContext
     {
     }

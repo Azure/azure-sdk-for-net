@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.FluidRelay.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
@@ -13,6 +15,20 @@ namespace Azure.ResourceManager.FluidRelay
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CmkEncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(CmkIdentity))]
+    [ModelReaderWriterBuildable(typeof(Models.EncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayContainerData))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayContainerList))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayContainerResource))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayEndpoints))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayServerData))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayServerKeys))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayServerList))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayServerPatch))]
+    [ModelReaderWriterBuildable(typeof(FluidRelayServerResource))]
+    [ModelReaderWriterBuildable(typeof(RegenerateKeyContent))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerFluidRelayContext : ModelReaderWriterContext
     {
     }

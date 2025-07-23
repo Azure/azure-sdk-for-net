@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkFunction.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
@@ -13,6 +15,18 @@ namespace Azure.ResourceManager.NetworkFunction
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AzureTrafficCollectorData))]
+    [ModelReaderWriterBuildable(typeof(AzureTrafficCollectorListResult))]
+    [ModelReaderWriterBuildable(typeof(AzureTrafficCollectorResource))]
+    [ModelReaderWriterBuildable(typeof(CollectorPolicyData))]
+    [ModelReaderWriterBuildable(typeof(CollectorPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(CollectorPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(EmissionPoliciesPropertiesFormat))]
+    [ModelReaderWriterBuildable(typeof(EmissionPolicyDestination))]
+    [ModelReaderWriterBuildable(typeof(IngestionPolicyPropertiesFormat))]
+    [ModelReaderWriterBuildable(typeof(IngestionSourcesPropertiesFormat))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TagsObject))]
     public partial class AzureResourceManagerNetworkFunctionContext : ModelReaderWriterContext
     {
     }

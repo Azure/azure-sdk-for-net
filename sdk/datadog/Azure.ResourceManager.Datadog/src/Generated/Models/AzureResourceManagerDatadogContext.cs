@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Datadog.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
@@ -13,6 +15,41 @@ namespace Azure.ResourceManager.Datadog
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DatadogAgreementProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogApiKey))]
+    [ModelReaderWriterBuildable(typeof(DatadogApiKeyListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogHost))]
+    [ModelReaderWriterBuildable(typeof(DatadogHostListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogHostMetadata))]
+    [ModelReaderWriterBuildable(typeof(DatadogInstallMethod))]
+    [ModelReaderWriterBuildable(typeof(DatadogLogsAgent))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResource))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResourceData))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(DatadogMonitorResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(DatadogOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSetPasswordLink))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResource))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceData))]
+    [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(FilteringTag))]
+    [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(LogRules))]
+    [ModelReaderWriterBuildable(typeof(MetricRules))]
+    [ModelReaderWriterBuildable(typeof(MonitoredResourceContent))]
+    [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRuleData))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRuleResource))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRulesListResponse))]
+    [ModelReaderWriterBuildable(typeof(MonitoringTagRulesProperties))]
+    [ModelReaderWriterBuildable(typeof(MonitorProperties))]
+    [ModelReaderWriterBuildable(typeof(MonitorUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceSku))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserInfo))]
     public partial class AzureResourceManagerDatadogContext : ModelReaderWriterContext
     {
     }
