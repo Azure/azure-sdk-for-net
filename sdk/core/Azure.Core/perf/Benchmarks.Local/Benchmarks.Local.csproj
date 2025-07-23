@@ -11,5 +11,6 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="$(BenchmarkDotNetVersion)" />
     <ProjectReference Include="..\..\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\tests\Azure.Core.Tests.csproj" />
   </ItemGroup>
 </Project>

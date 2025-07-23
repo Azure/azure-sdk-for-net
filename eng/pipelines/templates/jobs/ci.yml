@@ -48,9 +48,6 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
-  - name: CorePerfTestInputs
-    type: boolean
-    default: false
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -112,7 +109,6 @@ jobs:
             SDKType: ${{ parameters.SDKType }}
             CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
-            CorePerfTestInputs: ${{ parameters.CorePerfTestInputs }}
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
@@ -135,6 +131,7 @@ jobs:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             SDKType: ${{ parameters.SDKType }}
             BuildSnippets: ${{ parameters.BuildSnippets }}
+
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
@@ -204,7 +201,6 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-
           
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml

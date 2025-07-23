@@ -9,6 +9,7 @@ Write-Host "Running benchmarks..."
 dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.PipelineDefaultBenchmark*
 dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.PipelineBenchmark*
 dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.EventSourceBenchmark*
+dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.DynamicObjectBenchmark*
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Benchmark run failed. Exiting."

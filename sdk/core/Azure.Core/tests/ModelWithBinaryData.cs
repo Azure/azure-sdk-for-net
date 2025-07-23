@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Azure.Core.Tests
 {
-    internal class ModelWithBinaryData : IUtf8JsonSerializable
+    public class ModelWithBinaryData : IUtf8JsonSerializable
     {
         public string A { get; set; }
         public BinaryData Properties { get; set; }
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
             writer.WriteEndObject();
         }
 
-        internal static ModelWithBinaryData DeserializeModelWithBinaryData(JsonElement element)
+        public static ModelWithBinaryData DeserializeModelWithBinaryData(JsonElement element)
         {
             Optional<string> a = default;
             Optional<BinaryData> properties = default;
