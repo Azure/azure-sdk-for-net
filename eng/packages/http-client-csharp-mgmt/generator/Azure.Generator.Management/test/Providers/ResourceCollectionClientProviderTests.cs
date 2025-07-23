@@ -173,9 +173,8 @@ namespace Azure.Generator.Management.Tests.Providers
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
-            // TODO: Add expected output file for body verification
-            // var expected = Helpers.GetExpectedFromFile();
-            // Assert.AreEqual(expected, bodyStatements);
+            var expected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(expected, bodyStatements);
         }
 
         [TestCase]
@@ -195,9 +194,8 @@ namespace Azure.Generator.Management.Tests.Providers
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
-            // TODO: Add expected output file for body verification
-            // var expected = Helpers.GetExpectedFromFile();
-            // Assert.AreEqual(expected, bodyStatements);
+            var expected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(expected, bodyStatements);
         }
     }
 }

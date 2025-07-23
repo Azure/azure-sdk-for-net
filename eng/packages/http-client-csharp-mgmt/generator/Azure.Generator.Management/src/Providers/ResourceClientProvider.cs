@@ -350,24 +350,9 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    // For Create operations, use "CreateOrUpdate" method name instead of spec operation name
-                    string? methodName = null;
-                    if (methodKind == ResourceOperationKind.Create)
-                    {
-                        methodName = "CreateOrUpdate";  // For sync method
-                    }
-
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false));
                     var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-
-                    // For async method, use "CreateOrUpdateAsync"
-                    string? asyncMethodName = null;
-                    if (methodKind == ResourceOperationKind.Create)
-                    {
-                        asyncMethodName = "CreateOrUpdateAsync";  // For async method
-                    }
-
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true));
                 }
             }
 

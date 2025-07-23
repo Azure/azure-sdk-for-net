@@ -53,15 +53,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
-        /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
-            bool isAsync,
-            string? methodName = null)
+            bool isAsync)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -70,7 +68,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
-            _methodName = methodName;
+            _methodName = GetMethodNameForOperation(_serviceMethod, _convenienceMethod, _isAsync);
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
@@ -126,6 +124,45 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
+        }
+
+        /// <summary>
+        /// Gets the appropriate method name for the operation. For Create operations, returns "CreateOrUpdate" or "CreateOrUpdateAsync".
+        /// </summary>
+        private static string? GetMethodNameForOperation(InputServiceMethod serviceMethod, MethodProvider convenienceMethod, bool isAsync)
+        {
+            if (IsCreateOperation(serviceMethod))
+            {
+                return GetCreateOrUpdateMethodName(isAsync);
+            }
+            return convenienceMethod.Signature.Name;
+        }
+
+        /// <summary>
+        /// Gets the standard method name for CreateOrUpdate operations.
+        /// </summary>
+        private static string GetCreateOrUpdateMethodName(bool isAsync)
+        {
+            return isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
+        }
+
+        /// <summary>
+        /// Determines if the given service method is a Create operation.
+        /// </summary>
+        private static bool IsCreateOperation(InputServiceMethod serviceMethod)
+        {
+            var operation = serviceMethod.Operation;
+
+            // Check if it's a PUT operation with create-related operation names
+            if (operation.HttpMethod == "PUT")
+            {
+                var operationName = operation.Name.ToLowerInvariant();
+                return operationName.Contains("create") ||
+                       operationName.Contains("createorupdate") ||
+                       operationName.Contains("createorreplace");
+            }
+
+            return false;
         }
 
         private TryExpression BuildTryExpression()
