@@ -24,7 +24,7 @@ To cancel a training job, call CancelTrainingJob on the TextAnalysisAuthoring cl
 string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
-string jobId = "training-job-id"; // Replace with an actual job ID.
+string jobId = "{jobId}"; // Replace with an actual job ID.
 
 Operation<TextAuthoringTrainingJobResult> operation = projectClient.CancelTrainingJob(
     waitUntil: WaitUntil.Completed,

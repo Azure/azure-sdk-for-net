@@ -26,9 +26,9 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
             var projectMetadata = new TextAuthoringCreateProjectDetails(
-                projectKind: "CustomSingleLabelClassification",
-                storageInputContainerName: "test-data",
-                language: "en"
+                projectKind: "{projectKind}",
+                storageInputContainerName: "{storageInputContainerName}",
+                language: "{language}"
             )
             {
                 Description = "Sample dataset for Custom Entity Recognition",
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             };
 
             var exportedProject = new TextAuthoringExportedProject(
-                projectFileVersion: "2022-05-01",
+                projectFileVersion: "2025-05-15-preview",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
             )
@@ -165,15 +165,15 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
               "projectFileVersion": "2025-05-15-preview",
               "stringIndexType": "Utf16CodeUnit",
               "metadata": {
-                "projectKind": "CustomSingleLabelClassification",
-                "storageInputContainerName": "single-class-example",
-                "language": "en",
+                "projectKind": "{projectKind}",
+                "storageInputContainerName": "{storageInputContainerName}",
+                "language": "{language}",
                 "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
                 "multilingual": false,
                 "settings": {}
               },
               "assets": {
-                "projectKind": "CustomSingleLabelClassification",
+                "projectKind": "{projectKind}",
                 "classes": [
                   { "category": "Date" },
                   { "category": "LenderName" },

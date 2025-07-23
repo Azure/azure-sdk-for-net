@@ -25,9 +25,9 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
             var projectData = new TextAuthoringCreateProjectDetails(
-                projectKind: "customMultiLabelClassification",
-                storageInputContainerName: "test-data",
-                language: "en"
+                projectKind: "{projectKind}",
+                storageInputContainerName: "{storageInputContainerName}",
+                language: "{language}"
             )
             {
                 Description = "Project description for a Custom Entity Recognition project",

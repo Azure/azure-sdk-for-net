@@ -30,9 +30,9 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             var resourceMetadata = new TextAuthoringResourceMetadata(
-                azureResourceId: "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account",
-                customDomain: "my-custom-domain",
-                region: "my-region"
+                azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
+                customDomain: "{customDomain}",
+                region: "{Region}"
             );
 
             var assignDetails = new TextAuthoringAssignDeploymentResourcesDetails(

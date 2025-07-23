@@ -24,9 +24,9 @@ To create a new project, call CreateProject on the TextAnalysisAuthoring client.
 string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectData = new TextAuthoringCreateProjectDetails(
-    projectKind: "customMultiLabelClassification",
-    storageInputContainerName: "test-data",
-    language: "en"
+    projectKind: "{projectKind}",
+    storageInputContainerName: "{storageInputContainerName}",
+    language: "{language}"
 )
 {
     Description = "Project description for a Custom Entity Recognition project",
