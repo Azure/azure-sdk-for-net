@@ -67,7 +67,7 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
             param location string = resourceGroup().location
 
             resource redisEnterprise 'Microsoft.Cache/redisEnterprise@2022-01-01' = {
-              name: take('redisenterprise${uniqueString(resourceGroup().id)}', 24)
+              name: take('redisEnterprise-${uniqueString(resourceGroup().id)}', 60)
               location: location
               sku: {
                 name: 'Enterprise_E10'
@@ -94,7 +94,7 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
             }
 
             resource accessPolicyAssignment 'Microsoft.Cache/redisEnterprise/databases/accessPolicyAssignments@2022-01-01' = {
-              name: take('accesspolicyassignment${uniqueString(resourceGroup().id)}', 24)
+              name: take('accessPolicyAssignment${uniqueString(resourceGroup().id)}', 60)
               properties: {
                 accessPolicyName: 'default'
                 user: {

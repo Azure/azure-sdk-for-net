@@ -17,6 +17,8 @@ namespace Azure.Provisioning.RedisEnterprise
         public Azure.Provisioning.BicepValue<System.Guid> UserObjectId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.RedisEnterprise.AccessPolicyAssignment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_03_01;
@@ -79,6 +81,8 @@ namespace Azure.Provisioning.RedisEnterprise
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.RedisEnterprise.RedisEnterpriseCluster FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_03_01;
@@ -165,6 +169,8 @@ namespace Azure.Provisioning.RedisEnterprise
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.RedisEnterprise.RedisEnterpriseDatabase FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public Azure.Provisioning.RedisEnterprise.RedisEnterpriseDataAccessKeys GetKeys() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_03_01;
