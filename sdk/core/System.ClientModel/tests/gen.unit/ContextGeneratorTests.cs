@@ -1171,32 +1171,43 @@ namespace TestProject
         {
             string source =
 """
+using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+
 namespace TestProject
 {
+#pragma warning disable TEST001 // Experimental type
+  [ModelReaderWriterBuildable(typeof(JsonModel))]
+#pragma warning restore TEST001 // Experimental type
+#pragma warning disable TEST002 // Experimental type
+  [ModelReaderWriterBuildable(typeof(OtherModel))]
+#pragma warning restore TEST002 // Experimental type
+  public partial class LocalContext : ModelReaderWriterContext { }
 
-  [Experimental("TEST002")]
-  public class OtherModel
+  [Experimental("TEST001")]
+  public class JsonModel : IJsonModel<JsonModel>
   {
+      JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+      JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+      string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+      void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+      BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
   }
 
-  // Add a test class that uses the experimental types directly to verify warnings work
-  public class TestUsage
+  [Experimental("TEST002")]
+  public class OtherModel : IJsonModel<OtherModel>
   {
-      public void UseExperimentalTypes()
-      {
-          var model2 = new OtherModel();
-      }
+      OtherModel IJsonModel<OtherModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new OtherModel();
+      OtherModel IPersistableModel<OtherModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new OtherModel();
+      string IPersistableModel<OtherModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+      void IJsonModel<OtherModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+      BinaryData IPersistableModel<OtherModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
   }
 }
 """;
-
             Compilation compilation = CompilationHelper.CreateCompilation(source);
-
-            // First, verify that the original compilation has experimental warnings for direct usage
-            // var originalDiagnostics = compilation.GetDiagnostics();
-            // var originalExperimentalWarnings = originalDiagnostics.Where(d => d.Id == "TEST001" || d.Id == "TEST002").ToArray();
-            // Assert.AreEqual(2, originalExperimentalWarnings.Length, "Original compilation should have experimental warnings for direct usage");
 
             var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
             Assert.IsNotNull(result.GenerationSpec);
