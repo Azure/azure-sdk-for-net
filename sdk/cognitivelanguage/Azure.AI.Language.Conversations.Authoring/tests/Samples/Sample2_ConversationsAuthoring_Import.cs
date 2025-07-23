@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Completed,
                 exportedProject: exportedProject,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
              // Extract the operation-location header
@@ -157,7 +157,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Started,
                 exportedProject: rawJson,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;

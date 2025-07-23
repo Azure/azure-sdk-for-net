@@ -145,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 exportedProject: exportedProject,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Assert the operation and response
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 rawJson,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Assert the operation and response
@@ -328,7 +328,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Started,
                 exportedProject: exportedProject,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Assert
