@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="apiVersion"></param>
         /// <param name="deploymentName"></param>
         /// <returns></returns>
-        public ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
+        public ChatClient GetOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
         {
             ChatClientKey chatClientKey = new(deploymentName);
             AzureOpenAIClientKey openAIClientKey = new();
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
         /// <param name="apiVersion"></param>
         /// <param name="deploymentName"></param>
         /// <returns></returns>
-        public EmbeddingClient GetAzureOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
+        public EmbeddingClient GetOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
         {
             EmbeddingClientKey embeddingClientKey = new(deploymentName);
             AzureOpenAIClientKey openAIClientKey = new();

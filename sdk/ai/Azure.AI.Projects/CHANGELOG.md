@@ -1,24 +1,26 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.0.0 (Unreleased)
+
+First stable version of the client library. The client library now uses version `v1` of the
+AI Foundry [data plane REST APIs](https://aka.ms/azsdk/azure-ai-projects/ga-rest-api-reference).
 
 ### Features Added
-* Support for generating embeddings through Azure OpenAI using `GetAzureOpenAIEmbeddingClient`.
+
 
 ### Breaking Changes
-* Name changes:
-  * In `Datasets` methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
-  * `Connection` has been renamed `ConnectionProperties`
-  * `Deployment` has been renamed `AIDeployment`
-  * `Index` has been renamed `DatasetIndex`
-  * `SasCredential` has been renamed `BlobReferenceSasCredential`
-  * `Sku` has been renamed `ModelDeploymentSku`
-* Removing `GetChatCompletionsClient`, `GetEmbeddingsClient`, and `GetImageEmbeddingsClient` methods from `AIProjectClient`. The Inference client should be used directly instead.
-* Replacing `GetConnectionsClient`, `GetDatasetsClient`, `GetDeploymentsClient`, and`GetIndexesClient` with `Connections`, `Datasets`, `Deployments`, and `Indexes` properties.
+* Features that are still in preview were removed from this stable release. This includes:
+  * Evaluation operations
+  * Red-Team operations
+* Class changes:
+  * `AIDeployment` has been renamed `AssetDeployment`
+  * `AssetCredentialResponse` has been renamed `DatasetCredential`
+  * `DatasetIndex` has been renamed `SearchIndex`
+  * `PendingUploadRequest` has been renamed `PendingUploadConfiguration`
+  * `PendingUploadResponse` has been renamed `PendingUploadResult`
+* In `Datasets` methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `configuration`
 
 ### Bugs Fixed
-* Fix getting model deployed on the Azure Open AI resource, if the resource is authenticated using Entra ID. [see GitHub issue 49064](https://github.com/Azure/azure-sdk-for-net/issues/49064)
-* Fix dataset uploading datasets.
 
 ### Other Changes
 
