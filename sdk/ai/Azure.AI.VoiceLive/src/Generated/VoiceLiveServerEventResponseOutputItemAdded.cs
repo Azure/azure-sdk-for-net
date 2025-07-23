@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal VoiceLiveServerEventResponseOutputItemAdded(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, int outputIndex, VoiceLiveConversationItem item) : base(type, eventId, serializedAdditionalRawData)
+        internal VoiceLiveServerEventResponseOutputItemAdded(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, int outputIndex, VoiceLiveConversationResponseItem item) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
@@ -50,6 +50,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> The index of the output item in the Response. </summary>
         public int OutputIndex { get; }
         /// <summary> Gets the item. </summary>
-        public VoiceLiveConversationItem Item { get; }
+        public VoiceLiveConversationResponseItem Item { get; }
     }
 }

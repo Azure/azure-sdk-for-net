@@ -974,7 +974,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveServerEventResponseOutputItemAdded"/> instance for mocking. </returns>
-        public static VoiceLiveServerEventResponseOutputItemAdded VoiceLiveServerEventResponseOutputItemAdded(string eventId = null, string responseId = null, int outputIndex = default, VoiceLiveConversationItem item = null)
+        public static VoiceLiveServerEventResponseOutputItemAdded VoiceLiveServerEventResponseOutputItemAdded(string eventId = null, string responseId = null, int outputIndex = default, VoiceLiveConversationResponseItem item = null)
         {
             return new VoiceLiveServerEventResponseOutputItemAdded(
                 VoiceLiveServerEventType.ResponseOutputItemAdded,

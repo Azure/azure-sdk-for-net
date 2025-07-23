@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.VoiceLive
@@ -36,7 +37,9 @@ namespace Azure.AI.VoiceLive
         /// <inheritdoc/>
         public async IAsyncEnumerator<BinaryData> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
+#pragma warning disable AZC0100
             await using IAsyncEnumerator<BinaryData> enumerator = new AsyncVoiceLiveMessageEnumerator(_webSocket, cancellationToken);
+#pragma warning restore AZC0100
             while (await enumerator.MoveNextAsync().ConfigureAwait(false))
             {
                 yield return enumerator.Current;

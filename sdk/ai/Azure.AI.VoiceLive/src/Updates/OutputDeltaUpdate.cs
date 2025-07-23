@@ -154,6 +154,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /*
         /// <summary>
         /// Gets the blendshape candidates, if this is an animation blendshape update.
         /// </summary>
@@ -198,6 +199,7 @@ namespace Azure.AI.VoiceLive
                 };
             }
         }
+        */
 
         /// <summary>
         /// Gets the timestamp type, if this is an audio timestamp update.

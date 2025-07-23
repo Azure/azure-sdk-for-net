@@ -68,7 +68,7 @@ namespace Azure.AI.VoiceLive
             }
             string responseId = default;
             int outputIndex = default;
-            VoiceLiveConversationItem item = default;
+            VoiceLiveConversationResponseItem item = default;
             VoiceLiveServerEventType type = default;
             string eventId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -91,7 +91,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = VoiceLiveConversationItem.DeserializeVoiceLiveConversationItem(property.Value, options);
+                    item = VoiceLiveConversationResponseItem.DeserializeVoiceLiveConversationResponseItem(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

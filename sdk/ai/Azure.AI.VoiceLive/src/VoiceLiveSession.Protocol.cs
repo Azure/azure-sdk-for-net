@@ -56,7 +56,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         protected internal virtual void Connect(CancellationToken cancellationToken = default)
         {
+#pragma warning disable AZC0106
             ConnectAsync(cancellationToken).EnsureCompleted();
+#pragma warning restore AZC0106
         }
 
         /// <summary>
@@ -88,7 +90,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual void Close(CancellationToken cancellationToken = default)
         {
+#pragma warning disable AZC0107
             CloseAsync(cancellationToken).EnsureCompleted();
+#pragma warning restore AZC0107
         }
 
         /// <summary>

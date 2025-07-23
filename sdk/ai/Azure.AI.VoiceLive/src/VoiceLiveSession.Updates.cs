@@ -78,7 +78,7 @@ namespace Azure.AI.VoiceLive
         /// <returns>An enumerable of VoiceLive updates.</returns>
         /// <remarks>
         /// This method provides synchronous access to all updates from the service.
-        /// For better performance and resource utilization, consider using <see cref="GetUpdatesAsync"/> instead.
+        /// For better performance and resource utilization, consider using <see cref="GetUpdatesAsync(CancellationToken)"/> instead.
         /// </remarks>
         public IEnumerable<VoiceLiveUpdate> GetUpdates(CancellationToken cancellationToken = default)
         {
@@ -94,7 +94,7 @@ namespace Azure.AI.VoiceLive
         public async IAsyncEnumerable<T> GetUpdatesAsync<T>([EnumeratorCancellation] CancellationToken cancellationToken = default)
             where T : VoiceLiveUpdate
         {
-            await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken))
+            await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
                 if (update is T typedUpdate)
                 {
@@ -113,7 +113,7 @@ namespace Azure.AI.VoiceLive
         {
             if (kinds == null || kinds.Length == 0)
             {
-                await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken))
+                await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
                 {
                     yield return update;
                 }
@@ -122,7 +122,7 @@ namespace Azure.AI.VoiceLive
 
             var kindSet = new HashSet<VoiceLiveUpdateKind>(kinds);
 
-            await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken))
+            await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
                 if (kindSet.Contains(update.Kind))
                 {
@@ -140,7 +140,7 @@ namespace Azure.AI.VoiceLive
         public async Task<T> WaitForUpdateAsync<T>(CancellationToken cancellationToken = default)
             where T : VoiceLiveUpdate
         {
-            await foreach (T update in GetUpdatesAsync<T>(cancellationToken))
+            await foreach (T update in GetUpdatesAsync<T>(cancellationToken).ConfigureAwait(false))
             {
                 return update;
             }
@@ -156,7 +156,7 @@ namespace Azure.AI.VoiceLive
         /// <returns>The next update of the specified kind.</returns>
         public async Task<VoiceLiveUpdate> WaitForUpdateAsync(VoiceLiveUpdateKind kind, CancellationToken cancellationToken = default)
         {
-            await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken, kind))
+            await foreach (VoiceLiveUpdate update in GetUpdatesAsync(cancellationToken, kind).ConfigureAwait(false))
             {
                 return update;
             }

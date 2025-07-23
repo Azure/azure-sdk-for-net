@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets the error details.
         /// </summary>
-        public Error Error => _errorEvent?.Error;
+        public Error Error => new Error(_errorEvent?.Error.Code, _errorEvent?.Error.Message, _errorEvent?.Error.Param, _errorEvent?.Type.ToString(), _errorEvent?.EventId, null);
 
         /// <summary>
         /// Gets the error type.
@@ -82,19 +82,19 @@ namespace Azure.AI.VoiceLive
                 return $"ErrorUpdate: Unknown error";
 
             var parts = new List<string>();
-            
+
             if (!string.IsNullOrEmpty(ErrorType))
                 parts.Add($"Type: {ErrorType}");
-            
+
             if (!string.IsNullOrEmpty(ErrorCode))
                 parts.Add($"Code: {ErrorCode}");
-            
+
             if (!string.IsNullOrEmpty(ErrorMessage))
                 parts.Add($"Message: {ErrorMessage}");
-            
+
             if (!string.IsNullOrEmpty(ErrorParam))
                 parts.Add($"Param: {ErrorParam}");
-            
+
             if (!string.IsNullOrEmpty(ErrorEventId))
                 parts.Add($"EventId: {ErrorEventId}");
 

@@ -52,9 +52,11 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         public string SessionId => Session?.Id;
 
+        /*
         /// <summary>
         /// Gets the session object type.
         /// </summary>
         public string SessionObject => Session?.Object;
+        */
     }
 }

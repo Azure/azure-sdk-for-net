@@ -7,9 +7,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
+#pragma warning disable AZC0107
     public partial class VoiceLiveSession
     {
         #region Audio Data Transmission
@@ -50,7 +52,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="InvalidOperationException">Thrown when another audio stream is already being sent.</exception>
         public virtual void SendInputAudio(byte[] audio, CancellationToken cancellationToken = default)
         {
-            SendInputAudioAsync(audio, cancellationToken).GetAwaiter().GetResult();
+            SendInputAudioAsync(audio, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="InvalidOperationException">Thrown when another audio stream is already being sent.</exception>
         public virtual void SendInputAudio(BinaryData audio, CancellationToken cancellationToken = default)
         {
-            SendInputAudioAsync(audio, cancellationToken).GetAwaiter().GetResult();
+            SendInputAudioAsync(audio, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -111,7 +113,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         public virtual void ClearInputAudio(CancellationToken cancellationToken = default)
         {
-            ClearInputAudioAsync(cancellationToken).GetAwaiter().GetResult();
+            ClearInputAudioAsync(cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         public virtual void CommitInputAudio(CancellationToken cancellationToken = default)
         {
-            CommitInputAudioAsync(cancellationToken).GetAwaiter().GetResult();
+            CommitInputAudioAsync(cancellationToken).EnsureCompleted();
         }
 
         #endregion
@@ -166,7 +168,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
         public virtual void ConfigureSession(VoiceLiveSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
-            ConfigureSessionAsync(sessionOptions, cancellationToken).GetAwaiter().GetResult();
+            ConfigureSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -189,7 +191,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
         public virtual void ConfigureConversationSession(ConversationSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
-            ConfigureConversationSessionAsync(sessionOptions, cancellationToken).GetAwaiter().GetResult();
+            ConfigureConversationSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -212,7 +214,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="sessionOptions"/> is null.</exception>
         public virtual void ConfigureTranscriptionSession(TranscriptionSessionOptions sessionOptions, CancellationToken cancellationToken = default)
         {
-            ConfigureTranscriptionSessionAsync(sessionOptions, cancellationToken).GetAwaiter().GetResult();
+            ConfigureTranscriptionSessionAsync(sessionOptions, cancellationToken).EnsureCompleted();
         }
 
         #endregion
@@ -278,7 +280,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
         public virtual void AddItem(VoiceLiveConversationItem item, string previousItemId, CancellationToken cancellationToken = default)
         {
-            AddItemAsync(item, previousItemId, cancellationToken).GetAwaiter().GetResult();
+            AddItemAsync(item, previousItemId, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -308,7 +310,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
         public virtual void RequestItemRetrieval(string itemId, CancellationToken cancellationToken = default)
         {
-            RequestItemRetrievalAsync(itemId, cancellationToken).GetAwaiter().GetResult();
+            RequestItemRetrievalAsync(itemId, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -338,7 +340,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
         public virtual void DeleteItem(string itemId, CancellationToken cancellationToken = default)
         {
-            DeleteItemAsync(itemId, cancellationToken).GetAwaiter().GetResult();
+            DeleteItemAsync(itemId, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -377,9 +379,8 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentException">Thrown when <paramref name="itemId"/> is empty.</exception>
         public virtual void TruncateConversation(string itemId, int contentIndex, CancellationToken cancellationToken = default)
         {
-            TruncateConversationAsync(itemId, contentIndex, cancellationToken).GetAwaiter().GetResult();
+            TruncateConversationAsync(itemId, contentIndex, cancellationToken).EnsureCompleted();
         }
-
         #endregion
 
         #region Response Management
@@ -435,7 +436,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         public virtual void StartResponse(VoiceLiveResponseOptions responseOptions, CancellationToken cancellationToken = default)
         {
-            StartResponseAsync(responseOptions, cancellationToken).GetAwaiter().GetResult();
+            StartResponseAsync(responseOptions, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -468,7 +469,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="additionalInstructions"/> is null.</exception>
         public virtual void StartResponse(string additionalInstructions, CancellationToken cancellationToken = default)
         {
-            StartResponseAsync(additionalInstructions, cancellationToken).GetAwaiter().GetResult();
+            StartResponseAsync(additionalInstructions, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -491,9 +492,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         public virtual void CancelResponse(CancellationToken cancellationToken = default)
         {
-            CancelResponseAsync(cancellationToken).GetAwaiter().GetResult();
+            CancelResponseAsync(cancellationToken).EnsureCompleted();
         }
 
         #endregion
     }
+#pragma warning restore AZC0107
 }

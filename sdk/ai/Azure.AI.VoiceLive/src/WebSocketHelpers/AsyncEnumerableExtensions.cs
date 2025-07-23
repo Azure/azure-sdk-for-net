@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
@@ -67,14 +68,15 @@ namespace Azure.AI.VoiceLive
                 try
                 {
                     var moveNextTask = _asyncEnumerator.MoveNextAsync();
-                    bool hasNext = moveNextTask.AsTask().GetAwaiter().GetResult();
-                    
+#pragma warning disable AZC0107
+                    bool hasNext = moveNextTask.AsTask().EnsureCompleted();
+#pragma warning restore AZC0107
                     if (hasNext)
                     {
                         Current = _asyncEnumerator.Current;
                         return true;
                     }
-                    
+
                     Current = default(T);
                     return false;
                 }
@@ -95,7 +97,9 @@ namespace Azure.AI.VoiceLive
                 if (!_disposed)
                 {
                     _disposed = true;
-                    _asyncEnumerator?.DisposeAsync().AsTask().GetAwaiter().GetResult();
+#pragma warning disable AZC0107
+                    _asyncEnumerator?.DisposeAsync().AsTask().EnsureCompleted();
+#pragma warning restore AZC0107
                 }
             }
         }

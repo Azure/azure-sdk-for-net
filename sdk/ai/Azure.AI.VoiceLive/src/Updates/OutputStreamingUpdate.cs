@@ -131,7 +131,7 @@ namespace Azure.AI.VoiceLive
                     VoiceLiveServerEventResponseTextDone textDone => textDone.ContentIndex,
                     VoiceLiveServerEventResponseAudioDone audioDone => audioDone.ContentIndex,
                     VoiceLiveServerEventResponseAudioTranscriptDone transcriptDone => transcriptDone.ContentIndex,
-                    ResponseAnimationBlendshapeDoneEvent blendshapeDone => blendshapeDone.ContentIndex,
+                    // ResponseAnimationBlendshapeDoneEvent blendshapeDone => blendshapeDone.ContentIndex,
                     ResponseAnimationVisemeDoneEvent visemeDone => visemeDone.ContentIndex,
                     ResponseAudioTimestampDoneEvent timestampDone => timestampDone.ContentIndex,
                     _ => null
@@ -266,18 +266,14 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets a value indicating whether this represents a completion of any kind.
         /// </summary>
-        public bool IsCompleted => Kind switch
-        {
-            VoiceLiveUpdateKind.ResponseCompleted => true,
-            VoiceLiveUpdateKind.ResponseOutputItemDone => true,
-            VoiceLiveUpdateKind.ResponseContentPartDone => true,
-            VoiceLiveUpdateKind.ResponseTextDone => true,
-            VoiceLiveUpdateKind.ResponseAudioDone => true,
-            VoiceLiveUpdateKind.ResponseAudioTranscriptDone => true,
-            VoiceLiveUpdateKind.ResponseAnimationBlendshapesDone => true,
-            VoiceLiveUpdateKind.ResponseAnimationVisemeDone => true,
-            VoiceLiveUpdateKind.ResponseAudioTimestampDone => true,
-            _ => false
-        };
+        public bool IsCompleted => (Kind == VoiceLiveUpdateKind.ResponseCompleted ||
+            Kind == VoiceLiveUpdateKind.ResponseOutputItemDone ||
+            Kind == VoiceLiveUpdateKind.ResponseContentPartDone ||
+            Kind == VoiceLiveUpdateKind.ResponseTextDone ||
+            Kind == VoiceLiveUpdateKind.ResponseAudioDone ||
+            Kind == VoiceLiveUpdateKind.ResponseAudioTranscriptDone ||
+            Kind == VoiceLiveUpdateKind.ResponseAnimationBlendshapesDone ||
+            Kind == VoiceLiveUpdateKind.ResponseAnimationVisemeDone ||
+            Kind == VoiceLiveUpdateKind.ResponseAudioTimestampDone);
     }
 }

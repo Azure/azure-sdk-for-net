@@ -52,7 +52,7 @@ namespace Azure.AI.VoiceLive
         /// Gets the raw content of this update as binary data.
         /// </summary>
         /// <returns>The binary data representation of this update.</returns>
-        public virtual BinaryData GetRawContent() => ModelReaderWriter.Write(this);
+        public virtual BinaryData GetRawContent() => ModelReaderWriter.Write(this, null, null);
 
         /// <summary>
         /// Creates a VoiceLiveUpdate from a VoiceLiveServerEvent.
@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive
         internal static VoiceLiveUpdate FromBinaryData(BinaryData data, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
-            
+
             using JsonDocument document = JsonDocument.Parse(data);
             return DeserializeVoiceLiveUpdate(document.RootElement, options);
         }
@@ -187,7 +187,7 @@ namespace Azure.AI.VoiceLive
         /// <returns>The binary data representation.</returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.Write(this, options);
+            return ModelReaderWriter.Write(this, options, null);
         }
 
         /// <summary>

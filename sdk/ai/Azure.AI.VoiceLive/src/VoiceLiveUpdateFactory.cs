@@ -64,53 +64,53 @@ namespace Azure.AI.VoiceLive
             string eventId = null,
             IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
-            return kind switch
+            // Session events
+            if (kind == VoiceLiveUpdateKind.SessionStarted && serverEvent is VoiceLiveServerEventSessionCreated sessionCreated)
             {
-                // Session events
-                VoiceLiveUpdateKind.SessionStarted when serverEvent is VoiceLiveServerEventSessionCreated sessionCreated 
-                    => new SessionStartedUpdate(kind, eventId, additionalBinaryDataProperties, sessionCreated),
-
-                // Input audio events
-                VoiceLiveUpdateKind.InputAudioBufferCommitted
-                or VoiceLiveUpdateKind.InputAudioBufferCleared
-                or VoiceLiveUpdateKind.InputAudioSpeechStarted
-                or VoiceLiveUpdateKind.InputAudioSpeechStopped
-                or VoiceLiveUpdateKind.InputAudioTranscriptionCompleted
-                or VoiceLiveUpdateKind.InputAudioTranscriptionDelta
-                or VoiceLiveUpdateKind.InputAudioTranscriptionFailed
-                    => new InputAudioUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent),
-
-                // Response delta events
-                VoiceLiveUpdateKind.ResponseTextDelta
-                or VoiceLiveUpdateKind.ResponseAudioDelta
-                or VoiceLiveUpdateKind.ResponseAudioTranscriptDelta
-                or VoiceLiveUpdateKind.ResponseAnimationBlendshapesDelta
-                or VoiceLiveUpdateKind.ResponseAnimationVisemeDelta
-                or VoiceLiveUpdateKind.ResponseAudioTimestampDelta
-                    => new OutputDeltaUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent),
-
-                // Response streaming events
-                VoiceLiveUpdateKind.ResponseStarted
-                or VoiceLiveUpdateKind.ResponseCompleted
-                or VoiceLiveUpdateKind.ResponseOutputItemAdded
-                or VoiceLiveUpdateKind.ResponseOutputItemDone
-                or VoiceLiveUpdateKind.ResponseContentPartAdded
-                or VoiceLiveUpdateKind.ResponseContentPartDone
-                or VoiceLiveUpdateKind.ResponseTextDone
-                or VoiceLiveUpdateKind.ResponseAudioDone
-                or VoiceLiveUpdateKind.ResponseAudioTranscriptDone
-                or VoiceLiveUpdateKind.ResponseAnimationBlendshapesDone
-                or VoiceLiveUpdateKind.ResponseAnimationVisemeDone
-                or VoiceLiveUpdateKind.ResponseAudioTimestampDone
-                    => new OutputStreamingUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent),
-
-                // Error events
-                VoiceLiveUpdateKind.Error when serverEvent is VoiceLiveServerEventError errorEvent
-                    => new ErrorUpdate(kind, eventId, additionalBinaryDataProperties, errorEvent),
-
-                // Generic/unknown events
-                _ => new GenericUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent)
-            };
+                return new SessionStartedUpdate(kind, eventId, additionalBinaryDataProperties, sessionCreated);
+            }
+            else if (kind == VoiceLiveUpdateKind.InputAudioBufferCommitted ||
+                kind == VoiceLiveUpdateKind.InputAudioBufferCleared ||
+                kind == VoiceLiveUpdateKind.InputAudioSpeechStarted ||
+                kind == VoiceLiveUpdateKind.InputAudioSpeechStopped ||
+                kind == VoiceLiveUpdateKind.InputAudioTranscriptionCompleted ||
+                kind == VoiceLiveUpdateKind.InputAudioTranscriptionDelta ||
+                kind == VoiceLiveUpdateKind.InputAudioTranscriptionFailed)
+            {
+                return new InputAudioUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent);
+            }
+            else if (kind == VoiceLiveUpdateKind.ResponseTextDelta ||
+                kind == VoiceLiveUpdateKind.ResponseAudioDelta ||
+                kind == VoiceLiveUpdateKind.ResponseAudioTranscriptDelta ||
+                kind == VoiceLiveUpdateKind.ResponseAnimationBlendshapesDelta ||
+                kind == VoiceLiveUpdateKind.ResponseAnimationVisemeDelta ||
+                kind == VoiceLiveUpdateKind.ResponseAudioTimestampDelta)
+            {
+                return new OutputDeltaUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent);
+            }
+            else if (kind == VoiceLiveUpdateKind.ResponseStarted ||
+                kind == VoiceLiveUpdateKind.ResponseCompleted ||
+                kind == VoiceLiveUpdateKind.ResponseOutputItemAdded ||
+                kind == VoiceLiveUpdateKind.ResponseOutputItemDone ||
+                kind == VoiceLiveUpdateKind.ResponseContentPartAdded ||
+                kind == VoiceLiveUpdateKind.ResponseContentPartDone ||
+                kind == VoiceLiveUpdateKind.ResponseTextDone ||
+                kind == VoiceLiveUpdateKind.ResponseAudioDone ||
+                kind == VoiceLiveUpdateKind.ResponseAudioTranscriptDone ||
+                kind == VoiceLiveUpdateKind.ResponseAnimationBlendshapesDone ||
+                kind == VoiceLiveUpdateKind.ResponseAnimationVisemeDone ||
+                kind == VoiceLiveUpdateKind.ResponseAudioTimestampDone)
+            {
+                return new OutputStreamingUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent);
+            }
+            else if (kind == VoiceLiveUpdateKind.Error && serverEvent is VoiceLiveServerEventError errorEvent)
+            {
+                return new ErrorUpdate(kind, eventId, additionalBinaryDataProperties, errorEvent);
+            }
+            else
+            {
+                return new GenericUpdate(kind, eventId, additionalBinaryDataProperties, serverEvent);
+            }
         }
 
         private static string GetEventTypeFromServerEvent(VoiceLiveServerEvent serverEvent)
