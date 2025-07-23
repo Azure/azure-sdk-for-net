@@ -145,10 +145,11 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Create a FooSettings. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<FooSettingsResource> CreateOrUpdate(FooSettingsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FooSettingsResource> CreateOrUpdate(WaitUntil waitUntil, FooSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -161,14 +162,17 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateFooSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
-                if (response.Value == null)
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MgmtTypeSpecArmOperation<FooSettingsResource> operation = new MgmtTypeSpecArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                return Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -178,10 +182,11 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Create a FooSettings. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<FooSettingsResource>> CreateOrUpdateAsync(FooSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FooSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, FooSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -194,14 +199,17 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateFooSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
-                if (response.Value == null)
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MgmtTypeSpecArmOperation<FooSettingsResource> operation = new MgmtTypeSpecArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {

@@ -712,7 +712,7 @@
     {
       "$id": "71",
       "kind": "constant",
-      "name": "createFooSettingsContentType",
+      "name": "createOrUpdateContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -728,7 +728,7 @@
     {
       "$id": "73",
       "kind": "constant",
-      "name": "createFooSettingsContentType1",
+      "name": "createOrUpdateContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -792,7 +792,7 @@
     {
       "$id": "81",
       "kind": "constant",
-      "name": "createOrUpdateContentType4",
+      "name": "createOrUpdateContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -808,7 +808,7 @@
     {
       "$id": "83",
       "kind": "constant",
-      "name": "createOrUpdateContentType5",
+      "name": "createOrUpdateContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -824,7 +824,7 @@
     {
       "$id": "85",
       "kind": "constant",
-      "name": "createOrUpdateContentType6",
+      "name": "createOrUpdateContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -840,7 +840,7 @@
     {
       "$id": "87",
       "kind": "constant",
-      "name": "createOrUpdateContentType7",
+      "name": "createOrUpdateContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -984,7 +984,7 @@
     {
       "$id": "105",
       "kind": "constant",
-      "name": "createOrUpdateContentType8",
+      "name": "createOrUpdateContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1000,7 +1000,7 @@
     {
       "$id": "107",
       "kind": "constant",
-      "name": "createOrUpdateContentType9",
+      "name": "createOrUpdateContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1016,7 +1016,7 @@
     {
       "$id": "109",
       "kind": "constant",
-      "name": "createOrUpdateContentType10",
+      "name": "createOrUpdateContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1032,7 +1032,7 @@
     {
       "$id": "111",
       "kind": "constant",
-      "name": "createOrUpdateContentType11",
+      "name": "createOrUpdateContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -3590,7 +3590,7 @@
               },
               {
                 "$id": "324",
-                "id": "MgmtTypeSpec.FooSettingsOperations.createFooSettings",
+                "id": "MgmtTypeSpec.FooSettingsOperations.createOrUpdate",
                 "kind": "Create"
               },
               {
@@ -7190,7 +7190,7 @@
             {
               "$id": "582",
               "kind": "basic",
-              "name": "createFooSettings",
+              "name": "createOrUpdate",
               "accessibility": "public",
               "apiVersions": [
                 "2024-05-01"
@@ -7198,7 +7198,7 @@
               "doc": "Create a FooSettings",
               "operation": {
                 "$id": "583",
-                "name": "createFooSettings",
+                "name": "createOrUpdate",
                 "resourceName": "FooSettings",
                 "doc": "Create a FooSettings",
                 "accessibility": "public",
@@ -7376,7 +7376,7 @@
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
-                "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsOperations.createFooSettings",
+                "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsOperations.createOrUpdate",
                 "decorators": [
                   {
                     "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
@@ -7469,7 +7469,7 @@
               "isOverride": false,
               "generateConvenient": true,
               "generateProtocol": true,
-              "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsOperations.createFooSettings"
+              "crossLanguageDefinitionId": "MgmtTypeSpec.FooSettingsOperations.createOrUpdate"
             },
             {
               "$id": "600",

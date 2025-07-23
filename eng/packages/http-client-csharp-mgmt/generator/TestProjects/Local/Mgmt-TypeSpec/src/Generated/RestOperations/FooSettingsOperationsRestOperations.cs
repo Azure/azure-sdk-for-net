@@ -59,7 +59,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateCreateFooSettingsRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
