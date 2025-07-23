@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Started,
-                exportedProject: rawJson,
+                projectJson: rawJson,
                 projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
