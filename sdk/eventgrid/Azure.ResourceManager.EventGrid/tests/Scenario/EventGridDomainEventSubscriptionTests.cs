@@ -213,11 +213,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task DomainEventSubscriptionNegativeScenarios()
         {
             await SetCollection();
-            AzureLocation location = DefaultLocation;
             var domainName = Recording.GenerateAssetName("sdk-Domain-");
 
             var domain = (await DomainCollection.CreateOrUpdateAsync(
-                WaitUntil.Completed, domainName, new EventGridDomainData(location))).Value;
+                WaitUntil.Completed, domainName, new EventGridDomainData(DefaultLocation))).Value;
 
             var eventSubscriptions = domain.GetDomainEventSubscriptions();
 
