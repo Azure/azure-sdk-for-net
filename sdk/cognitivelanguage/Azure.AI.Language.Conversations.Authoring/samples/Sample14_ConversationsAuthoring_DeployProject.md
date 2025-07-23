@@ -80,3 +80,71 @@ string operationLocation = operation.GetRawResponse().Headers.TryGetValue("opera
     ? location : "Not found";
 Console.WriteLine($"Operation-Location header: {operationLocation}");
 ```
+
+## Deploy a Project Async
+
+To deploy a project asynchronously, call `DeployProjectAsync` on the `ConversationAuthoringDeployment` client. This ensures that the trained model is deployed and available for use without blocking execution.
+
+```C# Snippet:Sample14_ConversationsAuthoring_DeployProjectAsync
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
+
+ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
+
+Operation operation = await deploymentClient.DeployProjectAsync(
+    waitUntil: WaitUntil.Completed,
+    trainedModeDetails
+);
+
+// Extract operation-location from response headers
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
+Console.WriteLine($"Delete operation-location: {operationLocation}");
+Console.WriteLine($"Delete operation completed with status: {operation.GetRawResponse().Status}");
+```
+
+## Deploy with Assigned Resources Async
+
+To deploy a project with assigned resources, create a `ConversationAuthoringCreateDeploymentDetails` object and populate its `AssignedResources` list. Then call `DeployProjectAsync` on the `ConversationAuthoringDeployment` client.
+
+```C# Snippet:Sample14_ConversationsAuthoring_DeployProjectAsyncWithAssignedResources
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
+
+// Create AOAI resource reference
+AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource =
+    new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
+        AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
+        deploymentName: "gpt-4o")
+    {
+        ResourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    };
+
+// Create Cognitive Services resource with AOAI linkage
+ConversationAuthoringDeploymentResource assignedResource =
+    new ConversationAuthoringDeploymentResource(
+        resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
+        region: "{region}")
+    {
+        AssignedAoaiResource = assignedAoaiResource
+    };
+
+// Set up deployment details with assigned resources
+ConversationAuthoringCreateDeploymentDetails deploymentDetails =
+    new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
+deploymentDetails.AssignedResources.Add(assignedResource);
+
+// Get deployment client
+ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+// Start deployment
+Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, deploymentDetails);
+
+// Output result
+Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
+    ? location : "Not found";
+Console.WriteLine($"Operation-Location header: {operationLocation}");
+```

@@ -32,3 +32,22 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");
 ```
+
+## Load a Snapshot Async
+
+To load a snapshot for a specific trained model, call LoadSnapshotAsync on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
+
+```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+Operation operation = await trainedModelClient.LoadSnapshotAsync(
+    waitUntil: WaitUntil.Completed);
+
+ // Extract the operation-location header
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+
+Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");
+```

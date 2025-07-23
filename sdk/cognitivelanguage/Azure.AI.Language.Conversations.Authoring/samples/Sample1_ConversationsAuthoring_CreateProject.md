@@ -1,4 +1,4 @@
-# Creating a New Project in Azure AI Language (Synchronous)
+# Creating a New Project in Azure AI Language
 
 This sample demonstrates how to create a new project synchronously using the `Azure.AI.Language.Conversations.Authoring` SDK. You can define the project's properties, such as name, language, kind, and description.
 
@@ -32,6 +32,27 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
 };
 
 Response response = projectClient.CreateProject(projectData);
+
+Console.WriteLine($"Project created with status: {response.Status}");
+```
+
+## Create a New Project Async
+
+To create a new project, call `CreateProjectAsync` on the `ConversationAuthoringProject` client, which returns a `Response` object containing the status of the creation request.
+
+```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
+string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
+      projectKind: "Conversation",
+      language: "en-us"
+    )
+{
+    Multilingual = true,
+    Description = "Project description"
+};
+
+Response response = await projectClient.CreateProjectAsync(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```

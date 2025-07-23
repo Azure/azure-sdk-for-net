@@ -35,3 +35,24 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");
 ```
+
+## Export a Project Async
+
+To export a project asynchronously, call ExportAsync on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the export operation..
+
+```C# Snippet:Sample3_ConversationsAuthoring_ExportAsync
+string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Operation operation = await projectClient.ExportAsync(
+    waitUntil: WaitUntil.Completed,
+    stringIndexType: StringIndexType.Utf16CodeUnit,
+    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+);
+
+ // Extract the operation-location header
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+
+Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");
+```

@@ -33,3 +33,22 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project deletion completed with status: {operation.GetRawResponse().Status}");
 ```
+
+## Delete a Project Async
+
+To delete a project, call DeleteProjectAsync on the `ConversationAuthoringProject` client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.
+
+```C# Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
+string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Operation operation = await projectClient.DeleteProjectAsync(
+    waitUntil: WaitUntil.Completed
+);
+
+ // Extract the operation-location header
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+
+Console.WriteLine($"Project deletion completed with status: {operation.GetRawResponse().Status}");
+```

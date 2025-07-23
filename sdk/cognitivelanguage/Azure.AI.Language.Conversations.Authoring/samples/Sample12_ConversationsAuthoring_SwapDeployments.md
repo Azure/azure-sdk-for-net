@@ -33,3 +33,26 @@ string operationLocation = operation.GetRawResponse().Headers.TryGetValue("opera
 Console.WriteLine($"Swap operation-location: {operationLocation}");
 Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
 ```
+
+## Swap Deployments Async
+
+To swap two deployments asynchronously, call SwapDeploymentsAsync on the `ConversationAuthoringDeployment` client. Asynchronously swapping deployments allows for a seamless interchange of roles between deployment environments (e.g., production and staging), enabling smooth transitions and minimizing downtime during deployment updates.
+
+```C# Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
+string projectName = "{projectName}";
+string deploymentName1 = "{deploymentName1}";
+string deploymentName2 = "{deploymentName2}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
+
+Operation operation = await projectClient.SwapDeploymentsAsync(
+    waitUntil: WaitUntil.Completed,
+    details: swapDetails
+);
+
+// Extract operation-location from response headers
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
+Console.WriteLine($"Swap operation-location: {operationLocation}");
+Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");
+```

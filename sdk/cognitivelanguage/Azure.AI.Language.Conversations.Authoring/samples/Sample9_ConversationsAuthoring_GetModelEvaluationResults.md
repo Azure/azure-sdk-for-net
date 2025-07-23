@@ -54,3 +54,43 @@ foreach (UtteranceEvaluationResult result in results)
     Console.WriteLine();
 }
 ```
+
+## Retrieve Model Evaluation Results Async
+
+To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the `ConversationAuthoringTrainedModel` client. This returns an AsyncPageable<UtteranceEvaluationResult> that allows you to iterate through and analyze the results.
+
+```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
+ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+
+AsyncPageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
+    stringIndexType: stringIndexType
+);
+
+await foreach (UtteranceEvaluationResult result in results)
+{
+    Console.WriteLine($"Text: {result.Text}");
+    Console.WriteLine($"Language: {result.Language}");
+
+    // Print intents result
+    Console.WriteLine($"Expected Intent: {result.IntentsResult.ExpectedIntent}");
+    Console.WriteLine($"Predicted Intent: {result.IntentsResult.PredictedIntent}");
+
+    // Print entities result
+    Console.WriteLine("Expected Entities:");
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.ExpectedEntities)
+    {
+        Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
+    }
+
+    Console.WriteLine("Predicted Entities:");
+    foreach (UtteranceEntityEvaluationResult entity in result.EntitiesResult.PredictedEntities)
+    {
+        Console.WriteLine($" - Category: {entity.Category}, Offset: {entity.Offset}, Length: {entity.Length}");
+    }
+
+    Console.WriteLine();
+}
+```

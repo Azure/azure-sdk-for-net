@@ -50,3 +50,41 @@ else
     Console.WriteLine("Operation-Location header not found.");
 }
 ```
+
+## Unassign Deployment Resources Async
+
+To unassign deployment resources asynchronously, call `UnassignDeploymentResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
+
+```C# Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResourcesAsync
+// Set project name and create client for the project
+string sampleProjectName = "{projectName}";
+ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+
+// Define assigned resource ID to be unassigned
+var sampleAssignedResourceIds = new List<string>
+{
+    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+};
+
+// Build the unassignment details
+var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
+
+// Call the operation
+Operation sampleOperation = await sampleProjectClient.UnassignDeploymentResourcesAsync(
+    waitUntil: WaitUntil.Started,
+    details: sampleUnassignDetails
+);
+
+Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
+
+// Print jobId from Operation-Location
+if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
+{
+    string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
+    Console.WriteLine($"Job ID: {sampleJobId}");
+}
+else
+{
+    Console.WriteLine("Operation-Location header not found.");
+}
+```

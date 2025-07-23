@@ -36,5 +36,29 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");
             #endregion
         }
+
+        [Test]
+        [AsyncOnly]
+        public async Task LoadSnapshotAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
+            string projectName = "{projectName}";
+            string trainedModelLabel = "{trainedModelLabel}";
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(
+                waitUntil: WaitUntil.Completed);
+
+            // Extract the operation-location header
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+
+            Console.WriteLine($"Snapshot loaded with operation status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
     }
 }

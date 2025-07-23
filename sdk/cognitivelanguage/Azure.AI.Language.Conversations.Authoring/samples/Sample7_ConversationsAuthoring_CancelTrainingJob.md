@@ -35,3 +35,24 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Training job cancellation completed with status: {cancelOperation.GetRawResponse().Status}");
 ```
+
+## Cancel a Training Job Async
+
+To cancel a training job asynchronously, call CancelTrainingJobAsync on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
+
+```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
+string projectName = "{projectName}";
+string jobId = "{jobId}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
+    waitUntil: WaitUntil.Completed,
+    jobId: jobId
+);
+
+ // Extract the operation-location header
+string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+
+Console.WriteLine($"Training job cancellation completed with status: {cancelOperation.GetRawResponse().Status}");
+```
