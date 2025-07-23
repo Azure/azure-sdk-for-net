@@ -18,9 +18,9 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To swap two deployments, call SwapDeployments on the `ConversationAuthoringDeployment` client. Swapping deployments allows you to interchange the roles of two deployment environments (e.g., production and staging) to facilitate smooth transitions and testing in production-like environments.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeployments
-string projectName = "SampleProject";
-string deploymentName1 = "deployment1";
-string deploymentName2 = "deployment2";
+string projectName = "{projectName}";
+string deploymentName1 = "{deploymentName1}";
+string deploymentName2 = "{deploymentName2}";
 ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 Operation operation = projectClient.SwapDeployments(

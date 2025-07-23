@@ -18,13 +18,13 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To retrieve the status of a deployment assignment operation, call `GetAssignDeploymentResourcesStatus` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
 
 ```C# Snippet:Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatus
-string sampleProjectName = "SampleProject";
+string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
 var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
-    azureResourceId: "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.CognitiveServices/accounts/sample-account",
-    customDomain: "sample-domain",
-    region: "sample-region"
+    azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
+    customDomain: "{customDomain}",
+    region: "{region}"
 );
 
 var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(

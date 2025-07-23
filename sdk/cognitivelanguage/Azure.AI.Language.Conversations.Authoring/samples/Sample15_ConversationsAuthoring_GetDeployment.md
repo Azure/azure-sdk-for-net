@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To retrieve deployment details, call `GetDeployment` on the `ConversationAuthoringDeployment` client. This allows you to access metadata such as the model ID, timestamps, and assigned resource configuration.
 
 ```C# Snippet:Sample15_ConversationsAuthoring_GetDeployment
-string projectName = "EmailAppEnglish";
-string deploymentName = "assignedDeployment";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 

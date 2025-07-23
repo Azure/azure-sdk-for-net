@@ -20,7 +20,7 @@ The values of the `endpoint` and apiKey variables can be retrieved from: Environ
 To create a new project synchronously, call CreateProject on the `ConversationAuthoringProject` clientlet, which returns a Response object containing the status of the creation request.
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProject
-string projectName = "MyNewProject";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",

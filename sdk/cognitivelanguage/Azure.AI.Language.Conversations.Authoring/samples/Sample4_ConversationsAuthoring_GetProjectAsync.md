@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To retrieve metadata of a project, call GetProjectAsync on the `ConversationAuthoringProject` client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
-string projectName = "MySampleProjectAsync";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();

@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_Export
-            string projectName = "MyExportedProject";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             Operation operation = projectClient.Export(

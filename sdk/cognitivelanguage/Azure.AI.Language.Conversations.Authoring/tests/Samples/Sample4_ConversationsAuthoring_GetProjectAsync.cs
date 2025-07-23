@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
-            string projectName = "MySampleProjectAsync";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();

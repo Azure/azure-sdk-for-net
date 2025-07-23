@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To delete a project, call DeleteProject on the `ConversationAuthoringProject` client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProject
-string projectName = "MySampleProject";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation operation = projectClient.DeleteProject(

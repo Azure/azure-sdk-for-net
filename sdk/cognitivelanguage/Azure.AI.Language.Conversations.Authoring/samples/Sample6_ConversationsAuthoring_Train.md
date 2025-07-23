@@ -20,10 +20,10 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To train a model, call Train on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train
-string projectName = "MySampleProject";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-    modelLabel: "MyModel",
+    modelLabel: "{modelLabel}",
     trainingMode: ConversationAuthoringTrainingMode.Standard
 )
 {
@@ -53,19 +53,19 @@ Console.WriteLine($"Training completed with status: {operation.GetRawResponse().
 To train a model with data generation, include `DataGenerationSettings` when calling `Train` on the `ConversationAuthoringProject` client. This enables the service to generate additional training data using a connected Azure OpenAI resource. The method returns an `Operation<TrainingJobResult>` object, and the `operation-location` header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train_WithDataGeneration
-string projectName = "EmailAppEnglish";
+string projectName = "{projectName}";
 
 // Create connection info for data generation
 var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
     kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
     deploymentName: "gpt-4o")
 {
-    ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+    ResourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
 };
 
 // Prepare training job details with evaluation and data generation settings
 var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-    modelLabel: "ModelWithDG",
+    modelLabel: "{modelLabel}",
     trainingMode: ConversationAuthoringTrainingMode.Standard)
 {
     TrainingConfigVersion = "2025-05-15-preview-ConvLevel",

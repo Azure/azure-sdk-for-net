@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProject
-            string projectName = "MyNewProject";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",

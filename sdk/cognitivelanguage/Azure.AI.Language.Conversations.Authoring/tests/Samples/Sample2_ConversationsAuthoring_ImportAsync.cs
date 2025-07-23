@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportAsync
-            string projectName = "MyImportedProjectAsync";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
@@ -101,7 +101,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJsonAsync
-            string projectName = "MyImportedProjectAsync";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             string rawJson = """
@@ -175,7 +175,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsync_WithMetadataAndAssets
-            string projectName = "ImportedApp";
+            string projectName = "{projectName}";
 
             // Define project metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(

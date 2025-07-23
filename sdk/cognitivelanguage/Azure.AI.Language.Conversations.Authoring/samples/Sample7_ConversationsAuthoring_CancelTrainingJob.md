@@ -20,8 +20,8 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To cancel a training job, call CancelTrainingJob on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
-string projectName = "MyProject";
-string jobId = "YourTrainingJobId";
+string projectName = "{projectName}";
+string jobId = "{jobId}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(

@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the `ConversationAuthoringTrainedModel` client. This returns an AsyncPageable<UtteranceEvaluationResult> that allows you to iterate through and analyze the results.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 

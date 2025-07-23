@@ -21,8 +21,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
-            string projectName = "SampleProject";
-            string trainedModelLabel = "SampleModel";
+            string projectName = "{projectName}";
+            string trainedModelLabel = "{trainedModelLabel}";
 
             ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;

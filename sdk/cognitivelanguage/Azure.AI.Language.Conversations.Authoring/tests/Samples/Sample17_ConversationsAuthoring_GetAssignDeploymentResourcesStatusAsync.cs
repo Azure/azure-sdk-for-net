@@ -24,14 +24,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatusAsync
-            string sampleProjectName = "SampleProject";
+            string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
             // Build resource metadata
             var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
-                azureResourceId: "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.CognitiveServices/accounts/sample-account",
-                customDomain: "sample-domain",
-                region: "sample-region"
+                azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
+                customDomain: "{customDomain}",
+                region: "{region}"
             );
 
             var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(

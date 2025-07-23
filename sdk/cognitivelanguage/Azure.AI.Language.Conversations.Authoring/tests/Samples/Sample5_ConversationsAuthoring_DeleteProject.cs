@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProject
-            string projectName = "MySampleProject";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             Operation operation = projectClient.DeleteProject(

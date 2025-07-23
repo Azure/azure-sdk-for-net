@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
-            string projectName = "SampleProject";
-            string trainedModelLabel = "SampleModel";
+            string projectName = "{projectName}";
+            string trainedModelLabel = "{trainedModelLabel}";
             ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             Response response = await trainedModelClient.DeleteTrainedModelAsync();

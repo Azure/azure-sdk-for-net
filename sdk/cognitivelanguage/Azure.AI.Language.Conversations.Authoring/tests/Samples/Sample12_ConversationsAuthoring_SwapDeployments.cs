@@ -21,9 +21,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeployments
-            string projectName = "SampleProject";
-            string deploymentName1 = "deployment1";
-            string deploymentName2 = "deployment2";
+            string projectName = "{projectName}";
+            string deploymentName1 = "{deploymentName1}";
+            string deploymentName2 = "{deploymentName2}";
             ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
             Operation operation = projectClient.SwapDeployments(

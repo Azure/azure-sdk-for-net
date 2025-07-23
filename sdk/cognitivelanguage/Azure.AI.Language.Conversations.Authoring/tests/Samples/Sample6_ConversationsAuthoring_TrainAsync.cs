@@ -23,11 +23,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
-            string projectName = "MySampleProjectAsync";
+            string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "MyModel",
+                modelLabel: "{modelLabel}",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
@@ -62,19 +62,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
-            string projectName = "EmailAppEnglish";
+            string projectName = "{projectName}";
 
             // Create connection info for data generation
             var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
                 kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
                 deploymentName: "gpt-4o")
             {
-                ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+                ResourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
             };
 
             // Prepare training job details
             var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "ModelWithDG",
+                modelLabel: "{modelLabel}",
                 trainingMode: ConversationAuthoringTrainingMode.Standard)
             {
                 TrainingConfigVersion = "2025-05-15-preview-ConvLevel",

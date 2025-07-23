@@ -20,8 +20,8 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To retrieve model evaluation results, call GetModelEvaluationResults on the `ConversationAuthoringTrainedModel` client, which provides evaluation metrics for intents and entities for each utterance in the dataset.
 
 ```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
 
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;

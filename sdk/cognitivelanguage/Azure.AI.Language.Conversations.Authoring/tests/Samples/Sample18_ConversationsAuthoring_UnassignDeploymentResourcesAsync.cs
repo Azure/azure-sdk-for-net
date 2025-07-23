@@ -25,13 +25,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResourcesAsync
             // Set project name and create client for the project
-            string sampleProjectName = "SampleProject";
+            string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
             // Define assigned resource ID to be unassigned
             var sampleAssignedResourceIds = new List<string>
             {
-                "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.CognitiveServices/accounts/sample-account"
+                "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
             };
 
             // Build the unassignment details

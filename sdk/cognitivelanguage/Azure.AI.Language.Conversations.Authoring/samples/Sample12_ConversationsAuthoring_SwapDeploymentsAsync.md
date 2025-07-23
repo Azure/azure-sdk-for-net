@@ -18,9 +18,9 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To swap two deployments asynchronously, call SwapDeploymentsAsync on the `ConversationAuthoringDeployment` client. Asynchronously swapping deployments allows for a seamless interchange of roles between deployment environments (e.g., production and staging), enabling smooth transitions and minimizing downtime during deployment updates.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
-string projectName = "SampleProject";
-string deploymentName1 = "deployment1";
-string deploymentName2 = "deployment2";
+string projectName = "{projectName}";
+string deploymentName1 = "{deploymentName1}";
+string deploymentName2 = "{deploymentName2}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 ConversationAuthoringSwapDeploymentsDetails swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);

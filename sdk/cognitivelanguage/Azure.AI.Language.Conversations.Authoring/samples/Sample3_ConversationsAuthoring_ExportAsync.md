@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To export a project asynchronously, call ExportAsync on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the export operation..
 
 ```C# Snippet:Sample3_ConversationsAuthoring_ExportAsync
-string projectName = "MyExportedProjectAsync";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation operation = await projectClient.ExportAsync(

@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To retrieve deployment details asynchronously, call `GetDeploymentAsync` on the `ConversationAuthoringDeployment` client. This allows you to view metadata such as model ID, timestamps, and assigned resource configuration.
 
 ```C# Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
-string projectName = "EmailAppEnglish";
-string deploymentName = "assignedDeployment";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 

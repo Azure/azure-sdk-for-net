@@ -20,8 +20,8 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To retrieve a model evaluation summary, call GetModelEvaluationSummary on the `ConversationAuthoringTrainedModel` client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.
 
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummary
-string projectName = "MyProject";
-string trainedModelLabel = "YourTrainedModelLabel";
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary();

@@ -17,8 +17,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To delete a trained model asynchronously, call DeleteTrainedModelAsync on the `ConversationAuthoringTrainedModel` client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 Response response = await trainedModelClient.DeleteTrainedModelAsync();

@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To delete a deployment, call DeleteDeployment on the `ConversationAuthoringDeployment` client. Deleting a deployment removes it from the specified project and ensures that resources associated with the deployment are released.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
-string projectName = "SampleProject";
-string deploymentName = "SampleDeployment";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 Operation operation = deploymentClient.DeleteDeployment(

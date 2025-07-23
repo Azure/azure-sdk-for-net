@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To delete a deployment, call DeleteDeploymentAsync on the `ConversationAuthoringDeployment` client. Deleting a deployment asynchronously allows for non-blocking operations and ensures resources associated with the deployment are released efficiently.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
-string projectName = "SampleProject";
-string deploymentName = "SampleDeployment";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 Operation operation = await deploymentClient.DeleteDeploymentAsync(

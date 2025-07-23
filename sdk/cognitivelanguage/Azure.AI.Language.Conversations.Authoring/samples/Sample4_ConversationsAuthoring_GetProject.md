@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To retrieve metadata of a project, call GetProject on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProject
-string projectName = "MySampleProject";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();

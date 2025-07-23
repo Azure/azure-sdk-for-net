@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To load a snapshot for a specific trained model, call LoadSnapshotAsync on the `ConversationAuthoringTrainedModel` client. This method initiates the snapshot loading process and provides an operation response that includes the status and metadata about the operation.
 
 ```C# Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 Operation operation = await trainedModelClient.LoadSnapshotAsync(

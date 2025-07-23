@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To export a project, call Export on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the export operation.
 
 ```C# Snippet:Sample3_ConversationsAuthoring_Export
-string projectName = "MyExportedProject";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation operation = projectClient.Export(

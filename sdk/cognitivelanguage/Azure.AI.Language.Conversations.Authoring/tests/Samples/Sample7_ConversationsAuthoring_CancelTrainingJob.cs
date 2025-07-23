@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
-            string projectName = "MyProject";
-            string jobId = "YourTrainingJobId";
+            string projectName = "{projectName}";
+            string jobId = "{jobId}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(

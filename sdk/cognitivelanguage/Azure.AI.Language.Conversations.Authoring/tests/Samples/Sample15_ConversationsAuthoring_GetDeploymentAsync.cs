@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
-            string projectName = "EmailAppEnglish";
-            string deploymentName = "assignedDeployment";
+            string projectName = "{projectName}";
+            string deploymentName = "{deploymentName}";
 
             ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 

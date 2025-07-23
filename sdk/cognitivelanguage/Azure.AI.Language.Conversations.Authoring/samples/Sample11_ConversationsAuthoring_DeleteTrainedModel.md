@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To delete a trained model, call DeleteTrainedModel on the `ConversationAuthoringTrainedModel` client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
+string projectName = "{projectName}";
+string trainedModelLabel = "{trainedModelLabel}";
 ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 Response response = trainedModelClient.DeleteTrainedModel();

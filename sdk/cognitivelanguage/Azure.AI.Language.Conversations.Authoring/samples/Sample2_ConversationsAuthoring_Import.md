@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from: Environme
 To import a project synchronously, call Import on the `ConversationAuthoringProject` client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
-string projectName = "MyImportedProject";
+string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
@@ -76,7 +76,7 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
 Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Completed,
     exportedProject: exportedProject,
-    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+    projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
  // Extract the operation-location header
@@ -91,7 +91,7 @@ Console.WriteLine($"Project import completed with status: {operation.GetRawRespo
 To import a project using raw JSON, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJson
-string projectName = "MyImportedProject";
+string projectName = "{projectName}";
 
 string rawJson = """
 {
@@ -147,8 +147,8 @@ ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Started,
-    exportedProject: rawJson,
-    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+    projectJson: rawJson,
+    projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -161,7 +161,7 @@ Console.WriteLine($"Project import (raw JSON) completed with status: {operation.
 To import a project, construct a `ConversationAuthoringExportedProject` that includes the metadata and assets. Then call `Import` on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectWithMetadataAndResources
-string projectName = "ImportedApp";
+string projectName = "{projectName}";
 
 // Create metadata
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(

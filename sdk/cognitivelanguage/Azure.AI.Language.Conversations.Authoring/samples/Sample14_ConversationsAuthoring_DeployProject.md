@@ -18,8 +18,8 @@ ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringCl
 To deploy a project, call `DeployProject` on the `ConversationAuthoringDeployment` client. Deploying a project ensures that the trained model is available for use.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProject
-string projectName = "Test-data-labels";
-string deploymentName = "staging";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
@@ -41,8 +41,8 @@ Console.WriteLine($"Delete operation completed with status: {operation.GetRawRes
 To deploy a project with assigned resources, create a `ConversationAuthoringCreateDeploymentDetails` object and populate its `AssignedResources` list with the desired configuration. Then call `DeployProject` on the `ConversationAuthoringDeployment` client.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProjectWithAssignedResources
-string projectName = "EmailAppEnglish";
-string deploymentName = "assignedDeployment";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 
 // Create AOAI resource reference
 AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource =
@@ -50,13 +50,13 @@ AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource =
         AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
         deploymentName: "gpt-4o")
     {
-        ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+        ResourceId = "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
     };
 
 // Create Cognitive Services resource with AOAI linkage
 ConversationAuthoringDeploymentResource assignedResource =
     new ConversationAuthoringDeploymentResource(
-        resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
+        resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
         region: "East US")
     {
         AssignedAoaiResource = assignedAoaiResource
