@@ -8,6 +8,11 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 - `/eng/packages/http-client-csharp-mgmt`: Contains the source code of the generator for Azure Management Plane SDKs (aka Azure Management Generator).
 - `/sdk`: Contains the individual SDKs for Azure services.
 
+### Azure Management Generator
+
+- Always run `npm install` in the `/eng/packages/http-client-csharp-mgmt` folder before running the generator.
+- Always run `/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+
 ## SDK release
 
 There are two tools to help with SDK releases:
