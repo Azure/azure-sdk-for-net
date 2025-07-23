@@ -9,9 +9,11 @@ namespace Azure.Core.Pipeline
 {
     internal class HttpPipelineTransportPolicy : HttpPipelinePolicy
     {
-        private readonly HttpPipelineTransport _transport;
+        private volatile HttpPipelineTransport _transport;
         private readonly HttpMessageSanitizer _sanitizer;
         private readonly RequestFailedDetailsParser? _errorParser;
+
+        public HttpPipelineTransport Transport => _transport;
 
         public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, RequestFailedDetailsParser? failureContentExtractor = null)
         {
@@ -24,7 +26,11 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            await _transport.ProcessAsync(message).ConfigureAwait(false);
+            // Capture current transport reference - this ensures that even if _transport
+            // is swapped during execution, this call will complete with the original transport
+            var currentTransport = _transport;
+
+            await currentTransport.ProcessAsync(message).ConfigureAwait(false);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
@@ -35,29 +41,20 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            _transport.Process(message);
+            // Capture current transport reference - this ensures that even if _transport
+            // is swapped during execution, this call will complete with the original transport
+            var currentTransport = _transport;
+
+            currentTransport.Process(message);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
-        /// <summary>
-        /// Creates a new instance of <see cref="HttpPipelineTransportPolicy"/> with the specified
-        /// <paramref name="transport"/>, <paramref name="sanitizer"/>, and <paramref name="errorParser"/>.
-        /// </summary>
-        /// <param name="transport">The transport to use for processing HTTP messages.</param>
-        /// <param name="sanitizer">The sanitizer to use for sanitizing HTTP messages.</param>
-        /// <param name="errorParser">The parser to use for extracting error details from HTTP responses.</param>
-        /// <returns>A new instance of <see cref="HttpPipelineTransportPolicy"/>.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="transport"/> is null.</exception>
-        public HttpPipelineTransportPolicy Clone(HttpPipelineTransport transport, HttpMessageSanitizer? sanitizer = null, RequestFailedDetailsParser? errorParser = null)
-        {
-            if (transport == null)
-            {
-                throw new ArgumentNullException(nameof(transport));
-            }
 
-            return new HttpPipelineTransportPolicy(transport, sanitizer ?? _sanitizer, errorParser ?? _errorParser);
+        public void UpdateTransport(HttpPipelineTransport newTransport)
+        {
+            _transport = newTransport ?? throw new ArgumentNullException(nameof(newTransport));
         }
     }
 }

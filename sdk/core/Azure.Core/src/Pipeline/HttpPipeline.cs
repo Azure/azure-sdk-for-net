@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,11 +16,9 @@ namespace Azure.Core.Pipeline
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
-        private volatile PipelineState _state;
+        private protected readonly HttpPipelineTransportPolicy _transportPolicy;
 
-        private protected HttpPipelineTransport _transport => _state.Transport;
-
-        private ReadOnlyMemory<HttpPipelinePolicy> _pipeline => _state.Pipeline;
+        private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
         /// <summary>
         /// Indicates whether or not the pipeline was created using its internal constructor.
@@ -50,17 +47,17 @@ namespace Azure.Core.Pipeline
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
         {
-            transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            var localTransport = transport ?? throw new ArgumentNullException(nameof(transport));
             ResponseClassifier = responseClassifier ?? ResponseClassifier.Shared;
 
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
             HttpPipelinePolicy[] all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = new HttpPipelineTransportPolicy(transport,
+            all[policies.Length] = _transportPolicy = new HttpPipelineTransportPolicy(localTransport,
                 ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
 
-            _state = new PipelineState(transport, all);
+            _pipeline = all;
         }
 
         internal HttpPipeline(
@@ -72,15 +69,14 @@ namespace Azure.Core.Pipeline
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
-            transport = transport ?? throw new ArgumentNullException(nameof(transport));
-            pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            var localTransport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
 
-            Debug.Assert(pipeline[pipeline.Length - 1] is HttpPipelineTransportPolicy);
+            _transportPolicy = pipeline[pipeline.Length - 1] as HttpPipelineTransportPolicy ?? throw new InvalidOperationException("The last policy in the pipeline must be of type HttpPipelineTransportPolicy.");
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
             _internallyConstructed = true;
-            _state = new PipelineState(transport, pipeline);
         }
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-            => _transport.CreateRequest();
+            => _transportPolicy.Transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -252,6 +248,18 @@ namespace Azure.Core.Pipeline
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
+        /// <summary>
+        /// Updates the transport used by this pipeline in a thread-safe manner.
+        /// </summary>
+        /// <param name="newTransport">The new transport to use.</param>
+        public void UpdateTransport(HttpPipelineTransport newTransport)
+        {
+            if (newTransport == null)
+                throw new ArgumentNullException(nameof(newTransport));
+
+            _transportPolicy.UpdateTransport(newTransport);
+        }
+
         private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)
         {
             if (!_internallyConstructed)
@@ -317,45 +325,6 @@ namespace Azure.Core.Pipeline
                         message.SetProperty(kvp.Key, kvp.Value);
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Updates the transport used by this pipeline in a thread-safe manner.
-        /// </summary>
-        /// <param name="newTransport">The new transport to use.</param>
-        public void UpdateTransport(HttpPipelineTransport newTransport)
-        {
-            if (newTransport == null)
-                throw new ArgumentNullException(nameof(newTransport));
-
-            var currentState = _state;
-            var newPipelineArray = new HttpPipelinePolicy[currentState.Pipeline.Length];
-            currentState.Pipeline.Span.CopyTo(newPipelineArray);
-
-            // Replace the transport policy (always at the last position)
-            int lastIndex = newPipelineArray.Length - 1;
-            var oldTransportPolicy = (HttpPipelineTransportPolicy)newPipelineArray[lastIndex];
-            newPipelineArray[lastIndex] = oldTransportPolicy.Clone(newTransport);
-
-            var newPipeline = new ReadOnlyMemory<HttpPipelinePolicy>(newPipelineArray);
-            var newState = new PipelineState(newTransport, newPipeline);
-
-            _state = newState; // Atomic reference assignment
-        }
-
-        /// <summary>
-        /// Immutable state containing the transport and pipeline for thread-safe updates.
-        /// </summary>
-        private class PipelineState
-        {
-            public readonly HttpPipelineTransport Transport;
-            public readonly ReadOnlyMemory<HttpPipelinePolicy> Pipeline;
-
-            public PipelineState(HttpPipelineTransport transport, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                Transport = transport ?? throw new ArgumentNullException(nameof(transport));
-                Pipeline = pipeline;
             }
         }
 
