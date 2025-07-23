@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To retrieve model evaluation results, call `GetModelEvaluationResults` on the `TextAuthoringTrainedModel` client. The method returns a `Pageable<TextAuthoringDocumentEvalResult>` that allows you to enumerate the evaluation results for each document.
 
 ```C# Snippet:Sample9_TextAuthoring_GetModelEvaluationResults
-string projectName = "MyEvaluationProject";
-string trainedModelLabel = "model1";
+string projectName = "{projectName}";
+string trainedModelLabel = "{modelLabel}";
 StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
 TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);

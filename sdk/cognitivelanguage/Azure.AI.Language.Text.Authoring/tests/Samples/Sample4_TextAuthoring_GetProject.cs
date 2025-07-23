@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_TextAuthoring_GetProject
-            string projectName = "MyTextProject";
+            string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             Response<TextAuthoringProjectMetadata> response = projectClient.GetProject();

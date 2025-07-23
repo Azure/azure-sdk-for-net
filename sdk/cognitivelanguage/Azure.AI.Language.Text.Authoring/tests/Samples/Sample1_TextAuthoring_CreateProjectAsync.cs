@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample1_TextAuthoring_CreateProjectAsync
-            string projectName = "MyNewProjectAsync";
+            string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
             var projectData = new TextAuthoringCreateProjectDetails(
                 projectKind: "customMultiLabelClassification",

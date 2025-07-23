@@ -22,11 +22,11 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample6_TextAuthoring_Train
-            string projectName = "MyTrainingProject";
+            string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             var trainingJobDetails = new TextAuthoringTrainingJobDetails(
-                modelLabel: "model1",
+                modelLabel: "{modelLabel}",
                 trainingConfigVersion: "latest"
             )
             {

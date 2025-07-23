@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To retrieve deployment details, call `GetDeploymentAsync` on the `TextAuthoringDeployment` client. The method returns a `Response<TextAuthoringProjectDeployment>` containing the deployment details.
 
 ```C# Snippet:Sample15_TextAuthoring_GetDeploymentAsync
-string projectName = "MyDeploymentProjectAsync";
-string deploymentName = "Deployment1";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 Response<TextAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();

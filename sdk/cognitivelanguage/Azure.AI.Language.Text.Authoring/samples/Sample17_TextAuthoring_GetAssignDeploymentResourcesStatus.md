@@ -17,7 +17,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To retrieve the status of deployment resources assignment, call `GetAssignDeploymentResourcesStatus` on the `TextAuthoringProject` client. The method returns a `Response<TextAuthoringDeploymentResourcesState>` containing the assignment status.
 
 ```C# Snippet:Sample17_TextAuthoring_GetAssignDeploymentResourcesStatus
-string projectName = "MyResourceProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 var resourceMetadata = new TextAuthoringResourceMetadata(

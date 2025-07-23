@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To delete a deployment, call DeleteDeployment on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample13_TextAuthoring_DeleteDeployment
-string projectName = "MyDeploymentProject";
-string deploymentName = "Deployment1";
+string projectName = "{projectName}";
+string deploymentName = "{deploymentName}";
 TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 Operation operation = deploymentClient.DeleteDeployment(

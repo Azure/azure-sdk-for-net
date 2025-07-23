@@ -17,7 +17,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To unassign deployment resources, call `UnassignDeploymentResourcesAsync` on the `TextAuthoringProject` client. The method returns an `Operation` object containing the unassignment status.
 
 ```C# Snippet:Sample18_TextAuthoring_UnassignDeploymentResourcesAsync
-string projectName = "MyResourceProjectAsync";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(

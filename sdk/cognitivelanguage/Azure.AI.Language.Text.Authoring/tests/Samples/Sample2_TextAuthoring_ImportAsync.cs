@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_TextAuthoring_ImportAsync
-            string projectName = "MyImportProjectAsync";
+            string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
             var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "CustomEntityRecognition",
@@ -155,7 +155,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_TextAuthoring_ImportRawStringAsync
-            string projectName = "MyImportRawStringProjectAsync";
+            string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             string rawJson = """

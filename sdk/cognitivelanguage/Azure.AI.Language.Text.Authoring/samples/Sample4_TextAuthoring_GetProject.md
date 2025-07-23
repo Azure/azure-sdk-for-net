@@ -15,7 +15,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To retrieve metadata of a project, call GetProject on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample4_TextAuthoring_GetProject
-string projectName = "MyTextProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 Response<TextAuthoringProjectMetadata> response = projectClient.GetProject();

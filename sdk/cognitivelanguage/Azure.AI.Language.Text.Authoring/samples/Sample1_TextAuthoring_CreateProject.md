@@ -18,7 +18,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To create a new project, call CreateProject on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample1_TextAuthoring_CreateProject
-string projectName = "MyNewProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectData = new TextAuthoringCreateProjectDetails(
     projectKind: "customMultiLabelClassification",

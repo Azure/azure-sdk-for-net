@@ -18,7 +18,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To import project data asynchronously, call ImportAsync on the TextAnalysisAuthoring client. The method returns an Operation object, allowing you to track the import's status and results.
 
 ```C# Snippet:Sample2_TextAuthoring_ImportAsync
-string projectName = "MyImportProjectAsync";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectMetadata = new TextAuthoringCreateProjectDetails(
     projectKind: "CustomEntityRecognition",
@@ -145,7 +145,7 @@ Console.WriteLine($"Import completed with status: {operation.GetRawResponse().St
 To import project data from a raw JSON string asynchronously, call ImportAsync on the TextAuthoringProject client. The method accepts a raw JSON string and returns an Operation object, allowing you to track the import's status and results.
 
 ```C# Snippet:Sample2_TextAuthoring_ImportRawStringAsync
-string projectName = "MyImportRawStringProjectAsync";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 string rawJson = """

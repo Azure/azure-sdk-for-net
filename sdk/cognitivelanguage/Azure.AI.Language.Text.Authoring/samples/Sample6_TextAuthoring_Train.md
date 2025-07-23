@@ -18,11 +18,11 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To train a project, call Train on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample6_TextAuthoring_Train
-string projectName = "MyTrainingProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 var trainingJobDetails = new TextAuthoringTrainingJobDetails(
-    modelLabel: "model1",
+    modelLabel: "{modelLabel}",
     trainingConfigVersion: "latest"
 )
 {

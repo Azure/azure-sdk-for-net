@@ -17,7 +17,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To export project data, call `Export` on the `TextAuthoringProject` client. The method returns an `Operation` that allows you to track the status of the export operation. You can also extract the `operation-location` header from the raw response to get the URL of the operation.
 
 ```C# Snippet:Sample3_TextAuthoring_Export
-string projectName = "MyExportedProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation operation = projectClient.Export(

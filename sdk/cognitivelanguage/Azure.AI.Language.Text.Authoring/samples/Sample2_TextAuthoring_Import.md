@@ -18,7 +18,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To import project data synchronously, call Import on the TextAnalysisAuthoring client. The method returns an Operation object, allowing you to track the import's status and results.
 
 ```C# Snippet:Sample2_TextAuthoring_Import
-string projectName = "MyImportProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectMetadata = new TextAuthoringCreateProjectDetails(
     projectKind: "CustomSingleLabelClassification",
@@ -147,7 +147,7 @@ Console.WriteLine($"Import completed with status: {operation.GetRawResponse().St
 To import project data from a raw JSON string synchronously, call Import on the TextAuthoringProject client. The method accepts a raw JSON string and returns an Operation object, allowing you to track the import's status and results.
 
 ```C# Snippet:Sample2_TextAuthoring_ImportRawString
-string projectName = "MyImportRawStringProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 string rawJson = """

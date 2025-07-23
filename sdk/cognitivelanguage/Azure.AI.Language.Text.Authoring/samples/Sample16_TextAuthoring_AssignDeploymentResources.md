@@ -17,7 +17,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To assign deployment resources, call `AssignDeploymentResources` on the `TextAuthoringProject` client. The method returns an `Operation` object containing the assignment status.
 
 ```C# Snippet:Sample16_TextAuthoring_AssignDeploymentResources
-string projectName = "MyResourceProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 var resourceMetadata = new TextAuthoringResourceMetadata(

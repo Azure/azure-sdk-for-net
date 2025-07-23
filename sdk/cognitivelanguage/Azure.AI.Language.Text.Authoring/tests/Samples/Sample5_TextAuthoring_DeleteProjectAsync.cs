@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_TextAuthoring_DeleteProjectAsync
-            string projectName = "MyProjectToDeleteAsync";
+            string projectName = "{projectName}";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             Operation operation = await projectClient.DeleteProjectAsync(

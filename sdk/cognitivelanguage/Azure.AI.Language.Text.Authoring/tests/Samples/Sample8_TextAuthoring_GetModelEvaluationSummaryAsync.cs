@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample8_TextAuthoring_GetSingleLabelClassificationEvaluationSummaryAsync
-            string projectName = "MyEvaluationProjectAsync";
-            string trainedModelLabel = "model1";
+            string projectName = "{projectName}";
+            string trainedModelLabel = "{modelLabel}";
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Get the evaluation summary for the trained model

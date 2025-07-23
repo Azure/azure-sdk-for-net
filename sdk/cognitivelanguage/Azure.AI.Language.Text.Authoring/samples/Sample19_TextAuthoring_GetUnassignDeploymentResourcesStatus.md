@@ -17,7 +17,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To retrieve the status of deployment resources unassignment, call `GetUnassignDeploymentResourcesStatus` on the `TextAuthoringProject` client. The method returns a `Response<TextAuthoringDeploymentResourcesState>` containing the unassignment status.
 
 ```C# Snippet:Sample19_TextAuthoring_GetUnassignDeploymentResourcesStatus
-string projectName = "MyResourceProject";
+string projectName = "{projectName}";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 // Prepare the details for unassigning resources

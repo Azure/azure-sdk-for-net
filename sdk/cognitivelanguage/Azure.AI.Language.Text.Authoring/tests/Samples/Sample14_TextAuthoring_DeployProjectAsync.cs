@@ -23,11 +23,11 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample14_TextAuthoring_DeployProjectAsync
-            string projectName = "MyDeploymentProjectAsync";
-            string deploymentName = "Deployment1";
+            string projectName = "{projectName}";
+            string deploymentName = "{deploymentName}";
             TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-            var deploymentConfig = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+            var deploymentConfig = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "{modelLabel}");
 
             Operation operation = await deploymentClient.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,

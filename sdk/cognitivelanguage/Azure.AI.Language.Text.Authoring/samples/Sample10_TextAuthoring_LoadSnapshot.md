@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To load a snapshot, call LoadSnapshot on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample10_TextAuthoring_LoadSnapshot
-string projectName = "MySnapshotProject";
-string trainedModelLabel = "model1";
+string projectName = "{projectName}";
+string trainedModelLabel = "{modelLabel}";
 TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 Operation operation = trainedModelClient.LoadSnapshot(
