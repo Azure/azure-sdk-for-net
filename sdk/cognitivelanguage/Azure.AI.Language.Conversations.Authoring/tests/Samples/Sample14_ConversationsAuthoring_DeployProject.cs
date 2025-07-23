@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAuthoringDeploymentResource assignedResource =
                 new ConversationAuthoringDeploymentResource(
                     resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
-                    region: "East US")
+                    region: "{region}")
                 {
                     AssignedAoaiResource = assignedAoaiResource
                 };
