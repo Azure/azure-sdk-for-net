@@ -2,8 +2,7 @@
 
 ## 1.0.0 (Unreleased)
 
-First stable version of the client library. The client library now uses version `v1` of the
-AI Foundry [data plane REST APIs](https://aka.ms/azsdk/azure-ai-projects/ga-rest-api-reference).
+First stable version of the client library. The client library now uses version `v1` of the AI Foundry [data plane REST APIs](https://aka.ms/azsdk/azure-ai-projects/ga-rest-api-reference).
 
 ### Features Added
 
@@ -18,7 +17,8 @@ AI Foundry [data plane REST APIs](https://aka.ms/azsdk/azure-ai-projects/ga-rest
   * `DatasetIndex` has been renamed `SearchIndex`
   * `PendingUploadRequest` has been renamed `PendingUploadConfiguration`
   * `PendingUploadResponse` has been renamed `PendingUploadResult`
-* In `Datasets` methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `configuration`
+* In `Datasets`, methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `configuration`
+* `GetAzureOpenAIChatClient` and `GetAzureOpenAIEmbeddingClient` methods have been renamed to `GetOpenAIChatClient` and `GetOpenAIEmbeddingClient` respectively. The functionality of them has not changed.
 
 ### Bugs Fixed
 
