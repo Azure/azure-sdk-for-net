@@ -59,7 +59,7 @@ model FooSettings is ProxyResource<FooSettingsProperties> {
 @armResourceOperations
 interface FooSettingsOperations {
   get is ArmResourceRead<FooSettings>;
-  createOrUpdate is ArmResourceCreateOrReplaceSync<FooSettings>;
+  createFooSettings is ArmResourceCreateOrReplaceSync<FooSettings>;
   update is ArmCustomPatchSync<
     FooSettings,
     Azure.ResourceManager.Foundations.ResourceUpdateModel<
