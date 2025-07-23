@@ -34,7 +34,7 @@ namespace Azure.Generator.Visitors
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
         private const string IfUnmodifiedSinceMemberName = "IfUnmodifiedSince";
 
-        private static readonly HashSet<string> _matchConditionsHeaders = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
             IfMatch,
             IfMatchMemberName,
@@ -46,7 +46,7 @@ namespace Azure.Generator.Visitors
             IfUnmodifiedSinceMemberName,
         };
 
-        private static readonly Dictionary<RequestConditionHeaders, string> _requestConditionsHeaders = new()
+        private static readonly Dictionary<RequestConditionHeaders, string> _requestConditionsHeadersMap = new()
         {
             { RequestConditionHeaders.None, string.Empty },
             { RequestConditionHeaders.IfMatch, IfMatch },
@@ -57,24 +57,58 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
+            if (!TryGetMethodRequestConditionInfo(method, out var headerFlags, out var matchConditionParams))
+            {
+                return base.VisitMethod(method);
+            }
+
+            bool isCreateRequestMethod = IsCreateRequestMethod(method);
+            // Update method parameters
+            UpdateMethodParameters(method, isCreateRequestMethod, headerFlags, matchConditionParams);
+
+            // Update method body
+            if (isCreateRequestMethod)
+            {
+                UpdateCreateRequestMethodBody(method, headerFlags, matchConditionParams);
+            }
+            else if (!HasSingleRequestConditionHeader(headerFlags))
+            {
+                UpdateClientMethodBody(method, headerFlags);
+            }
+
+            return method;
+        }
+
+        private static bool TryGetMethodRequestConditionInfo(
+            ScmMethodProvider method,
+            out RequestConditionHeaders headerFlags,
+            out IReadOnlyList<ParameterProvider> matchConditionParams)
+        {
+            headerFlags = RequestConditionHeaders.None;
+            matchConditionParams = [];
+
             if (method.ServiceMethod == null || !ContainsOptionalMatchConditionParameters(method.ServiceMethod))
             {
-                return base.VisitMethod(method);
+                return false;
             }
 
-            var headerFlags = ParseMatchConditionHeaders(method);
+            // Parse header flags from the method
+            headerFlags = ParseMatchConditionHeaders(method);
             if (headerFlags == RequestConditionHeaders.None)
             {
-                return base.VisitMethod(method);
+                return false;
             }
 
-            var matchConditionParams = GetMatchConditionParameters(method.Signature.Parameters);
-            if (matchConditionParams.Count == 0)
-            {
-                return base.VisitMethod(method);
-            }
+            matchConditionParams = GetMatchConditionParameters(method.Signature.Parameters);
+            return matchConditionParams.Count > 0;
+        }
 
-            // Update method parameters
+        private static void UpdateMethodParameters(
+            ScmMethodProvider method,
+            bool isCreateRequestMethod,
+            RequestConditionHeaders headerFlags,
+            IReadOnlyList<ParameterProvider> matchConditionParams)
+        {
             switch (headerFlags)
             {
                 case RequestConditionHeaders.IfMatch:
@@ -87,27 +121,55 @@ namespace Azure.Generator.Visitors
                 case RequestConditionHeaders.IfMatch | RequestConditionHeaders.IfNoneMatch:
                     // Handle the case where both IfMatch/IfNoneMatch parameters are present
                     // Group them into a single MatchConditions parameter
-                    UpdateMethodSignatureWithMatchConditionParameter(method, matchConditionParams);
+                    UpdateMethodWithConditionsParameter(method, isCreateRequestMethod, matchConditionParams[0], useRequestConditions: false);
                     break;
 
-                case var flags when (flags & (RequestConditionHeaders.IfModifiedSince | RequestConditionHeaders.IfUnmodifiedSince)) != 0:
-                    // Handle date-based conditions (If-Modified-Since, If-Unmodified-Since)
-                    // These would require RequestConditions type
-                    UpdateMethodSignatureWithRequestConditionsParameter(method, matchConditionParams);
+                default:
+                    // Default to RequestConditions type
+                    UpdateMethodWithConditionsParameter(method, isCreateRequestMethod, matchConditionParams[0], useRequestConditions: true);
                     break;
             }
+        }
 
-            // Update method body if necessary
-            if (IsCreateRequestMethod(method))
+        private static void UpdateMethodWithConditionsParameter(
+            ScmMethodProvider method,
+            bool isCreateRequestMethod,
+            ParameterProvider originalMatchConditionsParameter,
+            bool useRequestConditions)
+        {
+            var updatedConditionsParameter = GetConditionsParameter(method, isCreateRequestMethod, useRequestConditions);
+            updatedConditionsParameter.Update(wireInfo: originalMatchConditionsParameter.WireInfo);
+
+            var updatedParams = new List<ParameterProvider>();
+            var xmlParameterDocs = new List<XmlDocParamStatement>();
+            bool addedConditionsParameter = false;
+
+            foreach (var param in method.Signature.Parameters)
             {
-                UpdateCreateRequestMethodBody(method, headerFlags);
-            }
-            else
-            {
-                UpdateClientMethod(method, headerFlags);
+                if (_conditionalHeaders.Contains(param.WireInfo.SerializedName))
+                {
+                    if (!addedConditionsParameter)
+                    {
+                        updatedParams.Add(updatedConditionsParameter);
+                        xmlParameterDocs.Add(new XmlDocParamStatement(updatedConditionsParameter));
+                        addedConditionsParameter = true;
+                    }
+                    // Skip all conditional header parameters
+                }
+                else
+                {
+                    updatedParams.Add(param);
+                    xmlParameterDocs.Add(new XmlDocParamStatement(param));
+                }
             }
 
-            return method;
+            // Update the method signature & xml docs with the new parameters
+            if (!IsCreateRequestMethod(method))
+            {
+                method.XmlDocs.Update(parameters: xmlParameterDocs);
+            }
+
+            method.Signature.Update(parameters: updatedParams);
         }
 
         private static RequestConditionHeaders ParseMatchConditionHeaders(ScmMethodProvider method)
@@ -120,327 +182,181 @@ namespace Azure.Generator.Visitors
 
             foreach (var parameter in allParameters)
             {
-                if (!parameter.IsRequired && parameter.Location == InputRequestLocation.Header)
-                {
-                    switch (parameter.NameInRequest.ToLowerInvariant())
-                    {
-                        case "if-match":
-                            flags |= RequestConditionHeaders.IfMatch;
-                            break;
-                        case "if-none-match":
-                            flags |= RequestConditionHeaders.IfNoneMatch;
-                            break;
-                        case "if-modified-since":
-                            flags |= RequestConditionHeaders.IfModifiedSince;
-                            break;
-                        case "if-unmodified-since":
-                            flags |= RequestConditionHeaders.IfUnmodifiedSince;
-                            break;
-                    }
-                }
+                if (parameter.IsRequired || parameter.Location != InputRequestLocation.Header)
+                    continue;
+
+                var headerName = parameter.NameInRequest;
+
+                if (string.Equals(headerName, IfMatch, StringComparison.OrdinalIgnoreCase))
+                    flags |= RequestConditionHeaders.IfMatch;
+                else if (string.Equals(headerName, IfNoneMatch, StringComparison.OrdinalIgnoreCase))
+                    flags |= RequestConditionHeaders.IfNoneMatch;
+                else if (string.Equals(headerName, IfModifiedSince, StringComparison.OrdinalIgnoreCase))
+                    flags |= RequestConditionHeaders.IfModifiedSince;
+                else if (string.Equals(headerName, IfUnmodifiedSince, StringComparison.OrdinalIgnoreCase))
+                    flags |= RequestConditionHeaders.IfUnmodifiedSince;
             }
 
             return flags;
         }
 
-        private static string? ParseRequestConditionsSerializationFormat(ScmMethodProvider method)
+        private static string? ParseRequestConditionsSerializationFormat(IReadOnlyList<ParameterProvider> matchConditionParams)
         {
-            foreach (var parameter in method.Signature.Parameters)
+            foreach (var parameter in matchConditionParams)
             {
-                if (parameter.Location == ParameterLocation.Header && IsRequestConditionHeader(parameter.WireInfo.SerializedName))
+                var wireName = parameter.WireInfo.SerializedName;
+                if (string.Equals(wireName, IfModifiedSince, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(wireName, IfUnmodifiedSince, StringComparison.OrdinalIgnoreCase))
                 {
-                    var wireName = parameter.WireInfo.SerializedName.ToLowerInvariant();
-                    switch (wireName)
-                    {
-                        case "if-modified-since":
-                        case "if-unmodified-since":
-                            return parameter.WireInfo.SerializationFormat.ToFormatSpecifier();
-                    }
+                    return parameter.WireInfo.SerializationFormat.ToFormatSpecifier();
                 }
             }
 
             return null;
         }
 
-        private static bool IsSingleRequestConditionHeader(RequestConditionHeaders flags)
-        {
-            return flags == RequestConditionHeaders.IfMatch || flags == RequestConditionHeaders.IfNoneMatch;
-        }
+        private static bool HasSingleRequestConditionHeader(RequestConditionHeaders flags) =>
+            flags is RequestConditionHeaders.IfMatch or RequestConditionHeaders.IfNoneMatch;
 
-        private static bool HasMultipleRequestConditionHeaders(RequestConditionHeaders flags)
-        {
-            return (flags & RequestConditionHeaders.IfMatch) != 0 && (flags & RequestConditionHeaders.IfNoneMatch) != 0;
-        }
+        private static bool HasMultipleRequestConditionHeaders(RequestConditionHeaders flags) =>
+            flags.HasFlag(RequestConditionHeaders.IfMatch) && flags.HasFlag(RequestConditionHeaders.IfNoneMatch);
 
-        private static bool HasModificationTimeHeaders(RequestConditionHeaders headers)
-        {
-            return headers.HasFlag(RequestConditionHeaders.IfModifiedSince) || headers.HasFlag(RequestConditionHeaders.IfUnmodifiedSince);
-        }
+        private static bool HasModificationTimeHeaders(RequestConditionHeaders headers) =>
+            headers.HasFlag(RequestConditionHeaders.IfModifiedSince) || headers.HasFlag(RequestConditionHeaders.IfUnmodifiedSince);
 
-        private static void UpdateMethodSignatureWithMatchConditionParameter(ScmMethodProvider method, List<ParameterProvider> matchConditionParams)
-        {
-            ParameterProvider matchConditionsParameter = (method.IsProtocolMethod || IsCreateRequestMethod(method)) &&
-                method.Signature.Parameters.FirstOrDefault(p => p.Name == "context")?.DefaultValue == null
-                    ? KnownAzureParameters.MatchConditionsParameter
-                    : KnownAzureParameters.OptionalMatchConditionsParameter;
-
-            matchConditionsParameter.Update(wireInfo: matchConditionParams[0].WireInfo);
-
-            // Remove the other match condition parameters
-            var updatedParams = new List<ParameterProvider>();
-            bool addedMatchConditionsParameter = false;
-            List<XmlDocParamStatement> xmlParameterDocs = [];
-
-            foreach (var param in method.Signature.Parameters)
-            {
-                if (IsRequestConditionHeader(param.WireInfo.SerializedName) && !addedMatchConditionsParameter)
-                {
-                    updatedParams.Add(matchConditionsParameter);
-                    xmlParameterDocs.Add(new XmlDocParamStatement(matchConditionsParameter));
-                    addedMatchConditionsParameter = true;
-                }
-                else if (!IsRequestConditionHeader(param.WireInfo.SerializedName))
-                {
-                    updatedParams.Add(param);
-                    xmlParameterDocs.Add(new XmlDocParamStatement(param));
-                }
-            }
-
-            // Update the method signature & xml docs with the new parameters
-            if (!IsCreateRequestMethod(method))
-            {
-                method.XmlDocs.Update(parameters: xmlParameterDocs);
-            }
-
-            // Update the method signature with the new parameters
-            method.Signature.Update(parameters: updatedParams);
-        }
-
-        private static void UpdateMethodSignatureWithRequestConditionsParameter(
+        private static ParameterProvider GetConditionsParameter(
             ScmMethodProvider method,
-            List<ParameterProvider> matchConditionParams)
+            bool isCreateRequestMethod,
+            bool useRequestConditions)
         {
-            ParameterProvider requestConditionsParameter = (method.IsProtocolMethod || IsCreateRequestMethod(method)) &&
-               method.Signature.Parameters.FirstOrDefault(p => p.Name == "context")?.DefaultValue == null
-                   ? KnownAzureParameters.RequestConditionsParameter
-                   : KnownAzureParameters.OptionalRequestConditionsParameter;
+            bool hasContext = method.Signature.Parameters.FirstOrDefault(p => p.Name == "context")?.DefaultValue == null;
+            bool isProtocolOrCreateRequest = method.IsProtocolMethod || isCreateRequestMethod;
 
-            requestConditionsParameter.Update(wireInfo: matchConditionParams[0].WireInfo);
-
-            // Remove the other match condition parameters
-            var updatedParams = new List<ParameterProvider>();
-            bool addedRequestConditionsParameter = false;
-            List<XmlDocParamStatement> xmlParameterDocs = [];
-
-            foreach (var param in method.Signature.Parameters)
+            return (useRequestConditions, isProtocolOrCreateRequest && hasContext) switch
             {
-                if (IsRequestConditionHeader(param.WireInfo.SerializedName) && !addedRequestConditionsParameter)
-                {
-                    updatedParams.Add(requestConditionsParameter);
-                    xmlParameterDocs.Add(new XmlDocParamStatement(requestConditionsParameter));
-                    addedRequestConditionsParameter = true;
-                }
-                else if (!IsRequestConditionHeader(param.WireInfo.SerializedName))
-                {
-                    updatedParams.Add(param);
-                    xmlParameterDocs.Add(new XmlDocParamStatement(param));
-                }
-            }
-
-            // Update the method signature & xml docs with the new parameters
-            if (!IsCreateRequestMethod(method))
-            {
-                method.XmlDocs.Update(parameters: xmlParameterDocs);
-            }
-
-            method.Signature.Update(parameters: updatedParams);
+                (true, true) => KnownAzureParameters.RequestConditionsParameter,
+                (true, false) => KnownAzureParameters.OptionalRequestConditionsParameter,
+                (false, true) => KnownAzureParameters.MatchConditionsParameter,
+                (false, false) => KnownAzureParameters.OptionalMatchConditionsParameter
+            };
         }
 
-        private static void UpdateClientMethod(ScmMethodProvider method, RequestConditionHeaders headerFlags)
+        private static void UpdateClientMethodBody(ScmMethodProvider method, RequestConditionHeaders headerFlags)
         {
-            if (method.BodyStatements == null || (!HasMultipleRequestConditionHeaders(headerFlags) && !HasModificationTimeHeaders(headerFlags)))
+            if (method.BodyStatements == null)
             {
                 return;
             }
 
             var updatedStatements = new List<MethodBodyStatement>();
+
             if (method.IsProtocolMethod && HasModificationTimeHeaders(headerFlags))
             {
-                ParameterProvider requestConditionsParameter = method.Signature.Parameters.FirstOrDefault(p => p.Name == "context")?.DefaultValue == null
-                      ? KnownAzureParameters.RequestConditionsParameter
-                      : KnownAzureParameters.OptionalRequestConditionsParameter;
-                List<MethodBodyStatement> validations = [];
-
-                foreach (RequestConditionHeaders val in Enum.GetValues(typeof(RequestConditionHeaders)).Cast<RequestConditionHeaders>())
+                var requestConditionsParameter = GetReplacementParameter(method, headerFlags);
+                // Add validation statements for unsupported headers
+                var unsupportedHeaders = new[]
                 {
-                    if (!headerFlags.HasFlag(val))
+                    (RequestConditionHeaders.IfMatch, nameof(RequestConditions.IfMatch)),
+                    (RequestConditionHeaders.IfNoneMatch, nameof(RequestConditions.IfNoneMatch)),
+                    (RequestConditionHeaders.IfModifiedSince, nameof(RequestConditions.IfModifiedSince)),
+                    (RequestConditionHeaders.IfUnmodifiedSince, nameof(RequestConditions.IfUnmodifiedSince))
+                };
+
+                foreach (var (flag, propertyName) in unsupportedHeaders)
+                {
+                    if (!headerFlags.HasFlag(flag))
                     {
-                        string? requestConditionsPropertyName = val switch
+                        var validationStatement = new IfStatement(requestConditionsParameter.Property(propertyName).NotEqual(Null))
                         {
-                            RequestConditionHeaders.IfMatch => nameof(RequestConditions.IfMatch),
-                            RequestConditionHeaders.IfNoneMatch => nameof(RequestConditions.IfNoneMatch),
-                            RequestConditionHeaders.IfModifiedSince => nameof(RequestConditions.IfModifiedSince),
-                            RequestConditionHeaders.IfUnmodifiedSince => nameof(RequestConditions.IfUnmodifiedSince),
-                            _ => null
+                            Throw(New.Instance(new CSharpType(typeof(ArgumentNullException)),
+                                Literal($"Service does not support the {_requestConditionsHeadersMap[flag]} header for this operation.")))
                         };
-
-                        if (requestConditionsPropertyName == null)
-                        {
-                            continue;
-                        }
-
-                        var validationStatement = new IfStatement(requestConditionsParameter.Property(requestConditionsPropertyName).NotEqual(Null))
-                        {
-                            Throw(
-                                New.Instance(new CSharpType(typeof(ArgumentNullException)),
-                                Literal($"Service does not support the {_requestConditionsHeaders[val]} header for this operation.")))
-                        };
-                        validations.Add(validationStatement);
+                        updatedStatements.Add(validationStatement);
                     }
                 }
 
-                if (validations.Count > 0)
+                if (updatedStatements.Count > 0)
                 {
-                    validations.Add(MethodBodyStatement.EmptyLine);
+                    updatedStatements.Add(MethodBodyStatement.EmptyLine);
                 }
-                updatedStatements.AddRange(validations);
             }
 
             foreach (var statement in method.BodyStatements)
             {
-                MethodBodyStatement updatedStatement = statement;
-                if (method.IsProtocolMethod)
-                {
-                    updatedStatement = UpdateCreateRequestInvocationStatement(method, statement, headerFlags);
-                }
-                else
-                {
-                    updatedStatement = UpdateProtocolMethodInvocationStatement(statement, headerFlags);
-                }
-
+                var updatedStatement = UpdateMethodInvocationStatement(method, statement, headerFlags);
                 updatedStatements.Add(updatedStatement);
             }
 
             method.Update(bodyStatements: updatedStatements);
         }
 
-        private static MethodBodyStatement UpdateCreateRequestInvocationStatement(
+        private static MethodBodyStatement UpdateMethodInvocationStatement(
             ScmMethodProvider method,
             MethodBodyStatement statement,
             RequestConditionHeaders headerFlags)
         {
-            if (statement is not TryCatchFinallyStatement tryCatchFinallyStatement)
-            {
-                return statement;
-            }
-
             var replacementParameter = GetReplacementParameter(method, headerFlags);
 
-            foreach (var tryBodyStatement in tryCatchFinallyStatement.Try.Body)
+            switch (statement)
             {
-                if (tryBodyStatement is ExpressionStatement expressionStatement)
-                {
-                    if (expressionStatement.Expression is AssignmentExpression assignmentExpression &&
-                        assignmentExpression.Value is InvokeMethodExpression invokeExpression &&
-                        IsCreateRequestMethodInvocation(invokeExpression))
+                case TryCatchFinallyStatement tryCatch when method.IsProtocolMethod:
+                    foreach (var tryBodyStatement in tryCatch.Try.Body)
                     {
-                        var updatedArguments = new List<ValueExpression>();
-                        bool addedMatchConditions = false;
-                        foreach (var argument in invokeExpression.Arguments)
+                        if (tryBodyStatement is ExpressionStatement { Expression: AssignmentExpression { Value: InvokeMethodExpression invoke } } expr &&
+                            IsCreateRequestMethodInvocation(invoke))
                         {
-                            if (argument is VariableExpression variable)
-                            {
-                                if (_matchConditionsHeaders.Contains(variable.Declaration.RequestedName))
-                                {
-                                    if (addedMatchConditions)
-                                    {
-                                        continue;
-                                    }
-
-                                    updatedArguments.Add(replacementParameter);
-                                    addedMatchConditions = true;
-                                }
-                                else
-                                {
-                                    updatedArguments.Add(argument);
-                                }
-                            }
-                            else
-                            {
-                                updatedArguments.Add(argument);
-                            }
+                            UpdateInvokeMethodArguments(invoke, replacementParameter);
+                            expr.Update(expression: new AssignmentExpression(((AssignmentExpression)expr.Expression).Variable, invoke));
                         }
-                        invokeExpression.Update(arguments: updatedArguments);
-                        var updatedAssignment = new AssignmentExpression(
-                            assignmentExpression.Variable,
-                            invokeExpression);
-                        expressionStatement.Update(expression: updatedAssignment);
                     }
-                }
+                    break;
+
+                case ExpressionStatement { Expression: KeywordExpression { Expression: InvokeMethodExpression invoke2 } keyword } expr2:
+                    var param = HasModificationTimeHeaders(headerFlags)
+                        ? KnownAzureParameters.OptionalRequestConditionsParameter
+                        : KnownAzureParameters.OptionalMatchConditionsParameter;
+                    UpdateInvokeMethodArguments(invoke2, param);
+                    keyword.Update(keyword.Keyword, invoke2);
+                    expr2.Update(expression: keyword);
+                    break;
             }
 
             return statement;
-        }
 
-        private static MethodBodyStatement UpdateProtocolMethodInvocationStatement(
-            MethodBodyStatement statement,
-            RequestConditionHeaders headerFlags)
-        {
-            var replacementParameter = (headerFlags.HasFlag(RequestConditionHeaders.IfModifiedSince) ||
-                headerFlags.HasFlag(RequestConditionHeaders.IfUnmodifiedSince))
-                    ? KnownAzureParameters.OptionalRequestConditionsParameter
-                    : KnownAzureParameters.OptionalMatchConditionsParameter;
-
-            if (statement is ExpressionStatement expressionStatement)
+            static void UpdateInvokeMethodArguments(InvokeMethodExpression invokeExpression, ParameterProvider replacementParameter)
             {
-                if (expressionStatement.Expression is KeywordExpression keywordExpression &&
-                    keywordExpression.Expression is InvokeMethodExpression invokeExpression)
-                {
-                    var updatedArguments = new List<ValueExpression>();
-                    bool addedMatchConditions = false;
-                    foreach (var argument in invokeExpression.Arguments)
-                    {
-                        if (argument is VariableExpression variable)
-                        {
-                            if (_matchConditionsHeaders.Contains(variable.Declaration.RequestedName))
-                            {
-                                if (addedMatchConditions)
-                                {
-                                    continue;
-                                }
+                var updatedArguments = new List<ValueExpression>();
+                bool addedMatchConditions = false;
 
-                                updatedArguments.Add(replacementParameter);
-                                addedMatchConditions = true;
-                            }
-                            else
-                            {
-                                updatedArguments.Add(argument);
-                            }
-                        }
-                        else
+                foreach (var argument in invokeExpression.Arguments)
+                {
+                    if (argument is VariableExpression variable && _conditionalHeaders.Contains(variable.Declaration.RequestedName))
+                    {
+                        if (!addedMatchConditions)
                         {
-                            updatedArguments.Add(argument);
+                            updatedArguments.Add(replacementParameter);
+                            addedMatchConditions = true;
                         }
                     }
-
-                    invokeExpression.Update(arguments: updatedArguments);
-                    keywordExpression.Update(keywordExpression.Keyword, invokeExpression);
-                    expressionStatement.Update(expression: keywordExpression);
+                    else
+                    {
+                        updatedArguments.Add(argument);
+                    }
                 }
-            }
 
-            return statement;
+                invokeExpression.Update(arguments: updatedArguments);
+            }
         }
 
         private static bool IsCreateRequestMethodInvocation(InvokeMethodExpression invocation)
-        {
-            // Check if the method name suggests it's a CreateRequest method
-            var methodName = invocation.MethodSignature?.Name;
-            return methodName?.StartsWith("Create") == true &&
-                   methodName?.EndsWith("Request") == true;
-        }
+            => invocation.MethodSignature?.Name is { } methodName &&
+                methodName.StartsWith("Create") &&
+                methodName.EndsWith("Request");
 
-        private static void UpdateCreateRequestMethodBody(ScmMethodProvider method, RequestConditionHeaders headerFlags)
+        private static void UpdateCreateRequestMethodBody(
+            ScmMethodProvider method,
+            RequestConditionHeaders headerFlags,
+            IReadOnlyList<ParameterProvider> matchConditionParams)
         {
             if (method.BodyStatements == null)
             {
@@ -452,7 +368,7 @@ namespace Azure.Generator.Visitors
 
             foreach (var statement in method.BodyStatements)
             {
-                if (!TryUpdateIfStatementForMatchConditions(method, statement, headerFlags, out var updatedStatement))
+                if (!TryUpdateIfStatement(statement, headerFlags, matchConditionParams, out var updatedStatement))
                 {
                     updatedStatements.Add(statement);
                 }
@@ -466,69 +382,57 @@ namespace Azure.Generator.Visitors
             method.Update(bodyStatements: updatedStatements);
         }
 
-        private static bool TryUpdateIfStatementForMatchConditions(
-            ScmMethodProvider method,
+        private static bool TryUpdateIfStatement(
             MethodBodyStatement statement,
             RequestConditionHeaders headerFlags,
+            IReadOnlyList<ParameterProvider> matchConditionParams,
             out MethodBodyStatement updatedStatement)
+        {
+            updatedStatement = statement;
+            if (statement is not IfStatement ifStatement || ifStatement.Body == null)
             {
-                updatedStatement = statement;
-                if (statement is not IfStatement ifStatement)
-                {
-                    return false;
-                }
-
-                var updatedIfStatement = ifStatement;
-                var ifBody = updatedIfStatement.Body;
-                if (ifBody == null)
-                {
-                    return false;
-                }
-
-                foreach (var bodyStatement in ifBody)
-                {
-                    if (bodyStatement is ExpressionStatement expressionStatement &&
-                        expressionStatement.Expression is InvokeMethodExpression invokeExpression &&
-                        invokeExpression.InstanceReference is MemberExpression { Inner: VariableExpression variableExpression })
-                    {
-                        if (variableExpression.Type.Equals(variableExpression.ToApi<HttpRequestApi>().Type))
-                        {
-                            var headerInfo = ExtractHeaderInfo(invokeExpression);
-                            if (headerInfo.HasValue)
-                            {
-                                var (headerName, headerValue) = headerInfo.Value;
-                                if (HasMultipleRequestConditionHeaders(headerFlags))
-                                {
-                                    // For MatchConditions, use AddHeader which will handle the header addition appropriately
-                                    updatedIfStatement.Update(
-                                         condition: KnownAzureParameters.MatchConditionsParameter.NotEqual(Null),
-                                         body: variableExpression.As<Request>().AddHeader(KnownAzureParameters.MatchConditionsParameter));
-                                    return true;
-                                }
-                                else if (IsSingleRequestConditionHeader(headerFlags))
-                                {
-                                    // For single ETag parameter, use AddHeaderValue with the header name and Value property
-                                    updatedIfStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(
-                                        headerName,
-                                        headerValue.Property("Value")));
-                                    return true;
-                                }
-                                else if (HasModificationTimeHeaders(headerFlags))
-                                {
-                                    // For date-based conditions, use AddHeader with RequestConditions parameter and serialization format
-                                    string? serializationFormat = ParseRequestConditionsSerializationFormat(method);
-                                    updatedIfStatement.Update(
-                                        condition: KnownAzureParameters.RequestConditionsParameter.NotEqual(Null),
-                                        body: variableExpression.As<Request>().AddHeader(KnownAzureParameters.RequestConditionsParameter, serializationFormat));
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-
                 return false;
             }
+
+            foreach (var bodyStatement in ifStatement.Body)
+            {
+                if (bodyStatement is ExpressionStatement expressionStatement &&
+                    expressionStatement.Expression is InvokeMethodExpression invokeExpression &&
+                    invokeExpression.InstanceReference is MemberExpression { Inner: VariableExpression variableExpression } &&
+                    variableExpression.Type.Equals(variableExpression.ToApi<HttpRequestApi>().Type))
+                {
+                    var headerInfo = ExtractHeaderInfo(invokeExpression);
+                    if (headerInfo.HasValue)
+                    {
+                        var (headerName, headerValue) = headerInfo.Value;
+                        switch (headerFlags)
+                        {
+                            case var flags when HasSingleRequestConditionHeader(flags):
+                                ifStatement.Update(body: variableExpression.As<Request>().AddHeaderValue(headerName, headerValue.Property("Value")));
+                                break;
+                            case var flags when HasMultipleRequestConditionHeaders(flags):
+                                ifStatement.Update(
+                                    condition: KnownAzureParameters.MatchConditionsParameter.NotEqual(Null),
+                                    body: variableExpression.As<Request>().AddHeader(KnownAzureParameters.MatchConditionsParameter));
+                                break;
+                            case var flags when HasModificationTimeHeaders(flags):
+                                string? serializationFormat = ParseRequestConditionsSerializationFormat(matchConditionParams);
+                                ifStatement.Update(
+                                    condition: KnownAzureParameters.RequestConditionsParameter.NotEqual(Null),
+                                    body: variableExpression.As<Request>().AddHeader(KnownAzureParameters.RequestConditionsParameter, serializationFormat));
+                                break;
+                            default:
+                                return false;
+                        }
+
+                        updatedStatement = ifStatement;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         private static bool IsCreateRequestMethod(ScmMethodProvider method)
         {
@@ -539,21 +443,14 @@ namespace Azure.Generator.Visitors
                 method.Signature.ReturnType?.Equals(typeof(HttpMessage)) == true;
         }
 
-        private static bool IsRequestConditionHeader(string headerName)
-        {
-            return string.Equals(headerName, IfMatch, StringComparison.OrdinalIgnoreCase) ||
-                   string.Equals(headerName, IfNoneMatch, StringComparison.OrdinalIgnoreCase) ||
-                     string.Equals(headerName, IfModifiedSince, StringComparison.OrdinalIgnoreCase) ||
-                     string.Equals(headerName, IfUnmodifiedSince, StringComparison.OrdinalIgnoreCase);
-        }
-
         private static List<ParameterProvider> GetMatchConditionParameters(IReadOnlyList<ParameterProvider> parameters)
         {
             var matchConditionParams = new List<ParameterProvider>();
 
             foreach (var parameter in parameters)
             {
-                if (IsRequestConditionParameter(parameter))
+                if (parameter.Location == ParameterLocation.Header &&
+                   _conditionalHeaders.Contains(parameter.WireInfo.SerializedName))
                 {
                     matchConditionParams.Add(parameter);
                 }
@@ -564,19 +461,11 @@ namespace Azure.Generator.Visitors
 
         private static (string HeaderName, ValueExpression HeaderValue)? ExtractHeaderInfo(InvokeMethodExpression invokeExpression)
         {
-            if (invokeExpression.Arguments.FirstOrDefault() is ScopedApi<string> scopedApi &&
-                scopedApi.Original is LiteralExpression literalExpression &&
-                literalExpression.Literal is string headerName &&
-                _matchConditionsHeaders.Contains(headerName))
+            if (invokeExpression.Arguments.FirstOrDefault() is ScopedApi<string> { Original: LiteralExpression { Literal: string headerName } } &&
+                _conditionalHeaders.Contains(headerName) &&
+                invokeExpression.Arguments.Count > 1)
             {
-                var headerValue = invokeExpression.Arguments.Count > 1
-                    ? invokeExpression.Arguments[1]
-                    : null;
-
-                if (headerValue != null)
-                {
-                    return (headerName, headerValue);
-                }
+                return (headerName, invokeExpression.Arguments[1]);
             }
 
             return null;
@@ -584,22 +473,10 @@ namespace Azure.Generator.Visitors
 
         private static bool ContainsOptionalMatchConditionParameters(InputServiceMethod inputServiceMethod)
         {
-            return inputServiceMethod.Parameters.Any(IsOptionalMatchConditionParameter) ||
-                   inputServiceMethod.Operation.Parameters.Any(IsOptionalMatchConditionParameter);
-        }
-
-        private static bool IsOptionalMatchConditionParameter(InputParameter parameter)
-        {
-            return !parameter.IsRequired &&
-                parameter.Location == InputRequestLocation.Header &&
-                _matchConditionsHeaders.Contains(parameter.NameInRequest);
-        }
-
-        private static bool IsRequestConditionParameter(ParameterProvider parameter)
-        {
-            return parameter.Type.IsNullable &&
-                   parameter.Location == ParameterLocation.Header &&
-                   IsRequestConditionHeader(parameter.WireInfo.SerializedName);
+            return inputServiceMethod.Parameters.Concat(inputServiceMethod.Operation.Parameters)
+                .Any(parameter => !parameter.IsRequired &&
+                    parameter.Location == InputRequestLocation.Header &&
+                    _conditionalHeaders.Contains(parameter.NameInRequest));
         }
 
         private static ParameterProvider GetReplacementParameter(ScmMethodProvider method, RequestConditionHeaders headerFlags)
