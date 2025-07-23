@@ -3135,7 +3135,8 @@
                 "kind": "List"
               }
             ],
-            "resourceScope": "ResourceGroup"
+            "resourceScope": "ResourceGroup",
+            "resourceName": "Foo"
           }
         }
       ],
@@ -3604,7 +3605,8 @@
               }
             ],
             "resourceScope": "ResourceGroup",
-            "singletonResourceName": "default"
+            "singletonResourceName": "default",
+            "resourceName": "FooSettings"
           }
         }
       ],
@@ -3831,7 +3833,8 @@
               }
             ],
             "resourceScope": "ResourceGroup",
-            "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}"
+            "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
+            "resourceName": "Bar"
           }
         }
       ],
@@ -4134,7 +4137,8 @@
             ],
             "resourceScope": "ResourceGroup",
             "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
-            "singletonResourceName": "current"
+            "singletonResourceName": "current",
+            "resourceName": "BarSettings"
           }
         }
       ],
@@ -4293,7 +4297,8 @@
                 "kind": "Action"
               }
             ],
-            "resourceScope": "ResourceGroup"
+            "resourceScope": "ResourceGroup",
+            "resourceName": "Zoo"
           }
         }
       ],
