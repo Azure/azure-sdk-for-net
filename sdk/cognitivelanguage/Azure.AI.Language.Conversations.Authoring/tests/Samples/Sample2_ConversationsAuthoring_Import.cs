@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             });
 
             ConversationAuthoringExportedProject exportedProject = new ConversationAuthoringExportedProject(
-                projectFileVersion: "2023-10-01",
+                projectFileVersion: "2025-05-15-preview",
                 stringIndexType: StringIndexType.Utf16CodeUnit,
                 metadata: projectMetadata
             )
