@@ -6,7 +6,9 @@ using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Exporter;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests;
 
@@ -15,52 +17,45 @@ public class RateLimitedSamplerTests
     [Fact]
     public void RespectLocalParentDecision()
     {
-        var sampler = new RateLimitedSampler(1000);
-        // ensure when sampler sees first trace, it will think rate is <= 1/100
-        System.Threading.Thread.Sleep(10);
-        var parentActivity = new Activity("ParentActivity");
-        parentActivity.Start();
+        ActivitySource MyActivitySource = new("MyCompany.MyProduct.MyLibrary");
 
-        var parentSamplingParams = new SamplingParameters(default(ActivityContext), parentActivity.TraceId, parentActivity.OperationName, ActivityKind.Internal);
-        var parentResult = sampler.ShouldSample(parentSamplingParams);
+        var exportedItems = new List<Activity>();
+        using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+        .AddSource("MyCompany.MyProduct.MyLibrary")
+        .SetSampler(new RateLimitedSampler(1000)) // 1000 traces per second
+        .AddInMemoryExporter(exportedItems)
+        .Build();
 
-        // Assert parent span is sampled and has correct attribute
-        Assert.Equal(SamplingDecision.RecordAndSample, parentResult.Decision);
-        var parentSampleRateAttr = Assert.Single(parentResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
-        Assert.IsType<double>(parentSampleRateAttr.Value);
-        double parentSampleRate = (double)parentSampleRateAttr.Value;
-        Assert.True(parentSampleRate > 0);
-
-        var parentActivityContext = new ActivityContext(
-            parentActivity.TraceId,
-            parentActivity.SpanId,
-            ActivityTraceFlags.Recorded,
-            null,
-            isRemote: false
-        );
-        Console.WriteLine($"Parent trace ID: {parentActivity.TraceId}, spanid: {parentActivity.SpanId}");
-        Console.WriteLine($"Parent Activity Context: {parentActivityContext.TraceId}, {parentActivityContext.SpanId}");
-
-        for (int i = 0; i < 100; i++) {
-             // Create a child activity with the parent as its context
-            var childActivity = new Activity($"ChildActivity_{i}");
-            childActivity.SetParentId(parentActivity.TraceId, parentActivity.SpanId, parentActivity.ActivityTraceFlags);
-            childActivity.Start();
-
-            var childSamplingParams = new SamplingParameters(parentActivityContext, parentActivity.TraceId, childActivity.OperationName, ActivityKind.Internal);
-            var childResult = sampler.ShouldSample(childSamplingParams);
-
-            // Assert child span is sampled and has same attribute
-            Assert.Equal(SamplingDecision.RecordAndSample, childResult.Decision);
-            var childSampleRateAttr = Assert.Single(childResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
-            Assert.IsType<double>(childSampleRateAttr.Value);
-            double childSampleRate = (double)childSampleRateAttr.Value;
-            Assert.Equal(parentSampleRate, childSampleRate);
-
-            childActivity.Stop();
+        System.Threading.Thread.Sleep(50); // Allow for adaptation time
+        using (var activity = MyActivitySource.StartActivity("ParentActivity"))
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                // Start 100 child activities
+                using (var childActivity = MyActivitySource.StartActivity($"MyChildActivity_{i}"))
+                {
+                    Assert.NotNull(childActivity);
+                }
+            }
         }
 
-        parentActivity.Stop();
+        Console.WriteLine($"Exported {exportedItems.Count} activities.");
+        Assert.NotEmpty(exportedItems);
+        Assert.Equal(101, exportedItems.Count);
+
+        var exportedParentActivity = exportedItems[100];
+        Assert.Equal("ParentActivity", exportedParentActivity.DisplayName);
+        var parentSampleRate = exportedParentActivity.GetTagItem("microsoft.sample_rate");
+        Console.WriteLine($"Parent Sample Rate: {parentSampleRate}");
+        Console.WriteLine($"Exported Parent Activity: {exportedParentActivity.DisplayName} {exportedParentActivity.TraceId}, {exportedParentActivity.SpanId}");
+
+        for (int i = 1; i < exportedItems.Count; i++) // looking at child activities
+        {
+            var exportedActivity = exportedItems[i - 1];
+            var sampleRate = exportedActivity.GetTagItem("microsoft.sample_rate");
+            Assert.Equal(parentSampleRate, sampleRate);
+            Console.WriteLine($"Exported: {exportedActivity.DisplayName} {exportedActivity.TraceId}, {exportedActivity.SpanId}");
+        }
     }
 
     [Fact]
@@ -155,7 +150,7 @@ public class RateLimitedSamplerTests
         Assert.Contains(result.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         var sampleRateAttr = Assert.Single(result.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         double sampleRate = (double)sampleRateAttr.Value;
-        Assert.True(sampleRate == 100);
+        Assert.True(sampleRate == 99.99);
     }
 
     [Fact]
