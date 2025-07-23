@@ -220,13 +220,13 @@ EnableSystemClientModelDebugging();
 AIProjectClient projectClient = CreateDebugClient(endpoint);
 
 Console.WriteLine("List all deployments:");
-foreach (AIDeployment deployment in projectClient.Deployments.Get())
+foreach (AssetDeployment deployment in projectClient.Deployments.Get())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (AIDeployment deployment in projectClient.Deployments.Get(modelPublisher: modelPublisher))
+foreach (AssetDeployment deployment in projectClient.Deployments.Get(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
@@ -314,7 +314,7 @@ DatasetVersion dataset = projectClient.Datasets.Get(datasetName, datasetVersion1
 Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-AssetCredentialResponse credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
+DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
@@ -358,7 +358,7 @@ BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
 }));
 
 Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-DatasetIndex index = projectClient.Indexes.CreateOrUpdate(
+SearchIndex index = projectClient.Indexes.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
     content: content
@@ -366,17 +366,17 @@ DatasetIndex index = projectClient.Indexes.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-DatasetIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
+SearchIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (DatasetIndex version in projectClient.Indexes.GetVersions(name: indexName))
+foreach (SearchIndex version in projectClient.Indexes.GetVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (DatasetIndex version in projectClient.Indexes.Get())
+foreach (SearchIndex version in projectClient.Indexes.Get())
 {
     Console.WriteLine(version);
 }

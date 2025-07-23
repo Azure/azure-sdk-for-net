@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownAIDeployment : AIDeployment
+    internal partial class UnknownAssetDeployment : AssetDeployment
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAIDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAssetDeployment"/>. </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAIDeployment(DeploymentType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", name, additionalBinaryDataProperties)
+        internal UnknownAssetDeployment(DeploymentType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", name, additionalBinaryDataProperties)
         {
         }
     }

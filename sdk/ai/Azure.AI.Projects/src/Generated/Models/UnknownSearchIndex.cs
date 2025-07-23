@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownDatasetIndex : DatasetIndex
+    internal partial class UnknownSearchIndex : SearchIndex
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDatasetIndex"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSearchIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -17,7 +17,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDatasetIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, name, version, description, tags, additionalBinaryDataProperties)
+        internal UnknownSearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, name, version, description, tags, additionalBinaryDataProperties)
         {
         }
     }

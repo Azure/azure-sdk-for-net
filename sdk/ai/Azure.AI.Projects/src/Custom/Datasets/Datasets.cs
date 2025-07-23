@@ -38,41 +38,41 @@ namespace Azure.AI.Projects
         /// </summary>
         private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion, string? connectionName = null)
         {
-            var pendingUploadRequest = new PendingUploadRequest(
+            var pendingUploadConfiguration = new PendingUploadConfiguration(
                 pendingUploadId: null,
                 connectionName: connectionName,
                 pendingUploadType: PendingUploadType.BlobReference,
                 additionalBinaryDataProperties: null);
 
-            PendingUploadResponse pendingUploadResponse = PendingUpload(
+            PendingUploadResult pendingUploadResult = PendingUpload(
                 name: name,
                 version: inputVersion,
-                pendingUploadRequest: pendingUploadRequest
+                configuration: pendingUploadConfiguration
             );
 
             string outputVersion = inputVersion;
 
-            return (GetContainerClientOrRaise(pendingUploadResponse), outputVersion);
+            return (GetContainerClientOrRaise(pendingUploadResult), outputVersion);
         }
 
         /// <summary>
         /// The convenience method to get the container client.
         /// </summary>
-        /// <param name="pendingUploadResponse">The pending upload request.</param>
+        /// <param name="pendingUploadResult">The pending upload request.</param>
         /// <returns></returns>
-        private BlobContainerClient GetContainerClientOrRaise(PendingUploadResponse pendingUploadResponse)
+        private BlobContainerClient GetContainerClientOrRaise(PendingUploadResult pendingUploadResult)
         {
             bool isSasEmpty = false;
 
-            if (pendingUploadResponse.BlobReference == null)
+            if (pendingUploadResult.BlobReference == null)
             {
                 throw new InvalidOperationException("Blob reference is not present.");
             }
-            if (pendingUploadResponse.BlobReference.Credential == null)
+            if (pendingUploadResult.BlobReference.Credential == null)
             {
                 throw new InvalidOperationException("SAS credential is not present.");
             }
-            if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
+            if (pendingUploadResult.BlobReference.Credential.SasUri == null)
             {
                 isSasEmpty = true;
             }
@@ -81,13 +81,13 @@ namespace Azure.AI.Projects
             if (isSasEmpty)
             {
                 containerClient = new BlobContainerClient(
-                    blobContainerUri: pendingUploadResponse.BlobReference.BlobUri,
+                    blobContainerUri: pendingUploadResult.BlobReference.BlobUri,
                     credential: _tokenCredential,
                     options: null);
             }
             else
             {
-                containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
+                containerClient = new BlobContainerClient(pendingUploadResult.BlobReference.Credential.SasUri);
             }
             return containerClient;
         }
@@ -173,21 +173,21 @@ namespace Azure.AI.Projects
         /// </summary>
         private async Task<(BlobContainerClient ContainerClient, string OutputVersion)> CreateDatasetAndGetContainerClientAsync(string name, string inputVersion, string? connectionName = null)
         {
-            PendingUploadRequest pendingUploadRequest = new(
+            PendingUploadConfiguration pendingUploadRequest = new(
                 pendingUploadId: null,
                 connectionName: connectionName,
                 pendingUploadType: PendingUploadType.BlobReference,
                 additionalBinaryDataProperties: null);
 
-            PendingUploadResponse pendingUploadResponse = await PendingUploadAsync(
+            PendingUploadResult pendingUploadResult = await PendingUploadAsync(
                 name: name,
                 version: inputVersion,
-                pendingUploadRequest: pendingUploadRequest
+                configuration: pendingUploadRequest
             ).ConfigureAwait(false);
 
             string outputVersion = inputVersion;
 
-            return (GetContainerClientOrRaise(pendingUploadResponse), outputVersion);
+            return (GetContainerClientOrRaise(pendingUploadResult), outputVersion);
         }
 
         /// <summary>

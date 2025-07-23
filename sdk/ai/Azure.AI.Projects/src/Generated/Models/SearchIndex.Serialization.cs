@@ -13,17 +13,17 @@ namespace Azure.AI.Projects
     /// Index resource Definition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="CosmosDBIndex"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDatasetIndex))]
-    public abstract partial class DatasetIndex : IJsonModel<DatasetIndex>
+    [PersistableModelProxy(typeof(UnknownSearchIndex))]
+    public abstract partial class SearchIndex : IJsonModel<SearchIndex>
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetIndex"/> for deserialization. </summary>
-        internal DatasetIndex()
+        /// <summary> Initializes a new instance of <see cref="SearchIndex"/> for deserialization. </summary>
+        internal SearchIndex()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatasetIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +34,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetIndex)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchIndex)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -96,24 +96,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatasetIndex IJsonModel<DatasetIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchIndex IJsonModel<SearchIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatasetIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetIndex)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchIndex)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatasetIndex(document.RootElement, options);
+            return DeserializeSearchIndex(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatasetIndex DeserializeDatasetIndex(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchIndex DeserializeSearchIndex(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,55 +131,55 @@ namespace Azure.AI.Projects
                         return CosmosDBIndex.DeserializeCosmosDBIndex(element, options);
                 }
             }
-            return UnknownDatasetIndex.DeserializeUnknownDatasetIndex(element, options);
+            return UnknownSearchIndex.DeserializeUnknownSearchIndex(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatasetIndex>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchIndex>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatasetIndex)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchIndex)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatasetIndex IPersistableModel<DatasetIndex>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchIndex IPersistableModel<SearchIndex>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatasetIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchIndex>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeDatasetIndex(document.RootElement, options);
+                        return DeserializeSearchIndex(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatasetIndex)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchIndex)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatasetIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DatasetIndex"/> from. </param>
-        public static explicit operator DatasetIndex(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="SearchIndex"/> from. </param>
+        public static explicit operator SearchIndex(ClientResult result)
         {
             using PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeDatasetIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSearchIndex(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

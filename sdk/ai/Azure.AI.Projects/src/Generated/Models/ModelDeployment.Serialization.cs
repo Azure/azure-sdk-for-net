@@ -80,7 +80,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AIDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AssetDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AIDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AssetDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ModelDeployment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Deployment Definition. </summary>
-    public partial class ModelDeployment : AIDeployment
+    public partial class ModelDeployment : AssetDeployment
     {
         /// <summary> Initializes a new instance of <see cref="ModelDeployment"/>. </summary>
         internal ModelDeployment() : base(DeploymentType.ModelDeployment)

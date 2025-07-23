@@ -152,7 +152,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the DatasetVersion
+        /// [Protocol Method] Get the specific version of the DatasetVersion. The service returns 404 Not Found error if the DatasetVersion does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the DatasetVersion
+        /// [Protocol Method] Get the specific version of the DatasetVersion. The service returns 404 Not Found error if the DatasetVersion does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -199,7 +199,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the specific version of the DatasetVersion. </summary>
+        /// <summary> Get the specific version of the DatasetVersion. The service returns 404 Not Found error if the DatasetVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -215,7 +215,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DatasetVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the specific version of the DatasetVersion. </summary>
+        /// <summary> Get the specific version of the DatasetVersion. The service returns 404 Not Found error if the DatasetVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -232,7 +232,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the DatasetVersion
+        /// [Protocol Method] Delete the specific version of the DatasetVersion. The service returns 204 No Content if the DatasetVersion was deleted successfully or if the DatasetVersion does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -256,7 +256,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the DatasetVersion
+        /// [Protocol Method] Delete the specific version of the DatasetVersion. The service returns 204 No Content if the DatasetVersion was deleted successfully or if the DatasetVersion does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -279,7 +279,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete the specific version of the DatasetVersion. </summary>
+        /// <summary> Delete the specific version of the DatasetVersion. The service returns 204 No Content if the DatasetVersion was deleted successfully or if the DatasetVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the DatasetVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -294,7 +294,7 @@ namespace Azure.AI.Projects
             return Delete(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Delete the specific version of the DatasetVersion. </summary>
+        /// <summary> Delete the specific version of the DatasetVersion. The service returns 204 No Content if the DatasetVersion was deleted successfully or if the DatasetVersion does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the DatasetVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -416,37 +416,37 @@ namespace Azure.AI.Projects
         /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
+        /// <param name="configuration"> The pending upload request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="configuration"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<PendingUploadResponse> PendingUpload(string name, string version, PendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
+        public virtual ClientResult<PendingUploadResult> PendingUpload(string name, string version, PendingUploadConfiguration configuration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+            Argument.AssertNotNull(configuration, nameof(configuration));
 
-            ClientResult result = PendingUpload(name, version, pendingUploadRequest, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((PendingUploadResponse)result, result.GetRawResponse());
+            ClientResult result = PendingUpload(name, version, configuration, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
+        /// <param name="configuration"> The pending upload request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="configuration"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<PendingUploadResponse>> PendingUploadAsync(string name, string version, PendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<PendingUploadResult>> PendingUploadAsync(string name, string version, PendingUploadConfiguration configuration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+            Argument.AssertNotNull(configuration, nameof(configuration));
 
-            ClientResult result = await PendingUploadAsync(name, version, pendingUploadRequest, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((PendingUploadResponse)result, result.GetRawResponse());
+            ClientResult result = await PendingUploadAsync(name, version, configuration, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -504,13 +504,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AssetCredentialResponse> GetCredentials(string name, string version, CancellationToken cancellationToken = default)
+        public virtual ClientResult<DatasetCredential> GetCredentials(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = GetCredentials(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((AssetCredentialResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
 
         /// <summary> Get the SAS credential to access the storage account associated with a Dataset version. </summary>
@@ -520,13 +520,13 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AssetCredentialResponse>> GetCredentialsAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<DatasetCredential>> GetCredentialsAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = await GetCredentialsAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((AssetCredentialResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
     }
 }

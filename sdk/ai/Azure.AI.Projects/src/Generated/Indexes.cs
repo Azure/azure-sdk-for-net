@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DatasetIndex> GetVersions(string name, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<SearchIndex> GetVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DatasetIndex> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<SearchIndex> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -138,7 +138,7 @@ namespace Azure.AI.Projects
         /// <summary> List the latest version of each Index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DatasetIndex> Get(CancellationToken cancellationToken = default)
+        public virtual CollectionResult<SearchIndex> Get(CancellationToken cancellationToken = default)
         {
             return new IndexesGetCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -146,13 +146,13 @@ namespace Azure.AI.Projects
         /// <summary> List the latest version of each Index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DatasetIndex> GetAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<SearchIndex> GetAsync(CancellationToken cancellationToken = default)
         {
             return new IndexesGetAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the Index
+        /// [Protocol Method] Get the specific version of the Index. The service returns 404 Not Found error if the Index does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Get the specific version of the Index
+        /// [Protocol Method] Get the specific version of the Index. The service returns 404 Not Found error if the Index does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -199,40 +199,40 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get the specific version of the Index. </summary>
+        /// <summary> Get the specific version of the Index. The service returns 404 Not Found error if the Index does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the Index to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DatasetIndex> Get(string name, string version, CancellationToken cancellationToken = default)
+        public virtual ClientResult<SearchIndex> Get(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = Get(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue((DatasetIndex)result, result.GetRawResponse());
+            return ClientResult.FromValue((SearchIndex)result, result.GetRawResponse());
         }
 
-        /// <summary> Get the specific version of the Index. </summary>
+        /// <summary> Get the specific version of the Index. The service returns 404 Not Found error if the Index does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the Index to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DatasetIndex>> GetAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<SearchIndex>> GetAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             ClientResult result = await GetAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue((DatasetIndex)result, result.GetRawResponse());
+            return ClientResult.FromValue((SearchIndex)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the Index
+        /// [Protocol Method] Delete the specific version of the Index. The service returns 204 No Content if the Index was deleted successfully or if the Index does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -256,7 +256,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the Index
+        /// [Protocol Method] Delete the specific version of the Index. The service returns 204 No Content if the Index was deleted successfully or if the Index does not exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -279,7 +279,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete the specific version of the Index. </summary>
+        /// <summary> Delete the specific version of the Index. The service returns 204 No Content if the Index was deleted successfully or if the Index does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the Index to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -294,7 +294,7 @@ namespace Azure.AI.Projects
             return Delete(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Delete the specific version of the Index. </summary>
+        /// <summary> Delete the specific version of the Index. The service returns 204 No Content if the Index was deleted successfully or if the Index does not exist. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the Index to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

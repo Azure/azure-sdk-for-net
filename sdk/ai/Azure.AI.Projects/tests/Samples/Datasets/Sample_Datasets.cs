@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-            AssetCredentialResponse credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
+            DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
             Console.WriteLine(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
@@ -234,7 +234,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(dataset.Id);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-            AssetCredentialResponse credentials = await projectClient.Datasets.GetCredentialsAsync(datasetName, datasetVersion1);
+            DatasetCredential credentials = await projectClient.Datasets.GetCredentialsAsync(datasetName, datasetVersion1);
             Console.WriteLine(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");

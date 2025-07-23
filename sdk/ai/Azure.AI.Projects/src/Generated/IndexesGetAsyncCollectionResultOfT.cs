@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class IndexesGetAsyncCollectionResultOfT : AsyncCollectionResult<DatasetIndex>
+    internal partial class IndexesGetAsyncCollectionResultOfT : AsyncCollectionResult<SearchIndex>
     {
         private readonly Indexes _client;
         private readonly RequestOptions _options;
@@ -64,9 +64,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<DatasetIndex> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<SearchIndex> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (DatasetIndex item in ((PagedIndex)page).Value)
+            foreach (SearchIndex item in ((PagedIndex)page).Value)
             {
                 yield return item;
                 await Task.Yield();
