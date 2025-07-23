@@ -3,8 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.SourceGeneration.Tests.SubNamespace;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace System.ClientModel.SourceGeneration.Tests
