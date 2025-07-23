@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
         }
 
+        private const string EnvTag = "env";
+        private const string OwnerTag = "owner";
+        private const string TestTag = "test";
+        private const string SdkTestTag = "sdk-test";
+        private const string StickerTagKey = "stickerKey";
+        private const string StickerTagValue = "stickerValue";
+        private const string RemoveStickerTagKey = "removeSticker";
+        public const string RemoveStickerTagValue = "removeMe";
+        public const string TeamTagKey = "team";
+        public const string TeamTagValue = "sdk";
+
         [SetUp]
         public async Task TestSetUp()
         {
@@ -56,33 +67,33 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Update
             var patch = new EventGridTopicPatch
             {
-                Tags = { { "env", "test" }, { "owner", "sdk-test" } }
+                Tags = { { EnvTag, TestTag }, { OwnerTag, SdkTestTag } }
             };
             await topic.UpdateAsync(WaitUntil.Completed, patch);
             var updatedTopic = await _eventGridTopicCollection.GetAsync(topicName);
-            Assert.IsTrue(updatedTopic.Value.Data.Tags.ContainsKey("env"));
+            Assert.IsTrue(updatedTopic.Value.Data.Tags.ContainsKey(EnvTag));
 
             // AddTag
-            var addTagResult = await topic.AddTagAsync("stickerKey", "stickerValue");
+            var addTagResult = await topic.AddTagAsync(StickerTagKey, StickerTagValue);
             Assert.IsNotNull(addTagResult);
             Assert.IsNotNull(addTagResult.Value);
-            Assert.IsTrue(addTagResult.Value.Data.Tags.ContainsKey("stickerKey"));
-            Assert.AreEqual("stickerValue", addTagResult.Value.Data.Tags["stickerKey"]);
+            Assert.IsTrue(addTagResult.Value.Data.Tags.ContainsKey(StickerTagKey));
+            Assert.AreEqual(StickerTagValue, addTagResult.Value.Data.Tags[StickerTagKey]);
 
             // SetTags
-            var tags = new Dictionary<string, string> { { "env", "test" }, { "team", "sdk" }, { "stickerKey", "stickerValue" } };
+            var tags = new Dictionary<string, string> { { EnvTag, TestTag }, { TeamTagKey, TeamTagValue }, { StickerTagKey, StickerTagValue } };
             var setTagsResult = await topic.SetTagsAsync(tags);
             Assert.IsNotNull(setTagsResult);
             Assert.IsNotNull(setTagsResult.Value);
-            Assert.IsTrue(setTagsResult.Value.Data.Tags.ContainsKey("stickerKey"));
-            Assert.AreEqual("stickerValue", setTagsResult.Value.Data.Tags["stickerKey"]);
+            Assert.IsTrue(setTagsResult.Value.Data.Tags.ContainsKey(StickerTagKey));
+            Assert.AreEqual(StickerTagValue, setTagsResult.Value.Data.Tags[StickerTagKey]);
 
             // RemoveTag
-            await topic.AddTagAsync("removeSticker", "removeMe");
-            var removeTagResult = await topic.RemoveTagAsync("removeSticker");
+            await topic.AddTagAsync(RemoveStickerTagKey, RemoveStickerTagValue);
+            var removeTagResult = await topic.RemoveTagAsync(RemoveStickerTagKey);
             Assert.IsNotNull(removeTagResult);
             Assert.IsNotNull(removeTagResult.Value);
-            Assert.IsFalse(removeTagResult.Value.Data.Tags.ContainsKey("removeSticker"));
+            Assert.IsFalse(removeTagResult.Value.Data.Tags.ContainsKey(RemoveStickerTagKey));
 
             // Exists
             bool exists = await _eventGridTopicCollection.ExistsAsync(topicName);
@@ -121,19 +132,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
 
-            // GetTopicEventSubscriptionAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await topic.GetTopicEventSubscriptionAsync("nonexistent-subscription");
             });
 
-            // GetTopicNetworkSecurityPerimeterConfigurationAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await topic.GetTopicNetworkSecurityPerimeterConfigurationAsync("perimeter-guid", "association");
             });
 
-            // GetEventGridTopicPrivateEndpointConnectionAsync (should throw)
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await topic.GetEventGridTopicPrivateEndpointConnectionAsync("pec-name");

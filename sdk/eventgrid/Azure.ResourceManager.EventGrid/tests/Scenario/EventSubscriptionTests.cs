@@ -10,7 +10,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using static System.Net.WebRequestMethods;
 
 namespace Azure.ResourceManager.EventGrid.Tests
 {

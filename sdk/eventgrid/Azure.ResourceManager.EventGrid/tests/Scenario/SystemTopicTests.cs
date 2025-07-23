@@ -59,13 +59,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
             };
 
             var beforeCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
-            Console.WriteLine($"System topics before creation: {beforeCreateSystemTopics.Count}");
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
-            Console.WriteLine($"Created system topic: {createSystemTopicResponse.Data.Name}");
             Assert.NotNull(createSystemTopicResponse);
             Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
             var afterCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
-            Console.WriteLine($"System topics after creation: {afterCreateSystemTopics.Count}");
 
             // List all system topics under resource group
             var systemTopicsUnderResourceGroup = await ResourceGroup.GetSystemTopics().GetAllAsync().ToEnumerableAsync();
@@ -158,7 +155,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.Storage/storageAccounts/sdkegteststorageaccount",
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine($"Deleting existing system topic: {existingTopic.Data.Name}");
                     await existingTopic.DeleteAsync(WaitUntil.Completed);
                 }
             }

@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createResponse = await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName, domainData);
             var domainResource = createResponse.Value;
             Assert.NotNull(domainResource);
+            Assert.NotNull(domainResource.Data);
             Assert.AreEqual(DefaultLocation.Name, domainResource.Data.Location.Name);
             Assert.IsFalse(string.IsNullOrWhiteSpace(domainName));
             Assert.IsTrue(domainName.StartsWith("sdk-domain-"));
@@ -123,9 +124,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var topicCollection = domainResource.GetDomainTopics();
             var topic = await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName);
             Assert.NotNull(topic);
+            Assert.NotNull(topic.Value);
+            Assert.NotNull(topic.Value.Data);
             Assert.AreEqual(topicName, topic.Value.Data.Name);
 
             var getTopic = await domainResource.GetDomainTopicAsync(topicName);
+            Assert.NotNull(getTopic);
+            Assert.NotNull(getTopic.Value);
+            Assert.NotNull(getTopic.Value.Data);
             Assert.AreEqual(topicName, getTopic.Value.Data.Name);
 
             await topic.Value.DeleteAsync(WaitUntil.Completed);
