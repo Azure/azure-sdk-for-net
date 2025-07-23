@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using OpenTelemetry;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -14,14 +15,11 @@ public class RateLimitedSamplerTests
     [Fact]
     public void RespectLocalParentDecision()
     {
-        var sampler = new RateLimitedSampler(10000);
+        var sampler = new RateLimitedSampler(1000);
+        // ensure when sampler sees first trace, it will think rate is <= 1/100
+        System.Threading.Thread.Sleep(10);
         var parentActivity = new Activity("ParentActivity");
         parentActivity.Start();
-
-        // Create a child activity with the parent as its context
-        var childActivity = new Activity("ChildActivity");
-        childActivity.SetParentId(parentActivity.TraceId, parentActivity.SpanId, parentActivity.ActivityTraceFlags);
-        childActivity.Start();
 
         var parentSamplingParams = new SamplingParameters(default(ActivityContext), parentActivity.TraceId, parentActivity.OperationName, ActivityKind.Internal);
         var parentResult = sampler.ShouldSample(parentSamplingParams);
@@ -32,18 +30,37 @@ public class RateLimitedSamplerTests
         Assert.IsType<double>(parentSampleRateAttr.Value);
         double parentSampleRate = (double)parentSampleRateAttr.Value;
         Assert.True(parentSampleRate > 0);
-        var childSamplingParams = new SamplingParameters(childActivity.Parent?.Context ?? default(ActivityContext), parentActivity.TraceId, childActivity.OperationName, ActivityKind.Internal);
-        var childResult = sampler.ShouldSample(childSamplingParams);
 
-        childActivity.Stop();
+        var parentActivityContext = new ActivityContext(
+            parentActivity.TraceId,
+            parentActivity.SpanId,
+            ActivityTraceFlags.Recorded,
+            null,
+            isRemote: false
+        );
+        Console.WriteLine($"Parent trace ID: {parentActivity.TraceId}, spanid: {parentActivity.SpanId}");
+        Console.WriteLine($"Parent Activity Context: {parentActivityContext.TraceId}, {parentActivityContext.SpanId}");
+
+        for (int i = 0; i < 100; i++) {
+             // Create a child activity with the parent as its context
+            var childActivity = new Activity($"ChildActivity_{i}");
+            childActivity.SetParentId(parentActivity.TraceId, parentActivity.SpanId, parentActivity.ActivityTraceFlags);
+            childActivity.Start();
+
+            var childSamplingParams = new SamplingParameters(parentActivityContext, parentActivity.TraceId, childActivity.OperationName, ActivityKind.Internal);
+            var childResult = sampler.ShouldSample(childSamplingParams);
+
+            // Assert child span is sampled and has same attribute
+            Assert.Equal(SamplingDecision.RecordAndSample, childResult.Decision);
+            var childSampleRateAttr = Assert.Single(childResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
+            Assert.IsType<double>(childSampleRateAttr.Value);
+            double childSampleRate = (double)childSampleRateAttr.Value;
+            Assert.Equal(parentSampleRate, childSampleRate);
+
+            childActivity.Stop();
+        }
+
         parentActivity.Stop();
-
-        // Assert child span is sampled and has same attribute
-        Assert.Equal(SamplingDecision.RecordAndSample, childResult.Decision);
-        var childSampleRateAttr = Assert.Single(childResult.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
-        Assert.IsType<double>(childSampleRateAttr.Value);
-        double childSampleRate = (double)childSampleRateAttr.Value;
-        Assert.Equal(parentSampleRate, childSampleRate);
     }
 
     [Fact]
@@ -124,7 +141,7 @@ public class RateLimitedSamplerTests
         var sampler = new RateLimitedSampler(100);
         // sleeping to allow for the sampler to adapt. If we send the first span before the adaptation time has passed,
         // the span will not be sampled.
-        System.Threading.Thread.Sleep(100);
+        System.Threading.Thread.Sleep(50);
         var parentContext = default(ActivityContext); // No parent
         var traceId = ActivityTraceId.CreateRandom();
         var samplingParams = new SamplingParameters(
@@ -147,27 +164,26 @@ public class RateLimitedSamplerTests
         var sampler = new RateLimitedSampler(50);
         int sampledin = 0;
         var parentContext = default(ActivityContext);
-
-        System.Threading.Thread.Sleep(100); // Allow for adaptation time
+        System.Threading.Thread.Sleep(50); // Allow for adaptation time
         // Simulate 1000 spans being created in just over 1 second.
-        for (int i = 0; i < 5; i++)
+        DateTime start = DateTime.UtcNow;
+        for (int i = 0; i < 100; i++)
         {
-            for (int j = 0; j < 200; j++)
+            var traceId = ActivityTraceId.CreateRandom();
+            var samplingParams = new SamplingParameters(parentContext, traceId, $"TestActivity_{i}", ActivityKind.Internal);
+            var result = sampler.ShouldSample(samplingParams);
+            if (result.Decision == SamplingDecision.RecordAndSample)
             {
-                var traceId = ActivityTraceId.CreateRandom();
-                var samplingParams = new SamplingParameters(parentContext, traceId, $"TestActivity_{i}_{j}", ActivityKind.Internal);
-                var result = sampler.ShouldSample(samplingParams);
-                if (result.Decision == SamplingDecision.RecordAndSample)
-                {
-                    sampledin++;
-                }
+                sampledin++;
             }
-            System.Threading.Thread.Sleep(200); // 0.2 seconds
+            System.Threading.Thread.Sleep(2);
         }
-
-        // We would expect at least 50 be sampled in, but there may be some variance based on adaptation and time intervals.
-        Console.WriteLine($"Sampled in {sampledin} spans out of 1000 attempts.");
-        Assert.InRange(sampledin, 50, 150);
+        // We would expect 50 to be sampled in, but there may be some variance based on sleep scheduling/elapsed time.
+        DateTime end = DateTime.UtcNow;
+        TimeSpan elapsed = end - start;
+        Console.WriteLine($"Elapsed: {elapsed.TotalSeconds} s");
+        Console.WriteLine($"Sampled in {sampledin} spans out of 100 attempts.");
+        Assert.InRange(sampledin, 25, 50 * elapsed.TotalSeconds);
     }
 
     [Fact]
@@ -177,22 +193,19 @@ public class RateLimitedSamplerTests
         int sampledin = 0;
         var parentContext = default(ActivityContext);
 
-        System.Threading.Thread.Sleep(100); // Allow for adaptation time
+        System.Threading.Thread.Sleep(50); // Allow for adaptation time
 
         // Simulate 50 spans being created in just over 1 second.
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 50; i++)
         {
-            for (int j = 0; j < 10; j++)
+            var traceId = ActivityTraceId.CreateRandom();
+            var samplingParams = new SamplingParameters(parentContext, traceId, $"TestActivity_{i}", ActivityKind.Internal);
+            var result = sampler.ShouldSample(samplingParams);
+            if (result.Decision == SamplingDecision.RecordAndSample)
             {
-                var traceId = ActivityTraceId.CreateRandom();
-                var samplingParams = new SamplingParameters(parentContext, traceId, $"TestActivity_{i}_{j}", ActivityKind.Internal);
-                var result = sampler.ShouldSample(samplingParams);
-                if (result.Decision == SamplingDecision.RecordAndSample)
-                {
-                    sampledin++;
-                }
+                sampledin++;
             }
-            System.Threading.Thread.Sleep(200); // 0.2 seconds
+            System.Threading.Thread.Sleep(2); // 0.2 seconds
         }
 
         // We would expect all spans to be sampled in.

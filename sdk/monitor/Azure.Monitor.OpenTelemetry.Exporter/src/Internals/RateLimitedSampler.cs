@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             // fetch the sampling rate from the parent span attributes
-            var parentAttributes = Activity.Current?.Tags;
+            var parentAttributes = Activity.Current?.Tags; // this seems to not always work, activity.current is sometimes default
             string? parentSampleRate = parentAttributes?.FirstOrDefault(kv => kv.Key == "microsoft.sample_rate").Value;
 
             if (parentSampleRate == null)
