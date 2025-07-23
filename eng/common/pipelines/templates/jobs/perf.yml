@@ -113,6 +113,8 @@ jobs:
     parameters:
       AgentImage: $(OSVmImage)
       
+  - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml
