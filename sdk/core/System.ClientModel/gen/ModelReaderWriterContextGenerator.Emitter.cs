@@ -105,6 +105,10 @@ internal sealed partial class ModelReaderWriterContextGenerator
             {
                 WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () =>
                 {
+                    if (modelInfo.Type.ExperimentalDiagnosticId != null)
+                    {
+                        builder.AppendLine(indent, $"#pragma warning disable {modelInfo.Type.ExperimentalDiagnosticId}");
+                    }
                     builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo.Type.FullyQualifiedName}), () => ");
                     if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
                     {
@@ -113,6 +117,10 @@ internal sealed partial class ModelReaderWriterContextGenerator
                     else
                     {
                         builder.AppendLine($" s_referenceContexts[typeof({modelInfo.ContextType.FullyQualifiedName})].GetTypeBuilder(typeof({modelInfo.Type.FullyQualifiedName})));");
+                    }
+                    if (modelInfo.Type.ExperimentalDiagnosticId != null)
+                    {
+                        builder.AppendLine(indent, $"#pragma warning restore {modelInfo.Type.ExperimentalDiagnosticId}");
                     }
                 });
             }

@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.SourceGeneration.Tests.SubNamespace;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
@@ -32,20 +33,6 @@ namespace System.ClientModel.SourceGeneration.Tests
         public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
 
         PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
-    }
-
-#pragma warning disable SA1402 // File may only contain a single type
-#if NET8_0_OR_GREATER
-    [Experimental("TEST001")]
-#endif
-    internal class ExperimentalModel : IPersistableModel<ExperimentalModel>
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-
-        ExperimentalModel IPersistableModel<ExperimentalModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new ExperimentalModel();
     }
 
     [PersistableModelProxy(typeof(UnknownBaseJsonModel))]

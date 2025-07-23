@@ -45,12 +45,13 @@
     <Compile Include="..\ModelReaderWriterTests\MrwTestBase.cs" LinkBase="SharedTests" />
     <Compile Include="..\ModelReaderWriterTests\RoundTripStrategy.cs" LinkBase="SharedTests" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\BaseModel.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelX.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\ModelY.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ModelReaderWriter\Models\DiscriminatorSet\UnknownBaseModel.cs" LinkBase="Shared\Models" />
+    <Compile Include="..\client\ModelReaderWriter\Models\ExperimentalModel.cs" LinkBase="Shared\Models" />
     <Compile Include="..\client\ClientShared\ModelReaderWriterHelper.cs" LinkBase="Shared\Helpers" />
     <Compile Include="..\client\ClientShared\OptionalProperty.cs" LinkBase="Shared\Helpers" />
     <Compile Include="..\client\ClientShared\OptionalList.cs" LinkBase="Shared\Helpers" />
@@ -64,5 +65,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
 </Project>
