@@ -30,7 +30,6 @@ namespace System.ClientModel.SourceGeneration
             {
                 var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
                 var itemType = itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache);
-                string? experimentalDiagnosticId = GetExperimentalDiagnosticId(symbol);
 
                 return new TypeRef(
                     symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
@@ -40,7 +39,7 @@ namespace System.ClientModel.SourceGeneration
                     isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache),
                     itemType,
                     obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol),
-                    experimentalDiagnosticId: experimentalDiagnosticId);
+                    experimentalDiagnosticId: itemType is not null ? itemType.ExperimentalDiagnosticId : GetExperimentalDiagnosticId(symbol));
             }
             else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
             {
@@ -56,7 +55,8 @@ namespace System.ClientModel.SourceGeneration
                     isContext ? null : GetContextType(assembly, symbolToKindCache),
                     elementType,
                     arrayTypeSymbol.Rank,
-                    obsoleteLevel: elementType.ObsoleteLevel);
+                    obsoleteLevel: elementType.ObsoleteLevel,
+                    experimentalDiagnosticId: elementType.ExperimentalDiagnosticId);
             }
             else
             {

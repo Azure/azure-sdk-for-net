@@ -103,7 +103,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             indent++;
             foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
             {
-                WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () =>
+                WrapInSuppress(modelInfo.Type, builder, () =>
                 {
                     if (modelInfo.Type.ExperimentalDiagnosticId != null)
                     {
@@ -332,7 +332,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var elementType = modelInfo.Type.ItemType!;
 
-            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            WrapInSuppress(elementType, builder, () =>
             {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
@@ -394,7 +394,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var elementType = modelInfo.Type.ItemType!;
 
-            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            WrapInSuppress(elementType, builder, () =>
             {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
@@ -458,7 +458,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
-            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            WrapInSuppress(elementType, builder, () =>
             {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
@@ -501,7 +501,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var elementType = modelInfo.Type.ItemType!;
 
-            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            WrapInSuppress(elementType, builder, () =>
             {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
@@ -530,7 +530,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var elementType = modelInfo.Type.ItemType!;
 
-            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            WrapInSuppress(elementType, builder, () =>
             {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
@@ -558,7 +558,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo,
             TypeRef context)
         {
-            WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () => {
+            WrapInSuppress(modelInfo.Type, builder, () => {
                 builder.Append(indent, "protected override ");
                 builder.AppendType(typeof(Type));
                 builder.AppendLine($" BuilderType => typeof({modelInfo.Type.FullyQualifiedName});");
@@ -567,31 +567,42 @@ internal sealed partial class ModelReaderWriterContextGenerator
 
             if (modelInfo.PersistableModelProxy is not null)
             {
-                WrapInSuppress(modelInfo.PersistableModelProxy.ObsoleteLevel, builder, () =>
+                WrapInSuppress(modelInfo.PersistableModelProxy, builder, () =>
                     builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.PersistableModelProxy.FullyQualifiedName}();"));
             }
             else
             {
-                WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () =>
+                WrapInSuppress(modelInfo.Type, builder, () =>
                     builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.FullyQualifiedName}();"));
             }
         }
 
         /// <summary>
         /// Helper method to wrap the action in #pragma warning disable CS0618 and #pragma warning restore CS0618.
-        /// This is needed if MRW is used with a type that is marked as Obsolete, but not marked as an error.
+        /// This is needed if MRW is used with a type that is marked as Obsolete, but not marked as an error. It is also
+        /// used for types that have an experimental diagnostic ID.
         /// </summary>
-        private static void WrapInSuppress(ObsoleteLevel level, StringBuilder builder, Action action)
+        private static void WrapInSuppress(TypeRef typeRef, StringBuilder builder, Action action)
         {
-            if (level == ObsoleteLevel.None)
+            if (typeRef.ObsoleteLevel != ObsoleteLevel.None)
             {
-                action();
-                return;
+                builder.AppendLine("#pragma warning disable CS0618");
+            }
+            if (typeRef.ExperimentalDiagnosticId != null)
+            {
+                builder.AppendLine($"#pragma warning disable {typeRef.ExperimentalDiagnosticId}");
             }
 
-            builder.AppendLine("#pragma warning disable CS0618");
             action();
-            builder.AppendLine("#pragma warning restore CS0618");
+
+            if (typeRef.ExperimentalDiagnosticId != null)
+            {
+                builder.AppendLine($"#pragma warning restore {typeRef.ExperimentalDiagnosticId}");
+            }
+            if (typeRef.ObsoleteLevel != ObsoleteLevel.None)
+            {
+                builder.AppendLine("#pragma warning restore CS0618");
+            }
         }
 
         private HashSet<string> GetNameSpaces(ModelReaderWriterContextGenerationSpec contextGenerationSpec)

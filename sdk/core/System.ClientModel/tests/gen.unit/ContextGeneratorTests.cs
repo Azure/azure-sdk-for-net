@@ -19,37 +19,37 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
+  using System;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(JsonModel))]
-  [ModelReaderWriterBuildable(typeof(UnknownJsonModel))]
-  public partial class LocalContext : ModelReaderWriterContext { }
-
-  public class Caller
+  namespace TestProject
   {
-      public void Call()
-      {
-          ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
-      }
-  }
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(UnknownJsonModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
 
-  [PersistableModelProxy(typeof(UnknownJsonModel))]
-  public class JsonModel : IJsonModel<JsonModel>
-  {
-      protected JsonModel() { }
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownJsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownJsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-  }
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
+        }
+    }
 
-  internal class UnknownJsonModel : JsonModel {}
-}
-""";
+    [PersistableModelProxy(typeof(UnknownJsonModel))]
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        protected JsonModel() { }
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    internal class UnknownJsonModel : JsonModel {}
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -85,28 +85,28 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
+  using System;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(PersistableModel))]
-  public partial class LocalContext : ModelReaderWriterContext
+  namespace TestProject
   {
+    [ModelReaderWriterBuildable(typeof(PersistableModel))]
+    public partial class LocalContext : ModelReaderWriterContext
+    {
+    }
+
+    public class PersistableModel : IPersistableModel<PersistableModel>
+    {
+        {{modifier}} PersistableModel() { }
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+
+        PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
+    }
   }
-
-  public class PersistableModel : IPersistableModel<PersistableModel>
-  {
-      {{modifier}} PersistableModel() { }
-
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-
-      PersistableModel IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new PersistableModel();
-  }
-}
-""";
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -141,38 +141,38 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Text.Json;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(JsonModel))]
-  [ModelReaderWriterBuildable(typeof(TestProject2.JsonModel))]
-  public partial class LocalContext : ModelReaderWriterContext { }
-
-  public class JsonModel : IJsonModel<JsonModel>
+  namespace TestProject
   {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-  }
-}
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(TestProject2.JsonModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
 
-namespace TestProject2
-{
-  public class JsonModel : IJsonModel<JsonModel>
-  {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
   }
-}
-""";
+
+  namespace TestProject2
+  {
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -200,35 +200,35 @@ namespace TestProject2
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
+  using System;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(JsonModel))]
-  [ModelReaderWriterBuildable(typeof(UnknownJsonModel))]
-  public partial class LocalContext : ModelReaderWriterContext { }
-
-  public class Caller
+  namespace TestProject
   {
-      public void Call()
-      {
-          ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
-      }
-  }
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(UnknownJsonModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
 
-  public abstract class JsonModel : IJsonModel<JsonModel>
-  {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownJsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownJsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-  }
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
+        }
+    }
 
-  internal class UnknownJsonModel : JsonModel {}
-}
-""";
+    public abstract class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownJsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    internal class UnknownJsonModel : JsonModel {}
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -250,32 +250,32 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
+  using System;
+  using System.ClientModel.Primitives;
 
-namespace _Type.Foo
-{
-  [ModelReaderWriterBuildable(typeof(JsonModel))]
-  public partial class LocalContext : ModelReaderWriterContext { }
-
-  public class Foo
+  namespace _Type.Foo
   {
-      public void Caller()
-      {
-          ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
-      }
-  }
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
 
-  public class JsonModel : IJsonModel<JsonModel>
-  {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    public class Foo
+    {
+        public void Caller()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(JsonModel), ModelReaderWriterOptions.Json, LocalContext.Default);
+        }
+    }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
   }
-}
-""";
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source, assemblyName: "Type.Foo");
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -308,48 +308,48 @@ namespace _Type.Foo
         {
             string depSource =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Text.Json;
 
-namespace TestDependency
-{
-  [ModelReaderWriterBuildable(typeof(JsonModel))]
-  internal partial class LocalContext : ModelReaderWriterContext { }
-
-  public class JsonModel : IJsonModel<JsonModel>
+  namespace TestDependency
   {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    internal partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
   }
-}
-""";
+  """;
 
             Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
 
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using TestDependency;
+  using System;
+  using System.ClientModel.Primitives;
+  using TestDependency;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(JsonModel))]
-  public partial class MyLocalContext : ModelReaderWriterContext { }
-
-  public class Caller
+  namespace TestProject
   {
-      public void Call()
-      {
-          ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, MyLocalContext.Default);
-      }
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    public partial class MyLocalContext : ModelReaderWriterContext { }
+
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, MyLocalContext.Default);
+        }
+    }
   }
-}
-""";
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(
                 source,
@@ -371,45 +371,45 @@ namespace TestProject
         {
             string depSource =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Text.Json;
 
-namespace TestDependency
-{
-  public class JsonModel : IJsonModel<JsonModel>
+  namespace TestDependency
   {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
   }
-}
-""";
+  """;
 
             Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
 
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using TestDependency;
+  using System;
+  using System.ClientModel.Primitives;
+  using TestDependency;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class Caller
-    {
-        public void Call()
-        {
-            ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
-        }
-    }
-}
-""";
+      public class Caller
+      {
+          public void Call()
+          {
+              ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+          }
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(
                 source,
@@ -430,23 +430,23 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
+  using System;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(Foo))]
-  public partial class LocalContext : ModelReaderWriterContext { }
-
-  public class Foo
+  namespace TestProject
   {
-      public void Caller()
-      {
-          ModelReaderWriter.Read(BinaryData.Empty, typeof(Foo));
-      }
+    [ModelReaderWriterBuildable(typeof(Foo))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Foo
+    {
+        public void Caller()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(Foo));
+        }
+    }
   }
-}
-""";
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -465,15 +465,15 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class Foo { }
-}
-""";
+      public class Foo { }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -486,24 +486,24 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
-using System;
-using System.Text.Json;
+  using System.ClientModel.Primitives;
+  using System;
+  using System.Text.Json;
 
-namespace TestProject
-{
-  public partial class LocalContext : ModelReaderWriterContext { }
-
-  public class JsonModel : IJsonModel<JsonModel>
+  namespace TestProject
   {
-      public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-      public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-      public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-      public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-      public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
   }
-}
-""";
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -517,14 +517,14 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-  [ModelReaderWriterBuildable(typeof(int))]
-  {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
-}
-""";
+  namespace TestProject
+  {
+    [ModelReaderWriterBuildable(typeof(int))]
+    {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -544,24 +544,24 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
-using System;
-using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+  using System.ClientModel.Primitives;
+  using System;
+  using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(AvailabilitySetData))]
-    {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(AvailabilitySetData))]
+      {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
 
-    public class Caller
-    {
-        public void Call()
-        {
-            ModelReaderWriter.Read(BinaryData.Empty, typeof(AvailabilitySetData), ModelReaderWriterOptions.Json, LocalContext.Default);
-        }
-    }
-}
-""";
+      public class Caller
+      {
+          public void Call()
+          {
+              ModelReaderWriter.Read(BinaryData.Empty, typeof(AvailabilitySetData), ModelReaderWriterOptions.Json, LocalContext.Default);
+          }
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(
                 source,
@@ -598,16 +598,16 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(int))]
-    public partial class LocalContext1 : ModelReaderWriterContext { }
-    [ModelReaderWriterBuildable(typeof(int))]
-    public partial class LocalContext2 : ModelReaderWriterContext { }
-}
-""";
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(int))]
+      public partial class LocalContext1 : ModelReaderWriterContext { }
+      [ModelReaderWriterBuildable(typeof(int))]
+      public partial class LocalContext2 : ModelReaderWriterContext { }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -623,14 +623,14 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(int))]
-    public class LocalContext : ModelReaderWriterContext { }
-}
-""";
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(int))]
+      public class LocalContext : ModelReaderWriterContext { }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -647,16 +647,16 @@ namespace TestProject
         {
             string source =
 $$"""
-using System.ClientModel.Primitives;
+  using System.ClientModel.Primitives;
 
-namespace TestProject
-{
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    [ModelReaderWriterBuildable(typeof(int))]
-    public class WrongClass { }
-}
-""";
+      [ModelReaderWriterBuildable(typeof(int))]
+      public class WrongClass { }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
@@ -678,35 +678,35 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Collections.Generic;
+  using System.Text.Json;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(int))]
-    public class BadContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(int))]
+      public class BadContext { }
 
-    [ModelReaderWriterBuildable(typeof(List<JsonModel>))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+      [ModelReaderWriterBuildable(typeof(List<JsonModel>))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
 
-        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
 
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-        }
+          public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+          {
+          }
 
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
-}
-""";
+          public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(
                 source,
@@ -737,25 +737,25 @@ namespace TestProject
         {
             string depSource =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Text.Json;
 
-namespace TestDependency
-{
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestDependency
+  {
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
-}
-""";
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+  }
+  """;
 
             Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
             var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
@@ -769,24 +769,24 @@ namespace TestDependency
 
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using TestDependency;
+  using System;
+  using System.ClientModel.Primitives;
+  using TestDependency;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-    public partial class MyLocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+      public partial class MyLocalContext : ModelReaderWriterContext { }
 
-    public class Caller
-    {
-        public void Call()
-        {
-            ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, MyLocalContext.Default);
-        }
-    }
-}
-""";
+      public class Caller
+      {
+          public void Call()
+          {
+              ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, MyLocalContext.Default);
+          }
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(
                 source,
@@ -833,28 +833,28 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Collections.Generic;
+  using System.Text.Json;
 
-namespace TestProject
-{
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-#pragma warning restore CS0618 // Type or member is obsolete
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+  #pragma warning disable CS0618 // Type or member is obsolete
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+  #pragma warning restore CS0618 // Type or member is obsolete
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
-}
+      [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+  }
 """;
             HashSet<string>? additionalSuppress = isError ? ["CS0619"] : null;
             Compilation compilation =
@@ -894,39 +894,39 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Collections.Generic;
+  using System.Text.Json;
 
-namespace TestProject
-{
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof({{collectionType}}))]
-#pragma warning restore CS0618 // Type or member is obsolete
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+  #pragma warning disable CS0618 // Type or member is obsolete
+      [ModelReaderWriterBuildable(typeof({{collectionType}}))]
+  #pragma warning restore CS0618 // Type or member is obsolete
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
+      [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
 
-    public class Caller
-    {
-        public void Call()
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            ModelReaderWriter.Read<{{collectionType}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-    }
-}
-""";
+      public class Caller
+      {
+          public void Call()
+          {
+  #pragma warning disable CS0618 // Type or member is obsolete
+              ModelReaderWriter.Read<{{collectionType}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+  #pragma warning restore CS0618 // Type or member is obsolete
+          }
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(
                 source,
@@ -1003,46 +1003,46 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Collections.Generic;
+  using System.Text.Json;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-    [ModelReaderWriterBuildable(typeof(Jsonmodel))]
-    [ModelReaderWriterBuildable(typeof(JsonmodeL))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+      [ModelReaderWriterBuildable(typeof(Jsonmodel))]
+      [ModelReaderWriterBuildable(typeof(JsonmodeL))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
 
-    public class Jsonmodel : IJsonModel<Jsonmodel>
-    {
-        Jsonmodel IJsonModel<Jsonmodel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new Jsonmodel();
-        Jsonmodel IPersistableModel<Jsonmodel>.Create(BinaryData data, ModelReaderWriterOptions options) => new Jsonmodel();
-        string IPersistableModel<Jsonmodel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<Jsonmodel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<Jsonmodel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
+      public class Jsonmodel : IJsonModel<Jsonmodel>
+      {
+          Jsonmodel IJsonModel<Jsonmodel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new Jsonmodel();
+          Jsonmodel IPersistableModel<Jsonmodel>.Create(BinaryData data, ModelReaderWriterOptions options) => new Jsonmodel();
+          string IPersistableModel<Jsonmodel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<Jsonmodel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<Jsonmodel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
 
-    public class JsonmodeL : IJsonModel<JsonmodeL>
-    {
-        JsonmodeL IJsonModel<JsonmodeL>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonmodeL();
-        JsonmodeL IPersistableModel<JsonmodeL>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonmodeL();
-        string IPersistableModel<JsonmodeL>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<JsonmodeL>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<JsonmodeL>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
-}
-""";
+      public class JsonmodeL : IJsonModel<JsonmodeL>
+      {
+          JsonmodeL IJsonModel<JsonmodeL>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonmodeL();
+          JsonmodeL IPersistableModel<JsonmodeL>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonmodeL();
+          string IPersistableModel<JsonmodeL>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonmodeL>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonmodeL>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
 
@@ -1073,28 +1073,28 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Collections.Generic;
+  using System.Text.Json;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
 
-    public readonly struct Type {}
-}
-""";
+      public readonly struct Type {}
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
 
@@ -1116,37 +1116,37 @@ namespace TestProject
         {
             string source =
 $$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Text.Json;
 
-namespace TestProject
-{
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+  namespace TestProject
+  {
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class JsonModel : IJsonModel<JsonModel>
-    {
-        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
 
-    [ModelReaderWriterBuildable(typeof(JsonModel2))]
-    public partial class LocalContext : ModelReaderWriterContext { }
+      [ModelReaderWriterBuildable(typeof(JsonModel2))]
+      public partial class LocalContext : ModelReaderWriterContext { }
 
-    public class JsonModel2 : IJsonModel<JsonModel2>
-    {
-        public JsonModel2 Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel2();
-        public JsonModel2 Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel2();
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
-    }
-}
-""";
+      public class JsonModel2 : IJsonModel<JsonModel2>
+      {
+          public JsonModel2 Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel2();
+          public JsonModel2 Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel2();
+          public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+  }
+  """;
 
             Compilation compilation = CompilationHelper.CreateCompilation(source);
 
@@ -1167,7 +1167,7 @@ namespace TestProject
 
 #if NET8_0_OR_GREATER
         [Test]
-        public void BuilderForExperimentalPersistableHasSuppression()
+        public void ExperimentalModels()
         {
             string source =
 """
@@ -1209,7 +1209,8 @@ namespace TestProject
 """;
             Compilation compilation = CompilationHelper.CreateCompilation(source);
 
-            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
+            var result =
+                CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
             Assert.IsNotNull(result.GenerationSpec);
 
             // Verify the new compilation still has warnings for direct usage but not for generated code
@@ -1218,7 +1219,8 @@ namespace TestProject
             Assert.AreEqual(0, errors.Length, "Compilation should not have errors");
 
             // Check for experimental warnings - should still have them for direct usage in TestUsage class
-            var experimentalWarnings = diagnostics.Where(d => (d.Id == "TEST001" || d.Id == "TEST002") && !d.Location.IsInSource).ToArray();
+            var experimentalWarnings = diagnostics
+                .Where(d => (d.Id == "TEST001" || d.Id == "TEST002") && !d.Location.IsInSource).ToArray();
             Assert.AreEqual(0, experimentalWarnings.Length, "Generated code should not produce experimental warnings");
 
             // Check the context file for pragma suppressions in the constructor
@@ -1248,6 +1250,370 @@ namespace TestProject
             Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
             Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
             Assert.AreEqual("TEST002", result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
+        }
+
+        [Test]
+        public void ExperimentalAndRegularModels()
+        {
+            string source =
+"""
+using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+
+namespace TestProject
+{
+#pragma warning disable TEST001 // Experimental type
+  [ModelReaderWriterBuildable(typeof(JsonModel))]
+#pragma warning restore TEST001 // Experimental type
+  [ModelReaderWriterBuildable(typeof(OtherModel))]
+  public partial class LocalContext : ModelReaderWriterContext { }
+
+  [Experimental("TEST001")]
+  public class JsonModel : IJsonModel<JsonModel>
+  {
+      JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+      JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+      string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+      void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+      BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+  }
+
+  public class OtherModel : IJsonModel<OtherModel>
+  {
+      OtherModel IJsonModel<OtherModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new OtherModel();
+      OtherModel IPersistableModel<OtherModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new OtherModel();
+      string IPersistableModel<OtherModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+      void IJsonModel<OtherModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+      BinaryData IPersistableModel<OtherModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+  }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+
+            var result =
+                CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
+            Assert.IsNotNull(result.GenerationSpec);
+
+            // Verify the new compilation still has warnings for direct usage but not for generated code
+            var diagnostics = newCompilation.GetDiagnostics();
+            var errors = diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
+            Assert.AreEqual(0, errors.Length, "Compilation should not have errors");
+
+            // Check for experimental warnings - should still have them for direct usage in TestUsage class
+            var experimentalWarnings = diagnostics
+                .Where(d => (d.Id == "TEST001") && !d.Location.IsInSource).ToArray();
+            Assert.AreEqual(0, experimentalWarnings.Length, "Generated code should not produce experimental warnings");
+
+            // Check the context file for pragma suppressions in the constructor
+            var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
+            var contextText = contextSource.SourceText.ToString();
+
+            // The constructor should have pragma suppressions for experimental types
+            StringAssert.Contains("#pragma warning disable TEST001", contextText);
+            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText);
+            StringAssert.Contains("#pragma warning restore TEST001", contextText);
+
+            // Also check the builder files
+            var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
+            var jsonModelText = jsonModelBuilder.SourceText.ToString();
+            StringAssert.Contains("#pragma warning disable TEST001", jsonModelText);
+            StringAssert.Contains("#pragma warning restore TEST001", jsonModelText);
+
+            var otherModelBuilder = generatedSources.First(s => s.HintName.Contains("OtherModel_Builder"));
+            var otherModelText = otherModelBuilder.SourceText.ToString();
+            StringAssert.DoesNotContain("#pragma warning disable", otherModelText);
+            StringAssert.DoesNotContain("#pragma warning restore", otherModelText);
+
+            Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
+            Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
+            Assert.IsNull(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
+        }
+
+        [Test]
+        public void ExperimentalAndObsoleteModels()
+        {
+            string source =
+$$"""
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Diagnostics.CodeAnalysis;
+  using System.Text.Json;
+
+  namespace TestProject
+  {
+  #pragma warning disable TEST001 // Experimental type
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+  #pragma warning restore TEST001 // Experimental type
+  #pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof(OtherModel))]
+  #pragma warning restore CS0618 // Type or member is obsolete
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    [Experimental("TEST001")]
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    [Obsolete("This is obsolete")]
+    public class OtherModel : IJsonModel<OtherModel>
+    {
+        OtherModel IJsonModel<OtherModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new OtherModel();
+        OtherModel IPersistableModel<OtherModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new OtherModel();
+        string IPersistableModel<OtherModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<OtherModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<OtherModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+
+            var result =
+                CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
+            Assert.IsNotNull(result.GenerationSpec);
+
+            // Verify the new compilation still has warnings for direct usage but not for generated code
+            var diagnostics = newCompilation.GetDiagnostics();
+            var errors = diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
+            Assert.AreEqual(0, errors.Length, "Compilation should not have errors");
+
+            // Check for experimental warnings - should still have them for direct usage in TestUsage class
+            var experimentalWarnings = diagnostics
+                .Where(d => (d.Id == "TEST001") && !d.Location.IsInSource).ToArray();
+            Assert.AreEqual(0, experimentalWarnings.Length, "Generated code should not produce experimental warnings");
+
+            // Check the context file for pragma suppressions in the constructor
+            var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
+            var contextText = contextSource.SourceText.ToString();
+
+            // The constructor should have pragma suppressions for experimental types
+            StringAssert.Contains("#pragma warning disable TEST001", contextText);
+            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText);
+            StringAssert.Contains("#pragma warning restore TEST001", contextText);
+
+            // Also check the builder files
+            var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
+            var jsonModelText = jsonModelBuilder.SourceText.ToString();
+            StringAssert.Contains("#pragma warning disable TEST001", jsonModelText);
+            StringAssert.Contains("#pragma warning restore TEST001", jsonModelText);
+
+            var otherModelBuilder = generatedSources.First(s => s.HintName.Contains("OtherModel_Builder"));
+            var otherModelText = otherModelBuilder.SourceText.ToString();
+            StringAssert.Contains("#pragma warning disable CS0618", otherModelText);
+            StringAssert.Contains("#pragma warning restore CS0618", otherModelText);
+
+            Assert.AreEqual(2, result.GenerationSpec!.TypeBuilders.Count);
+            Assert.AreEqual("TEST001", result.GenerationSpec.TypeBuilders[0].Type.ExperimentalDiagnosticId);
+            Assert.IsNull(result.GenerationSpec.TypeBuilders[1].Type.ExperimentalDiagnosticId);
+
+            Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[1].Type.ObsoleteLevel);
+        }
+
+        [Test]
+        public void DepWithExperimentalModel()
+        {
+            string depSource =
+$$"""
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Diagnostics.CodeAnalysis;
+  using System.Text.Json;
+
+  namespace TestDependency
+  {
+  #pragma warning disable TEST001 // Experimental type
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+  #pragma warning restore TEST001 // Experimental type
+      public partial class LocalContext : ModelReaderWriterContext { }
+
+      [Experimental("TEST001")]
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+  }
+  """;
+
+            Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
+            // The dependency compilation should not have experimental warnings
+            var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
+
+            Assert.IsNotNull(depResult.GenerationSpec);
+            Assert.AreEqual("LocalContext", depResult.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestDependency", depResult.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, depResult.Diagnostics.Length);
+            Assert.AreEqual("public", depResult.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, depResult.GenerationSpec.TypeBuilders.Count);
+
+            string source =
+$$"""
+  using System;
+  using System.ClientModel.Primitives;
+  using TestDependency;
+
+  namespace TestProject
+  {
+  #pragma warning disable TEST001 // Experimental type
+      [ModelReaderWriterBuildable(typeof(JsonModel))]
+  #pragma warning restore TEST001 // Experimental type
+      public partial class MyLocalContext : ModelReaderWriterContext { }
+
+      public class Caller
+      {
+          public void Call()
+          {
+  #pragma warning disable TEST001 // Experimental type
+              ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, ModelReaderWriterOptions.Json, MyLocalContext.Default);
+  #pragma warning restore TEST001 // Experimental type
+          }
+      }
+  }
+  """;
+
+            Compilation compilation = CompilationHelper.CreateCompilation(
+                source,
+                additionalReferences: [newDepCompilation.ToMetadataReference()],
+                contextName: "MyLocalContext");
+
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("MyLocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(1, result.GenerationSpec.ReferencedContexts.Count);
+
+            var myLocalContext = newCompilation.GetTypeByMetadataName("TestProject.MyLocalContext");
+            Assert.IsNotNull(myLocalContext, "MyLocalContext should not be null.");
+
+            var referenceContextFiled = myLocalContext!.GetMembers("s_referenceContexts")
+                .OfType<IFieldSymbol>()
+                .FirstOrDefault(f => f.IsStatic);
+            Assert.IsNotNull(referenceContextFiled, "s_referenceContexts field should not be null.");
+        }
+
+        [TestCase("JsonModel[]")]
+        [TestCase("List<JsonModel>")]
+        [TestCase("Dictionary<string, JsonModel>")]
+        [TestCase("ReadOnlyMemory<JsonModel>")]
+        [TestCase("JsonModel[][]")]
+        [TestCase("JsonModel[,]")]
+        public void BuilderForExperimentalCollectionHasSuppression(string collectionType)
+        {
+            string source =
+$$"""
+  using System;
+  using System.ClientModel.Primitives;
+  using System.Collections.Generic;
+  using System.Text.Json;
+  using System.Diagnostics.CodeAnalysis;
+
+  namespace TestProject
+  {
+  #pragma warning disable TEST001 // Type or member is experimental
+      [ModelReaderWriterBuildable(typeof({{collectionType}}))]
+  #pragma warning restore TEST001 // Type or member is experimental
+      public partial class LocalContext : ModelReaderWriterContext { }
+
+      [Experimental("TEST001")]
+      public class JsonModel : IJsonModel<JsonModel>
+      {
+          JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+          JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+          string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+          void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+          BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+      }
+
+      public class Caller
+      {
+          public void Call()
+          {
+  #pragma warning disable TEST001 // Type or member is experimental
+              ModelReaderWriter.Read<{{collectionType}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+  #pragma warning restore TEST001 // Type or member is experimental
+          }
+      }
+  }
+  """;
+
+            Compilation compilation = CompilationHelper.CreateCompilation(
+                source);
+
+            var result = CompilationHelper.RunSourceGenerator(
+                compilation,
+                out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(collectionType == "JsonModel[][]" ? 3 : 2,
+                result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
+
+            Assert.IsTrue(dict.TryGetValue("JsonModel", out var jsonModelBuilder));
+            Assert.AreEqual("JsonModel", jsonModelBuilder!.Type.Name);
+            Assert.AreEqual("TestProject", jsonModelBuilder.Type.Namespace);
+            Assert.AreEqual("internal", jsonModelBuilder.Modifier);
+            Assert.AreEqual(ObsoleteLevel.None, jsonModelBuilder.Type.ObsoleteLevel);
+            Assert.AreEqual("TEST001", jsonModelBuilder.Type.ExperimentalDiagnosticId);
+
+            Assert.IsTrue(dict.TryGetValue(collectionType, out var collectionBuilder));
+            Assert.AreEqual(collectionType, collectionBuilder!.Type.Name);
+            if (collectionType == "JsonModel[]" || collectionType == "JsonModel[,]" ||
+                collectionType == "JsonModel[][]")
+            {
+                Assert.AreEqual("TestProject", collectionBuilder.Type.Namespace);
+            }
+            else if (collectionType == "ReadOnlyMemory<JsonModel>")
+            {
+                Assert.AreEqual("System", collectionBuilder.Type.Namespace);
+            }
+            else
+            {
+                Assert.AreEqual("System.Collections.Generic", collectionBuilder.Type.Namespace);
+            }
+
+            Assert.AreEqual("internal", collectionBuilder.Modifier);
+            Assert.AreEqual(ObsoleteLevel.None, collectionBuilder.Type.ObsoleteLevel);
+            Assert.AreEqual("TEST001", collectionBuilder.Type.ExperimentalDiagnosticId);
+            if (collectionType == "JsonModel[][]")
+            {
+                Assert.AreEqual("JsonModel[]", collectionBuilder.Type.ItemType!.Name);
+                Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
+
+                Assert.IsTrue(dict.TryGetValue("JsonModel[]", out var jsonModelArrayBuilder));
+                Assert.AreEqual("JsonModel[]", jsonModelArrayBuilder!.Type.Name);
+                Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.Namespace);
+                Assert.AreEqual("internal", jsonModelArrayBuilder.Modifier);
+                Assert.AreEqual("TEST001", jsonModelArrayBuilder.Type.ExperimentalDiagnosticId);
+
+                Assert.AreEqual("JsonModel", jsonModelArrayBuilder.Type.ItemType!.Name);
+                Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.ItemType!.Namespace);
+                Assert.AreEqual("TEST001", jsonModelArrayBuilder.Type.ExperimentalDiagnosticId);
+            }
+            else
+            {
+                Assert.AreEqual("JsonModel", collectionBuilder.Type.ItemType!.Name);
+                Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
+                Assert.AreEqual("TEST001", collectionBuilder.Type.ExperimentalDiagnosticId);
+            }
         }
 #endif
     }
