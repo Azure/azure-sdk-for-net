@@ -231,10 +231,10 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @joseharriaga
+/sdk/documentintelligence/                                         @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @joseharriaga
+/sdk/formrecognizer/                                               @ctstone @vkurpad
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # AzureSdkOwners:                                                  @jsquire
@@ -272,19 +272,19 @@
 # ServiceOwners:                                                   @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @joseharriaga @bidisha-c
+/sdk/textanalytics/                                                @quentinRobinson @bidisha-c
 
 # ServiceLabel: %Cognitive - Text Analytics
 # ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz @joseharriaga @vikaspalaskar
+/sdk/translation/                                                  @mikeymcz @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Translator
 # ServiceOwners:                                                   @swmachan @mikeymcz @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Speech
-# ServiceOwners:                                                   @robch
+# ServiceOwners:                                                   @cahann @kayousef
 
 # PRLabel: %Cognitive - LUIS
 /sdk/cognitiveservices/Language.LUIS*/                             @cahann @kayousef
