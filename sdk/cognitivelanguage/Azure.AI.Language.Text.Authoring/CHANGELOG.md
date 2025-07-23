@@ -11,6 +11,7 @@
 ### Bugs Fixed
 
 - Merged TextAuthoringUnassignDeploymentResourcesState and TextAuthoringAssignDeploymentResourcesState into one class TextAuthoringDeploymentResourcesState
+- Fixed "azureOpenAI" to "AzureOpenAI" for DataGenerationConnectionInfoKind
 
 ### Other Changes
 
