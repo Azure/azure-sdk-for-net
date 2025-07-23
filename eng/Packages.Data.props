@@ -253,7 +253,7 @@
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="8.0.16" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" /><!--We can't upgrade this dependency until issue https://github.com/Azure/azure-webjobs-sdk/issues/3138 is resolved. -->
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.3.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />

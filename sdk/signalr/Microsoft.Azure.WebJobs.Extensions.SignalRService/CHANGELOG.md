@@ -1,14 +1,9 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 2.1.0 (2025-07-23)
 
 ### Other Changes
+* Upgrade `Microsoft.Extensions.Azure` to 1.12.0.
 
 ## 2.0.1 (2025-03-12)
 
