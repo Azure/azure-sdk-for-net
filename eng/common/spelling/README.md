@@ -1,6 +1,6 @@
 # Spelling Check Scripts
 
-This directory contains scripts to run cspell (Code Spell Checker) on the repository using the dependencies defined in the adjacent `package*.json` files.
+This directory contains a script to run cspell (Code Spell Checker) on the repository using the dependencies defined in the adjacent `package*.json` files.
 
 ## Adding Legitimate Words
 
@@ -40,13 +40,8 @@ To add new words, edit `.vscode/cspell.json` and add them to the `"words"` array
 - **File**: `Invoke-Cspell.ps1`
 - **Usage**: For Windows PowerShell environments
 
-### Bash Version (Linux/macOS)
-- **File**: `invoke-cspell.sh`
-- **Usage**: For Linux and macOS bash environments
-
 ## Usage Examples
 
-### PowerShell
 ```powershell
 # Check all files (default)
 ./eng/common/spelling/Invoke-Cspell.ps1
@@ -54,34 +49,14 @@ To add new words, edit `.vscode/cspell.json` and add them to the `"words"` array
 # Check specific files
 ./eng/common/spelling/Invoke-Cspell.ps1 -ScanGlobs 'sdk/*/*/PublicAPI/**/*.md'
 
-# Check multiple globs
+# Check multiple globs (powershell invocation only)
 ./eng/common/spelling/Invoke-Cspell.ps1 -ScanGlobs @('sdk/storage/**', 'sdk/keyvault/**')
 
 # Check single file
 ./eng/common/spelling/Invoke-Cspell.ps1 -ScanGlobs './README.md'
 ```
 
-### Bash
-```bash
-# Check all files (default)
-./eng/common/spelling/invoke-cspell.sh
-
-# Check specific files
-./eng/common/spelling/invoke-cspell.sh --scan-globs 'sdk/*/*/PublicAPI/**/*.md'
-
-# Check multiple globs
-./eng/common/spelling/invoke-cspell.sh --scan-globs 'sdk/storage/**' 'sdk/keyvault/**'
-
-# Check single file
-./eng/common/spelling/invoke-cspell.sh --scan-globs './README.md'
-
-# Get help
-./eng/common/spelling/invoke-cspell.sh --help
-```
-
 ## Parameters
-
-Both scripts support similar functionality:
 
 - **Job Type**: The cspell command to run (default: `lint`)
 - **Scan Globs**: File patterns to check for spelling
