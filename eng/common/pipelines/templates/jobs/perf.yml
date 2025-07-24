@@ -113,7 +113,12 @@ jobs:
     parameters:
       AgentImage: $(OSVmImage)
       
-  - template: /eng/pipelines/templates/steps/install-dotnet.yml
+  - task: UseDotNet@2
+    displayName: "Use .NET SDK from azure-sdk-tools/global.json"
+    retryCountOnTaskFailure: 3
+    inputs:
+      useGlobalJson: true
+      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
 
   - ${{ parameters.InstallLanguageSteps }}
 
