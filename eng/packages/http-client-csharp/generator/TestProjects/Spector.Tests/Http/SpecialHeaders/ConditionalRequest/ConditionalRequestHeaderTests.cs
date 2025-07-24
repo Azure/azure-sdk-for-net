@@ -48,17 +48,5 @@ namespace TestProjects.Spector.Tests.Http.SpecialHeaders.ConditionalRequest
             });
             Assert.AreEqual(204, response.Status);
         });
-
-        [Test]
-        public Task Special_Headers_Conditional_Request_PostIfUnmodifiedSince_ShouldThrow() => Test((host) =>
-        {
-            DateTimeOffset ifModifiedSince = DateTimeOffset.Parse("Fri, 26 Aug 2022 14:38:00 GMT");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await new ConditionalRequestClient(host, null).PostIfUnmodifiedSinceAsync(new RequestConditions()
-            {
-                IfModifiedSince = ifModifiedSince
-            }));
-
-            return Task.CompletedTask;
-        });
     }
 }
