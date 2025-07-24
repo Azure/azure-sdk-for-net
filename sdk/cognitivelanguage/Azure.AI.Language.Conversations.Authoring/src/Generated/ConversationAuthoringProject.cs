@@ -368,7 +368,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string projectFormat, RequestContext context)
+        internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string exportedProjectFormat, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -380,32 +380,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (projectFormat != null)
+            if (exportedProjectFormat != null)
             {
-                uri.AppendQuery("format", projectFormat, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateImportRawJsonRequest(string projectName, RequestContent content, string projectFormat, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-conversations/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (projectFormat != null)
-            {
-                uri.AppendQuery("format", projectFormat, true);
+                uri.AppendQuery("format", exportedProjectFormat, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
