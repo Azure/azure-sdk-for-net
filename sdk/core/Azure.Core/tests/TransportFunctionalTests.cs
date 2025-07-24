@@ -1089,7 +1089,8 @@ namespace Azure.Core.Tests
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
 #endif
-            byte[] cer = Convert.FromBase64String(Pfx);
+            // byte[] cer = Convert.FromBase64String(Pfx);
+            byte[] cer = Convert.FromBase64String(Pfx2);
             X509Certificate2 clientCert;
 
 #if NET9_0_OR_GREATER

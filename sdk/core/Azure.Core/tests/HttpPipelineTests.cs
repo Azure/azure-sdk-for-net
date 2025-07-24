@@ -334,6 +334,91 @@ namespace Azure.Core.Tests
             Assert.AreEqual(isError, response.IsError);
         }
 
+        [Test]
+        public async Task CanUpdateTransportAfterCreateRequestAndBeforeSend()
+        {
+            var mockTransport = new MockTransport(
+                new MockResponse(500),
+                new MockResponse(1));
+
+            var mockTransport2 = new MockTransport(
+                new MockResponse(500),
+                new MockResponse(2));
+
+            var pipeline = new HttpPipeline(mockTransport, [
+                new RetryPolicy(5)
+            ], responseClassifier: new CustomResponseClassifier());
+            pipeline.TransportFactory = o => mockTransport2;
+
+            Request request = pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
+            // Update the transport while the request is being processed
+            pipeline.UpdateTransport(new HttpPipelineTransportOptions());
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            Assert.AreEqual(2, response.Status);
+        }
+
+        [Test]
+        public async Task CanUpdateTransportWithActiveRequest()
+        {
+            HttpPipeline pipeline = null;
+            var mockTransport2 = new MockTransport(
+                new MockResponse(2));
+
+            var mockTransport = new MockTransport(r =>
+            {
+                // Update the transport while the request is being processed
+                pipeline.UpdateTransport(new HttpPipelineTransportOptions());
+                return new MockResponse(500);
+            });
+
+            pipeline = new HttpPipeline(mockTransport, [
+                new RetryPolicy(5)
+            ], responseClassifier: new CustomResponseClassifier());
+            pipeline.TransportFactory = o => mockTransport2;
+
+            Request request = pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
+
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            // The response should be from the updated transport
+            // Note that the initial transport returned a 500, which is retried and handled by the updated transport
+            Assert.AreEqual(2, response.Status);
+        }
+
+        [Test]
+        public async Task UpdatedTransportStillReturnsResponseFromInitialTransportAfterSend()
+        {
+            HttpPipeline pipeline = null;
+            var mockTransport2 = new MockTransport(
+                new MockResponse(2));
+
+            var mockTransport = new MockTransport(r =>
+            {
+                // Update the transport while the request is being processed
+                pipeline.UpdateTransport(new HttpPipelineTransportOptions());
+                return new MockResponse(1);
+            });
+
+            pipeline = new HttpPipeline(mockTransport, [
+                new RetryPolicy(5)
+            ], responseClassifier: new CustomResponseClassifier());
+            pipeline.TransportFactory = o => mockTransport2;
+
+            Request request = pipeline.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://contoso.a.io"));
+
+            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            // The response should still be from the initial transport
+            Assert.AreEqual(1, response.Status);
+        }
+
         #region Helpers
         public class AddHeaderPolicy : HttpPipelineSynchronousPolicy
         {

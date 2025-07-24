@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +20,11 @@ namespace Azure.Core.Pipeline
         private protected readonly HttpPipelineTransportPolicy _transportPolicy;
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
+
+        /// <summary>
+        /// A factory function for Updating the transport when <see cref="UpdateTransport"/> is called.
+        /// </summary>
+        public Func<HttpPipelineTransportOptions, HttpPipelineTransport>? TransportFactory { get; set; }
 
         /// <summary>
         /// Indicates whether or not the pipeline was created using its internal constructor.
@@ -250,14 +256,22 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// Updates the transport used by this pipeline in a thread-safe manner.
+        /// Update only occurs if this pipeline was constructed with a pipeline factory.
         /// </summary>
-        /// <param name="newTransport">The new transport to use.</param>
-        public void UpdateTransport(HttpPipelineTransport newTransport)
+        /// <param name="transportOptions">The options to customize the <see cref="HttpPipelineTransport"/>.</param>
+        public void UpdateTransport(HttpPipelineTransportOptions transportOptions)
         {
-            if (newTransport == null)
-                throw new ArgumentNullException(nameof(newTransport));
+            if (transportOptions == null)
+                throw new ArgumentNullException(nameof(transportOptions));
 
-            _transportPolicy.UpdateTransport(newTransport);
+            if (TransportFactory != null)
+            {
+                HttpPipelineTransport? newTransport = TransportFactory(transportOptions);
+                if (newTransport == null)
+                    throw new ArgumentNullException(nameof(newTransport));
+
+                _transportPolicy.UpdateTransport(newTransport);
+            }
         }
 
         private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)

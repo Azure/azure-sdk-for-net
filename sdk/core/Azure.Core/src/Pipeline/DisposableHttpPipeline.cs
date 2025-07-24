@@ -43,7 +43,7 @@ namespace Azure.Core.Pipeline
             // TODO: When transport disposal is needed for a nested client scenario, this method should implement reference counting to ensure proper disposal.
             if (isTransportOwnedInternally)
             {
-                (_transportPolicy as IDisposable)?.Dispose();
+                (_transportPolicy.Transport as IDisposable)?.Dispose();
             }
         }
     }
