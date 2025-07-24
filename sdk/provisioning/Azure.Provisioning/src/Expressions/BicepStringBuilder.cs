@@ -134,7 +134,7 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
     internal void AppendFormattableString(FormattableString value)
     {
         var formatSpan = value.Format.AsSpan();
-        foreach (var (span, isLiteral, index) in StringExtensions.GetFormattableStringFormatParts(formatSpan))
+        foreach (var (span, isLiteral, index) in FormattableStringHelpers.GetFormattableStringFormatParts(formatSpan))
         {
             if (isLiteral)
             {

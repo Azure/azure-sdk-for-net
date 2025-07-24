@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Provisioning.Utilities
 {
-    internal static class StringExtensions
+    internal static class FormattableStringHelpers
     {
         public static GetPathPartsEnumerator GetFormattableStringFormatParts(ReadOnlySpan<char> format) => new GetPathPartsEnumerator(format);
 
@@ -102,7 +102,11 @@ namespace Azure.Provisioning.Utilities
                     {
                         var formatSeparatorIndex = span.IndexOf(':');
                         var indexSpan = formatSeparatorIndex == -1 ? span : span.Slice(0, formatSeparatorIndex);
+#if NET8_0_OR_GREATER
+                        argumentIndex = int.Parse(indexSpan);
+#else
                         argumentIndex = int.Parse(indexSpan.ToString());
+#endif
                     }
                 }
             }
