@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Sanitizer for Certificate's Thumbprint used to test MQTT Namespace creation
             BodyRegexSanitizers.Add(new BodyRegexSanitizer("(?<=\"allowedThumbprints\"\\s*:\\s*)\\[[^\\]]*\\]") { Value = "[\"SANITIZED_THUMBPRINTS\"]" });
+
+            // Sanitize shared access keys (ListSharedAccessKeys and RegenerateKeyAsync responses)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("\"key1\"\\s*:\\s*\"[^\"]*\"") { Value = "\"key1\":\"SANITIZED_KEY1\"" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("\"key2\"\\s*:\\s*\"[^\"]*\"") { Value = "\"key2\":\"SANITIZED_KEY2\"" });
         }
 
         protected EventGridManagementTestBase(bool isAsync)
@@ -67,6 +71,10 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Sanitizer for Certificate's Thumbprint used to test MQTT Namespace creation
             BodyRegexSanitizers.Add(new BodyRegexSanitizer("(?<=\"allowedThumbprints\"\\s*:\\s*)\\[[^\\]]*\\]") { Value = "[\"SANITIZED_THUMBPRINTS\"]" });
+
+            // Sanitize shared access keys (ListSharedAccessKeys and RegenerateKeyAsync responses)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("\"key1\"\\s*:\\s*\"[^\"]*\"") { Value = "\"key1\":\"SANITIZED_KEY1\"" });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("\"key2\"\\s*:\\s*\"[^\"]*\"") { Value = "\"key2\":\"SANITIZED_KEY2\"" });
         }
 
         [SetUp]
