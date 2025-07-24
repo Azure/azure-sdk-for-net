@@ -1,9 +1,5 @@
 namespace Azure.Communication.Identity
 {
-    public partial class AzureCommunicationIdentityContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureCommunicationIdentityContext() { }
-    }
     public partial class CommunicationIdentityClient
     {
         protected CommunicationIdentityClient() { }

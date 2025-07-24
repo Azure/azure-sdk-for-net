@@ -1,9 +1,5 @@
 namespace Azure.Communication.Sms
 {
-    public partial class AzureCommunicationSmsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureCommunicationSmsContext() { }
-    }
     public partial class MessagingConnectOptions
     {
         public MessagingConnectOptions(string apiKey, string partner) { }

@@ -214,10 +214,6 @@ namespace Azure.AI.TextAnalytics
         public Azure.AI.TextAnalytics.TextSentiment Sentiment { get { throw null; } }
         public string Text { get { throw null; } }
     }
-    public partial class AzureAITextAnalyticsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAITextAnalyticsContext() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CategorizedEntity
     {

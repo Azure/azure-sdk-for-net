@@ -23,9 +23,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             v2_1 = 1,
         }
     }
-    public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class AzureMonitorOpenTelemetryExporterContext
     {
         public AzureMonitorOpenTelemetryExporterContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
     }
     public static partial class OpenTelemetryBuilderExtensions
     {

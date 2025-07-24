@@ -1,9 +1,5 @@
 namespace Azure.Security.ConfidentialLedger
 {
-    public partial class AzureSecurityConfidentialLedgerContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureSecurityConfidentialLedgerContext() { }
-    }
     public partial class ConfidentialLedgerClient
     {
         protected ConfidentialLedgerClient() { }

@@ -1,9 +1,5 @@
 namespace Azure.Communication.ShortCodes
 {
-    public partial class AzureCommunicationShortCodesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureCommunicationShortCodesContext() { }
-    }
     public partial class ShortCodesClient
     {
         protected ShortCodesClient() { }

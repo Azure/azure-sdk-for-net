@@ -1,9 +1,5 @@
 namespace Azure.Data.Tables
 {
-    public partial class AzureDataTablesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureDataTablesContext() { }
-    }
     public partial interface ITableEntity
     {
         Azure.ETag ETag { get; set; }

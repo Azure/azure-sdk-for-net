@@ -1,9 +1,5 @@
 namespace Azure.Analytics.Purview.Scanning
 {
-    public partial class AzureAnalyticsPurviewScanningContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsPurviewScanningContext() { }
-    }
     public partial class PurviewClassificationRuleClient
     {
         protected PurviewClassificationRuleClient() { }

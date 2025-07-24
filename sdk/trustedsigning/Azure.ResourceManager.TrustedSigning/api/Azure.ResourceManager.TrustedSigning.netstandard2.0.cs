@@ -1,16 +1,5 @@
 namespace Azure.ResourceManager.TrustedSigning
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.Models.TrustedSigningCertificate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerTrustedSigningContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerTrustedSigningContext() { }

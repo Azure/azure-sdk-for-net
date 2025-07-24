@@ -1,9 +1,5 @@
 namespace Azure.Maps.Search
 {
-    public partial class AzureMapsSearchContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMapsSearchContext() { }
-    }
     public partial class MapsSearchClient
     {
         protected MapsSearchClient() { }

@@ -1,9 +1,5 @@
 namespace Azure.Analytics.Purview.Account
 {
-    public partial class AzureAnalyticsPurviewAccountContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsPurviewAccountContext() { }
-    }
     public partial class PurviewAccountClient
     {
         protected PurviewAccountClient() { }

@@ -1,9 +1,5 @@
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 {
-    public partial class AzureAnalyticsSynapseManagedPrivateEndpointsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsSynapseManagedPrivateEndpointsContext() { }
-    }
     public partial class ManagedPrivateEndpointsClient
     {
         protected ManagedPrivateEndpointsClient() { }

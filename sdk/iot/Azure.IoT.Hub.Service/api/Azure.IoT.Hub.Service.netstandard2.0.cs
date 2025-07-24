@@ -1,9 +1,5 @@
 namespace Azure.IoT.Hub.Service
 {
-    public partial class AzureIoTHubServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureIoTHubServiceContext() { }
-    }
     public enum BulkIfMatchPrecondition
     {
         Unconditional = 0,

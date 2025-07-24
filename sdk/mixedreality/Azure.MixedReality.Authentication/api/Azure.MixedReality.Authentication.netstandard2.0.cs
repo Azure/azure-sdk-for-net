@@ -1,9 +1,5 @@
 namespace Azure.MixedReality.Authentication
 {
-    public partial class AzureMixedRealityAuthenticationContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMixedRealityAuthenticationContext() { }
-    }
     public partial class MixedRealityStsClient
     {
         protected MixedRealityStsClient() { }

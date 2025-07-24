@@ -1,9 +1,5 @@
 namespace Azure.Monitor.Ingestion
 {
-    public partial class AzureMonitorIngestionContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMonitorIngestionContext() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogsIngestionAudience : System.IEquatable<Azure.Monitor.Ingestion.LogsIngestionAudience>
     {

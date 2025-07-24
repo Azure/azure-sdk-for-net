@@ -63,19 +63,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         public virtual Azure.Response<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationResource> Update(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationResource>> UpdateAsync(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerArizeAIObservabilityEvalContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerArizeAIObservabilityEvalContext() { }

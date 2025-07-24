@@ -1,9 +1,5 @@
 namespace Azure.IoT.DeviceUpdate
 {
-    public partial class AzureIoTDeviceUpdateContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureIoTDeviceUpdateContext() { }
-    }
     public partial class DeviceManagementClient
     {
         protected DeviceManagementClient() { }

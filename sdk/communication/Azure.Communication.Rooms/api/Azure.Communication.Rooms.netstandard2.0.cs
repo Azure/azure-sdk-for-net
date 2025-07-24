@@ -1,9 +1,5 @@
 namespace Azure.Communication.Rooms
 {
-    public partial class AzureCommunicationRoomsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureCommunicationRoomsContext() { }
-    }
     public partial class CommunicationRoom
     {
         internal CommunicationRoom() { }

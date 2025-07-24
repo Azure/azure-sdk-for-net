@@ -1,9 +1,5 @@
 namespace Azure.Analytics.Synapse.Monitoring
 {
-    public partial class AzureAnalyticsSynapseMonitoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsSynapseMonitoringContext() { }
-    }
     public partial class MonitoringClient
     {
         protected MonitoringClient() { }

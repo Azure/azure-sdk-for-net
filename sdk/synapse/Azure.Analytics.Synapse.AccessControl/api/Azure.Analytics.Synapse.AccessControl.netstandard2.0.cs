@@ -8,10 +8,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             V2020_12_01 = 1,
         }
     }
-    public partial class AzureAnalyticsSynapseAccessControlContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsSynapseAccessControlContext() { }
-    }
     public partial class RoleAssignmentsClient
     {
         protected RoleAssignmentsClient() { }

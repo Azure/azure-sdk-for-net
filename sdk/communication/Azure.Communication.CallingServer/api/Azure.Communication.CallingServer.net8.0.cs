@@ -41,10 +41,6 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionProperties CallConnectionProperties { get { throw null; } }
     }
-    public partial class AzureCommunicationCallingServerContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureCommunicationCallingServerContext() { }
-    }
     public partial class CallAutomationClient
     {
         protected CallAutomationClient() { }

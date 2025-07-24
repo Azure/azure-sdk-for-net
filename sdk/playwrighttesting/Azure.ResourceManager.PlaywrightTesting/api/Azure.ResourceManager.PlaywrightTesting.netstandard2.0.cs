@@ -1,22 +1,5 @@
 namespace Azure.ResourceManager.PlaywrightTesting
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.AccountUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountFreeTrialProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountQuotaProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingFreeTrialProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingQuotaProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountQuotaData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountQuotaResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPlaywrightTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPlaywrightTestingContext() { }

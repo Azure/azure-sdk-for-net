@@ -1,22 +1,5 @@
 namespace Azure.ResourceManager.DependencyMap
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapDiscoverySourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapDiscoverySourceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.DependencyMapResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourcePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetConnectionsWithConnectedMachineForFocusedMachineContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForFocusedMachineContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.OffAzureDiscoverySourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDependencyMapContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDependencyMapContext() { }

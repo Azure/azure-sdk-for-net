@@ -20,10 +20,6 @@ namespace Azure.Maps.TimeZones
         public static bool operator !=(Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation left, Azure.Maps.TimeZones.AdditionalTimeZoneReturnInformation right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureMapsTimeZonesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMapsTimeZonesContext() { }
-    }
     public partial class CountryRecord
     {
         internal CountryRecord() { }

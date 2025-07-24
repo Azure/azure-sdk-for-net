@@ -1,12 +1,5 @@
 namespace Azure.ResourceManager.Terraform
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Terraform.Models.CommonExportProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Terraform.Models.ExportQueryTerraform))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Terraform.Models.ExportResourceGroupTerraform))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Terraform.Models.ExportResourceTerraform))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Terraform.Models.TerraformExportResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Terraform.Models.TerraformOperationStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerTerraformContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerTerraformContext() { }

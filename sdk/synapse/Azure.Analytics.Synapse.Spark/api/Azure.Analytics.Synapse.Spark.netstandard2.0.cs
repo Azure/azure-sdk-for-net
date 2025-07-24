@@ -1,9 +1,5 @@
 namespace Azure.Analytics.Synapse.Spark
 {
-    public partial class AzureAnalyticsSynapseSparkContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsSynapseSparkContext() { }
-    }
     public partial class SparkBatchClient
     {
         protected SparkBatchClient() { }

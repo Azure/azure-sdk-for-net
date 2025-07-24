@@ -1,9 +1,5 @@
 namespace Azure.Analytics.Purview.Catalog
 {
-    public partial class AzureAnalyticsPurviewCatalogContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAnalyticsPurviewCatalogContext() { }
-    }
     public partial class PurviewCatalogClient
     {
         protected PurviewCatalogClient() { }

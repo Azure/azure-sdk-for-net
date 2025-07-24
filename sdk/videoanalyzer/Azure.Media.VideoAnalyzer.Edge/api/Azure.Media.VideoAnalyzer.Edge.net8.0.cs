@@ -1,10 +1,3 @@
-namespace Azure.Media.VideoAnalyzer.Edge
-{
-    public partial class AzureMediaVideoAnalyzerEdgeContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMediaVideoAnalyzerEdgeContext() { }
-    }
-}
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     public abstract partial class CertificateSource

@@ -1,9 +1,5 @@
 namespace Azure.AI.FormRecognizer
 {
-    public partial class AzureAIFormRecognizerContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureAIFormRecognizerContext() { }
-    }
     public enum FormContentType
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

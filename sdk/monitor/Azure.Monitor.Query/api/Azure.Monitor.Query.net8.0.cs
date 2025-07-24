@@ -1,9 +1,5 @@
 namespace Azure.Monitor.Query
 {
-    public partial class AzureMonitorQueryContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMonitorQueryContext() { }
-    }
     public partial class LogsBatchQuery
     {
         public LogsBatchQuery() { }

@@ -12,10 +12,6 @@ namespace Azure.Quantum
 }
 namespace Azure.Quantum.Jobs
 {
-    public partial class AzureQuantumJobsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureQuantumJobsContext() { }
-    }
     public partial class QuantumJobClient
     {
         protected QuantumJobClient() { }

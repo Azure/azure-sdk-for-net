@@ -20,10 +20,6 @@ namespace Azure.Communication.AlphaIds
             V2022_09_26_Preview = 1,
         }
     }
-    public partial class AzureCommunicationAlphaIdsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureCommunicationAlphaIdsContext() { }
-    }
 }
 namespace Azure.Communication.AlphaIds.Models
 {

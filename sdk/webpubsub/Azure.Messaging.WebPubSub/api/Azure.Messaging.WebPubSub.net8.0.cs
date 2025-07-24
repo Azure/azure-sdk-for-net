@@ -1,9 +1,5 @@
 namespace Azure.Messaging.WebPubSub
 {
-    public partial class AzureMessagingWebPubSubContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMessagingWebPubSubContext() { }
-    }
     public static partial class ClientConnectionFilter
     {
         public static string Create(System.FormattableString filter) { throw null; }

@@ -1,9 +1,5 @@
 namespace Azure.Maps.Weather
 {
-    public partial class AzureMapsWeatherContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMapsWeatherContext() { }
-    }
     public partial class MapsWeatherClient
     {
         protected MapsWeatherClient() { }

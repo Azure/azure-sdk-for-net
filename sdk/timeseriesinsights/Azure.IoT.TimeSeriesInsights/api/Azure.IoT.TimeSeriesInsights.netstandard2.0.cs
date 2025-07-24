@@ -5,10 +5,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public AggregateVariable(Azure.IoT.TimeSeriesInsights.TimeSeriesExpression aggregation) { }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesExpression Aggregation { get { throw null; } set { } }
     }
-    public partial class AzureIoTTimeSeriesInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureIoTTimeSeriesInsightsContext() { }
-    }
     public partial class CategoricalVariable : Azure.IoT.TimeSeriesInsights.TimeSeriesVariable
     {
         public CategoricalVariable(Azure.IoT.TimeSeriesInsights.TimeSeriesExpression value, Azure.IoT.TimeSeriesInsights.TimeSeriesDefaultCategory defaultCategory) { }
