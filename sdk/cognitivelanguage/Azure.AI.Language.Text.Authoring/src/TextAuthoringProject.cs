@@ -61,10 +61,6 @@ namespace Azure.AI.Language.Text.Authoring
     [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("ImportRawJsonAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(String), typeof(CancellationToken))]
-    [CodeGenSuppress("ImportRawJson", typeof(WaitUntil), typeof(string), typeof(string), typeof(String), typeof(CancellationToken))]
-    [CodeGenSuppress("ImportRawJsonAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("ImportRawJson", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("TrainAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CancelTrainingJobAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(RequestContext))]
@@ -552,7 +548,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await ImportRawJsonAsync(waitUntil, _projectName, content, format, context).ConfigureAwait(false);
+            return await ImportAsync(waitUntil, content, format, context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -573,95 +569,7 @@ namespace Azure.AI.Language.Text.Authoring
 
             using RequestContent content = RequestContentHelper.FromObject(projectJson);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return ImportRawJson(waitUntil, _projectName, content, format, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Triggers a job to import a project using raw JSON string input.
-        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ImportAsync(WaitUntil,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> ImportRawJsonAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.ImportRawJson");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateImportRawJsonRequest(projectName, content, format, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.ImportRawJson", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Triggers a job to import a project using raw JSON string input.
-        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Import(WaitUntil,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation ImportRawJson(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TextAuthoringProject.ImportRawJson");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateImportRawJsonRequest(projectName, content, format, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "TextAuthoringProject.ImportRawJson", OperationFinalStateVia.OperationLocation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return Import(waitUntil, content, format, context);
         }
 
         /// <summary>

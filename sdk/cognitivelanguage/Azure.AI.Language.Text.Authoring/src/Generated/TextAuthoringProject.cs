@@ -334,29 +334,6 @@ namespace Azure.AI.Language.Text.Authoring
             return message;
         }
 
-        internal HttpMessage CreateImportRawJsonRequest(string projectName, RequestContent content, string format, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/authoring/analyze-text/projects/", false);
-            uri.AppendPath(projectName, true);
-            uri.AppendPath("/:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (format != null)
-            {
-                request.Headers.Add("format", format);
-            }
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateTrainRequest(string projectName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
