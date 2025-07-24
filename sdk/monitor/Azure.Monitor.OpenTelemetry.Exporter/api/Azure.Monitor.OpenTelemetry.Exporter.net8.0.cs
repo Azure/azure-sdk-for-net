@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AzureMonitorOpenTelemetryExporterContext
+    public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureMonitorOpenTelemetryExporterContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

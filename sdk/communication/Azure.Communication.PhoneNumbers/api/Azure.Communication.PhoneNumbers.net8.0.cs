@@ -14,7 +14,7 @@ namespace Azure.Communication.PhoneNumbers
         public Azure.Communication.PhoneNumbers.PhoneNumberType PhoneNumberType { get { throw null; } }
         public Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus Status { get { throw null; } }
     }
-    public partial class AzureCommunicationPhoneNumbersContext
+    public partial class AzureCommunicationPhoneNumbersContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureCommunicationPhoneNumbersContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -1,7 +1,7 @@
 namespace Azure.DigitalTwins.Core
 {
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AzureDigitalTwinsCoreContext
+    public partial class AzureDigitalTwinsCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureDigitalTwinsCoreContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

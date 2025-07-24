@@ -6,7 +6,7 @@ namespace Azure.Communication.Chat
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AzureCommunicationChatContext
+    public partial class AzureCommunicationChatContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureCommunicationChatContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

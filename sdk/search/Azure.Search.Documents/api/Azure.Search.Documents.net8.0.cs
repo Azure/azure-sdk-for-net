@@ -13,7 +13,7 @@ namespace Azure.Search.Documents
         public bool? UseFuzzyMatching { get { throw null; } set { } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AzureSearchDocumentsContext
+    public partial class AzureSearchDocumentsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureSearchDocumentsContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
