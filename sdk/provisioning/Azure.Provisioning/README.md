@@ -22,6 +22,80 @@ dotnet add package Azure.Provisioning
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a simple storage account
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.Storage;
+
+// Create a new Infrastructure instance
+Infrastructure infrastructure = new Infrastructure();
+
+// Define a storage account
+StorageAccount storage = new StorageAccount("storage")
+{
+    Kind = StorageKind.StorageV2,
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+    IsHnsEnabled = true,
+    AllowBlobPublicAccess = false
+};
+
+// Add it to the infrastructure
+infrastructure.Add(storage);
+
+// Generate the Bicep template
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
+### Create a resource group in a subscription
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.Resources;
+
+// Create infrastructure scoped to a subscription
+Infrastructure infrastructure = new Infrastructure { TargetScope = DeploymentScope.Subscription };
+
+// Create a resource group
+ResourceGroup resourceGroup = new ResourceGroup("rg_test", "2024-03-01");
+infrastructure.Add(resourceGroup);
+
+// Generate the Bicep template
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
+### Working with outputs
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.Storage;
+
+Infrastructure infrastructure = new Infrastructure();
+
+// Create a storage account
+StorageAccount storage = new StorageAccount("storage")
+{
+    Kind = StorageKind.StorageV2,
+    Sku = new StorageSku { Name = StorageSkuName.StandardLrs }
+};
+infrastructure.Add(storage);
+
+// Create an output for the storage endpoint
+ProvisioningOutput endpoint = new ProvisioningOutput("storageEndpoint", typeof(string))
+{
+    Value = storage.PrimaryEndpoints.BlobUri
+};
+infrastructure.Add(endpoint);
+
+// Generate the Bicep template with outputs
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
