@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
@@ -173,15 +174,64 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         [Test]
-        public void AddComplexProperty()
+        public void AddComplexPropertyAsJson()
         {
-            Assert.Fail("Not implemented");
+            ReadOnlySpan<byte> expectedValue = "{\"x\":{\"y\":123}}"u8;
+            var model = GetInitialModel();
+
+            model.Patch.Set("foobar"u8, expectedValue);
+
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson("foobar"u8).ToArray());
+
+            var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
+
+            var model2 = GetRoundTripModel(data);
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson("foobar"u8).ToArray());
+
+            AssertCommon(model, model2);
+        }
+
+        [Test]
+        public void AddComplexPropertyAsAnonModel()
+        {
+            ReadOnlySpan<byte> expectedValue = "{\"x\":{\"y\":123}}"u8;
+            var model = GetInitialModel();
+
+            model.Patch.Set("foobar"u8, JsonSerializer.SerializeToUtf8Bytes(new
+            {
+                x = new
+                {
+                    y = 123
+                }
+            }));
+
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson("foobar"u8).ToArray());
+
+            var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
+
+            var model2 = GetRoundTripModel(data);
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson("foobar"u8).ToArray());
+
+            AssertCommon(model, model2);
         }
 
         [Test]
         public void ReplaceExistingComplex()
         {
-            Assert.Fail("Not implemented");
+            ReadOnlySpan<byte> expectedValue = "{\"name\":\"replaced-name\",\"foo\":123}"u8;
+            var model = GetInitialModel();
+
+            model.Patch.Set("sku"u8, expectedValue);
+
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson("sku"u8).ToArray());
+
+            var data = WriteModifiedModel(model, "sku", "{\"name\":\"replaced-name\",\"foo\":123}");
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual("replaced-name", model2.Sku.Name);
+            Assert.AreEqual(123, model2.Sku.Patch.GetInt32("foo"u8));
+
+            AssertCommon(model, model2, "sku");
         }
 
         [Test]

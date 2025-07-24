@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.ComponentModel;
+
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary>
@@ -8,6 +11,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// </summary>
     public partial class WritableSubResource
     {
+        private AdditionalProperties _patch = new();
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ref AdditionalProperties Patch => ref _patch;
+
         /// <summary>
         /// Initializes an empty instance of <see cref="WritableSubResource"/> for mocking.
         /// </summary>

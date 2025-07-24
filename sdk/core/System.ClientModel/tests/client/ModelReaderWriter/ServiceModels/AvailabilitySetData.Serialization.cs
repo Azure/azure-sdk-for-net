@@ -88,15 +88,29 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     writer.WritePropertyName("platformFaultDomainCount"u8);
                     writer.WriteNumberValue(PlatformFaultDomainCount.Value);
                 }
-                if (OptionalProperty.IsCollectionDefined(VirtualMachines) && !flattenedJson.Contains("virtualMachines"u8))
+                if (OptionalProperty.IsCollectionDefined(VirtualMachines) || flattenedJson.ContainsStartsWith("virtualMachines"u8))
                 {
                     writer.WritePropertyName("virtualMachines"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in VirtualMachines)
+                    if (flattenedJson.Contains("virtualMachines"u8))
                     {
-                        JsonSerializer.Serialize(writer, item);
+                        writer.WriteRawValue(flattenedJson.GetJson("virtualMachines"u8));
                     }
-                    writer.WriteEndArray();
+                    else
+                    {
+                        writer.WriteStartArray();
+                        if (OptionalProperty.IsCollectionDefined(VirtualMachines))
+                        {
+                            foreach (var item in VirtualMachines)
+                            {
+                                JsonSerializer.Serialize(writer, item);
+                            }
+                        }
+                        foreach (var entry in flattenedJson.EntriesStartsWith("virtualMachines"u8.ToArray()))
+                        {
+                            writer.WriteRawValue(entry.Value.AsSpan().Slice(1));
+                        }
+                        writer.WriteEndArray();
+                    }
                 }
                 if (OptionalProperty.IsDefined(ProximityPlacementGroup) && !flattenedJson.Contains("proximityPlacementGroup"u8))
                 {

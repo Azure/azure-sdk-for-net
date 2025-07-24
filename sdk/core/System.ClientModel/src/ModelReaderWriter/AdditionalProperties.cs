@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers.Text;
+using System.ClientModel.Internal;
 using System.Text;
 using System.Text.Json;
 
@@ -124,9 +126,39 @@ public partial struct AdditionalProperties
     /// <param name="value"></param>
     public void Set(ReadOnlySpan<byte> name, string value)
     {
-        // TODO: can set support json pointer?
-        // System.String
-        Set(name, (object)value);
+        SetInternal(name, EncodeValue(value));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    public void Set(ReadOnlySpan<byte> name, byte[] value)
+    {
+        SetInternal(name, EncodeValue(value));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    public void Set(ReadOnlySpan<byte> name, BinaryData value)
+    {
+        SetInternal(name, EncodeValue(value));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    public void Set<T>(ReadOnlySpan<byte> name, IJsonModel<T> value)
+    {
+        var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
+        using var reader = writer.ExtractReader();
+        SetInternal(name, EncodeValue(reader.ToBinaryData()));
     }
 
     private T? GetPrimitive<T>(ReadOnlySpan<byte> propertyName, SpanParser<T?> parser, ValueKind expectedKind)
@@ -176,6 +208,41 @@ public partial struct AdditionalProperties
         }
 
         byte[] nameBytes = name.ToArray();
+        int lastSlashIndex = name.LastIndexOf((byte)'/');
+        if (lastSlashIndex > 0)
+        {
+            ReadOnlySpan<byte> remaining = name.Slice(lastSlashIndex + 1);
+            if (remaining.Length == 1 && remaining[0] == (byte)'-')
+            {
+                //is it worth it to calculate the size?
+                int size = 0;
+                int count = 0;
+                foreach (var kvp in EntriesStartsWith(nameBytes))
+                {
+                    count++;
+                    size += kvp.Value.Length;
+                }
+
+                //combine all entries that start with the name
+                using var memoryStream = new MemoryStream(size + count);
+                memoryStream.WriteByte((byte)ValueKind.Json);
+                int current = 0;
+                foreach (var kvp in EntriesStartsWith(nameBytes))
+                {
+                    memoryStream.Write(kvp.Value, 1, kvp.Value.Length - 1);
+                    if (current++ < count - 1)
+                    {
+                        memoryStream.WriteByte((byte)',');
+                    }
+                }
+                return memoryStream.ToArray();
+            }
+            else if (Utf8Parser.TryParse(remaining, out int index, out _))
+            {
+                return EntriesStartsWith(name.Slice(0, lastSlashIndex).ToArray()).Skip(index).Take(1).First().Value;
+            }
+        }
+
         if (!_properties.TryGetValue(nameBytes, out byte[]? encodedValue))
         {
             return Array.Empty<byte>();
@@ -216,7 +283,7 @@ public partial struct AdditionalProperties
     public void Set(ReadOnlySpan<byte> name, int value)
     {
         // Int32
-        Set(name, (object)value);
+        SetInternal(name, EncodeValue(value));
     }
 
     private bool TryGetFromPointer<T>(ReadOnlySpan<byte> name, SpanParser<T> parser, T defaultValue, out T? result)
@@ -282,10 +349,7 @@ public partial struct AdditionalProperties
     /// <param name="json"></param>
     public void Set(ReadOnlySpan<byte> name, ReadOnlySpan<byte> json)
     {
-        // TODO: can set support json pointer?
-        // JSON Object
-        byte[] jsonBytes = json.ToArray();
-        Set(name, (object)jsonBytes);
+        SetInternal(name, EncodeValue(json));
     }
 
     /// <summary>
@@ -311,7 +375,7 @@ public partial struct AdditionalProperties
     /// <param name="value"></param>
     public void Set(ReadOnlySpan<byte> name, bool value)
     {
-        Set(name, (object)value);
+        SetInternal(name, EncodeValue(value));
     }
 
     /// <summary>

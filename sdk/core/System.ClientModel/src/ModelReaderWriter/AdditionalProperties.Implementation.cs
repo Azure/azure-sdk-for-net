@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers.Text;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
 
@@ -16,6 +18,7 @@ public partial struct AdditionalProperties
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private Dictionary<byte[], byte[]>? _properties;
+    private int _arrayIndex;
 
     // Value kinds for encoding type information in byte arrays
     [Flags]
@@ -45,12 +48,52 @@ public partial struct AdditionalProperties
     static AdditionalProperties()
     {
         // Initialize null value array
-        s_nullValueArray = [(byte)ValueKind.Null, .. "null"u8.ToArray()];
+        s_nullValueArray = [(byte)ValueKind.Null, .. "null"u8];
         // Initialize true boolean array
-        s_trueBooleanArray = [(byte)ValueKind.BooleanTrue, .. "true"u8.ToArray()];
+        s_trueBooleanArray = [(byte)ValueKind.BooleanTrue, .. "true"u8];
         // Initialize false boolean array
-        s_falseBooleanArray = [(byte)ValueKind.BooleanFalse, .. "false"u8.ToArray()];
+        s_falseBooleanArray = [(byte)ValueKind.BooleanFalse, .. "false"u8];
     }
+
+    private static bool IsAnonymousType(object obj)
+    {
+        if (obj == null)
+            return false;
+        var type = obj.GetType();
+
+        return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+            && type.IsGenericType
+            && type.Name.Contains("AnonymousType")
+            && (type.Name.StartsWith("<>", StringComparison.Ordinal) || type.Name.StartsWith("VB$", StringComparison.Ordinal))
+            && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+    }
+
+    private static byte[] EncodeValue(bool value)
+        => value ? s_trueBooleanArray : s_falseBooleanArray;
+
+    private static byte[] EncodeValue(byte[] value)
+        => [(byte)ValueKind.Json, .. value];
+
+    private static byte[] EncodeValue(BinaryData value)
+        => [(byte)ValueKind.Json, .. value.ToMemory().Span];
+
+    private static byte[] EncodeValue(int value)
+    {
+        Span<byte> buffer = stackalloc byte[11];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return [(byte)ValueKind.Int32, .. buffer.Slice(0, bytesWritten)];
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode integer value '{value}'.");
+    }
+
+    private static byte[] EncodeValue(ReadOnlySpan<byte> value)
+        => [(byte)ValueKind.Json, .. value.ToArray()];
+
+    private static byte[] EncodeValue(string value)
+        => [(byte)ValueKind.Utf8String, (byte)'"', .. Encoding.UTF8.GetBytes(value), (byte)'"'];
 
     // Helper methods to encode objects to byte arrays (similar to PropertyRecord format)
     private static byte[] EncodeValue(object value)
@@ -58,48 +101,17 @@ public partial struct AdditionalProperties
         switch (value)
         {
             case string s:
-                // Estimate the buffer size for the string and use Utf8JsonWriter with a pre-allocated buffer
-                int estimatedSize = Encoding.UTF8.GetByteCount(s) + 10; // Add extra space for JSON formatting and value kind
-                using (var stream = new MemoryStream(estimatedSize))
-                {
-                    // Write the ValueKind byte and advance the position
-                    stream.WriteByte((byte)ValueKind.Utf8String);
-
-                    // Now write the JSON starting at position 1
-                    using (var writer = new Utf8JsonWriter(stream))
-                    {
-                        writer.WriteStringValue(s);
-                        writer.Flush();
-                    }
-                    return stream.ToArray();
-                }
+                return EncodeValue(s);
 
             case int i:
-                // Estimate the buffer size for the integer and use Utf8JsonWriter with a pre-allocated buffer
-                const int intEstimatedSize = 20; // Enough for any 32-bit integer
-                using (var stream = new MemoryStream(intEstimatedSize))
-                {
-                    // Write the ValueKind byte and advance the position
-                    stream.WriteByte((byte)ValueKind.Int32);
-
-                    // Now write the JSON starting at position 1
-                    using (var writer = new Utf8JsonWriter(stream))
-                    {
-                        writer.WriteNumberValue(i);
-                        writer.Flush();
-                    }
-                    return stream.ToArray();
-                }
+                return EncodeValue(i);
 
             case bool b:
                 // Use singleton arrays for boolean values
-                return b ? s_trueBooleanArray : s_falseBooleanArray;
+                return EncodeValue(b);
 
             case byte[] jsonBytes:
-                byte[] jsonResult = new byte[1 + jsonBytes.Length];
-                jsonResult[0] = (byte)ValueKind.Json;
-                jsonBytes.CopyTo(jsonResult, 1);
-                return jsonResult;
+                return EncodeValue(jsonBytes);
 
             case RemovedValue:
                 // Use singleton array for removed value
@@ -167,16 +179,44 @@ public partial struct AdditionalProperties
         }
     }
 
-    private void Set(ReadOnlySpan<byte> name, object value)
+    private void SetInternal(ReadOnlySpan<byte> name, byte[] encodedValue)
     {
         if (_properties == null)
         {
             _properties = new Dictionary<byte[], byte[]>(ByteArrayEqualityComparer.Instance);
         }
 
-        byte[] nameBytes = name.ToArray();
-        byte[] encodedValue = EncodeValue(value);
-        _properties[nameBytes] = encodedValue;
+        if (name.EndsWith("/-"u8))
+        {
+            _properties[[.. name, .. BitConverter.GetBytes(_arrayIndex++)]] = encodedValue;
+        }
+        else
+        {
+            _properties[name.ToArray()] = encodedValue;
+        }
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    [RequiresUnreferencedCode("RequiresUnreferencedCode")]
+    [RequiresDynamicCode("RequiresDynamicCode")]
+    public void Set(ReadOnlySpan<byte> name, object value)
+    {
+        if (IsAnonymousType(value))
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            SetInternal(name, EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options)));
+        }
+        else
+        {
+            SetInternal(name, EncodeValue(value));
+        }
     }
 
     private object Get(ReadOnlySpan<byte> name)
