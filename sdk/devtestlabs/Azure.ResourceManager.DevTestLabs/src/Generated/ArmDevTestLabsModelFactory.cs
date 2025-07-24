@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
         /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
         /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="createdOn"> The creation date of the schedule. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
@@ -370,6 +370,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
+        /// <param name="name"> The name of the virtual machine or environment. </param>
+        /// <param name="location"> The location of the new virtual machine or environment. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
+        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
+        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
+        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
+        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
+        /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
+        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, DevTestLabEnableStatus? status = null, string taskType = null, DevTestLabWeekDetails weeklyRecurrence = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = null, string timeZoneId = null, DevTestLabNotificationSettings notificationSettings = null, ResourceIdentifier targetResourceId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DevTestLabScheduleCreationParameter(
+                name,
+                location,
+                tags,
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime, serializedAdditionalRawData: null) : null,
+                hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute, serializedAdditionalRawData: null) : null,
+                timeZoneId,
+                notificationSettings,
+                targetResourceId,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCustomImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -455,38 +487,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
-        /// <param name="name"> The name of the virtual machine or environment. </param>
-        /// <param name="location"> The location of the new virtual machine or environment. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
-        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
-        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
-        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
-        /// <param name="notificationSettings"> Notification settings. </param>
-        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
-        /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(string name = null, AzureLocation? location = null, IDictionary<string, string> tags = null, DevTestLabEnableStatus? status = null, string taskType = null, DevTestLabWeekDetails weeklyRecurrence = null, string dailyRecurrenceTime = null, int? hourlyRecurrenceMinute = null, string timeZoneId = null, DevTestLabNotificationSettings notificationSettings = null, ResourceIdentifier targetResourceId = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DevTestLabScheduleCreationParameter(
-                name,
-                location,
-                tags,
-                status,
-                taskType,
-                weeklyRecurrence,
-                dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime, serializedAdditionalRawData: null) : null,
-                hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute, serializedAdditionalRawData: null) : null,
-                timeZoneId,
-                notificationSettings,
-                targetResourceId,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGalleryImage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -523,6 +523,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 planId,
                 isPlanAuthorized,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGenerateUploadUriResult"/>. </summary>
+        /// <param name="uploadUri"> The upload URI for the VHD. </param>
+        /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
+        public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(Uri uploadUri = null)
+        {
+            return new DevTestLabGenerateUploadUriResult(uploadUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabNotificationChannelData"/>. </summary>
@@ -1062,14 +1070,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static DevTestLabExternalSubnet DevTestLabExternalSubnet(ResourceIdentifier id = null, string name = null)
         {
             return new DevTestLabExternalSubnet(id, name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGenerateUploadUriResult"/>. </summary>
-        /// <param name="uploadUri"> The upload URI for the VHD. </param>
-        /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
-        public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(Uri uploadUri = null)
-        {
-            return new DevTestLabGenerateUploadUriResult(uploadUri, serializedAdditionalRawData: null);
         }
     }
 }

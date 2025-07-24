@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -63,7 +64,6 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.AppendQuery("$orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -97,7 +98,6 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 uri.AppendQuery("$orderby", orderby, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> List virtual machines in a given lab. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> List virtual machines in a given lab. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DevTestLabs
             uri.AppendPath(labName, true);
             uri.AppendPath("/virtualmachines/", false);
             uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get virtual machine. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Get virtual machine. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
@@ -327,8 +327,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Create or replace an existing virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="data"> A virtual machine. </param>
@@ -356,8 +356,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Create or replace an existing virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="data"> A virtual machine. </param>
@@ -378,100 +378,6 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                 case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string labName, string name)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string labName, string name)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
-            uri.AppendPath(labName, true);
-            uri.AppendPath("/virtualmachines/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Delete virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, labName, name);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="labName"> The name of the lab. </param>
-        /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, labName, name);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -521,8 +427,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Allows modifying tags of virtual machines. All other properties will be ignored. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="patch"> A virtual machine. </param>
@@ -554,8 +460,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Allows modifying tags of virtual machines. All other properties will be ignored. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="patch"> A virtual machine. </param>
@@ -581,6 +487,100 @@ namespace Azure.ResourceManager.DevTestLabs
                         value = DevTestLabVmData.DeserializeDevTestLabVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string labName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualmachines/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string labName, string name)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualmachines/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Delete virtual machine. This operation can take a while to complete. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, labName, name);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete virtual machine. This operation can take a while to complete. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string labName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, labName, name);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -631,8 +631,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Attach a new or existing data disk to virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="dataDiskProperties"> Request body for adding a new or existing data disk to a virtual machine. </param>
@@ -660,8 +660,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Attach a new or existing data disk to virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="dataDiskProperties"> Request body for adding a new or existing data disk to a virtual machine. </param>
@@ -733,8 +733,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Apply artifacts to virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="content"> Request body for applying artifacts to a virtual machine. </param>
@@ -762,8 +762,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Apply artifacts to virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="content"> Request body for applying artifacts to a virtual machine. </param>
@@ -831,8 +831,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Take ownership of an existing virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -858,8 +858,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Take ownership of an existing virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -929,8 +929,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Detach the specified disk from the virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="content"> Request body for detaching data disk from a virtual machine. </param>
@@ -958,8 +958,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Detach the specified disk from the virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="content"> Request body for detaching data disk from a virtual machine. </param>
@@ -1027,8 +1027,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Gets a string that represents the contents of the RDP file for the virtual machine. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1058,8 +1058,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Gets a string that represents the contents of the RDP file for the virtual machine. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1129,8 +1129,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Lists the applicable start/stop schedules, if any. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1160,8 +1160,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Lists the applicable start/stop schedules, if any. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1231,8 +1231,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Redeploy a virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1258,8 +1258,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Redeploy a virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1329,8 +1329,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Resize Virtual Machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="content"> Request body for resizing a virtual machine. </param>
@@ -1358,8 +1358,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Resize Virtual Machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="content"> Request body for resizing a virtual machine. </param>
@@ -1427,8 +1427,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Restart a virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1454,8 +1454,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Restart a virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1521,8 +1521,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Start a virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1548,8 +1548,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Start a virtual machine. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1615,8 +1615,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Stop a virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1642,8 +1642,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Stop a virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1709,8 +1709,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Transfers all data disks attached to the virtual machine to be owned by the current user. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1736,8 +1736,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Transfers all data disks attached to the virtual machine to be owned by the current user. This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1803,8 +1803,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Release ownership of an existing virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1830,8 +1830,8 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Release ownership of an existing virtual machine This operation can take a while to complete. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1880,8 +1880,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List virtual machines in a given lab. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
@@ -1915,8 +1915,8 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary> List virtual machines in a given lab. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> The name of the lab. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
