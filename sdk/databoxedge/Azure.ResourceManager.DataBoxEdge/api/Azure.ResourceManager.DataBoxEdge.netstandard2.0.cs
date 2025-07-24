@@ -115,6 +115,9 @@ namespace Azure.ResourceManager.DataBoxEdge
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     public partial class AzureResourceManagerDataBoxEdgeContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDataBoxEdgeContext() { }

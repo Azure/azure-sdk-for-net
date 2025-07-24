@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.MobileNetwork
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerMobileNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMobileNetworkContext() { }

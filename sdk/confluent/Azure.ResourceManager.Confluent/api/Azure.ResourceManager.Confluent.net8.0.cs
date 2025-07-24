@@ -48,6 +48,8 @@ namespace Azure.ResourceManager.Confluent
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Confluent.Models.SchemaRegistryClusterRecord))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Confluent.Models.SchemaRegistryClusterSpecEntity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Confluent.Models.SCMetadataEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerConfluentContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConfluentContext() { }

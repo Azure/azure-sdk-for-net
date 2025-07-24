@@ -1285,7 +1285,6 @@ namespace Azure.ResourceManager.AppService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.PrivateAccessVirtualNetwork))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.ProcessThreadInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.QueryUtterancesResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.QueryUtterancesResults))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.RampUpRule))]
@@ -1298,8 +1297,6 @@ namespace Azure.ResourceManager.AppService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.RequestsBasedTrigger))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.ResourceMetricAvailability))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.ResourceMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.ResourceNameAvailability))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.RestoreRequestInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.Models.SampleUtterance))]
@@ -1430,7 +1427,6 @@ namespace Azure.ResourceManager.AppService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteConfigAppsettingResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteConfigData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteConfigSnapshotResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteContainerCollection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteContainerData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteContainerResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.SiteDeploymentResource))]
@@ -1561,6 +1557,12 @@ namespace Azure.ResourceManager.AppService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.WorkflowTriggerResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.WorkflowVersionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppService.WorkflowVersionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ExtendedLocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAppServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAppServiceContext() { }

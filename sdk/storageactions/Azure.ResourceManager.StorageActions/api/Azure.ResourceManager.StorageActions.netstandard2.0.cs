@@ -1,5 +1,9 @@
 namespace Azure.ResourceManager.StorageActions
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskAction))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskIfCondition))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskOperationInfo))]
@@ -14,8 +18,10 @@ namespace Azure.ResourceManager.StorageActions
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.StorageTaskData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageActions.StorageTaskResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerStorageActionsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerStorageActionsContext() { }

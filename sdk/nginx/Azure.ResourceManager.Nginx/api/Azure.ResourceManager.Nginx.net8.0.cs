@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.Nginx
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Nginx.Models.NginxAnalysisConfig))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Nginx.Models.NginxAnalysisContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic))]
@@ -41,6 +44,8 @@ namespace Azure.ResourceManager.Nginx
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Nginx.NginxDeploymentApiKeyResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Nginx.NginxDeploymentData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Nginx.NginxDeploymentResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNginxContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNginxContext() { }

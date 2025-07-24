@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.SelfHelp
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SelfHelp.Models.ClassificationService))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SelfHelp.Models.DiscoveryNlpContent))]
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.SelfHelp
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SelfHelp.SelfHelpSolutionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SelfHelp.SelfHelpTroubleshooterResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSelfHelpContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSelfHelpContext() { }

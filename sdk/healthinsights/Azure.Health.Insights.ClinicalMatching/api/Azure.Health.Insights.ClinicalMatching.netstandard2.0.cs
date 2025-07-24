@@ -93,6 +93,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.ClinicalMatching.TrialMatcherResults))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureHealthInsightsClinicalMatchingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthInsightsClinicalMatchingContext() { }

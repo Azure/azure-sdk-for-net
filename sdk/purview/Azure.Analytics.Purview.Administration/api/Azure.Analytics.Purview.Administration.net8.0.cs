@@ -2,9 +2,7 @@ namespace Azure.Analytics.Purview.Administration
 {
     public partial class AzureAnalyticsPurviewAdministrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsPurviewAdministrationContext() { }
-        public static Azure.Analytics.Purview.Administration.AzureAnalyticsPurviewAdministrationContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsPurviewAdministrationContext() { }
     }
     public partial class PurviewAccountClient
     {

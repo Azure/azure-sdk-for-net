@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.SpringAppDiscovery
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem))]
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSpringAppDiscoveryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSpringAppDiscoveryContext() { }

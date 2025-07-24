@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.ComputePolicyForDataLakeAnalyticsAccountUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult))]
@@ -26,9 +27,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsFirewallRulePatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsHiveMetastore))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSasTokenInformation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsVirtualNetworkRule))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountUpdateContent))]
@@ -36,6 +39,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.FirewallRuleForDataLakeAnalyticsAccountUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeAnalytics.Models.SubscriptionResourceGetAccountsOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDataLakeAnalyticsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDataLakeAnalyticsContext() { }

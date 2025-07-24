@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.ScVmm
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ExtendedLocation))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ScVmm.Models.CloudInventoryItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ScVmm.Models.OSProfileForVmInstance))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ScVmm.Models.ScVmmAvailabilitySetItem))]
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.ScVmm
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerScVmmContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerScVmmContext() { }

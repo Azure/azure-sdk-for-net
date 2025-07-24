@@ -22,9 +22,7 @@ namespace Azure.Communication.AlphaIds
     }
     public partial class AzureCommunicationAlphaIdsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureCommunicationAlphaIdsContext() { }
-        public static Azure.Communication.AlphaIds.AzureCommunicationAlphaIdsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureCommunicationAlphaIdsContext() { }
     }
 }
 namespace Azure.Communication.AlphaIds.Models

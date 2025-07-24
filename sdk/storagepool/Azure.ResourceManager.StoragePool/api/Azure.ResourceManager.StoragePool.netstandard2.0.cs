@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.StoragePool
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource))]
@@ -21,6 +23,7 @@ namespace Azure.ResourceManager.StoragePool
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerStoragePoolContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerStoragePoolContext() { }

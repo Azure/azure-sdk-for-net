@@ -1,7 +1,12 @@
 namespace Azure.ResourceManager.Consumption
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.BillingAccountConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.BillingCustomerConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.BillingProfileConsumptionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.ConsumptionBudgetData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.ConsumptionBudgetResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.ManagementGroupBillingPeriodConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend))]
@@ -46,6 +51,11 @@ namespace Azure.ResourceManager.Consumption
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.CreditBalanceSummary))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.PriceSheetProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.Models.PriceSheetResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.ReservationConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.ReservationOrderConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.SubscriptionBillingPeriodConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Consumption.TenantBillingPeriodConsumptionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerConsumptionContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConsumptionContext() { }

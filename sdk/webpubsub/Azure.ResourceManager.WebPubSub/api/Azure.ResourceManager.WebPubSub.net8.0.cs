@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.WebPubSub
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WebPubSub.Models.BillingInfoSku))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration))]
@@ -30,6 +33,7 @@ namespace Azure.ResourceManager.WebPubSub
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WebPubSub.WebPubSubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerWebPubSubContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerWebPubSubContext() { }

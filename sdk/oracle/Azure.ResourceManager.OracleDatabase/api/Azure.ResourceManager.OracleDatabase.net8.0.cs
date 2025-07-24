@@ -238,6 +238,8 @@ namespace Azure.ResourceManager.OracleDatabase
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.AutonomousDBVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ArmPlan))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OracleDatabase.AutonomousDatabaseBackupResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OracleDatabase.AutonomousDatabaseCharacterSetData))]
@@ -354,6 +356,7 @@ namespace Azure.ResourceManager.OracleDatabase
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OracleDatabase.OracleSubscriptionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OracleDatabase.OracleSystemVersionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OracleDatabase.OracleSystemVersionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerOracleDatabaseContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerOracleDatabaseContext() { }

@@ -1,9 +1,13 @@
 namespace Azure.ResourceManager.PlanetaryComputer
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.Models.PlanetaryComputerGeoCatalogPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.Models.PlanetaryComputerGeoCatalogProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.PlanetaryComputerGeoCatalogData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.PlanetaryComputerGeoCatalogResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPlanetaryComputerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPlanetaryComputerContext() { }

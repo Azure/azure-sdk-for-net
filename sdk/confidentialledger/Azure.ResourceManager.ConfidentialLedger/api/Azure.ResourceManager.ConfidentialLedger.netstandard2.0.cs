@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerConfidentialLedgerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConfidentialLedgerContext() { }

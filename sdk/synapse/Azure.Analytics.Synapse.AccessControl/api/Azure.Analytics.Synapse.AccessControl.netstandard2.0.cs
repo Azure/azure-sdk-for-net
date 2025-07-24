@@ -10,9 +10,7 @@ namespace Azure.Analytics.Synapse.AccessControl
     }
     public partial class AzureAnalyticsSynapseAccessControlContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsSynapseAccessControlContext() { }
-        public static Azure.Analytics.Synapse.AccessControl.AzureAnalyticsSynapseAccessControlContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsSynapseAccessControlContext() { }
     }
     public partial class RoleAssignmentsClient
     {

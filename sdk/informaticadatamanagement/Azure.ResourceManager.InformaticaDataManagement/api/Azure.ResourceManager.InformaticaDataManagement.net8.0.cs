@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.InformaticaDataManagement.Models.ServerlessRuntimeDependency))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.InformaticaDataManagement.Models.ServerlessRuntimePropertiesUpdate))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.InformaticaDataManagement.Models.ServerlessRuntimeTag))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerInformaticaDataManagementContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerInformaticaDataManagementContext() { }

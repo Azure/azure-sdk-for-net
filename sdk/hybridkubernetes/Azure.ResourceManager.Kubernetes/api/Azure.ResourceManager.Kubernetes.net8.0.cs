@@ -7,6 +7,9 @@ namespace Azure.ResourceManager.Kubernetes
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Kubernetes.Models.CredentialResults))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Kubernetes.Models.HybridConnectionConfig))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Kubernetes.Models.ListClusterUserCredentialProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerKubernetesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerKubernetesContext() { }

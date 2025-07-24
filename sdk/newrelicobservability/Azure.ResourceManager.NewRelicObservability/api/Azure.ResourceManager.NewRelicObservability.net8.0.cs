@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.NewRelicObservability
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NewRelicObservability.Models.MarketplaceSaaSInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData))]
@@ -37,6 +40,8 @@ namespace Azure.ResourceManager.NewRelicObservability
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNewRelicObservabilityContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNewRelicObservabilityContext() { }

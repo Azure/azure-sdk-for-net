@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.SecurityInsights
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.AadCheckRequirements))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.AatpCheckRequirements))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.ActivityCustomEntityQuery))]
@@ -234,7 +235,9 @@ namespace Azure.ResourceManager.SecurityInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataSupport))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsOfficeDataConnector))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsOfficeDataConnectorDataTypes))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsPackageCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsProcessEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsProductTemplateCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsPropertyArrayChangedConditionProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsPropertyChangedConditionProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsPropertyConditionProperties))]
@@ -244,6 +247,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSubmissionMailEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsTemplateCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligence))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligenceIndicatorData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsTIDataConnector))]
@@ -297,6 +301,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.UebaSettings))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.WorkspaceEnrichmentIPGeodata))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerAssignmentItem))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.OperationalInsightsWorkspaceSecurityInsightsResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData))]
@@ -376,6 +381,7 @@ namespace Azure.ResourceManager.SecurityInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.WorkspaceManagerGroupResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.WorkspaceManagerMemberData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityInsights.WorkspaceManagerMemberResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSecurityInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSecurityInsightsContext() { }

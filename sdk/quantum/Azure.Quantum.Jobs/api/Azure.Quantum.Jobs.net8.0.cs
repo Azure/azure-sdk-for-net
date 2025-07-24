@@ -14,9 +14,7 @@ namespace Azure.Quantum.Jobs
 {
     public partial class AzureQuantumJobsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureQuantumJobsContext() { }
-        public static Azure.Quantum.Jobs.AzureQuantumJobsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureQuantumJobsContext() { }
     }
     public partial class QuantumJobClient
     {

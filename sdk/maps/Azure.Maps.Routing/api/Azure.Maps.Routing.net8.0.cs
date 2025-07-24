@@ -20,9 +20,7 @@ namespace Azure.Maps.Routing
     }
     public partial class AzureMapsRoutingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMapsRoutingContext() { }
-        public static Azure.Maps.Routing.AzureMapsRoutingContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMapsRoutingContext() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InclineLevel : System.IEquatable<Azure.Maps.Routing.InclineLevel>

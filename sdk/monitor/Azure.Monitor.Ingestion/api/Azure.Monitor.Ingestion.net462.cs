@@ -2,9 +2,7 @@ namespace Azure.Monitor.Ingestion
 {
     public partial class AzureMonitorIngestionContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMonitorIngestionContext() { }
-        public static Azure.Monitor.Ingestion.AzureMonitorIngestionContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMonitorIngestionContext() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogsIngestionAudience : System.IEquatable<Azure.Monitor.Ingestion.LogsIngestionAudience>

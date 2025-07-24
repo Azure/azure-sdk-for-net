@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CryptoKeyResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CryptoKeySummary))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CryptoPairedKey))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CveLink))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CveResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary))]
@@ -34,6 +33,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.Models.UsageMetricProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.UsageMetricData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.IotFirmwareDefense.UsageMetricResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerIotFirmwareDefenseContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerIotFirmwareDefenseContext() { }

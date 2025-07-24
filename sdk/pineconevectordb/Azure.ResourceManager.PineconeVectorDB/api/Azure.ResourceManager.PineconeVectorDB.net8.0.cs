@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.PineconeVectorDB
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBMarketplaceDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBOfferDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBOrganizationPatch))]
@@ -8,6 +11,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PineconeVectorDB.Models.PineconeVectorDBUserDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PineconeVectorDB.PineconeVectorDBOrganizationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PineconeVectorDB.PineconeVectorDBOrganizationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPineconeVectorDBContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPineconeVectorDBContext() { }

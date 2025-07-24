@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.Peering
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Peering.ConnectionMonitorTestData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Peering.ConnectionMonitorTestResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Peering.Models.CdnPeeringPrefix))]
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Peering
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Peering.PeeringServicePrefixData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Peering.PeeringServicePrefixResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Peering.PeeringServiceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     public partial class AzureResourceManagerPeeringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPeeringContext() { }

@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.PureStorageBlock
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PureStorageBlock.Models.PerformancePolicyLimits))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PureStorageBlock.Models.PropertyValueRangeLimits))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PureStorageBlock.Models.ProtectionPolicyLimits))]
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.PureStorageBlock
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PureStorageBlock.PureStoragePoolResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PureStorageBlock.PureStorageReservationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PureStorageBlock.PureStorageReservationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPureStorageBlockContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPureStorageBlockContext() { }

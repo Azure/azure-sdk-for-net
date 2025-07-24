@@ -98,6 +98,8 @@ namespace Azure.ResourceManager.Analysis
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisServerPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAnalysisContext() { }

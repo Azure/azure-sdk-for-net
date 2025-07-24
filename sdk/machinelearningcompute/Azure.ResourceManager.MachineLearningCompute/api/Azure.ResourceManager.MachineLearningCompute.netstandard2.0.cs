@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerMachineLearningComputeContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMachineLearningComputeContext() { }

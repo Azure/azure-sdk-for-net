@@ -10,6 +10,7 @@ namespace Azure.AI.Translation.Document
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Document.TranslationSource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Document.TranslationStatusResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Document.TranslationTarget))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAITranslationDocumentContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAITranslationDocumentContext() { }

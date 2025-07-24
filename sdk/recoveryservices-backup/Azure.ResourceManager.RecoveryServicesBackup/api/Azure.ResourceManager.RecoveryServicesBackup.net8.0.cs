@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.BackupEngineData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.BackupEngineResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.BackupJobData))]
@@ -22,7 +24,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.BackupResourceVaultConfigData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.BackupResourceVaultConfigResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.Models.AzureVmWorkloadSapHanaHSRProtectableItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCommonSettings))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDay))]
@@ -263,6 +264,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.Models.YearlyRetentionSchedule))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.ResourceGuardProxyData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesBackup.ResourceGuardProxyResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ExtendedLocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerRecoveryServicesBackupContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerRecoveryServicesBackupContext() { }

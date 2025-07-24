@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ApplicationServerConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ApplicationServerFullResourceNames))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadsSapVirtualInstance.Models.ApplicationServerVmDetails))]
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadsSapVirtualInstance.SapDatabaseInstanceResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadsSapVirtualInstance.SapVirtualInstanceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadsSapVirtualInstance.SapVirtualInstanceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerWorkloadsSapVirtualInstanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerWorkloadsSapVirtualInstanceContext() { }

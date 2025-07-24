@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Marketplace
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Marketplace.PrivateStoreOfferData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Marketplace.PrivateStoreOfferResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Marketplace.PrivateStoreResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerMarketplaceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMarketplaceContext() { }

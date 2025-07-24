@@ -15,9 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class AzureAnalyticsSynapseArtifactsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsSynapseArtifactsContext() { }
-        public static Azure.Analytics.Synapse.Artifacts.AzureAnalyticsSynapseArtifactsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsSynapseArtifactsContext() { }
     }
     public partial class BigDataPoolsClient
     {

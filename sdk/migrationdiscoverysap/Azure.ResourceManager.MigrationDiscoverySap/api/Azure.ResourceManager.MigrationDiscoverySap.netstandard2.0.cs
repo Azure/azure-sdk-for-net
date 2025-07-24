@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerMigrationDiscoverySapContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMigrationDiscoverySapContext() { }

@@ -2,9 +2,7 @@ namespace Azure.Maps.Geolocation
 {
     public partial class AzureMapsGeolocationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMapsGeolocationContext() { }
-        public static Azure.Maps.Geolocation.AzureMapsGeolocationContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMapsGeolocationContext() { }
     }
     public partial class CountryRegionResult
     {

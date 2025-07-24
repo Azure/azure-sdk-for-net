@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.WorkloadMonitor
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadMonitor.HealthMonitorData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData))]

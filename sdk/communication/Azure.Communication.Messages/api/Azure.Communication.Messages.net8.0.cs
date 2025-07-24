@@ -159,6 +159,7 @@ namespace Azure.Communication.Messages
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.Messages.VideoConversationMessageContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.Messages.VideoMessageContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.Messages.VideoNotificationContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureCommunicationMessagesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureCommunicationMessagesContext() { }

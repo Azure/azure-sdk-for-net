@@ -114,9 +114,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     }
     public partial class AzureMixedRealityObjectAnchorsConversionContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMixedRealityObjectAnchorsConversionContext() { }
-        public static Azure.MixedReality.ObjectAnchors.Conversion.AzureMixedRealityObjectAnchorsConversionContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMixedRealityObjectAnchorsConversionContext() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConversionErrorCode : System.IEquatable<Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode>

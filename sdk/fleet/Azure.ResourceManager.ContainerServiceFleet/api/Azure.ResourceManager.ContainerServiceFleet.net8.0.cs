@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerServiceFleet.Models.MemberUpdateStatus))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageSelection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerServiceFleet.Models.NodeImageVersion))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerContainerServiceFleetContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerContainerServiceFleetContext() { }

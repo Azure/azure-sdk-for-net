@@ -36,9 +36,7 @@ namespace Azure.Verticals.AgriFood.Farming
     }
     public partial class AzureVerticalsAgriFoodFarmingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureVerticalsAgriFoodFarmingContext() { }
-        public static Azure.Verticals.AgriFood.Farming.AzureVerticalsAgriFoodFarmingContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureVerticalsAgriFoodFarmingContext() { }
     }
     public partial class Boundaries
     {

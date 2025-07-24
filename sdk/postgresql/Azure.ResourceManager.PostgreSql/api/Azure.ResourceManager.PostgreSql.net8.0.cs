@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.PostgreSql
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbLevelValidationStatus))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.DbMigrationStatus))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent))]

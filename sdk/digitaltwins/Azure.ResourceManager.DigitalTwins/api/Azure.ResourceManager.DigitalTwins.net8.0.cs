@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DigitalTwins
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
     public partial class AzureResourceManagerDigitalTwinsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDigitalTwinsContext() { }

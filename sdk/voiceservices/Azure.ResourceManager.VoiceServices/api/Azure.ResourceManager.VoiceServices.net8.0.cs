@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.VoiceServices
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch))]
@@ -10,6 +11,7 @@ namespace Azure.ResourceManager.VoiceServices
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerVoiceServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerVoiceServicesContext() { }

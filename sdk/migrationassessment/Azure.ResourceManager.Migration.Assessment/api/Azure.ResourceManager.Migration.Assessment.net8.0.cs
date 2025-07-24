@@ -98,6 +98,9 @@ namespace Azure.ResourceManager.Migration.Assessment
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Migration.Assessment.Models.SqlRecommendationReasoning))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Migration.Assessment.Models.SqlRecommendationReasoningContext))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Migration.Assessment.Models.UltraDiskAssessmentConfig))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerMigrationAssessmentContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMigrationAssessmentContext() { }

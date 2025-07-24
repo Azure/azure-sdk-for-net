@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.FrontDoor
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentResourceGetTimeSeriesReportOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent))]
@@ -54,6 +55,9 @@ namespace Azure.ResourceManager.FrontDoor
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallScrubbingRules))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     public partial class AzureResourceManagerFrontDoorContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerFrontDoorContext() { }

@@ -41,6 +41,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ReadResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.SmartCropsResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.TagsResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAIVisionImageAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIVisionImageAnalysisContext() { }

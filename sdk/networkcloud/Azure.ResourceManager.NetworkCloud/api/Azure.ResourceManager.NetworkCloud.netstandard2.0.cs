@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.NetworkCloud
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings))]
@@ -130,6 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNetworkCloudContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNetworkCloudContext() { }

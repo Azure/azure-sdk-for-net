@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.NetworkAnalytics
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkAnalytics.DataProductData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkAnalytics.DataProductResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData))]
@@ -21,6 +24,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkAnalytics.Models.RoleAssignmentCommonProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkAnalytics.Models.RoleAssignmentDetail))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetworkAnalytics.Models.RoleAssignmentListResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNetworkAnalyticsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNetworkAnalyticsContext() { }

@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.StorageMover
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageMover.JobDefinitionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageMover.JobDefinitionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageMover.JobRunData))]
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.StorageMover
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageMover.StorageMoverProjectData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageMover.StorageMoverProjectResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StorageMover.StorageMoverResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerStorageMoverContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerStorageMoverContext() { }

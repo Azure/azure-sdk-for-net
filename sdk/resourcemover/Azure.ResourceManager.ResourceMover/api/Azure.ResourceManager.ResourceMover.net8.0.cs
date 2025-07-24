@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.ResourceMover
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceMover.Models.AffectedMoverResourceInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceMover.Models.DiskEncryptionSetResourceSettings))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceMover.Models.KeyVaultResourceSettings))]
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.ResourceMover
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceMover.MoverResourceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceMover.MoverResourceSetData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceMover.MoverResourceSetResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerResourceMoverContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerResourceMoverContext() { }

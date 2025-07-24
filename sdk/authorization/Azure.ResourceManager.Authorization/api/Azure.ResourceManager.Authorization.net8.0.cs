@@ -235,6 +235,8 @@ namespace Azure.ResourceManager.Authorization
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Authorization.RoleManagementPolicyData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Authorization.RoleManagementPolicyResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAuthorizationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAuthorizationContext() { }

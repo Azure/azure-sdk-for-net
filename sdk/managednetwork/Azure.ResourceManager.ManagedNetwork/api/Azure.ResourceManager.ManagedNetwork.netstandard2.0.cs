@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.ManagedNetwork
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.Models.Scope))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     public partial class AzureResourceManagerManagedNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerManagedNetworkContext() { }

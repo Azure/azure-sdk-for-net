@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.LargeInstance
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerLargeInstanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerLargeInstanceContext() { }

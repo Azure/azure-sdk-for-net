@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.BotService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.DirectLineSpeechChannel))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.DirectLineSpeechChannelProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.EmailChannel))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.EmailChannelProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.FacebookChannel))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.FacebookChannelProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.FacebookPage))]
@@ -67,6 +66,8 @@ namespace Azure.ResourceManager.BotService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.WebChatChannel))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.WebChatChannelProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BotService.Models.WebChatSite))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
     public partial class AzureResourceManagerBotServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerBotServiceContext() { }

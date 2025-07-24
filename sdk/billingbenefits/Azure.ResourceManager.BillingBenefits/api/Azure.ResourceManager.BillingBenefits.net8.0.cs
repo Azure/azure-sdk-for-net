@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.BillingBenefits
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.TenantResourceGetBillingBenefitsSavingsPlansOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerBillingBenefitsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerBillingBenefitsContext() { }

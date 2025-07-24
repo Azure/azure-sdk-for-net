@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.PlaywrightTesting
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.AccountUpdateProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountFreeTrialProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.Models.PlaywrightTestingAccountPatch))]
@@ -15,6 +16,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingQuotaResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPlaywrightTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPlaywrightTestingContext() { }

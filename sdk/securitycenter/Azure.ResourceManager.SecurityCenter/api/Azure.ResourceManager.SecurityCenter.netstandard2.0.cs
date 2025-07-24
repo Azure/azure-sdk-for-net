@@ -168,6 +168,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.AdaptiveApplicationControlGroupResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData))]
@@ -313,7 +317,6 @@ namespace Azure.ResourceManager.SecurityCenter
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.EnvironmentDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatus))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionProperties))]
@@ -526,6 +529,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.SubscriptionSecurityApplicationResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSecurityCenterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSecurityCenterContext() { }

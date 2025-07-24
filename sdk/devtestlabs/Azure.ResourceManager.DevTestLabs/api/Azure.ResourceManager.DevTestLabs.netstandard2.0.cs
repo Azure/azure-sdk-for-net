@@ -78,7 +78,6 @@ namespace Azure.ResourceManager.DevTestLabs
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleRetargetContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabImportVmContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabInboundNatRule))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNetworkInterface))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEvent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelNotifyContent))]
@@ -112,6 +111,9 @@ namespace Azure.ResourceManager.DevTestLabs
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmResizeContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDevTestLabsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDevTestLabsContext() { }

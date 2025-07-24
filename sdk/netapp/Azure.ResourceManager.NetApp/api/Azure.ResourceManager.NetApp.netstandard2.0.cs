@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.NetApp
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.CapacityPoolData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.CapacityPoolResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.AvailabilityZoneMapping))]
@@ -34,12 +37,10 @@ namespace Azure.ResourceManager.NetApp
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppSubvolumeMetadata))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppUsageName))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppUsageResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVault))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeAuthorizeReplicationContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBreakFileLocksContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.Models.NetAppVolumeBreakReplicationContent))]
@@ -95,6 +96,7 @@ namespace Azure.ResourceManager.NetApp
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.RegionInfoResourceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.SnapshotPolicyData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NetApp.SnapshotPolicyResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNetAppContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNetAppContext() { }

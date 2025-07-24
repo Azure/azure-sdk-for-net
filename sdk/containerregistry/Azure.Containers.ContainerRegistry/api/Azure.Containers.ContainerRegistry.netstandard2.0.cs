@@ -112,9 +112,7 @@ namespace Azure.Containers.ContainerRegistry
     }
     public partial class AzureContainersContainerRegistryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureContainersContainerRegistryContext() { }
-        public static Azure.Containers.ContainerRegistry.AzureContainersContainerRegistryContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureContainersContainerRegistryContext() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryAudience : System.IEquatable<Azure.Containers.ContainerRegistry.ContainerRegistryAudience>

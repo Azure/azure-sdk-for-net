@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.DurableTask
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSku))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DurableTask.Models.DurableTaskSchedulerSkuUpdate))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDurableTaskContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDurableTaskContext() { }

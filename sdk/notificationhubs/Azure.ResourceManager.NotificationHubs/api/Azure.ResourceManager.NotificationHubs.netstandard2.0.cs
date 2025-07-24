@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.NotificationHubs
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.BrowserCredential))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.FcmV1Credential))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential))]
@@ -7,15 +8,12 @@ namespace Azure.ResourceManager.NotificationHubs
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubGcmCredential))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubIPRule))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubMpnsCredential))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespacePatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNamespaceProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubNetworkAcls))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPnsCredentials))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPolicyKey))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubPrivateEndpointConnectionProperties))]
@@ -24,11 +22,9 @@ namespace Azure.ResourceManager.NotificationHubs
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubsPrivateLinkResourceProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubTestSendResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.NotificationHubWnsCredential))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.PnsCredentials))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.RemotePrivateLinkServiceConnectionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.Models.XiaomiCredential))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleData))]
@@ -42,6 +38,8 @@ namespace Azure.ResourceManager.NotificationHubs
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.NotificationHubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.NotificationHubsPrivateLinkResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NotificationHubs.NotificationHubsPrivateLinkResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNotificationHubsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNotificationHubsContext() { }

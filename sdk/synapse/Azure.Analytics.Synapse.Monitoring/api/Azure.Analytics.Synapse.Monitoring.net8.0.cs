@@ -2,9 +2,7 @@ namespace Azure.Analytics.Synapse.Monitoring
 {
     public partial class AzureAnalyticsSynapseMonitoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsSynapseMonitoringContext() { }
-        public static Azure.Analytics.Synapse.Monitoring.AzureAnalyticsSynapseMonitoringContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsSynapseMonitoringContext() { }
     }
     public partial class MonitoringClient
     {

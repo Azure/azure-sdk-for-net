@@ -90,6 +90,7 @@ namespace Azure.Health.Insights.RadiologyInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.RadiologyInsights.ScoringAndAssessmentInference))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.RadiologyInsights.SexMismatchInference))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.RadiologyInsights.TimePeriod))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureHealthInsightsRadiologyInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthInsightsRadiologyInsightsContext() { }

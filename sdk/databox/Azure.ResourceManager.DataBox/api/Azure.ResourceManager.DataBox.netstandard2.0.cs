@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.DataBox
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataBoxJobDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataBoxJobPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataboxJobSecrets))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataBoxJobStage))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey))]
@@ -108,6 +107,10 @@ namespace Azure.ResourceManager.DataBox
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.TransportPreferences))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.UnencryptedCredentials))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataBox.Models.UpdateJobDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDataBoxContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDataBoxContext() { }
@@ -908,6 +911,17 @@ namespace Azure.ResourceManager.DataBox.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DataBoxJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>
+    {
+        internal DataBoxJobSecrets() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxSecret> PodSecrets { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.Please use DataBoxJobSecrets instead.", false)]
     public partial class DataboxJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>
@@ -920,17 +934,6 @@ namespace Azure.ResourceManager.DataBox.Models
         Azure.ResourceManager.DataBox.Models.DataboxJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DataBoxJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>
-    {
-        internal DataBoxJobSecrets() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxSecret> PodSecrets { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataBoxJobStage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>
     {

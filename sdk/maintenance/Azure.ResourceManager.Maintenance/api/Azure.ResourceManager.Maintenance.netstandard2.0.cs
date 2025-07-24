@@ -11,8 +11,13 @@ namespace Azure.ResourceManager.Maintenance
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceGetApplyUpdatesByParentOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceGetConfigurationAssignmentByParentOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.VmTagSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerMaintenanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMaintenanceContext() { }

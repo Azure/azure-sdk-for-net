@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.DeviceRegistry
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUsernamePasswordCredentials))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.MessageSchemaReference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDeviceRegistryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDeviceRegistryContext() { }

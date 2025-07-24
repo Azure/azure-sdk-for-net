@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.Fabric
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricSku))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForExistingCapacity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerFabricContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerFabricContext() { }

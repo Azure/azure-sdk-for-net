@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.DevSpaces
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.KubernetesConnectionDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.ListConnectionDetailsContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.OrchestratorSpecificConnectionDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerDevSpacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDevSpacesContext() { }

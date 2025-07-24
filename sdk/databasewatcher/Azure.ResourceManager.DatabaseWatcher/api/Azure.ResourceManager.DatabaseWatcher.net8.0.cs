@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DatabaseWatcher
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDatabaseWatcherContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDatabaseWatcherContext() { }

@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.PolicyInsights
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.AttestationEvidence))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.CheckManagementGroupPolicyRestrictionsContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent))]
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.PolicyInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicyEvent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicyQuerySettings))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicyReference))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicyState))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.PolicySummary))]
@@ -31,11 +33,11 @@ namespace Azure.ResourceManager.PolicyInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyAttestationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyAttestationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyMetadataCollection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyMetadataData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyMetadataResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyRemediationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PolicyInsights.PolicyRemediationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPolicyInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPolicyInsightsContext() { }

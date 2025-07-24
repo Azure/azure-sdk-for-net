@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalUserDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerArizeAIObservabilityEvalContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerArizeAIObservabilityEvalContext() { }

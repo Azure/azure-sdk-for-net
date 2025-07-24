@@ -2,9 +2,7 @@ namespace Azure.IoT.DeviceUpdate
 {
     public partial class AzureIoTDeviceUpdateContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureIoTDeviceUpdateContext() { }
-        public static Azure.IoT.DeviceUpdate.AzureIoTDeviceUpdateContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureIoTDeviceUpdateContext() { }
     }
     public partial class DeviceManagementClient
     {

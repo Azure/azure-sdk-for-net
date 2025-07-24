@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.ResourceConnector
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult))]
@@ -15,6 +17,7 @@ namespace Azure.ResourceManager.ResourceConnector
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerResourceConnectorContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerResourceConnectorContext() { }

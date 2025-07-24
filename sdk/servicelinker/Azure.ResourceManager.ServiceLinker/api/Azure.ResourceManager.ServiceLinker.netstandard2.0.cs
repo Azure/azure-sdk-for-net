@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.ServiceLinker
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.LinkerResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.LinkerResourceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo))]
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.SystemAssignedIdentityAuthInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.UserAssignedIdentityAuthInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerServiceLinkerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerServiceLinkerContext() { }

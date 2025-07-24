@@ -16,9 +16,7 @@ namespace Azure.AI.MetricsAdvisor
     }
     public partial class AzureAIMetricsAdvisorContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAIMetricsAdvisorContext() { }
-        public static Azure.AI.MetricsAdvisor.AzureAIMetricsAdvisorContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAIMetricsAdvisorContext() { }
     }
     public partial class FeedbackFilter
     {

@@ -1,5 +1,10 @@
 namespace Azure.ResourceManager.Sql
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.DatabaseAdvancedThreatProtectionData))]
@@ -15,8 +20,6 @@ namespace Azure.ResourceManager.Sql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.DataWarehouseUserActivityResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.DeletedServerData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.DeletedServerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.DistributedAvailabilityGroupData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.DistributedAvailabilityGroupResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.ElasticPoolData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.ElasticPoolResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.EncryptionProtectorData))]
@@ -181,6 +184,7 @@ namespace Azure.ResourceManager.Sql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstanceQuery))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstanceUpdateDnsServersOperationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstanceVcoresCapability))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ManagedInstanceVersionCapability))]
@@ -210,6 +214,7 @@ namespace Azure.ResourceManager.Sql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdate))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdateList))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.RefreshExternalGovernanceStatusOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ResourceGroupResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.ResourceWithWritableName))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SecurityEvent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SecurityEventSqlInjectionAdditionalProperties))]
@@ -244,6 +249,11 @@ namespace Azure.ResourceManager.Sql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerCertificateInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerDatabaseReplicationLinkPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobAgentPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobAgentResourceGetJobExecutionsByAgentOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetAllOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepCollectionGetAllOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobExecutionStepTargetCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerJobSchedule))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlServerPrivateEndpointConnection))]
@@ -263,6 +273,7 @@ namespace Azure.ResourceManager.Sql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentRuleMetadata))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentScanError))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.StorageCapability))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SyncAgentKeyProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SyncAgentLinkedDatabase))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.Models.SyncFullSchemaProperties))]
@@ -412,6 +423,7 @@ namespace Azure.ResourceManager.Sql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.WorkloadClassifierResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.WorkloadGroupData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sql.WorkloadGroupResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSqlContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSqlContext() { }

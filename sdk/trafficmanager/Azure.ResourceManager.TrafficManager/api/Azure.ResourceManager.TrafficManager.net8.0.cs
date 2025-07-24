@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.TrafficManager
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerTrafficManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerTrafficManagerContext() { }

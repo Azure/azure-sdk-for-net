@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuRestrictions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.ResourceSkuZoneDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevOpsInfrastructure.Models.SecretsManagementSettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDevOpsInfrastructureContext() { }

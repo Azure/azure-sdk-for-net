@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.OperationalInsights
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource))]
@@ -13,7 +16,6 @@ namespace Azure.ResourceManager.OperationalInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterReplicationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSku))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsIntelligencePack))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsKeyVaultProperties))]
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.StorageInsightData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OperationalInsights.StorageInsightResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerOperationalInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerOperationalInsightsContext() { }

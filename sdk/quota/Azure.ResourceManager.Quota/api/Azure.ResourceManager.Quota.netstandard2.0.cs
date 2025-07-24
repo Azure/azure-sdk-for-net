@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.Quota
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quota.CurrentUsagesBaseData))]
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.Quota
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quota.QuotaRequestDetailResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerQuotaContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerQuotaContext() { }

@@ -72,6 +72,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceEntityEvaluationResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceEvaluationResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Conversations.Authoring.UtteranceIntentsEvaluationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAILanguageConversationsAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAILanguageConversationsAuthoringContext() { }

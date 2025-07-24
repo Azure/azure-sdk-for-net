@@ -201,6 +201,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgData))]
@@ -229,6 +230,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorStatsProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityDevOps.Models.GitHubOwnerProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecurityDevOps.Models.GitHubRepoProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSecurityDevOpsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSecurityDevOpsContext() { }

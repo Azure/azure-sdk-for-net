@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.LabServices
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerLabServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerLabServicesContext() { }

@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.ProviderHub
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProviderHub.CustomRolloutData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProviderHub.CustomRolloutResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProviderHub.DefaultRolloutData))]
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.ProviderHub
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProviderHub.ResourceTypeSkuData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerProviderHubContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerProviderHubContext() { }

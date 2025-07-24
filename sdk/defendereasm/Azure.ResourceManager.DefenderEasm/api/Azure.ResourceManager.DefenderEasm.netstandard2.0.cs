@@ -7,6 +7,8 @@ namespace Azure.ResourceManager.DefenderEasm
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DefenderEasm.Models.EasmLabelPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DefenderEasm.Models.EasmTask))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDefenderEasmContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDefenderEasmContext() { }

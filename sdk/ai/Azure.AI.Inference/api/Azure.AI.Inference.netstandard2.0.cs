@@ -63,7 +63,6 @@ namespace Azure.AI.Inference
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatCompletionsResponseFormatText))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatCompletionsToolCall))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatCompletionsToolDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatMessageAudioContentItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatMessageContentItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatMessageImageContentItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.ChatMessageInputAudio))]
@@ -89,6 +88,7 @@ namespace Azure.AI.Inference
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.StreamingChatCompletionsUpdate))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.StreamingChatResponseMessageUpdate))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Inference.StreamingChatResponseToolCallUpdate))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAIInferenceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIInferenceContext() { }

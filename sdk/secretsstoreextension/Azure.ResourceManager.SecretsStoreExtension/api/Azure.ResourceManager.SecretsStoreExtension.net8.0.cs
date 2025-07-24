@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.SecretsStoreExtension
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ExtendedLocation))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties))]
@@ -13,6 +15,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncUpdateProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.SecretSyncData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SecretsStoreExtension.SecretSyncResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSecretsStoreExtensionContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSecretsStoreExtensionContext() { }

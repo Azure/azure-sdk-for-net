@@ -1,5 +1,9 @@
 namespace Azure.ResourceManager.DataFactory
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactorySecret))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactorySecretString))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryChangeDataCaptureData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryChangeDataCaptureResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryData))]
@@ -13,8 +17,6 @@ namespace Azure.ResourceManager.DataFactory
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryIntegrationRuntimeResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryLinkedServiceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryManagedIdentityCredentialResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryManagedVirtualNetworkResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.DataFactoryPipelineData))]
@@ -738,6 +740,10 @@ namespace Azure.ResourceManager.DataFactory
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.Models.ZohoLinkedService))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.Models.ZohoObjectDataset))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataFactory.Models.ZohoSource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     public partial class AzureResourceManagerDataFactoryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDataFactoryContext() { }

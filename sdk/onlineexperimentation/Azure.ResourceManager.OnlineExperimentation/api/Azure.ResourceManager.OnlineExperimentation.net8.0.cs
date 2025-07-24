@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.OnlineExperimentation
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspacePatch))]
@@ -8,6 +11,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSku))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.OnlineExperimentationWorkspaceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.OnlineExperimentation.OnlineExperimentationWorkspaceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerOnlineExperimentationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerOnlineExperimentationContext() { }

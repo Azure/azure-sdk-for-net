@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.Support
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Support.ChatTranscriptDetailData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Support.FileWorkspaceDetailData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties))]
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Support
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Support.SupportTicketNoSubFileResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Support.TenantFileWorkspaceResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Support.TenantSupportTicketResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSupportContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSupportContext() { }

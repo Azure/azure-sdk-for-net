@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent))]
@@ -77,6 +80,8 @@ namespace Azure.ResourceManager.RedisEnterprise
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerRedisEnterpriseContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerRedisEnterpriseContext() { }

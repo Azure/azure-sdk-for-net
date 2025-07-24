@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ArmPlan))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerKubernetesConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerKubernetesConfigurationContext() { }

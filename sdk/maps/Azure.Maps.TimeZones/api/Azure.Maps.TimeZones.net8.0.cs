@@ -22,9 +22,7 @@ namespace Azure.Maps.TimeZones
     }
     public partial class AzureMapsTimeZonesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMapsTimeZonesContext() { }
-        public static Azure.Maps.TimeZones.AzureMapsTimeZonesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMapsTimeZonesContext() { }
     }
     public partial class CountryRecord
     {

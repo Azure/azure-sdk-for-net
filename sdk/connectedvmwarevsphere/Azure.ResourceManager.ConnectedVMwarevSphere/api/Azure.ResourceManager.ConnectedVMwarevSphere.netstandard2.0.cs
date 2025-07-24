@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ExtendedLocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerConnectedVMwarevSphereContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConnectedVMwarevSphereContext() { }

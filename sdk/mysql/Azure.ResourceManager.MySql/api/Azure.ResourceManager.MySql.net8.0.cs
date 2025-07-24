@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.MySql
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch))]

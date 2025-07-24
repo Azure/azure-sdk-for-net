@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.DataLakeStore
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountEncryptionConfig))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountKeyVaultMetaInfo))]
@@ -26,10 +27,13 @@ namespace Azure.ResourceManager.DataLakeStore
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.FirewallRuleForDataLakeStoreAccountUpdateContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.SubscriptionResourceGetAccountsOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.TrustedIdProviderForDataLakeStoreAccountUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DataLakeStore.Models.VirtualNetworkRuleForDataLakeStoreAccountUpdateContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerDataLakeStoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDataLakeStoreContext() { }

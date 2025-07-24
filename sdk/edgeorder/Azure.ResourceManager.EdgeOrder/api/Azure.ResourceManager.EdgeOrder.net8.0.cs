@@ -47,6 +47,8 @@ namespace Azure.ResourceManager.EdgeOrder
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.EdgeOrder.Models.PurchaseMeterDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.EdgeOrder.Models.ResourceProviderDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.EdgeOrder.Models.ReverseShippingDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerEdgeOrderContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerEdgeOrderContext() { }

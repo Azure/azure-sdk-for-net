@@ -13,9 +13,7 @@ namespace Azure.Analytics.Purview.Workflows
     }
     public partial class AzureAnalyticsPurviewWorkflowsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsPurviewWorkflowsContext() { }
-        public static Azure.Analytics.Purview.Workflows.AzureAnalyticsPurviewWorkflowsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsPurviewWorkflowsContext() { }
     }
     public partial class PurviewWorkflowServiceClientOptions : Azure.Core.ClientOptions
     {

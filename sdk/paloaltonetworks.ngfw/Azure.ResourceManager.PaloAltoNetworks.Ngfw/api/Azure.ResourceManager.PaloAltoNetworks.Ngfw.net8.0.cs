@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackData))]
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerPaloAltoNetworksNgfwContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPaloAltoNetworksNgfwContext() { }

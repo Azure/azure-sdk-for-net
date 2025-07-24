@@ -45,6 +45,8 @@ namespace Azure.ResourceManager.HybridContainerService
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerHybridContainerServiceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHybridContainerServiceContext() { }

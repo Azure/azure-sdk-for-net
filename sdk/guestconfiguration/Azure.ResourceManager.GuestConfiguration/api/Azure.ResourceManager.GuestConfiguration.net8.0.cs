@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.GuestConfiguration
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerGuestConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerGuestConfigurationContext() { }

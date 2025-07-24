@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.MongoCluster
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterConnectionString))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterConnectionStringsResult))]
@@ -25,6 +26,8 @@ namespace Azure.ResourceManager.MongoCluster
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResourceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerMongoClusterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMongoClusterContext() { }

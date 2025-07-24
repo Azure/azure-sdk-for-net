@@ -1,9 +1,7 @@
 namespace Azure.ResourceManager.HealthcareApis
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.DicomServiceCollection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.DicomServiceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.DicomServiceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.FhirServiceCollection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.FhirServiceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.FhirServiceResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData))]
@@ -23,7 +21,6 @@ namespace Azure.ResourceManager.HealthcareApis
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration))]
@@ -51,6 +48,10 @@ namespace Azure.ResourceManager.HealthcareApis
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
     public partial class AzureResourceManagerHealthcareApisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHealthcareApisContext() { }

@@ -2,9 +2,7 @@ namespace Azure.Maps.Weather
 {
     public partial class AzureMapsWeatherContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMapsWeatherContext() { }
-        public static Azure.Maps.Weather.AzureMapsWeatherContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMapsWeatherContext() { }
     }
     public partial class MapsWeatherClient
     {

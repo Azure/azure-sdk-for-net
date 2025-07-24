@@ -135,6 +135,7 @@ namespace Azure.ResourceManager.Attestation
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Attestation.Models.AttestationProviderPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Attestation.Models.JsonWebKey))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerAttestationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAttestationContext() { }

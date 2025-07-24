@@ -449,6 +449,9 @@ namespace Azure.ResourceManager.ApplicationInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
     public partial class AzureResourceManagerApplicationInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerApplicationInsightsContext() { }

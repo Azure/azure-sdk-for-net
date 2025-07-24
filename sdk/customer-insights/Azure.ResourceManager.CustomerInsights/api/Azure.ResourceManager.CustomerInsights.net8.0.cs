@@ -121,6 +121,7 @@ namespace Azure.ResourceManager.CustomerInsights
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerCustomerInsightsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerCustomerInsightsContext() { }

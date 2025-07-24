@@ -98,6 +98,7 @@ namespace Azure.Developer.LoadTesting
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestSecret))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TestServerMetricsConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.LoadTesting.TimeSeriesElement))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureDeveloperLoadTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDeveloperLoadTestingContext() { }

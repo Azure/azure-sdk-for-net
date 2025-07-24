@@ -1,8 +1,9 @@
 namespace Azure.ResourceManager.StandbyPool
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.Models.ContainerGroupInstanceCountSummary))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.Models.PoolContainerGroupStateCount))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.Models.PoolResourceStateCount))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.Models.PoolVirtualMachineStateCount))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolElasticityProfile))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.Models.StandbyContainerGroupPoolPatch))]
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.StandbyPool
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.StandbyVirtualMachinePoolRuntimeViewData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.StandbyVirtualMachinePoolRuntimeViewResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StandbyPool.StandbyVirtualMachineResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerStandbyPoolContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerStandbyPoolContext() { }

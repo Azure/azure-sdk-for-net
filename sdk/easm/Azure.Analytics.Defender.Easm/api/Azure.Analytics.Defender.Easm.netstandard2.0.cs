@@ -451,6 +451,7 @@ namespace Azure.Analytics.Defender.Easm
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.Defender.Easm.TaskResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.Defender.Easm.ValidateResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.Defender.Easm.WebComponent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAnalyticsDefenderEasmContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAnalyticsDefenderEasmContext() { }

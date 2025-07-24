@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassPropertiesUpdate))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassTypeProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ContainerOrchestratorRuntime.Models.StorageClassTypePropertiesUpdate))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerContainerOrchestratorRuntimeContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerContainerOrchestratorRuntimeContext() { }

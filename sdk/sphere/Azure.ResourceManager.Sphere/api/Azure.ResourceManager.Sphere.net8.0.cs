@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.Sphere
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sphere.Models.ClaimSphereDevicesContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sphere.Models.CountDevicesResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sphere.Models.CountElementsResult))]
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Sphere
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sphere.SphereImageResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sphere.SphereProductData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Sphere.SphereProductResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerSphereContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSphereContext() { }

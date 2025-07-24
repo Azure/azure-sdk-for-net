@@ -152,6 +152,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerManagedNetworkFabricContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerManagedNetworkFabricContext() { }

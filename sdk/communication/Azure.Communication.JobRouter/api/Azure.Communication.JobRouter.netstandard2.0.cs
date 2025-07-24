@@ -74,6 +74,7 @@ namespace Azure.Communication.JobRouter
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.JobRouter.WeightedAllocationWorkerSelectorAttachment))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.JobRouter.WorkerSelectorAttachment))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.JobRouter.WorkerWeightedAllocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureCommunicationJobRouterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureCommunicationJobRouterContext() { }

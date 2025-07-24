@@ -2,9 +2,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
 {
     public partial class AzureAnalyticsSynapseManagedPrivateEndpointsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsSynapseManagedPrivateEndpointsContext() { }
-        public static Azure.Analytics.Synapse.ManagedPrivateEndpoints.AzureAnalyticsSynapseManagedPrivateEndpointsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsSynapseManagedPrivateEndpointsContext() { }
     }
     public partial class ManagedPrivateEndpointsClient
     {

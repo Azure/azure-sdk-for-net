@@ -6,6 +6,9 @@ namespace Azure.ResourceManager.ExtendedLocations
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerExtendedLocationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerExtendedLocationsContext() { }

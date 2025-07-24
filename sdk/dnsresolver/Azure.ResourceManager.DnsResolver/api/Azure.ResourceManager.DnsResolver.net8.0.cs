@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DnsResolver
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DnsResolver.Models.TargetDnsServer))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DnsResolver.VirtualNetworkDnsResolverResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDnsResolverContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDnsResolverContext() { }

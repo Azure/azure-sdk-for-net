@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ConnectedCache
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCustomerAdditionalProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCustomerEntity))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ConnectedCache.Models.MccCustomerProperty))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerConnectedCacheContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerConnectedCacheContext() { }

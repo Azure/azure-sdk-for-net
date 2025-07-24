@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ComputeSchedule.Models.UserRequestResources))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerComputeScheduleContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerComputeScheduleContext() { }

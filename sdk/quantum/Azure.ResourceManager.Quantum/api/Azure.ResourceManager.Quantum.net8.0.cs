@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.Quantum
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quantum.Models.ProviderAadInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quantum.Models.ProviderApplicationInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quantum.Models.ProviderPricingDimension))]
@@ -18,6 +20,7 @@ namespace Azure.ResourceManager.Quantum
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quantum.Models.WorkspaceNameAvailabilityResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quantum.QuantumWorkspaceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Quantum.QuantumWorkspaceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerQuantumContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerQuantumContext() { }

@@ -14,6 +14,7 @@ namespace Azure.Communication.ProgrammableConnectivity
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.ProgrammableConnectivity.SimSwapRetrievalResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.ProgrammableConnectivity.SimSwapVerificationContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Communication.ProgrammableConnectivity.SimSwapVerificationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureCommunicationProgrammableConnectivityContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureCommunicationProgrammableConnectivityContext() { }

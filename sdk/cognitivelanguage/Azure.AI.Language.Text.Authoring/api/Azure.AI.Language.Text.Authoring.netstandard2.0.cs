@@ -99,6 +99,7 @@ namespace Azure.AI.Language.Text.Authoring
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextAuthoringUnassignDeploymentResourcesState))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.Authoring.TextSentimentEvalSummary))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAILanguageTextAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAILanguageTextAuthoringContext() { }

@@ -43,9 +43,7 @@ namespace Azure.Communication.CallingServer
     }
     public partial class AzureCommunicationCallingServerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureCommunicationCallingServerContext() { }
-        public static Azure.Communication.CallingServer.AzureCommunicationCallingServerContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureCommunicationCallingServerContext() { }
     }
     public partial class CallAutomationClient
     {

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerNameItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlServerRoleGroupConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerCosmosDBForPostgreSqlContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerCosmosDBForPostgreSqlContext() { }

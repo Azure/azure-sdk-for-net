@@ -2,9 +2,7 @@ namespace Azure.Analytics.Synapse.Spark
 {
     public partial class AzureAnalyticsSynapseSparkContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureAnalyticsSynapseSparkContext() { }
-        public static Azure.Analytics.Synapse.Spark.AzureAnalyticsSynapseSparkContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureAnalyticsSynapseSparkContext() { }
     }
     public partial class SparkBatchClient
     {

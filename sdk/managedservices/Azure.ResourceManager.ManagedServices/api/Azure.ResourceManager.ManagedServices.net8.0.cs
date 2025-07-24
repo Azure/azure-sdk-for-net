@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ManagedServices
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     public partial class AzureResourceManagerManagedServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerManagedServicesContext() { }

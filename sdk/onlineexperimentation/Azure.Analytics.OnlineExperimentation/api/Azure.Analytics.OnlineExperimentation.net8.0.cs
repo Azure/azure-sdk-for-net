@@ -44,6 +44,7 @@ namespace Azure.Analytics.OnlineExperimentation
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.SumMetricDefinition))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAnalyticsOnlineExperimentationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAnalyticsOnlineExperimentationContext() { }

@@ -2,9 +2,7 @@ namespace Azure.Maps.Search
 {
     public partial class AzureMapsSearchContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMapsSearchContext() { }
-        public static Azure.Maps.Search.AzureMapsSearchContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMapsSearchContext() { }
     }
     public partial class MapsSearchClient
     {

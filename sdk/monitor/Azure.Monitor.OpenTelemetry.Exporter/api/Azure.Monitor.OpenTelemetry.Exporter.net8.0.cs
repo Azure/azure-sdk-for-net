@@ -25,9 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     }
     public partial class AzureMonitorOpenTelemetryExporterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureMonitorOpenTelemetryExporterContext() { }
-        public static Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureMonitorOpenTelemetryExporterContext() { }
     }
     public static partial class OpenTelemetryBuilderExtensions
     {

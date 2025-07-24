@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.HybridConnectivity
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HybridConnectivity.PublicCloudConnectorSolutionTypeResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HybridConnectivity.PublicCloudInventoryResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerHybridConnectivityContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHybridConnectivityContext() { }

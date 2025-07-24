@@ -296,6 +296,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceGetOverviewStatusResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceOnboardResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportCollectionGetAllOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportEvidenceProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportNameAvailabilityContent))]
@@ -304,7 +306,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportPatchProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportScopingConfigurationProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportSnapshotProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceReportWebhookProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.AppComplianceResult))]
@@ -337,6 +341,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationProperty))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AppComplianceAutomation.Models.TriggerEvaluationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAppComplianceAutomationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAppComplianceAutomationContext() { }

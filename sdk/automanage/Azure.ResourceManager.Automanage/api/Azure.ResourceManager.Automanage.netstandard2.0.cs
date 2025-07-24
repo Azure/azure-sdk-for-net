@@ -429,6 +429,8 @@ namespace Azure.ResourceManager.Automanage
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Automanage.Models.AutomanageResourceUpdateDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentReportResourceDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAutomanageContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAutomanageContext() { }

@@ -2,9 +2,7 @@ namespace Azure.Storage.Queues
 {
     public partial class AzureStorageQueuesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureStorageQueuesContext() { }
-        public static Azure.Storage.Queues.AzureStorageQueuesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureStorageQueuesContext() { }
     }
     public partial class QueueClient
     {

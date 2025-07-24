@@ -2,9 +2,7 @@ namespace Azure.Security.ConfidentialLedger
 {
     public partial class AzureSecurityConfidentialLedgerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureSecurityConfidentialLedgerContext() { }
-        public static Azure.Security.ConfidentialLedger.AzureSecurityConfidentialLedgerContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureSecurityConfidentialLedgerContext() { }
     }
     public partial class ConfidentialLedgerClient
     {

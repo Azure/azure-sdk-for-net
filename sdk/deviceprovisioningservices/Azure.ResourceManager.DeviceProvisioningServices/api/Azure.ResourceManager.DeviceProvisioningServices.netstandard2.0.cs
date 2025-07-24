@@ -14,6 +14,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicePatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceDeleteOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterRule))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult))]
@@ -24,6 +27,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuDefinition))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.SubResource))]
     public partial class AzureResourceManagerDeviceProvisioningServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDeviceProvisioningServicesContext() { }

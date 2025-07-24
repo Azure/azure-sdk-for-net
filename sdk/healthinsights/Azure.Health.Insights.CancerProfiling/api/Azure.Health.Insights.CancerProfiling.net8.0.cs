@@ -12,6 +12,7 @@ namespace Azure.Health.Insights.CancerProfiling
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientDocument))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientRecord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureHealthInsightsCancerProfilingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthInsightsCancerProfilingContext() { }

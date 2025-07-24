@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.NeonPostgres
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NeonPostgres.Models.Attributes))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NeonPostgres.Models.ConnectionUriProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NeonPostgres.Models.DefaultEndpointSettings))]
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.NeonPostgres
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NeonPostgres.NeonOrganizationResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NeonPostgres.NeonProjectData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.NeonPostgres.NeonProjectResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerNeonPostgresContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerNeonPostgresContext() { }

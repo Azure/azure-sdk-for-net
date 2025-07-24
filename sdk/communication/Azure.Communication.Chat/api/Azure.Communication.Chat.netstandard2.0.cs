@@ -7,9 +7,7 @@ namespace Azure.Communication.Chat
     }
     public partial class AzureCommunicationChatContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureCommunicationChatContext() { }
-        public static Azure.Communication.Chat.AzureCommunicationChatContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureCommunicationChatContext() { }
     }
     public partial class ChatAttachment
     {

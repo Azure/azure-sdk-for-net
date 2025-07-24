@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AAddDisksContent))]
@@ -528,6 +529,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationMappingData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationMappingResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerRecoveryServicesSiteRecoveryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerRecoveryServicesSiteRecoveryContext() { }

@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.AlertsManagement
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.DailyRecurrence))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceList))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertEssentials))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties))]
@@ -102,13 +103,17 @@ namespace Azure.ResourceManager.AlertsManagement
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroup))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummaryGroupItemInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.SmartGroupAggregatedProperty))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.SmartGroupCollectionGetAllOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.SmartGroupModification))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationItemInfo))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.SmartGroupModificationProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.Models.SubscriptionResourceGetServiceAlertSummaryOptions))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.ServiceAlertData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.ServiceAlertResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.SmartGroupData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AlertsManagement.SmartGroupResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerAlertsManagementContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAlertsManagementContext() { }

@@ -1,5 +1,9 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.UserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WritableSubResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceFabricManagedClusters.Models.AdditionalNetworkInterfaceConfiguration))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationHealthPolicy))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUpgradePolicy))]
@@ -90,6 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerServiceFabricManagedClustersContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerServiceFabricManagedClustersContext() { }

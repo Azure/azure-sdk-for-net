@@ -117,6 +117,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HDInsight.Containers.Models.TrinoUserPlugin))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.HDInsight.Containers.Models.WebConnectivityEndpoint))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerHDInsightContainersContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHDInsightContainersContext() { }

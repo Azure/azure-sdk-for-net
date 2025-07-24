@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerCarbonOptimizationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerCarbonOptimizationContext() { }

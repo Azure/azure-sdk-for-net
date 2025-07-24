@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.DependencyMap
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetConnectionsWithConnectedMachineForFocusedMachineContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForFocusedMachineContent))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DependencyMap.Models.OffAzureDiscoverySourceProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureResourceManagerDependencyMapContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDependencyMapContext() { }

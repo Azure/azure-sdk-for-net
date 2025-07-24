@@ -121,6 +121,7 @@ namespace Azure.AI.ContentSafety
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.ContentSafety.TextBlocklistItem))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.ContentSafety.TextBlocklistMatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.ContentSafety.TextCategoriesAnalysis))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureAIContentSafetyContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIContentSafetyContext() { }

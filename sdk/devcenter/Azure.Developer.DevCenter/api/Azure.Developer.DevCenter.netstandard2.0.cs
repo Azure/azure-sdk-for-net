@@ -18,6 +18,7 @@ namespace Azure.Developer.DevCenter
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.OSDisk))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.RemoteConnection))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureDeveloperDevCenterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDeveloperDevCenterContext() { }

@@ -1,5 +1,6 @@
 namespace Azure.ResourceManager.ResourceHealth
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Models.SystemData))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact))]
