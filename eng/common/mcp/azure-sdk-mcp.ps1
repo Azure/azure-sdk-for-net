@@ -11,60 +11,14 @@ param(
     [string]$Repository = 'Azure/azure-sdk-tools',
     [string]$RunDirectory = (Resolve-Path (Join-Path $PSScriptRoot .. .. ..)),
     [switch]$Run,
-    [switch]$UpdateVsCodeConfig
+    [switch]$UpdateVsCodeConfig,
+    [switch]$UpdatePathInProfile
 )
 
 $ErrorActionPreference = "Stop"
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
-function Get-InstallDirectory {
-    if ($IsLinux) {
-        $defaultDir = Join-Path $HOME "bin"
-        if (-not (Test-Path $defaultDir)) {
-            New-Item -ItemType Directory -Path $defaultDir -Force | Out-Null
-        }
-        return $defaultDir
-    }
-
-    if ($IsWindows) {
-        $defaultDir = Join-Path $HOME ".azure-sdk"
-        if (-not (Test-Path $defaultDir)) {
-            New-Item -ItemType Directory -Path $defaultDir -Force | Out-Null
-        }
-
-        # Update PATH in current session
-        if (-not ($env:PATH -like "*$defaultDir*")) {
-            $env:PATH += ";$defaultDir"
-        }
-
-        # Update path for future sessions via PowerShell profile
-        if (-not (Test-Path $PROFILE)) {
-            New-Item -ItemType File -Path $PROFILE -Force | Out-Null
-        }
-        $markerComment = "  # azsdk install path"
-        $pathCommand = 'if (-not ($env:PATH -like "*$HOME\.azure-sdk*")) { $env:PATH += ";$HOME\.azure-sdk" }' + $markerComment
-        $profileContent = Get-Content $PROFILE -ErrorAction SilentlyContinue
-        if ($profileContent -notcontains $markerComment) {
-            Write-Host "Adding install path to PowerShell profile at $PROFILE"
-            Add-Content -Path $PROFILE -Value $pathCommand
-        }
-
-        return $defaultDir
-    }
-
-    if ($IsMacOS) {
-        $defaultDir = "/usr/local/bin"
-        if (-not (Test-Path $defaultDir)) {
-            New-Item -ItemType Directory -Path $defaultDir -Force | Out-Null
-        }
-        return $defaultDir
-    }
-
-    Write-Error "Unsupported platform. Specify an install directory manually with the -InstallDirectory parameter."
-    exit 1
-}
-
-$InstallDirectory = $InstallDirectory ? $InstallDirectory : (Get-InstallDirectory)
+$toolInstallDirectory = $InstallDirectory ? $InstallDirectory : (Get-CommonInstallDirectory)
 
 if ($UpdateVsCodeConfig) {
     $vscodeConfigPath = Join-Path $PSScriptRoot ".." ".." ".." ".vscode" "mcp.json"
@@ -107,10 +61,21 @@ $tempExe = Install-Standalone-Tool `
     -Directory $tempInstallDirectory `
     -Repository $Repository
 
-Copy-Item -Path $tempExe -Destination $InstallDirectory -Force
+Copy-Item -Path $tempExe -Destination $toolInstallDirectory -Force
 $exeName = Split-Path $tempExe -Leaf
-$exe = Join-Path $InstallDirectory $exeName
-Write-Host "Package $package is installed at $exe"
+$exe = Join-Path $toolInstallDirectory $exeName
+
+if (!$IsLinux) {
+    Write-Host "Package $package is installed at $exe"
+    if (!$UpdatePathInProfile) {
+        Write-Warning "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
+    } else {
+        Add-InstallDirectoryToPathInProfile -InstallDirectory $toolInstallDirectory
+        Write-Warning "'$exeName' will be available in PATH for new shell sessions."
+    }
+} else {
+    Write-Host "Package '$package' is installed at '$exe' and can be run directly by typing '$exeName'"
+}
 
 if ($Run) {
     Start-Process -WorkingDirectory $RunDirectory -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait

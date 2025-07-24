@@ -192,3 +192,64 @@ function Install-Standalone-Tool (
 
     return $executable_path
 }
+
+function Get-CommonInstallDirectory {
+    $installDirectory = Join-Path $HOME "bin"
+    if (-not (Test-Path $installDirectory)) {
+        New-Item -ItemType Directory -Path $installDirectory -Force | Out-Null
+    }
+
+    # Update PATH in current session
+    if (-not ($env:PATH -like "*$InstallDirectory*")) {
+        $env:PATH += ";$InstallDirectory"
+    }
+
+    return $installDirectory
+}
+
+function Add-InstallDirectoryToPathInProfile(
+    [Parameter()]
+    [string]$InstallDirectory = (Get-CommonInstallDirectory)
+) {
+    if ($IsLinux) {
+        # Expect common install directory '$HOME/bin' to be in PATH by default
+        return
+    }
+
+    if ($IsWindows) {
+        if (-not (Test-Path $PROFILE)) {
+            New-Item -ItemType File -Path $PROFILE -Force | Out-Null
+        }
+
+        $markerComment = "  # azsdk install path"
+        $pathCommand = "if (-not (`$env:PATH -like `'*$InstallDirectory*`')) { `$env:PATH += ';$InstallDirectory`' }" + $markerComment
+        Write-Host "PowerShell profile at $PROFILE"
+        $profileContent = Get-Content $PROFILE
+
+        if (!$profileContent -or !$profileContent.Contains($markerComment)) {
+            Write-Host "Adding install path to PowerShell profile at '$PROFILE'"
+            Add-Content -Path $PROFILE -Value $pathCommand
+        }
+
+        return
+    }
+
+    if ($IsMacOS) {
+        $zshrcPath = Join-Path $HOME ".zshrc"
+        if (-not (Test-Path $zshrcPath)) {
+            New-Item -ItemType File -Path $zshrcPath -Force | Out-Null
+        }
+        $markerComment = "  # azsdk install path"
+        $pathCommand = "export PATH=`"`$PATH:$InstallDirectory`"" + $markerComment
+        $zshrcContent = Get-Content $zshrcPath
+
+        if (!$zshrcContent -or !$zshrcContent.Contains($markerComment)) {
+            Write-Host "Adding install path to zshrc config at $zshrcPath"
+            Add-Content -Path $zshrcPath -Value $pathCommand
+        }
+
+        return
+    }
+
+    throw "Unsupported platform"
+}
