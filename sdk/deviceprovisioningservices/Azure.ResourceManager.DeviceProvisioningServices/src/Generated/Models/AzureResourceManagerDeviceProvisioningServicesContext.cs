@@ -45,11 +45,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSkuInfo))]
     [ModelReaderWriterBuildable(typeof(IotDpsSkuDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(IotHubDefinitionDescription))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDeviceProvisioningServicesContext : ModelReaderWriterContext
     {
     }
