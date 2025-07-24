@@ -19,8 +19,7 @@ namespace Azure.AI.Projects
         public virtual Azure.AI.Projects.Datasets GetDatasetsClient() { throw null; }
         public virtual Azure.AI.Projects.Deployments GetDeploymentsClient() { throw null; }
         public virtual Azure.AI.Projects.Indexes GetIndexesClient() { throw null; }
-        public OpenAI.Chat.ChatClient GetOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
-        public OpenAI.Embeddings.EmbeddingClient GetOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
+        public OpenAI.OpenAIClient GetOpenAIClient(string? connectionName = null, string? apiVersion = null) { throw null; }
     }
     public partial class AIProjectClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
@@ -662,7 +661,7 @@ namespace Azure.AI.Projects
     public partial class Telemetry
     {
         public Telemetry(Azure.AI.Projects.AIProjectClient outerInstance) { }
-        public string GetConnectionString() { throw null; }
-        public System.Threading.Tasks.Task<string> GetConnectionStringAsync() { throw null; }
+        public string GetApplicationInsightsConnectionString() { throw null; }
+        public System.Threading.Tasks.Task<string> GetApplicationInsightsConnectionStringAsync() { throw null; }
     }
 }
