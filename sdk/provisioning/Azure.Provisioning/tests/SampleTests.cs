@@ -35,6 +35,7 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ProvisioningBasic
                 Infrastructure infra = new();
 
                 // Create a storage account and blob resources
@@ -55,6 +56,7 @@ internal class SampleTests(bool async)
                 infra.Add(endpoint);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

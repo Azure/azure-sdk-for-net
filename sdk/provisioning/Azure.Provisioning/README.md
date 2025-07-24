@@ -22,6 +22,33 @@ dotnet add package Azure.Provisioning
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create basic infrastructure
+
+```C# Snippet:ProvisioningBasic
+Infrastructure infra = new();
+
+// Create a storage account and blob resources
+StorageAccount storage =
+    new(nameof(storage), StorageAccount.ResourceVersions.V2023_01_01)
+    {
+        Kind = StorageKind.StorageV2,
+        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+        IsHnsEnabled = true,
+        AllowBlobPublicAccess = false
+    };
+infra.Add(storage);
+blobs = new(nameof(blobs)) { Parent = storage };
+infra.Add(blobs);
+
+// Grab the endpoint
+endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri };
+infra.Add(endpoint);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
