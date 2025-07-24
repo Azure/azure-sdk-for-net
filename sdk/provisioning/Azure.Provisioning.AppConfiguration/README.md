@@ -26,24 +26,47 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ### Create a basic AppConfiguration resource
 
-```csharp
-using Azure.Provisioning;
-using Azure.Provisioning.AppConfiguration;
+```C# Snippet:AppConfigurationStoreFF
+Infrastructure infra = new();
 
-Infrastructure infrastructure = new Infrastructure();
+ProvisioningParameter featureFlagKey =
+    new(nameof(featureFlagKey), typeof(string))
+    {
+        Value = "FeatureFlagSample",
+        Description = "Specifies the key of the feature flag."
+    };
+infra.Add(featureFlagKey);
 
-// Create a AppConfiguration resource
-// Note: Specific resource types and properties vary by service
-// Refer to the Azure.Provisioning.AppConfiguration API documentation for detailed resource configuration
+AppConfigurationStore configStore =
+    new(nameof(configStore), AppConfigurationStore.ResourceVersions.V2022_05_01)
+    {
+        SkuName = "Standard",
+    };
+infra.Add(configStore);
 
-infrastructure.Add(/* Add your AppConfiguration resources here */);
+ProvisioningVariable flag =
+    new(nameof(flag), typeof(object))
+    {
+        Value =
+            new BicepDictionary<object>
+            {
+                { "id", featureFlagKey },
+                { "description", "A simple feature flag." },
+                { "enabled", true }
+            }
+    };
+infra.Add(flag);
 
-// Generate the Bicep template
-string bicep = infrastructure.Compile();
-Console.WriteLine(bicep);
+AppConfigurationKeyValue featureFlag =
+    new(nameof(featureFlag), AppConfigurationKeyValue.ResourceVersions.V2022_05_01)
+    {
+        Parent = configStore,
+        Name = BicepFunction.Interpolate($".appconfig.featureflag~2F{featureFlagKey}"),
+        ContentType = "application/vnd.microsoft.appconfig.ff+json;charset=utf-8",
+        Value = BicepFunction.AsString(flag)
+    };
+infra.Add(featureFlag);
 ```
-
-For detailed examples and resource-specific configurations, please refer to the test files in the `tests/` directory of this library, which demonstrate practical usage scenarios and configuration patterns.
 
 ## Troubleshooting
 
