@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
-            _methodName = methodName ?? convenienceMethod.Signature.Name ?? "Operation";
+            _methodName = methodName ?? convenienceMethod.Signature.Name;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
