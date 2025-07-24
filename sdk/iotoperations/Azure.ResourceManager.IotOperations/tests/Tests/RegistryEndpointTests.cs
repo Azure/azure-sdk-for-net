@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                     Authentication = new RegistryEndpointAnonymousAuthentication(new RegistryEndpointAnonymousSettings())
                 },
                 ExtendedLocation = new IotOperationsExtendedLocation(
-                    ExtendedLocation, // Use the property from your base class
+                    ExtendedLocation,
                     IotOperationsExtendedLocationType.CustomLocation
                 ),
             };

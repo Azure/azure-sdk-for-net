@@ -56,7 +56,6 @@ Version = "0.0.1",
                         AioMinVersion = "1.2.0",
                         AioMaxVersion = "1.4.0",
                     },
-                    LogsLevel = "info",
                     MqttConnectionConfiguration = new AkriConnectorsMqttConnectionConfiguration
                     {
                         Authentication = new AkriConnectorsServiceAccountAuthentication(new AkriConnectorsServiceAccountTokenSettings("MQ-SAT")),

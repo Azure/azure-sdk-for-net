@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.IotOperations.Tests
         {
             ArmClient = GetArmClient();
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            ResourceGroup = Environment.GetEnvironmentVariable("IOTOPERATIONS_RESOURCE_GROUP") ?? "aio-validation-113034243";
-            CustomLocationName = Environment.GetEnvironmentVariable("IOTOPERATIONS_CUSTOM_LOCATION_NAME") ?? "location-sxy3o";
-            InstanceName = Environment.GetEnvironmentVariable("IOTOPERATIONS_INSTANCE_NAME") ?? "aio-sxy3o";
+            ResourceGroup = "aio-validation-113034243";
+            CustomLocationName = "location-sxy3o";
+            InstanceName =  "aio-sxy3o";
             BrokersName = "default";
             BrokersListenersName = "default";
             BrokersAuthenticationsName = "default";
             DataflowProfilesName = "default";
             DataflowEndpointsName = "default";
             AkriConnectorTemplateName = "default";
-            RegistryEndpointName = Environment.GetEnvironmentVariable("IOTOPERATIONS_REGISTRY_ENDPOINT_NAME") ?? "default";
-            DataflowGraphName = Environment.GetEnvironmentVariable("IOTOPERATIONS_DATAFLOW_GRAPH_NAME") ?? "default";
+            RegistryEndpointName = "default";
+            DataflowGraphName =  "default";
             ExtendedLocation =
                 $"/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}";
         }
