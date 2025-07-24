@@ -78,6 +78,38 @@ public partial struct AdditionalProperties
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
+    public bool ContainsStartsWith(ReadOnlySpan<byte> name)
+    {
+        if (_properties == null)
+            return false;
+        byte[] nameBytes = name.ToArray();
+        return _properties.Keys.Any(k => k.AsSpan().StartsWith(nameBytes));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public IEnumerable<KeyValuePair<byte[], byte[]>> EntriesStartsWith(byte[] name)
+    {
+        if (_properties == null)
+            yield break;
+
+        foreach (var kvp in _properties)
+        {
+            if (kvp.Key.AsSpan().StartsWith(name))
+            {
+                yield return kvp;
+            }
+        }
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public bool Contains(byte[] name)
     {
         if (_properties == null)
@@ -108,10 +140,6 @@ public partial struct AdditionalProperties
         byte[] encodedValue = GetEncodedValue(propertyName);
         if (encodedValue.Length == 0)
         {
-            if (TryGetValueFromSard(propertyName, out T? value))
-            {
-                return value;
-            }
             ThrowPropertyNotFoundException(propertyName);
             return default;
         }
@@ -156,27 +184,6 @@ public partial struct AdditionalProperties
         return encodedValue;
     }
 
-    private bool TryGetValueFromSard<T>(ReadOnlySpan<byte> name, out T? value)
-    {
-        value = default;
-
-        if (_serializedAdditionalRawData == null)
-            return false;
-
-#if NET6_0_OR_GREATER
-        string nameString = Encoding.UTF8.GetString(name);
-#else
-        string nameString = Encoding.UTF8.GetString(name.ToArray());
-#endif
-        if (_serializedAdditionalRawData.TryGetValue(nameString, out BinaryData? data))
-        {
-            value = data.ToObjectFromJson<T>();
-            return true;
-        }
-
-        return false;
-    }
-
     /// <summary>
     /// .
     /// </summary>
@@ -215,6 +222,7 @@ public partial struct AdditionalProperties
     private bool TryGetFromPointer<T>(ReadOnlySpan<byte> name, SpanParser<T> parser, T defaultValue, out T? result)
     {
         // Check if this is a JSON pointer (contains '/')
+        result = default;
         int slashIndex = name.IndexOf((byte)'/');
         if (slashIndex >= 0)
         {
@@ -225,14 +233,15 @@ public partial struct AdditionalProperties
             // Get the encoded value for the base property
             byte[] baseEncodedValue = GetEncodedValue(baseName);
             if (baseEncodedValue.Length == 0 || (ValueKind)baseEncodedValue[0] != ValueKind.Json)
-                ThrowPropertyNotFoundException(name);
+            {
+                return false;
+            }
 
             // Use JsonPointer to navigate to the specific element
             result = parser(baseEncodedValue.AsSpan(1), pointer) ?? defaultValue;
             return true;
         }
 
-        result = default;
         return false;
     }
 

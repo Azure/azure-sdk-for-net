@@ -1,11 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.ComponentModel;
+
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public abstract partial class ResourceData
     {
+        private AdditionalProperties _patch = new();
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ref AdditionalProperties Patch => ref _patch;
+
         /// <summary> Initializes a new instance of Resource. </summary>
         protected ResourceData()
         {

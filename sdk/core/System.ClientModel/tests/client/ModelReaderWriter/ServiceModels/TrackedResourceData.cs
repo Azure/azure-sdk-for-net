@@ -47,7 +47,11 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
                 AssertHasValue(_location, nameof(Location));
                 return _location!;
             }
-            set { _location = value; }
+            set
+            {
+                Patch.Set("location"u8, value);
+                _location = value;
+            }
         }
 
         private void AssertHasValue<T>(T? value, string name)

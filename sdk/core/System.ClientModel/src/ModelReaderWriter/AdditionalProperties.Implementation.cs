@@ -16,7 +16,6 @@ public partial struct AdditionalProperties
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private Dictionary<byte[], byte[]>? _properties;
-    private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
     // Value kinds for encoding type information in byte arrays
     [Flags]
@@ -42,53 +41,15 @@ public partial struct AdditionalProperties
     private static readonly byte[] s_trueBooleanArray;
     private static readonly byte[] s_falseBooleanArray;
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="serializedAdditionalRawData"></param>
-    public AdditionalProperties(IDictionary<string, BinaryData> serializedAdditionalRawData)
-    {
-        _serializedAdditionalRawData = serializedAdditionalRawData;
-    }
-
     // Static constructor to initialize singleton arrays
     static AdditionalProperties()
     {
         // Initialize null value array
-        using (var stream = new MemoryStream(6))
-        {
-            stream.WriteByte((byte)ValueKind.Null);
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                writer.WriteNullValue();
-                writer.Flush();
-            }
-            s_nullValueArray = stream.ToArray();
-        }
-
+        s_nullValueArray = [(byte)ValueKind.Null, .. "null"u8.ToArray()];
         // Initialize true boolean array
-        using (var stream = new MemoryStream(10))
-        {
-            stream.WriteByte((byte)ValueKind.BooleanTrue);
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                writer.WriteBooleanValue(true);
-                writer.Flush();
-            }
-            s_trueBooleanArray = stream.ToArray();
-        }
-
+        s_trueBooleanArray = [(byte)ValueKind.BooleanTrue, .. "true"u8.ToArray()];
         // Initialize false boolean array
-        using (var stream = new MemoryStream(10))
-        {
-            stream.WriteByte((byte)ValueKind.BooleanFalse);
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                writer.WriteBooleanValue(false);
-                writer.Flush();
-            }
-            s_falseBooleanArray = stream.ToArray();
-        }
+        s_falseBooleanArray = [(byte)ValueKind.BooleanFalse, .. "false"u8.ToArray()];
     }
 
     // Custom equality comparer for byte arrays to enable content-based comparison
@@ -282,6 +243,9 @@ public partial struct AdditionalProperties
 
         foreach (var kvp in _properties)
         {
+            if (kvp.Key.AsSpan().IndexOf((byte)'/') >= 0)
+                continue;
+
             // TODO we are going back and forth from bytes to string and back, which is not efficient.
             string propertyName = Encoding.UTF8.GetString(kvp.Key);
             WriteEncodedValueAsJson(writer, propertyName, kvp.Value);

@@ -13,7 +13,7 @@ using System.ClientModel.SourceGeneration.Tests;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    internal class AvailabilitySetDataTests : ModelJsonTests<AvailabilitySetData>
+    internal partial class AvailabilitySetDataTests : ModelJsonTests<AvailabilitySetData>
     {
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataWireFormat.json")).TrimEnd();
 
@@ -31,7 +31,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             if (format == "J")
                 expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
-            expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}";
+            expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"location\":\"eastus\"";
             if (format == "J")
                 expectedSerializedString += ",\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"";
             expectedSerializedString += "}";
@@ -55,7 +55,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => CompareAvailabilitySetData(model, model2, format);
 
-        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format)
+        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format, params string[] propertySkips)
         {
             if (model is null)
             {
@@ -63,144 +63,39 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 return;
             }
 
-            Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
-            Assert.AreEqual(model.Location, model2.Location);
-            Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
-            Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
-            Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
-            if (format == "J")
+            HashSet<string> skips = new HashSet<string>(propertySkips);
+            if (!skips.Contains("id"))
+            {
+                Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
+            }
+            if (!skips.Contains("name"))
+            {
+                Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
+            }
+            if (format == "J" && !skips.Contains("resourceType"))
+            {
                 Assert.AreEqual(model.ResourceType, model2.ResourceType);
-            CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
-            Assert.AreEqual(model.Sku.Name, model2.Sku.Name);
-        }
-
-        [Test]
-        public void RoundTripWithAdditionalProperty_Int()
-        {
-            var model = GetInitialModel();
-            model.Json.Set("foobar"u8, 5);
-            Assert.AreEqual(5, model.Json.GetInt32("foobar"u8));
-            Assert.AreEqual(5, model.Json.GetNullableInt32("foobar"u8));
-
-            var data = WriteModifiedModel(model, "5");
-
-            var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(5, model2.Json.GetInt32("foobar"u8));
-            Assert.AreEqual(5, model2.Json.GetNullableInt32("foobar"u8));
-
-            AssertCommon(model, model2);
-
-            AssertFromRawData(model2, 5);
-        }
-
-        [Test]
-        public void GetInt32FailsWhenNull()
-        {
-            var model = GetInitialModel();
-            model.Json.SetNull("foobar"u8);
-
-            AssertJsonException(() => model.Json.GetInt32("foobar"u8));
-            var data = WriteModifiedModel(model, "null");
-
-            var model2 = GetRoundTripModel(data);
-            AssertJsonException(() => model2.Json.GetInt32("foobar"u8));
-
-            AssertCommon(model, model2);
-
-            AssertFromRawData<int?>(model2, null);
-        }
-
-        [Test]
-        public void RoundTripWithAdditionalProperty_String()
-        {
-            var value = "some value";
-            var model = GetInitialModel();
-            model.Json.Set("foobar"u8, value);
-
-            Assert.AreEqual(value, model.Json.GetString("foobar"u8));
-            var data = WriteModifiedModel(model, "\"some value\"");
-
-            var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(value, model2.Json.GetString("foobar"u8));
-
-            AssertCommon(model, model2);
-
-            AssertFromRawData(model2, value);
-        }
-
-        [Test]
-        public void RoundTripWithAdditionalProperty_Null()
-        {
-            var model = GetInitialModel();
-            model.Json.SetNull("foobar"u8);
-            Assert.AreEqual(null, model.Json.GetString("foobar"u8));
-            Assert.AreEqual(null, model.Json.GetNullableInt32("foobar"u8));
-
-            var data = WriteModifiedModel(model, "null");
-
-            var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(null, model2.Json.GetString("foobar"u8));
-            Assert.AreEqual(null, model2.Json.GetNullableInt32("foobar"u8));
-
-            AssertCommon(model, model2);
-
-            AssertFromRawData<string?>(model2, null);
-        }
-
-        private AvailabilitySetData GetInitialModel()
-        {
-            var model = ModelReaderWriter.Read<AvailabilitySetData>(BinaryData.FromString(JsonPayload));
-            Assert.IsNotNull(model);
-            return model!;
-        }
-
-        private static void AssertJsonException(Action lambda)
-        {
-            bool exceptionThrown = false;
-            try
-            {
-                lambda();
             }
-            catch (Exception ex)
+            if (!skips.Contains("location"))
             {
-                exceptionThrown = true;
-                Assert.AreEqual("JsonException", ex.GetType().Name);
-                Assert.IsTrue(ex.Message.StartsWith("The JSON value could not be converted to"));
+                Assert.AreEqual(model.Location, model2.Location);
             }
-            finally
+            if (!skips.Contains("platformFaultDomainCount"))
             {
-                Assert.IsTrue(exceptionThrown, "Expected GetInt32 to throw when the value is null");
+                Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
             }
-        }
-
-        private static BinaryData WriteModifiedModel(AvailabilitySetData model, string expectedJsonValue)
-        {
-            var data = ModelReaderWriter.Write(model);
-            var json = data.ToString();
-            Assert.IsTrue(json.Contains($"\"foobar\":{expectedJsonValue}"), $"Did not find \"foobar\":{expectedJsonValue}, json was:\n{json}");
-            return data;
-        }
-
-        private static AvailabilitySetData GetRoundTripModel(BinaryData data)
-        {
-            var model2 = ModelReaderWriter.Read<AvailabilitySetData>(data);
-            Assert.IsNotNull(model2);
-            return model2!;
-        }
-
-        private static void AssertCommon(AvailabilitySetData model, AvailabilitySetData model2)
-        {
-            Assert.AreEqual("extraSku", model2.Json.GetString("extraSku"u8));
-            Assert.AreEqual("extraRoot", model2.Json.GetString("extraRoot"u8));
-            CompareAvailabilitySetData(model, model2, "J");
-        }
-        private static void AssertFromRawData<T>(AvailabilitySetData model, T value)
-        {
-            var rawData = GetRawData(model);
-            //will contain 2 from the TestData and 1 from the additional property we injected
-            Assert.AreEqual(3, rawData.Count);
-            Assert.IsTrue(rawData.ContainsKey("foobar"));
-            Assert.AreEqual(value, rawData["foobar"].ToObjectFromJson<T>());
+            if (!skips.Contains("platformUpdateDomainCount"))
+            {
+                Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
+            }
+            if (!skips.Contains("sku"))
+            {
+                Assert.AreEqual(model.Sku.Name, model2.Sku.Name);
+            }
+            if (!skips.Contains("tags"))
+            {
+                CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
+            }
         }
     }
 }
