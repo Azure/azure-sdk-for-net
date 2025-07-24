@@ -135,7 +135,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override CSharpType? GetBaseType() => typeof(ArmCollection);
+        protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
             _getAll is null

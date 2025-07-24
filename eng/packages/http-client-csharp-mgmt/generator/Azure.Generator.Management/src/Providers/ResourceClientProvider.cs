@@ -310,7 +310,7 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceTypeValue => _resourceMetadata.ResourceType;
 
-        protected override CSharpType? GetBaseType() => typeof(ArmResource);
+        protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
         protected override MethodProvider[] BuildMethods()
         {
