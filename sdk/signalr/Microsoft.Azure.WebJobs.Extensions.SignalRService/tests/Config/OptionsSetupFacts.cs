@@ -3,10 +3,13 @@
 
 using System;
 using System.Reflection;
+
 using Azure.Core.Serialization;
+
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
+
 using Xunit;
 
 namespace SignalRServiceExtension.Tests.Config
@@ -94,7 +97,7 @@ namespace SignalRServiceExtension.Tests.Config
             var options = new ServiceManagerOptions();
             var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
             setup.Configure(options);
-            Assert.Null(options.RetryOptions);
+            Assert.NotNull(options.RetryOptions);
         }
 
         [Fact]
