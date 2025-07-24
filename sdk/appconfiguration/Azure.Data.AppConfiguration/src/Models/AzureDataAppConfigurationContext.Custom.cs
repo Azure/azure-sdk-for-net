@@ -3,19 +3,19 @@
 
 using System.ComponentModel;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Data.AppConfiguration
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    public partial class AzureCommunicationPhoneNumbersContext
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class AzureDataAppConfigurationContext
     {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        private AzureCommunicationPhoneNumbersContext _azureCommunicationPhoneNumbersContext;
+        private AzureDataAppConfigurationContext _azureDataAppConfigurationContext;
 
         /// <summary> Gets the default instance </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public AzureCommunicationPhoneNumbersContext Default => _azureCommunicationPhoneNumbersContext ??= new();
+        public AzureDataAppConfigurationContext Default => _azureDataAppConfigurationContext ??= new();
     }
 }

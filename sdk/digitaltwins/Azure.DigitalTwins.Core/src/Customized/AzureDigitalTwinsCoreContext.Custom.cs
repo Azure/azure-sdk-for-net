@@ -3,19 +3,19 @@
 
 using System.ComponentModel;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.DigitalTwins.Core
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    public partial class AzureCommunicationPhoneNumbersContext
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class AzureDigitalTwinsCoreContext
     {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        private AzureCommunicationPhoneNumbersContext _azureCommunicationPhoneNumbersContext;
+        private AzureDigitalTwinsCoreContext _azureDigitalTwinsCoreContext;
 
         /// <summary> Gets the default instance </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public AzureCommunicationPhoneNumbersContext Default => _azureCommunicationPhoneNumbersContext ??= new();
+        public AzureDigitalTwinsCoreContext Default => _azureDigitalTwinsCoreContext ??= new();
     }
 }
