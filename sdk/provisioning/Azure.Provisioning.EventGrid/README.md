@@ -22,6 +22,55 @@ dotnet add package Azure.Provisioning.EventGrid
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create an Event Grid topic
+
+```C# Snippet:EventGridBasic
+Infrastructure infra = new();
+
+ProvisioningParameter webhookUri = new(nameof(webhookUri), typeof(string));
+infra.Add(webhookUri);
+
+StorageAccount storage =
+    new(nameof(storage))
+    {
+        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+        Kind = StorageKind.StorageV2,
+        AllowBlobPublicAccess = false,
+        AccessTier = StorageAccountAccessTier.Hot,
+        EnableHttpsTrafficOnly = true,
+    };
+infra.Add(storage);
+
+SystemTopic topic =
+    new(nameof(topic))
+    {
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        Source = storage.Id,
+        TopicType = "Microsoft.Storage.StorageAccounts"
+    };
+infra.Add(topic);
+
+SystemTopicEventSubscription subscription =
+    new(nameof(subscription))
+    {
+        Parent = topic,
+        Destination = new WebHookEventSubscriptionDestination { Endpoint = webhookUri },
+        Filter = new EventSubscriptionFilter
+        {
+            IncludedEventTypes =
+            {
+                "Microsoft.Storage.BlobCreated",
+                "Microsoft.Storage.BlobDeleted"
+            }
+        }
+    };
+infra.Add(subscription);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

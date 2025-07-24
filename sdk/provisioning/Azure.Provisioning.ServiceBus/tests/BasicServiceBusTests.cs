@@ -21,6 +21,7 @@ public class BasicServiceBusTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ServiceBusBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter queueName =
@@ -58,6 +59,7 @@ public class BasicServiceBusTests(bool async)
                 infra.Add(queue);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """
