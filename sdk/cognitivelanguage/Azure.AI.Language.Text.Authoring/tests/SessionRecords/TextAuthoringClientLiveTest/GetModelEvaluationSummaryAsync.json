@@ -1,13 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/test001/models/m1/evaluation/summary-result?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/models/model1/evaluation/summary-result?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250302.1 (.NET Framework 4.8.9290.0; Microsoft Windows 10.0.26100 )",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250627.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,81 +14,159 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "8e180d8e-ed30-4e23-886f-21742727e804",
-        "Content-Length": "1492",
+        "apim-request-id": "a90ef704-009e-4195-a8b8-8294c5d90202",
+        "Content-Length": "2820",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 03 Mar 2025 07:19:50 GMT",
-        "request-id": "8e180d8e-ed30-4e23-886f-21742727e804",
+        "Date": "Fri, 27 Jun 2025 17:34:19 GMT",
+        "request-id": "a90ef704-009e-4195-a8b8-8294c5d90202",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "54",
+        "x-envoy-upstream-service-time": "71",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
         "projectKind": "CustomSingleLabelClassification",
         "customSingleLabelClassificationEvaluation": {
           "confusionMatrix": {
-            "Computer_science": {},
-            "Electrical_engineering": {},
-            "Mechanical_engineering": {
-              "Biochemistry": {
-                "normalizedValue": 50.0,
-                "rawValue": 1.0
+            "Computer_science": {
+              "Computer_science": {
+                "normalizedValue": 66.666664,
+                "rawValue": 4.0
               },
               "Mechanical_engineering": {
-                "normalizedValue": 50.0,
+                "normalizedValue": 16.666666,
+                "rawValue": 1.0
+              },
+              "Civil_engineering": {
+                "normalizedValue": 16.666666,
                 "rawValue": 1.0
               }
             },
-            "Civil_engineering": {},
-            "Biochemistry": {},
+            "Electrical_engineering": {
+              "Mechanical_engineering": {
+                "normalizedValue": 33.333332,
+                "rawValue": 2.0
+              },
+              "Electrical_engineering": {
+                "normalizedValue": 50.0,
+                "rawValue": 3.0
+              },
+              "Civil_engineering": {
+                "normalizedValue": 16.666666,
+                "rawValue": 1.0
+              }
+            },
+            "Psychology": {
+              "Psychology": {
+                "normalizedValue": 50.0,
+                "rawValue": 3.0
+              },
+              "Medical": {
+                "normalizedValue": 16.666666,
+                "rawValue": 1.0
+              },
+              "Biochemistry": {
+                "normalizedValue": 33.333332,
+                "rawValue": 2.0
+              }
+            },
+            "Mechanical_engineering": {
+              "Mechanical_engineering": {
+                "normalizedValue": 66.666664,
+                "rawValue": 4.0
+              },
+              "Civil_engineering": {
+                "normalizedValue": 16.666666,
+                "rawValue": 1.0
+              },
+              "Electrical_engineering": {
+                "normalizedValue": 16.666666,
+                "rawValue": 1.0
+              }
+            },
+            "Civil_engineering": {
+              "Civil_engineering": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "Medical": {
+              "Medical": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "Biochemistry": {
+              "Biochemistry": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
             "None": {}
           },
           "classes": {
-            "Mechanical_engineering": {
-              "f1": 0.6666666865348816,
-              "precision": 1.0,
-              "recall": 0.5,
-              "truePositiveCount": 1,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 1
-            },
             "Biochemistry": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 1,
+              "f1": 0.8571428060531616,
+              "precision": 0.75,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 34,
+              "falsePositiveCount": 2,
+              "falseNegativeCount": 0
+            },
+            "Medical": {
+              "f1": 0.9230769872665405,
+              "precision": 0.8571428656578064,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 35,
               "falsePositiveCount": 1,
               "falseNegativeCount": 0
             },
-            "Computer_science": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
+            "Civil_engineering": {
+              "f1": 0.800000011920929,
+              "precision": 0.6666666865348816,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 33,
+              "falsePositiveCount": 3,
               "falseNegativeCount": 0
+            },
+            "Mechanical_engineering": {
+              "f1": 0.6153846383094788,
+              "precision": 0.5714285969734192,
+              "recall": 0.6666666865348816,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 33,
+              "falsePositiveCount": 3,
+              "falseNegativeCount": 2
             },
             "Electrical_engineering": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
-              "falsePositiveCount": 0,
-              "falseNegativeCount": 0
+              "f1": 0.5999999642372131,
+              "precision": 0.75,
+              "recall": 0.5,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 35,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 3
             },
-            "Civil_engineering": {
-              "f1": 0.0,
-              "precision": 0.0,
-              "recall": 0.0,
-              "truePositiveCount": 0,
-              "trueNegativeCount": 0,
+            "Psychology": {
+              "f1": 0.6666666865348816,
+              "precision": 1.0,
+              "recall": 0.5,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 36,
               "falsePositiveCount": 0,
-              "falseNegativeCount": 0
+              "falseNegativeCount": 3
+            },
+            "Computer_science": {
+              "f1": 0.800000011920929,
+              "precision": 1.0,
+              "recall": 0.6666666865348816,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 36,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 2
             },
             "None": {
               "f1": 0.0,
@@ -101,12 +178,12 @@
               "falseNegativeCount": 0
             }
           },
-          "microF1": 0.5,
-          "microPrecision": 0.5,
-          "microRecall": 0.5,
-          "macroF1": 0.6666667,
-          "macroPrecision": 1.0,
-          "macroRecall": 0.5
+          "microF1": 0.7619048,
+          "microPrecision": 0.7619048,
+          "microRecall": 0.7619048,
+          "macroF1": 0.751753,
+          "macroPrecision": 0.79931974,
+          "macroRecall": 0.7619048
         },
         "evaluationOptions": {
           "kind": "percentage",
@@ -117,8 +194,8 @@
     }
   ],
   "Variables": {
-    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "1732408200"
+    "RandomSeed": "356072907"
   }
 }
