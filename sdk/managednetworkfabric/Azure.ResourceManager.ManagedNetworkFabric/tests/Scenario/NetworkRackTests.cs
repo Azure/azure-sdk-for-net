@@ -30,7 +30,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"NetworkRack Test started.....");
 
-            NetworkRackCollection collection = ResourceGroupResource.GetNetworkRacks();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkRackCollection collection = resourceGroup.GetNetworkRacks();
 
             NetworkRackResource rack = Client.GetNetworkRackResource(networkRackResourceId);
 

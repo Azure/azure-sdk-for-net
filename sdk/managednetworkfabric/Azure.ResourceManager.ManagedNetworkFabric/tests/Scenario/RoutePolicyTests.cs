@@ -29,33 +29,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"RoutePolicy Test started.....");
 
-            NetworkFabricRoutePolicyCollection collection = ResourceGroupResource.GetNetworkFabricRoutePolicies();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricRoutePolicyCollection collection = resourceGroup.GetNetworkFabricRoutePolicies();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
 
-            NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            var statement = new RoutePolicyStatementProperties(
+                7,
+                new StatementConditionProperties
+                {
+                    RoutePolicyConditionType = RoutePolicyConditionType.Or,
+                    IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
+                },
+                new StatementActionProperties(RoutePolicyActionType.Deny)
+                {
+                    LocalPreference = 20,
+                })
+            {
+                Annotation = "annotation",
+            };
+
+            var properties = new RoutePolicyProperties(new[] { statement }, new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
             {
                 Annotation = "annotation",
                 DefaultAction = CommunityActionType.Permit,
-                Statements =
-                {
-                    new RoutePolicyStatementProperties(
-                        7,
-                        new StatementConditionProperties()
-                        {
-                            RoutePolicyConditionType = RoutePolicyConditionType.Or,
-                            IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
-                        },
-                        new StatementActionProperties(RoutePolicyActionType.Deny)
-                        {
-                            LocalPreference = 20,
-                        })
-                    {
-                        Annotation = "annotation",
-                    }
-                },
                 AddressFamilyType = AddressFamilyType.IPv4,
+            };
+
+            NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), properties)
+            {
                 Tags =
                 {
                     ["keyID"] = "keyValue",

@@ -29,7 +29,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"NetworkDevice Test started.....");
 
-            NetworkDeviceCollection collection = ResourceGroupResource.GetNetworkDevices();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkDeviceCollection collection = resourceGroup.GetNetworkDevices();
 
             NetworkDeviceResource device = Client.GetNetworkDeviceResource(networkDeviceResourceId);
 
@@ -62,16 +64,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
-            // Update Serial Number
-            NetworkDevicePatch patch = new NetworkDevicePatch()
+            var patchProperties = new NetworkDevicePatchParametersProperties
             {
                 Annotation = "null",
                 HostName = "networkDeviceName",
                 SerialNumber = "Arista;DCS-7280PR3-24;12.05;JPE21330382",
             };
+            NetworkDevicePatch patch = new NetworkDevicePatch(
+                new Dictionary<string, string> { ["key8107"] = "1234" }, // tags
+                patchProperties,
+                null
+            );
             ArmOperation<NetworkDeviceResource> lro = await device.UpdateAsync(WaitUntil.Completed, patch);
             NetworkDeviceResource result = lro.Value;
-            Assert.AreEqual(result.Data.SerialNumber, patch.SerialNumber);
+            Assert.AreEqual(result.Data.Properties.SerialNumber, patchProperties.SerialNumber);
         }
     }
 }

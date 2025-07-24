@@ -23,13 +23,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         {
             // get the collection of this L2Isolation
 
-            NetworkFabricL2IsolationDomainCollection collection = ResourceGroupResource.GetNetworkFabricL2IsolationDomains();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricL2IsolationDomainCollection collection = resourceGroup.GetNetworkFabricL2IsolationDomains();
 
             TestContext.Out.WriteLine($"Entered into the L2Isolation Domain tests....");
 
             TestContext.Out.WriteLine($"Provided NetworkFabric Id : {TestEnvironment.Provisioned_NF_ID}");
 
-            ResourceIdentifier l2DomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.L2IsolationDomainName);
+            ResourceIdentifier l2DomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.L2IsolationDomainName);
 
             TestContext.Out.WriteLine($"l2DomainResourceId: {l2DomainResourceId}");
 
@@ -37,10 +39,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricL2IsolationDomainData data = new NetworkFabricL2IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID), 1000)
+            var properties = new L2IsolationDomainProperties()
             {
+                NetworkFabricId = new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID),
+                VlanId = 1000,
                 Annotation = "annotation",
                 Mtu = 7000,
+            };
+
+            NetworkFabricL2IsolationDomainData data = new NetworkFabricL2IsolationDomainData(new AzureLocation(TestEnvironment.Location), properties)
+            {
                 Tags =
                 {
                     ["keyID"] = "keyValue",
@@ -61,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
             var listByResourceGroup = new List<NetworkFabricL2IsolationDomainResource>();
-            NetworkFabricL2IsolationDomainCollection collectionOp = ResourceGroupResource.GetNetworkFabricL2IsolationDomains();
+            NetworkFabricL2IsolationDomainCollection collectionOp = resourceGroup.GetNetworkFabricL2IsolationDomains();
             await foreach (NetworkFabricL2IsolationDomainResource item in collectionOp.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
