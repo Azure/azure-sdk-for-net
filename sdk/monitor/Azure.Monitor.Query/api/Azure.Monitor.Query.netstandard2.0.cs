@@ -1,5 +1,12 @@
 namespace Azure.Monitor.Query
 {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class AzureMonitorQueryContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        public AzureMonitorQueryContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Monitor.Query.AzureMonitorQueryContext Default { get { throw null; } }
+    }
     public partial class LogsBatchQuery
     {
         public LogsBatchQuery() { }
