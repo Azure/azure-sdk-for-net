@@ -70,7 +70,7 @@ public partial class AppCertificate : ProvisionableResource
     private BicepList<string>? _hostNames;
 
     /// <summary>
-    /// Key Vault Csm resource Id.
+    /// Azure Key Vault Csm resource Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> KeyVaultId 
     {
@@ -80,7 +80,7 @@ public partial class AppCertificate : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _keyVaultId;
 
     /// <summary>
-    /// Key Vault secret name.
+    /// Azure Key Vault secret name.
     /// </summary>
     public BicepValue<string> KeyVaultSecretName 
     {
@@ -122,8 +122,7 @@ public partial class AppCertificate : ProvisionableResource
     private BicepValue<BinaryData>? _pfxBlob;
 
     /// <summary>
-    /// Resource ID of the associated App Service plan, formatted as:
-    /// &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
+    /// Resource ID of the associated App Service plan.
     /// </summary>
     public BicepValue<ResourceIdentifier> ServerFarmId 
     {

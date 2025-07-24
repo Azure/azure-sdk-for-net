@@ -8,6 +8,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Agents.Persistent.Custom.Streaming;
 using Azure.Core.TestFramework;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -91,6 +92,7 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         #endregion
 
         #region Snippet:StreamingWithAutoFunctionCallAsync_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
@@ -120,7 +122,11 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         #endregion
 
         #region Snippet:StreamingWithAutoFunctionCallAsync
-        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
+        CreateRunStreamingOptions runOptions = new()
+        {
+            AutoFunctionCallOptions = autoFunctionCallOptions
+        };
+        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: runOptions))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
@@ -139,6 +145,7 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         #endregion
 
         #region Snippet:StreamingWithAutoFunctionCallAsync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -159,6 +166,7 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
         #region Snippet:StreamingWithAutoFunctionCall_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
@@ -186,7 +194,11 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
 
         #region Snippet:StreamingWithAutoFunctionCall
-        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions);
+        CreateRunStreamingOptions runOptions = new()
+        {
+            AutoFunctionCallOptions = autoFunctionCallOptions
+        };
+        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, options: runOptions);
         foreach (StreamingUpdate streamingUpdate in stream)
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -206,6 +218,7 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         #endregion
 
         #region Snippet:StreamingWithAutoFunctionCall_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

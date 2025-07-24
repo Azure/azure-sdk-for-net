@@ -14,7 +14,7 @@ There are a few exceptions where package-name is replaced with a shorter directo
 - "track 2" refers to packages that start with `Azure`. Unless otherwise specified, assume that references to "data plane" mean "track 2 data plane", i.e. packages that start with `Azure` and don't include `ResourceManager` in the package name. Unless otherwise specified, assume that references to "management plane" mean "track 2 management plane", i.e. packages that start with `Azure.ResourceManager`.
 - "functions extensions packages" or sometimes just "extensions packages" refers to packages that start with `Microsoft.Azure.WebJobs.Extensions`. They are built on data plane packages and are used with Azure Functions.
 
-# Requirements
+# Coding requirements
 - If you are writing C# code within the `azure-sdk-for-net/sdk` directory:
     1. Follow the coding guidelines in the "Coding guidelines" section below.
     2. You should never manually make changes to `*/Generated/*` files, e.g. `azure-sdk-for-net/sdk/containerregistry/Azure.Containers.ContainerRegistry/src/Generated/`
@@ -34,3 +34,23 @@ There are a few exceptions where package-name is replaced with a shorter directo
 - Follow the formatting standards defined in https://github.com/Azure/azure-sdk-for-net/blob/main/.editorconfig
 - When writing tests, do not emit "Act", "Arrange" or "Assert" comments.
 - Do not add extra whitespace to the end of lines.
+
+# SDK release
+
+There are two tools to help with SDK releases:
+- Check SDK release readiness
+- Release SDK
+
+### Check SDK Release Readiness
+Run `CheckPackageReleaseReadiness` to verify if the package is ready for release. This tool checks:
+- API review status
+- Change log status
+- Package name approval(If package is new and releasing a preview version)
+- Release date is set in release tracker
+
+### Release SDK
+Run `ReleasePackage` to release the package. This tool requires package name and language as inputs. It will:
+- Check if the package is ready for release
+- Identify the release pipeline
+- Trigger the release pipeline.
+User needs to approve the release stage in the pipeline after it is triggered.

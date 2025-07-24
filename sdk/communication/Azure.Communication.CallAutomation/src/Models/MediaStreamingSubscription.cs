@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="id"> Gets or Sets subscription Id. </param>
         /// <param name="state"> Gets or Sets media streaming subscription state. </param>
         /// <param name="subscribedContentTypes"> Gets or Sets the subscribed media streaming content types. </param>
-        public MediaStreamingSubscription(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes)
+        internal MediaStreamingSubscription(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes)
         {
             Id = id;
             State = state;

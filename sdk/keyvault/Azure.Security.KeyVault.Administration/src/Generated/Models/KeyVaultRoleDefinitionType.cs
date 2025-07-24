@@ -14,35 +14,52 @@ namespace Azure.Security.KeyVault.Administration
     public readonly partial struct KeyVaultRoleDefinitionType : IEquatable<KeyVaultRoleDefinitionType>
     {
         private readonly string _value;
+        /// <summary> Microsoft-defined role definitions. </summary>
+        private const string MicrosoftAuthorizationRoleDefinitionsValue = "Microsoft.Authorization/roleDefinitions";
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRoleDefinitionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftAuthorizationRoleDefinitionsValue = "Microsoft.Authorization/roleDefinitions";
+            _value = value;
+        }
 
         /// <summary> Microsoft-defined role definitions. </summary>
         public static KeyVaultRoleDefinitionType MicrosoftAuthorizationRoleDefinitions { get; } = new KeyVaultRoleDefinitionType(MicrosoftAuthorizationRoleDefinitionsValue);
+
         /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultRoleDefinitionType left, KeyVaultRoleDefinitionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultRoleDefinitionType left, KeyVaultRoleDefinitionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultRoleDefinitionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KeyVaultRoleDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultRoleDefinitionType(string value) => new KeyVaultRoleDefinitionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KeyVaultRoleDefinitionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultRoleDefinitionType?(string value) => value == null ? null : new KeyVaultRoleDefinitionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultRoleDefinitionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultRoleDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

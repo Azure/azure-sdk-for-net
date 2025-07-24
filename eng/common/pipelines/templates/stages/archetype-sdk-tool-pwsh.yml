@@ -30,9 +30,6 @@ stages:
             Linux:
               Pool: azsdk-pool
               Image: ubuntu-24.04
-            Mac:
-              Pool: Azure Pipelines
-              Image: macos-latest
 
         pool:
           name: $(Pool)

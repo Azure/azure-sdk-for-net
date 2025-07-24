@@ -17,6 +17,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.BrokerProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.FailedLockToken))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReceiveDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReceiveResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.RejectResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReleaseResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.RenewLocksResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureMessagingEventGridNamespacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureMessagingEventGridNamespacesContext() { }
@@ -214,6 +223,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay (string value) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay? (string value) { throw null; }
         public static bool operator !=(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public override string ToString() { throw null; }
     }

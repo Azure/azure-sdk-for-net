@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.0.0-beta.11 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.10 (2025-07-11)
+
+### Features Added
+* Support for generating embeddings through Azure OpenAI using `GetAzureOpenAIEmbeddingClient`.
+
+### Breaking Changes
+* Name changes:
+  * In `Datasets` methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
+  * `Connection` has been renamed `ConnectionProperties`
+  * `Deployment` has been renamed `AIDeployment`
+  * `Index` has been renamed `DatasetIndex`
+  * `SasCredential` has been renamed `BlobReferenceSasCredential`
+  * `Sku` has been renamed `ModelDeploymentSku`
+* Removing `GetChatCompletionsClient`, `GetEmbeddingsClient`, and `GetImageEmbeddingsClient` methods from `AIProjectClient`. The Inference client should be used directly instead.
+* Replacing `GetConnectionsClient`, `GetDatasetsClient`, `GetDeploymentsClient`, and`GetIndexesClient` with `Connections`, `Datasets`, `Deployments`, and `Indexes` properties.
+
+### Bugs Fixed
+* Fix getting model deployed on the Azure Open AI resource, if the resource is authenticated using Entra ID. [see GitHub issue 49064](https://github.com/Azure/azure-sdk-for-net/issues/49064)
+* Fix dataset uploading datasets.
 
 ## 1.0.0-beta.9 (2025-05-16)
 
@@ -29,6 +49,7 @@ AI models deployed to the Project's AI Services.
 * Property `scope` on `AIProjectClient` is removed.
 * Evaluator Ids are available using the class `EvaluatorIDs` and no longer require `Azure.AI.Evaluation` package to be installed.
 * Property `Id` on Evaluation is replaced with `name`.
+* Please see the [agents migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/AGENTS_MIGRATION_GUIDE.md) on how to use the new `azure-ai-projects` with `azure-ai-agents` package.
 
 ### Sample Updates
 * All samples have been updated. New ones have been added for Deployments, Datasets, and Indexes.
@@ -39,7 +60,7 @@ AI models deployed to the Project's AI Services.
 * New sample added for connected agent tool.
 
 ### Bugs Fixed
-* Fix for filtering of messages by run ID [see GitHub issue issue 49513](https://github.com/Azure/azure-sdk-for-net/issues/49513).
+* Fix for filtering of messages by run ID [see GitHub issue 49513](https://github.com/Azure/azure-sdk-for-net/issues/49513).
 
 ## 1.0.0-beta.7 (2025-04-18)
 
