@@ -204,6 +204,26 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CreateRunStreamingOptions
+    {
+        public CreateRunStreamingOptions() { }
+        public string AdditionalInstructions { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ThreadMessageOptions> AdditionalMessages { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunAdditionalFieldList> Include { get { throw null; } set { } }
+        public int? MaxCompletionTokens { get { throw null; } set { } }
+        public int? MaxPromptTokens { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } set { } }
+        public string OverrideInstructions { get { throw null; } set { } }
+        public string OverrideModelName { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> OverrideTools { get { throw null; } set { } }
+        public bool? ParallelToolCalls { get { throw null; } set { } }
+        public System.BinaryData ResponseFormat { get { throw null; } set { } }
+        public float? Temperature { get { throw null; } set { } }
+        public System.BinaryData ToolChoice { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.ToolResources ToolResources { get { throw null; } set { } }
+        public float? TopP { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.Truncation TruncationStrategy { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DoneEvent : System.IEquatable<Azure.AI.Agents.Persistent.DoneEvent>
     {
@@ -2313,9 +2333,9 @@ namespace Azure.AI.Agents.Persistent
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.ThreadRun>> CreateRunAsync(Azure.AI.Agents.Persistent.PersistentAgentThread thread, Azure.AI.Agents.Persistent.PersistentAgent agent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateRunAsync(string threadId, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunAdditionalFieldList> include = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ThreadMessageOptions> additionalMessages = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> overrideTools = null, bool? stream = default(bool?), float? temperature = default(float?), float? topP = default(float?), int? maxPromptTokens = default(int?), int? maxCompletionTokens = default(int?), Azure.AI.Agents.Persistent.Truncation truncationStrategy = null, System.BinaryData toolChoice = null, System.BinaryData responseFormat = null, bool? parallelToolCalls = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunAdditionalFieldList> include = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Agents.Persistent.StreamingUpdate> CreateRunStreaming(string threadId, string agentId, Azure.AI.Agents.Persistent.Custom.Streaming.CreateRunStreamingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Agents.Persistent.StreamingUpdate> CreateRunStreaming(string threadId, string agentId, Azure.AI.Agents.Persistent.CreateRunStreamingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.CollectionResult<Azure.AI.Agents.Persistent.StreamingUpdate> CreateRunStreaming(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ThreadMessageOptions> additionalMessages = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> overrideTools = null, float? temperature = default(float?), float? topP = default(float?), int? maxPromptTokens = default(int?), int? maxCompletionTokens = default(int?), Azure.AI.Agents.Persistent.Truncation truncationStrategy = null, System.BinaryData toolChoice = null, System.BinaryData responseFormat = null, bool? parallelToolCalls = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Agents.Persistent.StreamingUpdate> CreateRunStreamingAsync(string threadId, string agentId, Azure.AI.Agents.Persistent.Custom.Streaming.CreateRunStreamingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Agents.Persistent.StreamingUpdate> CreateRunStreamingAsync(string threadId, string agentId, Azure.AI.Agents.Persistent.CreateRunStreamingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Agents.Persistent.StreamingUpdate> CreateRunStreamingAsync(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ThreadMessageOptions> additionalMessages = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> overrideTools = null, float? temperature = default(float?), float? topP = default(float?), int? maxPromptTokens = default(int?), int? maxCompletionTokens = default(int?), Azure.AI.Agents.Persistent.Truncation truncationStrategy = null, System.BinaryData toolChoice = null, System.BinaryData responseFormat = null, bool? parallelToolCalls = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetRun(string threadId, string runId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.ThreadRun> GetRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2838,29 +2858,6 @@ namespace Azure.AI.Agents.Persistent
         public static implicit operator Azure.AI.Agents.Persistent.VectorStoreStatus (string value) { throw null; }
         public static bool operator !=(Azure.AI.Agents.Persistent.VectorStoreStatus left, Azure.AI.Agents.Persistent.VectorStoreStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-}
-namespace Azure.AI.Agents.Persistent.Custom.Streaming
-{
-    public partial class CreateRunStreamingOptions
-    {
-        public CreateRunStreamingOptions() { }
-        public string AdditionalInstructions { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ThreadMessageOptions> AdditionalMessages { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunAdditionalFieldList> Include { get { throw null; } set { } }
-        public int? MaxCompletionTokens { get { throw null; } set { } }
-        public int? MaxPromptTokens { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } set { } }
-        public string OverrideInstructions { get { throw null; } set { } }
-        public string OverrideModelName { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> OverrideTools { get { throw null; } set { } }
-        public bool? ParallelToolCalls { get { throw null; } set { } }
-        public System.BinaryData ResponseFormat { get { throw null; } set { } }
-        public float? Temperature { get { throw null; } set { } }
-        public System.BinaryData ToolChoice { get { throw null; } set { } }
-        public Azure.AI.Agents.Persistent.ToolResources ToolResources { get { throw null; } set { } }
-        public float? TopP { get { throw null; } set { } }
-        public Azure.AI.Agents.Persistent.Truncation TruncationStrategy { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure

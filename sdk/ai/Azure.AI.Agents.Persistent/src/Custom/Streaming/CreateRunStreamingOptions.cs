@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Agents.Persistent.Custom.Streaming
+namespace Azure.AI.Agents.Persistent
 {
     public class CreateRunStreamingOptions
     {
