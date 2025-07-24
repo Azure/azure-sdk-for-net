@@ -65,6 +65,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(ConversationExportedIntent))]
     [ModelReaderWriterBuildable(typeof(ConversationExportedProjectAsset))]
     [ModelReaderWriterBuildable(typeof(ConversationExportedUtterance))]
+    [ModelReaderWriterBuildable(typeof(CopyProjectAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(EntitiesEvaluationSummary))]
     [ModelReaderWriterBuildable(typeof(ExportedConversationOrchestration))]
     [ModelReaderWriterBuildable(typeof(ExportedConversationOrchestrationDetails))]

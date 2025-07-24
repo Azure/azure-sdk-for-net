@@ -13,6 +13,7 @@ namespace Azure.AI.Language.Text.Authoring
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CopyProjectAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionDocumentEvalResult))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionEvalSummary))]
     [ModelReaderWriterBuildable(typeof(CustomHealthcareDocumentEvalResult))]

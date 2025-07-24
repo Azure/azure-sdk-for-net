@@ -33,6 +33,7 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(AnalyzeTextPiiResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextSentimentResult))]
+    [ModelReaderWriterBuildable(typeof(AnalyzeTextSubmitJobRequest))]
     [ModelReaderWriterBuildable(typeof(AreaMetadata))]
     [ModelReaderWriterBuildable(typeof(BaseMetadata))]
     [ModelReaderWriterBuildable(typeof(BaseRedactionPolicy))]

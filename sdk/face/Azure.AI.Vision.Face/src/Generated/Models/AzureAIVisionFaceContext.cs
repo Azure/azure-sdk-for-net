@@ -14,6 +14,8 @@ namespace Azure.AI.Vision.Face
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccessoryItem))]
+    [ModelReaderWriterBuildable(typeof(AddFaceFromUrlRequest1))]
+    [ModelReaderWriterBuildable(typeof(AddFaceFromUrlRequest2))]
     [ModelReaderWriterBuildable(typeof(AddFaceResult))]
     [ModelReaderWriterBuildable(typeof(AuditLivenessResponseInfo))]
     [ModelReaderWriterBuildable(typeof(AuditRequestInfo))]
@@ -21,8 +23,14 @@ namespace Azure.AI.Vision.Face
     [ModelReaderWriterBuildable(typeof(CreateLivenessSessionContent))]
     [ModelReaderWriterBuildable(typeof(CreateLivenessSessionResult))]
     [ModelReaderWriterBuildable(typeof(CreateLivenessWithVerifySessionContent))]
+    [ModelReaderWriterBuildable(typeof(CreateLivenessWithVerifySessionMultipartContent))]
     [ModelReaderWriterBuildable(typeof(CreateLivenessWithVerifySessionResult))]
+    [ModelReaderWriterBuildable(typeof(CreatePersonRequest))]
     [ModelReaderWriterBuildable(typeof(CreatePersonResult))]
+    [ModelReaderWriterBuildable(typeof(CreateRequest))]
+    [ModelReaderWriterBuildable(typeof(CreateRequest1))]
+    [ModelReaderWriterBuildable(typeof(DetectFromSessionImageRequest))]
+    [ModelReaderWriterBuildable(typeof(DetectFromUrlRequest))]
     [ModelReaderWriterBuildable(typeof(ExposureProperties))]
     [ModelReaderWriterBuildable(typeof(FaceAttributes))]
     [ModelReaderWriterBuildable(typeof(FaceDetectionResult))]
@@ -35,9 +43,13 @@ namespace Azure.AI.Vision.Face
     [ModelReaderWriterBuildable(typeof(FaceTrainingResult))]
     [ModelReaderWriterBuildable(typeof(FaceVerificationResult))]
     [ModelReaderWriterBuildable(typeof(FacialHair))]
+    [ModelReaderWriterBuildable(typeof(FindSimilarFromLargeFaceListRequest))]
+    [ModelReaderWriterBuildable(typeof(FindSimilarRequest))]
+    [ModelReaderWriterBuildable(typeof(GroupRequest))]
     [ModelReaderWriterBuildable(typeof(HairColor))]
     [ModelReaderWriterBuildable(typeof(HairProperties))]
     [ModelReaderWriterBuildable(typeof(HeadPose))]
+    [ModelReaderWriterBuildable(typeof(IdentifyFromLargePersonGroupRequest))]
     [ModelReaderWriterBuildable(typeof(LandmarkCoordinate))]
     [ModelReaderWriterBuildable(typeof(LargeFaceList))]
     [ModelReaderWriterBuildable(typeof(LargeFaceListFace))]
@@ -55,6 +67,8 @@ namespace Azure.AI.Vision.Face
     [ModelReaderWriterBuildable(typeof(MaskProperties))]
     [ModelReaderWriterBuildable(typeof(NoiseProperties))]
     [ModelReaderWriterBuildable(typeof(OcclusionProperties))]
+    [ModelReaderWriterBuildable(typeof(VerifyFaceToFaceRequest))]
+    [ModelReaderWriterBuildable(typeof(VerifyFromLargePersonGroupRequest))]
     public partial class AzureAIVisionFaceContext : ModelReaderWriterContext
     {
     }

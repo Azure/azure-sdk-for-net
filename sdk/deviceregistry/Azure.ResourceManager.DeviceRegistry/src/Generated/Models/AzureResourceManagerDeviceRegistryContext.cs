@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.DeviceRegistry
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AssetEndpointProfileListResult))]
+    [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatus))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatusError))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AssetListResult))]
     [ModelReaderWriterBuildable(typeof(AssetProperties))]
     [ModelReaderWriterBuildable(typeof(AssetUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(BillingContainerListResult))]
+    [ModelReaderWriterBuildable(typeof(BillingContainerProperties))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetData))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetEndpointProfileData))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetEndpointProfilePatch))]
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(DeviceRegistryExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryTopic))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryUsernamePasswordCredentials))]
+    [ModelReaderWriterBuildable(typeof(DeviceRegistryX509Credentials))]
     [ModelReaderWriterBuildable(typeof(MessageSchemaReference))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

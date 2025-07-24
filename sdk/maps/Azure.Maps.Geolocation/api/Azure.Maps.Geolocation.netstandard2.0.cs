@@ -1,9 +1,5 @@
 namespace Azure.Maps.Geolocation
 {
-    public partial class AzureMapsGeolocationContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureMapsGeolocationContext() { }
-    }
     public partial class CountryRegionResult
     {
         internal CountryRegionResult() { }

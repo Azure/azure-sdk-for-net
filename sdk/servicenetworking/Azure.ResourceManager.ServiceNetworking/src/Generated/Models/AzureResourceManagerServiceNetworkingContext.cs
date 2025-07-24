@@ -19,7 +19,12 @@ namespace Azure.ResourceManager.ServiceNetworking
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyData))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(AssociationListResult))]
+    [ModelReaderWriterBuildable(typeof(FrontendListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SecurityPolicyConfigurations))]
+    [ModelReaderWriterBuildable(typeof(SecurityPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(SecurityPolicyUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerAssociationData))]
@@ -29,8 +34,10 @@ namespace Azure.ResourceManager.ServiceNetworking
     [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendData))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendPatch))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendResource))]
+    [ModelReaderWriterBuildable(typeof(TrafficControllerListResult))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerPatch))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerResource))]
+    [ModelReaderWriterBuildable(typeof(TrafficControllerUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerServiceNetworkingContext : ModelReaderWriterContext
     {

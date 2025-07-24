@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.DurableTask
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerSku))]
     [ModelReaderWriterBuildable(typeof(DurableTaskSchedulerSkuUpdate))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RetentionPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(SchedulerListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TaskHubListResult))]
     public partial class AzureResourceManagerDurableTaskContext : ModelReaderWriterContext
     {
     }

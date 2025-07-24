@@ -17,15 +17,19 @@ namespace Azure.ResourceManager.Fabric
     /// </summary>
     [ModelReaderWriterBuildable(typeof(FabricCapacityAdministration))]
     [ModelReaderWriterBuildable(typeof(FabricCapacityData))]
+    [ModelReaderWriterBuildable(typeof(FabricCapacityListResult))]
     [ModelReaderWriterBuildable(typeof(FabricCapacityPatch))]
     [ModelReaderWriterBuildable(typeof(FabricCapacityProperties))]
     [ModelReaderWriterBuildable(typeof(FabricCapacityResource))]
+    [ModelReaderWriterBuildable(typeof(FabricCapacityUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(FabricNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(FabricNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(FabricSku))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForExistingCapacity))]
     [ModelReaderWriterBuildable(typeof(FabricSkuDetailsForNewCapacity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForExistingResourceResult))]
+    [ModelReaderWriterBuildable(typeof(RpSkuEnumerationForNewResourceResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerFabricContext : ModelReaderWriterContext
     {

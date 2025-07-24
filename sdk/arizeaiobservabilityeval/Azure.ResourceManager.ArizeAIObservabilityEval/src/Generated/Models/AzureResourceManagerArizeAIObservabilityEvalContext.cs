@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
     [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalSingleSignOnPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalUserDetails))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

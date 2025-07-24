@@ -32,6 +32,7 @@ namespace Azure.Communication.Messages
     [ModelReaderWriterBuildable(typeof(ConversationMessageContent))]
     [ModelReaderWriterBuildable(typeof(ConversationMessageItem))]
     [ModelReaderWriterBuildable(typeof(ConversationParticipant))]
+    [ModelReaderWriterBuildable(typeof(CreateConversationRequest1))]
     [ModelReaderWriterBuildable(typeof(DocumentConversationMessageContent))]
     [ModelReaderWriterBuildable(typeof(DocumentMessageContent))]
     [ModelReaderWriterBuildable(typeof(DocumentNotificationContent))]

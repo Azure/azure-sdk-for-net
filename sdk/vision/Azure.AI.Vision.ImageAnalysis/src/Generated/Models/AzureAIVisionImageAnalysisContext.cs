@@ -27,6 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     [ModelReaderWriterBuildable(typeof(ImageBoundingBox))]
     [ModelReaderWriterBuildable(typeof(ImageMetadata))]
     [ModelReaderWriterBuildable(typeof(ImagePoint))]
+    [ModelReaderWriterBuildable(typeof(ImageUrl))]
     [ModelReaderWriterBuildable(typeof(ObjectsResult))]
     [ModelReaderWriterBuildable(typeof(PeopleResult))]
     [ModelReaderWriterBuildable(typeof(ReadResult))]

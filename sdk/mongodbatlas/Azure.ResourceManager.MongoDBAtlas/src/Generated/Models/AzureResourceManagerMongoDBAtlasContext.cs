@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasPartnerProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasUserDetails))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.PureStorageBlock
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AvsStorageContainerListResult))]
+    [ModelReaderWriterBuildable(typeof(AvsStorageContainerVolumeListResult))]
+    [ModelReaderWriterBuildable(typeof(AvsStorageContainerVolumeUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AvsVmListResult))]
+    [ModelReaderWriterBuildable(typeof(AvsVmUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AvsVmVolumeListResult))]
+    [ModelReaderWriterBuildable(typeof(AvsVmVolumeUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PerformancePolicyLimits))]
     [ModelReaderWriterBuildable(typeof(PropertyValueRangeLimits))]
@@ -62,6 +69,8 @@ namespace Azure.ResourceManager.PureStorageBlock
     [ModelReaderWriterBuildable(typeof(PureStorageVolumeProperties))]
     [ModelReaderWriterBuildable(typeof(ReservationBillingStatus))]
     [ModelReaderWriterBuildable(typeof(ReservationBillingUsageReport))]
+    [ModelReaderWriterBuildable(typeof(ReservationListResult))]
+    [ModelReaderWriterBuildable(typeof(ReservationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceInitializationHandle))]
     [ModelReaderWriterBuildable(typeof(ServiceInitializationInfo))]
@@ -69,8 +78,11 @@ namespace Azure.ResourceManager.PureStorageBlock
     [ModelReaderWriterBuildable(typeof(StoragePoolFinalizeAvsConnectionContent))]
     [ModelReaderWriterBuildable(typeof(StoragePoolHealthInfo))]
     [ModelReaderWriterBuildable(typeof(StoragePoolLimits))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolListResult))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VolumeLimits))]
     public partial class AzureResourceManagerPureStorageBlockContext : ModelReaderWriterContext
     {
     }

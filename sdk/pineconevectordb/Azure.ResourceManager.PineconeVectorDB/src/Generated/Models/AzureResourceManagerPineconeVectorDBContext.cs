@@ -16,12 +16,14 @@ namespace Azure.ResourceManager.PineconeVectorDB
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOfferDetails))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationData))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationPatch))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(PineconeVectorDBPartnerProperties))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBSingleSignOnPropertiesV2))]
     [ModelReaderWriterBuildable(typeof(PineconeVectorDBUserDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
