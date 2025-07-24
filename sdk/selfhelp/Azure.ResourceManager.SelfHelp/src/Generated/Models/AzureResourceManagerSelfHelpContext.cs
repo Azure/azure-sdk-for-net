@@ -16,8 +16,10 @@ namespace Azure.ResourceManager.SelfHelp
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AutomatedCheckResult))]
+    [ModelReaderWriterBuildable(typeof(ChartFilterGroup))]
     [ModelReaderWriterBuildable(typeof(ClassificationService))]
     [ModelReaderWriterBuildable(typeof(DiscoveryNlpContent))]
+    [ModelReaderWriterBuildable(typeof(DiscoveryNlpResult))]
     [ModelReaderWriterBuildable(typeof(KBSearchResult))]
     [ModelReaderWriterBuildable(typeof(KBWebResult))]
     [ModelReaderWriterBuildable(typeof(MetricsBasedChart))]

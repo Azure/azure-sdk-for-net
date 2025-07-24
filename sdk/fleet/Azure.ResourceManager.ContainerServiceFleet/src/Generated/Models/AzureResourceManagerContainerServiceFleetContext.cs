@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AutoUpgradeNodeImageSelection))]
     [ModelReaderWriterBuildable(typeof(AutoUpgradeProfileData))]
     [ModelReaderWriterBuildable(typeof(AutoUpgradeProfileGenerateResult))]
     [ModelReaderWriterBuildable(typeof(AutoUpgradeProfileListResult))]
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateRunListResult))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateRunResource))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateRunStatus))]
+    [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateRunStrategy))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateStage))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateStageStatus))]
     [ModelReaderWriterBuildable(typeof(ContainerServiceFleetUpdateStatus))]
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MemberUpdateStatus))]
     [ModelReaderWriterBuildable(typeof(NodeImageSelection))]
+    [ModelReaderWriterBuildable(typeof(NodeImageSelectionStatus))]
     [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

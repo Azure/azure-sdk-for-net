@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.RedisEnterprise
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentData))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentList))]
+    [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentPropertiesUser))]
     [ModelReaderWriterBuildable(typeof(AccessPolicyAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(ClusterPropertiesEncryption))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExportRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(FlushRedisEnterpriseDatabaseContent))]
     [ModelReaderWriterBuildable(typeof(ForceLinkContent))]

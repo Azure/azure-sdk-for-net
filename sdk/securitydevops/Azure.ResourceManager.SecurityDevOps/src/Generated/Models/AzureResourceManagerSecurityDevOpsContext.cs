@@ -16,11 +16,13 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActionableRemediation))]
+    [ModelReaderWriterBuildable(typeof(AuthorizationInfo))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorData))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorListResponse))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorResource))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorStats))]
+    [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorStatsListResponse))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsConnectorStatsProperties))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsOrgData))]
     [ModelReaderWriterBuildable(typeof(AzureDevOpsOrgListResponse))]
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     [ModelReaderWriterBuildable(typeof(GitHubConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(GitHubConnectorResource))]
     [ModelReaderWriterBuildable(typeof(GitHubConnectorStats))]
+    [ModelReaderWriterBuildable(typeof(GitHubConnectorStatsListResponse))]
     [ModelReaderWriterBuildable(typeof(GitHubConnectorStatsProperties))]
     [ModelReaderWriterBuildable(typeof(GitHubOwnerData))]
     [ModelReaderWriterBuildable(typeof(GitHubOwnerListResponse))]
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     [ModelReaderWriterBuildable(typeof(GitHubRepoResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TargetBranchConfiguration))]
     public partial class AzureResourceManagerSecurityDevOpsContext : ModelReaderWriterContext
     {
     }

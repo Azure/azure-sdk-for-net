@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResponse))]
     [ModelReaderWriterBuildable(typeof(DetailedInformation))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(ExtensionData))]
     [ModelReaderWriterBuildable(typeof(ExtensionListResponse))]
     [ModelReaderWriterBuildable(typeof(ExtensionResource))]

@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentResource))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentServer))]
     [ModelReaderWriterBuildable(typeof(ApiCenterEnvironmentData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterEnvironmentProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterEnvironmentResource))]
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(ApiCenterMetadataSchemaResource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterServiceData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterServicePatch))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterServiceProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterServiceResource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterWorkspaceProperties))]
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TermsOfService))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
     public partial class AzureResourceManagerApiCenterContext : ModelReaderWriterContext

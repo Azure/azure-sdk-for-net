@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Attestation
     [ModelReaderWriterBuildable(typeof(AttestationPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(AttestationPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderData))]
+    [ModelReaderWriterBuildable(typeof(AttestationProviderListResult))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderPatch))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderResource))]
     [ModelReaderWriterBuildable(typeof(AttestationServiceCreationSpecificParams))]
+    [ModelReaderWriterBuildable(typeof(AttestationServicePatchSpecificParams))]
     [ModelReaderWriterBuildable(typeof(JsonWebKey))]
+    [ModelReaderWriterBuildable(typeof(JsonWebKeySet))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAttestationContext : ModelReaderWriterContext
     {

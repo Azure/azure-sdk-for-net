@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     [ModelReaderWriterBuildable(typeof(IPCommunityIdList))]
     [ModelReaderWriterBuildable(typeof(IPCommunityRule))]
     [ModelReaderWriterBuildable(typeof(IPExtendedCommunityAddOperationProperties))]
+    [ModelReaderWriterBuildable(typeof(IPExtendedCommunityIdList))]
     [ModelReaderWriterBuildable(typeof(IPExtendedCommunityListResult))]
     [ModelReaderWriterBuildable(typeof(IPExtendedCommunityRule))]
     [ModelReaderWriterBuildable(typeof(IPMatchCondition))]

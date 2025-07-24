@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CertificateListDescription))]
     [ModelReaderWriterBuildable(typeof(CertificateVerificationCodeContent))]
     [ModelReaderWriterBuildable(typeof(CertificateVerificationCodeProperties))]
     [ModelReaderWriterBuildable(typeof(CertificateVerificationCodeResult))]
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSkuInfo))]
     [ModelReaderWriterBuildable(typeof(IotDpsSkuDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(IotHubDefinitionDescription))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SubResource))]

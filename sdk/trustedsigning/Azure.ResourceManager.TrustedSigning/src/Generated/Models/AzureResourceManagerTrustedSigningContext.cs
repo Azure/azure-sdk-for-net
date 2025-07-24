@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.TrustedSigning
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountPatch))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningAccountResource))]
+    [ModelReaderWriterBuildable(typeof(TrustedSigningAccountSku))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningCertificate))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningCertificateProfileData))]
     [ModelReaderWriterBuildable(typeof(TrustedSigningCertificateProfileResource))]

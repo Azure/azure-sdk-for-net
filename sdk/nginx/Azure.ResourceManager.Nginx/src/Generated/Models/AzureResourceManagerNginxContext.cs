@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Nginx
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AutoUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NginxAnalysisConfig))]
     [ModelReaderWriterBuildable(typeof(NginxAnalysisContent))]
@@ -51,10 +52,15 @@ namespace Azure.ResourceManager.Nginx
     [ModelReaderWriterBuildable(typeof(NginxDeploymentResource))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentScalingProperties))]
     [ModelReaderWriterBuildable(typeof(NginxDeploymentUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentUpdatePropertiesNginxAppProtect))]
+    [ModelReaderWriterBuildable(typeof(NginxDeploymentUserProfile))]
     [ModelReaderWriterBuildable(typeof(NginxDiagnosticItem))]
     [ModelReaderWriterBuildable(typeof(NginxFrontendIPConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NginxLogging))]
+    [ModelReaderWriterBuildable(typeof(NginxNetworkInterfaceConfiguration))]
     [ModelReaderWriterBuildable(typeof(NginxNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(NginxPrivateIPAddress))]
+    [ModelReaderWriterBuildable(typeof(NginxResourceSku))]
     [ModelReaderWriterBuildable(typeof(NginxScaleProfile))]
     [ModelReaderWriterBuildable(typeof(NginxScaleProfileCapacity))]
     [ModelReaderWriterBuildable(typeof(NginxStorageAccount))]

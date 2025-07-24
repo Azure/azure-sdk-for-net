@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(AppConfigurationStoreApiKey))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationStoreApiKeyListResult))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationStoreData))]
+    [ModelReaderWriterBuildable(typeof(AppConfigurationStoreEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationStoreListResult))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationStorePatch))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationStoreResource))]

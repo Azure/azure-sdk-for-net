@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Dynatrace
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorResource))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorResourceFilteringTag))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorResourceLogRules))]
+    [ModelReaderWriterBuildable(typeof(DynatraceMonitorResourceMetricRules))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorUserInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceMonitorVmInfo))]
     [ModelReaderWriterBuildable(typeof(DynatraceOneAgentEnabledAppServiceInfo))]

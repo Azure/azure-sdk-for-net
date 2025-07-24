@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.FluidRelay
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CmkEncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(CmkIdentity))]
+    [ModelReaderWriterBuildable(typeof(Models.EncryptionProperties))]
     [ModelReaderWriterBuildable(typeof(FluidRelayContainerData))]
     [ModelReaderWriterBuildable(typeof(FluidRelayContainerList))]
     [ModelReaderWriterBuildable(typeof(FluidRelayContainerResource))]

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ApplicationDeltaHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationHealthPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationMetricDescription))]
+    [ModelReaderWriterBuildable(typeof(ApplicationTypeVersionsCleanupPolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ApplicationUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ArmApplicationHealthPolicy))]
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(ClusterCertificateDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterClientCertificateCommonName))]
     [ModelReaderWriterBuildable(typeof(ClusterClientCertificateThumbprint))]
+    [ModelReaderWriterBuildable(typeof(ClusterCodeVersionsListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterCodeVersionsResult))]
     [ModelReaderWriterBuildable(typeof(ClusterEndpointRangeDescription))]
     [ModelReaderWriterBuildable(typeof(ClusterHealthPolicy))]
@@ -77,6 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric
     [ModelReaderWriterBuildable(typeof(UpgradableVersionPathResult))]
     [ModelReaderWriterBuildable(typeof(UpgradableVersionsDescription))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VmSize))]
     [ModelReaderWriterBuildable(typeof(VmSizesResult))]
     public partial class AzureResourceManagerServiceFabricContext : ModelReaderWriterContext
     {

@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     [ModelReaderWriterBuildable(typeof(HelmOperatorProperties))]
     [ModelReaderWriterBuildable(typeof(HelmReleaseProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesAzureBlob))]
+    [ModelReaderWriterBuildable(typeof(KubernetesAzureBlobManagedIdentity))]
+    [ModelReaderWriterBuildable(typeof(KubernetesAzureBlobManagedIdentityUpdateContent))]
     [ModelReaderWriterBuildable(typeof(KubernetesAzureBlobUpdateContent))]
     [ModelReaderWriterBuildable(typeof(KubernetesBucket))]
     [ModelReaderWriterBuildable(typeof(KubernetesBucketUpdateContent))]
@@ -47,6 +49,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     [ModelReaderWriterBuildable(typeof(KustomizationUpdateContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ScopeCluster))]
+    [ModelReaderWriterBuildable(typeof(ScopeNamespace))]
     [ModelReaderWriterBuildable(typeof(SourceControlConfigurationList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationContext : ModelReaderWriterContext

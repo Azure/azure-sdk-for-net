@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(LinkerResource))]
     [ModelReaderWriterBuildable(typeof(LinkerResourceData))]
     [ModelReaderWriterBuildable(typeof(LinkerResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(LinkerSecretStore))]
     [ModelReaderWriterBuildable(typeof(LinkerValidateOperationResult))]
     [ModelReaderWriterBuildable(typeof(LinkerValidationResultItemInfo))]
     [ModelReaderWriterBuildable(typeof(RawValueSecretInfo))]
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker
     [ModelReaderWriterBuildable(typeof(UnknownSecretInfoBase))]
     [ModelReaderWriterBuildable(typeof(UnknownTargetServiceBase))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityAuthInfo))]
+    [ModelReaderWriterBuildable(typeof(VnetSolution))]
     public partial class AzureResourceManagerServiceLinkerContext : ModelReaderWriterContext
     {
     }

@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(ApiKeyResourceEntity))]
     [ModelReaderWriterBuildable(typeof(ApiKeySpecEntity))]
     [ModelReaderWriterBuildable(typeof(ClusterByokEntity))]
+    [ModelReaderWriterBuildable(typeof(ClusterConfigEntity))]
     [ModelReaderWriterBuildable(typeof(ClusterEnvironmentEntity))]
     [ModelReaderWriterBuildable(typeof(ClusterNetworkEntity))]
     [ModelReaderWriterBuildable(typeof(ClusterSpecEntity))]
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(ConfluentRegionRecord))]
     [ModelReaderWriterBuildable(typeof(ConfluentUserDetail))]
     [ModelReaderWriterBuildable(typeof(GetEnvironmentsResponse))]
+    [ModelReaderWriterBuildable(typeof(LinkOrganization))]
     [ModelReaderWriterBuildable(typeof(ListClustersSuccessResponse))]
     [ModelReaderWriterBuildable(typeof(ListSchemaRegistryClustersResponse))]
     [ModelReaderWriterBuildable(typeof(MetadataEntity))]
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.Confluent
     [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterEnvironmentRegionEntity))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterRecord))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterSpecEntity))]
+    [ModelReaderWriterBuildable(typeof(SchemaRegistryClusterStatusEntity))]
     [ModelReaderWriterBuildable(typeof(SCMetadataEntity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConfluentContext : ModelReaderWriterContext

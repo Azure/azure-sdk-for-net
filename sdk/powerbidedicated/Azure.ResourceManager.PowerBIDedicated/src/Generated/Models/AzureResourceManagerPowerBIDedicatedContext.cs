@@ -23,11 +23,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
     [ModelReaderWriterBuildable(typeof(CheckCapacityNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(CheckCapacityNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacities))]
+    [ModelReaderWriterBuildable(typeof(DedicatedCapacityAdministrators))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityData))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityPatch))]
     [ModelReaderWriterBuildable(typeof(DedicatedCapacityResource))]
     [ModelReaderWriterBuildable(typeof(PowerBIDedicatedResourceData))]
     [ModelReaderWriterBuildable(typeof(SkuDetails))]
+    [ModelReaderWriterBuildable(typeof(SkuEnumerationForExistingResourceResult))]
+    [ModelReaderWriterBuildable(typeof(SkuEnumerationForNewResourceResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPowerBIDedicatedContext : ModelReaderWriterContext
     {

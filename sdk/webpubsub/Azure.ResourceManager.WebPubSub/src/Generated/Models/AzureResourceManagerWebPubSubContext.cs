@@ -18,12 +18,15 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(BillingInfoSku))]
     [ModelReaderWriterBuildable(typeof(LiveTraceCategory))]
     [ModelReaderWriterBuildable(typeof(LiveTraceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ManagedIdentitySettings))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointAcl))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
     [ModelReaderWriterBuildable(typeof(PublicNetworkAcls))]
     [ModelReaderWriterBuildable(typeof(ResourceLogCategory))]
+    [ModelReaderWriterBuildable(typeof(ResourceLogConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkProperties))]
     [ModelReaderWriterBuildable(typeof(ShareablePrivateLinkType))]
@@ -31,6 +34,7 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsage))]
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsageList))]
     [ModelReaderWriterBuildable(typeof(SignalRServiceUsageName))]
+    [ModelReaderWriterBuildable(typeof(SkuList))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpstreamAuthSettings))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
@@ -55,6 +59,7 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(WebPubSubSharedPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubSku))]
     [ModelReaderWriterBuildable(typeof(WebPubSubSkuCapacity))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubTlsSettings))]
     public partial class AzureResourceManagerWebPubSubContext : ModelReaderWriterContext
     {
     }

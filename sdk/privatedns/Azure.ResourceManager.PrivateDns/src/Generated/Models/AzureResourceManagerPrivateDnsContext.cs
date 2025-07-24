@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.PrivateDns
     /// </summary>
     [ModelReaderWriterBuildable(typeof(PrivateDnsAaaaRecordInfo))]
     [ModelReaderWriterBuildable(typeof(PrivateDnsARecordInfo))]
+    [ModelReaderWriterBuildable(typeof(PrivateDnsCnameRecordInfo))]
     [ModelReaderWriterBuildable(typeof(PrivateDnsMXRecordInfo))]
     [ModelReaderWriterBuildable(typeof(PrivateDnsPtrRecordInfo))]
     [ModelReaderWriterBuildable(typeof(PrivateDnsRecordListResult))]

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Search
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DataPlaneAadOrApiKeyAuthOption))]
     [ModelReaderWriterBuildable(typeof(ListQueryKeysResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationData))]
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SearchServiceResource))]
     [ModelReaderWriterBuildable(typeof(SearchServiceSkuOffering))]
     [ModelReaderWriterBuildable(typeof(SearchServiceSkuOfferingLimits))]
+    [ModelReaderWriterBuildable(typeof(SearchSku))]
     [ModelReaderWriterBuildable(typeof(ShareableSearchServicePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ShareableSearchServicePrivateLinkResourceType))]
     [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceListResult))]

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Purview
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AccountList))]
+    [ModelReaderWriterBuildable(typeof(CloudConnectors))]
     [ModelReaderWriterBuildable(typeof(CollectionAdminUpdateContent))]
     [ModelReaderWriterBuildable(typeof(DefaultPurviewAccountPayload))]
     [ModelReaderWriterBuildable(typeof(KafkaConfigurationList))]
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(PurviewUsageName))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UsageList))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerPurviewContext : ModelReaderWriterContext

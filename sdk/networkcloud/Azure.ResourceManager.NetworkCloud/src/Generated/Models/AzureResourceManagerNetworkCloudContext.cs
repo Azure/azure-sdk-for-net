@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdministrativeCredentials))]
     [ModelReaderWriterBuildable(typeof(AdministratorConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AdministratorConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(AgentPoolList))]
     [ModelReaderWriterBuildable(typeof(AgentPoolUpgradeSettings))]
     [ModelReaderWriterBuildable(typeof(AnalyticsOutputSettings))]
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(KubernetesLabel))]
     [ModelReaderWriterBuildable(typeof(L2NetworkAttachmentConfiguration))]
     [ModelReaderWriterBuildable(typeof(L2NetworkList))]
+    [ModelReaderWriterBuildable(typeof(L2ServiceLoadBalancerConfiguration))]
     [ModelReaderWriterBuildable(typeof(L3NetworkAttachmentConfiguration))]
     [ModelReaderWriterBuildable(typeof(L3NetworkList))]
     [ModelReaderWriterBuildable(typeof(LldpNeighbor))]
@@ -81,6 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentitySelector))]
     [ModelReaderWriterBuildable(typeof(NetworkAttachment))]
+    [ModelReaderWriterBuildable(typeof(NetworkCloudAadConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkCloudAgentConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkCloudAgentPoolData))]
     [ModelReaderWriterBuildable(typeof(NetworkCloudAgentPoolPatch))]
@@ -145,9 +148,11 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(NetworkCloudVolumeData))]
     [ModelReaderWriterBuildable(typeof(NetworkCloudVolumePatch))]
     [ModelReaderWriterBuildable(typeof(NetworkCloudVolumeResource))]
+    [ModelReaderWriterBuildable(typeof(NodePoolAdministratorConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(RackList))]
     [ModelReaderWriterBuildable(typeof(RackSkuList))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RuntimeProtectionConfiguration))]
     [ModelReaderWriterBuildable(typeof(RuntimeProtectionStatus))]
     [ModelReaderWriterBuildable(typeof(SecretArchiveReference))]
     [ModelReaderWriterBuildable(typeof(SecretArchiveSettings))]
@@ -168,6 +173,8 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(VirtualMachinePlacementHint))]
     [ModelReaderWriterBuildable(typeof(VirtualMachinePowerOffContent))]
     [ModelReaderWriterBuildable(typeof(VolumeList))]
+    [ModelReaderWriterBuildable(typeof(VulnerabilityScanningSettings))]
+    [ModelReaderWriterBuildable(typeof(VulnerabilityScanningSettingsPatch))]
     public partial class AzureResourceManagerNetworkCloudContext : ModelReaderWriterContext
     {
     }
