@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
@@ -38,13 +39,14 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 #endif
         Console.WriteLine("Create the Azure OpenAI chat client");
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Complete a chat");
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);
         #endregion
-        }
+    }
 
     [Test]
     [AsyncOnly]
@@ -70,7 +72,8 @@ public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 #endif
         Console.WriteLine("Create the Azure OpenAI chat client");
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
+        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        ChatClient chatClient = azureOpenAIClient.GetChatClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Complete a chat");
         ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");
