@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="lastUpdated"> The most recent time that Advisor checked the validity of the recommendation. </param>
         /// <param name="metadata"> The recommendation metadata. </param>
         /// <param name="recommendationTypeId"> The recommendation-type GUID. </param>
-        /// <param name="risk"> The potential risk of not implementing the recommendation. </param>
         /// <param name="shortDescription"> A summary of the recommendation. </param>
         /// <param name="suppressionIds"> The list of snoozed and dismissed rules for the recommendation. </param>
         /// <param name="extendedProperties"> Extended properties. </param>
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
         /// <returns> A new <see cref="Advisor.ResourceRecommendationBaseData"/> instance for mocking. </returns>
-        public static ResourceRecommendationBaseData ResourceRecommendationBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Category? category = null, Impact? impact = null, string impactedField = null, string impactedValue = null, DateTimeOffset? lastUpdated = null, IDictionary<string, BinaryData> metadata = null, string recommendationTypeId = null, Risk? risk = null, ShortDescription shortDescription = null, IEnumerable<Guid> suppressionIds = null, IDictionary<string, string> extendedProperties = null, ResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, IEnumerable<IDictionary<string, BinaryData>> actions = null, IDictionary<string, BinaryData> remediation = null, IDictionary<string, BinaryData> exposedMetadataProperties = null)
+        public static ResourceRecommendationBaseData ResourceRecommendationBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Category? category = null, Impact? impact = null, string impactedField = null, string impactedValue = null, DateTimeOffset? lastUpdated = null, IDictionary<string, BinaryData> metadata = null, string recommendationTypeId = null, ShortDescription shortDescription = null, IEnumerable<Guid> suppressionIds = null, IDictionary<string, string> extendedProperties = null, ResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, IEnumerable<IDictionary<string, BinaryData>> actions = null, IDictionary<string, BinaryData> remediation = null, IDictionary<string, BinaryData> exposedMetadataProperties = null)
         {
             metadata ??= new Dictionary<string, BinaryData>();
             suppressionIds ??= new List<Guid>();
@@ -123,7 +122,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 lastUpdated,
                 metadata,
                 recommendationTypeId,
-                risk,
                 shortDescription,
                 suppressionIds?.ToList(),
                 extendedProperties,
