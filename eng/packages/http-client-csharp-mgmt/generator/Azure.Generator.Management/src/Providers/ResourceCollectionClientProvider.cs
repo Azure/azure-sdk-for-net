@@ -272,7 +272,8 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, _create, convenienceMethod, isAsync));
+                var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync);
+                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, _create, convenienceMethod, isAsync, methodName));
             }
 
             return result;

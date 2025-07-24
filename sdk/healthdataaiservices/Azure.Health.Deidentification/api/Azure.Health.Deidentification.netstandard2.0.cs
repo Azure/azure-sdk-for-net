@@ -203,6 +203,7 @@ namespace Azure.Health.Deidentification
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.DeidentificationOperationType left, Azure.Health.Deidentification.DeidentificationOperationType right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.DeidentificationOperationType (string value) { throw null; }
+        public static implicit operator Azure.Health.Deidentification.DeidentificationOperationType? (string value) { throw null; }
         public static bool operator !=(Azure.Health.Deidentification.DeidentificationOperationType left, Azure.Health.Deidentification.DeidentificationOperationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -256,6 +257,7 @@ namespace Azure.Health.Deidentification
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.OperationStatus left, Azure.Health.Deidentification.OperationStatus right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.OperationStatus (string value) { throw null; }
+        public static implicit operator Azure.Health.Deidentification.OperationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.Health.Deidentification.OperationStatus left, Azure.Health.Deidentification.OperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -301,6 +303,7 @@ namespace Azure.Health.Deidentification
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.PhiCategory left, Azure.Health.Deidentification.PhiCategory right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.PhiCategory (string value) { throw null; }
+        public static implicit operator Azure.Health.Deidentification.PhiCategory? (string value) { throw null; }
         public static bool operator !=(Azure.Health.Deidentification.PhiCategory left, Azure.Health.Deidentification.PhiCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
