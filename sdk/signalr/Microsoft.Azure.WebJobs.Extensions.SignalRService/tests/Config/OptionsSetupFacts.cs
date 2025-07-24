@@ -91,7 +91,7 @@ namespace SignalRServiceExtension.Tests.Config
         }
 
         [Fact]
-        public void TestNullRetryOptions()
+        public void TestDefaultRetryOptions()
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             var options = new ServiceManagerOptions();
@@ -100,8 +100,9 @@ namespace SignalRServiceExtension.Tests.Config
             Assert.NotNull(options.RetryOptions);
         }
 
+        // We didn't enable retry by default previously, so we utilize a "Default" name for users to set a retry policy with default settings.
         [Fact]
-        public void TestDefaultRetryOptions()
+        public void TestRetryOptionsWithDefaultName()
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration[Constants.AzureSignalRRetry + ":Default"] = "";
