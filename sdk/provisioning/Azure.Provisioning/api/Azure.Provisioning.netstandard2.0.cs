@@ -608,6 +608,7 @@ namespace Azure.Provisioning.Expressions
         public BicepInterpolatedStringHandler(int literalLength, int formattedCount) { throw null; }
         public void AppendFormatted<T>(T t) { }
         public void AppendLiteral(string text) { }
+        public static implicit operator Azure.Provisioning.Expressions.BicepInterpolatedStringHandler (System.FormattableString formattable) { throw null; }
     }
     public partial class BicepProgram
     {
@@ -627,6 +628,7 @@ namespace Azure.Provisioning.Expressions
         public BicepStringBuilder() { }
         public Azure.Provisioning.Expressions.BicepStringBuilder Append(Azure.Provisioning.Expressions.BicepExpression expression) { throw null; }
         public Azure.Provisioning.Expressions.BicepStringBuilder Append(Azure.Provisioning.Expressions.BicepInterpolatedStringHandler handler) { throw null; }
+        public Azure.Provisioning.Expressions.BicepStringBuilder Append(System.FormattableString value) { throw null; }
         public Azure.Provisioning.Expressions.BicepStringBuilder Append(string text) { throw null; }
         public Azure.Provisioning.BicepValue<string> Build() { throw null; }
         public static implicit operator Azure.Provisioning.BicepValue<string> (Azure.Provisioning.Expressions.BicepStringBuilder value) { throw null; }
