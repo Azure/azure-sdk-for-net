@@ -118,7 +118,7 @@ jobs:
     retryCountOnTaskFailure: 3
     inputs:
       useGlobalJson: true
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+      workingDirectory: azure-sdk-tools
 
   - ${{ parameters.InstallLanguageSteps }}
 
