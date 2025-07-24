@@ -52,44 +52,6 @@ public partial struct AdditionalProperties
         s_falseBooleanArray = [(byte)ValueKind.BooleanFalse, .. "false"u8.ToArray()];
     }
 
-    // Custom equality comparer for byte arrays to enable content-based comparison
-    private sealed class ByteArrayEqualityComparer : IEqualityComparer<byte[]>
-    {
-        public static readonly ByteArrayEqualityComparer Instance = new();
-
-        public bool Equals(byte[]? x, byte[]? y)
-        {
-            if (ReferenceEquals(x, y))
-                return true;
-            if (x is null || y is null)
-                return false;
-            return x.AsSpan().SequenceEqual(y.AsSpan());
-        }
-
-        public int GetHashCode(byte[] obj)
-        {
-            if (obj is null)
-                return 0;
-
-            // Simple hash code implementation for byte arrays
-#if NET8_0_OR_GREATER
-            var hash = new HashCode();
-            hash.AddBytes(obj);
-            return hash.ToHashCode();
-#else
-            unchecked
-            {
-                int hash = 17;
-                for (int i = 0; i < obj.Length; i++)
-                {
-                    hash = hash * 31 + obj[i];
-                }
-                return hash;
-            }
-#endif
-        }
-    }
-
     // Helper methods to encode objects to byte arrays (similar to PropertyRecord format)
     private static byte[] EncodeValue(object value)
     {
