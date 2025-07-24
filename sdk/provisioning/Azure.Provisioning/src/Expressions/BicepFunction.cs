@@ -294,8 +294,7 @@ public static class BicepFunction
     /// Combines multiple string values <paramref name="values"/> and returns
     /// the concatenated string.  This represents the <c>concat</c> Bicep
     /// function.  To improve readability, prefer
-    /// <see cref="BicepFunction.Interpolate"/> instead of
-    /// <see cref="Concat"/>.
+    /// <see cref="Interpolate"/> instead of <see cref="Concat"/>.
     /// </summary>
     /// <param name="values">Strings in sequential order for concatenation.</param>
     /// <returns>A string or array of concatenated values.</returns>
@@ -318,28 +317,4 @@ public static class BicepFunction
     /// <returns>An interpolated string.</returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
-
-    /// <summary>
-    /// Convert a <see cref="FormattableString"/> with literal text, C# expressions,
-    /// and Bicep expressions into an interpolated Bicep string.
-    /// </summary>
-    /// <param name="formattableString"></param>
-    /// <returns></returns>
-    public static BicepValue<string> Interpolate(FormattableString formattableString)
-    {
-        // TODO -- maybe it makes more sense that we instantiate a bicep string builder here, by adding an overload to accept FormattableString.
-        var handler = new BicepInterpolatedStringHandler();
-        foreach (var (span, isLiteral) in StringExtensions.GetFormattableStringFormatParts(formattableString.Format.AsSpan()))
-        {
-            if (isLiteral)
-            {
-                handler.AppendLiteral(span.ToString());
-            }
-            else
-            {
-                handler.AppendFormatted(span);
-            }
-        }
-        return Interpolate(handler);
-    }
 }
