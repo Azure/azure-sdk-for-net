@@ -22,6 +22,29 @@ dotnet add package Azure.Provisioning.WebPubSub
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic WebPubSub resource
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.WebPubSub;
+
+Infrastructure infrastructure = new Infrastructure();
+
+// Create a WebPubSub resource
+// Note: Specific resource types and properties vary by service
+// Refer to the Azure.Provisioning.WebPubSub API documentation for detailed resource configuration
+
+infrastructure.Add(/* Add your WebPubSub resources here */);
+
+// Generate the Bicep template
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
+For detailed examples and resource-specific configurations, please refer to the test files in the `tests/` directory of this library, which demonstrate practical usage scenarios and configuration patterns.
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

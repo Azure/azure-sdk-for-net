@@ -22,6 +22,84 @@ dotnet add package Azure.Provisioning.EventHubs
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create an Event Hub namespace with Event Hub and consumer group
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.EventHubs;
+
+Infrastructure infrastructure = new Infrastructure();
+
+// Create an Event Hub namespace
+EventHubsNamespace eventHubNamespace = new EventHubsNamespace("eventHubNamespace")
+{
+    Sku = new EventHubsSku
+    {
+        Name = EventHubsSkuName.Standard,
+        Tier = EventHubsSkuTier.Standard,
+        Capacity = 1
+    }
+};
+infrastructure.Add(eventHubNamespace);
+
+// Create an Event Hub within the namespace
+EventHub eventHub = new EventHub("eventHub")
+{
+    Parent = eventHubNamespace,
+    Name = "orders"
+};
+infrastructure.Add(eventHub);
+
+// Create a consumer group for the Event Hub
+EventHubsConsumerGroup consumerGroup = new EventHubsConsumerGroup("consumerGroup")
+{
+    Parent = eventHub,
+    Name = "managers",
+    UserMetadata = "{\"department\":\"sales\"}"
+};
+infrastructure.Add(consumerGroup);
+
+// Generate the Bicep template
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
+### Create an Event Hub with retention and partitions
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.EventHubs;
+
+Infrastructure infrastructure = new Infrastructure();
+
+// Create namespace with premium tier for more features
+EventHubsNamespace eventHubNamespace = new EventHubsNamespace("eventHubNamespace")
+{
+    Sku = new EventHubsSku
+    {
+        Name = EventHubsSkuName.Premium,
+        Tier = EventHubsSkuTier.Premium,
+        Capacity = 1
+    }
+};
+infrastructure.Add(eventHubNamespace);
+
+// Create Event Hub with custom settings
+EventHub eventHub = new EventHub("eventHub")
+{
+    Parent = eventHubNamespace,
+    Name = "telemetry",
+    MessageRetentionInDays = 7,
+    PartitionCount = 4
+};
+infrastructure.Add(eventHub);
+
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

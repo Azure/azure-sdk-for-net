@@ -22,6 +22,83 @@ dotnet add package Azure.Provisioning.ServiceBus
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a Service Bus namespace with queue
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.ServiceBus;
+
+Infrastructure infrastructure = new Infrastructure();
+
+// Create a Service Bus namespace
+ServiceBusNamespace serviceBusNamespace = new ServiceBusNamespace("serviceBusNamespace")
+{
+    Sku = new ServiceBusSku { Name = ServiceBusSkuName.Standard }
+};
+infrastructure.Add(serviceBusNamespace);
+
+// Create a queue in the namespace
+ServiceBusQueue queue = new ServiceBusQueue("queue")
+{
+    Parent = serviceBusNamespace,
+    Name = "orders",
+    LockDuration = TimeSpan.FromMinutes(5),
+    MaxSizeInMegabytes = 1024,
+    RequiresDuplicateDetection = false,
+    RequiresSession = false,
+    MaxDeliveryCount = 10,
+    EnablePartitioning = false
+};
+infrastructure.Add(queue);
+
+// Generate the Bicep template
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
+### Create a Service Bus namespace with topic and subscription
+
+```csharp
+using Azure.Provisioning;
+using Azure.Provisioning.ServiceBus;
+
+Infrastructure infrastructure = new Infrastructure();
+
+// Create Service Bus namespace with premium tier
+ServiceBusNamespace serviceBusNamespace = new ServiceBusNamespace("serviceBusNamespace")
+{
+    Sku = new ServiceBusSku { Name = ServiceBusSkuName.Premium, Capacity = 1 }
+};
+infrastructure.Add(serviceBusNamespace);
+
+// Create a topic
+ServiceBusTopic topic = new ServiceBusTopic("topic")
+{
+    Parent = serviceBusNamespace,
+    Name = "notifications",
+    MaxSizeInMegabytes = 1024,
+    EnablePartitioning = true
+};
+infrastructure.Add(topic);
+
+// Create a subscription for the topic
+ServiceBusSubscription subscription = new ServiceBusSubscription("subscription")
+{
+    Parent = topic,
+    Name = "emailSubscription",
+    LockDuration = TimeSpan.FromMinutes(1),
+    MaxDeliveryCount = 10
+};
+infrastructure.Add(subscription);
+
+string bicep = infrastructure.Compile();
+Console.WriteLine(bicep);
+```
+
+For detailed examples and resource-specific configurations, please refer to the test files in the `tests/` directory of this library, which demonstrate practical usage scenarios and configuration patterns.
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
