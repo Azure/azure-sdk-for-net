@@ -18,7 +18,7 @@ First stable version of the client library. The client library now uses version 
   * `PendingUploadRequest` has been renamed `PendingUploadConfiguration`
   * `PendingUploadResponse` has been renamed `PendingUploadResult`
 * In `Datasets`, methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `configuration`
-* `GetAzureOpenAIChatClient` and `GetAzureOpenAIEmbeddingClient` methods have been renamed to `GetOpenAIChatClient` and `GetOpenAIEmbeddingClient` respectively. The functionality of them has not changed.
+* `GetAzureOpenAIChatClient` and `GetAzureOpenAIEmbeddingClient` methods have been removed and replaced with a single `GetOpenAIClient` method. This method returns an OpenAI client which has properties for accessing individual operation clients. More information is available in the `Inference` samples.
 
 ### Bugs Fixed
 
