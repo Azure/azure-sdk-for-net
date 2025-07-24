@@ -55,12 +55,11 @@ namespace Azure.Developer.Playwright.Utility
             return runId;
         }
 
-        internal string GetDefaultRunName()
+        internal string GetDefaultRunName(string runId)
         {
             var runNameFromEnvironmentVariable = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable);
             if (!string.IsNullOrEmpty(runNameFromEnvironmentVariable))
                 return runNameFromEnvironmentVariable!;
-            var runId = GetDefaultRunId(); // RunId as the default RunName
             _environment.SetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable, runId);
             return runId;
         }

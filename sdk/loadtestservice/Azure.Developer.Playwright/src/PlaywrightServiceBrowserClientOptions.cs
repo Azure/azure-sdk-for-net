@@ -57,17 +57,23 @@ namespace Azure.Developer.Playwright
         /// </summary>
         public string RunId
         {
-            get => _runId ?? _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable) ?? _clientUtility.GetDefaultRunId();
+            get
+            {
+                // If runId is not set, try to get it from the environment variable if not present in environment variable then set default value
+                if (string.IsNullOrEmpty(_runId))
+                {
+                    var envRunId = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable);
+                    _runId = !string.IsNullOrEmpty(envRunId) ? envRunId : _clientUtility.GetDefaultRunId();
+                }
+                return _runId!;
+            }
             set
             {
-                if (value != null && value.Length > 200)
+                if (!string.IsNullOrEmpty(value) && !Guid.TryParse(value, out _))
                 {
-                    throw new ArgumentException(Constants.s_playwright_service_runId_length_exceeded_error_message);
+                    throw new ArgumentException(Constants.s_playwright_service_runId_not_guid_error_message);
                 }
-                else
-                {
-                    _runId = value;
-                }
+                _runId = value;
                 // Set run id if not already set in the environment
                 if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable)))
                 {
@@ -83,12 +89,20 @@ namespace Azure.Developer.Playwright
         /// </summary>
         public string RunName
         {
-            get => _runName ?? _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable) ?? _clientUtility.GetDefaultRunName();
+            get
+            {
+                // If runName is not set, try to get it from the environment variable if not present in environment variable then set default value
+                if (string.IsNullOrEmpty(_runName))
+                {
+                    var envRunName = _environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable);
+                    _runName = !string.IsNullOrEmpty(envRunName) ? envRunName : _clientUtility.GetDefaultRunName(RunId);
+                }
+                return _runName!;
+            }
             set
             {
-                if (value != null && value.Length > 200)
+                if (!string.IsNullOrEmpty(value) && value.Length > 200)
                 {
-                    Console.WriteLine(Constants.s_playwright_service_runName_truncated_warning);
                     _runName = value.Substring(0, 200);
                 }
                 else
@@ -245,7 +259,7 @@ namespace Azure.Developer.Playwright
             // no-op
         }
 
-        internal PlaywrightServiceBrowserClientOptions(ServiceVersion serviceVersion, IEnvironment? environment = null, ClientUtilities? clientUtility = null)
+        internal PlaywrightServiceBrowserClientOptions(ServiceVersion serviceVersion, IEnvironment? environment = null, ILogger? logger = null, ClientUtilities? clientUtility = null)
         {
             _environment = environment ?? new EnvironmentHandler();
             _clientUtility = clientUtility ?? new ClientUtilities(_environment);

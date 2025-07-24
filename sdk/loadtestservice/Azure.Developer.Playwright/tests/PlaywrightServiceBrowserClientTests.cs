@@ -83,7 +83,6 @@ public class PlaywrightServiceBrowserClientTests
         {
             Assert.That(client._options.RunName.Length, Is.EqualTo(200));
             Assert.That(client._options.RunName, Is.EqualTo(longRunName.Substring(0, 200)));
-            Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable)?.Length, Is.EqualTo(200));
         });
     }
 
@@ -694,11 +693,11 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        var longRunId = new string('a', 201);
+        var notGuidRunId = new string('a', 201);
         var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
-        ArgumentException? exception = Assert.Throws<ArgumentException>(() => clientOptions.RunId = longRunId);
+        ArgumentException? exception = Assert.Throws<ArgumentException>(() => clientOptions.RunId = notGuidRunId);
         Assert.That(exception, Is.Not.Null);
-        Assert.That(exception!.Message, Is.EqualTo(Constants.s_playwright_service_runId_length_exceeded_error_message));
+        Assert.That(exception!.Message, Is.EqualTo(Constants.s_playwright_service_runId_not_guid_error_message));
     }
 
     [Test]
