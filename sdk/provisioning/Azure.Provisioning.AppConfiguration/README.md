@@ -22,6 +22,52 @@ dotnet add package Azure.Provisioning.AppConfiguration
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic AppConfiguration resource
+
+```C# Snippet:AppConfigurationStoreFF
+Infrastructure infra = new();
+
+ProvisioningParameter featureFlagKey =
+    new(nameof(featureFlagKey), typeof(string))
+    {
+        Value = "FeatureFlagSample",
+        Description = "Specifies the key of the feature flag."
+    };
+infra.Add(featureFlagKey);
+
+AppConfigurationStore configStore =
+    new(nameof(configStore), AppConfigurationStore.ResourceVersions.V2022_05_01)
+    {
+        SkuName = "Standard",
+    };
+infra.Add(configStore);
+
+ProvisioningVariable flag =
+    new(nameof(flag), typeof(object))
+    {
+        Value =
+            new BicepDictionary<object>
+            {
+                { "id", featureFlagKey },
+                { "description", "A simple feature flag." },
+                { "enabled", true }
+            }
+    };
+infra.Add(flag);
+
+AppConfigurationKeyValue featureFlag =
+    new(nameof(featureFlag), AppConfigurationKeyValue.ResourceVersions.V2022_05_01)
+    {
+        Parent = configStore,
+        Name = BicepFunction.Interpolate($".appconfig.featureflag~2F{featureFlagKey}"),
+        ContentType = "application/vnd.microsoft.appconfig.ff+json;charset=utf-8",
+        Value = BicepFunction.AsString(flag)
+    };
+infra.Add(featureFlag);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
