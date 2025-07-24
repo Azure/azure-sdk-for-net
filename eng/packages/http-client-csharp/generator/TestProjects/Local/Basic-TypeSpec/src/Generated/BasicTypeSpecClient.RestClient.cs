@@ -405,21 +405,5 @@ namespace BasicTypeSpec
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
-
-        internal HttpMessage CreatePostIfMatchNoneMatchRequest(MatchConditions matchConditions, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Post;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/if-match-none-match", false);
-            request.Uri = uri;
-            if (matchConditions != null)
-            {
-                request.Headers.Add(matchConditions);
-            }
-            return message;
-        }
     }
 }
