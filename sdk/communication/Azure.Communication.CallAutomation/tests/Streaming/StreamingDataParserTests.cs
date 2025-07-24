@@ -136,7 +136,11 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                         "}" +
                     "]," +
                     "\"participantRawID\":\"abc12345\"," +
-                    "\"resultStatus\":\"final\"" +
+                    "\"resultStatus\":\"final\"," +
+                    "\"sentimentAnalysisResult\":{" +
+                    "\"sentiment\":\"neutral\"" +
+                    "}," +
+                    "\"languageIdentified\":\"en-US\"" +
                 "}" +
             "}";
 
@@ -207,6 +211,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("abc12345", transcription.Participant.RawId);
             Console.WriteLine(transcription.ResultState.ToString());
             Assert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
+            Assert.AreEqual("neutral", transcription.SentimentAnalysisResult.TranscriptionSentiment);
+            Assert.AreEqual("en-US", transcription.LanguageIdentified);
         }
         #endregion
     }

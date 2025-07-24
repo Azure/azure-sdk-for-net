@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
@@ -14,12 +13,8 @@ namespace Azure.Communication.CallAutomation
     internal partial class WebSocketTranscriptionOptionsInternal : TranscriptionOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="WebSocketTranscriptionOptionsInternal"/>. </summary>
-        /// <param name="locale"> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        public WebSocketTranscriptionOptionsInternal(string locale) : base(locale)
+        public WebSocketTranscriptionOptionsInternal()
         {
-            Argument.AssertNotNull(locale, nameof(locale));
-
             Locales = new ChangeTrackingList<string>();
             TransportType = StreamingTransport.Websocket;
         }

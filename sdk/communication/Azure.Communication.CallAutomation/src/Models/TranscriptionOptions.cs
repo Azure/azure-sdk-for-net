@@ -17,36 +17,26 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
         /// <param name="streamingTransport"> Transport URL for live transcription. </param>
-        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptions(string locale, StreamingTransport streamingTransport = default)
+        public TranscriptionOptions(StreamingTransport streamingTransport = default)
         {
-            Argument.AssertNotNull(locale, nameof(locale));
             TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
-            Locale = locale;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
         /// <param name="streamingTransport"> Transport URL for live transcription. </param>
-        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
         /// <param name="locales"> Defines the list locale for the language identification e.g en-CA, en-AU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptions(string locale, IEnumerable<string> locales, StreamingTransport streamingTransport = default)
+        public TranscriptionOptions(IEnumerable<string> locales, StreamingTransport streamingTransport = default)
         {
-            Argument.AssertNotNull(locale, nameof(locale));
             TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
-            Locale = locale;
             Locales = locales.ToList<string>();
         }
-
-
 
         /// <summary> Transport URL for live transcription. </summary>
         public Uri TransportUri { get; set; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
         public StreamingTransport TranscriptionTransport { get; set; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>
-        public string Locale { get; }
+        public string Locale { get; set; }
         /// <summary> Determines if the transcription should be started immediately after call is answered or not. </summary>
         public bool? StartTranscription { get; set; }
         /// <summary> Endpoint where the custom model was deployed. </summary>

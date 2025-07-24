@@ -1549,6 +1549,74 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Get summary of the call.
+        /// </summary>
+        /// <param name="options">An optional object containing summarizeCallOptions options and configurations.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response SummarizeCall(SummarizeCallOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
+            scope.Start();
+            try
+            {
+                var request = options == default ? new SummarizeCallRequestInternal() : new SummarizeCallRequestInternal(
+                    operationContext: options.OperationContext,
+                    operationCallbackUri: options.OperationCallbackUri,
+                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                );
+
+                //return CallMediaRestClient.SummarizeCall(CallConnectionId, request, cancellationToken);
+
+                return CallMediaRestClient.SummarizeCall(CallConnectionId,
+                    options.OperationContext,
+                    options.OperationCallbackUri,
+                    options.SummarizationOptions.EnableEndCallSummary,
+                    options.SummarizationOptions.Locale,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get summary of the call.
+        /// </summary>
+        /// <param name="options">An optional object containing summarizeCallOptions options and configurations.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> SummarizeCallAsync(SummarizeCallOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
+            scope.Start();
+            try
+            {
+                var request = options == default? new SummarizeCallRequestInternal() : new SummarizeCallRequestInternal(
+                    operationContext: options.OperationContext,
+                    operationCallbackUri: options.OperationCallbackUri,
+                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                );
+
+                //return CallMediaRestClient.SummarizeCall(CallConnectionId, request, cancellationToken);
+
+                return await CallMediaRestClient.SummarizeCallAsync(CallConnectionId,
+                    options.OperationContext,
+                    options.OperationCallbackUri,
+                    options.SummarizationOptions.EnableEndCallSummary,
+                    options.SummarizationOptions.Locale,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Starts media streaming in the call.
         /// </summary>
         /// <param name="options">An optional object containing start media streaming options.</param>

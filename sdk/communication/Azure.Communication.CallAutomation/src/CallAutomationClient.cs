@@ -766,8 +766,9 @@ namespace Azure.Communication.CallAutomation
                 return default;
             }
 
-            WebSocketTranscriptionOptionsInternal webSocketTranscriptionOptionsInternal = new WebSocketTranscriptionOptionsInternal(configuration.Locale)
+            WebSocketTranscriptionOptionsInternal webSocketTranscriptionOptionsInternal = new WebSocketTranscriptionOptionsInternal()
             {
+                Locale = configuration.Locale,
                 SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
                 StartTranscription = configuration.StartTranscription,
                 TransportUrl = configuration.TransportUri?.AbsoluteUri,

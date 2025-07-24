@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -17,13 +15,8 @@ namespace Azure.Communication.CallAutomation
     internal abstract partial class TranscriptionOptionsInternal
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
-        /// <param name="locale"> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        protected TranscriptionOptionsInternal(string locale)
+        protected TranscriptionOptionsInternal()
         {
-            Argument.AssertNotNull(locale, nameof(locale));
-
-            Locale = locale;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
@@ -38,6 +31,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Defines the transport type used for streaming. Note that future values may be introduced that are not currently documented. </summary>
         internal StreamingTransport TransportType { get; set; }
         /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
-        public string Locale { get; }
+        public string Locale { get; set; }
     }
 }

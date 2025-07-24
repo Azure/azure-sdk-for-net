@@ -414,6 +414,8 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response> StopMediaStreamingAsync(Azure.Communication.CallAutomation.StopMediaStreamingOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopTranscription(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTranscriptionAsync(Azure.Communication.CallAutomation.StopTranscriptionOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SummarizeCall(Azure.Communication.CallAutomation.SummarizeCallOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SummarizeCallAsync(Azure.Communication.CallAutomation.SummarizeCallOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Unhold(Azure.Communication.CallAutomation.UnholdOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Unhold(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UnholdAsync(Azure.Communication.CallAutomation.UnholdOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1702,6 +1704,13 @@ namespace Azure.Communication.CallAutomation
         public SummarizationOptions(string locale) { }
         public bool? EnableEndCallSummary { get { throw null; } set { } }
     }
+    public partial class SummarizeCallOptions
+    {
+        public SummarizeCallOptions() { }
+        public string OperationCallbackUri { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.SummarizationOptions SummarizationOptions { get { throw null; } set { } }
+    }
     public partial class TeamsPhoneCallDetails
     {
         public TeamsPhoneCallDetails() { }
@@ -1752,9 +1761,11 @@ namespace Azure.Communication.CallAutomation
         public double Confidence { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
         public string Format { get { throw null; } }
+        public string LanguageIdentified { get { throw null; } set { } }
         public System.TimeSpan Offset { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionSentimentResult SentimentAnalysisResult { get { throw null; } set { } }
         public string Text { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } }
     }
@@ -1776,11 +1787,11 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(string locale, Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
-        public TranscriptionOptions(string locale, System.Collections.Generic.IEnumerable<string> locales, Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
+        public TranscriptionOptions(Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
+        public TranscriptionOptions(System.Collections.Generic.IEnumerable<string> locales, Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
         public bool? EnableSentimentAnalysis { get { throw null; } set { } }
-        public string Locale { get { throw null; } }
+        public string Locale { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Locales { get { throw null; } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
@@ -1806,6 +1817,12 @@ namespace Azure.Communication.CallAutomation
         public static implicit operator Azure.Communication.CallAutomation.TranscriptionResultState (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionResultState left, Azure.Communication.CallAutomation.TranscriptionResultState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class TranscriptionSentimentResult
+    {
+        public TranscriptionSentimentResult() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sentiment")]
+        public string TranscriptionSentiment { get { throw null; } set { } }
     }
     public partial class TranscriptionStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {

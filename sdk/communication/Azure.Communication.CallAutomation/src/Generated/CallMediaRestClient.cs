@@ -335,6 +335,96 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal HttpMessage CreateSummarizeCallRequest(string callConnectionId, string summarizeCallRequestOperationContext, string summarizeCallRequestOperationCallbackUri, bool? summarizeCallRequestSummarizationOptionsEnableEndCallSummary, string summarizeCallRequestSummarizationOptionsLocale)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":summarizeCall", false);
+            if (summarizeCallRequestOperationContext != null)
+            {
+                uri.AppendQuery("summarizeCallRequest.operationContext", summarizeCallRequestOperationContext, true);
+            }
+            if (summarizeCallRequestOperationCallbackUri != null)
+            {
+                uri.AppendQuery("summarizeCallRequest.operationCallbackUri", summarizeCallRequestOperationCallbackUri, true);
+            }
+            if (summarizeCallRequestSummarizationOptionsEnableEndCallSummary != null)
+            {
+                uri.AppendQuery("summarizeCallRequest.summarizationOptions.enableEndCallSummary", summarizeCallRequestSummarizationOptionsEnableEndCallSummary.Value, true);
+            }
+            if (summarizeCallRequestSummarizationOptionsLocale != null)
+            {
+                uri.AppendQuery("summarizeCallRequest.summarizationOptions.locale", summarizeCallRequestSummarizationOptionsLocale, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> API to get a summary of the call so far. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="summarizeCallRequestOperationContext"> The value to identify context of the operation. </param>
+        /// <param name="summarizeCallRequestOperationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        /// <param name="summarizeCallRequestSummarizationOptionsEnableEndCallSummary"> Indicating whether end call summary should be enabled. </param>
+        /// <param name="summarizeCallRequestSummarizationOptionsLocale"> Locale for summarization (e.g., en-US). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public async Task<Response> SummarizeCallAsync(string callConnectionId, string summarizeCallRequestOperationContext = null, string summarizeCallRequestOperationCallbackUri = null, bool? summarizeCallRequestSummarizationOptionsEnableEndCallSummary = null, string summarizeCallRequestSummarizationOptionsLocale = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+
+            using var message = CreateSummarizeCallRequest(callConnectionId, summarizeCallRequestOperationContext, summarizeCallRequestOperationCallbackUri, summarizeCallRequestSummarizationOptionsEnableEndCallSummary, summarizeCallRequestSummarizationOptionsLocale);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> API to get a summary of the call so far. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="summarizeCallRequestOperationContext"> The value to identify context of the operation. </param>
+        /// <param name="summarizeCallRequestOperationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        /// <param name="summarizeCallRequestSummarizationOptionsEnableEndCallSummary"> Indicating whether end call summary should be enabled. </param>
+        /// <param name="summarizeCallRequestSummarizationOptionsLocale"> Locale for summarization (e.g., en-US). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
+        public Response SummarizeCall(string callConnectionId, string summarizeCallRequestOperationContext = null, string summarizeCallRequestOperationCallbackUri = null, bool? summarizeCallRequestSummarizationOptionsEnableEndCallSummary = null, string summarizeCallRequestSummarizationOptionsLocale = null, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+
+            using var message = CreateSummarizeCallRequest(callConnectionId, summarizeCallRequestOperationContext, summarizeCallRequestOperationCallbackUri, summarizeCallRequestSummarizationOptionsEnableEndCallSummary, summarizeCallRequestSummarizationOptionsLocale);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateCancelAllMediaOperationsRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();

@@ -87,7 +87,9 @@ namespace Azure.Communication.CallAutomation
                         transcriptionDataInternal.Duration,
                         transcriptionDataInternal.Words,
                         transcriptionDataInternal.ParticipantRawID,
-                        transcriptionDataInternal.ResultState
+                        transcriptionDataInternal.ResultState,
+                        transcriptionDataInternal.SentimentAnalysisResult,
+                        transcriptionDataInternal.LanguageIdentified
                         );
 
                 #endregion
