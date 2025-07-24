@@ -8187,7 +8187,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.TdeCertificate TdeCertificate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string privateBlob = null, string certPassword = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.TopQueries TopQueries(int? numberOfQueries = default(int?), string aggregationFunction = null, string observationMetric = null, Azure.ResourceManager.Sql.Models.QueryTimeGrainType? intervalType = default(Azure.ResourceManager.Sql.Models.QueryTimeGrainType?), string startTime = null, string endTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.QueryStatisticsProperties> queries = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationParameters UpsertManagedServerOperationParameters(string family = null, string tier = null, int? vCores = default(int?), int? storageSizeInGB = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep UpsertManagedServerOperationStep(System.DateTimeOffset? stepStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? stepEndOn = default(System.DateTimeOffset?), string timeElapsed = null, int? order = default(int?), string name = null, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus? status = default(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus?)) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep UpsertManagedServerOperationStep(System.DateTimeOffset? stepStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? stepEndOn = default(System.DateTimeOffset?), string timeElapsed = null, int? order = default(int?), string name = null, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus? status = default(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus?)) { throw null; }
         public static Azure.ResourceManager.Sql.VirtualClusterData VirtualClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier subnetId = null, string version = null, System.Collections.Generic.IEnumerable<string> childResources = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.VirtualClusterPatch VirtualClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.ResourceIdentifier subnetId = null, string version = null, System.Collections.Generic.IEnumerable<string> childResources = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.VulnerabilityAssessmentScanError VulnerabilityAssessmentScanError(string code = null, string message = null) { throw null; }
@@ -10683,6 +10683,8 @@ namespace Azure.ResourceManager.Sql.Models
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future release.")]
+        public Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability SupportedMemoryLimitsMB { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability SupportedMemorySizesInGB { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.MaxLimitRangeCapability SupportedStorageIOps { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.MaxSizeRangeCapability> SupportedStorageSizes { get { throw null; } }
@@ -13932,7 +13934,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal UpsertManagedServerOperationStep() { }
         public string Name { get { throw null; } }
         public int? Order { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus? Status { get { throw null; } }
         public System.DateTimeOffset? StepEndOn { get { throw null; } }
         public System.DateTimeOffset? StepStartOn { get { throw null; } }
         public string TimeElapsed { get { throw null; } }
@@ -13944,25 +13946,25 @@ namespace Azure.ResourceManager.Sql.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStep>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UpsertManagedServerOperationStepWithEstimatesAndDurationStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus>
+    public readonly partial struct UpsertManagedServerOperationStepStatus : System.IEquatable<Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public UpsertManagedServerOperationStepWithEstimatesAndDurationStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus NotStarted { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus SlowedDown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus other) { throw null; }
+        public UpsertManagedServerOperationStepStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus SlowedDown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus left, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus left, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepWithEstimatesAndDurationStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus left, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus left, Azure.ResourceManager.Sql.Models.UpsertManagedServerOperationStepStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class VirtualClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.VirtualClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.VirtualClusterPatch>
