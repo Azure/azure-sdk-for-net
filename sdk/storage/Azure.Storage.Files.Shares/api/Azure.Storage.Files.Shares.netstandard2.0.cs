@@ -1,9 +1,5 @@
 namespace Azure.Storage.Files.Shares
 {
-    public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureStorageFilesSharesContext() { }
-    }
     public partial class ShareClient
     {
         protected ShareClient() { }
