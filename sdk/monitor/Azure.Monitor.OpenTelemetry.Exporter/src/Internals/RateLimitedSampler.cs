@@ -39,6 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (samplingPercentage == 0)
             {
                 // optimization, no need to calculate sample score in this case
+                Console.WriteLine("Sampling percentage is 0, returning RecordOnlySamplingResult.");
                 return RecordOnlySamplingResult;
             }
             if (samplingPercentage == 100)
@@ -47,9 +48,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var attributes = new List<KeyValuePair<string, object>>();
                 // assuming that ingestion sampling applies at 100, so setting it to 99.99 so ingestion sampling does not apply
                 attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", 99.99));
-                string tracestate = "microsoft.sample_rate=99.99";
+                //string tracestate = "microsoft.sample_rate=99.99";
+                Console.WriteLine("Sampling percentage is 100, returning RecordAndSample with sample rate 99.99.");
+                //Activity.Current?.SetTag("microsoft.sample_rate", 99.99);
                 return new SamplingResult(SamplingDecision.RecordAndSample,
-                    attributes, tracestate);
+                    attributes/*, tracestate*/);
             }
 
             // the sampling score is between 0 and 1, for correct comparison with samplingPercentage, we multiply by 100
@@ -58,11 +61,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 var attributes = new List<KeyValuePair<string, object>>();
                 attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", samplingPercentage));
-                string tracestate = "microsoft.sample_rate=" + samplingPercentage.ToString("F2");
-                return new SamplingResult(SamplingDecision.RecordAndSample, attributes, tracestate);
+                //Activity.Current?.SetTag("microsoft.sample_rate", samplingPercentage);
+                //string tracestate = "microsoft.sample_rate=" + samplingPercentage.ToString("F2");
+                Console.WriteLine($"Sampled with score {sampleScore} and sampling percentage {samplingPercentage}.");
+                return new SamplingResult(SamplingDecision.RecordAndSample, attributes/*, tracestate*/);
             }
             else
             {
+                Console.WriteLine($"Not sampled with score {sampleScore} and sampling percentage {samplingPercentage}.");
                 return RecordOnlySamplingResult;
             }
         }
@@ -76,31 +82,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // propagating item count locally
             if (!IsValid(parentActivityContext) || parentActivityContext.IsRemote)
             {
+                Console.WriteLine($"Parent Activity Context is invalid or remote. Parent Activity Context Trace/Span Ids: {parentActivityContext.TraceId}, {parentActivityContext.SpanId}");
                 return null;
             }
 
             bool isSampled = (parentActivityContext.TraceFlags & ActivityTraceFlags.Recorded) != 0;
             if (!isSampled)
             {
-                // record if parent is recorded but not sampled
+                // record only if parent is not sampled
+                Console.WriteLine($"Parent Activity Context is not sampled. Parent Activity Context TraceFlag: {parentActivityContext.TraceFlags}");
+                Console.WriteLine($"Activity.Current SpanId: {Activity.Current?.SpanId} and traceflags: {Activity.Current?.ActivityTraceFlags}");
                 return RecordOnlySamplingResult;
             }
 
             // fetch the sampling rate from the parent span attributes
-            //var parentAttributes = Activity.Current?.Parent?.Tags; // this seems to not work, it looks at the right span but attributes are not set/propogated
-            //string? parentSampleRate = parentAttributes?.FirstOrDefault(kv => kv.Key == "microsoft.sample_rate").Value;
+            Console.WriteLine($"Activity.Current TraceId: {Activity.Current?.TraceId}, SpanId: {Activity.Current?.SpanId}");
+            var parentAttributes = Activity.Current?.Tags;
+            string? parentSampleRate = parentAttributes?.FirstOrDefault(kv => kv.Key == "microsoft.sample_rate").Value;
 
-            double? parentSampleRate = parseSampleRateFromTraceState(parentActivityContext.TraceState ?? string.Empty);
+            //double? parentSampleRate = parseSampleRateFromTraceState(parentActivityContext.TraceState ?? string.Empty);
             // this is a span that has a local parent span that is sampled. Sample it in and include the sample rate from the parent.
             if (parentSampleRate != null)
             {
+                Console.WriteLine($"Parent Sample Rate: {parentSampleRate}");
                 var attributes = new List<KeyValuePair<string, object>>();
                 attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", parentSampleRate));
-                return new SamplingResult(SamplingDecision.RecordAndSample, attributes, parentActivityContext.TraceState);
+                return new SamplingResult(SamplingDecision.RecordAndSample, attributes/*, parentActivityContext.TraceState*/);
             }
 
             // if we reach here, it means the parent span is sampled but does not have a sample rate set. The child should be sampled, we just
             // won't be able to propagate the sample rate.
+            Console.WriteLine("Parent Activity Context is sampled but does not have a sample rate set.");
             return new SamplingResult(SamplingDecision.RecordAndSample);
         }
 
