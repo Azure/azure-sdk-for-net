@@ -22,6 +22,31 @@ dotnet add package Azure.Provisioning.Communication --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic Communication Service
+
+```C# Snippet:CommunicationBasic
+Infrastructure infra = new();
+
+ProvisioningParameter location =
+    new(nameof(location), typeof(string))
+    {
+        Value = "global"
+    };
+infra.Add(location);
+
+CommunicationService comm =
+    new(nameof(comm), "2023-03-31")
+    {
+        Location = location,
+        DataLocation = "unitedstates"
+    };
+infra.Add(comm);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

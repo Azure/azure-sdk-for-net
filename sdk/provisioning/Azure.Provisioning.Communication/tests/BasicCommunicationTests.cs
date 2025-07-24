@@ -20,6 +20,7 @@ public class BasicCommunicationTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:CommunicationBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter location =
@@ -38,6 +39,7 @@ public class BasicCommunicationTests(bool async)
                 infra.Add(comm);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

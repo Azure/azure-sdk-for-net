@@ -22,6 +22,51 @@ dotnet add package Azure.Provisioning.EventHubs
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create an Event Hub with Consumer Group
+
+```C# Snippet:EventHubsBasic
+Infrastructure infra = new();
+
+ProvisioningParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
+infra.Add(hubName);
+
+ProvisioningParameter groupName = new(nameof(groupName), typeof(string)) { Value = "managers" };
+infra.Add(groupName);
+
+EventHubsNamespace ns =
+    new(nameof(ns))
+    {
+        Sku = new EventHubsSku
+        {
+            Name = EventHubsSkuName.Standard,
+            Tier = EventHubsSkuTier.Standard,
+            Capacity = 1
+        }
+    };
+infra.Add(ns);
+
+EventHub hub =
+    new(nameof(hub))
+    {
+        Parent = ns,
+        Name = hubName
+    };
+infra.Add(hub);
+
+EventHubsConsumerGroup group =
+    new(nameof(group))
+    {
+        Parent = hub,
+        Name = groupName,
+        UserMetadata = BinaryData.FromObjectAsJson(new { foo = 1, bar = "hello" }).ToString()
+    };
+infra.Add(group);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

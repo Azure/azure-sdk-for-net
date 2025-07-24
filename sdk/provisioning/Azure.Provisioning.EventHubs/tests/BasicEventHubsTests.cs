@@ -21,6 +21,7 @@ public class BasicEventHubsTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:EventHubsBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter hubName = new(nameof(hubName), typeof(string)) { Value = "orders" };
@@ -59,6 +60,7 @@ public class BasicEventHubsTests(bool async)
                 infra.Add(group);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """
