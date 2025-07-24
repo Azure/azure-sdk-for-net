@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, BinaryData> Details
         {
-            get => new ReadOnlyDictionary<string, BinaryData>(ActionDetails.ToArray().ToDictionary(kvp => kvp.Key, kvp => BinaryData.FromString(kvp.Value)));
+            get => ConvertActionDetailsToBinaryData();
         }
 
         /// <summary> Gets additional details specific to this recommended action. </summary>
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Sql
                     kvp => kvp.Value.ToString() ?? string.Empty
                 );
             }
+        }
+
+        private IReadOnlyDictionary<string, BinaryData> ConvertActionDetailsToBinaryData()
+        {
+            var dictionary = ActionDetails
+                .ToArray()
+                .ToDictionary(kvp => kvp.Key, kvp => BinaryData.FromString(kvp.Value));
+            return new ReadOnlyDictionary<string, BinaryData>(dictionary);
         }
     }
 }
