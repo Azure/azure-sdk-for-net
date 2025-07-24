@@ -22,6 +22,31 @@ dotnet add package Azure.Provisioning.Redis
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic Redis cache
+
+```C# Snippet:RedisBasic
+Infrastructure infra = new();
+
+RedisResource cache =
+    new(nameof(cache), "2020-06-01")
+    {
+        EnableNonSslPort = false,
+        MinimumTlsVersion = RedisTlsVersion.Tls1_2,
+        Sku =
+            new RedisSku
+            {
+                Name = RedisSkuName.Standard,
+                Family = RedisSkuFamily.BasicOrStandard,
+                Capacity = 1
+            },
+    };
+infra.Add(cache);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

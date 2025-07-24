@@ -20,6 +20,7 @@ public class BasicSearchTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:SearchBasic
                 Infrastructure infra = new();
 
                 SearchService search =
@@ -33,6 +34,7 @@ public class BasicSearchTests(bool async)
                 infra.Add(search);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

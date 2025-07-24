@@ -22,6 +22,66 @@ dotnet add package Azure.Provisioning.WebPubSub
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic Web PubSub service
+
+```C# Snippet:WebPubSubBasic
+Infrastructure infra = new();
+
+WebPubSubService webpubsub =
+    new(nameof(webpubsub), "2021-10-01")
+    {
+        Sku =
+            new BillingInfoSku
+            {
+                Name = "Free_F1",
+                Tier = WebPubSubSkuTier.Free,
+                Capacity = 1
+            },
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.None },
+        IsAadAuthDisabled = false,
+        IsLocalAuthDisabled = false,
+        LiveTraceConfiguration =
+            new LiveTraceConfiguration
+            {
+                IsEnabled = "false",
+                Categories =
+                {
+                    new LiveTraceCategory { Name = "ConnectivityLogs", IsEnabled = "false" },
+                    new LiveTraceCategory { Name = "MessagingLogs", IsEnabled = "false" },
+                }
+            },
+        NetworkAcls =
+            new WebPubSubNetworkAcls
+            {
+                DefaultAction = AclAction.Deny,
+                PublicNetwork =
+                    new PublicNetworkAcls
+                    {
+                        Allow =
+                        {
+                            WebPubSubRequestType.ServerConnection,
+                            WebPubSubRequestType.ClientConnection,
+                            WebPubSubRequestType.RestApi,
+                            WebPubSubRequestType.Trace
+                        }
+                    }
+            },
+        PublicNetworkAccess = "Enabled",
+        ResourceLogCategories =
+        {
+            new ResourceLogCategory { Enabled = "true", Name = "ConnectivityLogs" },
+            new ResourceLogCategory { Enabled = "true", Name = "MessagingLogs" },
+        },
+        IsClientCertEnabled = false
+    };
+
+infra.Add(webpubsub);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

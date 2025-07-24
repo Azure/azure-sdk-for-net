@@ -21,6 +21,7 @@ public class BasicCosmosDBTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:CosmosDBBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter dbName = new(nameof(dbName), typeof(string)) { Value = "orders" };
@@ -80,6 +81,7 @@ public class BasicCosmosDBTests(bool async)
                 infra.Add(new ProvisioningOutput("containerId", typeof(string)) { Value = container.Id });
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

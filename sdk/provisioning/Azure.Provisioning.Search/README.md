@@ -22,6 +22,26 @@ dotnet add package Azure.Provisioning.Search
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic Search Service
+
+```C# Snippet:SearchBasic
+Infrastructure infra = new();
+
+SearchService search =
+    new(nameof(search))
+    {
+        SearchSkuName = SearchServiceSkuName.Standard,
+        ReplicaCount = 1,
+        PartitionCount = 1,
+        HostingMode = SearchServiceHostingMode.Default,
+    };
+infra.Add(search);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

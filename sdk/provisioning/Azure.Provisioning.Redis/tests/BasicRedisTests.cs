@@ -18,6 +18,7 @@ public class BasicRedisTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:RedisBasic
                 Infrastructure infra = new();
 
                 RedisResource cache =
@@ -36,6 +37,7 @@ public class BasicRedisTests(bool async)
                 infra.Add(cache);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

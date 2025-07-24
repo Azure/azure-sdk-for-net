@@ -22,6 +22,34 @@ dotnet add package Azure.Provisioning.CognitiveServices
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic Cognitive Services account
+
+```C# Snippet:CognitiveServicesBasic
+Infrastructure infra = new();
+
+CognitiveServicesAccount account =
+    new(nameof(account))
+    {
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        Kind = "TextTranslation",
+        Sku = new CognitiveServicesSku { Name = "S1" },
+        Properties = new CognitiveServicesAccountProperties
+        {
+            PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Disabled,
+            NetworkAcls = new CognitiveServicesNetworkRuleSet
+            {
+                DefaultAction = CognitiveServicesNetworkRuleAction.Deny
+            },
+            DisableLocalAuth = true
+        }
+    };
+infra.Add(account);
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
