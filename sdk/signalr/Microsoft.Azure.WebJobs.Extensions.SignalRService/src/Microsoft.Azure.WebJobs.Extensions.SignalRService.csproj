@@ -24,5 +24,9 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
+
+    <!--Hoisted version to 8.x, avoid incompatibility between Microsoft.AspNetCore.Http.Connections 1.2.0 and Microsoft.Azure.WebJobs 3.0.41.
+       Don't remove this until issue https://github.com/Azure/azure-webjobs-sdk/issues/3138 is resolved.-->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
 </Project>
