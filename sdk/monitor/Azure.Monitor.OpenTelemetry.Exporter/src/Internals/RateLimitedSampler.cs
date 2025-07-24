@@ -109,7 +109,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", parentSampleRate));
                 return new SamplingResult(SamplingDecision.RecordAndSample, attributes/*, parentActivityContext.TraceState*/);
             }
-
             // if we reach here, it means the parent span is sampled but does not have a sample rate set. The child should be sampled, we just
             // won't be able to propagate the sample rate.
             Console.WriteLine("Parent Activity Context is sampled but does not have a sample rate set.");
