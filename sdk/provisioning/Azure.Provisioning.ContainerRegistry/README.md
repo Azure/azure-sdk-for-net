@@ -1,4 +1,4 @@
-# Azure.Provisioning.ContainerRegistry client library for .NET
+# Azure Provisioning ContainerRegistry client library for .NET
 
 Azure.Provisioning.ContainerRegistry simplifies declarative resource provisioning in .NET.
 

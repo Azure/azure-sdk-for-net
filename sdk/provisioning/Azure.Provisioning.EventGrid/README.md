@@ -1,4 +1,4 @@
-# Azure.Provisioning.EventGrid client library for .NET
+# Azure Provisioning EventGrid client library for .NET
 
 Azure.Provisioning.EventGrid simplifies declarative resource provisioning in .NET.
 

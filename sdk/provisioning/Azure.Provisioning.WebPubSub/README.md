@@ -1,4 +1,4 @@
-# Azure.Provisioning.WebPubSub client library for .NET
+# Azure Provisioning WebPubSub client library for .NET
 
 Azure.Provisioning.WebPubSub simplifies declarative resource provisioning in .NET.
 

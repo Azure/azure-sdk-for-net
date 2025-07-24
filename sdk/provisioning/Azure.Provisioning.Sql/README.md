@@ -1,4 +1,4 @@
-# Azure.Provisioning.Sql client library for .NET
+# Azure Provisioning Sql client library for .NET
 
 Azure.Provisioning.Sql simplifies declarative resource provisioning in .NET.
 

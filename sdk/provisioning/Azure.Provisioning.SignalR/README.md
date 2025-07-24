@@ -1,4 +1,4 @@
-# Azure.Provisioning.SignalR client library for .NET
+# Azure Provisioning SignalR client library for .NET
 
 Azure.Provisioning.SignalR simplifies declarative resource provisioning in .NET.
 

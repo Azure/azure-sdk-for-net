@@ -1,4 +1,4 @@
-# Azure.Provisioning.CosmosDB client library for .NET
+# Azure Provisioning CosmosDB client library for .NET
 
 Azure.Provisioning.CosmosDB simplifies declarative resource provisioning in .NET.
 

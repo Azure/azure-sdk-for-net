@@ -1,4 +1,4 @@
-# Azure.Provisioning.Communication client library for .NET
+# Azure Provisioning Communication client library for .NET
 
 Azure.Provisioning.Communication simplifies declarative resource provisioning in .NET.
 
