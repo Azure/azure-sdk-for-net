@@ -22,6 +22,93 @@ dotnet add package Azure.Provisioning.KeyVault
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a basic Key Vault with secret
+
+```C# Snippet:KeyVaultBasic
+Infrastructure infra = new();
+
+ProvisioningParameter skuName =
+    new(nameof(skuName), typeof(string))
+    {
+        Value = KeyVaultSkuName.Standard,
+        Description = "Vault type"
+    };
+infra.Add(skuName);
+
+ProvisioningParameter secretValue =
+    new(nameof(secretValue), typeof(string))
+    {
+        Description = "Specifies the value of the secret that you want to create.",
+        IsSecure = true
+    };
+infra.Add(secretValue);
+
+ProvisioningParameter objectId =
+    new(nameof(objectId), typeof(string))
+    {
+        Description = "Specifies the object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault."
+    };
+infra.Add(objectId);
+
+ProvisioningVariable tenantId =
+    new(nameof(tenantId), typeof(string))
+    {
+        Value = BicepFunction.GetSubscription().TenantId
+    };
+infra.Add(tenantId);
+
+KeyVaultService kv =
+    new(nameof(kv))
+    {
+        Properties =
+            new KeyVaultProperties
+            {
+                Sku = new KeyVaultSku { Name = skuName, Family = KeyVaultSkuFamily.A, },
+                TenantId = tenantId,
+                EnableSoftDelete = true,
+                SoftDeleteRetentionInDays = 90,
+                AccessPolicies =
+                {
+                    new KeyVaultAccessPolicy
+                    {
+                        ObjectId = objectId,
+                        TenantId = tenantId,
+                        Permissions =
+                            new IdentityAccessPermissions
+                            {
+                                Keys = { IdentityAccessKeyPermission.List },
+                                Secrets = { IdentityAccessSecretPermission.List }
+                            }
+                    }
+                },
+                NetworkRuleSet =
+                    new KeyVaultNetworkRuleSet
+                    {
+                        DefaultAction = KeyVaultNetworkRuleAction.Allow,
+                        Bypass = KeyVaultNetworkRuleBypassOption.AzureServices
+                    }
+            }
+    };
+infra.Add(kv);
+
+KeyVaultSecret secret =
+    new(nameof(secret))
+    {
+        Parent = kv,
+        Name = "myDarkNecessities",
+        Properties = new SecretProperties { Value = secretValue }
+    };
+infra.Add(secret);
+
+infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = kv.Name });
+infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = kv.Id });
+infra.Add(new ProvisioningOutput("vaultUri", typeof(string)) { Value = kv.Properties.VaultUri });
+
+return infra;
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

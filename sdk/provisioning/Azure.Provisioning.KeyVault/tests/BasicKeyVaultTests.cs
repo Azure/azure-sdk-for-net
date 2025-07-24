@@ -20,6 +20,7 @@ public class BasicKeyVaultTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:KeyVaultBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter skuName =
@@ -100,6 +101,7 @@ public class BasicKeyVaultTests(bool async)
                 infra.Add(new ProvisioningOutput("vaultUri", typeof(string)) { Value = kv.Properties.VaultUri });
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

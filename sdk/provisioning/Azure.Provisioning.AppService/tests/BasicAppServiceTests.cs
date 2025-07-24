@@ -24,6 +24,7 @@ public class BasicAppServiceTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:AppServiceBasic
                 Infrastructure infra = new();
 
                 StorageAccount storage =
@@ -120,6 +121,7 @@ public class BasicAppServiceTests(bool async)
                 infra.Add(functionApp);
 
                 return infra;
+                #endregion
             })
         .Compare(
             """

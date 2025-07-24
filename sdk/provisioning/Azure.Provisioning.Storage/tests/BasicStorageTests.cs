@@ -20,13 +20,16 @@ public class BasicStorageTests(bool async)
     {
         await using Trycep test = CreateBicepTest();
         await test.Define(
+            #region Snippet:StorageAccountBasic
             new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)
             {
                 Kind = StorageKind.StorageV2,
                 Sku = { Name = StorageSkuName.StandardLrs },
                 IsHnsEnabled = true,
                 AllowBlobPublicAccess = false
-            })
+            }
+            #endregion
+            )
         .Compare(
             """
             @description('The location for the resource(s) to be deployed.')
