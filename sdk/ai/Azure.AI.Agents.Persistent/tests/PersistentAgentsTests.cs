@@ -9,11 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Agents.Persistent.Custom.Streaming;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests
