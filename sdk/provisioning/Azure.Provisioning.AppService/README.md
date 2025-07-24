@@ -1,4 +1,4 @@
-# Azure.Provisioning.AppService client library for .NET
+# Azure Provisioning AppService client library for .NET
 
 Azure.Provisioning.AppService simplifies declarative resource provisioning in .NET.
 

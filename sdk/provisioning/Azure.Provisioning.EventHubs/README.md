@@ -1,4 +1,4 @@
-# Azure.Provisioning.EventHubs client library for .NET
+# Azure Provisioning EventHubs client library for .NET
 
 Azure.Provisioning.EventHubs simplifies declarative resource provisioning in .NET.
 
