@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Storage Account
+### Create a Basic Storage Account
+
+This example demonstrates how to create a storage account with recommended security settings and hierarchical namespace enabled for Azure Data Lake Storage Gen2.
 
 ```C# Snippet:StorageAccountBasic
 new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)

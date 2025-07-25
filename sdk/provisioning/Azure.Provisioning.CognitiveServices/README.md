@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Cognitive Services account
+### Create a Basic Cognitive Services Account
+
+This example demonstrates how to create a Cognitive Services account for AI and machine learning capabilities, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cognitiveservices/cognitive-services-translate/main.bicep).
 
 ```C# Snippet:CognitiveServicesBasic
 Infrastructure infra = new();

@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a Service Bus queue
+### Create a Service Bus Queue
+
+This example demonstrates how to create a Service Bus namespace with a queue for reliable messaging scenarios.
 
 ```C# Snippet:ServiceBusBasic
 Infrastructure infra = new();

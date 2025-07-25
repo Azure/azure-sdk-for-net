@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Communication Service
+### Create a Basic Communication Service
+
+This example demonstrates how to create an Azure Communication Services resource for adding communication capabilities to applications.
 
 ```C# Snippet:CommunicationBasic
 Infrastructure infra = new();

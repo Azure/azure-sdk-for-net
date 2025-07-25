@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Key Vault with secret
+### Create a Basic Key Vault With Secret
+
+This example demonstrates how to create a Key Vault and store a secret, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.keyvault/key-vault-create/main.bicep).
 
 ```C# Snippet:KeyVaultBasic
 Infrastructure infra = new();

@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Cosmos DB account
+### Create a Basic Cosmos DB Account
+
+This example demonstrates how to create a Cosmos DB account with a SQL database and container configured for optimal performance.
 
 ```C# Snippet:CosmosDBBasic
 Infrastructure infra = new();

@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create an Event Grid topic
+### Create an Event Grid Topic
+
+This example demonstrates how to create an Event Grid topic for event-driven architectures, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventgrid/event-grid-subscription-and-storage/main.bicep).
 
 ```C# Snippet:EventGridBasic
 Infrastructure infra = new();

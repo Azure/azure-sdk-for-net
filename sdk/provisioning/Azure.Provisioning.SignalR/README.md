@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a SignalR service
+### Create a SignalR Service
+
+This example demonstrates how to create an Azure SignalR Service for real-time web functionality.
 
 ```C# Snippet:SignalRBasic
 Infrastructure infra = new();

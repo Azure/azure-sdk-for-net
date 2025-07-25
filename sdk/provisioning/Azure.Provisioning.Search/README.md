@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Search Service
+### Create a Basic Search Service
+
+This example demonstrates how to create an Azure Cognitive Search service, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.search/azure-search-create/main.bicep).
 
 ```C# Snippet:SearchBasic
 Infrastructure infra = new();

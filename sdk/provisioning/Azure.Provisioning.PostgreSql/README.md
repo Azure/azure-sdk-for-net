@@ -26,6 +26,8 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ### Create a PostgreSQL Flexible Server
 
+This example demonstrates how to create a PostgreSQL Flexible Server with Azure Active Directory authentication, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.dbforpostgresql/flexible-postgresql-with-aad/main.bicep).
+
 ```C# Snippet:PostgreSqlBasic
 Infrastructure infra = new();
 

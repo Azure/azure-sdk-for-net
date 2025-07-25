@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Redis cache
+### Create a Basic Redis Cache
+
+This example demonstrates how to create an Azure Cache for Redis instance with standard configuration settings.
 
 ```C# Snippet:RedisBasic
 Infrastructure infra = new();

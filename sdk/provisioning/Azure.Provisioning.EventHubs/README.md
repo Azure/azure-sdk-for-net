@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create an Event Hub with Consumer Group
+### Create an Event Hub With Consumer Group
+
+This example demonstrates how to create an Event Hub namespace with an Event Hub and consumer group, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.eventhub/event-hubs-create-event-hub-and-consumer-group/main.bicep).
 
 ```C# Snippet:EventHubsBasic
 Infrastructure infra = new();

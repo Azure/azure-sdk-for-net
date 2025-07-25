@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Application Insights component
+### Create a Basic Application Insights Component
+
+This example demonstrates how to create an Application Insights component for application performance monitoring, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep).
 
 ```C# Snippet:ApplicationInsightsBasic
 Infrastructure infra = new();

@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic AppConfiguration resource
+### Create a Basic AppConfiguration Resource
+
+This example demonstrates how to create an App Configuration store with a feature flag, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.appconfiguration/app-configuration-store-ff/main.bicep).
 
 ```C# Snippet:AppConfigurationStoreFF
 Infrastructure infra = new();

@@ -24,7 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a basic Function App
+### Create a Basic Function App
+
+This example demonstrates how to create a Function App with required dependencies including storage account and application insights, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep).
 
 ```C# Snippet:AppServiceBasic
 Infrastructure infra = new();
