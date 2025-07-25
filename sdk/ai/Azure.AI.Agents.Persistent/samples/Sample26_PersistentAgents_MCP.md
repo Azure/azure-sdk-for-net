@@ -1,7 +1,7 @@
 # Sample for use of an agent with Model Context Protocol (MCP) tools in Azure.AI.Agents.Persistent.
 
 To enable your Agent to use Model Context Protocol (MCP) tools, you use `MCPToolDefinition` along with server configuration and tool resources.
-1. First we need to create an agent client and read the environment variables, which will be used in the next steps.
+1. First we need to create an agent client and read the environment variables, which will be used in the next steps. In this example we will enable the experimental feature of MCP activity listing by adding headers `x-ms-enable-preview true` and `x-ms-oai-assistants-testenv true`, it is not required for using mcp tool.
 
 ```C# Snippet:AgentsMCP_CreateProject
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -147,7 +147,27 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-5. Print the agent messages to console in chronological order.
+5. We will create the helper method `PrintActivitySteps` to list the functions being called with the descriptions and arguments.
+
+```C# Snippet:AgentsMcpPrintActivityStep
+```
+
+6. Print activities description.
+
+Synchronous sample:
+```C# Snippet:AgentsMCP_PrintRunSteps
+```
+
+Asynchronous sample:
+```C# Snippet:AgentsMCPAsync_PrintRunSteps
+```
+
+7. To print messages, we will use the helper method `PrintMessages`.
+
+```C# Snippet:AgentsMcpPrintMessages
+```
+
+8. Print the agent messages to console in chronological order.
 
 Synchronous sample:
 ```C# Snippet:AgentsMCP_Print
@@ -199,7 +219,7 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 }
 ```
 
-6. Clean up resources by deleting thread and agent.
+9. Clean up resources by deleting thread and agent.
 
 Synchronous sample:
 ```C# Snippet:AgentsMCPCleanup

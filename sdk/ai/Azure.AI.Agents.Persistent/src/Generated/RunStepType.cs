@@ -24,11 +24,14 @@ namespace Azure.AI.Agents.Persistent
 
         private const string MessageCreationValue = "message_creation";
         private const string ToolCallsValue = "tool_calls";
+        private const string ActivityValue = "activity";
 
         /// <summary> Represents a run step to create a message. </summary>
         public static RunStepType MessageCreation { get; } = new RunStepType(MessageCreationValue);
         /// <summary> Represents a run step that calls tools. </summary>
         public static RunStepType ToolCalls { get; } = new RunStepType(ToolCallsValue);
+        /// <summary> Represents a run step with activity information. </summary>
+        public static RunStepType Activity { get; } = new RunStepType(ActivityValue);
         /// <summary> Determines if two <see cref="RunStepType"/> values are the same. </summary>
         public static bool operator ==(RunStepType left, RunStepType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunStepType"/> values are not the same. </summary>

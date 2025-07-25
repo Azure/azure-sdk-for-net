@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -30,7 +31,13 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+        // Enable experimantal headers (needed only to list activity steps).
+        PersistentAgentsAdministrationClientOptions options = new();
+        CustomHeadersPolicy experimentalFeaturesHeader = new();
+        experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
+        options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
+        //
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options);
         #endregion
 
         #region Snippet:AgentsMCP_CreateMCPTool
@@ -103,28 +110,17 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
             run.LastError?.Message);
         #endregion
 
+        #region Snippet: AgentsMCPAsync_PrintRunSteps
+        IReadOnlyList<RunStep> runSteps = [.. agentClient.Runs.GetRunSteps(run: run)];
+        PrintActivitySteps(runSteps);
+        #endregion
         #region Snippet:AgentsMCPAsync_Print
-        AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(
+        IReadOnlyList<PersistentThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        ).ToListAsync();
 
-        await foreach (PersistentThreadMessage threadMessage in messages)
-        {
-            Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-            foreach (MessageContent contentItem in threadMessage.ContentItems)
-            {
-                if (contentItem is MessageTextContent textItem)
-                {
-                    Console.Write(textItem.Text);
-                }
-                else if (contentItem is MessageImageFileContent imageFileItem)
-                {
-                    Console.Write($"<image from ID: {imageFileItem.FileId}>");
-                }
-                Console.WriteLine();
-            }
-        }
+        PrintMessages(messages);
         #endregion
 
         #region Snippet:AgentsMCPCleanupAsync
@@ -148,7 +144,13 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+        // Enable experimantal headers (needed only to list activity steps).
+        PersistentAgentsAdministrationClientOptions options = new();
+        CustomHeadersPolicy experimentalFeaturesHeader = new();
+        experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
+        options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
+        //
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options);
 
         // Create MCP tool definition
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
@@ -216,12 +218,62 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
             run.LastError?.Message);
         #endregion
 
+        #region Snippet:AgentsMCP_PrintRunSteps
+        IReadOnlyList<RunStep> runSteps = [..agentClient.Runs.GetRunSteps(run: run)];
+        PrintActivitySteps(runSteps);
+        #endregion
         #region Snippet:AgentsMCP_Print
-        Pageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessages(
+        IReadOnlyList<PersistentThreadMessage> messages = [..agentClient.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
-        );
+        )];
 
+        PrintMessages(messages);
+        #endregion
+
+        #region Snippet:AgentsMCPCleanup
+        agentClient.Threads.DeleteThread(threadId: thread.Id);
+        agentClient.Administration.DeleteAgent(agentId: agent.Id);
+        #endregion
+    }
+
+    #region Snippet:AgentsMcpPrintActivityStep
+    private static void PrintActivitySteps(IReadOnlyList<RunStep> runSteps)
+    {
+        foreach (RunStep step in runSteps)
+        {
+            if (step.StepDetails is RunStepActivityDetails activityDetails)
+            {
+                foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+                {
+                    foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+                    {
+                        Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                        if (activityFunction.Value.Parameters.Properties.Count > 0)
+                        {
+                            Console.WriteLine("Function parameters:");
+                            foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                            {
+                                Console.WriteLine($"\t{arg.Key}");
+                                Console.WriteLine($"\t\t Type: {arg.Value.Type}");
+                                if (!string.IsNullOrEmpty(arg.Value.Description))
+                                    Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("This function has no parameters");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Snippet:AgentsMcpPrintMessages
+    private static void PrintMessages(IReadOnlyList<PersistentThreadMessage> messages)
+    {
         foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
@@ -238,11 +290,6 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
                 Console.WriteLine();
             }
         }
-        #endregion
-
-        #region Snippet:AgentsMCPCleanup
-        agentClient.Threads.DeleteThread(threadId: thread.Id);
-        agentClient.Administration.DeleteAgent(agentId: agent.Id);
-        #endregion
     }
+    #endregion
 }
