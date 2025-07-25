@@ -20,8 +20,9 @@ namespace Azure.AI.VoiceLive.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_VoiceLive_ForceModels_ShortVersion()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -46,8 +47,9 @@ namespace Azure.AI.VoiceLive.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_VoiceLive_ForceModels_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -72,8 +74,9 @@ namespace Azure.AI.VoiceLive.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_VoiceLive_ForceModels_ShortVersion_Convenience()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession());
             Response<VoiceLiveServerEventResponseAudioDone> response = client.ForceModels("<accept>", session);
@@ -83,8 +86,9 @@ namespace Azure.AI.VoiceLive.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_VoiceLive_ForceModels_ShortVersion_Convenience_Async()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession());
             Response<VoiceLiveServerEventResponseAudioDone> response = await client.ForceModelsAsync("<accept>", session);
@@ -94,8 +98,9 @@ namespace Azure.AI.VoiceLive.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_VoiceLive_ForceModels_AllParameters()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -223,8 +228,9 @@ parameters = new object(),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_VoiceLive_ForceModels_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -352,8 +358,9 @@ parameters = new object(),
         [Ignore("Only validating compilation of examples")]
         public void Example_VoiceLive_ForceModels_AllParameters_Convenience()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession
             {
@@ -417,8 +424,9 @@ Parameters = BinaryData.FromObjectAsJson(new object()),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_VoiceLive_ForceModels_AllParameters_Convenience_Async()
         {
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            VoiceLiveClient client = new VoiceLiveClient(credential);
+            VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
             VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession
             {

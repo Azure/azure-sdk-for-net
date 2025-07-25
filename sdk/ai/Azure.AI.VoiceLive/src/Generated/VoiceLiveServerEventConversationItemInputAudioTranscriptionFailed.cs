@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="error"/> is null. </exception>
-        internal VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, Error error)
+        internal VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, ErrorDetails error)
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
             Argument.AssertNotNull(error, nameof(error));
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
-        internal VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, Error error) : base(type, eventId, serializedAdditionalRawData)
+        internal VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, ErrorDetails error) : base(type, eventId, serializedAdditionalRawData)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
@@ -57,6 +57,6 @@ namespace Azure.AI.VoiceLive
         /// <summary> The index of the content part containing the audio. </summary>
         public int ContentIndex { get; }
         /// <summary> Details of the transcription error. </summary>
-        public Error Error { get; }
+        public ErrorDetails Error { get; }
     }
 }

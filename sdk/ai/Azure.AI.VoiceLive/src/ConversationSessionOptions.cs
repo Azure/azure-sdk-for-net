@@ -93,11 +93,6 @@ namespace Azure.AI.VoiceLive
                 session.Model = Model;
             }
 
-            if (!string.IsNullOrEmpty(""))
-            {
-                
-            }
-
             if (!string.IsNullOrEmpty(Instructions))
             {
                 session.Instructions = Instructions;

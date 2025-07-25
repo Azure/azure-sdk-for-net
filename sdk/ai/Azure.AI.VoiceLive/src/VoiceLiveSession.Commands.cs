@@ -228,7 +228,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task AddItemAsync(VoiceLiveConversationItem item, CancellationToken cancellationToken = default)
+        public virtual async Task AddItemAsync(VoiceLiveConversationItemWithReference item, CancellationToken cancellationToken = default)
         {
             await AddItemAsync(item, previousItemId: null, cancellationToken).ConfigureAwait(false);
         }
@@ -239,7 +239,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="item">The item to add to the conversation.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-        public virtual void AddItem(VoiceLiveConversationItem item, CancellationToken cancellationToken = default)
+        public virtual void AddItem(VoiceLiveConversationItemWithReference item, CancellationToken cancellationToken = default)
         {
             AddItem(item, previousItemId: null, cancellationToken);
         }
@@ -252,7 +252,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task AddItemAsync(VoiceLiveConversationItem item, string previousItemId, CancellationToken cancellationToken = default)
+        public virtual async Task AddItemAsync(VoiceLiveConversationItemWithReference item, string previousItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(item, nameof(item));
             ThrowIfDisposed();
@@ -278,7 +278,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="previousItemId">The ID of the item after which to insert the new item.</param>
         /// <param name="cancellationToken">An optional cancellation token.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="item"/> is null.</exception>
-        public virtual void AddItem(VoiceLiveConversationItem item, string previousItemId, CancellationToken cancellationToken = default)
+        public virtual void AddItem(VoiceLiveConversationItemWithReference item, string previousItemId, CancellationToken cancellationToken = default)
         {
             AddItemAsync(item, previousItemId, cancellationToken).EnsureCompleted();
         }

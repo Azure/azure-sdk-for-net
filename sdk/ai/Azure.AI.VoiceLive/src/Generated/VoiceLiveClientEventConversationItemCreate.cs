@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// ID cannot be found, an error will be returned and the item will not be added.
         /// </param>
         /// <param name="item"></param>
-        internal VoiceLiveClientEventConversationItemCreate(VoiceLiveClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, VoiceLiveConversationItem item) : base(type, eventId, serializedAdditionalRawData)
+        internal VoiceLiveClientEventConversationItemCreate(VoiceLiveClientEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, VoiceLiveConversationItemWithReference item) : base(type, eventId, serializedAdditionalRawData)
         {
             PreviousItemId = previousItemId;
             Item = item;
@@ -54,6 +54,6 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         public string PreviousItemId { get; }
         /// <summary> Gets the item. </summary>
-        public VoiceLiveConversationItem Item { get; }
+        public VoiceLiveConversationItemWithReference Item { get; }
     }
 }

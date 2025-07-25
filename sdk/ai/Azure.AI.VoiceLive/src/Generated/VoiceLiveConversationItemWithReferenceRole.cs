@@ -7,8 +7,8 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveConversationItemRole. </summary>
-    public enum VoiceLiveConversationItemRole
+    /// <summary> The VoiceLiveConversationItemWithReferenceRole. </summary>
+    public enum VoiceLiveConversationItemWithReferenceRole
     {
         /// <summary> user. </summary>
         User,

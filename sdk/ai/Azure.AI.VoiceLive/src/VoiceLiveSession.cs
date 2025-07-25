@@ -28,16 +28,6 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         public WebSocket WebSocket { get; protected set; }
 
-        /// <summary>
-        /// Occurs when a command is being sent to the service.
-        /// </summary>
-        public event EventHandler<BinaryData> SendingCommand;
-
-        /// <summary>
-        /// Occurs when a message is received from the service.
-        /// </summary>
-        public event EventHandler<BinaryData> ReceivingMessage;
-
         private readonly VoiceLiveClient _parentClient;
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _credential;
@@ -225,8 +215,6 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(data, nameof(data));
             ThrowIfDisposed();
 
-            SendingCommand?.Invoke(this, data);
-
             ArraySegment<byte> messageBytes = new(data.ToArray());
 
             await _clientSendSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -275,7 +263,6 @@ namespace Azure.AI.VoiceLive
 
             await foreach (BinaryData message in _receiveCollectionResult.WithCancellation(cancellationToken))
             {
-                ReceivingMessage?.Invoke(this, message);
                 yield return message;
             }
         }

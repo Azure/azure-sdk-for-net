@@ -7,8 +7,8 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveConversationItemContentType. </summary>
-    public enum VoiceLiveConversationItemContentType
+    /// <summary> The VoiceLiveConversationItemWithReferenceContentType. </summary>
+    public enum VoiceLiveConversationItemWithReferenceContentType
     {
         /// <summary> input_audio. </summary>
         InputAudio,

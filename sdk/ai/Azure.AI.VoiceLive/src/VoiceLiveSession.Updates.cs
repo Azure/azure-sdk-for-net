@@ -52,9 +52,6 @@ namespace Azure.AI.VoiceLive
             {
                 await foreach (BinaryData message in _receiveCollectionResult.WithCancellation(cancellationToken))
                 {
-                    // Fire the ReceivingMessage event
-                    ReceivingMessage?.Invoke(this, message);
-
                     // Process the message and yield any updates
                     foreach (VoiceLiveUpdate update in ProcessMessage(message))
                     {

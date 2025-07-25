@@ -5,16 +5,18 @@
       <example>
 This sample shows how to call ForceModelsAsync.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession());
 Response<VoiceLiveServerEventResponseAudioDone> response = await client.ForceModelsAsync("<accept>", session);
 ]]></code>
 This sample shows how to call ForceModelsAsync with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession
 {
@@ -78,16 +80,18 @@ Response<VoiceLiveServerEventResponseAudioDone> response = await client.ForceMod
       <example>
 This sample shows how to call ForceModels.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession());
 Response<VoiceLiveServerEventResponseAudioDone> response = client.ForceModels("<accept>", session);
 ]]></code>
 This sample shows how to call ForceModels with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 VoiceLiveClientEventSessionUpdate session = new VoiceLiveClientEventSessionUpdate(new VoiceLiveRequestSession
 {
@@ -151,8 +155,9 @@ Response<VoiceLiveServerEventResponseAudioDone> response = client.ForceModels("<
       <example>
 This sample shows how to call ForceModelsAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -174,8 +179,9 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 This sample shows how to call ForceModelsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -303,8 +309,9 @@ Console.WriteLine(result.GetProperty("event_id").ToString());
       <example>
 This sample shows how to call ForceModels and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -326,8 +333,9 @@ Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 This sample shows how to call ForceModels with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-VoiceLiveClient client = new VoiceLiveClient(credential);
+VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {

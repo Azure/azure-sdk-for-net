@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveConversationItemContent. </summary>
-    public partial class VoiceLiveConversationItemContent
+    /// <summary> The VoiceLiveConversationItemWithReferenceContent. </summary>
+    public partial class VoiceLiveConversationItemWithReferenceContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveConversationItemContent"/>. </summary>
-        internal VoiceLiveConversationItemContent()
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveConversationItemWithReferenceContent"/>. </summary>
+        internal VoiceLiveConversationItemWithReferenceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLiveConversationItemContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLiveConversationItemWithReferenceContent"/>. </summary>
         /// <param name="type"> The content type (`input_text`, `input_audio`, `item_reference`, `text`). </param>
         /// <param name="text"> The text content, used for `input_text` and `text` content types. </param>
         /// <param name="id">
@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audio"> Base64-encoded audio bytes, used for `input_audio` content type. </param>
         /// <param name="transcript"> The transcript of the audio, used for `input_audio` content type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveConversationItemContent(VoiceLiveConversationItemContentType? type, string text, string id, string audio, string transcript, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VoiceLiveConversationItemWithReferenceContent(VoiceLiveConversationItemWithReferenceContentType? type, string text, string id, string audio, string transcript, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Text = text;
@@ -72,7 +72,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> The content type (`input_text`, `input_audio`, `item_reference`, `text`). </summary>
-        public VoiceLiveConversationItemContentType? Type { get; }
+        public VoiceLiveConversationItemWithReferenceContentType? Type { get; }
         /// <summary> The text content, used for `input_text` and `text` content types. </summary>
         public string Text { get; }
         /// <summary>

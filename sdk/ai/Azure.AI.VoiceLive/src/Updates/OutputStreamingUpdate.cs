@@ -158,7 +158,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets the conversation response item, if this is an item-level update.
         /// </summary>
-        public VoiceLiveConversationResponseItem Item
+        public VoiceLiveConversationItemWithReference Item
         {
             get
             {

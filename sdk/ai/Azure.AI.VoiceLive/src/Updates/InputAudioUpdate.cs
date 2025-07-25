@@ -141,7 +141,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets the transcription error, if available.
         /// </summary>
-        public Error TranscriptionError
+        public ErrorDetails TranscriptionError
         {
             get
             {

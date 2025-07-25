@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal VoiceLiveServerEventConversationItemCreated(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, VoiceLiveConversationItem item) : base(type, eventId, serializedAdditionalRawData)
+        internal VoiceLiveServerEventConversationItemCreated(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, VoiceLiveConversationItemWithReference item) : base(type, eventId, serializedAdditionalRawData)
         {
             PreviousItemId = previousItemId;
             Item = item;
@@ -63,6 +63,6 @@ namespace Azure.AI.VoiceLive
         /// </summary>
         public string PreviousItemId { get; }
         /// <summary> Gets the item. </summary>
-        public VoiceLiveConversationItem Item { get; }
+        public VoiceLiveConversationItemWithReference Item { get; }
     }
 }

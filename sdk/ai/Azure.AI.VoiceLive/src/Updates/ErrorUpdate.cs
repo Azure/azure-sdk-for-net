@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Gets the error details.
         /// </summary>
-        public Error Error => new Error(_errorEvent?.Error.Code, _errorEvent?.Error.Message, _errorEvent?.Error.Param, _errorEvent?.Type.ToString(), _errorEvent?.EventId, null);
+        public ErrorDetails Error => new ErrorDetails(_errorEvent?.Error.Code, _errorEvent?.Error.Message, _errorEvent?.Error.Param, _errorEvent?.Type.ToString(), _errorEvent?.EventId, null);
 
         /// <summary>
         /// Gets the error type.

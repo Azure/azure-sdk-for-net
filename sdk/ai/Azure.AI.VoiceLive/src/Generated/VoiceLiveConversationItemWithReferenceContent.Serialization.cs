@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class VoiceLiveConversationItemContent : IUtf8JsonSerializable, IJsonModel<VoiceLiveConversationItemContent>
+    public partial class VoiceLiveConversationItemWithReferenceContent : IUtf8JsonSerializable, IJsonModel<VoiceLiveConversationItemWithReferenceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceLiveConversationItemContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceLiveConversationItemWithReferenceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VoiceLiveConversationItemContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceLiveConversationItemWithReferenceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemWithReferenceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceLiveConversationItemContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceLiveConversationItemWithReferenceContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Type))
@@ -76,19 +76,19 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        VoiceLiveConversationItemContent IJsonModel<VoiceLiveConversationItemContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VoiceLiveConversationItemWithReferenceContent IJsonModel<VoiceLiveConversationItemWithReferenceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemWithReferenceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceLiveConversationItemContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceLiveConversationItemWithReferenceContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceLiveConversationItemContent(document.RootElement, options);
+            return DeserializeVoiceLiveConversationItemWithReferenceContent(document.RootElement, options);
         }
 
-        internal static VoiceLiveConversationItemContent DeserializeVoiceLiveConversationItemContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VoiceLiveConversationItemWithReferenceContent DeserializeVoiceLiveConversationItemWithReferenceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,7 +96,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            VoiceLiveConversationItemContentType? type = default;
+            VoiceLiveConversationItemWithReferenceContentType? type = default;
             string text = default;
             string id = default;
             string audio = default;
@@ -111,7 +111,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    type = property.Value.GetString().ToVoiceLiveConversationItemContentType();
+                    type = property.Value.GetString().ToVoiceLiveConversationItemWithReferenceContentType();
                     continue;
                 }
                 if (property.NameEquals("text"u8))
@@ -140,7 +140,7 @@ namespace Azure.AI.VoiceLive
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VoiceLiveConversationItemContent(
+            return new VoiceLiveConversationItemWithReferenceContent(
                 type,
                 text,
                 id,
@@ -149,43 +149,43 @@ namespace Azure.AI.VoiceLive
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VoiceLiveConversationItemContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VoiceLiveConversationItemWithReferenceContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemWithReferenceContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, new AzureAIVoiceLiveContext());
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveConversationItemContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceLiveConversationItemWithReferenceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VoiceLiveConversationItemContent IPersistableModel<VoiceLiveConversationItemContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VoiceLiveConversationItemWithReferenceContent IPersistableModel<VoiceLiveConversationItemWithReferenceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VoiceLiveConversationItemWithReferenceContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVoiceLiveConversationItemContent(document.RootElement, options);
+                        return DeserializeVoiceLiveConversationItemWithReferenceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceLiveConversationItemContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceLiveConversationItemWithReferenceContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VoiceLiveConversationItemContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceLiveConversationItemWithReferenceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static VoiceLiveConversationItemContent FromResponse(Response response)
+        internal static VoiceLiveConversationItemWithReferenceContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVoiceLiveConversationItemContent(document.RootElement);
+            return DeserializeVoiceLiveConversationItemWithReferenceContent(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

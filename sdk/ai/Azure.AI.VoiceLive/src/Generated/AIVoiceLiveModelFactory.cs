@@ -119,42 +119,67 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveClientEventConversationItemCreate"/> instance for mocking. </returns>
-        public static VoiceLiveClientEventConversationItemCreate VoiceLiveClientEventConversationItemCreate(string eventId = null, string previousItemId = null, VoiceLiveConversationItem item = null)
+        public static VoiceLiveClientEventConversationItemCreate VoiceLiveClientEventConversationItemCreate(string eventId = null, string previousItemId = null, VoiceLiveConversationItemWithReference item = null)
         {
             return new VoiceLiveClientEventConversationItemCreate(VoiceLiveClientEventType.ConversationItemCreate, eventId, serializedAdditionalRawData: null, previousItemId, item);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.VoiceLiveConversationItem"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="arguments"></param>
-        /// <param name="callId"></param>
-        /// <param name="content"></param>
-        /// <param name="name"></param>
-        /// <param name="object"></param>
-        /// <param name="output"></param>
-        /// <param name="role"></param>
-        /// <param name="status"></param>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveConversationItem"/> instance for mocking. </returns>
-        public static VoiceLiveConversationItem VoiceLiveConversationItem(string id = null, string arguments = null, string callId = null, IEnumerable<VoiceLiveConversationItemContent> content = null, string name = null, VoiceLiveConversationItemObject? @object = null, string output = null, VoiceLiveConversationItemRole? role = null, VoiceLiveConversationItemStatus? status = null, VoiceLiveConversationItemType? type = null)
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.VoiceLiveConversationItemWithReference"/>. </summary>
+        /// <param name="id">
+        /// For an item of type (`message` | `function_call` | `function_call_output`)
+        /// this field allows the client to assign the unique ID of the item. It is
+        /// not required because the server will generate one if not provided.
+        ///
+        /// For an item of type `item_reference`, this field is required and is a
+        /// reference to any item that has previously existed in the conversation.
+        /// </param>
+        /// <param name="type"> The type of the item (`message`, `function_call`, `function_call_output`, `item_reference`). </param>
+        /// <param name="object"> Identifier for the API object being returned - always `realtime.item`. </param>
+        /// <param name="status">
+        /// The status of the item (`completed`, `incomplete`). These have no effect
+        /// on the conversation, but are accepted for consistency with the
+        /// `conversation.item.created` event.
+        /// </param>
+        /// <param name="role">
+        /// The role of the message sender (`user`, `assistant`, `system`), only
+        /// applicable for `message` items.
+        /// </param>
+        /// <param name="content">
+        /// The content of the message, applicable for `message` items.
+        /// - Message items of role `system` support only `input_text` content
+        /// - Message items of role `user` support `input_text` and `input_audio`
+        ///   content
+        /// - Message items of role `assistant` support `text` content.
+        /// </param>
+        /// <param name="callId">
+        /// The ID of the function call (for `function_call` and
+        /// `function_call_output` items). If passed on a `function_call_output`
+        /// item, the server will check that a `function_call` item with the same
+        /// ID exists in the conversation history.
+        /// </param>
+        /// <param name="name"> The name of the function being called (for `function_call` items). </param>
+        /// <param name="arguments"> The arguments of the function call (for `function_call` items). </param>
+        /// <param name="output"> The output of the function call (for `function_call_output` items). </param>
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveConversationItemWithReference"/> instance for mocking. </returns>
+        public static VoiceLiveConversationItemWithReference VoiceLiveConversationItemWithReference(string id = null, VoiceLiveConversationItemWithReferenceType? type = null, VoiceLiveConversationItemWithReferenceObject? @object = null, VoiceLiveConversationItemWithReferenceStatus? status = null, VoiceLiveConversationItemWithReferenceRole? role = null, IEnumerable<VoiceLiveConversationItemWithReferenceContent> content = null, string callId = null, string name = null, string arguments = null, string output = null)
         {
-            content ??= new List<VoiceLiveConversationItemContent>();
+            content ??= new List<VoiceLiveConversationItemWithReferenceContent>();
 
-            return new VoiceLiveConversationItem(
+            return new VoiceLiveConversationItemWithReference(
                 id,
-                arguments,
-                callId,
-                content?.ToList(),
-                name,
-                @object,
-                output,
-                role,
-                status,
                 type,
+                @object,
+                status,
+                role,
+                content?.ToList(),
+                callId,
+                name,
+                arguments,
+                output,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.VoiceLiveConversationItemContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.VoiceLiveConversationItemWithReferenceContent"/>. </summary>
         /// <param name="type"> The content type (`input_text`, `input_audio`, `item_reference`, `text`). </param>
         /// <param name="text"> The text content, used for `input_text` and `text` content types. </param>
         /// <param name="id">
@@ -164,10 +189,10 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="audio"> Base64-encoded audio bytes, used for `input_audio` content type. </param>
         /// <param name="transcript"> The transcript of the audio, used for `input_audio` content type. </param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveConversationItemContent"/> instance for mocking. </returns>
-        public static VoiceLiveConversationItemContent VoiceLiveConversationItemContent(VoiceLiveConversationItemContentType? type = null, string text = null, string id = null, string audio = null, string transcript = null)
+        /// <returns> A new <see cref="VoiceLive.VoiceLiveConversationItemWithReferenceContent"/> instance for mocking. </returns>
+        public static VoiceLiveConversationItemWithReferenceContent VoiceLiveConversationItemWithReferenceContent(VoiceLiveConversationItemWithReferenceContentType? type = null, string text = null, string id = null, string audio = null, string transcript = null)
         {
-            return new VoiceLiveConversationItemContent(
+            return new VoiceLiveConversationItemWithReferenceContent(
                 type,
                 text,
                 id,
@@ -566,7 +591,7 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveServerEventConversationItemCreated"/> instance for mocking. </returns>
-        public static VoiceLiveServerEventConversationItemCreated VoiceLiveServerEventConversationItemCreated(string eventId = null, string previousItemId = null, VoiceLiveConversationItem item = null)
+        public static VoiceLiveServerEventConversationItemCreated VoiceLiveServerEventConversationItemCreated(string eventId = null, string previousItemId = null, VoiceLiveConversationItemWithReference item = null)
         {
             return new VoiceLiveServerEventConversationItemCreated(VoiceLiveServerEventType.ConversationItemCreated, eventId, serializedAdditionalRawData: null, previousItemId, item);
         }
@@ -662,7 +687,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed"/> instance for mocking. </returns>
-        public static VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(string eventId = null, string itemId = null, int contentIndex = default, Error error = null)
+        public static VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(string eventId = null, string itemId = null, int contentIndex = default, ErrorDetails error = null)
         {
             return new VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed(
                 VoiceLiveServerEventType.ConversationItemInputAudioTranscriptionFailed,
@@ -673,16 +698,16 @@ namespace Azure.AI.VoiceLive
                 error);
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceLive.Error"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceLive.ErrorDetails"/>. </summary>
         /// <param name="code"> Error code, or null if unspecified. </param>
         /// <param name="message"> Human-readable error message. </param>
         /// <param name="param"> Parameter name related to the error, if applicable. </param>
         /// <param name="type"> Type or category of the error. </param>
         /// <param name="eventId"> Event id of the error. </param>
-        /// <returns> A new <see cref="VoiceLive.Error"/> instance for mocking. </returns>
-        public static Error Error(string code = null, string message = null, string param = null, string type = null, string eventId = null)
+        /// <returns> A new <see cref="VoiceLive.ErrorDetails"/> instance for mocking. </returns>
+        public static ErrorDetails ErrorDetails(string code = null, string message = null, string param = null, string type = null, string eventId = null)
         {
-            return new Error(
+            return new ErrorDetails(
                 code,
                 message,
                 param,
@@ -974,7 +999,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveServerEventResponseOutputItemAdded"/> instance for mocking. </returns>
-        public static VoiceLiveServerEventResponseOutputItemAdded VoiceLiveServerEventResponseOutputItemAdded(string eventId = null, string responseId = null, int outputIndex = default, VoiceLiveConversationResponseItem item = null)
+        public static VoiceLiveServerEventResponseOutputItemAdded VoiceLiveServerEventResponseOutputItemAdded(string eventId = null, string responseId = null, int outputIndex = default, VoiceLiveConversationItemWithReference item = null)
         {
             return new VoiceLiveServerEventResponseOutputItemAdded(
                 VoiceLiveServerEventType.ResponseOutputItemAdded,

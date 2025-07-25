@@ -14,14 +14,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
-#pragma warning disable AZC0006, AZC0007
     // Data plane generated client.
     /// <summary> The VoiceLive service client. </summary>
     public partial class VoiceLiveClient
     {
         private const string AuthorizationHeader = "api-key";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "";
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
 
@@ -37,14 +37,23 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
+        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public VoiceLiveClient(AzureKeyCredential credential) : this(new Uri("wss://api.voicelive.com/v1"), credential, new VoiceLiveClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public VoiceLiveClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new VoiceLiveClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
+        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public VoiceLiveClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new VoiceLiveClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
+        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
@@ -56,7 +65,24 @@ namespace Azure.AI.VoiceLive
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+        }
+
+        /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
+        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public VoiceLiveClient(Uri endpoint, TokenCredential credential, VoiceLiveClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new VoiceLiveClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
 
@@ -183,6 +209,7 @@ namespace Azure.AI.VoiceLive
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendRaw("/voice-agent/realtime", false);
             uri.AppendPath("/", false);
             request.Uri = uri;
             request.Headers.Add("Accept", accept);
@@ -205,5 +232,4 @@ namespace Azure.AI.VoiceLive
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
-#pragma warning restore AZC0006, AZC0007
 }

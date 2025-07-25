@@ -68,7 +68,7 @@ namespace Azure.AI.VoiceLive
             }
             string responseId = default;
             int outputIndex = default;
-            VoiceLiveConversationResponseItem item = default;
+            VoiceLiveConversationItemWithReference item = default;
             VoiceLiveServerEventType type = default;
             string eventId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -91,7 +91,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = VoiceLiveConversationResponseItem.DeserializeVoiceLiveConversationResponseItem(property.Value, options);
+                    item = VoiceLiveConversationItemWithReference.DeserializeVoiceLiveConversationItemWithReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -126,7 +126,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, new AzureAIVoiceLiveContext());
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VoiceLiveServerEventResponseOutputItemAdded)} does not support writing '{options.Format}' format.");
             }

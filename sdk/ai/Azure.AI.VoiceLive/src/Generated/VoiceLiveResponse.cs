@@ -11,9 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The response resource. </summary>
-#pragma warning disable AZC0030 // Improper model name suffix
     public partial class VoiceLiveResponse
-#pragma warning restore AZC0030 // Improper model name suffix
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

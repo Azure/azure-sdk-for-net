@@ -7,14 +7,12 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The VoiceLiveConversationItemStatus. </summary>
-    public enum VoiceLiveConversationItemStatus
+    /// <summary> The VoiceLiveConversationItemWithReferenceStatus. </summary>
+    public enum VoiceLiveConversationItemWithReferenceStatus
     {
         /// <summary> completed. </summary>
         Completed,
         /// <summary> incomplete. </summary>
-        Incomplete,
-        /// <summary> in_progress. </summary>
-        InProgress
+        Incomplete
     }
 }

@@ -182,7 +182,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, new AzureAIVoiceLiveContext());
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VoiceLiveServerEventErrorError)} does not support writing '{options.Format}' format.");
             }

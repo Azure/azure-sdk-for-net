@@ -65,7 +65,7 @@ namespace Azure.AI.VoiceLive
             }
             string itemId = default;
             int contentIndex = default;
-            Error error = default;
+            ErrorDetails error = default;
             VoiceLiveServerEventType type = default;
             string eventId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -84,7 +84,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (property.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(property.Value, options);
+                    error = ErrorDetails.DeserializeErrorDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -119,7 +119,7 @@ namespace Azure.AI.VoiceLive
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, new AzureAIVoiceLiveContext());
+                    return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VoiceLiveServerEventConversationItemInputAudioTranscriptionFailed)} does not support writing '{options.Format}' format.");
             }
