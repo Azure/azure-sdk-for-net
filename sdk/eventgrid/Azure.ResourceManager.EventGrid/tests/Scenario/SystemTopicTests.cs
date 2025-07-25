@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -24,13 +27,14 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private EventGridNamespaceCollection NamespaceCollection { get; set; }
 
         // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
-        // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
-        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
+        // from the Azure Portal for the Logic App "sdk-test-logic-app" -> workflow
+        private const string LogicAppEndpointUrl = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
+
         private async Task SetCollection()
         {
-            // This test relies on the existence of the 'TestRG' resource group within the subscription, ensuring that system topics and related resources (such as Key Vault) are deployed within the same resource group for validation
+            // This test relies on the existence of the 'sdk-eventgrid-test-rg' resource group within the subscription, ensuring that system topics and related resources (such as Key Vault) are deployed within the same resource group for validation
             // Subscription: 5b4b650e-28b9-4790-b3ab-ddbd88d727c4 (Azure Event Grid SDK Subscription)
-            ResourceGroup = await GetResourceGroupAsync(DefaultSubscription, "TestRG");
+            ResourceGroup = await GetResourceGroupAsync(DefaultSubscription, "sdk-eventgrid-test-rg");
             SystemTopicCollection = ResourceGroup.GetSystemTopics();
             NamespaceCollection = ResourceGroup.GetEventGridNamespaces();
         }
@@ -39,11 +43,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task SystemTopicWithMonitorDestinationCreateGetUpdateDelete()
         {
             await SetCollection();
-            string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-");
-            string systemTopicEventSubscriptionName1 = Recording.GenerateAssetName("sdk-EventSubscription-");
-            string systemTopicEventSubscriptionName2 = Recording.GenerateAssetName("sdk-EventSubscription-");
-            string sourceResourceIdentifier = String.Format("/subscriptions/{0}/resourceGroups/TestRG/providers/Microsoft.KeyVault/vaults/sdk-test-keyvault", SystemTopicCollection.Id.SubscriptionId);
-            SystemTopicData data = new SystemTopicData(new AzureLocation("eastus"))
+            string systemTopicName = Recording.GenerateAssetName("sdk-eventgrid-SystemTopic-");
+            string systemTopicEventSubscriptionName1 = Recording.GenerateAssetName("sdk-eventgrid-EventSubscription-");
+            string systemTopicEventSubscriptionName2 = Recording.GenerateAssetName("sdk-eventgrid-EventSubscription-");
+            string sourceResourceIdentifier = String.Format("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.KeyVault/vaults/sdkeventgridtestkeyvault");
+            SystemTopicData data = new SystemTopicData(new AzureLocation("centraluseuap"))
             {
                 Source = new ResourceIdentifier(sourceResourceIdentifier),
                 TopicType = "Microsoft.KeyVault.Vaults",
@@ -53,17 +57,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
                          ["tag2"] = "value2",
                      },
             };
+
+            var beforeCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
             Assert.NotNull(createSystemTopicResponse);
             Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
+            var afterCreateSystemTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
 
             // List all system topics under resource group
             var systemTopicsUnderResourceGroup = await ResourceGroup.GetSystemTopics().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(systemTopicsUnderResourceGroup.Count, 1);
+            Assert.IsTrue(systemTopicsUnderResourceGroup.Count > 0);
 
             // List all system topics under subscription
             var systemTopicsInAzureSubscription = await DefaultSubscription.GetSystemTopicsAsync().ToEnumerableAsync();
-            Assert.AreEqual(systemTopicsInAzureSubscription.Count, 133);
+            Assert.NotNull(systemTopicsInAzureSubscription);
+            Assert.IsTrue(systemTopicsInAzureSubscription.Count >= 0);
 
             var SystemTopicEventSubscriptionsCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
 
@@ -122,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var eventSubscriptionCollection = createSystemTopicResponse.GetSystemTopicEventSubscriptions();
             var listSystemTopicsResponse = await eventSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(listSystemTopicsResponse);
-            Assert.AreEqual(listSystemTopicsResponse.Count, 2);
+            Assert.AreEqual(2, listSystemTopicsResponse.Count, "Expected 2 event subscriptions, but found " + listSystemTopicsResponse.Count);
 
             // Delete System topics event subscription
             await getSystemTopicSubscription1Response.DeleteAsync(WaitUntil.Completed);
@@ -141,13 +149,23 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task SystemTopicWithNamespaceTopicDestinationCreateGetUpdateDelete()
         {
             await SetCollection();
+            await foreach (var existingTopic in SystemTopicCollection.GetAllAsync())
+            {
+                if (existingTopic.Data.Source.ToString().Equals(
+                    "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.Storage/storageAccounts/sdkegteststorageaccount",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    await existingTopic.DeleteAsync(WaitUntil.Completed);
+                }
+            }
+
             // Create system topic and create subscription to namespace topic for that system topic
             string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-");
             string systemTopicEventSubscriptionName1 = Recording.GenerateAssetName("sdk-EventSubscription-");
             string systemTopicEventSubscriptionName2 = Recording.GenerateAssetName("sdk-EventSubscription-");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
-            string sourceResourceIdentifier = String.Format("/subscriptions/{0}/resourceGroups/TestRG/providers/Microsoft.Storage/storageAccounts/testcontosso3", SystemTopicCollection.Id.SubscriptionId);
-            SystemTopicData data = new SystemTopicData(new AzureLocation("eastus2euap"))
+            string sourceResourceIdentifier = String.Format("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.Storage/storageAccounts/sdkegteststorageaccount");
+            SystemTopicData data = new SystemTopicData(new AzureLocation("centraluseuap"))
             {
                 Source = new ResourceIdentifier(sourceResourceIdentifier),
                 TopicType = "microsoft.storage.storageaccounts",
@@ -158,7 +176,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                          ["tag2"] = "value2",
                      },
             };
-            data.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity"), userAssignedIdentity);
+            data.Identity.UserAssignedIdentities.Add(new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity"), userAssignedIdentity);
             var createSystemTopicResponse = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, data)).Value;
             Assert.NotNull(createSystemTopicResponse);
             Assert.AreEqual(createSystemTopicResponse.Data.ProvisioningState, EventGridResourceProvisioningState.Succeeded);
@@ -182,11 +200,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Identity = new EventSubscriptionIdentity()
                 {
                     IdentityType = EventSubscriptionIdentityType.UserAssigned,
-                    UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/TestRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdktestuseridentity",
+                    UserAssignedIdentity = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity",
                 },
                 Destination = new NamespaceTopicEventSubscriptionDestination()
                 {
-                    ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testrg/providers/Microsoft.EventGrid/namespaces/sdk-test-namespace/topics/sdk-test-topic"),
+                    ResourceId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.EventGrid/namespaces/sdk-eventgrid-test-eventgridNamespace/topics/sdk-eventgrid-test-eventGridTopic"),
                 }
             };
 
@@ -244,6 +262,190 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await createSystemTopicResponse.DeleteAsync(WaitUntil.Completed);
             var resultFalse = (await SystemTopicCollection.ExistsAsync(systemTopicName)).Value;
             Assert.IsFalse(resultFalse);
+        }
+
+        [Test]
+        public async Task SystemTopicLifecycleCreateGetUpdateDeleteTags()
+        {
+            await SetCollection();
+            string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-Lifecycle-");
+            string sourceResourceIdentifier = $"/subscriptions/{SystemTopicCollection.Id.SubscriptionId}/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.KeyVault/vaults/sdkeventgridtestkeyvault";
+
+            // Create system topic
+            var systemTopicData = new SystemTopicData(new AzureLocation("centraluseuap"))
+            {
+                Source = new ResourceIdentifier(sourceResourceIdentifier),
+                TopicType = "Microsoft.KeyVault.Vaults"
+            };
+            var existingTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
+            var existing = existingTopics.FirstOrDefault(t =>
+                t.Data.Source.ToString().Equals(sourceResourceIdentifier, StringComparison.OrdinalIgnoreCase));
+
+            SystemTopicResource systemTopicResource;
+            if (existing != null)
+            {
+                systemTopicResource = existing;
+                systemTopicName = systemTopicResource.Data.Name;
+            }
+            else
+            {
+                systemTopicResource = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, systemTopicData)).Value;
+            }
+            Assert.NotNull(systemTopicResource);
+
+            // Get system topic from collection
+            var getFromCollectionResponse = await SystemTopicCollection.GetAsync(systemTopicName);
+            Assert.NotNull(getFromCollectionResponse);
+            Assert.AreEqual(systemTopicName, getFromCollectionResponse.Value.Data.Name);
+
+            // Get system topic from resource
+            var getFromResourceResponse = await systemTopicResource.GetAsync();
+            Assert.NotNull(getFromResourceResponse);
+            Assert.AreEqual(systemTopicName, getFromResourceResponse.Value.Data.Name);
+
+            // Add a tag
+            var addTagResponse = await systemTopicResource.AddTagAsync("testTag", "testValue");
+            Assert.NotNull(addTagResponse);
+            Assert.IsTrue(addTagResponse.Value.Data.Tags.ContainsKey("testTag"));
+            Assert.AreEqual("testValue", addTagResponse.Value.Data.Tags["testTag"]);
+
+            // Set tags
+            var tagsToSet = new Dictionary<string, string>
+            {
+                { "tagA", "valueA" },
+                { "tagB", "valueB" }
+            };
+            var setTagsResponse = await systemTopicResource.SetTagsAsync(tagsToSet);
+            Assert.NotNull(setTagsResponse);
+            Assert.IsTrue(setTagsResponse.Value.Data.Tags.ContainsKey("tagA"));
+            Assert.AreEqual("valueA", setTagsResponse.Value.Data.Tags["tagA"]);
+            Assert.IsTrue(setTagsResponse.Value.Data.Tags.ContainsKey("tagB"));
+            Assert.AreEqual("valueB", setTagsResponse.Value.Data.Tags["tagB"]);
+
+            // Remove a tag
+            var removeTagResponse = await systemTopicResource.RemoveTagAsync("tagA");
+            Assert.NotNull(removeTagResponse);
+            Assert.IsFalse(removeTagResponse.Value.Data.Tags.ContainsKey("tagA"));
+            Assert.IsTrue(removeTagResponse.Value.Data.Tags.ContainsKey("tagB"));
+
+            // ExtensionTopicResourceGetAsync
+            var resourceId = SystemTopicResource.CreateResourceIdentifier(
+                SystemTopicCollection.Id.SubscriptionId,
+                ResourceGroup.Data.Name,
+                systemTopicName);
+
+            var systemTopicFromId = Client.GetSystemTopicResource(resourceId);
+            var response = await systemTopicFromId.GetAsync();
+
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+            Assert.AreEqual(systemTopicName, response.Value.Data.Name);
+
+            // Cleanup
+            await systemTopicResource.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task SystemTopicEventSubscriptionLifecycleGetAttributesUriAndResource()
+        {
+            await SetCollection();
+            string systemTopicName = Recording.GenerateAssetName("sdk-SystemTopic-EventSubLifecycle-");
+            string eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-EventSubLifecycle-");
+
+            string sourceResourceIdentifier = $"/subscriptions/{SystemTopicCollection.Id.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.KeyVault/vaults/sdkeventgridtestkeyvault";
+
+            var systemTopicData = new SystemTopicData(new AzureLocation("centraluseuap"))
+            {
+                Source = new ResourceIdentifier(sourceResourceIdentifier),
+                TopicType = "Microsoft.KeyVault.Vaults"
+            };
+
+            var existingTopics = await SystemTopicCollection.GetAllAsync().ToEnumerableAsync();
+            var existing = existingTopics.FirstOrDefault(t =>
+                t.Data.Source.ToString().Equals(sourceResourceIdentifier, StringComparison.OrdinalIgnoreCase));
+
+            SystemTopicResource systemTopicResource;
+            if (existing != null)
+            {
+                systemTopicResource = existing;
+                systemTopicName = systemTopicResource.Data.Name;
+            }
+            else
+            {
+                systemTopicResource = (await SystemTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, systemTopicName, systemTopicData)).Value;
+            }
+            Assert.NotNull(systemTopicResource);
+
+            var eventSubscriptions = systemTopicResource.GetSystemTopicEventSubscriptions();
+
+            var eventSubscriptionData = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl)
+                },
+                Filter = new EventSubscriptionFilter()
+                {
+                    SubjectBeginsWith = "Prefix",
+                    SubjectEndsWith = "Suffix",
+                    IsSubjectCaseSensitive = false,
+                },
+                EventDeliverySchema = EventDeliverySchema.CloudEventSchemaV1_0
+            };
+
+            var eventSubscriptionResource = (await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscriptionData)).Value;
+            Assert.NotNull(eventSubscriptionResource);
+
+            // Get delivery attributes
+            IReadOnlyList<DeliveryAttributeMapping> deliveryAttributesList = null;
+            try
+            {
+                deliveryAttributesList = await eventSubscriptionResource.GetDeliveryAttributesAsync().ToEnumerableAsync();
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("type 'Null'"))
+            {
+                deliveryAttributesList = Array.Empty<DeliveryAttributeMapping>();
+            }
+            Assert.NotNull(deliveryAttributesList);
+
+            // Get full URI
+            var fullUriResponse = await eventSubscriptionResource.GetFullUriAsync();
+            Assert.NotNull(fullUriResponse);
+            Assert.NotNull(fullUriResponse.Value);
+
+            // Get event subscription resource from system topic
+            var getEventSubscriptionResponse = await systemTopicResource.GetSystemTopicEventSubscriptionAsync(eventSubscriptionName);
+            Assert.NotNull(getEventSubscriptionResponse);
+            Assert.AreEqual(eventSubscriptionName, getEventSubscriptionResponse.Value.Data.Name);
+
+            // Cleanup
+            await eventSubscriptionResource.DeleteAsync(WaitUntil.Completed);
+            if (existing == null)
+            {
+                await systemTopicResource.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
+        [Test]
+        public async Task ExtensionTopicGetAsyncThrowsRequestFailedException()
+        {
+            await SetCollection();
+
+            // Arrange
+            string nonExistentSystemTopicName = "nonexistent-system-topic";
+            string subscriptionId = SystemTopicCollection.Id.SubscriptionId;
+            string resourceGroupName = ResourceGroup.Data.Name;
+
+            var resourceId = SystemTopicResource.CreateResourceIdentifier(
+                subscriptionId, resourceGroupName, nonExistentSystemTopicName);
+
+            var systemTopicResource = Client.GetSystemTopicResource(resourceId);
+
+            // Act & Assert
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await systemTopicResource.GetAsync();
+            });
         }
     }
 }

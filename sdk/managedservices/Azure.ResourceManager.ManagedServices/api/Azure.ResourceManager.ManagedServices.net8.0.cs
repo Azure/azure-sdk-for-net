@@ -1,21 +1,5 @@
 namespace Azure.ResourceManager.ManagedServices
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties))]
     public partial class AzureResourceManagerManagedServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerManagedServicesContext() { }

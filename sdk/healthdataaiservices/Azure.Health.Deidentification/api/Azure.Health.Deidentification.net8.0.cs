@@ -1,18 +1,5 @@
 namespace Azure.Health.Deidentification
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationCustomizationOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationDocumentDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationDocumentLocation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationJob))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationJobCustomizationOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationJobSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.DeidentificationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.PhiEntity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.PhiTaggerResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.SourceStorageLocation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.StringIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Deidentification.TargetStorageLocation))]
     public partial class AzureHealthDeidentificationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthDeidentificationContext() { }
@@ -202,6 +189,7 @@ namespace Azure.Health.Deidentification
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.DeidentificationOperationType left, Azure.Health.Deidentification.DeidentificationOperationType right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.DeidentificationOperationType (string value) { throw null; }
+        public static implicit operator Azure.Health.Deidentification.DeidentificationOperationType? (string value) { throw null; }
         public static bool operator !=(Azure.Health.Deidentification.DeidentificationOperationType left, Azure.Health.Deidentification.DeidentificationOperationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -255,6 +243,7 @@ namespace Azure.Health.Deidentification
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.OperationStatus left, Azure.Health.Deidentification.OperationStatus right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.OperationStatus (string value) { throw null; }
+        public static implicit operator Azure.Health.Deidentification.OperationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.Health.Deidentification.OperationStatus left, Azure.Health.Deidentification.OperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -300,6 +289,7 @@ namespace Azure.Health.Deidentification
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Health.Deidentification.PhiCategory left, Azure.Health.Deidentification.PhiCategory right) { throw null; }
         public static implicit operator Azure.Health.Deidentification.PhiCategory (string value) { throw null; }
+        public static implicit operator Azure.Health.Deidentification.PhiCategory? (string value) { throw null; }
         public static bool operator !=(Azure.Health.Deidentification.PhiCategory left, Azure.Health.Deidentification.PhiCategory right) { throw null; }
         public override string ToString() { throw null; }
     }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -463,31 +464,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="exportedProject"> The project data to import. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? projectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
 
             using RequestContent content = exportedProject.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await ImportAsync(waitUntil, content, exportedProjectFormat?.ToString(), context).ConfigureAwait(false);
+            return await ImportAsync(waitUntil, content, projectFormat?.ToString(), context).ConfigureAwait(false);
         }
 
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="exportedProject"> The project data to import. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation Import(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, ConversationAuthoringExportedProject exportedProject, ConversationAuthoringExportedProjectFormat? projectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(exportedProject, nameof(exportedProject));
 
             using RequestContent content = exportedProject.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            return Import(waitUntil, content, exportedProjectFormat?.ToString(), context);
+            return Import(waitUntil, content, projectFormat?.ToString(), context);
         }
 
         /// <summary>
@@ -507,11 +508,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, RequestContent content, string projectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -520,7 +521,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(_projectName, content, exportedProjectFormat, context);
+                using HttpMessage message = CreateImportRequest(_projectName, content, projectFormat, context);
                 return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -547,11 +548,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        public virtual Operation Import(WaitUntil waitUntil, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
+        public virtual Operation Import(WaitUntil waitUntil, RequestContent content, string projectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -560,7 +561,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportRequest(_projectName, content, exportedProjectFormat, context);
+                using HttpMessage message = CreateImportRequest(_projectName, content, projectFormat, context);
                 return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
@@ -568,6 +569,48 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Triggers a job to import a project using raw JSON string input.
+        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectJson">
+        /// A raw JSON string representing the entire project to import.
+        /// This string should match the format of an exported Analyze Conversations project.
+        /// </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectJson, ConversationAuthoringExportedProjectFormat? projectFormat = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
+
+            using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(projectJson));
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ImportAsync(waitUntil, content, projectFormat?.ToString(), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Triggers a job to import a project using raw JSON string input.
+        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectJson">
+        /// A raw JSON string representing the entire project to import.
+        /// This string should match the format of an exported Analyze Conversations project.
+        /// </param>
+        /// <param name="projectFormat"> The format of the exported project file to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Operation Import(WaitUntil waitUntil, string projectJson, ConversationAuthoringExportedProjectFormat? projectFormat = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(projectJson, nameof(projectJson));
+
+            using RequestContent content = RequestContentHelper.FromObject(projectJson);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Import(waitUntil, content, projectFormat?.ToString(), context);
         }
 
         /// <summary> Gets the status for an import. </summary>
