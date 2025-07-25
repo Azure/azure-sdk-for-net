@@ -1569,10 +1569,7 @@ namespace Azure.Communication.CallAutomation
                 //return CallMediaRestClient.SummarizeCall(CallConnectionId, request, cancellationToken);
 
                 return CallMediaRestClient.SummarizeCall(CallConnectionId,
-                    options.OperationContext,
-                    options.OperationCallbackUri,
-                    options.SummarizationOptions.EnableEndCallSummary,
-                    options.SummarizationOptions.Locale,
+                    request,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1603,10 +1600,7 @@ namespace Azure.Communication.CallAutomation
                 //return CallMediaRestClient.SummarizeCall(CallConnectionId, request, cancellationToken);
 
                 return await CallMediaRestClient.SummarizeCallAsync(CallConnectionId,
-                    options.OperationContext,
-                    options.OperationCallbackUri,
-                    options.SummarizationOptions.EnableEndCallSummary,
-                    options.SummarizationOptions.Locale,
+                    request,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

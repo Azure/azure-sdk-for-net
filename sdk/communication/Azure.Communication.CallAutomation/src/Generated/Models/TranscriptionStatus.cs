@@ -27,6 +27,7 @@ namespace Azure.Communication.CallAutomation
         private const string TranscriptionResumedValue = "transcriptionResumed";
         private const string TranscriptionUpdatedValue = "transcriptionUpdated";
         private const string TranscriptionStoppedValue = "transcriptionStopped";
+        private const string CallSummaryUpdateValue = "callSummaryUpdate";
         private const string UnspecifiedErrorValue = "unspecifiedError";
 
         /// <summary> transcriptionStarted. </summary>
@@ -39,6 +40,8 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionStatus TranscriptionUpdated { get; } = new TranscriptionStatus(TranscriptionUpdatedValue);
         /// <summary> transcriptionStopped. </summary>
         public static TranscriptionStatus TranscriptionStopped { get; } = new TranscriptionStatus(TranscriptionStoppedValue);
+        /// <summary> callSummaryUpdate. </summary>
+        public static TranscriptionStatus CallSummaryUpdate { get; } = new TranscriptionStatus(CallSummaryUpdateValue);
         /// <summary> unspecifiedError. </summary>
         public static TranscriptionStatus UnspecifiedError { get; } = new TranscriptionStatus(UnspecifiedErrorValue);
         /// <summary> Determines if two <see cref="TranscriptionStatus"/> values are the same. </summary>

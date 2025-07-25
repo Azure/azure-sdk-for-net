@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
             }
             TranscriptionStatus? transcriptionStatus = default;
             TranscriptionStatusDetails? transcriptionStatusDetails = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transcriptionStatus"u8))
@@ -39,8 +40,13 @@ namespace Azure.Communication.CallAutomation
                     transcriptionStatusDetails = new TranscriptionStatusDetails(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
+            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails, message);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
