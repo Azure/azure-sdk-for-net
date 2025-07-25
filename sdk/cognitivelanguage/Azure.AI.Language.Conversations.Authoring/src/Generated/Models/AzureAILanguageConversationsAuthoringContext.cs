@@ -13,6 +13,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringDataGenerationConnectionInfo))]
+    [ModelReaderWriterBuildable(typeof(AnalyzeConversationAuthoringDataGenerationSettings))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignDeploymentResourcesDetails))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignedDeploymentResource))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringAssignedProjectDeploymentMetadata))]
@@ -61,6 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringTrainingJobResult))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringTrainingState))]
     [ModelReaderWriterBuildable(typeof(ConversationAuthoringUnassignDeploymentResourcesDetails))]
+    [ModelReaderWriterBuildable(typeof(ConversationExportedAssociatedEntityLabel))]
     [ModelReaderWriterBuildable(typeof(ConversationExportedEntity))]
     [ModelReaderWriterBuildable(typeof(ConversationExportedIntent))]
     [ModelReaderWriterBuildable(typeof(ConversationExportedProjectAsset))]
