@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // optimization, no need to calculate sample score in this case
                 return RecordOnlySamplingResult;
             }
-            
+
             if (samplingPercentage == 100)
             {
                 // optimization, no need to calculate sample score in this case
