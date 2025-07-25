@@ -64,9 +64,9 @@ public class BasicEventGridTests(bool async)
                         }
                     };
                 infra.Add(subscription);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

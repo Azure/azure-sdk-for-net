@@ -87,9 +87,9 @@ public class BasicSignalRTests(bool async)
                         }
                     };
                 infra.Add(signalr);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

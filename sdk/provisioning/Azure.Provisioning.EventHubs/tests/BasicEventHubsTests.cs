@@ -58,9 +58,9 @@ public class BasicEventHubsTests(bool async)
                         UserMetadata = BinaryData.FromObjectAsJson(new { foo = 1, bar = "hello" }).ToString()
                     };
                 infra.Add(group);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

@@ -62,8 +62,6 @@ ServiceBusQueue queue =
         EnableExpress = false
     };
 infra.Add(queue);
-
-return infra;
 ```
 
 ## Troubleshooting

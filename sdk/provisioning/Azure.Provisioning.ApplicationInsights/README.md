@@ -40,8 +40,6 @@ infra.Add(appInsights);
 
 infra.Add(new ProvisioningOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
 infra.Add(new ProvisioningOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
-
-return infra;
 ```
 
 ## Troubleshooting

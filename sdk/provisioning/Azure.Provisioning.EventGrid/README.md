@@ -67,8 +67,6 @@ SystemTopicEventSubscription subscription =
         }
     };
 infra.Add(subscription);
-
-return infra;
 ```
 
 ## Troubleshooting

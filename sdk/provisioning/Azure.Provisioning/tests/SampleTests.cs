@@ -54,9 +54,9 @@ internal class SampleTests(bool async)
                 // Grab the endpoint
                 endpoint = new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri };
                 infra.Add(endpoint);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

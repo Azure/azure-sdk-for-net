@@ -57,9 +57,9 @@ public class BasicServiceBusTests(bool async)
                         EnableExpress = false
                     };
                 infra.Add(queue);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

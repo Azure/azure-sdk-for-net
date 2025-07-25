@@ -100,9 +100,9 @@ public class BasicPostgreSqlTests(bool async)
                         PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
                     };
                 infra.Add(admin);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

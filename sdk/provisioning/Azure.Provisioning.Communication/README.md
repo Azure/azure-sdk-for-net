@@ -43,8 +43,6 @@ CommunicationService comm =
         DataLocation = "unitedstates"
     };
 infra.Add(comm);
-
-return infra;
 ```
 
 ## Troubleshooting

@@ -63,8 +63,6 @@ EventHubsConsumerGroup group =
         UserMetadata = BinaryData.FromObjectAsJson(new { foo = 1, bar = "hello" }).ToString()
     };
 infra.Add(group);
-
-return infra;
 ```
 
 ## Troubleshooting

@@ -38,8 +38,6 @@ SearchService search =
         HostingMode = SearchServiceHostingMode.Default,
     };
 infra.Add(search);
-
-return infra;
 ```
 
 ## Troubleshooting

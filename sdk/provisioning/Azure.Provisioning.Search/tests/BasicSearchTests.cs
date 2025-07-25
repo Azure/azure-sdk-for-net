@@ -32,9 +32,9 @@ public class BasicSearchTests(bool async)
                         HostingMode = SearchServiceHostingMode.Default,
                     };
                 infra.Add(search);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

@@ -121,8 +121,6 @@ WebSite functionApp =
             }
     };
 infra.Add(functionApp);
-
-return infra;
 ```
 
 ## Troubleshooting

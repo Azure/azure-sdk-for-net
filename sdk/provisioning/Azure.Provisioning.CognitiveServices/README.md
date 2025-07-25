@@ -46,8 +46,6 @@ CognitiveServicesAccount account =
         }
     };
 infra.Add(account);
-
-return infra;
 ```
 
 ## Troubleshooting

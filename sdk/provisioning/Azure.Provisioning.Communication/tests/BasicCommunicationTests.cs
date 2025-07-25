@@ -37,9 +37,9 @@ public class BasicCommunicationTests(bool async)
                         DataLocation = "unitedstates"
                     };
                 infra.Add(comm);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

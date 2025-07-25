@@ -35,9 +35,9 @@ public class BasicRedisTests(bool async)
                             },
                     };
                 infra.Add(cache);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

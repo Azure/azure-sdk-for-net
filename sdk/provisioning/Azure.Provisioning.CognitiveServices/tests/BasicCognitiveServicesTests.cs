@@ -41,9 +41,9 @@ public class BasicCognitiveServicesTests(bool async)
                         }
                     };
                 infra.Add(account);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

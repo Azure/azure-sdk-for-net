@@ -43,8 +43,6 @@ RedisResource cache =
             },
     };
 infra.Add(cache);
-
-return infra;
 ```
 
 ## Troubleshooting

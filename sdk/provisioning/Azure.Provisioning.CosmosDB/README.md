@@ -84,8 +84,6 @@ infra.Add(container);
 
 infra.Add(new ProvisioningOutput("containerName", typeof(string)) { Value = container.Name });
 infra.Add(new ProvisioningOutput("containerId", typeof(string)) { Value = container.Id });
-
-return infra;
 ```
 
 ## Troubleshooting

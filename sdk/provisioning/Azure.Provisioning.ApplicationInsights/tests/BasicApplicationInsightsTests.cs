@@ -34,9 +34,9 @@ public class BasicApplicationInsightsTests(bool async)
 
                 infra.Add(new ProvisioningOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
                 infra.Add(new ProvisioningOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

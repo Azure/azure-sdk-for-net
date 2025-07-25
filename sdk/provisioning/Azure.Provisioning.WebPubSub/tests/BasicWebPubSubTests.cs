@@ -73,9 +73,9 @@ public class BasicWebPubSubTests(bool async)
                     };
 
                 infra.Add(webpubsub);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

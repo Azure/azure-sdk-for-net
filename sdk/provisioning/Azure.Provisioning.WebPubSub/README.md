@@ -78,8 +78,6 @@ WebPubSubService webpubsub =
     };
 
 infra.Add(webpubsub);
-
-return infra;
 ```
 
 ## Troubleshooting

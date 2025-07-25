@@ -119,9 +119,9 @@ public class BasicAppServiceTests(bool async)
                             }
                     };
                 infra.Add(functionApp);
+                #endregion
 
                 return infra;
-                #endregion
             })
         .Compare(
             """

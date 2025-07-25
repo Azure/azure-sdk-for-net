@@ -106,8 +106,6 @@ PostgreSqlFlexibleServerActiveDirectoryAdministrator admin =
         PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
     };
 infra.Add(admin);
-
-return infra;
 ```
 
 ## Troubleshooting

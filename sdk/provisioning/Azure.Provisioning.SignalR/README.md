@@ -92,8 +92,6 @@ SignalRService signalr =
         }
     };
 infra.Add(signalr);
-
-return infra;
 ```
 
 ## Troubleshooting
