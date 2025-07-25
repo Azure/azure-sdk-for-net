@@ -190,6 +190,9 @@ public class UserAgentPolicy : PipelinePolicy
     /// <returns>True if the string contains non-ASCII characters, false otherwise.</returns>
     private static bool ContainsNonAscii(string value)
     {
+#if NET8_0_OR_GREATER
+        return !System.Text.Ascii.IsValid(value);
+#else
         foreach (char c in value)
         {
             if ((int)c > 0x7f)
@@ -198,5 +201,6 @@ public class UserAgentPolicy : PipelinePolicy
             }
         }
         return false;
+#endif
     }
 }
