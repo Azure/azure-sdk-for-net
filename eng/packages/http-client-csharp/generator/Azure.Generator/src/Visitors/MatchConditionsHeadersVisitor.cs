@@ -209,16 +209,24 @@ namespace Azure.Generator.Visitors
                 // Map header names to flags using string comparison
                 if (string.Equals(headerName, IfMatch, StringComparison.OrdinalIgnoreCase) ||
                     string.Equals(headerName, IfMatch.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
+                {
                     flags |= RequestConditionHeaders.IfMatch;
+                }
                 else if (string.Equals(headerName, IfNoneMatch, StringComparison.OrdinalIgnoreCase) ||
                          string.Equals(headerName, IfNoneMatch.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
+                {
                     flags |= RequestConditionHeaders.IfNoneMatch;
+                }
                 else if (string.Equals(headerName, IfModifiedSince, StringComparison.OrdinalIgnoreCase) ||
                          string.Equals(headerName, IfModifiedSince.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
+                {
                     flags |= RequestConditionHeaders.IfModifiedSince;
+                }
                 else if (string.Equals(headerName, IfUnmodifiedSince, StringComparison.OrdinalIgnoreCase) ||
                          string.Equals(headerName, IfUnmodifiedSince.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
+                {
                     flags |= RequestConditionHeaders.IfUnmodifiedSince;
+                }
             }
 
             return flags;
@@ -292,7 +300,7 @@ namespace Azure.Generator.Visitors
                     {
                         var validationStatement = new IfStatement(requestConditionsParameter.Property(propertyName).NotEqual(Null))
                         {
-                            Throw(New.Instance(new CSharpType(typeof(ArgumentNullException)),
+                            Throw(New.Instance(new CSharpType(typeof(ArgumentException)),
                                 Literal($"Service does not support the {_requestConditionsFlagMap[flag]} header for this operation.")))
                         };
                         updatedStatements.Add(validationStatement);

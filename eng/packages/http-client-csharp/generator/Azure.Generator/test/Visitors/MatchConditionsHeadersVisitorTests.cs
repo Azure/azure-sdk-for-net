@@ -249,8 +249,8 @@ namespace Azure.Generator.Tests.Visitors
 
             var bodyText = protocolMethod!.BodyStatements!.ToDisplayString();
 
-            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentNullException(\"Service does not support the If-Match header for this operation"));
-            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentNullException(\"Service does not support the If-Unmodified-Since header for this operation"));
+            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentException(\"Service does not support the If-Match header for this operation"));
+            Assert.IsTrue(bodyText.Contains("throw new global::System.ArgumentException(\"Service does not support the If-Unmodified-Since header for this operation"));
         }
 
         [TestCase(true)]
