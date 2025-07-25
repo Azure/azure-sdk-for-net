@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Azure.Security.KeyVault.Administration;
@@ -18,10 +17,11 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="KeyVaultAccessControlClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="vaultUri"> A  to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Key Vault or Managed HSM resource. See  for details. </param>
-        public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions> AddKeyVaultAccessControlClient<TBuilder>(this TBuilder builder, Uri vaultUri)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        /// <param name="credential"> A  used to authenticate requests to the vault, such as DefaultAzureCredential. </param>
+        public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions> AddKeyVaultAccessControlClient<TBuilder>(this TBuilder builder, global::.Uri vaultUri, global::.TokenCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>((options, credential) => new KeyVaultAccessControlClient(vaultUri, credential, options));
+            return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>(options => new KeyVaultAccessControlClient(vaultUri, credential, options));
         }
 
         /// <summary> Registers a <see cref="KeyVaultAccessControlClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
