@@ -114,6 +114,7 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ProvisioningContainerApp
                 Infrastructure infra = new();
 
                 ProvisioningParameter principalId = new(nameof(principalId), typeof(string)) { Value = "" };
@@ -211,6 +212,7 @@ internal class SampleTests(bool async)
                 infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_NAME", typeof(string)) { Value = cae.Name });
                 infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_ID", typeof(string)) { Value = cae.Id });
                 infra.Add(new ProvisioningOutput("AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN", typeof(string)) { Value = cae.DefaultDomain });
+                #endregion
 
                 return infra;
             })
@@ -335,12 +337,14 @@ internal class SampleTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ProvisioningResourceGroup
                 // Create a new infra group scoped to our subscription and add
                 // the resource group
                 Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
 
                 ResourceGroup rg = new("rg_test", "2024-03-01");
                 infra.Add(rg);
+                #endregion
 
                 return infra;
             })
