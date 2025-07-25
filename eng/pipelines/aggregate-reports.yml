@@ -145,6 +145,9 @@ stages:
     jobs:
       - job: ComplianceTools
         timeoutInMinutes: 120
+        variables:
+        - template: /eng/pipelines/templates/variables/codeql.yml
+
         steps:
           - template: /eng/common/pipelines/templates/steps/policheck.yml
             parameters:

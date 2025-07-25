@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,7 +18,7 @@ internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new HashSet<CSharpType>();
+    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
@@ -27,51 +28,61 @@ internal class NameVisitor : ScmLibraryVisitor
             type.Update(name: newName);
         }
 
-        if (type is not null && inputLibrary.IsResourceUpdateModel(model))
+        if (type is not null)
         {
-            var enclosingResourceName = inputLibrary.FindEnclosingResourceNameForResourceUpdateModel(model);
-            var newModelName = $"{enclosingResourceName}Patch";
-
-            _resourceUpdateModelTypes.Add(type.Type);
-
-            type.Update(name: newModelName);
-
-            foreach (var serializationProvider in type.SerializationProviders)
+            if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
             {
-                serializationProvider.Update(name: newModelName);
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
-            }
-        }
+                var newModelName = $"{enclosingResourceName}Patch";
 
-        // rename "Type" property to "ResourceType" in Azure.ResourceManager.CommonTypes.Resource
-        bool typePropertyRenamed = false;
-        if (model.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
-        {
-            foreach (var property in model.Properties)
-            {
-                if (!typePropertyRenamed && property.Type is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType)
-                    && knownType.Equals(typeof(ResourceType)) && property is InputModelProperty typeProperty)
+                _resourceUpdateModelTypes.Add(type.Type);
+
+                type.Update(name: newModelName);
+
+                foreach (var serializationProvider in type.SerializationProviders)
                 {
-                    typePropertyRenamed = true;
-                    typeProperty.Update(name: ResourceTypeName, isRequired: true);
-                }
-                if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
-                {
-                    modelProperty.Update(name: newPropertyName);
-                }
-            }
-        }
-        else
-        {
-            foreach (var property in model.Properties)
-            {
-                if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
-                {
-                    modelProperty.Update(name: newPropertyName);
+                    serializationProvider.Update(name: newModelName);
+                    _resourceUpdateModelTypes.Add(serializationProvider.Type);
                 }
             }
         }
         return base.PreVisitModel(model, type);
+    }
+
+    protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
+        DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
+        return base.PreVisitProperty(property, propertyProvider);
+    }
+
+    private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider == null || property is not InputModelProperty)
+        {
+            return;
+        }
+        var enclosingType = propertyProvider.EnclosingType;
+        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
+            || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
+        {
+            return;
+        }
+        // the Azure.ResourceManager.CommonTypes.Resource defines its `type` property as an optional `armResourceType`
+        // therefore here we need to change it to required because our common types define it as required
+        if (propertyProvider.Type.Equals(_nullableResourceType))
+        {
+            propertyProvider.Update(name: ResourceTypeName, type: typeof(ResourceType));
+        }
+    }
+
+    private readonly CSharpType _nullableResourceType = new CSharpType(typeof(ResourceType), isNullable: true);
+
+    private void DoPreVisitPropertyForUrlPropertyName(InputProperty property, PropertyProvider? propertyProvider)
+    {
+        if (propertyProvider != null && TryTransformUrlToUri(propertyProvider.Name, out var newPropertyName))
+        {
+            propertyProvider.Update(name: newPropertyName);
+        }
     }
 
     protected override MethodProvider? VisitMethod(MethodProvider method)

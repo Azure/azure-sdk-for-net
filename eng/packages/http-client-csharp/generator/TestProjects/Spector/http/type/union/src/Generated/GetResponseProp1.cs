@@ -26,6 +26,10 @@ namespace _Type.Union
         /// <param name="value"> The value. </param>
         public static implicit operator GetResponseProp1(string value) => throw null;
 
+        /// <summary> Converts a string to a <see cref="GetResponseProp1"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GetResponseProp1?(string value) => throw null;
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 

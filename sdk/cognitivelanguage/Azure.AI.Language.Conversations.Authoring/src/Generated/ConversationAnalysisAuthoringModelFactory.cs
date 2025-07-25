@@ -39,15 +39,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentResource"/>. </summary>
-        /// <param name="resourceId"> Represents the Azure resource Id. </param>
-        /// <param name="region"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Authoring.ConversationAuthoringDeploymentResource"/> instance for mocking. </returns>
-        public static ConversationAuthoringDeploymentResource ConversationAuthoringDeploymentResource(string resourceId = null, string region = null)
-        {
-            return new ConversationAuthoringDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringProjectMetadata"/>. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
         /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
@@ -168,16 +159,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="trainingStatus"> Represents the model training status. </param>
+        /// <param name="dataGenerationStatus"> Represents the model data generation status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringTrainingJobResult"/> instance for mocking. </returns>
-        public static ConversationAuthoringTrainingJobResult ConversationAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, ConversationAuthoringTrainingMode? trainingMode = null, ConversationAuthoringSubTrainingState trainingStatus = null, ConversationAuthoringSubTrainingState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
+        public static ConversationAuthoringTrainingJobResult ConversationAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, ConversationAuthoringTrainingMode? trainingMode = null, ConversationAuthoringSubTrainingState trainingStatus = null, ConversationAuthoringSubTrainingState dataGenerationStatus = null, ConversationAuthoringSubTrainingState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
         {
             return new ConversationAuthoringTrainingJobResult(
                 modelLabel,
                 trainingConfigVersion,
                 trainingMode,
                 trainingStatus,
+                dataGenerationStatus,
                 evaluationStatus,
                 estimatedEndOn,
                 serializedAdditionalRawData: null);
@@ -238,13 +231,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
-        public static ConversationAuthoringCreateDeploymentDetails ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        public static ConversationAuthoringCreateDeploymentDetails ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<ConversationAuthoringDeploymentResource> assignedResources = null)
         {
-            assignedResourceIds ??= new List<string>();
+            assignedResources ??= new List<ConversationAuthoringDeploymentResource>();
 
-            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringDeploymentState"/>. </summary>
@@ -436,21 +429,35 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ConversationAuthoringExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Authoring.ConversationExportedIntent"/>. </summary>
+        /// <param name="category"> The intent category. </param>
+        /// <param name="description"> The intent description. </param>
+        /// <param name="associatedEntities"> The list of associated entities. </param>
+        /// <returns> A new <see cref="Authoring.ConversationExportedIntent"/> instance for mocking. </returns>
+        public static ConversationExportedIntent ConversationExportedIntent(string category = null, string description = null, IEnumerable<ConversationExportedAssociatedEntityLabel> associatedEntities = null)
+        {
+            associatedEntities ??= new List<ConversationExportedAssociatedEntityLabel>();
+
+            return new ConversationExportedIntent(category, description, associatedEntities?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationExportedEntity"/>. </summary>
         /// <param name="category"> The category of the entity. </param>
+        /// <param name="description"> The entity description. </param>
         /// <param name="compositionMode"> The behavior to follow when the entity's components overlap with each other. </param>
         /// <param name="entities"> The list component of the entity. </param>
         /// <param name="prebuilts"> The prebuilt entities components. </param>
         /// <param name="regex"> The regex component of the entity. </param>
         /// <param name="requiredComponents"> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </param>
         /// <returns> A new <see cref="Authoring.ConversationExportedEntity"/> instance for mocking. </returns>
-        public static ConversationExportedEntity ConversationExportedEntity(string category = null, ConversationAuthoringCompositionMode? compositionMode = null, ConversationAuthoringExportedEntityList entities = null, IEnumerable<ConversationAuthoringExportedPrebuiltEntity> prebuilts = null, ExportedEntityRegex regex = null, IEnumerable<string> requiredComponents = null)
+        public static ConversationExportedEntity ConversationExportedEntity(string category = null, string description = null, ConversationAuthoringCompositionMode? compositionMode = null, ConversationAuthoringExportedEntityList entities = null, IEnumerable<ConversationAuthoringExportedPrebuiltEntity> prebuilts = null, ExportedEntityRegex regex = null, IEnumerable<string> requiredComponents = null)
         {
             prebuilts ??= new List<ConversationAuthoringExportedPrebuiltEntity>();
             requiredComponents ??= new List<string>();
 
             return new ConversationExportedEntity(
                 category,
+                description,
                 compositionMode,
                 entities,
                 prebuilts?.ToList(),
@@ -486,10 +493,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// The available derived classes include <see cref="Authoring.ExportedConversationOrchestrationDetails"/>, <see cref="Authoring.ExportedLuisOrchestrationDetails"/> and <see cref="Authoring.ExportedQuestionAnsweringOrchestrationDetails"/>.
         /// </param>
         /// <param name="category"> The intent category. </param>
+        /// <param name="description"> The intent description. </param>
         /// <returns> A new <see cref="Authoring.OrchestrationExportedIntent"/> instance for mocking. </returns>
-        public static OrchestrationExportedIntent OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration = null, string category = null)
+        public static OrchestrationExportedIntent OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration = null, string category = null, string description = null)
         {
-            return new OrchestrationExportedIntent(orchestration, category, serializedAdditionalRawData: null);
+            return new OrchestrationExportedIntent(orchestration, category, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.ExportedConversationOrchestrationDetails"/>. </summary>
@@ -592,10 +600,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
+        /// <param name="dataGenerationSettings"> For customers to populate if they wish to use data generation for their model training job. </param>
         /// <returns> A new <see cref="Authoring.ConversationAuthoringTrainingJobDetails"/> instance for mocking. </returns>
-        public static ConversationAuthoringTrainingJobDetails ConversationAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, ConversationAuthoringTrainingMode trainingMode = default, ConversationAuthoringEvaluationDetails evaluationOptions = null)
+        public static ConversationAuthoringTrainingJobDetails ConversationAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, ConversationAuthoringTrainingMode trainingMode = default, ConversationAuthoringEvaluationDetails evaluationOptions = null, AnalyzeConversationAuthoringDataGenerationSettings dataGenerationSettings = null)
         {
-            return new ConversationAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
+            return new ConversationAuthoringTrainingJobDetails(
+                modelLabel,
+                trainingConfigVersion,
+                trainingMode,
+                evaluationOptions,
+                dataGenerationSettings,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.ConversationAuthoringExportedModelState"/>. </summary>

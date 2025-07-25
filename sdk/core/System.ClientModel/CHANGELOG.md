@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+## 1.5.1 (2025-07-14)
+
+### Bugs Fixed
+
+- Fixed an issue where System.ClientModel.SourceGeneration was running slowly for large projects with many dependencies.
+
+### Breaking Changes
+
+- The System.ClientModel.SourceGeneration used to auto-discover `IJsonModel<T>`'s that were in the project as well as any types `T` used in `ModelReaderWriter.Read<T>` and `ModelReaderWriter.Write<T>`.  Now you must explicitly add a `ModelReaderWriterBuildableAttribute` with each type that needs to have AOT friendly reading and writing.
+
 ## 1.5.0 (2025-07-07)
 
 ### Features Added

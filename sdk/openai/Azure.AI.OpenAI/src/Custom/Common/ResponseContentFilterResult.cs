@@ -10,9 +10,6 @@ namespace Azure.AI.OpenAI;
 [CodeGenType("AzureContentFilterResultForChoice")]
 public partial class ResponseContentFilterResult
 {
-    [CodeGenMember("Error")]
-    internal InternalAzureContentFilterResultForChoiceError Error { get; }
-
 #if !AZURE_OPENAI_GA
     public ContentFilterTextSpanResult UngroundedMaterial { get; }
 #else

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,12 +44,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TargetVirtualNetwork))
             {
                 writer.WritePropertyName("targetVirtualNetwork"u8);
-                JsonSerializer.Serialize(writer, TargetVirtualNetwork);
+                ((IJsonModel<WritableSubResource>)TargetVirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(TargetSubnet))
             {
                 writer.WritePropertyName("targetSubnet"u8);
-                JsonSerializer.Serialize(writer, TargetSubnet);
+                ((IJsonModel<WritableSubResource>)TargetSubnet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    targetVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    targetVirtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("targetSubnet"u8))
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    targetSubnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    targetSubnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
