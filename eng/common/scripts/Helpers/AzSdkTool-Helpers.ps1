@@ -247,6 +247,6 @@ function Add-InstallDirectoryToPathInProfile(
 
     if (!$configContent -or !$configContent.Contains($markerComment)) {
         Write-Host "Adding installation to PATH in shell profile at '$configFile'"
-        Add-Content -Path $configFile -Value $pathCommand
+        Add-Content -Path $configFile -Value ([Environment]::NewLine + $pathCommand)
     }
 }
