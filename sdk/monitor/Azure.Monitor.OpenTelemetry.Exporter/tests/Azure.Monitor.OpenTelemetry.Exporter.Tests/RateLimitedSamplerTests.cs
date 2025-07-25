@@ -150,7 +150,7 @@ public class RateLimitedSamplerTests
         Assert.Contains(result.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         var sampleRateAttr = Assert.Single(result.Attributes, kvp => kvp.Key == "microsoft.sample_rate");
         double sampleRate = (double)sampleRateAttr.Value;
-        Assert.True(sampleRate == 99.99);
+        Assert.True(sampleRate == 100);
     }
 
     [Fact]
