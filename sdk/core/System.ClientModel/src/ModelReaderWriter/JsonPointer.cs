@@ -11,7 +11,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// .
 /// </summary>
-public static partial class JsonPointer
+internal static partial class JsonPointer
 {
     // TODO (pri 3): make sure JSON Pointer escaping works, e.g. "/a~/b"u8 finds property "a/b"
 

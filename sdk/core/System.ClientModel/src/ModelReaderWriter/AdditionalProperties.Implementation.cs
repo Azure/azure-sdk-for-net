@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Buffers.Text;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -19,6 +18,8 @@ public partial struct AdditionalProperties
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private Dictionary<byte[], byte[]>? _properties;
     private Dictionary<byte[], int>? _arrayIndices;
+
+    private delegate T? SpanParser<T>(ReadOnlySpan<byte> buffer, ReadOnlySpan<byte> span);
 
     // Value kinds for encoding type information in byte arrays
     [Flags]
@@ -54,6 +55,183 @@ public partial struct AdditionalProperties
         s_trueBooleanArray = [(byte)ValueKind.BooleanTrue, .. "true"u8];
         // Initialize false boolean array
         s_falseBooleanArray = [(byte)ValueKind.BooleanFalse, .. "false"u8];
+    }
+
+    private bool TryGetFromPointer<T>(ReadOnlySpan<byte> name, SpanParser<T> parser, T defaultValue, out T? result)
+    {
+        // Check if this is a JSON pointer (contains '/')
+        result = default;
+        int slashIndex = name.IndexOf((byte)'/');
+        if (slashIndex >= 0)
+        {
+            // This is a JSON pointer - extract the base property name
+            ReadOnlySpan<byte> baseName = name.Slice(0, slashIndex);
+            ReadOnlySpan<byte> pointer = name.Slice(slashIndex);
+
+            // Get the encoded value for the base property
+            byte[] baseEncodedValue = GetEncodedValue(baseName);
+            if (baseEncodedValue.Length == 0 || (ValueKind)baseEncodedValue[0] != ValueKind.Json)
+            {
+                return false;
+            }
+
+            // Use JsonPointer to navigate to the specific element
+            result = parser(baseEncodedValue.AsSpan(1), pointer) ?? defaultValue;
+            return true;
+        }
+
+        return false;
+    }
+
+    // Helper method to get raw encoded value bytes
+    private byte[] GetEncodedValue(ReadOnlySpan<byte> name)
+    {
+        if (_properties == null)
+        {
+            return Array.Empty<byte>();
+        }
+
+        if (name.EndsWith("/-"u8))
+        {
+            var rootArrayName = name.Slice(0, name.Length - 1).ToArray();
+            //is it worth it to calculate the size?
+            int size = 0;
+            int count = 0;
+            foreach (var kvp in EntriesStartsWith(rootArrayName))
+            {
+                count++;
+                size += kvp.Value.Length;
+            }
+
+            if (count == 0)
+            {
+                //check for the full array entry
+                if (_properties.TryGetValue(name.Slice(0, name.LastIndexOf((byte)'/')).ToArray(), out byte[]? fullArrayValue))
+                {
+                    return fullArrayValue;
+                }
+                return Array.Empty<byte>();
+            }
+            else
+            {
+                //combine all entries that start with the name
+                using var memoryStream = new MemoryStream(size + count + 2);
+                memoryStream.WriteByte((byte)ValueKind.Json);
+                memoryStream.WriteByte((byte)'[');
+                int current = 0;
+                foreach (var kvp in EntriesStartsWith(rootArrayName))
+                {
+                    memoryStream.Write(kvp.Value, 1, kvp.Value.Length - 1);
+                    if (current++ < count - 1)
+                    {
+                        memoryStream.WriteByte((byte)',');
+                    }
+                }
+                memoryStream.WriteByte((byte)']');
+                return memoryStream.ToArray();
+            }
+        }
+
+        byte[] nameBytes = name.ToArray();
+        if (!_properties.TryGetValue(nameBytes, out byte[]? encodedValue))
+        {
+            var lastSlashIndex = name.LastIndexOf((byte)'/');
+            if (Utf8Parser.TryParse(name.Slice(lastSlashIndex + 1), out int index, out _))
+            {
+                if (_properties.TryGetValue(name.Slice(0, lastSlashIndex).ToArray(), out encodedValue))
+                {
+                    Utf8JsonReader reader = new Utf8JsonReader(encodedValue.AsSpan(1));
+
+                    if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray)
+                        return Array.Empty<byte>();
+
+                    int currentIndex = 0;
+                    while (reader.Read())
+                    {
+                        if (currentIndex == index)
+                        {
+                            long start = reader.TokenStartIndex;
+                            reader.Skip();
+                            long end = reader.BytesConsumed;
+
+                            return encodedValue.AsSpan(1).Slice((int)start - 1, (int)(end - start + 1)).ToArray();
+                        }
+                        else
+                        {
+                            // Skip the value
+                            reader.Skip();
+                        }
+                        currentIndex++;
+                    }
+
+                    return Array.Empty<byte>();
+                }
+            }
+
+            return Array.Empty<byte>();
+        }
+
+        return encodedValue;
+    }
+
+    private T? GetPrimitive<T>(ReadOnlySpan<byte> propertyName, SpanParser<T?> parser, ValueKind expectedKind)
+    {
+        if (TryGetFromPointer(propertyName, parser, default, out T? result))
+        {
+            return result;
+        }
+
+        // Direct property access
+        byte[] encodedValue = GetEncodedValue(propertyName);
+        if (encodedValue.Length == 0)
+        {
+            ThrowPropertyNotFoundException(propertyName);
+            return default;
+        }
+        else
+        {
+            ValueKind kind = (ValueKind)encodedValue[0];
+            if (kind == ValueKind.Null && expectedKind.HasFlag(ValueKind.Null))
+            {
+                return default;
+            }
+            else
+            {
+                return JsonSerializer.Deserialize<T>(encodedValue.AsSpan(1));
+            }
+        }
+    }
+
+    // Helper method to write objects as JSON
+    private static void WriteObjectAsJson(Utf8JsonWriter writer, string propertyName, object value)
+    {
+        // Skip removed properties during serialization
+        if (value is RemovedValue)
+            return;
+
+        ReadOnlySpan<byte> nameBytes = System.Text.Encoding.UTF8.GetBytes(propertyName);
+
+        switch (value)
+        {
+            case string s:
+                writer.WriteString(nameBytes, s);
+                break;
+            case int i:
+                writer.WriteNumber(nameBytes, i);
+                break;
+            case bool b:
+                writer.WriteBoolean(nameBytes, b);
+                break;
+            case byte[] jsonBytes:
+                writer.WritePropertyName(nameBytes);
+                writer.WriteRawValue(jsonBytes);
+                break;
+            case NullValue:
+                writer.WriteNull(nameBytes);
+                break;
+            default:
+                throw new NotSupportedException($"Unsupported value type: {value?.GetType()}");
+        }
     }
 
     private static bool IsAnonymousType(object obj)
@@ -214,29 +392,6 @@ public partial struct AdditionalProperties
         }
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="value"></param>
-    [RequiresUnreferencedCode("RequiresUnreferencedCode")]
-    [RequiresDynamicCode("RequiresDynamicCode")]
-    public void Set(ReadOnlySpan<byte> name, object value)
-    {
-        if (IsAnonymousType(value))
-        {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-            SetInternal(name, EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options)));
-        }
-        else
-        {
-            SetInternal(name, EncodeValue(value));
-        }
-    }
-
     private object Get(ReadOnlySpan<byte> name)
     {
         if (_properties == null)
@@ -249,96 +404,6 @@ public partial struct AdditionalProperties
         }
 
         return DecodeValue(encodedValue!);
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="writer"></param>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Write(Utf8JsonWriter writer)
-    {
-        if (_properties == null)
-            return;
-
-        HashSet<byte[]> arrays = new HashSet<byte[]>(ByteArrayEqualityComparer.Instance);
-
-        foreach (var kvp in _properties)
-        {
-            if ((kvp.Value[0] & (byte)ValueKind.ArrayItem) != 0)
-            {
-                var keySpan = kvp.Key.AsSpan();
-                var slash = keySpan.IndexOf((byte)'/');
-                if (keySpan.Slice(slash + 1).IndexOf((byte)'/') >= 0)
-                {
-                    // skip properties that are multiple layers as those will be propagated to the child objects
-                    continue;
-                }
-
-                var arrayKey = keySpan.Slice(0, slash + 1).ToArray();
-                if (arrays.Contains(arrayKey))
-                {
-                    continue;
-                }
-
-                writer.WritePropertyName(keySpan.Slice(0, slash));
-                writer.WriteStartArray();
-                foreach (var arrayItem in EntriesStartsWith(arrayKey))
-                {
-                    writer.WriteRawValue(arrayItem.Value.AsSpan().Slice(1));
-                }
-                writer.WriteEndArray();
-
-                arrays.Add(arrayKey);
-                continue;
-            }
-
-            if (kvp.Key.AsSpan().IndexOf((byte)'/') >= 0)
-            {
-                continue;
-            }
-
-            // TODO we are going back and forth from bytes to string and back, which is not efficient.
-            string propertyName = Encoding.UTF8.GetString(kvp.Key);
-            WriteEncodedValueAsJson(writer, propertyName, kvp.Value);
-        }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="prefix"></param>
-    public void PropagateTo(ref AdditionalProperties target, ReadOnlySpan<byte> prefix)
-    {
-        foreach (var entry in EntriesStartsWith(prefix.ToArray()))
-        {
-            var inner = entry.Key.AsSpan().Slice(prefix.Length);
-            if ((entry.Value[0] & (byte)ValueKind.ArrayItem) > 0)
-            {
-                var indexSpan = inner.Slice(inner.LastIndexOf((byte)'/') + 1);
-                if (Utf8Parser.TryParse(indexSpan, out int index, out _))
-                {
-                    if (target._arrayIndices is null)
-                    {
-                        target._arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
-                        target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = index;
-                    }
-                    else
-                    {
-                        if (!target._arrayIndices.TryGetValue(inner.Slice(0, inner.Length - 1).ToArray(), out int existingIndex))
-                        {
-                            target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = index;
-                        }
-                        else
-                        {
-                            target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = Math.Max(index, existingIndex);
-                        }
-                    }
-                }
-            }
-            target.SetInternal(inner, entry.Value);
-        }
     }
 
     private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, string propertyName, byte[] encodedValue)
@@ -399,35 +464,6 @@ public partial struct AdditionalProperties
             default:
                 throw new NotSupportedException($"Unsupported value kind: {kind}");
         }
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <returns></returns>
-    public override string ToString()
-    {
-        if (_properties == null || _properties.Count == 0)
-            return string.Empty;
-
-        StringBuilder sb = new StringBuilder();
-        bool first = true;
-        foreach (var kvp in _properties)
-        {
-            if (!first)
-                sb.AppendLine(",");
-            first = false;
-            string propertyName = Encoding.UTF8.GetString(kvp.Key);
-            sb.Append(propertyName);
-            sb.Append(": ");
-
-            // Decode the encoded value for display
-            object decodedValue = DecodeValue(kvp.Value);
-            sb.Append(decodedValue.ToString());
-        }
-        if (_properties.Count > 0)
-            sb.AppendLine();
-        return sb.ToString();
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
