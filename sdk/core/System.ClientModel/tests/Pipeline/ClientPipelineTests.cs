@@ -360,7 +360,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.Throws<ArgumentNullException>(() =>
             pipeline.CreateMessage(null!, testMethod, testClassifier));
 
-        ssert.Throws<ArgumentNullException>(() =>
+        Assert.Throws<ArgumentNullException>(() =>
             pipeline.CreateMessage(testUri, null!, testClassifier));
     }
 
