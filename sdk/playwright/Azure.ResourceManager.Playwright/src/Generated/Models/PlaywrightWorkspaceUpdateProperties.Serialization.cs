@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Playwright.Models
             {
                 return null;
             }
-            EnablementStatus? regionalAffinity = default;
-            EnablementStatus? localAuth = default;
+            PlaywrightEnablementStatus? regionalAffinity = default;
+            PlaywrightEnablementStatus? localAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    regionalAffinity = new EnablementStatus(property.Value.GetString());
+                    regionalAffinity = new PlaywrightEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("localAuth"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    localAuth = new EnablementStatus(property.Value.GetString());
+                    localAuth = new PlaywrightEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

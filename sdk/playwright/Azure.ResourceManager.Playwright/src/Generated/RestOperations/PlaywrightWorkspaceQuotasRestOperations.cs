@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Playwright
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, QuotaName quotaName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, PlaywrightQuotaName quotaName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Playwright
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, QuotaName quotaName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, PlaywrightQuotaName quotaName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="playwrightWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PlaywrightWorkspaceQuotumData>> GetAsync(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, QuotaName quotaName, CancellationToken cancellationToken = default)
+        public async Task<Response<PlaywrightWorkspaceQuotaData>> GetAsync(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.Playwright
             {
                 case 200:
                     {
-                        PlaywrightWorkspaceQuotumData value = default;
+                        PlaywrightWorkspaceQuotaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PlaywrightWorkspaceQuotumData.DeserializePlaywrightWorkspaceQuotumData(document.RootElement);
+                        value = PlaywrightWorkspaceQuotaData.DeserializePlaywrightWorkspaceQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PlaywrightWorkspaceQuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightWorkspaceQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="playwrightWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="playwrightWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PlaywrightWorkspaceQuotumData> Get(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, QuotaName quotaName, CancellationToken cancellationToken = default)
+        public Response<PlaywrightWorkspaceQuotaData> Get(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.Playwright
             {
                 case 200:
                     {
-                        PlaywrightWorkspaceQuotumData value = default;
+                        PlaywrightWorkspaceQuotaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PlaywrightWorkspaceQuotumData.DeserializePlaywrightWorkspaceQuotumData(document.RootElement);
+                        value = PlaywrightWorkspaceQuotaData.DeserializePlaywrightWorkspaceQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PlaywrightWorkspaceQuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightWorkspaceQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

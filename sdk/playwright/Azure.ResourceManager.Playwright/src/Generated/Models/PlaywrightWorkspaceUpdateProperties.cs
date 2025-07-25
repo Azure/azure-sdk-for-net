@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="regionalAffinity"> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
         /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceUpdateProperties(EnablementStatus? regionalAffinity, EnablementStatus? localAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightWorkspaceUpdateProperties(PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegionalAffinity = regionalAffinity;
             LocalAuth = localAuth;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Playwright.Models
         }
 
         /// <summary> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
-        public EnablementStatus? RegionalAffinity { get; set; }
+        public PlaywrightEnablementStatus? RegionalAffinity { get; set; }
         /// <summary> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </summary>
-        public EnablementStatus? LocalAuth { get; set; }
+        public PlaywrightEnablementStatus? LocalAuth { get; set; }
     }
 }

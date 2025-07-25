@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 return null;
             }
             PlaywrightWorkspaceFreeTrialProperties freeTrial = default;
-            ProvisioningState? provisioningState = default;
+            PlaywrightProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new PlaywrightProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Playwright.Models
             {
                 return null;
             }
-            IReadOnlyList<PlaywrightWorkspaceQuotumData> value = default;
+            IReadOnlyList<PlaywrightWorkspaceQuotaData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Playwright.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PlaywrightWorkspaceQuotumData> array = new List<PlaywrightWorkspaceQuotumData>();
+                    List<PlaywrightWorkspaceQuotaData> array = new List<PlaywrightWorkspaceQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlaywrightWorkspaceQuotumData.DeserializePlaywrightWorkspaceQuotumData(item, options));
+                        array.Add(PlaywrightWorkspaceQuotaData.DeserializePlaywrightWorkspaceQuotaData(item, options));
                     }
                     value = array;
                     continue;

@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.Playwright.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlaywrightQuotumResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlaywrightQuotumResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightQuotumResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlaywrightQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlaywrightQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlaywrightQuotumResource"/> object. </returns>
-        public virtual PlaywrightQuotumResource GetPlaywrightQuotumResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightQuotaResource"/> object. </returns>
+        public virtual PlaywrightQuotaResource GetPlaywrightQuotaResource(ResourceIdentifier id)
         {
-            PlaywrightQuotumResource.ValidateResourceId(id);
-            return new PlaywrightQuotumResource(Client, id);
+            PlaywrightQuotaResource.ValidateResourceId(id);
+            return new PlaywrightQuotaResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlaywrightWorkspaceQuotumResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlaywrightWorkspaceQuotumResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightWorkspaceQuotumResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlaywrightWorkspaceQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlaywrightWorkspaceQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightWorkspaceQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlaywrightWorkspaceQuotumResource"/> object. </returns>
-        public virtual PlaywrightWorkspaceQuotumResource GetPlaywrightWorkspaceQuotumResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightWorkspaceQuotaResource"/> object. </returns>
+        public virtual PlaywrightWorkspaceQuotaResource GetPlaywrightWorkspaceQuotaResource(ResourceIdentifier id)
         {
-            PlaywrightWorkspaceQuotumResource.ValidateResourceId(id);
-            return new PlaywrightWorkspaceQuotumResource(Client, id);
+            PlaywrightWorkspaceQuotaResource.ValidateResourceId(id);
+            return new PlaywrightWorkspaceQuotaResource(Client, id);
         }
     }
 }

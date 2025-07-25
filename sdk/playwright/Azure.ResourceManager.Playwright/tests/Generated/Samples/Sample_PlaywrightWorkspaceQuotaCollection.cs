@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Playwright.Samples
 {
-    public partial class Sample_PlaywrightWorkspaceQuotumCollection
+    public partial class Sample_PlaywrightWorkspaceQuotaCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.Playwright.Samples
             ResourceIdentifier playwrightWorkspaceResourceId = PlaywrightWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, playwrightWorkspaceName);
             PlaywrightWorkspaceResource playwrightWorkspace = client.GetPlaywrightWorkspaceResource(playwrightWorkspaceResourceId);
 
-            // get the collection of this PlaywrightWorkspaceQuotumResource
-            PlaywrightWorkspaceQuotumCollection collection = playwrightWorkspace.GetPlaywrightWorkspaceQuota();
+            // get the collection of this PlaywrightWorkspaceQuotaResource
+            PlaywrightWorkspaceQuotaCollection collection = playwrightWorkspace.GetAllPlaywrightWorkspaceQuota();
 
             // invoke the operation
-            QuotaName quotaName = QuotaName.ExecutionMinutes;
-            PlaywrightWorkspaceQuotumResource result = await collection.GetAsync(quotaName);
+            PlaywrightQuotaName quotaName = PlaywrightQuotaName.ExecutionMinutes;
+            PlaywrightWorkspaceQuotaResource result = await collection.GetAsync(quotaName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PlaywrightWorkspaceQuotumData resourceData = result.Data;
+            PlaywrightWorkspaceQuotaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.Playwright.Samples
             ResourceIdentifier playwrightWorkspaceResourceId = PlaywrightWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, playwrightWorkspaceName);
             PlaywrightWorkspaceResource playwrightWorkspace = client.GetPlaywrightWorkspaceResource(playwrightWorkspaceResourceId);
 
-            // get the collection of this PlaywrightWorkspaceQuotumResource
-            PlaywrightWorkspaceQuotumCollection collection = playwrightWorkspace.GetPlaywrightWorkspaceQuota();
+            // get the collection of this PlaywrightWorkspaceQuotaResource
+            PlaywrightWorkspaceQuotaCollection collection = playwrightWorkspace.GetAllPlaywrightWorkspaceQuota();
 
             // invoke the operation and iterate over the result
-            await foreach (PlaywrightWorkspaceQuotumResource item in collection.GetAllAsync())
+            await foreach (PlaywrightWorkspaceQuotaResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PlaywrightWorkspaceQuotumData resourceData = item.Data;
+                PlaywrightWorkspaceQuotaData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Playwright.Samples
             ResourceIdentifier playwrightWorkspaceResourceId = PlaywrightWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, playwrightWorkspaceName);
             PlaywrightWorkspaceResource playwrightWorkspace = client.GetPlaywrightWorkspaceResource(playwrightWorkspaceResourceId);
 
-            // get the collection of this PlaywrightWorkspaceQuotumResource
-            PlaywrightWorkspaceQuotumCollection collection = playwrightWorkspace.GetPlaywrightWorkspaceQuota();
+            // get the collection of this PlaywrightWorkspaceQuotaResource
+            PlaywrightWorkspaceQuotaCollection collection = playwrightWorkspace.GetAllPlaywrightWorkspaceQuota();
 
             // invoke the operation
-            QuotaName quotaName = QuotaName.ExecutionMinutes;
+            PlaywrightQuotaName quotaName = PlaywrightQuotaName.ExecutionMinutes;
             bool result = await collection.ExistsAsync(quotaName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.Playwright.Samples
             ResourceIdentifier playwrightWorkspaceResourceId = PlaywrightWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, playwrightWorkspaceName);
             PlaywrightWorkspaceResource playwrightWorkspace = client.GetPlaywrightWorkspaceResource(playwrightWorkspaceResourceId);
 
-            // get the collection of this PlaywrightWorkspaceQuotumResource
-            PlaywrightWorkspaceQuotumCollection collection = playwrightWorkspace.GetPlaywrightWorkspaceQuota();
+            // get the collection of this PlaywrightWorkspaceQuotaResource
+            PlaywrightWorkspaceQuotaCollection collection = playwrightWorkspace.GetAllPlaywrightWorkspaceQuota();
 
             // invoke the operation
-            QuotaName quotaName = QuotaName.ExecutionMinutes;
-            NullableResponse<PlaywrightWorkspaceQuotumResource> response = await collection.GetIfExistsAsync(quotaName);
-            PlaywrightWorkspaceQuotumResource result = response.HasValue ? response.Value : null;
+            PlaywrightQuotaName quotaName = PlaywrightQuotaName.ExecutionMinutes;
+            NullableResponse<PlaywrightWorkspaceQuotaResource> response = await collection.GetIfExistsAsync(quotaName);
+            PlaywrightWorkspaceQuotaResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Playwright.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PlaywrightWorkspaceQuotumData resourceData = result.Data;
+                PlaywrightWorkspaceQuotaData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

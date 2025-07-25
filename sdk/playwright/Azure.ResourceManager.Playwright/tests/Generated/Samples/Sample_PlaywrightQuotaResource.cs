@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Playwright.Samples
 {
-    public partial class Sample_PlaywrightQuotumResource
+    public partial class Sample_PlaywrightQuotaResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.Playwright.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PlaywrightQuotumResource created on azure
-            // for more information of creating PlaywrightQuotumResource, please refer to the document of PlaywrightQuotumResource
+            // this example assumes you already have this PlaywrightQuotaResource created on azure
+            // for more information of creating PlaywrightQuotaResource, please refer to the document of PlaywrightQuotaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             AzureLocation location = new AzureLocation("eastus");
-            QuotaName playwrightQuotaName = QuotaName.ExecutionMinutes;
-            ResourceIdentifier playwrightQuotumResourceId = PlaywrightQuotumResource.CreateResourceIdentifier(subscriptionId, location, playwrightQuotaName);
-            PlaywrightQuotumResource playwrightQuotum = client.GetPlaywrightQuotumResource(playwrightQuotumResourceId);
+            PlaywrightQuotaName playwrightQuotaName = PlaywrightQuotaName.ExecutionMinutes;
+            ResourceIdentifier playwrightQuotaResourceId = PlaywrightQuotaResource.CreateResourceIdentifier(subscriptionId, location, playwrightQuotaName);
+            PlaywrightQuotaResource playwrightQuota = client.GetPlaywrightQuotaResource(playwrightQuotaResourceId);
 
             // invoke the operation
-            PlaywrightQuotumResource result = await playwrightQuotum.GetAsync();
+            PlaywrightQuotaResource result = await playwrightQuota.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PlaywrightQuotumData resourceData = result.Data;
+            PlaywrightQuotaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

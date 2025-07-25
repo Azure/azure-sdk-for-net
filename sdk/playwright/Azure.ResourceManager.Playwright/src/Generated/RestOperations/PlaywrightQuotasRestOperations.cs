@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Playwright
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, QuotaName playwrightQuotaName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, PlaywrightQuotaName playwrightQuotaName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Playwright
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, QuotaName playwrightQuotaName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, PlaywrightQuotaName playwrightQuotaName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PlaywrightQuotumData>> GetAsync(string subscriptionId, AzureLocation location, QuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public async Task<Response<PlaywrightQuotaData>> GetAsync(string subscriptionId, AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -87,13 +87,13 @@ namespace Azure.ResourceManager.Playwright
             {
                 case 200:
                     {
-                        PlaywrightQuotumData value = default;
+                        PlaywrightQuotaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PlaywrightQuotumData.DeserializePlaywrightQuotumData(document.RootElement);
+                        value = PlaywrightQuotaData.DeserializePlaywrightQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PlaywrightQuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PlaywrightQuotumData> Get(string subscriptionId, AzureLocation location, QuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public Response<PlaywrightQuotaData> Get(string subscriptionId, AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.Playwright
             {
                 case 200:
                     {
-                        PlaywrightQuotumData value = default;
+                        PlaywrightQuotaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PlaywrightQuotumData.DeserializePlaywrightQuotumData(document.RootElement);
+                        value = PlaywrightQuotaData.DeserializePlaywrightQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PlaywrightQuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
