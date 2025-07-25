@@ -202,19 +202,19 @@ public sealed partial class ClientPipeline
     /// <param name="uri">The <see cref="Uri"/> for the HTTP request.</param>
     /// <param name="method">The HTTP method for the request.</param>
     /// <param name="classifier">The <see cref="PipelineMessageClassifier"/>
-    /// to use for determining response success and retry behavior.</param>
+    /// to use for determining response success and retry behavior. If not provided,
+    /// <see cref="PipelineMessageClassifier.Default"/> will be used.</param>
     /// <returns>The created <see cref="PipelineMessage"/> with the specified
     /// URI, method, and classifier configured.</returns>
-    public PipelineMessage CreateMessage(Uri uri, string method, PipelineMessageClassifier classifier)
+    public PipelineMessage CreateMessage(Uri uri, string method, PipelineMessageClassifier? classifier = default)
     {
         Argument.AssertNotNull(uri, nameof(uri));
         Argument.AssertNotNull(method, nameof(method));
-        Argument.AssertNotNull(classifier, nameof(classifier));
 
         PipelineMessage message = CreateMessage();
         message.Request.Uri = uri;
         message.Request.Method = method;
-        message.ResponseClassifier = classifier;
+        message.ResponseClassifier = classifier ?? PipelineMessageClassifier.Default;
         return message;
     }
 

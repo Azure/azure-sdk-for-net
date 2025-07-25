@@ -372,14 +372,18 @@ public class ClientPipelineTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CreateMessageWithUriMethodAndClassifierThrowsOnNullClassifier()
+    public void CreateMessageWithUriAndMethodUsesDefaultClassifier()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
         Uri testUri = new Uri("https://example.com/test");
         string testMethod = "DELETE";
 
-        Assert.Throws<ArgumentNullException>(() =>
-            pipeline.CreateMessage(testUri, testMethod, null!));
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(PipelineMessageClassifier.Default, message.ResponseClassifier);
     }
 
     [Test]
