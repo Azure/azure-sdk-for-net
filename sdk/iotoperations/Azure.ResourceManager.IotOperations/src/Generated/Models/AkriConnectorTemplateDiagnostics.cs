@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.IotOperations.Models
 
             Logs = logs;
         }
-
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDiagnostics"/>. </summary>
         /// <param name="logs"> The log settings for the Connector template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
