@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -16,5 +12,19 @@ namespace Azure.Storage.Files.Shares
     public partial class AzureStorageFilesSharesContext
     {
         internal AzureStorageFilesSharesContext() { }
+
+        /// <summary>
+        /// Default value.
+        /// </summary>
+        public static AzureStorageFilesSharesContext Default { get { throw null; } }
+
+        /// <summary>
+        /// Attempts to get Builder Core.
+        /// </summary>
+        /// <param name="type">Type to set.</param>
+        /// <param name="builder">Reader Writer Builder to set.</param>
+        /// <returns></returns>
+        /// <exception cref="NullReferenceException"></exception>
+        protected override bool TryGetTypeBuilderCore(Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
 }
