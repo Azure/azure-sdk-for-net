@@ -350,7 +350,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CreateMessageWThrowsOnNullUriOrMethod()
+    public void CreateMessageThrowsOnNullUriOrMethod()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
         Uri testUri = new Uri("https://example.com/test");
