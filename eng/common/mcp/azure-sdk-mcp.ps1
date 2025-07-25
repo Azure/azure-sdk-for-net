@@ -65,16 +65,12 @@ Copy-Item -Path $tempExe -Destination $toolInstallDirectory -Force
 $exeName = Split-Path $tempExe -Leaf
 $exe = Join-Path $toolInstallDirectory $exeName
 
-if (!$IsLinux) {
-    Write-Host "Package $package is installed at $exe"
-    if (!$UpdatePathInProfile) {
-        Write-Warning "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
-    } else {
-        Add-InstallDirectoryToPathInProfile -InstallDirectory $toolInstallDirectory
-        Write-Warning "'$exeName' will be available in PATH for new shell sessions."
-    }
+Write-Host "Package $package is installed at $exe"
+if (!$UpdatePathInProfile) {
+    Write-Warning "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
 } else {
-    Write-Host "Package '$package' is installed at '$exe' and can be run directly by typing '$exeName'"
+    Add-InstallDirectoryToPathInProfile -InstallDirectory $toolInstallDirectory
+    Write-Warning "'$exeName' will be available in PATH for new shell sessions."
 }
 
 if ($Run) {

@@ -211,45 +211,42 @@ function Add-InstallDirectoryToPathInProfile(
     [Parameter()]
     [string]$InstallDirectory = (Get-CommonInstallDirectory)
 ) {
-    if ($IsLinux) {
-        # Expect common install directory '$HOME/bin' to be in PATH by default
-        return
-    }
+    $powershellProfilePath = $PROFILE
+    $bashrcPath = Join-Path $HOME ".bashrc"
+    $zshrcPath = Join-Path $HOME ".zshrc"
+    $markerComment = "  # azsdk install path"
+    $pathCommand = ""
+    $configFile = ""
 
-    if ($IsWindows) {
-        if (-not (Test-Path $PROFILE)) {
-            New-Item -ItemType File -Path $PROFILE -Force | Out-Null
-        }
-
-        $markerComment = "  # azsdk install path"
+    if ($IsWindows) {  # expect powershell for windows, cmd.exe path update is not currently supported
+        $configFile = $powershellProfilePath
         $pathCommand = "if (-not (`$env:PATH -like `'*$InstallDirectory*`')) { `$env:PATH += ';$InstallDirectory`' }" + $markerComment
-        Write-Host "PowerShell profile at $PROFILE"
-        $profileContent = Get-Content $PROFILE
-
-        if (!$profileContent -or !$profileContent.Contains($markerComment)) {
-            Write-Host "Adding install path to PowerShell profile at '$PROFILE'"
-            Add-Content -Path $PROFILE -Value $pathCommand
-        }
-
-        return
     }
-
-    if ($IsMacOS) {
-        $zshrcPath = Join-Path $HOME ".zshrc"
-        if (-not (Test-Path $zshrcPath)) {
-            New-Item -ItemType File -Path $zshrcPath -Force | Out-Null
+    elseif ($IsLinux) {  # handle bash or zsh shells for linux
+        if (Test-Path $zshrcPath) {
+            $configFile = $zshrcPath
         }
-        $markerComment = "  # azsdk install path"
+        else {
+            $configFile = $bashrcPath
+        }
         $pathCommand = "export PATH=`"`$PATH:$InstallDirectory`"" + $markerComment
-        $zshrcContent = Get-Content $zshrcPath
-
-        if (!$zshrcContent -or !$zshrcContent.Contains($markerComment)) {
-            Write-Host "Adding install path to zshrc config at $zshrcPath"
-            Add-Content -Path $zshrcPath -Value $pathCommand
-        }
-
-        return
+    }
+    elseif ($IsMacOS) {  # mac os should use zsh by default
+        $configFile = $zshrcPath
+        $pathCommand = "export PATH=`"`$PATH:$InstallDirectory`"" + $markerComment
+    }
+    else {
+        throw "Unsupported platform"
     }
 
-    throw "Unsupported platform"
+    if (-not (Test-Path $configFile)) {
+        New-Item -ItemType File -Path $configFile -Force | Out-Null
+    }
+
+    $configContent = Get-Content $configFile -Raw
+
+    if (!$configContent -or !$configContent.Contains($markerComment)) {
+        Write-Host "Adding installation to PATH in shell profile at '$configFile'"
+        Add-Content -Path $configFile -Value $pathCommand
+    }
 }
