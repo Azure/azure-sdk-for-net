@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
-using Azure.Messaging;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
@@ -24,15 +23,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
             details ??= new ChangeTrackingList<ReceiveDetails>();
 
             return new ReceiveResult(details?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Receive operation details per Cloud Event. </summary>
-        /// <param name="brokerProperties"> The Event Broker details. </param>
-        /// <param name="event"> Cloud Event details. </param>
-        /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
-        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = default, CloudEvent @event = default)
-        {
-            return new ReceiveDetails(brokerProperties, @event, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties of the Event Broker operation. </summary>
