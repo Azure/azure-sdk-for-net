@@ -498,11 +498,6 @@ internal static partial class JsonPointer
     /// <exception cref="NotImplementedException"></exception>
     public static Utf8JsonReader Find(Utf8JsonReader reader, ReadOnlySpan<byte> pointer)
     {
-#if NET6_0_OR_GREATER
-        string propertyName = Encoding.UTF8.GetString(pointer);
-#else
-        string propertyName = Encoding.UTF8.GetString(pointer.ToArray());
-#endif
         if (pointer.Length == 0)
             return reader;
         if (pointer[0] != (byte)'/')
@@ -513,17 +508,7 @@ internal static partial class JsonPointer
         pointer = pointer.Slice(1); // slice off the leading '/'
         int slashIndex = pointer.IndexOf((byte)'/');
         ReadOnlySpan<byte> nextPointerSegment = slashIndex == -1 ? pointer : pointer.Slice(0, slashIndex);
-#if NET6_0_OR_GREATER
-        string nextSegment = Encoding.UTF8.GetString(nextPointerSegment);
-#else
-        string nextSegment = Encoding.UTF8.GetString(nextPointerSegment.ToArray());
-#endif
         ReadOnlySpan<byte> remainingPointer = slashIndex == -1 ? ReadOnlySpan<byte>.Empty : pointer.Slice(slashIndex);
-#if NET6_0_OR_GREATER
-        string remainingPointerString = Encoding.UTF8.GetString(remainingPointer);
-#else
-        string remainingPointerString = Encoding.UTF8.GetString(remainingPointer.ToArray());
-#endif
 
         JsonTokenType jsonType = reader.TokenType;
         if (jsonType == JsonTokenType.StartObject)
@@ -546,11 +531,6 @@ internal static partial class JsonPointer
     /// <exception cref="KeyNotFoundException"></exception>
     public static Utf8JsonReader FindPropertyValue(Utf8JsonReader reader, ReadOnlySpan<byte> propertyName)
     {
-#if NET6_0_OR_GREATER
-        string pn = Encoding.UTF8.GetString(propertyName);
-#else
-        string pn = Encoding.UTF8.GetString(propertyName.ToArray());
-#endif
         while (reader.Read())
         {
             if (reader.TokenType == JsonTokenType.PropertyName && reader.ValueTextEquals(propertyName))
@@ -579,11 +559,6 @@ internal static partial class JsonPointer
     /// <exception cref="KeyNotFoundException"></exception>
     public static Utf8JsonReader FindArrayItem(Utf8JsonReader reader, ReadOnlySpan<byte> pointer)
     {
-#if NET6_0_OR_GREATER
-        string indexString = Encoding.UTF8.GetString(pointer);
-#else
-        string indexString = Encoding.UTF8.GetString(pointer.ToArray());
-#endif
         if (!Utf8Parser.TryParse(pointer, out int index, out _))
         {
 #if NET6_0_OR_GREATER
