@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0-beta.1 (2025-07-25)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed the [issue](https://github.com/Azure/azure-sdk-for-net/issues/51342) with ignoring `after` parameter when getting pageable lists.
 
 ## 1.1.0-beta.4 (2025-07-11)
 

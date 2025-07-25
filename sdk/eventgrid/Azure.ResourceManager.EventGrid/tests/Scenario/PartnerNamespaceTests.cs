@@ -143,6 +143,28 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(0, partnerNamespace.Data.Tags.Count);
         }
 
+        [Test]
+        public async Task GetPartnerNamespacePrivateLinkResourceAsync()
+        {
+            // Arrange
+            string partnerNamespaceName = Recording.GenerateAssetName("PartnerNamespace");
+            var partnerNamespace = await CreatePartnerNamespace(_resourceGroup, partnerNamespaceName);
+
+            // The private link resource name is typically "partnerNamespace"
+            string privateLinkResourceName = "partnerNamespace";
+
+            // Act
+            var response = await partnerNamespace.GetPartnerNamespacePrivateLinkResourceAsync(privateLinkResourceName);
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+            Assert.AreEqual(privateLinkResourceName, response.Value.Data.Name);
+
+            // Cleanup
+            await partnerNamespace.DeleteAsync(WaitUntil.Completed);
+        }
+
         private void ValidatePartnerNamespace(PartnerNamespaceResource partnerNamespace, string partnerNamespaceName)
         {
             Assert.IsNotNull(partnerNamespace);

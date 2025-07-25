@@ -9,7 +9,7 @@ csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
 require: https://github.com/Azure/azure-rest-api-specs/blob/f1dc99dad0b0d61849393cfa14604c1a1a7b729b/specification/search/resource-manager/readme.md
-#tag: package-preview-2025-02-01
+#tag: package-2025-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

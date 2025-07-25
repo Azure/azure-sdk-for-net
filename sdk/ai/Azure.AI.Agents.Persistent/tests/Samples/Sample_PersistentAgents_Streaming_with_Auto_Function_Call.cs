@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests;
@@ -121,7 +120,11 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         #endregion
 
         #region Snippet:StreamingWithAutoFunctionCallAsync
-        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
+        CreateRunStreamingOptions runOptions = new()
+        {
+            AutoFunctionCallOptions = autoFunctionCallOptions
+        };
+        await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: runOptions))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
@@ -189,7 +192,11 @@ public partial class Sample_PersistentAgents_Streaming_with_Auto_Function_Call :
         AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
 
         #region Snippet:StreamingWithAutoFunctionCall
-        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions);
+        CreateRunStreamingOptions runOptions = new()
+        {
+            AutoFunctionCallOptions = autoFunctionCallOptions
+        };
+        CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, options: runOptions);
         foreach (StreamingUpdate streamingUpdate in stream)
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)

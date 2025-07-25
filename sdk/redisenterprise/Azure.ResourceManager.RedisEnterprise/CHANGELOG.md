@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.2.1 (2025-07-25)
+
+### Bugs Fixed
+
+- Added some missing attributes on `AzureResourceManagerRedisEnterpriseContext` to fix potential missing models during serialization.
+
 ## 1.2.0 (2025-07-23)
 
 ### Features Added
