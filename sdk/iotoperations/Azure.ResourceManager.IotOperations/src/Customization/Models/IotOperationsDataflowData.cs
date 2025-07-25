@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
     /// A class representing the IotOperationsDataflow data model.
-    /// Instance dataflowProfile dataflow resource
+    /// Dataflow resource for instance dataflow profiles
     /// </summary>
     public partial class IotOperationsDataflowData : ResourceData
     {

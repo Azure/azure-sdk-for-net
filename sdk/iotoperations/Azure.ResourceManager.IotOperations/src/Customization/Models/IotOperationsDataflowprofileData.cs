@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotOperations
         public IotOperationsDataflowProfileData(IotOperationsExtendedLocation extendedLocation) : base()
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            ExtendedLocation  = extendedLocation;
+            ExtendedLocation = extendedLocation;
         }
     }
 
