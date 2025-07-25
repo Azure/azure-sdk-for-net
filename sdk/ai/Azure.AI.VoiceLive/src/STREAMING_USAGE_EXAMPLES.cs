@@ -2,79 +2,67 @@
 // Licensed under the MIT License.
 
 /*
-# VoiceLive SDK Streaming Updates Usage Examples
+# VoiceLive SDK Server Events Usage Examples
 
-This file demonstrates how to use the VoiceLive SDK's streaming update functionality.
+This file demonstrates how to use the VoiceLive SDK's server event streaming functionality.
 
-## Basic Update Streaming
+## Basic Server Event Streaming
 
 ```csharp
 using Azure.AI.VoiceLive;
 
 // Create and connect to a VoiceLive session
 var client = new VoiceLiveClient(endpoint, credential);
-var session = await client.CreateSessionAsync(sessionOptions);
+var session = await client.StartSessionAsync(sessionOptions);
 
-// Get all updates as they arrive
-await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync())
+// Get all server events as they arrive
+await foreach (VoiceLiveServerEvent serverEvent in session.GetUpdatesAsync())
 {
-    Console.WriteLine($"Received update: {update.Kind}");
+    Console.WriteLine($"Received event: {serverEvent.Type}");
 
-    // Handle specific update types
-    switch (update)
+    // Handle specific event types
+    switch (serverEvent)
     {
-        case SessionStartedUpdate sessionStarted:
-            Console.WriteLine($"Session started: {sessionStarted.SessionId}");
+        case VoiceLiveServerEventSessionCreated sessionCreated:
+            Console.WriteLine($"Session created: {sessionCreated.Session?.Id}");
             break;
 
-        case OutputDeltaUpdate deltaUpdate:
-            if (deltaUpdate.IsTextDelta)
-            {
-                Console.Write(deltaUpdate.TextDelta); // Stream text as it arrives
-            }
-            else if (deltaUpdate.IsAudioDelta)
-            {
-                ProcessAudioData(deltaUpdate.AudioDelta); // Process audio chunks
-            }
+        case VoiceLiveServerEventResponseTextDelta textDelta:
+            Console.Write(textDelta.Delta); // Stream text as it arrives
             break;
 
-        case InputAudioUpdate inputUpdate:
-            if (inputUpdate.IsSpeechStarted)
-            {
-                Console.WriteLine("User started speaking");
-            }
-            else if (inputUpdate.IsTranscriptionDelta)
-            {
-                Console.WriteLine($"Transcription delta: {inputUpdate.TranscriptionDelta}");
-            }
+        case VoiceLiveServerEventResponseAudioDelta audioDelta:
+            ProcessAudioData(audioDelta.Delta); // Process audio chunks
             break;
 
-        case ErrorUpdate errorUpdate:
-            Console.WriteLine($"Error: {errorUpdate.ErrorMessage}");
+        case VoiceLiveServerEventInputAudioBufferSpeechStarted speechStarted:
+            Console.WriteLine("User started speaking");
+            break;
+
+        case VoiceLiveServerEventConversationItemInputAudioTranscriptionDelta transcriptionDelta:
+            Console.WriteLine($"Transcription delta: {transcriptionDelta.Delta}");
+            break;
+
+        case VoiceLiveServerEventError errorEvent:
+            Console.WriteLine($"Error: {errorEvent.Error?.Message}");
             break;
     }
 }
 ```
 
-## Filtered Update Streaming
+## Filtered Server Event Streaming
 
 ```csharp
-// Get only specific types of updates
-await foreach (OutputDeltaUpdate delta in session.GetUpdatesAsync<OutputDeltaUpdate>())
+// Get only specific types of server events
+await foreach (VoiceLiveServerEventResponseTextDelta textDelta in session.GetUpdatesAsync<VoiceLiveServerEventResponseTextDelta>())
 {
-    if (delta.IsTextDelta)
-    {
-        Console.Write(delta.TextDelta);
-    }
+    Console.Write(textDelta.Delta);
 }
 
-// Get updates of specific kinds
-await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync(
-    cancellationToken,
-    VoiceLiveUpdateKind.ResponseTextDelta,
-    VoiceLiveUpdateKind.ResponseAudioDelta))
+// Get only audio delta events
+await foreach (VoiceLiveServerEventResponseAudioDelta audioDelta in session.GetUpdatesAsync<VoiceLiveServerEventResponseAudioDelta>())
 {
-    // Process only text and audio deltas
+    ProcessAudioData(audioDelta.Delta);
 }
 ```
 
@@ -82,111 +70,148 @@ await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync(
 
 ```csharp
 // For scenarios where you need synchronous processing
-foreach (VoiceLiveUpdate update in session.GetUpdates())
+foreach (VoiceLiveServerEvent serverEvent in session.GetUpdates())
 {
-    ProcessUpdate(update);
+    ProcessServerEvent(serverEvent);
 }
 ```
 
 ## Convenience Methods
 
 ```csharp
-// Wait for a specific update type
-SessionStartedUpdate sessionStarted = await session.WaitForUpdateAsync<SessionStartedUpdate>();
-Console.WriteLine($"Session {sessionStarted.SessionId} is ready");
+// Wait for a specific server event type
+VoiceLiveServerEventSessionCreated sessionCreated = await session.WaitForUpdateAsync<VoiceLiveServerEventSessionCreated>();
+Console.WriteLine($"Session {sessionCreated.Session?.Id} is ready");
 
-// Wait for a specific update kind
-VoiceLiveUpdate errorUpdate = await session.WaitForUpdateAsync(VoiceLiveUpdateKind.Error);
+// Wait for any error event
+VoiceLiveServerEventError errorEvent = await session.WaitForUpdateAsync<VoiceLiveServerEventError>();
+Console.WriteLine($"Error: {errorEvent.Error?.Message}");
+```
 
-// Get only delta updates (streaming content)
-await foreach (OutputDeltaUpdate delta in session.GetDeltaUpdatesAsync())
+## Avatar and Animation Events
+
+```csharp
+// Handle avatar-specific events
+await foreach (VoiceLiveServerEvent serverEvent in session.GetUpdatesAsync())
 {
-    ProcessDelta(delta);
-}
+    switch (serverEvent)
+    {
+        case VoiceLiveServerEventSessionAvatarConnecting avatarConnecting:
+            Console.WriteLine("Avatar connection in progress");
+            break;
 
-// Get only streaming updates (completion events)
-await foreach (OutputStreamingUpdate streaming in session.GetStreamingUpdatesAsync())
-{
-    ProcessStreamingUpdate(streaming);
-}
+        case ResponseAnimationBlendshapeDeltaEvent blendshapeDelta:
+            ProcessBlendshapeData(blendshapeDelta.Frames);
+            break;
 
-// Get only input audio updates
-await foreach (InputAudioUpdate inputAudio in session.GetInputAudioUpdatesAsync())
-{
-    ProcessInputAudio(inputAudio);
-}
+        case ResponseAnimationVisemeDeltaEvent visemeDelta:
+            ProcessVisemeData(visemeDelta.VisemeIds);
+            break;
 
-// Get only error updates
-await foreach (ErrorUpdate error in session.GetErrorUpdatesAsync())
-{
-    HandleError(error);
+        case ResponseEmotionHypothesis emotionHypothesis:
+            Console.WriteLine($"Detected emotion: {emotionHypothesis.Emotion} (confidence: {emotionHypothesis.Candidates?.FirstOrDefault()?.Confidence})");
+            break;
+    }
 }
 ```
 
-## WebSocket Message Handling
+## Response Lifecycle Tracking
 
-The SDK automatically handles:
-- WebSocket message fragmentation and reassembly
-- JSON deserialization of server events
-- Conversion from server events to typed update objects
-- Connection lifecycle management
-- Thread-safe message processing
+```csharp
+await foreach (VoiceLiveServerEvent serverEvent in session.GetUpdatesAsync())
+{
+    switch (serverEvent)
+    {
+        case VoiceLiveServerEventResponseCreated responseCreated:
+            Console.WriteLine($"Response started: {responseCreated.Response?.Id}");
+            break;
 
-## Update Types
+        case VoiceLiveServerEventResponseOutputItemAdded itemAdded:
+            Console.WriteLine($"Output item added: {itemAdded.Item?.Id}");
+            break;
 
-### VoiceLiveUpdateKind Enumeration
+        case VoiceLiveServerEventResponseOutputItemDone itemDone:
+            Console.WriteLine($"Output item completed: {itemDone.Item?.Id}");
+            break;
 
-- **Session Events**: SessionStarted, SessionUpdated, SessionAvatarConnecting
-- **Input Audio Events**: InputAudioBufferCommitted, InputAudioBufferCleared, InputAudioSpeechStarted, InputAudioSpeechStopped
-- **Input Transcription Events**: InputAudioTranscriptionCompleted, InputAudioTranscriptionDelta, InputAudioTranscriptionFailed
-- **Response Events**: ResponseStarted, ResponseCompleted
-- **Response Streaming Events**: ResponseOutputItemAdded, ResponseOutputItemDone, ResponseContentPartAdded, ResponseContentPartDone
-- **Response Delta Events**: ResponseTextDelta, ResponseAudioDelta, ResponseAudioTranscriptDelta
-- **Animation Events**: ResponseAnimationBlendshapesDelta, ResponseAnimationVisemeDelta, ResponseAudioTimestampDelta
-- **Error Events**: Error
+        case VoiceLiveServerEventResponseDone responseDone:
+            Console.WriteLine($"Response completed: {responseDone.Response?.Id} (status: {responseDone.Response?.Status})");
+            break;
+    }
+}
+```
 
-### Update Classes
+## Event Type Categories
 
-- **VoiceLiveUpdate**: Base class for all updates
-- **SessionStartedUpdate**: Session initialization complete
-- **InputAudioUpdate**: Input audio processing events (speech detection, transcription)
-- **OutputDeltaUpdate**: Streaming content updates (text, audio, animations)
-- **OutputStreamingUpdate**: Completion events and response lifecycle
-- **ErrorUpdate**: Error conditions and failures
+The VoiceLive service generates several categories of server events:
+
+### Session Events
+- **VoiceLiveServerEventSessionCreated**: Session initialization complete
+- **VoiceLiveServerEventSessionUpdated**: Session configuration updated
+- **VoiceLiveServerEventSessionAvatarConnecting**: Avatar connection in progress
+
+### Input Audio Events
+- **VoiceLiveServerEventInputAudioBufferSpeechStarted**: Voice activity detected
+- **VoiceLiveServerEventInputAudioBufferSpeechStopped**: Voice activity ended
+- **VoiceLiveServerEventInputAudioBufferCommitted**: Audio buffer committed
+- **VoiceLiveServerEventInputAudioBufferCleared**: Audio buffer cleared
+
+### Response Events
+- **VoiceLiveServerEventResponseCreated**: Response generation started
+- **VoiceLiveServerEventResponseDone**: Response generation completed
+- **VoiceLiveServerEventResponseOutputItemAdded**: New output item created
+- **VoiceLiveServerEventResponseOutputItemDone**: Output item completed
+
+### Content Streaming Events
+- **VoiceLiveServerEventResponseTextDelta**: Text content streaming
+- **VoiceLiveServerEventResponseTextDone**: Text content completed
+- **VoiceLiveServerEventResponseAudioDelta**: Audio content streaming
+- **VoiceLiveServerEventResponseAudioDone**: Audio content completed
+- **VoiceLiveServerEventResponseAudioTranscriptDelta**: Audio transcript streaming
+- **VoiceLiveServerEventResponseAudioTranscriptDone**: Audio transcript completed
+
+### Animation Events (VoiceLive-specific)
+- **ResponseAnimationBlendshapeDeltaEvent**: Blendshape animation data streaming
+- **ResponseAnimationBlendshapeDoneEvent**: Blendshape animation completed
+- **ResponseAnimationVisemeDeltaEvent**: Viseme animation data streaming
+- **ResponseAnimationVisemeDoneEvent**: Viseme animation completed
+- **ResponseEmotionHypothesis**: Emotion detection results
+
+### Conversation Events
+- **VoiceLiveServerEventConversationItemCreated**: New conversation item
+- **VoiceLiveServerEventConversationItemDeleted**: Conversation item removed
+- **VoiceLiveServerEventConversationItemInputAudioTranscriptionDelta**: Input transcription streaming
+- **VoiceLiveServerEventConversationItemInputAudioTranscriptionCompleted**: Input transcription completed
+
+### Error Events
+- **VoiceLiveServerEventError**: Error conditions and failures
 
 ## Error Handling
 
 ```csharp
-try
+await foreach (VoiceLiveServerEvent serverEvent in session.GetUpdatesAsync())
 {
-    await foreach (VoiceLiveUpdate update in session.GetUpdatesAsync())
+    if (serverEvent is VoiceLiveServerEventError errorEvent)
     {
-        if (update is ErrorUpdate errorUpdate)
+        Console.WriteLine($"Error occurred: {errorEvent.Error?.Message}");
+        Console.WriteLine($"Error type: {errorEvent.Error?.Type}");
+        Console.WriteLine($"Error code: {errorEvent.Error?.Code}");
+
+        // Handle specific error conditions
+        switch (errorEvent.Error?.Type)
         {
-            Console.WriteLine($"Service error: {errorUpdate.ErrorMessage}");
-            // Handle the error appropriately
-            break;
+            case "connection_error":
+                // Handle connection issues
+                break;
+            case "invalid_request_error":
+                // Handle request validation errors
+                break;
+            default:
+                // Handle other errors
+                break;
         }
-        // Process other updates
     }
 }
-catch (OperationCanceledException)
-{
-    Console.WriteLine("Update streaming was cancelled");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Unexpected error: {ex.Message}");
-}
 ```
-
-## Best Practices
-
-1. **Use appropriate update filtering** to reduce processing overhead
-2. **Handle cancellation** properly with CancellationToken
-3. **Process delta updates quickly** to avoid buffer overrun
-4. **Monitor for error updates** to handle service issues
-5. **Use async enumeration** for better resource utilization
-6. **Implement proper cleanup** when done with the session
 
 */

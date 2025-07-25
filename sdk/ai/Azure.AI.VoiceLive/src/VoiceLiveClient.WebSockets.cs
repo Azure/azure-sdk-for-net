@@ -38,10 +38,6 @@ namespace Azure.AI.VoiceLive
 
             VoiceLiveSession session = new(this, webSocketEndpoint, _keyCredential);
 
-            // Wire up events
-            session.SendingCommand += OnSendingCommand;
-            session.ReceivingMessage += OnReceivingMessage;
-
             await session.ConnectAsync(cancellationToken).ConfigureAwait(false);
 
             return session;
