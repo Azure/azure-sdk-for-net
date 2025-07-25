@@ -1,12 +1,11 @@
 namespace Azure.Storage.Blobs
 {
-<<<<<<< HEAD
-    public partial class AzureStorageBlobsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    public partial class AzureStorageBlobsContext
     {
         internal AzureStorageBlobsContext() { }
+        public static Azure.Storage.Blobs.AzureStorageBlobsContext Default { get { throw null; } }
+        protected bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-=======
->>>>>>> main
     public partial class BlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
     {
         protected BlobClient() { }

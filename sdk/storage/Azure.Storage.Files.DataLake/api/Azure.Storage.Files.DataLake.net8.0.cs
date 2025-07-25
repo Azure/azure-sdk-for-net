@@ -1,5 +1,11 @@
 namespace Azure.Storage.Files.DataLake
 {
+    public partial class AzureStorageFilesDataLakeContext
+    {
+        internal AzureStorageFilesDataLakeContext() { }
+        public static Azure.Storage.Files.DataLake.AzureStorageFilesDataLakeContext Default { get { throw null; } }
+        protected bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
         public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2025_11_05) { }

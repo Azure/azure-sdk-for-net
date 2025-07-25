@@ -25,6 +25,6 @@ namespace Azure.Storage.Blobs
         /// <param name="builder">Reader Writer Builder to set.</param>
         /// <returns></returns>
         /// <exception cref="NullReferenceException"></exception>
-        protected override bool TryGetTypeBuilderCore(Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        protected bool TryGetTypeBuilderCore(Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
 }

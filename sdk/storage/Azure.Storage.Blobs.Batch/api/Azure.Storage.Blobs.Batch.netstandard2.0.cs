@@ -1,5 +1,11 @@
 namespace Azure.Storage.Blobs.Batch
 {
+    public partial class AzureStorageBlobsBatchContext
+    {
+        internal AzureStorageBlobsBatchContext() { }
+        public static Azure.Storage.Blobs.Batch.AzureStorageBlobsBatchContext Default { get { throw null; } }
+        protected bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BatchDeleteBlobOptions
     {
         public BatchDeleteBlobOptions() { }
