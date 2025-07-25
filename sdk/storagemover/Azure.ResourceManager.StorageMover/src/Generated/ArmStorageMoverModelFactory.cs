@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -128,6 +127,78 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static EndpointBaseProperties EndpointBaseProperties(string endpointType = null, string description = null, StorageMoverProvisioningState? provisioningState = null)
         {
             return new UnknownEndpointBaseProperties(endpointType == null ? default : new EndpointType(endpointType), description, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
+        /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
+        /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
+        public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string storageAccountResourceId = null, string blobContainerName = null)
+        {
+            return new AzureStorageBlobContainerEndpointProperties(
+                EndpointType.AzureStorageBlobContainer,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                storageAccountResourceId,
+                blobContainerName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
+        /// <param name="nfsVersion"> The NFS protocol version. </param>
+        /// <param name="export"> The directory being exported from the server. </param>
+        /// <returns> A new <see cref="Models.NfsMountEndpointProperties"/> instance for mocking. </returns>
+        public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, NfsVersion? nfsVersion = null, string export = null)
+        {
+            return new NfsMountEndpointProperties(
+                EndpointType.NfsMount,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                host,
+                nfsVersion,
+                export);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
+        /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
+        /// <returns> A new <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/> instance for mocking. </returns>
+        public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier storageAccountResourceId = null, string fileShareName = null)
+        {
+            return new AzureStorageSmbFileShareEndpointProperties(
+                EndpointType.AzureStorageSmbFileShare,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                storageAccountResourceId,
+                fileShareName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
+        /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
+        /// <param name="shareName"> The name of the SMB share being exported from the server. </param>
+        /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
+        /// <returns> A new <see cref="Models.SmbMountEndpointProperties"/> instance for mocking. </returns>
+        public static SmbMountEndpointProperties SmbMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, string shareName = null, AzureKeyVaultSmbCredentials credentials = null)
+        {
+            return new SmbMountEndpointProperties(
+                EndpointType.SmbMount,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                host,
+                shareName,
+                credentials);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>
@@ -282,102 +353,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static JobRunError JobRunError(string code = null, string message = null, string target = null)
         {
             return new JobRunError(code, message, target, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>
-        /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
-        /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
-        /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
-        public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string storageAccountResourceId = null, string blobContainerName = null)
-        {
-            return new AzureStorageBlobContainerEndpointProperties(
-                EndpointType.AzureStorageBlobContainer,
-                description,
-                provisioningState,
-                serializedAdditionalRawData: null,
-                storageAccountResourceId,
-                blobContainerName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
-        /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
-        /// <param name="nfsVersion"> The NFS protocol version. </param>
-        /// <param name="export"> The directory being exported from the server. </param>
-        /// <returns> A new <see cref="Models.NfsMountEndpointProperties"/> instance for mocking. </returns>
-        public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, NfsVersion? nfsVersion = null, string export = null)
-        {
-            return new NfsMountEndpointProperties(
-                EndpointType.NfsMount,
-                description,
-                provisioningState,
-                serializedAdditionalRawData: null,
-                host,
-                nfsVersion,
-                export);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
-        /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
-        /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
-        /// <returns> A new <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/> instance for mocking. </returns>
-        public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier storageAccountResourceId = null, string fileShareName = null)
-        {
-            return new AzureStorageSmbFileShareEndpointProperties(
-                EndpointType.AzureStorageSmbFileShare,
-                description,
-                provisioningState,
-                serializedAdditionalRawData: null,
-                storageAccountResourceId,
-                fileShareName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
-        /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
-        /// <param name="shareName"> The name of the SMB share being exported from the server. </param>
-        /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
-        /// <returns> A new <see cref="Models.SmbMountEndpointProperties"/> instance for mocking. </returns>
-        public static SmbMountEndpointProperties SmbMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, string shareName = null, AzureKeyVaultSmbCredentials credentials = null)
-        {
-            return new SmbMountEndpointProperties(
-                EndpointType.SmbMount,
-                description,
-                provisioningState,
-                serializedAdditionalRawData: null,
-                host,
-                shareName,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="agentVersion"> The Agent version. </param>
-        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="agentStatus"> The Agent status. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
-        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
-        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
-        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
-        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
-        /// <param name="errorDetails"></param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageMover.StorageMoverAgentData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState)
-        {
-            return StorageMoverAgentData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, agentVersion: agentVersion, arcResourceId: arcResourceId, arcVmUuid: arcVmUuid, agentStatus: agentStatus, lastStatusUpdate: lastStatusUpdate, localIPAddress: localIPAddress, memoryInMB: memoryInMB, numberOfCores: numberOfCores, uptimeInSeconds: uptimeInSeconds, timeZone: default, uploadLimitScheduleWeeklyRecurrences: default, errorDetails: errorDetails, provisioningState: provisioningState);
         }
     }
 }
