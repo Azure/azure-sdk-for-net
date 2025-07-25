@@ -12,9 +12,6 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    /// <summary>
-    ///
-    /// </summary>
     [ModelReaderWriterBuildable(typeof(PrivateLinkListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateLink))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceProperties))]
