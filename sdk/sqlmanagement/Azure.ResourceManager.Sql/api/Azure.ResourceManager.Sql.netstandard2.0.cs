@@ -436,15 +436,31 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ElasticPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseResource> GetDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseResource> GetDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ElasticPoolActivity> GetElasticPoolActivities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ElasticPoolActivity> GetElasticPoolActivitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ElasticPoolDatabaseActivity> GetElasticPoolDatabaseActivitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ElasticPoolOperationData> GetElasticPoolOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ElasticPoolOperationData> GetElasticPoolOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetricDefinition> GetMetricDefinitions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetricDefinition> GetMetricDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetrics(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetricsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ElasticPoolResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ElasticPoolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3379,21 +3395,41 @@ namespace Azure.ResourceManager.Sql
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ServerTrustCertificateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ServerTrustCertificateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class ServiceObjectiveCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServiceObjectiveResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServiceObjectiveResource>, System.Collections.IEnumerable
     {
-        protected ServiceObjectiveCollection() { }
+        public ServiceObjectiveCollection() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<bool> Exists(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource> Get(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServiceObjectiveResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServiceObjectiveResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource>> GetAsync(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.NullableResponse<Azure.ResourceManager.Sql.ServiceObjectiveResource> GetIfExists(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sql.ServiceObjectiveResource>> GetIfExistsAsync(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServiceObjectiveResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServiceObjectiveResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServiceObjectiveResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServiceObjectiveResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class ServiceObjectiveData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ServiceObjectiveData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ServiceObjectiveData>
     {
         public ServiceObjectiveData() { }
@@ -3409,14 +3445,20 @@ namespace Azure.ResourceManager.Sql
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ServiceObjectiveData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ServiceObjectiveData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class ServiceObjectiveResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ServiceObjectiveData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.ServiceObjectiveData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServiceObjectiveResource() { }
+        public ServiceObjectiveResource() { }
         public virtual Azure.ResourceManager.Sql.ServiceObjectiveData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string serviceObjectiveName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Sql.ServiceObjectiveData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ServiceObjectiveData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.ServiceObjectiveData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3782,9 +3824,17 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LongTermRetentionPolicyResource>> GetLongTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.LongTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.MaintenanceWindowOptionResource GetMaintenanceWindowOption() { throw null; }
         public virtual Azure.ResourceManager.Sql.MaintenanceWindowsResource GetMaintenanceWindows() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetricDefinition> GetMetricDefinitions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetricDefinition> GetMetricDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetrics(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetricsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4493,6 +4543,8 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public static Azure.ResourceManager.Sql.ServiceObjectiveResource GetServiceObjectiveResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource GetSqlDatabaseAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -4525,6 +4577,8 @@ namespace Azure.ResourceManager.Sql
         public static Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource GetSqlServerAzureADAdministratorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource GetSqlServerAzureADOnlyAuthenticationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public static Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5059,23 +5113,47 @@ namespace Azure.ResourceManager.Sql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlServerCommunicationLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>, System.Collections.IEnumerable
     {
-        protected SqlServerCommunicationLinkCollection() { }
+        public SqlServerCommunicationLinkCollection() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string communicationLinkName, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string communicationLinkName, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<bool> Exists(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> Get(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.NullableResponse<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetIfExists(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetIfExistsAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlServerCommunicationLinkData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>
     {
         public SqlServerCommunicationLinkData() { }
@@ -5090,23 +5168,37 @@ namespace Azure.ResourceManager.Sql
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlServerCommunicationLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SqlServerCommunicationLinkResource() { }
+        public SqlServerCommunicationLinkResource() { }
         public virtual Azure.ResourceManager.Sql.SqlServerCommunicationLinkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string communicationLinkName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Sql.SqlServerCommunicationLinkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Sql.SqlServerCommunicationLinkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.SqlServerCommunicationLinkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlServerCommunicationLinkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlServerConnectionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource>, System.Collections.IEnumerable
@@ -5990,8 +6082,14 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ServerOperationData> GetServerOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlServerUsage> GetServerUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlServerUsage> GetServerUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource> GetServiceObjective(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServiceObjectiveResource>> GetServiceObjectiveAsync(string serviceObjectiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.Sql.ServiceObjectiveCollection GetServiceObjectives() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlDatabaseResource> GetSqlDatabase(string databaseName, string expand = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -6025,8 +6123,14 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyCollection GetSqlServerBlobAuditingPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource> GetSqlServerBlobAuditingPolicy(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource>> GetSqlServerBlobAuditingPolicyAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource> GetSqlServerCommunicationLink(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource>> GetSqlServerCommunicationLinkAsync(string communicationLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.Sql.SqlServerCommunicationLinkCollection GetSqlServerCommunicationLinks() { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerConnectionPolicyCollection GetSqlServerConnectionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource> GetSqlServerConnectionPolicy(Azure.ResourceManager.Sql.Models.ConnectionPolicyName connectionPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -7134,6 +7238,8 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.ResourceManager.Sql.RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.Sql.ServiceObjectiveResource GetServiceObjectiveResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlAgentConfigurationResource GetSqlAgentConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlDatabaseAdvisorResource GetSqlDatabaseAdvisorResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -7164,6 +7270,8 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.ResourceManager.Sql.SqlServerAzureADAdministratorResource GetSqlServerAzureADAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerAzureADOnlyAuthenticationResource GetSqlServerAzureADOnlyAuthenticationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release.")]
         public virtual Azure.ResourceManager.Sql.SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -8362,6 +8470,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.EditionCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.EditionCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class ElasticPoolActivity : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ElasticPoolActivity>
     {
         public ElasticPoolActivity() { }
@@ -8393,6 +8503,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ElasticPoolActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ElasticPoolActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class ElasticPoolDatabaseActivity : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.ElasticPoolDatabaseActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ElasticPoolDatabaseActivity>
     {
         public ElasticPoolDatabaseActivity() { }
@@ -11639,6 +11751,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlMetric : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetric>
     {
         internal SqlMetric() { }
@@ -11655,6 +11769,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetric>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetric>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlMetricAvailability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlMetricAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricAvailability>
     {
         internal SqlMetricAvailability() { }
@@ -11667,6 +11783,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricAvailability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricAvailability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlMetricDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricDefinition>
     {
         internal SqlMetricDefinition() { }
@@ -11685,6 +11803,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlMetricDefinitionUnitType : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType>
     {
@@ -11707,6 +11827,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType left, Azure.ResourceManager.Sql.Models.SqlMetricDefinitionUnitType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlMetricName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlMetricName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricName>
     {
         internal SqlMetricName() { }
@@ -11719,6 +11841,8 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlMetricPrimaryAggregationType : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlMetricPrimaryAggregationType>
     {
@@ -11762,6 +11886,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlMetricType left, Azure.ResourceManager.Sql.Models.SqlMetricType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlMetricUnitType : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlMetricUnitType>
     {
@@ -11784,6 +11910,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlMetricUnitType left, Azure.ResourceManager.Sql.Models.SqlMetricUnitType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
     public partial class SqlMetricValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlMetricValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlMetricValue>
     {
         internal SqlMetricValue() { }

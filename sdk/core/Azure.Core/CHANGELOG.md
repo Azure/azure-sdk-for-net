@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.47.1 (2025-07-15)
+
+### Features Added
+
+- Adopt System.ClientModel 1.5.1
+
 ## 1.47.0 (2025-07-09)
 
 ### Features Added
