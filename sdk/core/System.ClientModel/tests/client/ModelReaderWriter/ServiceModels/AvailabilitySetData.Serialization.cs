@@ -44,11 +44,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             }
             if (OptionalProperty.IsDefined(Sku) && !Patch.Contains("sku"u8))
             {
-                foreach (var entry in Patch.EntriesStartsWith("sku/"u8.ToArray()))
-                {
-                    var inner = entry.Key.AsSpan().Slice(4); //length of 'sku/'
-                    Sku.Patch.Set(inner, entry.Value.AsSpan().Slice(1));
-                }
+                Patch.PropagateTo(ref Sku.Patch, "sku/"u8);
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
@@ -71,11 +67,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             if (!Patch.Contains("properties"u8))
             {
                 var flattenedJson = new AdditionalProperties();
-                foreach (var entry in Patch.EntriesStartsWith("properties/"u8.ToArray()))
-                {
-                    var inner = entry.Key.AsSpan().Slice(11); //length of 'properties/'
-                    flattenedJson.Set(inner, entry.Value.AsSpan().Slice(1));
-                }
+                Patch.PropagateTo(ref flattenedJson, "properties/"u8);
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 if (OptionalProperty.IsDefined(PlatformUpdateDomainCount) && !flattenedJson.Contains("platformUpdateDomainCount"u8))
@@ -88,26 +80,26 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     writer.WritePropertyName("platformFaultDomainCount"u8);
                     writer.WriteNumberValue(PlatformFaultDomainCount.Value);
                 }
-                if (OptionalProperty.IsCollectionDefined(VirtualMachines) || flattenedJson.ContainsStartsWith("virtualMachines"u8))
+                if (flattenedJson.Contains("virtualMachines"u8))
                 {
                     writer.WritePropertyName("virtualMachines"u8);
-                    if (flattenedJson.Contains("virtualMachines"u8))
+                    writer.WriteRawValue(flattenedJson.GetJson("virtualMachines"u8));
+                }
+                else if (OptionalProperty.IsCollectionDefined(VirtualMachines))
+                {
+                    if (flattenedJson.EntriesStartsWith("virtualMachines"u8.ToArray()).Any())
                     {
-                        writer.WriteRawValue(flattenedJson.GetJson("virtualMachines"u8));
+                        foreach (var item in VirtualMachines)
+                        {
+                            flattenedJson.Set("virtualMachines/-"u8, item);
+                        }
                     }
                     else
                     {
                         writer.WriteStartArray();
-                        if (OptionalProperty.IsCollectionDefined(VirtualMachines))
+                        foreach (var item in VirtualMachines)
                         {
-                            foreach (var item in VirtualMachines)
-                            {
-                                JsonSerializer.Serialize(writer, item);
-                            }
-                        }
-                        foreach (var entry in flattenedJson.EntriesStartsWith("virtualMachines"u8.ToArray()))
-                        {
-                            writer.WriteRawValue(entry.Value.AsSpan().Slice(1));
+                            JsonSerializer.Serialize(writer, item);
                         }
                         writer.WriteEndArray();
                     }

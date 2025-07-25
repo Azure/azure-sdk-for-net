@@ -18,7 +18,7 @@ public partial struct AdditionalProperties
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private Dictionary<byte[], byte[]>? _properties;
-    private int _arrayIndex;
+    private Dictionary<byte[], int>? _arrayIndices;
 
     // Value kinds for encoding type information in byte arrays
     [Flags]
@@ -32,6 +32,7 @@ public partial struct AdditionalProperties
         Null = 1 << 4,
         BooleanTrue = 1 << 5,
         BooleanFalse = 1 << 6,
+        ArrayItem = 1 << 7,
         Boolean = BooleanTrue | BooleanFalse,
         NullableInt32 = Int32 | Null,
         NullableBoolean = Boolean | Null,
@@ -188,7 +189,24 @@ public partial struct AdditionalProperties
 
         if (name.EndsWith("/-"u8))
         {
-            _properties[[.. name, .. BitConverter.GetBytes(_arrayIndex++)]] = encodedValue;
+            if (_arrayIndices == null)
+            {
+                _arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
+            }
+
+            encodedValue[0] |= (byte)ValueKind.ArrayItem; // Mark as array item
+            var arrayNameBytes = name.Slice(0, name.Length - 1).ToArray();
+            if ( !_arrayIndices.TryGetValue(arrayNameBytes, out var index))
+            {
+                index = 0;
+                _arrayIndices[arrayNameBytes] = index;
+            }
+            else
+            {
+                index++;
+                _arrayIndices[arrayNameBytes] = index;
+            }
+            _properties[[.. arrayNameBytes, .. Encoding.UTF8.GetBytes(index.ToString())]] = encodedValue;
         }
         else
         {
@@ -243,14 +261,83 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return;
 
+        HashSet<byte[]> arrays = new HashSet<byte[]>(ByteArrayEqualityComparer.Instance);
+
         foreach (var kvp in _properties)
         {
-            if (kvp.Key.AsSpan().IndexOf((byte)'/') >= 0)
+            if ((kvp.Value[0] & (byte)ValueKind.ArrayItem) != 0)
+            {
+                var keySpan = kvp.Key.AsSpan();
+                var slash = keySpan.IndexOf((byte)'/');
+                if (keySpan.Slice(slash + 1).IndexOf((byte)'/') >= 0)
+                {
+                    // skip properties that are multiple layers as those will be propagated to the child objects
+                    continue;
+                }
+
+                var arrayKey = keySpan.Slice(0, slash + 1).ToArray();
+                if (arrays.Contains(arrayKey))
+                {
+                    continue;
+                }
+
+                writer.WritePropertyName(keySpan.Slice(0, slash));
+                writer.WriteStartArray();
+                foreach (var arrayItem in EntriesStartsWith(arrayKey))
+                {
+                    writer.WriteRawValue(arrayItem.Value.AsSpan().Slice(1));
+                }
+                writer.WriteEndArray();
+
+                arrays.Add(arrayKey);
                 continue;
+            }
+
+            if (kvp.Key.AsSpan().IndexOf((byte)'/') >= 0)
+            {
+                continue;
+            }
 
             // TODO we are going back and forth from bytes to string and back, which is not efficient.
             string propertyName = Encoding.UTF8.GetString(kvp.Key);
             WriteEncodedValueAsJson(writer, propertyName, kvp.Value);
+        }
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="prefix"></param>
+    public void PropagateTo(ref AdditionalProperties target, ReadOnlySpan<byte> prefix)
+    {
+        foreach (var entry in EntriesStartsWith(prefix.ToArray()))
+        {
+            var inner = entry.Key.AsSpan().Slice(prefix.Length);
+            if ((entry.Value[0] & (byte)ValueKind.ArrayItem) > 0)
+            {
+                var indexSpan = inner.Slice(inner.LastIndexOf((byte)'/') + 1);
+                if (Utf8Parser.TryParse(indexSpan, out int index, out _))
+                {
+                    if (target._arrayIndices is null)
+                    {
+                        target._arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
+                        target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = index;
+                    }
+                    else
+                    {
+                        if (!target._arrayIndices.TryGetValue(inner.Slice(0, inner.Length - 1).ToArray(), out int existingIndex))
+                        {
+                            target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = index;
+                        }
+                        else
+                        {
+                            target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = Math.Max(index, existingIndex);
+                        }
+                    }
+                }
+            }
+            target.SetInternal(inner, entry.Value);
         }
     }
 

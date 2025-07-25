@@ -207,27 +207,35 @@ public partial struct AdditionalProperties
             return Array.Empty<byte>();
         }
 
-        byte[] nameBytes = name.ToArray();
-        int lastSlashIndex = name.LastIndexOf((byte)'/');
-        if (lastSlashIndex > 0)
+        if (name.EndsWith("/-"u8))
         {
-            ReadOnlySpan<byte> remaining = name.Slice(lastSlashIndex + 1);
-            if (remaining.Length == 1 && remaining[0] == (byte)'-')
+            var rootArrayName = name.Slice(0, name.Length - 1).ToArray();
+            //is it worth it to calculate the size?
+            int size = 0;
+            int count = 0;
+            foreach (var kvp in EntriesStartsWith(rootArrayName))
             {
-                //is it worth it to calculate the size?
-                int size = 0;
-                int count = 0;
-                foreach (var kvp in EntriesStartsWith(nameBytes))
-                {
-                    count++;
-                    size += kvp.Value.Length;
-                }
+                count++;
+                size += kvp.Value.Length;
+            }
 
+            if (count == 0)
+            {
+                //check for the full array entry
+                if (_properties.TryGetValue(name.Slice(0, name.LastIndexOf((byte)'/')).ToArray(), out byte[]? fullArrayValue))
+                {
+                    return fullArrayValue;
+                }
+                return Array.Empty<byte>();
+            }
+            else
+            {
                 //combine all entries that start with the name
-                using var memoryStream = new MemoryStream(size + count);
+                using var memoryStream = new MemoryStream(size + count + 2);
                 memoryStream.WriteByte((byte)ValueKind.Json);
+                memoryStream.WriteByte((byte)'[');
                 int current = 0;
-                foreach (var kvp in EntriesStartsWith(nameBytes))
+                foreach (var kvp in EntriesStartsWith(rootArrayName))
                 {
                     memoryStream.Write(kvp.Value, 1, kvp.Value.Length - 1);
                     if (current++ < count - 1)
@@ -235,16 +243,47 @@ public partial struct AdditionalProperties
                         memoryStream.WriteByte((byte)',');
                     }
                 }
+                memoryStream.WriteByte((byte)']');
                 return memoryStream.ToArray();
-            }
-            else if (Utf8Parser.TryParse(remaining, out int index, out _))
-            {
-                return EntriesStartsWith(name.Slice(0, lastSlashIndex).ToArray()).Skip(index).Take(1).First().Value;
             }
         }
 
+        byte[] nameBytes = name.ToArray();
         if (!_properties.TryGetValue(nameBytes, out byte[]? encodedValue))
         {
+            var lastSlashIndex = name.LastIndexOf((byte)'/');
+            if (Utf8Parser.TryParse(name.Slice(lastSlashIndex + 1), out int index, out _))
+            {
+                if (_properties.TryGetValue(name.Slice(0, lastSlashIndex).ToArray(), out encodedValue))
+                {
+                    Utf8JsonReader reader = new Utf8JsonReader(encodedValue.AsSpan(1));
+
+                    if (!reader.Read() || reader.TokenType != JsonTokenType.StartArray)
+                        return Array.Empty<byte>();
+
+                    int currentIndex = 0;
+                    while (reader.Read())
+                    {
+                        if (currentIndex == index)
+                        {
+                            long start = reader.TokenStartIndex;
+                            reader.Skip();
+                            long end = reader.BytesConsumed;
+
+                            return encodedValue.AsSpan(1).Slice((int)start - 1, (int)(end - start + 1)).ToArray();
+                        }
+                        else
+                        {
+                            // Skip the value
+                            reader.Skip();
+                        }
+                        currentIndex++;
+                    }
+
+                    return Array.Empty<byte>();
+                }
+            }
+
             return Array.Empty<byte>();
         }
 
@@ -360,7 +399,7 @@ public partial struct AdditionalProperties
     public BinaryData GetJson(ReadOnlySpan<byte> jsonPointer)
     {
         byte[] encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Length == 0 || (ValueKind)encodedValue[0] != ValueKind.Json)
+        if (encodedValue.Length == 0 || (encodedValue[0] & (byte)ValueKind.Json) == 0)
             ThrowPropertyNotFoundException(jsonPointer);
 
         // Extract JSON bytes (skip the first byte which is the kind)
