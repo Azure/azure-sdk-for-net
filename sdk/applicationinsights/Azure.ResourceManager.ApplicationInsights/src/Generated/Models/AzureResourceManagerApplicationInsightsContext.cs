@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ApplicationInsights.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
@@ -13,6 +15,61 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AnnotationsListResult))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsAnnotation))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsApiKeyContent))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentAnalyticsItem))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentAnalyticsItemProperties))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentApiKey))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentApiKeyListResult))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentAvailableFeatures))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentBillingFeatures))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentData))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentDataVolumeCap))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentExportConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentExportContent))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentFavorite))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentFeature))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentFeatureCapabilities))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentFeatureCapability))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentListResult))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentProactiveDetectionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentQuotaStatus))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentResource))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsComponentWebTestLocation))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWebTestData))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWebTestResource))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookData))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookPatch))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookResource))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookRevisionResource))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookTemplateData))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookTemplatePatch))]
+    [ModelReaderWriterBuildable(typeof(ApplicationInsightsWorkbookTemplateResource))]
+    [ModelReaderWriterBuildable(typeof(ComponentPurgeContent))]
+    [ModelReaderWriterBuildable(typeof(ComponentPurgeFilters))]
+    [ModelReaderWriterBuildable(typeof(ComponentPurgeResult))]
+    [ModelReaderWriterBuildable(typeof(ComponentPurgeStatusResult))]
+    [ModelReaderWriterBuildable(typeof(LiveTokenResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkScopedResourceReference))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WebTestComponentTag))]
+    [ModelReaderWriterBuildable(typeof(WebTestConfiguration))]
+    [ModelReaderWriterBuildable(typeof(WebTestContentValidation))]
+    [ModelReaderWriterBuildable(typeof(WebTestGeolocation))]
+    [ModelReaderWriterBuildable(typeof(WebTestListResult))]
+    [ModelReaderWriterBuildable(typeof(WebTestRequest))]
+    [ModelReaderWriterBuildable(typeof(WebTestRequestHeaderField))]
+    [ModelReaderWriterBuildable(typeof(WebTestValidationRules))]
+    [ModelReaderWriterBuildable(typeof(WorkbooksListResult))]
+    [ModelReaderWriterBuildable(typeof(WorkbookTemplateGallery))]
+    [ModelReaderWriterBuildable(typeof(WorkbookTemplateLocalizedGallery))]
+    [ModelReaderWriterBuildable(typeof(WorkItemConfiguration))]
+    [ModelReaderWriterBuildable(typeof(WorkItemConfigurationsListResult))]
+    [ModelReaderWriterBuildable(typeof(WorkItemCreateConfiguration))]
     public partial class AzureResourceManagerApplicationInsightsContext : ModelReaderWriterContext
     {
     }

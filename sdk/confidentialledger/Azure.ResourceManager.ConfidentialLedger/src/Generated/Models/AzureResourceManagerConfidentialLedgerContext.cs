@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ConfidentialLedger.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
@@ -13,6 +15,30 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AadBasedSecurityPrincipal))]
+    [ModelReaderWriterBuildable(typeof(CertBasedSecurityPrincipal))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerBackupContent))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerBackupResult))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerData))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerDeploymentType))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerList))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerMemberIdentityCertificate))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerProperties))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerResource))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerRestoreContent))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerRestoreResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfBackupContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfBackupResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfData))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfList))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfRestoreContent))]
+    [ModelReaderWriterBuildable(typeof(ManagedCcfRestoreResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConfidentialLedgerContext : ModelReaderWriterContext
     {
     }

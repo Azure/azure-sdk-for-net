@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerAppConfigurationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppConfigurationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.ExtendedLocations
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.CustomLocationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.CustomLocationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationPatch))]
     public partial class AzureResourceManagerExtendedLocationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerExtendedLocationsContext() { }
