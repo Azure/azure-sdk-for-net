@@ -25,6 +25,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.RejectResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReleaseResult))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.RenewLocksResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureMessagingEventGridNamespacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureMessagingEventGridNamespacesContext() { }
