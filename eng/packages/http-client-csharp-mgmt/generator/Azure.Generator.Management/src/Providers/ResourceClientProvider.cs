@@ -350,9 +350,11 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false));
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
                     var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true));
+                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
                 }
             }
 

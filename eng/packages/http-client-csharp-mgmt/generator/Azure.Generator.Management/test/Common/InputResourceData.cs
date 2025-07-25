@@ -29,13 +29,22 @@ namespace Azure.Generator.Management.Tests.Common
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var subscriptionIdParameter = InputFactory.Parameter("subscriptionId", new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid"), location: InputRequestLocation.Path, kind: InputParameterKind.Client);
             var resourceGroupParameter = InputFactory.Parameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
-            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
-            var crossLanguageDefinitionId = Guid.NewGuid().ToString();
+            var dataParameter = InputFactory.Parameter("data", responseModel, location: InputRequestLocation.Body);
+            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
+            var getCrossLanguageDefinitionId = Guid.NewGuid().ToString();
+            var createCrossLanguageDefinitionId = Guid.NewGuid().ToString();
             var client = InputFactory.Client(
                 TestClientName,
-                methods: [InputFactory.BasicServiceMethod("get", operation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: crossLanguageDefinitionId)],
+                methods: [
+                    InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: getCrossLanguageDefinitionId),
+                    InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: createCrossLanguageDefinitionId)
+                ],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
-            decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, ResourceOperationKind.Get)], "ResponseType"));
+            decorators.Add(BuildResourceMetadata(responseModel, client, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, [
+                new ResourceMethod(getCrossLanguageDefinitionId, ResourceOperationKind.Get),
+                new ResourceMethod(createCrossLanguageDefinitionId, ResourceOperationKind.Create)
+            ], "ResponseType"));
             return (client, [responseModel]);
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartArray();
             foreach (var item in DnsResolverDomainLists)
             {
-                JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DnsSecurityRuleState))
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.DnsResolver
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default));
                             }
                             dnsResolverDomainLists = array;
                             continue;

@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
-using Azure.AI.Agents.Persistent.Custom.Streaming;
 
 namespace Azure.AI.Agents.Persistent
 {

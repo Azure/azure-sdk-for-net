@@ -139,7 +139,7 @@ known_content_issues:
 
   - ['sdk/extension-wcf/Microsoft.CoreWCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/extension-wcf/Microsoft.WCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
- 
+
   - ['sdk/provisioning/Azure.Provisioning.AppService/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Sql/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.ServiceBus/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
@@ -165,6 +165,7 @@ known_content_issues:
   - ['sdk/provisioning/Azure.Provisioning.ApplicationInsights/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.ContainerService/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Deployment/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/provisioning/Azure.Provisioning.RedisEnterprise/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

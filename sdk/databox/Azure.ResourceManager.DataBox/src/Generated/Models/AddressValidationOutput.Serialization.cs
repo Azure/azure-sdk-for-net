@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ValidationStatus))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("validationStatus"u8))
