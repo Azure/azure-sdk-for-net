@@ -1,11 +1,5 @@
 namespace Azure.Data.Tables
 {
-    public partial class AzureDataTablesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureDataTablesContext() { }
-        public static Azure.Data.Tables.AzureDataTablesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial interface ITableEntity
     {
         Azure.ETag ETag { get; set; }

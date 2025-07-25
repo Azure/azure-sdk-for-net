@@ -22,7 +22,7 @@ model ZooProperties {
 
 @armResourceOperations
 interface Zoos {
-  createOrUpdate is ArmResourceCreateOrUpdateAsync<Zoo>;
+  createZoo is ArmResourceCreateOrUpdateAsync<Zoo>;
 
   get is ArmResourceRead<Zoo>;
 

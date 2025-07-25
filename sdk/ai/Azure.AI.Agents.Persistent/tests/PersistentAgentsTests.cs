@@ -1434,7 +1434,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = null;
             if (useStream)
             {
-                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: include))
+                CreateRunStreamingOptions opts = new()
+                {
+                    Include = include,
+                };
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: opts))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -1871,7 +1875,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                 MessageRole.User,
                 "Get humidity for address, 456 2nd Ave in city, Seattle");
 
-            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions))
+            CreateRunStreamingOptions opts = new()
+            {
+                AutoFunctionCallOptions = autoFunctionCallOptions
+            };
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: opts))
             {
                 if (streamingUpdate is MessageContentUpdate contentUpdate)
                 {

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("securityPolicyName"u8);
             writer.WriteStringValue(SecurityPolicyName);
             writer.WritePropertyName("changeToWafPolicy"u8);
-            JsonSerializer.Serialize(writer, ChangeToWafPolicy);
+            ((IJsonModel<WritableSubResource>)ChangeToWafPolicy).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("changeToWafPolicy"u8))
                 {
-                    changeToWafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    changeToWafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

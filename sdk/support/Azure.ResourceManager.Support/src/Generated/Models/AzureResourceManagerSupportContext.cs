@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
@@ -13,6 +15,47 @@ namespace Azure.ResourceManager.Support
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ChatTranscriptDetailData))]
+    [ModelReaderWriterBuildable(typeof(ChatTranscriptMessageProperties))]
+    [ModelReaderWriterBuildable(typeof(ChatTranscriptsListResult))]
+    [ModelReaderWriterBuildable(typeof(CommunicationsListResult))]
+    [ModelReaderWriterBuildable(typeof(FilesListResult))]
+    [ModelReaderWriterBuildable(typeof(FileWorkspaceDetailData))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationData))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationResource))]
+    [ModelReaderWriterBuildable(typeof(ProblemClassificationsListResult))]
+    [ModelReaderWriterBuildable(typeof(QuotaTicketDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SecondaryConsent))]
+    [ModelReaderWriterBuildable(typeof(SecondaryConsentEnabled))]
+    [ModelReaderWriterBuildable(typeof(ServicesListResult))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionFileWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionSupportTicketResource))]
+    [ModelReaderWriterBuildable(typeof(SupportAzureServiceData))]
+    [ModelReaderWriterBuildable(typeof(SupportAzureServiceResource))]
+    [ModelReaderWriterBuildable(typeof(SupportContactProfile))]
+    [ModelReaderWriterBuildable(typeof(SupportContactProfileContent))]
+    [ModelReaderWriterBuildable(typeof(SupportEngineer))]
+    [ModelReaderWriterBuildable(typeof(SupportFileDetailData))]
+    [ModelReaderWriterBuildable(typeof(SupportNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(SupportNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(SupportQuotaChangeContent))]
+    [ModelReaderWriterBuildable(typeof(SupportServiceLevelAgreement))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketChatTranscriptResource))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketCommunicationData))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketCommunicationResource))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketData))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketFileResource))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketNoSubChatTranscriptResource))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketNoSubCommunicationResource))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketNoSubFileResource))]
+    [ModelReaderWriterBuildable(typeof(SupportTicketsListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TechnicalTicketDetails))]
+    [ModelReaderWriterBuildable(typeof(TenantFileWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(TenantSupportTicketResource))]
+    [ModelReaderWriterBuildable(typeof(UpdateSupportTicket))]
+    [ModelReaderWriterBuildable(typeof(UploadFileContent))]
     public partial class AzureResourceManagerSupportContext : ModelReaderWriterContext
     {
     }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Blueprint.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
@@ -13,6 +16,45 @@ namespace Azure.ResourceManager.Blueprint
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ArtifactData))]
+    [ModelReaderWriterBuildable(typeof(ArtifactList))]
+    [ModelReaderWriterBuildable(typeof(AssignmentData))]
+    [ModelReaderWriterBuildable(typeof(AssignmentDeploymentJob))]
+    [ModelReaderWriterBuildable(typeof(AssignmentDeploymentJobResult))]
+    [ModelReaderWriterBuildable(typeof(AssignmentJobCreatedResult))]
+    [ModelReaderWriterBuildable(typeof(AssignmentList))]
+    [ModelReaderWriterBuildable(typeof(AssignmentLockSettings))]
+    [ModelReaderWriterBuildable(typeof(AssignmentOperationData))]
+    [ModelReaderWriterBuildable(typeof(AssignmentOperationList))]
+    [ModelReaderWriterBuildable(typeof(AssignmentOperationResource))]
+    [ModelReaderWriterBuildable(typeof(AssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(AssignmentStatus))]
+    [ModelReaderWriterBuildable(typeof(AzureResourceManagerError))]
+    [ModelReaderWriterBuildable(typeof(BlueprintArtifactResource))]
+    [ModelReaderWriterBuildable(typeof(BlueprintData))]
+    [ModelReaderWriterBuildable(typeof(BlueprintList))]
+    [ModelReaderWriterBuildable(typeof(BlueprintResource))]
+    [ModelReaderWriterBuildable(typeof(BlueprintResourceStatusBase))]
+    [ModelReaderWriterBuildable(typeof(BlueprintStatus))]
+    [ModelReaderWriterBuildable(typeof(BlueprintVersionArtifactResource))]
+    [ModelReaderWriterBuildable(typeof(Models.ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ParameterDefinition))]
+    [ModelReaderWriterBuildable(typeof(ParameterValue))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentArtifact))]
+    [ModelReaderWriterBuildable(typeof(PublishedBlueprintData))]
+    [ModelReaderWriterBuildable(typeof(PublishedBlueprintList))]
+    [ModelReaderWriterBuildable(typeof(PublishedBlueprintResource))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupDefinition))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupValue))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentArtifact))]
+    [ModelReaderWriterBuildable(typeof(SecretValueReference))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TemplateArtifact))]
+    [ModelReaderWriterBuildable(typeof(UnknownArtifact))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WhoIsBlueprintContract))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerBlueprintContext : ModelReaderWriterContext
     {
     }
