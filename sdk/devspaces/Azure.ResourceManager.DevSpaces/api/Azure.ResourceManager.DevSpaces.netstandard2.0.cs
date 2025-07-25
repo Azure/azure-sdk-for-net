@@ -1,15 +1,5 @@
 namespace Azure.ResourceManager.DevSpaces
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.ControllerData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.ControllerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.ContainerHostMapping))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.ControllerConnectionDetailsList))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.ControllerPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.DevSpacesSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.KubernetesConnectionDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.ListConnectionDetailsContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DevSpaces.Models.OrchestratorSpecificConnectionDetails))]
     public partial class AzureResourceManagerDevSpacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDevSpacesContext() { }

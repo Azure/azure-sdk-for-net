@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ManagedServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices
 {
@@ -13,6 +15,26 @@ namespace Azure.ResourceManager.ManagedServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServicesAuthorization))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesEligibleApprover))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesEligibleAuthorization))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesJustInTimeAccessPolicy))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesMarketplaceRegistrationData))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesMarketplaceRegistrationProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesMarketplaceRegistrationResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesPlan))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationAssignmentProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationAssignmentRegistrationData))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationAssignmentRegistrationProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationData))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServicesRegistrationResource))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceRegistrationDefinitionList))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerManagedServicesContext : ModelReaderWriterContext
     {
     }
