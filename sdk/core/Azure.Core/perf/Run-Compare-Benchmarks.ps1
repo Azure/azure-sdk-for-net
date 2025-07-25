@@ -4,17 +4,40 @@
 $benchmarkProject = "perf/Azure.Core.Perf.csproj"
 $framework = "net8.0"
 
-# Run the benchmarks (ensure JSON exporter is enabled in your config)
-Write-Host "Running benchmarks..."
-dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.PipelineDefaultBenchmark*
-dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.PipelineBenchmark*
-dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.EventSourceBenchmark*
-dotnet run -c Release --framework $framework --bm --filter Azure.Core.Perf.DynamicObjectBenchmark*
+# Define the benchmark filters
+$benchmarkFilters = @(
+    "Azure.Core.Perf.PipelineDefaultBenchmark*",
+    "Azure.Core.Perf.PipelineBenchmark*",
+    "Azure.Core.Perf.EventSourceBenchmark*",
+    "Azure.Core.Perf.DynamicObjectBenchmark*"
+)
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Benchmark run failed. Exiting."
-    exit 1
+# First run: Local Azure.Core project (no AzureCoreVersion set)
+Write-Host "Running benchmarks with local Azure.Core project..."
+$env:AzureCoreVersion = ""
+foreach ($filter in $benchmarkFilters) {
+    Write-Host "Running filter: $filter"
+    dotnet run -c Release --framework $framework --bm --filter $filter
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Benchmark run failed for filter: $filter. Exiting."
+        exit 1
+    }
 }
+
+# Second run: Azure.Core NuGet package version from Packages.Data.props
+Write-Host "Running benchmarks with Azure.Core NuGet package version $nugetVersion..."
+$env:AzureCoreVersion = "nuget"
+foreach ($filter in $benchmarkFilters) {
+    Write-Host "Running filter: $filter"
+    dotnet run -c Release --framework $framework --bm --filter $filter
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Benchmark run failed for filter: $filter. Exiting."
+        exit 1
+    }
+}
+
+# Clean up environment variable
+$env:AzureCoreVersion = ""
 
 # Run the comparison script
 Write-Host "Comparing benchmark results..."

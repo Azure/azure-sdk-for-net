@@ -11,8 +11,6 @@ using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
-using Benchmarks.Nuget;
-using Benchmarks.Local;
 
 namespace Azure.Core.Perf
 {
@@ -21,29 +19,29 @@ namespace Azure.Core.Perf
     [MemoryDiagnoser]
     public class PipelineDefaultBenchmark
     {
-        private Benchmarks.Local.PipelineDefaultScenario _localScenario;
-        private Benchmarks.Nuget.PipelineDefaultScenario _nugetScenario;
+        /// <summary>
+        /// The HTTP pipeline used for sending requests.
+        /// </summary>
+        public HttpPipeline _pipeline;
 
         [GlobalSetup]
         public void SetUp()
         {
-            // Set up local scenario
-            _localScenario = new Benchmarks.Local.PipelineDefaultScenario();
-
-            // Set up NuGet scenario
-            _nugetScenario = new Benchmarks.Nuget.PipelineDefaultScenario();
+            // Update the code to explicitly use the local BenchmarkClientOptions
+            var options = new BenchmarkClientOptions
+            {
+                Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
+            };
+            _pipeline = HttpPipelineBuilder.Build(options);
         }
 
         [Benchmark]
         public async Task<Response> LocalDefaultPipeline()
         {
-            return await _localScenario.SendAsync();
-        }
-
-        [Benchmark(Baseline = true)]
-        public async Task<Response> NugetDefaultPipeline()
-        {
-            return await _nugetScenario.SendAsync();
+            var message = _pipeline.CreateMessage();
+            message.Request.Uri.Reset(new Uri("https://www.example.com"));
+            await _pipeline.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
+            return message.Response;
         }
     }
 }

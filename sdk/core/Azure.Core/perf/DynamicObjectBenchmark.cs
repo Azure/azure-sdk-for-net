@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using Azure.Core.Tests;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using Benchmarks.Local;
-using Benchmarks.Nuget;
 
 namespace Azure.Core.Perf
 {
@@ -14,97 +16,103 @@ namespace Azure.Core.Perf
     [MemoryDiagnoser]
     public class DynamicObjectBenchmark
     {
+        private string _fileName;
+        private JsonDocument _jsonDocument;
+        private ModelWithBinaryData _modelWithBinaryData;
+        private ModelWithObject _modelWithObject;
+
         private static readonly string FileName = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "TestData",
             "JsonFormattedString.json");
 
-        private Benchmarks.Local.DynamicObjectScenario _localScenario;
-        private Benchmarks.Nuget.DynamicObjectScenario _nugetScenario;
-
         [GlobalSetup]
         public void SetUp()
         {
-            _localScenario = new Benchmarks.Local.DynamicObjectScenario(FileName);
-            _nugetScenario = new Benchmarks.Nuget.DynamicObjectScenario(FileName);
+            _fileName = FileName;
+            using var fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            _jsonDocument = JsonDocument.Parse(fs);
+
+            var anon = new
+            {
+                a = "properties.a.value",
+                innerProperties = new
+                {
+                    a = "properties.innerProperties.a.value"
+                }
+            };
+
+            _modelWithBinaryData = new ModelWithBinaryData();
+            _modelWithBinaryData.A = "a.value";
+            _modelWithBinaryData.Properties = BinaryData.FromObjectAsJson(anon);
+
+            _modelWithObject = new ModelWithObject();
+            _modelWithObject.A = "a.value";
+            _modelWithObject.Properties = new Dictionary<string, object>()
+            {
+                { "a", "a.value" },
+                { "innerProperties", new Dictionary<string, object>()
+                    {
+                        {"a", "properties.innerProperties.a.value" }
+                    }
+                }
+            };
         }
 
         [Benchmark]
-        public void Local_DeserializeWithObject()
+        public void DeserializeWithObject()
         {
-            _localScenario.DeserializeWithObject();
+            var model = ModelWithObject.DeserializeModelWithObject(_jsonDocument.RootElement);
         }
 
         [Benchmark]
-        public void Nuget_DeserializeWithObject()
+        public void DeserializeWithObjectAndAccess()
         {
-            _nugetScenario.DeserializeWithObject();
+            var model = ModelWithObject.DeserializeModelWithObject(_jsonDocument.RootElement);
+            var properties = model.Properties as Dictionary<string, object>;
+            var innerProperties = properties!["innerProperties"] as Dictionary<string, object>;
+            var innerA = innerProperties!["a"] as string;
         }
 
         [Benchmark]
-        public void Local_DeserializeWithObjectAndAccess()
+        public void SerializeWithObject()
         {
-            _localScenario.DeserializeWithObjectAndAccess();
+            using var ms = new MemoryStream();
+            using var writer = new Utf8JsonWriter(ms);
+            _modelWithObject.Write(writer);
         }
 
         [Benchmark]
-        public void Nuget_DeserializeWithObjectAndAccess()
+        public void DeserializeWithBinaryData()
         {
-            _nugetScenario.DeserializeWithObjectAndAccess();
+            var model = ModelWithBinaryData.DeserializeModelWithBinaryData(_jsonDocument.RootElement);
         }
 
         [Benchmark]
-        public void Local_SerializeWithObject()
+        public void DeserializeWithBinaryDataAndAccess()
         {
-            _localScenario.SerializeWithObject();
+            var model = ModelWithBinaryData.DeserializeModelWithBinaryData(_jsonDocument.RootElement);
+            var properties = model.Properties.ToObjectFromJson<Dictionary<string, object>>();
+            if (properties!["innerProperties"] is JsonElement innerElement && innerElement.ValueKind == JsonValueKind.Object)
+            {
+                var innerProperties = JsonSerializer.Deserialize<Dictionary<string, object>>(innerElement.GetRawText());
+                // Now you can access innerA
+                var innerA = innerProperties!["a"] as string;
+            }
         }
 
         [Benchmark]
-        public void Nuget_SerializeWithObject()
+        public void SerializeWithBinaryData()
         {
-            _nugetScenario.SerializeWithObject();
+            using var ms = new MemoryStream();
+            using var writer = new Utf8JsonWriter(ms);
+            _modelWithBinaryData.Write(writer);
         }
 
-        [Benchmark]
-        public void Local_DeserializeWithBinaryData()
-        {
-            _localScenario.DeserializeWithBinaryData();
-        }
-
-        [Benchmark]
-        public void Nuget_DeserializeWithBinaryData()
-        {
-            _nugetScenario.DeserializeWithBinaryData();
-        }
-
-        [Benchmark]
-        public void Local_DeserializeWithBinaryDataAndAccess()
-        {
-            _localScenario.DeserializeWithBinaryDataAndAccess();
-        }
-
-        [Benchmark]
-        public void Nuget_DeserializeWithBinaryDataAndAccess()
-        {
-            _nugetScenario.DeserializeWithBinaryDataAndAccess();
-        }
-
-        [Benchmark]
-        public void Local_SerializeWithBinaryData()
-        {
-            _localScenario.SerializeWithBinaryData();
-        }
-
-        [Benchmark]
-        public void Nuget_SerializeWithBinaryData()
-        {
-            _nugetScenario.SerializeWithBinaryData();
-        }
         [GlobalCleanup]
         public void CleanUp()
         {
-            _localScenario.Dispose();
-            _nugetScenario.Dispose();
+            _jsonDocument?.Dispose();
         }
     }
 }

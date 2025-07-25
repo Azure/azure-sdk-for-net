@@ -3,17 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetFrameworks>net462;net8.0;net9.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Benchmarks.Local\Benchmarks.Local.csproj" />
-    <None Include="Benchmarks.Nuget\Benchmarks.Nuget.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Condition="'$(AzureCoreVersion)' == ''" Include="../../Azure.Core/src/Azure.Core.csproj" />
-    <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" VersionOverride="$(AzureCoreVersion)" />
+    <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />

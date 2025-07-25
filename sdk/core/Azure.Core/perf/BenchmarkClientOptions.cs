@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Benchmarks.Local
+namespace Azure.Core.Perf
 {
     /// <summary>
     /// Options for configuring the benchmark client.

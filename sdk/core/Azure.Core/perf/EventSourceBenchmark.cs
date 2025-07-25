@@ -10,8 +10,6 @@ using System.Text;
 using Azure.Core.Diagnostics;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using Benchmarks.Local;
-using Benchmarks.Nuget;
 
 namespace Azure.Core.Perf
 {
@@ -25,8 +23,10 @@ namespace Azure.Core.Perf
 
         private string _sanitizedUri;
         private byte[] _headersBytes;
-        private Benchmarks.Local.EventSourceScenario _localScenario;
-        private Benchmarks.Nuget.EventSourceScenario _nugetScenario;
+
+        private AzureEventSourceListener _sourceListener;
+        private CustomEventSource _eventSource;
+        private int _iteration;
 
         [GlobalSetup]
         public void SetUp()
@@ -43,53 +43,35 @@ namespace Azure.Core.Perf
             _sanitizedUri = Sanitizer.SanitizeUrl(uri.ToString());
             _headersBytes = FormatHeaders(message);
 
-            _localScenario = new Benchmarks.Local.EventSourceScenario(_sanitizedUri, _headersBytes);
-            _nugetScenario = new Benchmarks.Nuget.EventSourceScenario(_sanitizedUri, _headersBytes);
+            _sourceListener = new AzureEventSourceListener(_ => { }, EventLevel.LogAlways);
+            _eventSource = new CustomEventSource();
+            _sourceListener.EnableEvents(_eventSource, EventLevel.LogAlways);
         }
 
         [GlobalCleanup]
         public void CleanUp()
         {
-            _localScenario.Dispose();
-            _nugetScenario.Dispose();
+            _sourceListener.Dispose();
+            _eventSource.Dispose();
         }
 
         // Local benchmarks
         [Benchmark]
         public void Local_OldImplementation()
         {
-            _localScenario.RunOld(_sanitizedUri, _headersBytes);
+            _eventSource.RequestOld(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
 
         [Benchmark]
         public void Local_NewImplementation()
         {
-            _localScenario.RunNew(_sanitizedUri, _headersBytes);
+            _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
 
         [Benchmark]
         public void Local_NewImplementation_AfterFormatting()
         {
-            _localScenario.RunNewPreformatted();
-        }
-
-        // Nuget benchmarks
-        [Benchmark(Baseline = true)]
-        public void Nuget_OldImplementation()
-        {
-            _nugetScenario.RunOld(_sanitizedUri, _headersBytes);
-        }
-
-        [Benchmark]
-        public void Nuget_NewImplementation()
-        {
-            _nugetScenario.RunNew(_sanitizedUri, _headersBytes);
-        }
-
-        [Benchmark]
-        public void Nuget_NewImplementation_AfterFormatting()
-        {
-            _nugetScenario.RunNewPreformatted();
+            _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
 
         private byte[] FormatHeaders(HttpRequestMessage message)

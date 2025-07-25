@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Benchmarks.Local
+namespace Azure.Core.Perf
 {
     /// <summary>
     /// Mock out the network to isolate the performance test to only

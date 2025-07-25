@@ -11,8 +11,6 @@ using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
-using Benchmarks.Nuget;
-using Benchmarks.Local;
 
 namespace Azure.Core.Perf
 {
@@ -21,34 +19,64 @@ namespace Azure.Core.Perf
     [MemoryDiagnoser]
     public class PipelineBenchmark
     {
-        private Benchmarks.Local.PipelineScenario _localScenario;
-        private Benchmarks.Nuget.PipelineScenario _nugetScenario;
+        /// <summary>
+        /// The HTTP pipeline used for sending requests in the benchmark scenario.
+        /// </summary>
+        public HttpPipeline _pipeline;
+        private HttpMessage[] _messages;
+        private int _messageIndex;
 
         [GlobalSetup]
         public void SetUp()
         {
-            // Set up local scenario
-            _localScenario = new Benchmarks.Local.PipelineScenario();
-            // Set up NuGet scenario
-            _nugetScenario = new Benchmarks.Nuget.PipelineScenario();
+            int messageCount = 1000;
+            var options = new BenchmarkClientOptions
+            {
+                Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
+            };
+
+            _pipeline = HttpPipelineBuilder.Build(options);
+
+            // Pre-create messages
+
+            _messages = new HttpMessage[messageCount];
+
+            for (int i = 0; i < messageCount; i++)
+            {
+                var message = _pipeline.CreateMessage();
+
+                message.Request.Uri.Reset(new Uri("https://www.example.com"));
+
+                _messages[i] = message;
+            }
+
+            _messageIndex = 0;
         }
         [GlobalCleanup]
         public void CleanUp()
         {
-            _localScenario.Dispose();
-            _nugetScenario.Dispose();
+            if (_messages != null)
+            {
+                foreach (var msg in _messages)
+                {
+                    msg?.Dispose();
+                }
+                _messages = Array.Empty<HttpMessage>();
+            }
         }
 
         [Benchmark]
         public async Task<Response> LocalPipeline()
         {
-            return await _localScenario.SendPreCreatedAsync();
-        }
+            // Use round-robin to avoid always sending the same message
 
-        [Benchmark(Baseline = true)]
-        public async Task<Response> NugetPipeline()
-        {
-            return await _nugetScenario.SendPreCreatedAsync();
+            var message = _messages[_messageIndex];
+
+            _messageIndex = (_messageIndex + 1) % _messages.Length;
+
+            await _pipeline.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
+
+            return message.Response;
         }
     }
 }
