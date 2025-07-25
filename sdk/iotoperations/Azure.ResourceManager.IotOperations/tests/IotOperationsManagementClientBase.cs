@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
             ArmClient = GetArmClient();
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ResourceGroup = "aio-validation-113034243";
-            CustomLocationName = "location-sxy3o";
-            InstanceName =  "aio-sxy3o";
+            CustomLocationName = "location-qsyv6";
+            InstanceName =  "aio-qsyv6";
             BrokersName = "default";
             BrokersListenersName = "default";
             BrokersAuthenticationsName = "default";
