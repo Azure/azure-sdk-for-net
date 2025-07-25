@@ -9,7 +9,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Indicating whether end call summary should be enabled. </summary>
         public bool? EnableEndCallSummary { get; set; }
         /// <summary> Locale for summarization (e.g., en-US). </summary>
-        internal string Locale { get; set; }
+        public string Locale { get; set; }
 
         /// <summary>
         /// Locale for summarization (e.g., en-US).

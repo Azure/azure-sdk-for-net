@@ -1592,8 +1592,9 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class SummarizationOptions
     {
-        public SummarizationOptions(string locale) { }
+        public SummarizationOptions() { }
         public bool? EnableEndCallSummary { get { throw null; } set { } }
+        public string Locale { get { throw null; } set { } }
     }
     public partial class SummarizeCallOptions
     {
