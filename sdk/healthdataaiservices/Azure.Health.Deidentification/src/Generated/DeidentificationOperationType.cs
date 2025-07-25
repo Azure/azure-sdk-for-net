@@ -54,6 +54,10 @@ namespace Azure.Health.Deidentification
         /// <param name="value"> The value. </param>
         public static implicit operator DeidentificationOperationType(string value) => new DeidentificationOperationType(value);
 
+        /// <summary> Converts a string to a <see cref="DeidentificationOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeidentificationOperationType?(string value) => value == null ? null : new DeidentificationOperationType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeidentificationOperationType other && Equals(other);

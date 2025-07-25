@@ -38,6 +38,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly string _methodName;
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
@@ -52,13 +53,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
+        /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
-            bool isAsync)
+            bool isAsync,
+            string? methodName = null)
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
@@ -67,6 +70,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
+            _methodName = methodName ?? convenienceMethod.Signature.Name;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
@@ -110,7 +114,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected virtual MethodSignature CreateSignature()
         {
             return new MethodSignature(
-                _convenienceMethod.Signature.Name,
+                _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
                 _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),

@@ -37,8 +37,8 @@ namespace Azure.Generator.Management.Providers
     {
         internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            // Create a resource that supports multiple clients
-            var resource = new ResourceClientProvider(model.Name.ToIdentifierName(), model, resourceMetadata);
+            // Create a resource that supports multiple clients, using ResourceName from metadata
+            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, resourceMetadata);
             if (!resource.IsSingleton)
             {
                 var collection = new ResourceCollectionClientProvider(resource, model, resourceMetadata);
@@ -350,9 +350,11 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false));
+                    var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, methodName));
                     var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true));
+                    var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, asyncMethodName));
                 }
             }
 

@@ -64,6 +64,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="value"> The value. </param>
         public static implicit operator ReleaseDelay(string value) => new ReleaseDelay(value);
 
+        /// <summary> Converts a string to a <see cref="ReleaseDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReleaseDelay?(string value) => value == null ? null : new ReleaseDelay(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReleaseDelay other && Equals(other);
