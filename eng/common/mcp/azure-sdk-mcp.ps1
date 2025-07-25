@@ -1,4 +1,4 @@
-#!/bin/env pwsh
+#!/usr/bin/env pwsh
 
 #Requires -Version 7.0
 #Requires -PSEdition Core
@@ -61,11 +61,14 @@ $tempExe = Install-Standalone-Tool `
     -Directory $tempInstallDirectory `
     -Repository $Repository
 
-Copy-Item -Path $tempExe -Destination $toolInstallDirectory -Force
+if (-not (Test-Path $toolInstallDirectory)) {
+    New-Item -ItemType Directory -Path $toolInstallDirectory -Force | Out-Null
+}
 $exeName = Split-Path $tempExe -Leaf
-$exe = Join-Path $toolInstallDirectory $exeName
+$exeDestination = Join-Path $toolInstallDirectory $exeName
+Copy-Item -Path $tempExe -Destination $exeDestination -Force
 
-Write-Host "Package $package is installed at $exe"
+Write-Host "Package $package is installed at $exeDestination"
 if (!$UpdatePathInProfile) {
     Write-Warning "To add the tool to PATH for new shell sessions, re-run with -UpdatePathInProfile to modify the shell profile file."
 } else {
@@ -74,5 +77,5 @@ if (!$UpdatePathInProfile) {
 }
 
 if ($Run) {
-    Start-Process -WorkingDirectory $RunDirectory -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exeDestination -ArgumentList 'start' -NoNewWindow -Wait
 }
