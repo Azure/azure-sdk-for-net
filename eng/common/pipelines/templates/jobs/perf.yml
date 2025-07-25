@@ -1,201 +1,216 @@
 parameters:
-- name: JobName
-  type: string
-  default: 'Perf'
-- name: TimeoutInMinutes
-  type: number
-  default: '360'
-- name: LinuxPool
-  type: string
-  default: 'azsdk-pool-mms-ubuntu-2204-perf'
-- name: LinuxVmImage
-  type: string
-  default: 'ubuntu-22.04'
-- name: WindowsPool
-  type: string
-  default: 'azsdk-pool-mms-win-2022-perf'
-- name: WindowsVmImage
-  type: string
-  default: 'windows-2022'
-- name: Language
-  type: string
-  default: ''
-- name: LanguageVersion
-  type: string
-  default: ''
-- name: LanguageRepoName
-  type: string
-  default: $(Build.Repository.Name)
-- name: LanguageRepoCommitish
-  type: string
-  default: $(Build.SourceVersion)
-- name: ToolsRepoCommitish
-  type: string
-  default: 'main'
-- name: Variables
-  type: object
-  default: []
-- name: OperatingSystems
-  type: string
-  default: 'Linux'
-- name: InstallLanguageSteps
-  type: stepList
-  default: []
-- name: ServiceDirectory
-  type: string
-  default: ''
-- name: PackageVersions
-  type: string
-  default: '.*'
-- name: Tests
-  type: string
-  default: '.*'
-- name: Arguments
-  type: string
-  default: '.*'
-- name: Iterations
-  type: number
-  default: '5'
-- name: Profile
-  type: boolean
-  default: false
-- name: AdditionalArguments
-  type: string
-  default: ''
-- name: EnvVars
-  type: object
-  default: {}
+  - name: JobName
+    type: string
+    default: "Perf"
+  - name: TimeoutInMinutes
+    type: number
+    default: "360"
+  - name: LinuxPool
+    type: string
+    default: "azsdk-pool-mms-ubuntu-2204-perf"
+  - name: LinuxVmImage
+    type: string
+    default: "ubuntu-22.04"
+  - name: WindowsPool
+    type: string
+    default: "azsdk-pool-mms-win-2022-perf"
+  - name: WindowsVmImage
+    type: string
+    default: "windows-2022"
+  - name: Language
+    type: string
+    default: ""
+  - name: LanguageVersion
+    type: string
+    default: ""
+  - name: LanguageRepoName
+    type: string
+    default: $(Build.Repository.Name)
+  - name: LanguageRepoCommitish
+    type: string
+    default: $(Build.SourceVersion)
+  - name: ToolsRepoCommitish
+    type: string
+    default: "main"
+  - name: Variables
+    type: object
+    default: []
+  - name: OperatingSystems
+    type: string
+    default: "Linux"
+  - name: InstallLanguageSteps
+    type: stepList
+    default: []
+  - name: ServiceDirectory
+    type: string
+    default: ""
+  - name: PackageVersions
+    type: string
+    default: ".*"
+  - name: Tests
+    type: string
+    default: ".*"
+  - name: Arguments
+    type: string
+    default: ".*"
+  - name: Iterations
+    type: number
+    default: "5"
+  - name: Profile
+    type: boolean
+    default: false
+  - name: AdditionalArguments
+    type: string
+    default: ""
+  - name: EnvVars
+    type: object
+    default: {}
 
 jobs:
-- job: ${{ parameters.JobName }}
-  timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-  strategy:
-    matrix:
-      ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
-        Linux:
-          Pool: ${{ parameters.LinuxPool }}
-          OsVmImage: ${{ parameters.LinuxVmImage }}
-          MatrixName: 'Linux'
-      ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
-        Windows:
-          Pool: ${{ parameters.WindowsPool }}
-          OsVmImage: ${{ parameters.WindowsVmImage }}
-          MatrixName: 'Windows'
-  variables:
-  - ${{ parameters.Variables }}
-  - name: Profile
-    ${{ if parameters.Profile }}:
-      value: '--profile'
-    ${{ else }}:
-      value: ''
-  pool:
-    name: $(Pool)
-    vmImage: $(OSVmImage)
-  steps:
+  - job: ${{ parameters.JobName }}
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+    strategy:
+      matrix:
+        ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
+          Linux:
+            Pool: ${{ parameters.LinuxPool }}
+            OsVmImage: ${{ parameters.LinuxVmImage }}
+            MatrixName: "Linux"
+        ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
+          Windows:
+            Pool: ${{ parameters.WindowsPool }}
+            OsVmImage: ${{ parameters.WindowsVmImage }}
+            MatrixName: "Windows"
+    variables:
+      - ${{ parameters.Variables }}
+      - name: Profile
+        ${{ if parameters.Profile }}:
+          value: "--profile"
+        ${{ else }}:
+          value: ""
+    pool:
+      name: $(Pool)
+      vmImage: $(OSVmImage)
+    steps:
+      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+        parameters:
+          Paths:
+            - "/*"
+            - "!sdk/**/test-recordings/*"
+            - "!sdk/**/recordings/*"
+            - "!sdk/**/SessionRecords/*"
+            - "!sdk/**/session-records/*"
+          Repositories:
+            - Name: ${{ parameters.LanguageRepoName }}
+              Commitish: ${{ parameters.LanguageRepoCommitish }}
+              WorkingDirectory: $(System.DefaultWorkingDirectory)
+            - Name: Azure/azure-sdk-tools
+              Commitish: ${{ parameters.ToolsRepoCommitish }}
+              WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
 
-  - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-    parameters:
-      Paths:
-      - '/*'
-      - '!sdk/**/test-recordings/*'
-      - '!sdk/**/recordings/*'
-      - '!sdk/**/SessionRecords/*'
-      - '!sdk/**/session-records/*'
-      Repositories:
-      - Name: ${{ parameters.LanguageRepoName }}
-        Commitish: ${{ parameters.LanguageRepoCommitish }}
-        WorkingDirectory: $(System.DefaultWorkingDirectory)
-      - Name: Azure/azure-sdk-tools
-        Commitish: ${{ parameters.ToolsRepoCommitish }}
-        WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
 
-  - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-    parameters:
-      AgentImage: $(OSVmImage)
-      
-  - task: UseDotNet@2
-    displayName: "Use .NET SDK from azure-sdk-tools/global.json"
-    retryCountOnTaskFailure: 3
-    inputs:
-      useGlobalJson: true
-      workingDirectory: azure-sdk-tools
+      # Copied from eng/pipelines/templates/steps/install-dotnet.yml, but changed workingDirectory
+      - task: UseDotNet@2 # About UseDotNet@2 task: https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/use-dotnet-v2?view=azure-pipelines
+        displayName: "Use .NET SDK from global.json"
+        retryCountOnTaskFailure: 3
+        inputs:
+          useGlobalJson: true
+          workingDirectory: azure-sdk-tools
 
-  - ${{ parameters.InstallLanguageSteps }}
+      # Copied from eng/pipelines/templates/steps/install-dotnet.yml, but changed workingDirectory
+      - task: UseDotNet@2
+        displayName: "Use .NET SDK 8.0.x"
+        retryCountOnTaskFailure: 3
+        inputs:
+          # We must install sdk, not just runtime, as it is required by some of our tools, like test-proxy.
+          # Specifically, test-proxy requires asp.net core runtime, which is installed only when sdk option
+          # is selected, per: https://github.com/microsoft/azure-pipelines-tasks/issues/14405
+          packageType: sdk
+          version: 8.0.x
+          # performMultiLevelLookup comes into play when given .NET executable target runtime is different
+          # than the installed .NET SDK. Without this, such runtime would not be found.
+          performMultiLevelLookup: true
+          workingDirectory: azure-sdk-tools
 
-  - template: /eng/common/TestResources/deploy-test-resources.yml
-    parameters:
-      ServiceDirectory: ${{ parameters.ServiceDirectory }}
-      Location: westus
-      ResourceType: perf
-      ServiceConnection: azure-sdk-tests-public
+      - ${{ parameters.InstallLanguageSteps }}
 
-  - task: AzurePowerShell@5
-    inputs:
-      azureSubscription: azure-sdk-tests-public
-      azurePowerShellVersion: LatestVersion
-      pwsh: true
-      ScriptType: InlineScript
-      Inline: >-
-        $account = (Get-AzContext).Account;
-        $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
-        $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
+      - template: /eng/common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          Location: westus
+          ResourceType: perf
+          ServiceConnection: azure-sdk-tests-public
 
-        dotnet run -- run
-        --language ${{ parameters.Language }}
-        --language-version ${{ parameters.LanguageVersion }}
-        --repo-root $(System.DefaultWorkingDirectory)
-        --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
-        --package-versions "${{ parameters.PackageVersions }}"
-        --tests "${{ parameters.Tests }}"
-        --arguments "${{ parameters.Arguments }}"
-        --iterations ${{ parameters.Iterations }}
-        $(Profile)
-        ${{ parameters.AdditionalArguments }}
-      workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
-    displayName: Run perf tests
-    env:
-      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-      ${{ each var in parameters.EnvVars }}:
-        ${{ var.key }}: ${{ var.value }}
+      - task: AzurePowerShell@5
+        inputs:
+          azureSubscription: azure-sdk-tests-public
+          azurePowerShellVersion: LatestVersion
+          pwsh: true
+          ScriptType: InlineScript
+          Inline: >-
+            $account = (Get-AzContext).Account;
+            $env:AZURESUBSCRIPTION_CLIENT_ID = $account.Id;
+            $env:AZURESUBSCRIPTION_TENANT_ID = $account.Tenants;
 
-  - pwsh: |
-      get-content results.txt
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-    displayName: Print results.txt
-    condition: always()
+            dotnet run -- run
+            --language ${{ parameters.Language }}
+            --language-version ${{ parameters.LanguageVersion }}
+            --repo-root $(System.DefaultWorkingDirectory)
+            --tests-file $(System.DefaultWorkingDirectory)/sdk/${{ parameters.ServiceDirectory }}/perf-tests.yml
+            --package-versions "${{ parameters.PackageVersions }}"
+            --tests "${{ parameters.Tests }}"
+            --arguments "${{ parameters.Arguments }}"
+            --iterations ${{ parameters.Iterations }}
+            $(Profile)
+            ${{ parameters.AdditionalArguments }}
+          workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
+        displayName: Run perf tests
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          ${{ each var in parameters.EnvVars }}:
+            ${{ var.key }}: ${{ var.value }}
 
-  - pwsh: |
-      get-content results.csv
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-    displayName: Print results.csv
-    condition: always()
+      - pwsh: |
+          get-content results.txt
+        workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+        displayName: Print results.txt
+        condition: always()
 
-  - pwsh: |
-      get-content results.md
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-    displayName: Print results.md
-    condition: always()
+      - pwsh: |
+          get-content results.csv
+        workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+        displayName: Print results.csv
+        condition: always()
 
-  - pwsh: |
-      get-content results.json
-    workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-    displayName: Print results.json
-    condition: always()
+      - pwsh: |
+          get-content results.md
+        workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+        displayName: Print results.md
+        condition: always()
 
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      artifactName: results-${{ parameters.Language }}-$(MatrixName)
-    condition: always()
+      - pwsh: |
+          get-content results.json
+        workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+        displayName: Print results.json
+        condition: always()
 
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: $(System.DefaultWorkingDirectory)/${{ parameters.Language }}-profile.zip
-      artifactName: ${{ parameters.Language }}-profile.zip
-    condition: ${{ parameters.Profile }}
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
+          artifactName: results-${{ parameters.Language }}-$(MatrixName)
+        condition: always()
 
-  - template: /eng/common/TestResources/remove-test-resources.yml
-    parameters:
-      ServiceDirectory: ${{ parameters.ServiceDirectory }}
-      ResourceType: perf
-      ServiceConnection: azure-sdk-tests-public
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: $(System.DefaultWorkingDirectory)/${{ parameters.Language }}-profile.zip
+          artifactName: ${{ parameters.Language }}-profile.zip
+        condition: ${{ parameters.Profile }}
+
+      - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          ResourceType: perf
+          ServiceConnection: azure-sdk-tests-public
