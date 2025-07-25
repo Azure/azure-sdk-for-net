@@ -331,4 +331,70 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
     }
+
+    [Test]
+    public void CreateMessageWithUriMethodAndClassifierSetsProperties()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "POST";
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Create(ReadOnlySpan<ushort>.Empty);
+
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod, testClassifier);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(testClassifier, message.ResponseClassifier);
+        Assert.IsNotNull(message.NetworkTimeout);
+    }
+
+    [Test]
+    public void CreateMessageWithUriMethodAndClassifierThrowsOnNullUri()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        string testMethod = "GET";
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Default;
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(null!, testMethod, testClassifier));
+    }
+
+    [Test]
+    public void CreateMessageWithUriMethodAndClassifierThrowsOnNullMethod()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        PipelineMessageClassifier testClassifier = PipelineMessageClassifier.Default;
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(testUri, null!, testClassifier));
+    }
+
+    [Test]
+    public void CreateMessageWithUriMethodAndClassifierThrowsOnNullClassifier()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/test");
+        string testMethod = "DELETE";
+
+        Assert.Throws<ArgumentNullException>(() =>
+            pipeline.CreateMessage(testUri, testMethod, null!));
+    }
+
+    [Test]
+    public void CreateMessageWithUriMethodAndClassifierUsesDefaultClassifier()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        Uri testUri = new Uri("https://example.com/api/resource");
+        string testMethod = "PUT";
+        PipelineMessageClassifier defaultClassifier = PipelineMessageClassifier.Default;
+
+        PipelineMessage message = pipeline.CreateMessage(testUri, testMethod, defaultClassifier);
+
+        Assert.IsNotNull(message);
+        Assert.AreEqual(testUri, message.Request.Uri);
+        Assert.AreEqual(testMethod, message.Request.Method);
+        Assert.AreEqual(defaultClassifier, message.ResponseClassifier);
+    }
 }
