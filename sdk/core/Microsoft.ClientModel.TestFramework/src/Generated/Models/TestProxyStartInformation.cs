@@ -19,32 +19,32 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
-        /// <param name="xRecodingAssetsFiles"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> or <paramref name="xRecodingAssetsFiles"/> is null. </exception>
-        public TestProxyStartInformation(string xRecordingFile, string xRecodingAssetsFiles)
+        /// <param name="xRecordingAssetsFiles"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> or <paramref name="xRecordingAssetsFiles"/> is null. </exception>
+        public TestProxyStartInformation(string xRecordingFile, string xRecordingAssetsFiles)
         {
             Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
-            Argument.AssertNotNull(xRecodingAssetsFiles, nameof(xRecodingAssetsFiles));
+            Argument.AssertNotNull(xRecordingAssetsFiles, nameof(xRecordingAssetsFiles));
 
             XRecordingFile = xRecordingFile;
-            XRecodingAssetsFiles = xRecodingAssetsFiles;
+            XRecordingAssetsFiles = xRecordingAssetsFiles;
         }
 
         /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
-        /// <param name="xRecodingAssetsFiles"></param>
+        /// <param name="xRecordingAssetsFiles"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProxyStartInformation(string xRecordingFile, string xRecodingAssetsFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProxyStartInformation(string xRecordingFile, string xRecordingAssetsFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             XRecordingFile = xRecordingFile;
-            XRecodingAssetsFiles = xRecodingAssetsFiles;
+            XRecordingAssetsFiles = xRecordingAssetsFiles;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the XRecordingFile. </summary>
         public string XRecordingFile { get; }
 
-        /// <summary> Gets the XRecodingAssetsFiles. </summary>
-        public string XRecodingAssetsFiles { get; }
+        /// <summary> Gets the XRecordingAssetsFiles. </summary>
+        public string XRecordingAssetsFiles { get; }
     }
 }

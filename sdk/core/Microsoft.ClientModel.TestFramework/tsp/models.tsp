@@ -63,7 +63,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy {
   }
   model TestProxyStartInformation {
     xRecordingFile: string;
-    xRecodingAssetsFiles: string;
+    xRecordingAssetsFiles: string;
   }
   model UriRegexSanitizer {
     regex: string;

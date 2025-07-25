@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,17 +28,16 @@ public class RecordEntryMessage
     /// </summary>
     /// <param name="contentType"></param>
     /// <returns></returns>
-    public bool TryGetContentType(out string contentType)
+    public bool TryGetContentType(out string? contentType)
     {
-        throw new NotImplementedException();
-        //contentType = null;
-        //if (Headers.TryGetValue("Content-Type", out var contentTypes) &&
-        //    contentTypes.Length == 1)
-        //{
-        //    contentType = contentTypes[0];
-        //    return true;
-        //}
-        //return false;
+        contentType = null;
+        if (Headers.TryGetValue("Content-Type", out var contentTypes) &&
+            contentTypes.Length == 1)
+        {
+            contentType = contentTypes[0];
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -45,12 +45,11 @@ public class RecordEntryMessage
     /// </summary>
     /// <param name="encoding"></param>
     /// <returns></returns>
-    public bool IsTextContentType(out Encoding encoding)
+    public bool IsTextContentType(out Encoding? encoding)
     {
-        throw new NotImplementedException();
-        //encoding = null;
-        //return TryGetContentType(out string contentType) &&
-        //       ContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
+        encoding = null;
+        return TryGetContentType(out string? contentType) &&
+                ContentTypeUtilities.TryGetTextEncoding(contentType!, out encoding);
     }
 
     /// <summary>
@@ -58,18 +57,17 @@ public class RecordEntryMessage
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public bool TryGetBodyAsText(out string text)
+    public bool TryGetBodyAsText(out string? text)
     {
-        throw new NotImplementedException();
-        //text = null;
+        text = null;
 
-        //if (IsTextContentType(out Encoding encoding))
-        //{
-        //    text = encoding.GetString(Body);
+        if (IsTextContentType(out Encoding? encoding))
+        {
+            text = encoding?.GetString(Body!);
 
-        //    return true;
-        //}
+            return true;
+        }
 
-        //return false;
+        return false;
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Linq;
 using System.Reflection;
@@ -45,7 +46,24 @@ internal class WrapResultInterceptor : IInterceptor
             type.GetGenericTypeDefinition() == typeof(Task<>) &&
             typeof(OperationResult).IsAssignableFrom(arguments[0]))
         {
-            // TODO - LRO implementation
+            // Handle Task<OperationResult> - instrument the LRO when the task completes
+            invocation.Proceed();
+            if (invocation.ReturnValue is Task task)
+            {
+                invocation.ReturnValue = InstrumentLongRunningOperationAsync(task, arguments[0]);
+            }
+            return;
+        }
+
+        if (typeof(OperationResult).IsAssignableFrom(type))
+        {
+            // Handle direct OperationResult returns
+            invocation.Proceed();
+            if (invocation.ReturnValue != null)
+            {
+                invocation.ReturnValue = InstrumentOperationResult(invocation.ReturnValue, type);
+            }
+            return;
         }
 
         invocation.Proceed();
@@ -60,5 +78,36 @@ internal class WrapResultInterceptor : IInterceptor
     {
         invocation.Proceed();
         return invocation.ReturnValue == null;
+    }
+
+    private async Task<OperationResult> InstrumentLongRunningOperationAsync(Task task, Type operationResultType)
+    {
+        await task.ConfigureAwait(false);
+        
+        // Get the result from the completed task
+        var resultProperty = task.GetType().GetProperty("Result");
+        if (resultProperty?.GetValue(task) is OperationResult operationResult)
+        {
+            return InstrumentOperationResult(operationResult, operationResultType);
+        }
+
+        throw new InvalidOperationException($"Expected Task<{operationResultType.Name}> but could not extract result.");
+    }
+
+    private OperationResult InstrumentOperationResult(object operationResult, Type operationResultType)
+    {
+        // If it's already test-aware, don't wrap it again
+        if (operationResult is TestAwareOperationResult)
+        {
+            return (OperationResult)operationResult;
+        }
+
+        // Create a proxy that will intercept WaitForCompletion calls and apply mode-aware polling
+        var proxy = ClientTestBase.ProxyGenerator.CreateClassProxyWithTarget(
+            operationResultType,
+            operationResult,
+            new OperationResultInterceptor(_testMode));
+
+        return (OperationResult)proxy;
     }
 }

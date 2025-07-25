@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -208,6 +209,34 @@ public abstract class ClientTestBase
             client,
             interceptors.ToArray());
     }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="operationType"></param>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    protected internal virtual object InstrumentOperation(Type operationType, object operation)
+    {
+        var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+
+        // The assumption is that any recorded or live tests deriving from RecordedTestBase, and that any unit tests deriving directly from ClientTestBase are equivalent to playback.
+        var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(RecordedTestMode.Playback) }).ToArray();
+        return ProxyGenerator.CreateClassProxyWithTarget(
+            operationType,
+            new[] { typeof(IWrappedClient) },
+            operation,
+            interceptorArray);
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    protected internal T InstrumentOperation<T>(T operation) where T : OperationResult =>
+        (T)InstrumentOperation(typeof(T), operation);
 
     /// <summary>
     /// TODO.

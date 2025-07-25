@@ -18,6 +18,10 @@
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Compile Include="$(MSBuildThisFileDirectory)/../../System.ClientModel/src/Internal/ContentTypeUtilities.cs" LinkBase="Shared\Core" />
+	</ItemGroup>
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>TestProxyPath</_Parameter1>

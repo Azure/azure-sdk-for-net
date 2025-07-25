@@ -42,8 +42,8 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             }
             writer.WritePropertyName("xRecordingFile"u8);
             writer.WriteStringValue(XRecordingFile);
-            writer.WritePropertyName("xRecodingAssetsFiles"u8);
-            writer.WriteStringValue(XRecodingAssetsFiles);
+            writer.WritePropertyName("xRecordingAssetsFiles"u8);
+            writer.WriteStringValue(XRecordingAssetsFiles);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -87,7 +87,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                 return null;
             }
             string xRecordingFile = default;
-            string xRecodingAssetsFiles = default;
+            string xRecordingAssetsFiles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,9 +96,9 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     xRecordingFile = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("xRecodingAssetsFiles"u8))
+                if (prop.NameEquals("xRecordingAssetsFiles"u8))
                 {
-                    xRecodingAssetsFiles = prop.Value.GetString();
+                    xRecordingAssetsFiles = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestProxyStartInformation(xRecordingFile, xRecodingAssetsFiles, additionalBinaryDataProperties);
+            return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFiles, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

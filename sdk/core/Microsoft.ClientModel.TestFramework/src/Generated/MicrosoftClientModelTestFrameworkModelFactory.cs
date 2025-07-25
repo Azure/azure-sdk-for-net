@@ -16,11 +16,11 @@ namespace Microsoft.ClientModel.TestFramework
     {
         /// <summary> The TestProxyStartInformation. </summary>
         /// <param name="xRecordingFile"></param>
-        /// <param name="xRecodingAssetsFiles"></param>
+        /// <param name="xRecordingAssetsFiles"></param>
         /// <returns> A new <see cref="TestProxy.TestProxyStartInformation"/> instance for mocking. </returns>
-        public static TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = default, string xRecodingAssetsFiles = default)
+        public static TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = default, string xRecordingAssetsFiles = default)
         {
-            return new TestProxyStartInformation(xRecordingFile, xRecodingAssetsFiles, additionalBinaryDataProperties: null);
+            return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFiles, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The StopPlaybackResponse. </summary>

@@ -21,8 +21,19 @@ using System.Threading.Tasks;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO>
+/// Base class for recorded tests that provides functionality for recording, replaying, and managing HTTP interactions.
+/// This class handles test proxy integration, session recording, and client instrumentation for consistent testing
+/// across different modes (Live, Record, Playback).
 /// </summary>
+/// <remarks>
+/// Recorded tests allow you to:
+/// - Record HTTP interactions during live testing
+/// - Replay recorded interactions for fast, deterministic tests
+/// - Sanitize sensitive data in recordings
+/// - Instrument client options for test scenarios
+///
+/// The class automatically manages test proxy lifecycle and recording sessions based on the test mode.
+/// </remarks>
 [NonParallelizable]
 public abstract class RecordedTestBase : ClientTestBase
 {
@@ -43,38 +54,62 @@ public abstract class RecordedTestBase : ClientTestBase
     private DateTime _testStartTime;
 
     /// <summary>
-    /// TODO.
+    /// A constant value used for sanitizing sensitive data in recordings.
+    /// This value replaces actual sensitive information like secrets, keys, and tokens.
     /// </summary>
     public const string SanitizeValue = "Sanitized";
 
     /// <summary>
-    /// TODO.
+    /// The filename for the assets configuration file that contains external test asset definitions.
+    /// This file is used to manage test assets that are shared across multiple tests or repositories.
     /// </summary>
     public const string AssetsJson = "assets.json";
 
     /// <summary>
-    /// TODO.
+    /// Gets the path to the assets.json file if it exists in the test directory hierarchy.
+    /// This file contains configuration for external test assets and dependencies.
     /// </summary>
+    /// <value>
+    /// The full path to the assets.json file, or null if no assets file is found.
+    /// The search traverses up the directory tree until it finds an assets.json file or reaches the git root.
+    /// </value>
     public virtual string? AssetsJsonPath { get; }
 
     /// <summary>
-    /// TODO.
+    /// Gets the current test recording instance that manages HTTP request/response capture and replay.
+    /// This property is automatically set during test setup and provides access to recording functionality.
     /// </summary>
+    /// <value>
+    /// The active TestRecording instance, or null if no recording is currently active.
+    /// </value>
     public TestRecording? Recording { get; private set; }
 
     /// <summary>
-    /// TODO.
+    /// Gets or sets the recording mode for the current test execution.
+    /// This determines whether the test runs against live services, records interactions, or replays recorded data.
     /// </summary>
+    /// <value>
+    /// The current <see cref="RecordedTestMode"/> which can be Live, Record, or Playback.
+    /// </value>
     public RecordedTestMode Mode { get; set; }
 
     /// <summary>
-    /// TODO.
+    /// Gets or sets a value indicating whether client instrumentation validation should be performed.
+    /// When enabled, the test framework verifies that all clients used during testing are properly instrumented.
     /// </summary>
+    /// <value>
+    /// true if client instrumentation should be validated; otherwise, false.
+    /// This is automatically set based on whether the recording has captured any requests.
+    /// </value>
     protected bool ValidateClientInstrumentation { get; set; }
 
     /// <summary>
-    /// TODO.
+    /// Gets the timestamp when the current test started execution.
+    /// This excludes test proxy setup overhead and provides accurate test timing measurements.
     /// </summary>
+    /// <value>
+    /// A <see cref="DateTime"/> representing when the test logic began executing.
+    /// </value>
     protected override DateTime TestStartTime => _testStartTime;
 
     /// <summary>
@@ -173,29 +208,41 @@ public abstract class RecordedTestBase : ClientTestBase
         };
 
     /// <summary>
-    /// Flag you can (temporarily) enable to save failed test recordings
-    /// and debug/re-run at the point of failure without re-running
-    /// potentially lengthy live tests.
+    /// Gets or sets a value indicating whether to save debug recordings when tests fail.
+    /// This is useful for debugging test failures by preserving the recorded interactions.
     /// </summary>
+    /// <value>
+    /// true to save recordings on test failure; otherwise, false.
+    /// This flag is typically used during development and debugging scenarios.
+    /// </value>
     public bool SaveDebugRecordingsOnFailure { get; set; }
 
     /// <summary>
-    /// Whether or not to compare bodies from the request and the recorded request during playback.
-    /// The default value is <value>true</value>.
+    /// Gets or sets a value indicating whether to compare request bodies during playback.
+    /// When enabled, the test framework validates that request bodies match between recorded and replayed requests.
     /// </summary>
+    /// <value>
+    /// true to compare request bodies during playback; otherwise, false. The default is true.
+    /// </value>
     public bool CompareBodies { get; set; } = true;
 
     /// <summary>
-    /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
-    /// should use the default Guid format. The default Guid format contains hyphens.
-    /// The default value is <value>false</value>.
+    /// Gets or sets a value indicating whether to use the default GUID format for client request IDs.
+    /// The default GUID format includes hyphens, while the alternative format excludes them.
     /// </summary>
+    /// <value>
+    /// true to use the default GUID format with hyphens; false to use a format without hyphens. The default is false.
+    /// </value>
     public bool UseDefaultGuidFormatForClientRequestId { get; set; } = false;
 
     /// <summary>
-    /// Request headers whose values can change between recording and playback without causing request matching
-    /// to fail. The presence or absence of the header itself is still respected in matching.
+    /// Gets a collection of request headers whose values can change between recording and playback
+    /// without causing request matching to fail. The presence or absence of the header itself is still respected.
     /// </summary>
+    /// <value>
+    /// A <see cref="HashSet{String}"/> containing header names to ignore during request matching.
+    /// Common headers like Date, User-Agent, and request tracking headers are included by default.
+    /// </value>
     public HashSet<string> IgnoredHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "Date",
@@ -207,23 +254,40 @@ public abstract class RecordedTestBase : ClientTestBase
         };
 
     /// <summary>
-    /// Query parameters whose values can change between recording and playback without causing URI matching
-    /// to fail. The presence or absence of the query parameter itself is still respected in matching.
+    /// Gets a collection of query parameters whose values can change between recording and playback
+    /// without causing URI matching to fail. The presence or absence of the parameter itself is still respected.
     /// </summary>
+    /// <value>
+    /// A <see cref="HashSet{String}"/> containing query parameter names to ignore during URI matching.
+    /// By default, this collection is empty, but can be populated with parameters that vary between runs.
+    /// </value>
     public HashSet<string> IgnoredQueryParameters = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
     {
     };
 
     /// <summary>
-    /// If set to true, the proxy will be configured to connect on ports 5000 and 5001. This is useful when running the proxy locally for debugging recorded test issues.
+    /// Gets or sets a value indicating whether to use a local debug proxy for testing.
+    /// When enabled, the proxy connects on ports 5000 and 5001 for local debugging scenarios.
     /// </summary>
+    /// <value>
+    /// true to use the local debug proxy; otherwise, false.
+    /// This is useful when running the proxy locally for debugging recorded test issues.
+    /// </value>
     protected bool UseLocalDebugProxy { get; set; }
 
     /// <summary>
-    /// Creats a new instance of <see cref="RecordedTestBase"/>.
+    /// Initializes a new instance of the <see cref="RecordedTestBase"/> class.
     /// </summary>
-    /// <param name="isAsync">True if this instance is testing the async API variants false otherwise.</param>
-    /// <param name="mode">Indicates which <see cref="RecordedTestMode" /> this instance should run under.</param>
+    /// <param name="isAsync">
+    /// true if this instance is testing the async API variants; false for synchronous API variants.
+    /// </param>
+    /// <param name="mode">
+    /// The recording mode for this test instance. If null, uses the global test mode from the environment.
+    /// </param>
+    /// <remarks>
+    /// The constructor automatically determines the assets.json path by searching up the directory hierarchy
+    /// from the test location. The recording mode defaults to the global test mode if not explicitly specified.
+    /// </remarks>
     protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
     {
         Mode = mode ?? TestEnvironment.GlobalTestMode;
@@ -231,11 +295,18 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Creates a new test recording instance for capturing or replaying HTTP interactions.
     /// </summary>
-    /// <param name="mode"></param>
-    /// <param name="sessionFile"></param>
-    /// <returns></returns>
+    /// <param name="mode">The recording mode (Live, Record, or Playback) for this recording session.</param>
+    /// <param name="sessionFile">The path to the session file where recordings are stored or read from.</param>
+    /// <returns>A task that represents the asynchronous operation and contains the created TestRecording instance.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the test proxy has not been started and is required for recording operations.
+    /// </exception>
+    /// <remarks>
+    /// This method requires that the test proxy is running when creating recordings in Record or Playback modes.
+    /// The session file path should be relative to the repository root for consistency across environments.
+    /// </remarks>
     protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile)
     {
         if (_proxy is null)
@@ -246,22 +317,30 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Instruments client options to work properly with the test recording infrastructure.
+    /// This method configures the client pipeline to use the test proxy transport and applies test-specific settings.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="clientOptions"></param>
-    /// <param name="recording"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">The type of client options, which must inherit from <see cref="ClientPipelineOptions"/>.</typeparam>
+    /// <param name="clientOptions">The client options instance to instrument.</param>
+    /// <param name="recording">
+    /// The test recording to associate with the client options. If null, uses the current Recording property.
+    /// </param>
+    /// <returns>The instrumented client options instance.</returns>
+    /// <remarks>
+    /// In Playback mode, this method configures optimized settings for faster test execution.
+    /// In Record mode, it sets up the transport to capture HTTP interactions through the test proxy.
+    /// In Live mode, the original transport is preserved for direct service communication.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when clientOptions.Transport is null in Record or Playback modes.
+    /// </exception>
     public T InstrumentClientOptions<T>(T clientOptions, TestRecording? recording = default) where T : ClientPipelineOptions
     {
         recording ??= Recording;
 
         if (Mode == RecordedTestMode.Playback)
         {
-            // TODO
-            //// Not making the timeout zero so retry code still goes async
-            //clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(10);
-            //clientOptions.Retry.Mode = RetryMode.Fixed;
+            clientOptions.RetryPolicy = new PlaybackRetryPolicy(TimeSpan.FromMilliseconds(10));
         }
         // No need to set the transport if we are in Live mode
         if (Mode != RecordedTestMode.Live)
@@ -273,9 +352,21 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Gets the file path for the current test's recording session.
+    /// The path is constructed based on the test name, async mode, and class hierarchy.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// A string representing the relative path to the session file for the current test.
+    /// The path is relative to the repository root and includes the test class and method names.
+    /// </returns>
+    /// <remarks>
+    /// The session file path follows the pattern: SessionRecords/{ClassName}/{TestName}[Async].json
+    /// Invalid filename characters are replaced with '%' to ensure valid file paths.
+    /// When an assets.json file is present, the path is made relative to the repository root.
+    /// </remarks>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when TestEnvironment.RepositoryRoot is null and cannot determine the repository root.
+    /// </exception>
     protected internal string GetSessionFilePath()
     {
         TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
@@ -346,8 +437,14 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Applies global timeout enforcement only for playback mode tests.
+    /// Live and record mode tests are not subject to timeout enforcement to allow for varying service response times.
     /// </summary>
+    /// <remarks>
+    /// This override ensures that only playback tests, which should execute quickly and deterministically,
+    /// are subject to timeout constraints. Live tests may legitimately take longer due to network latency
+    /// and service processing times.
+    /// </remarks>
     public override void GlobalTimeoutTearDown()
     {
         // Only enforce the timeout on playback.
@@ -365,9 +462,17 @@ public abstract class RecordedTestBase : ClientTestBase
     //private static TestLogger Logger { get; set; }
 
     /// <summary>
-    /// Start logging events to the console if debugging or in Live mode.
-    /// This will run once before any tests.
+    /// Initializes the recorded test class by setting up logging and starting the test proxy if needed.
+    /// This method runs once before any tests in the class are executed.
     /// </summary>
+    /// <remarks>
+    /// The initialization process:
+    /// - Sets up console logging in Live mode or when debugging
+    /// - Starts the test proxy for Record and Playback modes
+    /// - Configures the proxy to use local debug ports if UseLocalDebugProxy is enabled
+    ///
+    /// The test proxy is not started in Live mode since direct service communication is used.
+    /// </remarks>
     [OneTimeSetUp]
     public void InitializeRecordedTestClass()
     {
@@ -383,9 +488,18 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// Do necessary cleanup.
-    /// This will run once after all tests have finished.
+    /// Performs cleanup operations after all tests in the class have completed.
+    /// This method runs once after all test methods have finished execution.
     /// </summary>
+    /// <remarks>
+    /// The cleanup process includes:
+    /// - Disposing of logging resources
+    /// - Cleaning up unused test recording files in Record mode
+    /// - Removing session files for tests that no longer exist
+    ///
+    /// File cleanup helps maintain a clean test directory by removing recordings for deleted or renamed tests.
+    /// Only files that don't match any known test method names are removed to prevent accidental deletion.
+    /// </remarks>
     [OneTimeTearDown]
     public void TearDownRecordedTestClass()
     {
@@ -442,10 +556,21 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Sets proxy-specific options for the test recording session.
+    /// This method allows customization of how the test proxy handles requests and responses during recording.
     /// </summary>
-    /// <param name="options"></param>
-    /// <returns></returns>
+    /// <param name="options">
+    /// The proxy options to apply to the current recording session.
+    /// These options control proxy behavior such as request matching, response handling, and transport settings.
+    /// </param>
+    /// <returns>A task that represents the asynchronous operation of setting proxy options.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the test proxy has not been started or when not in Record mode.
+    /// </exception>
+    /// <remarks>
+    /// This method only applies options during Record mode. Options are ignored in Live and Playback modes.
+    /// The proxy must be running and a recording session must be active before calling this method.
+    /// </remarks>
     protected async Task SetProxyOptionsAsync(ProxyOptions options)
     {
         if (Mode == RecordedTestMode.Record && options != null)
@@ -459,10 +584,24 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Starts a new test recording session for the current test method.
+    /// This method initializes the recording infrastructure and prepares for HTTP interaction capture or replay.
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="IgnoreException"></exception>
+    /// <returns>A task that represents the asynchronous operation of starting the test recording.</returns>
+    /// <exception cref="IgnoreException">
+    /// Thrown when the test should be skipped based on recording skip conditions or live test skip conditions.
+    /// </exception>
+    /// <remarks>
+    /// This method is automatically called by the NUnit framework before each test method execution.
+    /// It performs the following operations:
+    /// - Checks for test skip conditions based on recording settings
+    /// - Creates a new test recording session for the current test
+    /// - Initializes client instrumentation validation
+    /// - Records the actual test start time (excluding proxy setup overhead)
+    ///
+    /// The recording session file path is automatically determined based on the test class and method names.
+    /// Tests may be skipped if they have skip attributes for specific recording modes.
+    /// </remarks>
     [SetUp]
     public virtual async Task StartTestRecordingAsync()
     {
@@ -491,10 +630,25 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Stops the current test recording session and performs cleanup operations.
+    /// This method finalizes the recording session and validates test execution requirements.
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <returns>A task that represents the asynchronous operation of stopping the test recording.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when client instrumentation validation fails, indicating that the test had recordings
+    /// but didn't properly instrument any clients using the InstrumentClient method.
+    /// </exception>
+    /// <remarks>
+    /// This method is automatically called by the NUnit framework after each test method execution.
+    /// It performs the following operations:
+    /// - Validates that clients were properly instrumented if recordings were made
+    /// - Saves or discards the recording based on test outcome and debug settings
+    /// - Ensures the test proxy tool is installed when recordings are saved
+    /// - Checks for any proxy output or errors during test execution
+    ///
+    /// Recordings are saved when tests pass, or in debug builds when SaveDebugRecordingsOnFailure is enabled.
+    /// Client instrumentation validation ensures proper test setup and helps catch configuration issues.
+    /// </remarks>
     [TearDown]
     public virtual async Task StopTestRecordingAsync()
     {
@@ -525,66 +679,90 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Instruments a client instance to work with the test recording infrastructure.
+    /// This method applies interceptors and configuration needed for proper test recording and playback.
     /// </summary>
-    /// <param name="clientType"></param>
-    /// <param name="client"></param>
-    /// <param name="preInterceptors"></param>
-    /// <returns></returns>
+    /// <param name="clientType">The type of the client being instrumented.</param>
+    /// <param name="client">The client instance to instrument with test recording capabilities.</param>
+    /// <param name="preInterceptors">
+    /// Optional collection of interceptors to apply before the standard test recording interceptors.
+    /// These interceptors are applied in the order specified before test framework interceptors.
+    /// </param>
+    /// <returns>
+    /// An instrumented proxy instance of the client that captures HTTP interactions for recording
+    /// or replays recorded interactions during playback.
+    /// </returns>
+    /// <remarks>
+    /// This method is typically called automatically by the test framework when clients are created
+    /// through InstrumentClientOptions. It disables client instrumentation validation since a client
+    /// has been properly configured for test recording.
+    ///
+    /// The instrumented client maintains the same API surface as the original client but routes
+    /// HTTP requests through the test recording infrastructure for capture and replay.
+    /// </remarks>
     protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor>? preInterceptors)
     {
         ValidateClientInstrumentation = false;
         return base.InstrumentClient(clientType, client, preInterceptors);
     }
 
-    // TODO
-    ///// <summary>
-    ///// TODO.
-    ///// </summary>
-    ///// <param name="operationType"></param>
-    ///// <param name="operation"></param>
-    ///// <returns></returns>
-    //protected internal override object InstrumentOperation(Type operationType, object operation)
-    //{
-    //    var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
-    //    var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
-    //    return ProxyGenerator.CreateClassProxyWithTarget(
-    //        operationType,
-    //        new[] { typeof(IInstrumented) },
-    //        operation,
-    //        interceptorArray);
-    //}
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="operationType"></param>
+    /// <param name="operation"></param>
+    /// <returns></returns>
+    protected internal override object InstrumentOperation(Type operationType, object operation)
+    {
+        var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+        var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
+        return ProxyGenerator.CreateClassProxyWithTarget(
+            operationType,
+            new[] { typeof(IInstrumented) },
+            operation,
+            interceptorArray);
+    }
 
     /// <summary>
-    /// A number of our tests have built in delays while we wait an expected
-    /// amount of time for a service operation to complete and this method
-    /// allows us to wait (unless we're playing back recordings, which can
-    /// complete immediately).
+    /// Provides convenient access to mode-aware delay functionality for the current test instance.
+    /// This method automatically uses the current test's recording mode to determine appropriate delay behavior.
     /// </summary>
-    /// <param name="milliseconds">The number of milliseconds to wait.</param>
+    /// <param name="milliseconds">The number of milliseconds to wait in Live and Record modes. Default is 1000ms.</param>
     /// <param name="playbackDelayMilliseconds">
-    /// An optional number of milliseconds to wait if we're playing back a
-    /// recorded test.  This is useful for allowing client side events to
-    /// get processed.
+    /// An optional number of milliseconds to wait in Playback mode. If null, no delay occurs in Playback mode.
+    /// This is useful for allowing client-side events to process during playback.
     /// </param>
-    /// <returns>A task that will (optionally) delay.</returns>
+    /// <returns>
+    /// A task that represents the delay operation. The task completes immediately in Playback mode
+    /// (unless playbackDelayMilliseconds is specified), or after the specified delay in other modes.
+    /// </returns>
+    /// <remarks>
+    /// This method is a convenience wrapper that calls the static Delay method with the current test's Mode.
+    /// Use this method when you need to wait for service operations to complete but want fast playback execution.
+    /// </remarks>
     public Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
         Delay(Mode, milliseconds, playbackDelayMilliseconds);
 
     /// <summary>
-    /// A number of our tests have built in delays while we wait an expected
-    /// amount of time for a service operation to complete and this method
-    /// allows us to wait (unless we're playing back recordings, which can
-    /// complete immediately).
+    /// Provides mode-aware delay functionality that adapts behavior based on the specified recording mode.
+    /// This static method allows delay behavior to be controlled independently of a test instance.
     /// </summary>
-    /// <param name="mode"></param>
-    /// <param name="milliseconds">The number of milliseconds to wait.</param>
+    /// <param name="mode">The recording mode that determines delay behavior.</param>
+    /// <param name="milliseconds">The number of milliseconds to wait in Live and Record modes. Default is 1000ms.</param>
     /// <param name="playbackDelayMilliseconds">
-    /// An optional number of milliseconds to wait if we're playing back a
-    /// recorded test.  This is useful for allowing client side events to
-    /// get processed.
+    /// An optional number of milliseconds to wait in Playback mode. If null, no delay occurs in Playback mode.
+    /// This parameter allows fine-tuning of playback timing when some delay is necessary for proper test execution.
     /// </param>
-    /// <returns>A task that will (optionally) delay.</returns>
+    /// <returns>
+    /// A task that represents the delay operation:
+    /// - In Live and Record modes: delays for the specified milliseconds
+    /// - In Playback mode: completes immediately (unless playbackDelayMilliseconds is specified)
+    /// </returns>
+    /// <remarks>
+    /// This method enables tests to include realistic delays during live execution and recording
+    /// while maintaining fast execution during playback. Use this for operations that require
+    /// waiting for service-side processing to complete.
+    /// </remarks>
     public static Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
     {
         if (mode != RecordedTestMode.Playback)
@@ -668,7 +846,18 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Provides a helper for implementing retry logic in tests that accounts for the current recording mode.
+    /// The retry behavior adapts based on whether the test is running in Live, Record, or Playback mode.
     /// </summary>
+    /// <value>
+    /// A <see cref="TestRetryHelper"/> instance configured for the current test mode.
+    /// In Playback mode, retries execute immediately for faster test execution.
+    /// In Live and Record modes, retries include appropriate delays for real service interactions.
+    /// </value>
+    /// <remarks>
+    /// This property provides mode-aware retry functionality that ensures tests run efficiently
+    /// in playback while maintaining realistic retry behavior during live execution and recording.
+    /// Use this helper instead of implementing custom retry logic to ensure consistency across test modes.
+    /// </remarks>
     protected TestRetryHelper TestRetryHelper => new TestRetryHelper(Mode == RecordedTestMode.Playback);
 }

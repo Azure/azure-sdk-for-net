@@ -14,9 +14,19 @@ using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework;
 
-internal class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
+/// <summary>
+/// TODO.
+/// </summary>
+public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
 {
+    /// <summary>
+    /// TODO.
+    /// </summary>
     public static readonly string SyncOnlyKey = "SyncOnly";
+
+    /// <summary>
+    /// TODO
+    /// </summary>
     public static readonly string RecordingDirectorySuffixKey = "RecordingDirectory";
 
     private readonly object[] _additionalParameters;
@@ -30,11 +40,22 @@ internal class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IP
         _additionalParameters = additionalParameters ?? new object[] { };
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="typeInfo"></param>
+    /// <returns></returns>
     public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
     {
         return BuildFrom(typeInfo, this);
     }
 
+    /// <summary>
+    /// TODO
+    /// </summary>
+    /// <param name="typeInfo"></param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
     {
         bool includeSync = !typeInfo.GetCustomAttributes<AsyncOnlyAttribute>(true).Any();
@@ -156,7 +177,6 @@ internal class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IP
             {
                 test.RunState = RunState.Ignored;
                 test.Properties.Set("_SKIPREASON", $"Test ignored in async run because it's marked with {nameof(SyncOnlyAttribute)}");
-                return false;
             }
         }
 
@@ -165,7 +185,6 @@ internal class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IP
         {
             test.RunState = RunState.Ignored;
             test.Properties.Set("_SKIPREASON", $"Test ignored in sync run because it's marked with {nameof(AsyncOnlyAttribute)}");
-            return false;
         }
 
         // Set properties to indicate this test can run in both modes

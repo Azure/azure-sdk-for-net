@@ -86,21 +86,38 @@ public abstract class TestEnvironment
     /// </summary>
     static TestEnvironment()
     {
-        // Traverse parent directories until we find an "artifacts" directory
-        // parent of that would become a repo root for test environment resolution purposes
         var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
+        string? repositoryRoot = null;
 
-        while (directoryInfo.Name != "artifacts")
+        // Strategy 1: Look for common repository root indicators
+        while (directoryInfo != null)
         {
-            if (directoryInfo.Parent == null)
+            // Check for common repository root files/folders
+            if (File.Exists(Path.Combine(directoryInfo.FullName, ".git", "config")) ||
+                Directory.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
+                File.Exists(Path.Combine(directoryInfo.FullName, "Directory.Build.props")) ||
+                File.Exists(Path.Combine(directoryInfo.FullName, "Directory.Build.targets")) ||
+                File.Exists(Path.Combine(directoryInfo.FullName, "global.json")) ||
+                directoryInfo.Name == "artifacts")  // Keep existing Azure SDK logic
             {
-                return;
+                repositoryRoot = directoryInfo.Name == "artifacts" ? directoryInfo.Parent?.FullName : directoryInfo.FullName;
+                break;
             }
 
             directoryInfo = directoryInfo.Parent;
         }
 
-        var repositoryRoot = directoryInfo?.Parent?.FullName;
+        // Strategy 2: Fallback to a reasonable default if no indicators found
+        if (repositoryRoot == null)
+        {
+            // Go up a few levels from the assembly location as a reasonable guess
+            directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
+            for (int i = 0; i < 4 && directoryInfo?.Parent != null; i++)
+            {
+                directoryInfo = directoryInfo.Parent;
+            }
+            repositoryRoot = directoryInfo?.FullName;
+        }
 
         if (repositoryRoot is null)
         {
@@ -109,6 +126,7 @@ public abstract class TestEnvironment
 
         RepositoryRoot ??= repositoryRoot;
 
+        // Make DevCertPath more flexible too
         DevCertPath ??= Path.Combine(
             RepositoryRoot,
             "eng",
@@ -333,12 +351,21 @@ public abstract class TestEnvironment
         if (assembly == null)
             throw new ArgumentNullException(nameof(assembly));
 
-        var testProject = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == "SourcePath").Value;
-        if (string.IsNullOrEmpty(testProject))
+        var sourcePathAttribute = assembly.GetCustomAttributes<AssemblyMetadataAttribute>().FirstOrDefault(a => a.Key == "SourcePath");
+        if (sourcePathAttribute?.Value is string sourcePath && !string.IsNullOrEmpty(sourcePath))
+        {
+            return sourcePath;
+        }
+
+        // Fallback: use assembly location directory
+        string? assemblyDir = Path.GetDirectoryName(assembly.Location);
+        if (string.IsNullOrEmpty(assemblyDir))
         {
             throw new InvalidOperationException($"Unable to determine the test directory for {assembly}");
         }
-        return testProject;
+
+        Console.WriteLine($"Using fallback path: {assemblyDir}");
+        return assemblyDir;
     }
 
     /// <summary>

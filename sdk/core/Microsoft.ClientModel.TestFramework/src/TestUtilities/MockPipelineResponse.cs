@@ -33,6 +33,14 @@ public class MockPipelineResponse : PipelineResponse
         _reasonPhrase = reasonPhrase;
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public bool IsDisposed
+    {
+        get => _disposed;
+    }
+
     /// <inheritdoc/>
     public override int Status => _status;
 
