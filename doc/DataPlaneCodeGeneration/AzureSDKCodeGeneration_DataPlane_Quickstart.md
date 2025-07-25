@@ -6,7 +6,7 @@ Azure SDK Code Generation takes a [TypeSpec](https://microsoft.github.io/typespe
 
 ## Prerequisites
 
-The initial library generation should happen as part of the `azure-rest-api-specs` repo PR. Details about this process can be found in [here](https://eng.ms/docs/products/azure-developer-experience/develop/sdk-generation-pipelines). To proceed with manual generation, follow the rest of the steps in this doc.
+The initial library generation should happen as part of the `azure-rest-api-specs` repo PR. Details about this process can be found [here](https://eng.ms/docs/products/azure-developer-experience/develop/sdk-generation-pipelines). To proceed with manual generation, follow the rest of the steps in this doc.
 
 For first time to set up of a new SDK package, please verify you have met the prerequisites, including runtime environment, TypeSpec project, and SDK project folder. You can refer to [SDK Generation Prerequisites](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKGeneration_Prerequistites.md) to set up.
 
