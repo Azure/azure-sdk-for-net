@@ -109,9 +109,9 @@ jobs:
         Commitish: ${{ parameters.ToolsRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
 
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-        parameters:
-          AgentImage: $(OSVmImage)
+  - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+    parameters:
+      AgentImage: $(OSVmImage)
 
   # Copied from eng/pipelines/templates/steps/install-dotnet.yml, but changed workingDirectory
   - task: UseDotNet@2 # About UseDotNet@2 task: https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/use-dotnet-v2?view=azure-pipelines
