@@ -1566,8 +1566,6 @@ namespace Azure.Communication.CallAutomation
                     summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
                 );
 
-                //return CallMediaRestClient.SummarizeCall(CallConnectionId, request, cancellationToken);
-
                 return CallMediaRestClient.SummarizeCall(CallConnectionId,
                     request,
                     cancellationToken);
@@ -1596,8 +1594,6 @@ namespace Azure.Communication.CallAutomation
                     operationCallbackUri: options.OperationCallbackUri,
                     summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
                 );
-
-                //return CallMediaRestClient.SummarizeCall(CallConnectionId, request, cancellationToken);
 
                 return await CallMediaRestClient.SummarizeCallAsync(CallConnectionId,
                     request,

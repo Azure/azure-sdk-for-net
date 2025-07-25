@@ -14,10 +14,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Locale for summarization (e.g., en-US).
         /// </summary>
-        /// <param name="locale"></param>
-        public SummarizationOptions(string locale)
+        public SummarizationOptions()
         {
-            Locale = locale;
         }
     }
 }
