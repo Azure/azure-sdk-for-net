@@ -8,9 +8,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Agents.Persistent.Custom.Streaming;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests;
