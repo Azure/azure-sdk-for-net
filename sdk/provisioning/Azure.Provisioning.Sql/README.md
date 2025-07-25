@@ -22,6 +22,56 @@ dotnet add package Azure.Provisioning.Sql
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create A SQL Server And Database
+
+This example demonstrates how to create a SQL Server with a database, including secure parameter handling for administrator credentials, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.sql/sql-database/main.bicep).
+
+```C# Snippet:SqlServerBasic
+Infrastructure infra = new();
+
+ProvisioningParameter dbName =
+    new(nameof(dbName), typeof(string))
+    {
+        Value = "SampleDB",
+        Description = "The name of the SQL Database."
+    };
+infra.Add(dbName);
+
+ProvisioningParameter adminLogin =
+    new(nameof(adminLogin), typeof(string))
+    {
+        Description = "The administrator username of the SQL logical server."
+    };
+infra.Add(adminLogin);
+
+ProvisioningParameter adminPass =
+    new(nameof(adminPass), typeof(string))
+    {
+        Description = "The administrator password of the SQL logical server.",
+        IsSecure = true
+    };
+infra.Add(adminPass);
+
+SqlServer sql =
+    new(nameof(sql))
+    {
+        AdministratorLogin = adminLogin,
+        AdministratorLoginPassword = adminPass
+    };
+infra.Add(sql);
+
+SqlDatabase db =
+    new(nameof(db))
+    {
+        Parent = sql,
+        Name = dbName,
+        Sku = new SqlSku { Name = "Standard", Tier = "Standard" }
+    };
+infra.Add(db);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

@@ -20,6 +20,7 @@ public class BasicContainerRegistryTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ContainerRegistryBasic
                 Infrastructure infra = new();
 
                 ContainerRegistryService registry =
@@ -33,6 +34,7 @@ public class BasicContainerRegistryTests(bool async)
                 infra.Add(registry);
 
                 infra.Add(new ProvisioningOutput("registryLoginServer", typeof(string)) { Value = registry.LoginServer });
+                #endregion
 
                 return infra;
             })

@@ -22,6 +22,27 @@ dotnet add package Azure.Provisioning.OperationalInsights
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create A Log Analytics Workspace
+
+This example demonstrates how to create a Log Analytics workspace with system-assigned managed identity and per-GB pricing tier.
+
+```C# Snippet:OperationalInsightsWorkspaceBasic
+Infrastructure infra = new();
+
+OperationalInsightsWorkspace workspace =
+    new(nameof(workspace))
+    {
+        Sku = new OperationalInsightsWorkspaceSku
+        {
+            Name = OperationalInsightsWorkspaceSkuName.PerGB2018
+        },
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+    };
+infra.Add(workspace);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

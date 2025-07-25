@@ -20,7 +20,7 @@ public class BasicStorageTests(bool async)
     {
         await using Trycep test = CreateBicepTest();
         await test.Define(
-            BicepInfrastructure =>
+            ctx =>
             {
                 #region Snippet:StorageAccountBasic
                 Infrastructure infra = new();
