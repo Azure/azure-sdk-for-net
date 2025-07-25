@@ -29,13 +29,16 @@ This library allows you to specify your infrastructure in a declarative style us
 This example demonstrates how to create a storage account with recommended security settings and hierarchical namespace enabled for Azure Data Lake Storage Gen2.
 
 ```C# Snippet:StorageAccountBasic
-new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)
+Infrastructure infra = new();
+
+StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2023_01_01)
 {
     Kind = StorageKind.StorageV2,
     Sku = { Name = StorageSkuName.StandardLrs },
     IsHnsEnabled = true,
     AllowBlobPublicAccess = false
-}
+};
+infra.Add(storage);
 ```
 
 ## Troubleshooting
