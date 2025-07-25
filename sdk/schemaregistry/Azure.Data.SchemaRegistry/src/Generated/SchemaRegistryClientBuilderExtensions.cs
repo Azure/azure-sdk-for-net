@@ -17,10 +17,11 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="SchemaRegistryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="fullyQualifiedNamespace"></param>
-        public static IAzureClientBuilder<SchemaRegistryClient, SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<SchemaRegistryClient, SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace, global::.TokenCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<SchemaRegistryClient, SchemaRegistryClientOptions>((options, credential) => new SchemaRegistryClient(fullyQualifiedNamespace, credential, options));
+            return builder.RegisterClientFactory<SchemaRegistryClient, SchemaRegistryClientOptions>(options => new SchemaRegistryClient(fullyQualifiedNamespace, credential, options));
         }
 
         /// <summary> Registers a <see cref="SchemaRegistryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
