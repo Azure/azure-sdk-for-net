@@ -1,4 +1,4 @@
 directory: specification/liftrarize/ArizeAi.ObservabilityEval.Management
-commit: 589f71f4a7fe1c6ca70b0988cadd93687df8f73c
+commit: 685bc4b1cb39ae8d912762b9f7b62a474bafcae5
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
