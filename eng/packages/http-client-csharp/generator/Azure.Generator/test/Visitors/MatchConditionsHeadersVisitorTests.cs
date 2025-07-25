@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
@@ -491,6 +492,55 @@ namespace Azure.Generator.Tests.Visitors
             }
         }
 
+        // This test validates that the CollectionResultDefinition is generated correctly when the payload contains match conditions headers.
+        [Test]
+        public void TestCollectionResultDefinitionNextLinkInBody()
+        {
+            var inputModel = InputFactory.Model("cat", properties:
+            [
+                InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
+            ]);
+            var pagingMetadata = InputFactory.NextLinkPagingMetadata("cats", "nextCat", InputResponseLocation.Body);
+            var response = InputFactory.OperationResponse(
+                [200],
+                InputFactory.Model(
+                    "page",
+                    properties: [
+                        InputFactory.Property("cats", InputFactory.Array(inputModel)),
+                        InputFactory.Property("nextCat", InputPrimitiveType.Url)
+                    ]));
+            var operation = InputFactory.Operation("getCats", parameters: [.. CreateAllMatchConditionParameters()], responses: [response]);
+            var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
+            var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
+
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(client);
+            Assert.IsNotNull(clientProvider);
+
+            // visit
+            var visitor = new TestMatchConditionsHeaderVisitor();
+
+            var restClient = clientProvider!.RestClient;
+            var methods = restClient.Methods;
+            Assert.IsTrue(methods.Count > 0, "RestClient should have methods defined.");
+            foreach (var method in methods)
+            {
+                visitor.VisitScmMethod(method);
+            }
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+            visitor.TestVisitType(collectionResultDefinition!);
+
+            // validate the fields are updated with the request condition type
+            var matchConditionsField = collectionResultDefinition!.Fields.FirstOrDefault(f => f.Name == "_requestConditions");
+            Assert.IsNotNull(matchConditionsField, "MatchConditions field should be present in the collection result definition.");
+            var ifMatchField = collectionResultDefinition.Fields.FirstOrDefault(f => f.Name == "_ifMatch");
+            Assert.IsNull(ifMatchField, "If-Match field should not be present in the collection result definition.");
+        }
+
         private static List<InputParameter> CreateAllMatchConditionParameters()
         {
             List<InputParameter> parameters =
@@ -532,6 +582,11 @@ namespace Azure.Generator.Tests.Visitors
             public ScmMethodProvider? VisitScmMethod(ScmMethodProvider method)
             {
                 return base.VisitMethod(method);
+            }
+
+            public TypeProvider? TestVisitType(TypeProvider type)
+            {
+                return base.VisitType(type);
             }
 
             internal MethodProvider? VisitScmMethod(MethodProvider method)

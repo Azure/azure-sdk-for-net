@@ -3,11 +3,13 @@
 
 using Azure.Core;
 using Azure.Generator.Primitives;
+using Azure.Generator.Providers;
 using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -20,33 +22,29 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Visitors
 {
     /// <summary>
-    /// Visitor that modifies service methods to group conditional request headers into MatchConditions/RequestConditions types.
+    /// Visitor that modifies service methods to group conditional request headers into <see cref="MatchConditions"/>/<see cref="RequestConditions"/> types.
     /// </summary>
     internal class MatchConditionsHeadersVisitor : ScmLibraryVisitor
     {
         private static CSharpType ETagType => new CSharpType(typeof(ETag)).WithNullable(true);
         private const string IfMatch = "If-Match";
-        private const string IfMatchMemberName = "IfMatch";
         private const string IfNoneMatch = "If-None-Match";
-        private const string IfNoneMatchMemberName = "IfNoneMatch";
         private const string IfModifiedSince = "If-Modified-Since";
-        private const string IfModifiedSinceMemberName = "IfModifiedSince";
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
-        private const string IfUnmodifiedSinceMemberName = "IfUnmodifiedSince";
 
         private static readonly HashSet<string> _conditionalHeaders = new(StringComparer.OrdinalIgnoreCase)
         {
             IfMatch,
-            IfMatchMemberName,
+            IfMatch.ToIdentifierName(),
             IfNoneMatch,
-            IfNoneMatchMemberName,
+            IfNoneMatch.ToIdentifierName(),
             IfModifiedSince,
-            IfModifiedSinceMemberName,
+            IfModifiedSince.ToIdentifierName(),
             IfUnmodifiedSince,
-            IfUnmodifiedSinceMemberName,
+            IfUnmodifiedSince.ToIdentifierName(),
         };
 
-        private static readonly Dictionary<RequestConditionHeaders, string> _requestConditionsHeadersMap = new()
+        private static readonly Dictionary<RequestConditionHeaders, string> _requestConditionsFlagMap = new()
         {
             { RequestConditionHeaders.None, string.Empty },
             { RequestConditionHeaders.IfMatch, IfMatch },
@@ -55,6 +53,9 @@ namespace Azure.Generator.Visitors
             { RequestConditionHeaders.IfUnmodifiedSince, IfUnmodifiedSince }
         };
 
+        /// <summary>
+        /// Visits a method and modifies it to handle request condition headers.
+        /// </summary>
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
             if (!TryGetMethodRequestConditionInfo(method, out var headerFlags, out var matchConditionParams))
@@ -64,7 +65,7 @@ namespace Azure.Generator.Visitors
 
             bool isCreateRequestMethod = IsCreateRequestMethod(method);
             // Update method parameters
-            UpdateMethodParameters(method, isCreateRequestMethod, headerFlags, matchConditionParams);
+            UpdateMethodParameters(method, headerFlags, matchConditionParams);
 
             // Update method body
             if (isCreateRequestMethod)
@@ -77,6 +78,17 @@ namespace Azure.Generator.Visitors
             }
 
             return method;
+        }
+
+        protected override TypeProvider? VisitType(TypeProvider type)
+        {
+            // reset the collection definition if it exists so any changes are properly reflected
+            if (type is CollectionResultDefinition)
+            {
+                type.Reset();
+            }
+
+            return base.VisitType(type);
         }
 
         private static bool TryGetMethodRequestConditionInfo(
@@ -105,7 +117,6 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateMethodParameters(
             ScmMethodProvider method,
-            bool isCreateRequestMethod,
             RequestConditionHeaders headerFlags,
             IReadOnlyList<ParameterProvider> matchConditionParams)
         {
@@ -197,16 +208,16 @@ namespace Azure.Generator.Visitors
 
                 // Map header names to flags using string comparison
                 if (string.Equals(headerName, IfMatch, StringComparison.OrdinalIgnoreCase) ||
-                    string.Equals(headerName, IfMatchMemberName, StringComparison.OrdinalIgnoreCase))
+                    string.Equals(headerName, IfMatch.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
                     flags |= RequestConditionHeaders.IfMatch;
                 else if (string.Equals(headerName, IfNoneMatch, StringComparison.OrdinalIgnoreCase) ||
-                         string.Equals(headerName, IfNoneMatchMemberName, StringComparison.OrdinalIgnoreCase))
+                         string.Equals(headerName, IfNoneMatch.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
                     flags |= RequestConditionHeaders.IfNoneMatch;
                 else if (string.Equals(headerName, IfModifiedSince, StringComparison.OrdinalIgnoreCase) ||
-                         string.Equals(headerName, IfModifiedSinceMemberName, StringComparison.OrdinalIgnoreCase))
+                         string.Equals(headerName, IfModifiedSince.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
                     flags |= RequestConditionHeaders.IfModifiedSince;
                 else if (string.Equals(headerName, IfUnmodifiedSince, StringComparison.OrdinalIgnoreCase) ||
-                         string.Equals(headerName, IfUnmodifiedSinceMemberName, StringComparison.OrdinalIgnoreCase))
+                         string.Equals(headerName, IfUnmodifiedSince.ToIdentifierName(), StringComparison.OrdinalIgnoreCase))
                     flags |= RequestConditionHeaders.IfUnmodifiedSince;
             }
 
@@ -282,7 +293,7 @@ namespace Azure.Generator.Visitors
                         var validationStatement = new IfStatement(requestConditionsParameter.Property(propertyName).NotEqual(Null))
                         {
                             Throw(New.Instance(new CSharpType(typeof(ArgumentNullException)),
-                                Literal($"Service does not support the {_requestConditionsHeadersMap[flag]} header for this operation.")))
+                                Literal($"Service does not support the {_requestConditionsFlagMap[flag]} header for this operation.")))
                         };
                         updatedStatements.Add(validationStatement);
                     }
@@ -322,6 +333,12 @@ namespace Azure.Generator.Visitors
                             UpdateInvokeMethodArguments(invoke, replacementParameter);
                             expr.Update(expression: new AssignmentExpression(((AssignmentExpression)expr.Expression).Variable, invoke));
                         }
+                        else if (tryBodyStatement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } keyword } expr1)
+                        {
+                            var updatedNewInstanceExpression1 = GetNewInstanceExpression(newInstanceExpression, replacementParameter);
+                            keyword.Update(keyword.Keyword, updatedNewInstanceExpression1);
+                            expr1.Update(expression: keyword);
+                        }
                     }
                     break;
 
@@ -333,16 +350,33 @@ namespace Azure.Generator.Visitors
                 case ExpressionStatement { Expression: AssignmentExpression { Value: ClientResponseApi { Original: InvokeMethodExpression invoke } } }:
                     UpdateInvokeMethodArguments(invoke, replacementParameter);
                     break;
+                case ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } keyword } expr:
+                    var updatedNewInstanceExpression = GetNewInstanceExpression(newInstanceExpression, replacementParameter);
+                    keyword.Update(keyword.Keyword, updatedNewInstanceExpression);
+                    expr.Update(expression: keyword);
+                    break;
             }
 
             return statement;
 
             static void UpdateInvokeMethodArguments(InvokeMethodExpression invokeExpression, ParameterProvider replacementParameter)
             {
+                var updatedArguments = ReplaceConditionalHeaderArguments(invokeExpression.Arguments, replacementParameter);
+                invokeExpression.Update(arguments: updatedArguments);
+            }
+
+            static NewInstanceExpression GetNewInstanceExpression(NewInstanceExpression newInstanceExpression, ParameterProvider replacementParameter)
+            {
+                var updatedArguments = ReplaceConditionalHeaderArguments(newInstanceExpression.Parameters, replacementParameter);
+                return new NewInstanceExpression(newInstanceExpression.Type, updatedArguments, newInstanceExpression.InitExpression);
+            }
+
+            static List<ValueExpression> ReplaceConditionalHeaderArguments(IReadOnlyList<ValueExpression> arguments, ParameterProvider replacementParameter)
+            {
                 var updatedArguments = new List<ValueExpression>();
                 bool addedMatchConditions = false;
 
-                foreach (var argument in invokeExpression.Arguments)
+                foreach (var argument in arguments)
                 {
                     if (argument is VariableExpression variable && _conditionalHeaders.Contains(variable.Declaration.RequestedName))
                     {
@@ -358,7 +392,7 @@ namespace Azure.Generator.Visitors
                     }
                 }
 
-                invokeExpression.Update(arguments: updatedArguments);
+                return updatedArguments;
             }
         }
 
