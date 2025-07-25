@@ -151,6 +151,10 @@ interface Employees2 {
       resourceMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
+    strictEqual(
+      resourceMetadataDecorator.arguments.resourceName,
+      "Employee"
+    );
   });
 
   it("singleton resource", async () => {
@@ -281,6 +285,10 @@ interface CurrentEmployees {
       employeeGetMethod.crossLanguageDefinitionId
     );
     strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceName,
+      "Employee"
+    );
 
     const currentEmployeeModel = root.models.find(
       (m) => m.name === "CurrentEmployee"
@@ -308,6 +316,10 @@ interface CurrentEmployees {
       "ResourceGroup"
     );
     strictEqual(currentMetdataDecorator.arguments.methods.length, 3);
+    strictEqual(
+      currentMetdataDecorator.arguments.resourceName,
+      "CurrentEmployee"
+    );
   });
 
   it("resource with grand parent under a resource group", async () => {
@@ -452,6 +464,10 @@ interface Employees {
       departmentMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceName,
+      "Department"
+    );
 
     const companyMetadataDecorator = companyModel.decorators?.find(
       (d) => d.name === resourceMetadata
@@ -479,10 +495,18 @@ interface Employees {
       companyMetadataDecorator.arguments.parentResourceId,
       undefined
     );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceName,
+      "Company"
+    );
     
     strictEqual(
       employeeMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceName,
+      "Employee"
     );
   });
 
@@ -631,6 +655,10 @@ interface Employees {
       departmentMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceName,
+      "Department"
+    );
 
     const companyMetadataDecorator = companyModel.decorators?.find(
       (d) => d.name === resourceMetadata
@@ -658,10 +686,18 @@ interface Employees {
       companyMetadataDecorator.arguments.parentResourceId,
       undefined
     );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceName,
+      "Company"
+    );
     
     strictEqual(
       employeeMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceName,
+      "Employee"
     );
   });
 
@@ -810,6 +846,10 @@ interface Employees {
       departmentMetadataDecorator.arguments.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceName,
+      "Department"
+    );
 
     const companyMetadataDecorator = companyModel.decorators?.find(
       (d) => d.name === resourceMetadata
@@ -837,10 +877,18 @@ interface Employees {
       companyMetadataDecorator.arguments.parentResourceId,
       undefined
     );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceName,
+      "Company"
+    );
     
     strictEqual(
       employeeMetadataDecorator.arguments.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceName,
+      "Employee"
     );
   });
 });

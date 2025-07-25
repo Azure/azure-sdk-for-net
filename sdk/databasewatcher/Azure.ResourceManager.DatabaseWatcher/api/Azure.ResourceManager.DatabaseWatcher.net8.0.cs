@@ -1,28 +1,5 @@
 namespace Azure.ResourceManager.DatabaseWatcher
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherAlertRuleResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherHealthValidationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.DatabaseWatcherTargetResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherAlertRuleProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherDatastore))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationIssue))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherHealthValidationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherSharedPrivateLinkResourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherTargetProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.DatabaseWatcherUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.SqlDBElasticPoolTargetProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.SqlDBSingleDatabaseTargetProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.SqlMITargetProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DatabaseWatcher.Models.TargetAuthenticationVaultSecret))]
     public partial class AzureResourceManagerDatabaseWatcherContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDatabaseWatcherContext() { }

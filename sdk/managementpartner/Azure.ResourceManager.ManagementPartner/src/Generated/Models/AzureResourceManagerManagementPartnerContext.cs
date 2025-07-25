@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ManagementPartner.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementPartner
 {
@@ -13,6 +15,12 @@ namespace Azure.ResourceManager.ManagementPartner
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(OperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(OperationList))]
+    [ModelReaderWriterBuildable(typeof(OperationResponse))]
+    [ModelReaderWriterBuildable(typeof(PartnerResponseData))]
+    [ModelReaderWriterBuildable(typeof(PartnerResponseResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerManagementPartnerContext : ModelReaderWriterContext
     {
     }

@@ -1,15 +1,5 @@
 namespace Azure.ResourceManager.Fabric
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.FabricCapacityData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.FabricCapacityResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricCapacityPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricCapacityProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForExistingCapacity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity))]
     public partial class AzureResourceManagerFabricContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerFabricContext() { }
