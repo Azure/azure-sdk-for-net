@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, CheckNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckPlaywrightNameAvailabilityRequestUri(string subscriptionId, PlaywrightNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Playwright
             return uri;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckPlaywrightNameAvailabilityRequest(string subscriptionId, PlaywrightNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -610,20 +610,20 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<PlaywrightNameAvailabilityResult>> CheckPlaywrightNameAvailabilityAsync(string subscriptionId, PlaywrightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
+            using var message = CreateCheckPlaywrightNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        PlaywrightNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = PlaywrightNameAvailabilityResult.DeserializePlaywrightNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -637,20 +637,20 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(string subscriptionId, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<PlaywrightNameAvailabilityResult> CheckPlaywrightNameAvailability(string subscriptionId, PlaywrightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
+            using var message = CreateCheckPlaywrightNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        PlaywrightNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = PlaywrightNameAvailabilityResult.DeserializePlaywrightNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

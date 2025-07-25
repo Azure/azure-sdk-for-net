@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
-    public partial class FreeTrialProperties : IUtf8JsonSerializable, IJsonModel<FreeTrialProperties>
+    public partial class PlaywrightFreeTrialProperties : IUtf8JsonSerializable, IJsonModel<PlaywrightFreeTrialProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FreeTrialProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightFreeTrialProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FreeTrialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlaywrightFreeTrialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightFreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightFreeTrialProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Playwright.Models
             }
         }
 
-        FreeTrialProperties IJsonModel<FreeTrialProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlaywrightFreeTrialProperties IJsonModel<PlaywrightFreeTrialProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightFreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightFreeTrialProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFreeTrialProperties(document.RootElement, options);
+            return DeserializePlaywrightFreeTrialProperties(document.RootElement, options);
         }
 
-        internal static FreeTrialProperties DeserializeFreeTrialProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PlaywrightFreeTrialProperties DeserializePlaywrightFreeTrialProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 return null;
             }
             string workspaceId = default;
-            FreeTrialState state = default;
+            PlaywrightFreeTrialState state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    state = new FreeTrialState(property.Value.GetString());
+                    state = new PlaywrightFreeTrialState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.Playwright.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FreeTrialProperties(workspaceId, state, serializedAdditionalRawData);
+            return new PlaywrightFreeTrialProperties(workspaceId, state, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FreeTrialProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PlaywrightFreeTrialProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightFreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightFreeTrialProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FreeTrialProperties IPersistableModel<FreeTrialProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PlaywrightFreeTrialProperties IPersistableModel<PlaywrightFreeTrialProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightFreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFreeTrialProperties(document.RootElement, options);
+                        return DeserializePlaywrightFreeTrialProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightFreeTrialProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FreeTrialProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlaywrightFreeTrialProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

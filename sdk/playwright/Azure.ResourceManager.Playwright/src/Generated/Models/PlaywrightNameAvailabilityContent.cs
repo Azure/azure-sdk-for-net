@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Playwright.Models;
 
-namespace Azure.ResourceManager.Playwright
+namespace Azure.ResourceManager.Playwright.Models
 {
-    /// <summary>
-    /// A class representing the PlaywrightWorkspaceQuotum data model.
-    /// Playwright workspace quota resource.
-    /// </summary>
-    public partial class PlaywrightWorkspaceQuotumData : ResourceData
+    /// <summary> The check availability request body. </summary>
+    public partial class PlaywrightNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,25 @@ namespace Azure.ResourceManager.Playwright
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceQuotumData"/>. </summary>
-        internal PlaywrightWorkspaceQuotumData()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightNameAvailabilityContent"/>. </summary>
+        public PlaywrightNameAvailabilityContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightWorkspaceQuotumData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceQuotumData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlaywrightWorkspaceQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Name = name;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PlaywrightWorkspaceQuotaProperties Properties { get; }
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        public string Name { get; set; }
+        /// <summary> The resource type. </summary>
+        public string Type { get; set; }
     }
 }

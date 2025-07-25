@@ -16,53 +16,53 @@ using Azure.ResourceManager.Playwright.Models;
 namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
-    /// A Class representing a PlaywrightWorkspaceQuotum along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightWorkspaceQuotumResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPlaywrightWorkspaceQuotumResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PlaywrightWorkspaceResource"/> using the GetPlaywrightWorkspaceQuotum method.
+    /// A Class representing a PlaywrightWorkspaceQuota along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightWorkspaceQuotaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPlaywrightWorkspaceQuotaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PlaywrightWorkspaceResource"/> using the GetPlaywrightWorkspaceQuota method.
     /// </summary>
-    public partial class PlaywrightWorkspaceQuotumResource : ArmResource
+    public partial class PlaywrightWorkspaceQuotaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PlaywrightWorkspaceQuotumResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PlaywrightWorkspaceQuotaResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="playwrightWorkspaceName"> The playwrightWorkspaceName. </param>
         /// <param name="quotaName"> The quotaName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, QuotaName quotaName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string playwrightWorkspaceName, PlaywrightQuotaName quotaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasClientDiagnostics;
-        private readonly PlaywrightWorkspaceQuotasRestOperations _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasRestClient;
-        private readonly PlaywrightWorkspaceQuotumData _data;
+        private readonly ClientDiagnostics _playwrightWorkspaceQuotaClientDiagnostics;
+        private readonly PlaywrightWorkspaceQuotasRestOperations _playwrightWorkspaceQuotaRestClient;
+        private readonly PlaywrightWorkspaceQuotaData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/playwrightWorkspaces/quotas";
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotumResource"/> class for mocking. </summary>
-        protected PlaywrightWorkspaceQuotumResource()
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotaResource"/> class for mocking. </summary>
+        protected PlaywrightWorkspaceQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PlaywrightWorkspaceQuotumResource(ArmClient client, PlaywrightWorkspaceQuotumData data) : this(client, data.Id)
+        internal PlaywrightWorkspaceQuotaResource(ArmClient client, PlaywrightWorkspaceQuotaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightWorkspaceQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PlaywrightWorkspaceQuotumResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlaywrightWorkspaceQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasApiVersion);
-            _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasRestClient = new PlaywrightWorkspaceQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasApiVersion);
+            _playwrightWorkspaceQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string playwrightWorkspaceQuotaApiVersion);
+            _playwrightWorkspaceQuotaRestClient = new PlaywrightWorkspaceQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightWorkspaceQuotaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Playwright
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PlaywrightWorkspaceQuotumData Data
+        public virtual PlaywrightWorkspaceQuotaData Data
         {
             get
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotumResource"/></description>
+        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlaywrightWorkspaceQuotumResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightWorkspaceQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotumResource.Get");
+            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = await _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightWorkspaceQuotaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PlaywrightWorkspaceQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightWorkspaceQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotumResource"/></description>
+        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlaywrightWorkspaceQuotumResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightWorkspaceQuotaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotumResource.Get");
+            using var scope = _playwrightWorkspaceQuotaClientDiagnostics.CreateScope("PlaywrightWorkspaceQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = _playwrightWorkspaceQuotumPlaywrightWorkspaceQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _playwrightWorkspaceQuotaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PlaywrightWorkspaceQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightWorkspaceQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

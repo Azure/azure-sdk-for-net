@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Playwright.Samples
 },
                 Properties = new PlaywrightWorkspaceUpdateProperties
                 {
-                    RegionalAffinity = EnablementStatus.Disabled,
+                    RegionalAffinity = PlaywrightEnablementStatus.Disabled,
                 },
             };
             PlaywrightWorkspaceResource result = await playwrightWorkspace.UpdateAsync(patch);

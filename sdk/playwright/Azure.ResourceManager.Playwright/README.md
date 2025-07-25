@@ -1,6 +1,6 @@
 # Microsoft Azure Playwright management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft Playwright is a fully managed service for end-to-end testing built on top of Playwright. With Playwright, you can automate end-to-end tests to ensure your web applications work the way you expect it to, across different web browsers and operating systems. The service abstracts the complexity and infrastructure for running Playwright tests with high parallelization.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Playwright.Models;
 
 namespace Azure.ResourceManager.Playwright
 {
@@ -13,6 +15,26 @@ namespace Azure.ResourceManager.Playwright
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(PlaywrightFreeTrialProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceFreeTrialProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceListResult))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspacePatch))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPlaywrightContext : ModelReaderWriterContext
     {
     }
