@@ -1,4 +1,4 @@
-# Azure.Provisioning.OperationalInsights client library for .NET
+# Azure Provisioning OperationalInsights client library for .NET
 
 Azure.Provisioning.OperationalInsights simplifies declarative resource provisioning in .NET.
 

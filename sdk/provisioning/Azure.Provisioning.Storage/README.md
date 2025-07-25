@@ -1,4 +1,4 @@
-# Azure Provisioning client library for .NET
+# Azure Provisioning Storage client library for .NET
 
 Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET for Azure Storage.
 

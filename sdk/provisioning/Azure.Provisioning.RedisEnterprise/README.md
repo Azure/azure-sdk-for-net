@@ -1,4 +1,4 @@
-# Azure.Provisioning.RedisEnterprise client library for .NET
+# Azure Provisioning RedisEnterprise client library for .NET
 
 Azure.Provisioning.RedisEnterprise simplifies declarative resource provisioning in .NET.
 

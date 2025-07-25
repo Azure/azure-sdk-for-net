@@ -1,4 +1,4 @@
-# Azure.Provisioning.ContainerService client library for .NET
+# Azure Provisioning ContainerService client library for .NET
 
 Azure.Provisioning.ContainerService simplifies declarative resource provisioning in .NET.
 

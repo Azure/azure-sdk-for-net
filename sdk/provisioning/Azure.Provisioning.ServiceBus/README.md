@@ -1,4 +1,4 @@
-# Azure.Provisioning.ServiceBus client library for .NET
+# Azure Provisioning ServiceBus client library for .NET
 
 Azure.Provisioning.ServiceBus simplifies declarative resource provisioning in .NET.
 

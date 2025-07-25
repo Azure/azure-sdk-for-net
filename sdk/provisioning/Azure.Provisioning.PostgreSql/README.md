@@ -1,4 +1,4 @@
-# Azure.Provisioning.PostgreSql client library for .NET
+# Azure Provisioning PostgreSql client library for .NET
 
 Azure.Provisioning.PostgreSql simplifies declarative resource provisioning in .NET.
 

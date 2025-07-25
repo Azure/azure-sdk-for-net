@@ -1,4 +1,4 @@
-# Azure.Provisioning.KeyVault client library for .NET
+# Azure Provisioning KeyVault client library for .NET
 
 Azure.Provisioning.KeyVault simplifies declarative resource provisioning in .NET.
 

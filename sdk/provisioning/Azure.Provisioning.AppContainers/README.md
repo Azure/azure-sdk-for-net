@@ -1,4 +1,4 @@
-# Azure.Provisioning.AppContainers client library for .NET
+# Azure Provisioning AppContainers client library for .NET
 
 Azure.Provisioning.AppContainers simplifies declarative resource provisioning in .NET.
 

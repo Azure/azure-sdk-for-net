@@ -1,4 +1,4 @@
-# Azure.Provisioning.AppConfiguration client library for .NET
+# Azure Provisioning AppConfiguration client library for .NET
 
 Azure.Provisioning.AppConfiguration simplifies declarative resource provisioning in .NET.
 

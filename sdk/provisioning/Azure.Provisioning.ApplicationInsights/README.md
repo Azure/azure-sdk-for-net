@@ -1,4 +1,4 @@
-# Azure.Provisioning.ApplicationInsights client library for .NET
+# Azure Provisioning ApplicationInsights client library for .NET
 
 Azure.Provisioning.ApplicationInsights simplifies declarative resource provisioning in .NET.
 

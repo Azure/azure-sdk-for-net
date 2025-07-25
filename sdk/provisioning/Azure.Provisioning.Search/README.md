@@ -1,4 +1,4 @@
-# Azure.Provisioning.Search client library for .NET
+# Azure Provisioning Search client library for .NET
 
 Azure.Provisioning.Search simplifies declarative resource provisioning in .NET.
 

@@ -1,4 +1,4 @@
-# Azure.Provisioning.Redis client library for .NET
+# Azure Provisioning Redis client library for .NET
 
 Azure.Provisioning.Redis simplifies declarative resource provisioning in .NET.
 

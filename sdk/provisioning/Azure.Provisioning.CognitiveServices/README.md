@@ -1,4 +1,4 @@
-# Azure.Provisioning.CognitiveServices client library for .NET
+# Azure Provisioning CognitiveServices client library for .NET
 
 Azure.Provisioning.CognitiveServices simplifies declarative resource provisioning in .NET.
 
