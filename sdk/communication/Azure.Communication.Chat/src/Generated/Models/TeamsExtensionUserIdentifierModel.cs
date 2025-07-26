@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Chat;
 
-namespace Azure.Communication.Chat
+namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams Phone user who is using a Communication Services resource to extend their Teams Phone set up. </summary>
-    public partial class TeamsExtensionUserIdentifierModel
+    internal partial class TeamsExtensionUserIdentifierModel
     {
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams Extension user, i.e. the Entra ID object Id of the user. </param>
