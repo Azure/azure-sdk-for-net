@@ -1,9 +1,5 @@
 namespace Azure.Storage.Queues
 {
-    public partial class AzureStorageQueuesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureStorageQueuesContext() { }
-    }
     public partial class QueueClient
     {
         protected QueueClient() { }

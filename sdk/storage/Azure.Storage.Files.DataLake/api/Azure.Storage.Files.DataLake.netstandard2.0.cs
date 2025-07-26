@@ -1,9 +1,5 @@
 namespace Azure.Storage.Files.DataLake
 {
-    public partial class AzureStorageFilesDataLakeContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureStorageFilesDataLakeContext() { }
-    }
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
         public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2025_11_05) { }

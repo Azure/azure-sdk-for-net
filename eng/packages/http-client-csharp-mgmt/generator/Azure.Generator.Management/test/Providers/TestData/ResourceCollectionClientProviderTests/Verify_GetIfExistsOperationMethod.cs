@@ -1,4 +1,4 @@
-using global::Azure.Core.Pipeline.DiagnosticScope scope = _responseTypeClientDiagnostics.CreateScope("ResponseTypeCollection.GetIfExists");
+using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeCollection.GetIfExists");
 scope.Start();
 try
 {

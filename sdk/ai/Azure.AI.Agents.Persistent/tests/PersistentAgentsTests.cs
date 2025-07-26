@@ -176,7 +176,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             using var _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
-            HashSet<string> ids = new();
+            HashSet<string> ids = [];
             int initialAgentCount = await CountElementsAndRemoveIds(client, ids);
             PersistentAgent agent1 = await GetAgent(client, AGENT_NAME);
             ids = [agent1.Id];
@@ -448,6 +448,381 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             Assert.AreEqual(0, ids.Count);
             Assert.AreEqual(2, (await msgResp.ToListAsync()).Count);
+        }
+
+        [RecordedTest]
+        public async Task TestListAgentsAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            // In this test we are assuming that workspace has more then 10 agents.
+            // If it is not the case create these agents.
+            int agentLimit = 10;
+            AsyncPageable<PersistentAgent> agents = client.Administration.GetAgentsAsync(limit: 100, order: ListSortOrder.Ascending);
+            List<string> ids = await agents.Select(x => x.Id).ToListAsync();
+            if (ids.Count < agentLimit)
+            {
+                for (int i = ids.Count; i < agentLimit; i++)
+                {
+                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+                    ids.Add((await GetAgent(client)).Id);
+                }
+            }
+            // Test calling before.
+            agents = client.Administration.GetAgentsAsync(before: ids[4], limit: 2, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentAgent agent in agents)
+            {
+                Assert.AreEqual(ids[idNum], agent.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            agents = client.Administration.GetAgentsAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentAgent agent in agents)
+            {
+                Assert.AreEqual(ids[idNum], agent.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+                agentLimit--;
+                if (agentLimit <= 0)
+                    break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListThreadsAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            // In this test we are assuming that workspace has more then 10 threads.
+            // If it is not the case create these threads.
+            int threadLimit = 10;
+            AsyncPageable<PersistentAgentThread> threads = client.Threads.GetThreadsAsync(limit: 100, order: ListSortOrder.Ascending);
+            List<string> ids = await threads.Select(x => x.Id).ToListAsync();
+            if (ids.Count < threadLimit)
+            {
+                for (int i = ids.Count; i < threadLimit; i++)
+                {
+                    PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+                    ids.Add(thread.Id);
+                }
+            }
+            // Test calling before.
+            threads = client.Threads.GetThreadsAsync(before: ids[4], limit: 2, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentAgentThread thread in threads)
+            {
+                Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            threads = client.Threads.GetThreadsAsync(after: ids[idNum-1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentAgentThread thread in threads)
+            {
+                Assert.AreEqual(ids[idNum], thread.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+                threadLimit--;
+                if (threadLimit <= 0)
+                    break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListVectorStoresAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            // In this test we are assuming that workspace has more then 10 threads.
+            // If it is not the case create these threads.
+            int storeLimit = 10;
+            AsyncPageable<PersistentAgentsVectorStore> vctStores = client.VectorStores.GetVectorStoresAsync(limit: 100, order: ListSortOrder.Ascending);
+            List<string> ids = await vctStores.Select(x => x.Id).ToListAsync();
+            if (ids.Count < storeLimit)
+            {
+                for (int i = ids.Count; i < storeLimit; i++)
+                {
+                    PersistentAgentsVectorStore vct = await client.VectorStores.CreateVectorStoreAsync(name: VCT_STORE_NAME);
+                    ids.Add(vct.Id);
+                }
+            }
+            // Test calling before.
+            vctStores = client.VectorStores.GetVectorStoresAsync(before: ids[4], limit: 2, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentAgentsVectorStore vct in vctStores)
+            {
+                Assert.AreEqual(ids[idNum], vct.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            vctStores = client.VectorStores.GetVectorStoresAsync(after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentAgentsVectorStore vct in vctStores)
+            {
+                Assert.AreEqual(ids[idNum], vct.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+                storeLimit--;
+                if (storeLimit <= 0)
+                    break;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListRunsAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            PersistentAgentThread thread = await GetThread(client);
+            PersistentAgent agent = await GetAgent(client);
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                content: "What is the mass of the Sun?"
+            );
+            int runLimit = 5;
+            string[] ids = new string[runLimit];
+            for (int i = 0; i < runLimit; i++)
+            {
+                ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+                await WaitForRun(client: client, run: run);
+                ids[i] = run.Id;
+            }
+            // Test calling before.
+            AsyncPageable<ThreadRun> runs = client.Runs.GetRunsAsync(threadId:thread.Id, before: ids[2], limit: 1, order: ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (ThreadRun run in runs)
+            {
+                Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 2);
+            // Test calling after.
+            runs = client.Runs.GetRunsAsync(threadId: thread.Id, after: ids[idNum - 1], limit: 1, order: ListSortOrder.Ascending);
+            await foreach (ThreadRun run in runs)
+            {
+                Assert.AreEqual(ids[idNum], run.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            client.Threads.DeleteThread(threadId: thread.Id);
+        }
+
+        [RecordedTest]
+        public async Task TestMultipleAgentTool()
+        {
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent weatherAgent = await GetAgent(
+                client: client,
+                agentName: "weather-bot",
+                instruction: "Your job is to get the weather for a given location. " +
+                              "Always return 50F Cloudy when asked about weather in Seattle"
+            );
+
+            // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
+            PersistentAgent stockPriceAgent = await GetAgent(
+                client: client,
+                agentName: "stock-price-bot",
+                instruction: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
+            ConnectedAgentToolDefinition stockPriceConnectedAgentTool = new(
+                new ConnectedAgentDetails(
+                    id: stockPriceAgent.Id,
+                    name: "stock_price_bot",
+                    description: "Gets the stock price of a company"
+                )
+            );
+
+            ConnectedAgentToolDefinition weatherConnectedAgentTool = new(
+                new ConnectedAgentDetails(
+                    id: weatherAgent.Id,
+                    name: "weather_bot",
+                    description: "Gets the weather for a given location"
+                )
+            );
+            PersistentAgent agent = await GetAgent(
+               client: client,
+               agentName: "my-assistant",
+               instruction: "You are a helpful assistant, and use the connected agents to get stock prices and weather.",
+               tools: [stockPriceConnectedAgentTool, weatherConnectedAgentTool]);
+
+            // Create thread for communication
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+            // Create message to thread
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "What is the stock price of Microsoft and the weather in Seattle?");
+
+            // Run the agent
+            ThreadRun run = client.Runs.CreateRun(thread, agent);
+            run = await WaitForRun(client, run);
+
+            // Check run steps
+            List<string> ids = await client.Runs.GetRunStepsAsync(run, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
+            Assert.AreEqual(ids.Count, 3);
+
+            // Check steps before
+            List<RunStep> steps = await client.Runs.GetRunStepsAsync(run, before: ids[1], order: ListSortOrder.Ascending).ToListAsync();
+            Assert.AreEqual(1, steps.Count);
+            Assert.AreEqual(steps[0].Id, ids[0]);
+
+            // Check steps after
+            steps = await client.Runs.GetRunStepsAsync(run, after: ids[0], order: ListSortOrder.Ascending).ToListAsync();
+            Assert.AreEqual(2, steps.Count);
+            Assert.AreEqual(steps[0].Id, ids[1]);
+            Assert.AreEqual(steps[1].Id, ids[2]);
+
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
+                threadId: run.ThreadId,
+                runId: run.Id,
+                order: ListSortOrder.Ascending
+            ).ToListAsync();
+            Assert.Greater(messages.Count, 0);
+
+            // NOTE: Comment out these four lines if you plan to reuse the agent later.
+            client.Threads.DeleteThread(threadId: thread.Id);
+        }
+
+        [RecordedTest]
+        public async Task TestListMessageAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            PersistentAgentThread thread = await GetThread(client);
+
+            string[] ids = new string[9];
+            for (int i = 0; i < 9; i++)
+            {
+                PersistentThreadMessage msg1 = await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "foo");
+                ids[i] = msg1.Id;
+            }
+            // Test calling before.
+            AsyncPageable<PersistentThreadMessage> msgResp = client.Messages.GetMessagesAsync(thread.Id, before: ids[4], limit:2, order:ListSortOrder.Ascending);
+            int idNum = 0;
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                Assert.AreEqual(ids[idNum], msg.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            msgResp = client.Messages.GetMessagesAsync(thread.Id, after: ids[idNum - 1], limit: 2, order: ListSortOrder.Ascending);
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                Assert.AreEqual(ids[idNum], msg.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListVectorStoreFilesAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            int storeLimit = 10;
+            List<VectorStoreDataSource> sources = [];
+            for (int i = 0; i < storeLimit; i++)
+            {
+                sources.Add(new(
+                    assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
+                    assetType: VectorStoreDataSourceAssetType.UriAsset
+                ));
+            }
+            VectorStoreConfiguration storeConf = new(
+                sources
+            );
+            PersistentAgentsVectorStore vct = await client.VectorStores.CreateVectorStoreAsync(
+                name: VCT_STORE_NAME,
+                storeConfiguration: storeConf
+            );
+            List<string> ids = await client.VectorStores.GetVectorStoreFilesAsync(vectorStoreId: vct.Id, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
+            AsyncPageable<VectorStoreFile> files = client.VectorStores.GetVectorStoreFilesAsync(
+                vectorStoreId: vct.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                before: ids[4]
+            );
+            int idNum = 0;
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(idNum, 4);
+            // Test calling after.
+            files = client.VectorStores.GetVectorStoreFilesAsync(
+                vectorStoreId: vct.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                after: ids[idNum-1]
+            );
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestListVectorStoreFileBatchesAfterAndBefore()
+        {
+            using var _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            int storeLimit = 10;
+            List<VectorStoreDataSource> sources = [];
+            IReadOnlyList<PersistentAgentFileInfo> uploadedFiles = (await client.Files.GetFilesAsync()).Value;
+            List<string> fileIds = [];
+            // This test requires the number of uploaded files to be not less then ten.
+            // The code below ill do it, however, th test will require re-recording as file upload
+            // is not handled properly by the recording system.
+            // Q: Why cannot we use the Enterprise file search as in TestListVectorStoreFilesAfterAndBefore?
+            // A: Only one data source configuration may be uploaded at this time.
+            if (uploadedFiles.Count < storeLimit)
+            {
+                for (int i = uploadedFiles.Count; i < storeLimit; i++)
+                    await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+                uploadedFiles = (await client.Files.GetFilesAsync()).Value;
+            }
+            for (int i = 0; i < storeLimit; i++)
+            {
+                fileIds.Add(uploadedFiles[i].Id);
+            }
+            PersistentAgentsVectorStore vct = await client.VectorStores.CreateVectorStoreAsync(
+                name: VCT_STORE_NAME
+            );
+            VectorStoreFileBatch batch = await client.VectorStores.CreateVectorStoreFileBatchAsync(
+                vectorStoreId: vct.Id,
+                fileIds: fileIds
+            );
+            batch = await WaitForBatch(client, vct.Id, batch);
+
+            List<string> ids = await client.VectorStores.GetVectorStoreFileBatchFilesAsync(vectorStoreId: vct.Id, batchId: batch.Id, order: ListSortOrder.Ascending).Select(x => x.Id).ToListAsync();
+            AsyncPageable<VectorStoreFile> files = client.VectorStores.GetVectorStoreFileBatchFilesAsync(
+                vectorStoreId: vct.Id,
+                batchId: batch.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                before: ids[4]
+            );
+            int idNum = 0;
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
+            Assert.AreEqual(4, idNum);
+            // Test calling after.
+            files = client.VectorStores.GetVectorStoreFileBatchFilesAsync(
+                vectorStoreId: vct.Id,
+                batchId: batch.Id,
+                limit: 2,
+                order: ListSortOrder.Ascending,
+                after: ids[idNum - 1]
+            );
+            await foreach (VectorStoreFile fle in files)
+            {
+                Assert.AreEqual(ids[idNum], fle.Id, $"The ID #{idNum} is incorrect.");
+                idNum++;
+            }
         }
 
         [RecordedTest]
@@ -1059,7 +1434,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = null;
             if (useStream)
             {
-                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: include))
+                CreateRunStreamingOptions opts = new()
+                {
+                    Include = include,
+                };
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: opts))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -1496,7 +1875,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                 MessageRole.User,
                 "Get humidity for address, 456 2nd Ave in city, Seattle");
 
-            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions))
+            CreateRunStreamingOptions opts = new()
+            {
+                AutoFunctionCallOptions = autoFunctionCallOptions
+            };
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: opts))
             {
                 if (streamingUpdate is MessageContentUpdate contentUpdate)
                 {
@@ -1691,6 +2074,20 @@ namespace Azure.AI.Agents.Persistent.Tests
                 || run.Status == RunStatus.RequiresAction);
             Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.Message?.ToString());
             return run;
+        }
+
+        private async Task<VectorStoreFileBatch> WaitForBatch(PersistentAgentsClient client, string vectorStoreId, VectorStoreFileBatch batch)
+        {
+            double delay = 500;
+            do
+            {
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(delay));
+                batch = await client.VectorStores.GetVectorStoreFileBatchAsync(vectorStoreId: vectorStoreId, batchId: batch.Id);
+            }
+            while (batch.Status == VectorStoreFileBatchStatus.InProgress);
+            Assert.AreEqual(VectorStoreFileBatchStatus.Completed, batch.Status, message: "Failed to create VectorStoreFileBatchStatus");
+            return batch;
         }
 
         private static string GetFile([CallerFilePath] string pth = "")

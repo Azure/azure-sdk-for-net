@@ -1,9 +1,5 @@
 namespace Azure.Storage.Files.Shares
 {
-    public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        public AzureStorageFilesSharesContext() { }
-    }
     public partial class ShareClient
     {
         protected ShareClient() { }
@@ -239,7 +235,7 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareDirectoryInfo>> SetHttpHeadersAsync(Azure.Storage.Files.Shares.Models.ShareDirectorySetHttpHeadersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareDirectoryInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareDirectoryInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected static Azure.Storage.Files.Shares.ShareDirectoryClient WithAppendedUserAgent(Azure.Storage.Files.Shares.ShareDirectoryClient client, string appendedUserAgent) { throw null; }
+        protected static Azure.Storage.Files.Shares.ShareDirectoryClient WithAdditionalPolicies(Azure.Storage.Files.Shares.ShareDirectoryClient client, params Azure.Core.Pipeline.HttpPipelinePolicy[] policies) { throw null; }
         public virtual Azure.Storage.Files.Shares.ShareDirectoryClient WithSnapshot(string snapshot) { throw null; }
     }
     public partial class ShareFileClient
@@ -404,7 +400,7 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.HttpRange sourceRange, Azure.Storage.Files.Shares.Models.ShareFileUploadRangeFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.HttpRange sourceRange, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected static Azure.Storage.Files.Shares.ShareFileClient WithAppendedUserAgent(Azure.Storage.Files.Shares.ShareFileClient client, string appendedUserAgent) { throw null; }
+        protected static Azure.Storage.Files.Shares.ShareFileClient WithAdditonalPolicies(Azure.Storage.Files.Shares.ShareFileClient client, params Azure.Core.Pipeline.HttpPipelinePolicy[] policies) { throw null; }
         public virtual Azure.Storage.Files.Shares.ShareFileClient WithSnapshot(string shareSnapshot) { throw null; }
     }
     public partial class ShareServiceClient

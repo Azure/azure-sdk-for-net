@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                JsonSerializer.Serialize(writer, PeerAsn);
+                ((IJsonModel<WritableSubResource>)PeerAsn).Write(writer, options);
             }
             if (Optional.IsDefined(DirectPeeringType))
             {
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    peerAsn = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerPeeringContext.Default);
                     continue;
                 }
                 if (property.NameEquals("directPeeringType"u8))
