@@ -651,6 +651,7 @@ namespace Azure.Communication.Chat
                     communicationIdentifierModel.PhoneNumber,
                     communicationIdentifierModel.MicrosoftTeamsUser,
                     communicationIdentifierModel.MicrosoftTeamsApp,
+                    communicationIdentifierModel.TeamsExtensionUser,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -678,6 +679,7 @@ namespace Azure.Communication.Chat
                     communicationIdentifierModel.PhoneNumber,
                     communicationIdentifierModel.MicrosoftTeamsUser,
                     communicationIdentifierModel.MicrosoftTeamsApp,
+                    communicationIdentifierModel.TeamsExtensionUser,
                     cancellationToken);
             }
             catch (Exception ex)
