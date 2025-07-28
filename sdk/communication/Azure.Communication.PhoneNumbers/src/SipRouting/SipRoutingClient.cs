@@ -110,7 +110,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.GetSipConfiguration(cancellationToken);
+                var response = _restClient.Get(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken);
                 var trunk = response.Value.Trunks[fqdn];
 
                 if (trunk == null)
@@ -141,7 +141,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var trunk = response.Value.Trunks[fqdn];
 
                 if (trunk == null)
@@ -265,7 +265,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.GetSipConfiguration(cancellationToken);
+                var response = _restClient.Get(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken);
                 return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -287,7 +287,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(ExpandEnum.TrunksHealth, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue((IReadOnlyList<SipTrunk>)response.Value.Trunks.Values.ToList().AsReadOnly(), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -309,7 +309,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = _restClient.GetSipConfiguration(cancellationToken);
+                var response = _restClient.Get(cancellationToken:cancellationToken);
                 return Response.FromValue(response.Value.Routes, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -331,7 +331,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var response = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.GetAsync(cancellationToken:cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Routes, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -354,7 +354,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var currentConfig = _restClient.GetSipConfiguration(cancellationToken);
+                var currentConfig = _restClient.Get(cancellationToken:cancellationToken);
                 var newTrunks = trunks.ToDictionary(x => x.Fqdn, x => x);
 
                 if (currentConfig.Value.Trunks.Count > 0)
@@ -394,7 +394,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             scope.Start();
             try
             {
-                var currentConfig = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var currentConfig = await _restClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 var newTrunks = trunks.ToDictionary(x => x.Fqdn, x => x);
 
                 if (currentConfig.Value.Trunks.Count > 0)
@@ -414,7 +414,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
                 return await _restClient.UpdateAsync(new SipConfiguration(newTrunks), cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 scope.Failed(ex);
                 throw;
             }
@@ -460,6 +461,336 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             {
                 var config = new SipConfiguration(routes);
                 return await _restClient.UpdateAsync(config, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a single <see cref="SipDomain"/> object.
+        /// </summary>
+        /// <param name="fqdn">Domain name.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Sip domain configuration.</returns>
+        public virtual async Task<Response<SipDomain>> GetDomainAsync(
+            string fqdn,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomain)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                var domain = response.Value.Domains[fqdn];
+
+                if (domain == null)
+                {
+                    throw new KeyNotFoundException($"SIP domain with FQDN: {fqdn} wasn't found");
+                }
+                return Response.FromValue(domain, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a single <see cref="SipDomain"/> object.
+        /// </summary>
+        /// <param name="fqdn">Domain name.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Sip domain configuration.</returns>
+        public virtual Response<SipDomain> GetDomain(
+            string fqdn,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomain)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(cancellationToken: cancellationToken);
+                var domain = response.Value.Domains[fqdn];
+
+                if (domain == null)
+                {
+                    throw new KeyNotFoundException($"SIP domain with FQDN: {fqdn} wasn't found");
+                }
+                return Response.FromValue(domain, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get List of configured <see cref="SipDomain"/>.
+        /// </summary>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>List of configured domains.</returns>
+        public async virtual Task<Response<IReadOnlyList<SipDomain>>> GetDomainsAsync(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomains)}");
+            scope.Start();
+            try
+            {
+                var response = await _restClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue((IReadOnlyList<SipDomain>)response.Value.Domains.Values.ToList().AsReadOnly(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get List of configured <see cref="SipDomain"/>.
+        /// </summary>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>List of configured domains.</returns>
+        public virtual Response<IReadOnlyList<SipDomain>> GetDomains(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetDomains)}");
+            scope.Start();
+            try
+            {
+                var response = _restClient.Get(cancellationToken: cancellationToken);
+                return Response.FromValue((IReadOnlyList<SipDomain>)response.Value.Domains.Values.ToList().AsReadOnly(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set <see cref="SipDomain"/> for resource. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="domain">SIP domain configuration.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual Response SetDomain(
+            SipDomain domain,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration(new Dictionary<string, SipDomain> { { domain.Fqdn, domain } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomain)}");
+            scope.Start();
+            try
+            {
+                return _restClient.Update(config, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set <see cref="SipDomain"/> for resource. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="domain">SIP domain configuration.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual async Task<Response> SetDomainAsync(
+            SipDomain domain,
+            CancellationToken cancellationToken = default)
+        {
+            var config = new SipConfiguration(new Dictionary<string, SipDomain> { { domain.Fqdn, domain } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomain)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateAsync(config, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set SIP domains configuration for resource. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="domains">New collection of <see cref="SipDomain"/>.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual Response SetDomains(
+            IEnumerable<SipDomain> domains,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomains)}");
+            scope.Start();
+            try
+            {
+                var currentConfig = _restClient.Get(cancellationToken: cancellationToken);
+                var newDomains = domains.ToDictionary(x => x.Fqdn, x => x);
+
+                if (currentConfig.Value.Domains.Count > 0)
+                {
+                    var domainFqdnsToRemove = currentConfig.Value.Domains.Keys.Where(x => !newDomains.ContainsKey(x));
+
+                    foreach (var fqdn in domainFqdnsToRemove)
+                    {
+                        newDomains.Add(fqdn, null);
+                    }
+                }
+
+                if (newDomains.Count == 0)
+                {
+                    return currentConfig.GetRawResponse();
+                }
+
+                return _restClient.Update(new SipConfiguration(newDomains), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set SIP domains configuration for resource. Other configuration settings are not affected.
+        /// </summary>
+        /// <param name="domains">New collection of <see cref="SipDomain"/>.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual async Task<Response> SetDomainsAsync(
+            IEnumerable<SipDomain> domains,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetDomains)}");
+            scope.Start();
+            try
+            {
+                var currentConfig = await _restClient.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                var newDomains = domains.ToDictionary(x => x.Fqdn, x => x);
+
+                if (currentConfig.Value.Domains.Count > 0)
+                {
+                    var domainFqdnsToRemove = currentConfig.Value.Domains.Keys.Where(x => !newDomains.ContainsKey(x));
+
+                    foreach (var fqdn in domainFqdnsToRemove)
+                    {
+                        newDomains.Add(fqdn, null);
+                    }
+                }
+
+                if (newDomains.Count == 0)
+                {
+                    return currentConfig.GetRawResponse();
+                }
+
+                return await _restClient.UpdateAsync(new SipConfiguration(newDomains), cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete <see cref="SipDomain"/>.
+        /// </summary>
+        /// <param name="fqdn">FQDN of a <see cref="SipDomain"/> to be deleted.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual Response DeleteDomain(
+            string fqdn,
+            CancellationToken cancellationToken = default)
+        {
+            var removeConfig = new SipConfiguration(new Dictionary<string, SipDomain> { { fqdn, null } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteDomain)}");
+            scope.Start();
+            try
+            {
+                return _restClient.Update(removeConfig, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete <see cref="SipDomain"/>.
+        /// </summary>
+        /// <param name="fqdn">FQDN of a <see cref="SipDomain"/> to be deleted.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual async Task<Response> DeleteDomainAsync(
+            string fqdn,
+            CancellationToken cancellationToken = default)
+        {
+            var removeConfig = new SipConfiguration(new Dictionary<string, SipDomain> { { fqdn, null } });
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(DeleteDomain)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateAsync(removeConfig, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of routes matching the target phone number, ordered by priority.
+        /// </summary>
+        /// <param name="targetPhoneNumber"> Phone number to test routing patterns against. </param>
+        /// <param name="routes">New list of <see cref="SipTrunkRoute"/>.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual Response<IReadOnlyList<SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, IEnumerable<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutesForNumber)}");
+            scope.Start();
+            try
+            {
+                IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
+                IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
+                var config = new SipConfiguration(domains, trunks, routes.ToList());
+                var response = _restClient.TestRoutesWithNumber(targetPhoneNumber, config, cancellationToken);
+                return Response.FromValue(response.Value.MatchingRoutes, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of routes matching the target phone number, ordered by priority.
+        /// </summary>
+        /// <param name="targetPhoneNumber"> Phone number to test routing patterns against. </param>
+        /// <param name="routes">New list of <see cref="SipTrunkRoute"/>.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        public virtual async Task<Response<IReadOnlyList<SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, IEnumerable<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutesForNumber)}");
+            scope.Start();
+            try
+            {
+                IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
+                IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
+                var config = new SipConfiguration(domains, trunks, routes.ToList());
+                var response = await _restClient.TestRoutesWithNumberAsync(targetPhoneNumber, config, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.MatchingRoutes, response.GetRawResponse());
             }
             catch (Exception ex)
             {

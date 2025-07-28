@@ -6,8 +6,8 @@ Run following command from the project root folder to generate code (note: AutoR
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-2023-03
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/66174681c09b101de03fd35399080cfbccc93e8f/specification/communication/data-plane/SipRouting/readme.md
+tag: package-2024-11-15-preview
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/8a218b1c6203d1ea118c3e0bcb4ae95bd44e1014/specification/communication/data-plane/SipRouting/readme.md
 output-folder: $(project-folder)\SipRouting\Generated
 namespace: Azure.Communication.PhoneNumbers.SipRouting
 enable-xml: true
@@ -20,7 +20,9 @@ generation1-convenience-client: true
 ```
 
 # The types with Update suffix, used in API are not used for SDK, to keep the things simple. Therefore, they are removed from autorest.
+
 ### Change SipConfigurationUpdate to SipConfiguration
+
 ``` yaml
 directive:
   from: swagger-document
@@ -30,6 +32,7 @@ directive:
 ```
 
 ### Remove TrunkUpdate type
+
 ``` yaml
 directive:
   from: swagger-document
@@ -39,6 +42,7 @@ directive:
 ```
 
 ### Remove SipConfigurationUpdate type
+
 ``` yaml
 directive:
   from: swagger-document
@@ -48,10 +52,57 @@ directive:
 ```
 
 ### Move all the models to the main namespace
+
 ```yaml
 directive:
   from: swagger-document
   where: $.definitions.*
   transform: >
     $["x-namespace"] = "Azure.Communication.PhoneNumbers.SipRouting"
+```
+
+### Directive renaming "inactiveStatusReason" enum to "healthStatusReason"
+
+```yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.OverallHealth"
+  transform: >
+    $.properties.reason["x-ms-enum"].name = "healthStatusReason";
+```
+
+### Directive deleting "CommunicationErrorResponse"
+
+```yaml
+directive:
+  from: swagger-document
+  where: "$.definitions"
+  transform: >
+    delete $.CommunicationErrorResponse
+```
+
+### Directives deleting default response
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "SipRouting_Get")].responses
+  transform: >
+    delete $.default
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "SipRouting_Update")].responses
+  transform: >
+    delete $.default
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.paths.*[?(@.operationId == "SipRouting_TestRoutesWithNumber")].responses
+  transform: >
+    delete $.default
 ```

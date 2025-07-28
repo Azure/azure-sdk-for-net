@@ -18,11 +18,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             SipSignalingPort = sipSignalingPort;
         }
 
-        private SipTrunk(int sipSignalingPort)
-        {
-            SipSignalingPort = sipSignalingPort;
-        }
-
         /// <summary> Name of the trunk. </summary>
         public string Fqdn { get; internal set; }
     }

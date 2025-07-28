@@ -5,8 +5,5 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    [CodeGenClient("CommunicationPhoneNumbersSipRoutingModelFactory")]
-    internal static partial class SipRoutingModelFactory
-    {
-    }
+    internal readonly partial struct ExpandEnum { }
 }

@@ -14,25 +14,28 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
     {
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string DummyTestDomain = "testdomain.com";
+        private const string DummyRandomPrefix = "123456789";
         private string testDomain;
+        private string randomDomain;
         protected TestData? TestData;
 
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             testDomain = TestEnvironment.Mode != RecordedTestMode.Playback ? TestEnvironment.GetTestDomain() ?? DummyTestDomain : DummyTestDomain;
+            var randomPrefix = TestEnvironment.Mode != RecordedTestMode.Playback ? Guid.NewGuid().ToString() ?? DummyRandomPrefix : DummyRandomPrefix;
+            randomDomain = randomPrefix + "." + testDomain;
 
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(testDomain) { Value = DummyTestDomain });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(randomPrefix) { Value = DummyRandomPrefix });
         }
 
         [SetUp]
         public void SetUpTestData()
         {
-            var testRandom = Recording.Random;
-            var randomGuid = testRandom.NewGuid();
-            TestData = new TestData(testDomain, randomGuid.ToString());
+            TestData = new TestData(testDomain, randomDomain);
         }
 
         public bool SkipSipRoutingLiveTests
@@ -76,7 +79,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 expected.Name == actual.Name &&
                 expected.Description == actual.Description &&
                 expected.NumberPattern == actual.NumberPattern &&
-                expected.Trunks.Count == actual.Trunks.Count);
+                expected.Trunks.Count == actual.Trunks.Count &&
+                expected.CallerIdOverride == actual.CallerIdOverride);
 
             for (int i = 0; i < expected.Trunks.Count; i++)
             {
@@ -88,7 +92,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 
         protected bool TrunkAreEqual(SipTrunk expected, SipTrunk actual)
         {
-            return expected.Fqdn == actual.Fqdn && expected.SipSignalingPort == actual.SipSignalingPort;
+            return expected.Fqdn == actual.Fqdn &&
+                expected.SipSignalingPort == actual.SipSignalingPort &&
+                expected.DirectTransfer == actual.DirectTransfer &&
+                expected.Enabled == actual.Enabled &&
+                expected.IpAddressVersion == actual.IpAddressVersion &&
+                expected.PrivacyHeader == actual.PrivacyHeader;
+        }
+
+        protected bool DomainAreEqual(SipDomain expected, SipDomain actual)
+        {
+            return expected.Fqdn == actual.Fqdn &&
+                expected.Enabled == actual.Enabled;
         }
     }
 }

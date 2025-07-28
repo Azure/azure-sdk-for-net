@@ -476,6 +476,98 @@ namespace Azure.Communication.PhoneNumbers
 }
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IpAddressVersion : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IpAddressVersion(string value) { throw null; }
+        public static Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion Ipv4 { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion Ipv6 { get { throw null; } }
+        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion left, Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion right) { throw null; }
+        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion left, Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class OverallHealth
+    {
+        internal OverallHealth() { }
+        public Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason? Reason { get { throw null; } }
+        public Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OverallHealthStatus : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OverallHealthStatus(string value) { throw null; }
+        public static Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus Active { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus Inactive { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus left, Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus right) { throw null; }
+        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus left, Azure.Communication.PhoneNumbers.SipRouting.OverallHealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PingHealth
+    {
+        internal PingHealth() { }
+        public Azure.Communication.PhoneNumbers.SipRouting.PingStatus Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PingStatus : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.PingStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PingStatus(string value) { throw null; }
+        public static Azure.Communication.PhoneNumbers.SipRouting.PingStatus Error { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.PingStatus Expired { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.PingStatus Ok { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.PingStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.PingStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.PingStatus left, Azure.Communication.PhoneNumbers.SipRouting.PingStatus right) { throw null; }
+        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.PingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.PingStatus left, Azure.Communication.PhoneNumbers.SipRouting.PingStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivacyHeader : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivacyHeader(string value) { throw null; }
+        public static Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader Id { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader None { get { throw null; } }
+        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader left, Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader right) { throw null; }
+        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader left, Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SipDomain
+    {
+        public SipDomain(string fqdn, bool enabled) { }
+        public bool Enabled { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } }
+    }
     public partial class SipRoutingClient
     {
         protected SipRoutingClient() { }
@@ -483,14 +575,26 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public SipRoutingClient(string connectionString, Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions options) { }
         public SipRoutingClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions options = null) { }
         public SipRoutingClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions options = null) { }
+        public virtual Azure.Response DeleteDomain(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDomainAsync(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteTrunk(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTrunkAsync(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.PhoneNumbers.SipRouting.SipDomain> GetDomain(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.SipRouting.SipDomain>> GetDomainAsync(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipDomain>> GetDomains(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipDomain>>> GetDomainsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>> GetRoutes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>>> GetRoutesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk> GetTrunk(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk>> GetTrunkAsync(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk>> GetTrunks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk>>> GetTrunksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetDomain(Azure.Communication.PhoneNumbers.SipRouting.SipDomain domain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetDomainAsync(Azure.Communication.PhoneNumbers.SipRouting.SipDomain domain, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetDomains(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipDomain> domains, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetDomainsAsync(System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipDomain> domains, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetRoutes(System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetRoutesAsync(System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetTrunk(Azure.Communication.PhoneNumbers.SipRouting.SipTrunk trunk, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -500,24 +604,83 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     }
     public partial class SipRoutingClientOptions : Azure.Core.ClientOptions
     {
-        public SipRoutingClientOptions(Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion.V2023_03_01) { }
+        public SipRoutingClientOptions(Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.SipRouting.SipRoutingClientOptions.ServiceVersion.V2024_11_15_Preview) { }
         public enum ServiceVersion
         {
             V2023_03_01 = 1,
+            V2024_11_15_Preview = 2,
         }
     }
     public partial class SipTrunk
     {
         public SipTrunk(string fqdn, int sipSignalingPort) { }
+        public bool? DirectTransfer { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
+        public Azure.Communication.PhoneNumbers.SipRouting.TrunkHealth Health { get { throw null; } }
+        public Azure.Communication.PhoneNumbers.SipRouting.IpAddressVersion? IpAddressVersion { get { throw null; } set { } }
+        public Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader? PrivacyHeader { get { throw null; } set { } }
         public int SipSignalingPort { get { throw null; } set { } }
     }
     public partial class SipTrunkRoute
     {
         public SipTrunkRoute(string name, string numberPattern, string description = null, System.Collections.Generic.IEnumerable<string> trunks = null) { }
+        public SipTrunkRoute(string name, string numberPattern, string description = null, System.Collections.Generic.IEnumerable<string> trunks = null, string callerIdOverride = null) { }
+        public string CallerIdOverride { get { throw null; } }
         public string Description { get { throw null; } }
         public string Name { get { throw null; } }
         public string NumberPattern { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Trunks { get { throw null; } }
+    }
+    public partial class TlsHealth
+    {
+        internal TlsHealth() { }
+        public Azure.Communication.PhoneNumbers.SipRouting.TlsStatus Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TlsStatus : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.TlsStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TlsStatus(string value) { throw null; }
+        public static Azure.Communication.PhoneNumbers.SipRouting.TlsStatus CertExpired { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.TlsStatus CertExpiring { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.TlsStatus Ok { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.TlsStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.TlsStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.TlsStatus left, Azure.Communication.PhoneNumbers.SipRouting.TlsStatus right) { throw null; }
+        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.TlsStatus (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.TlsStatus left, Azure.Communication.PhoneNumbers.SipRouting.TlsStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TrunkHealth
+    {
+        internal TrunkHealth() { }
+        public Azure.Communication.PhoneNumbers.SipRouting.OverallHealth Overall { get { throw null; } }
+        public Azure.Communication.PhoneNumbers.SipRouting.PingHealth Ping { get { throw null; } }
+        public Azure.Communication.PhoneNumbers.SipRouting.TlsHealth Tls { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UnhealthyStatusReason : System.IEquatable<Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UnhealthyStatusReason(string value) { throw null; }
+        public static Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason NoRecentCalls { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason NoRecentCallsAndPings { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason NoRecentPings { get { throw null; } }
+        public bool Equals(Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason left, Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason right) { throw null; }
+        public static implicit operator Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason left, Azure.Communication.PhoneNumbers.SipRouting.UnhealthyStatusReason right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
