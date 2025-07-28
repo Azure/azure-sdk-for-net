@@ -16,13 +16,13 @@
 		<!-- <Parameter name="LiveTestServiceVersions" value="V2019_02_02" /> -->
 
 		<!-- Disables auto recording when using [RecordedTest] attribute -->
-		<Parameter name="DisableAutoRecording" value="true" />
+		<!-- <Parameter name="DisableAutoRecording" value="true" /> -->
 
 		<!-- Change the test mode -->
-		<Parameter name="TestMode" value="Playback" />
+		<!-- <Parameter name="TestMode" value="Record" /> -->
 
 		<!-- Enable running Fiddler -->
-		<Parameter name="EnableFiddler" value="false" />
+		<!-- <Parameter name="EnableFiddler" value="true" /> -->
 	</TestRunParameters>
 
 </RunSettings>
