@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Marked all classes and methods that are dependent on the retiring 2014-04-01 API version as obsolete. Further information at https://learn.microsoft.com/en-us/rest/api/sql/retirement
+
 ## 1.4.0-beta.1 (2025-05-14)
 
 ### Features Added
