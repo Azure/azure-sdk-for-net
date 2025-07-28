@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
-                JsonSerializer.Serialize(writer, UserAssignedIdentity);
+                ((IJsonModel<WritableSubResource>)UserAssignedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    userAssignedIdentity = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    userAssignedIdentity = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
