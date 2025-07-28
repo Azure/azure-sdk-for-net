@@ -1,7 +1,7 @@
-# OpenTelemetry semantic conventions for Azure SDK
+# OpenTelemetry Semantic Conventions
 
 Azure client libraries follow OpenTelemetry semantic conventions on distributed traces.
-In addition to general conventions described in [azure-sdk repo](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md), some of the .NET libraries emit
+In addition to general conventions described in the [azure-sdk repo](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md), some of the .NET libraries emit
 additional attributes on public API spans. Such attributes are described below.
 
 ## Azure Application Configuration attributes

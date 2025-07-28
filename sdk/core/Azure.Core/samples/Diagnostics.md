@@ -178,7 +178,7 @@ Prior to November 2023, OpenTelemetry support was experimental for all Azure cli
 Most of Azure client libraries released in or after November 2023 have OpenTelemetry support enabled by default. Tracing support in messaging libraries (`Azure.Messaging.ServiceBus` and `Azure.Messaging.EventHubs`) remains experimental.
 
 More detailed distributed tracing convention can be found at [Azure SDK semantic conventions](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.md). Additional attributes emitted by
-Azure client libraries in .NET are documented [here](./SemanticConventions.md).
+Azure client libraries in .NET are documented [here](./OpenTelemetrySemanticConventions.md).
 
 ### OpenTelemetry configuration
 
