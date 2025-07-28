@@ -43,7 +43,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4o",
+                model: "gpt-4.1",
                 name: AGENT_NAME,
                 instructions: "You are a helpful chat agent."
             );
@@ -113,7 +113,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             else if (optionsType == ChatOptionsTestType.WithJsonSchemaResponseFormat)
             {
-                var jsonSchema = """
+                var schema = """
                 {
                     "$schema": "http://json-schema.org/draft-07/schema#",
                     "type": "object",
@@ -134,14 +134,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                     "required": ["name", "age", "occupation"]
                 }
                 """;
-
-                using (var jsonDoc = JsonDocument.Parse(jsonSchema))
+                var jsonSchema = JsonSerializer.Deserialize<JsonElement>(schema, JsonSerializerOptions.Default);
+                options = new ChatOptions
                 {
-                    options = new ChatOptions
-                    {
-                        ResponseFormat = ChatResponseFormatJson.ForJsonSchema(jsonDoc.RootElement, "TestSchema", "Schema for testing purposes")
-                    };
-                }
+                    ResponseFormat = ChatResponseFormatJson.ForJsonSchema(jsonSchema, "TestSchema", "Schema for testing purposes")
+                };
             }
 
             List<ChatMessage> messages = [new ChatMessage(ChatRole.User, [new TextContent("What's the weather like? Respond in JSON.")])];
@@ -320,24 +317,24 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private PersistentAgentsClient GetClient()
         {
-            var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
             PersistentAgentsAdministrationClient admClient;
 
             if (Mode == RecordedTestMode.Playback)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new MockCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new MockCredential(), opts));
                 return new PersistentAgentsClient(admClient);
             }
 
             var cli = Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new AzureCliCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new AzureCliCredential(), opts));
             }
             else
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new DefaultAzureCredential(), opts));
             }
 
             return new PersistentAgentsClient(admClient);
