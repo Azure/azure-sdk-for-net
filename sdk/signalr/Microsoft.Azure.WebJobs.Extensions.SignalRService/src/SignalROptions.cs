@@ -4,11 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Azure.Core.Serialization;
+
 using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Hosting;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Gets or sets the retry options.
         /// </summary>
-        public ServiceManagerRetryOptions? RetryOptions { get; set; }
+        public ServiceManagerRetryOptions? RetryOptions { get; set; } = new();
 
         /// <summary>
         /// Gets or sets the timespan for HttpClient timeout.

@@ -13,6 +13,19 @@ namespace Azure.Health.Insights.CancerProfiling
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ClinicalCodedElement))]
+    [ModelReaderWriterBuildable(typeof(ClinicalNoteEvidence))]
+    [ModelReaderWriterBuildable(typeof(DocumentContent))]
+    [ModelReaderWriterBuildable(typeof(InferenceEvidence))]
+    [ModelReaderWriterBuildable(typeof(OncoPhenotypeData))]
+    [ModelReaderWriterBuildable(typeof(OncoPhenotypeInference))]
+    [ModelReaderWriterBuildable(typeof(OncoPhenotypeModelConfiguration))]
+    [ModelReaderWriterBuildable(typeof(OncoPhenotypePatientResult))]
+    [ModelReaderWriterBuildable(typeof(OncoPhenotypeResults))]
+    [ModelReaderWriterBuildable(typeof(PatientDocument))]
+    [ModelReaderWriterBuildable(typeof(PatientInfo))]
+    [ModelReaderWriterBuildable(typeof(PatientRecord))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureHealthInsightsCancerProfilingContext : ModelReaderWriterContext
     {
     }

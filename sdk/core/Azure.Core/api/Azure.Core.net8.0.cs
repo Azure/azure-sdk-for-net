@@ -320,8 +320,6 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.RehydrationToken))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResponseError))]
     public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureCoreContext() { }

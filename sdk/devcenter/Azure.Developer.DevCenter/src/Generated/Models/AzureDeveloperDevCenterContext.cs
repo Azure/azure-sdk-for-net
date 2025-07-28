@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {
@@ -13,6 +14,25 @@ namespace Azure.Developer.DevCenter
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DevBox))]
+    [ModelReaderWriterBuildable(typeof(DevBoxAction))]
+    [ModelReaderWriterBuildable(typeof(DevBoxActionDelayResult))]
+    [ModelReaderWriterBuildable(typeof(DevBoxHardwareProfile))]
+    [ModelReaderWriterBuildable(typeof(DevBoxImageReference))]
+    [ModelReaderWriterBuildable(typeof(DevBoxNextAction))]
+    [ModelReaderWriterBuildable(typeof(DevBoxPool))]
+    [ModelReaderWriterBuildable(typeof(DevBoxSchedule))]
+    [ModelReaderWriterBuildable(typeof(DevBoxStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(DevCenterCatalog))]
+    [ModelReaderWriterBuildable(typeof(DevCenterEnvironment))]
+    [ModelReaderWriterBuildable(typeof(DevCenterEnvironmentType))]
+    [ModelReaderWriterBuildable(typeof(DevCenterProject))]
+    [ModelReaderWriterBuildable(typeof(EnvironmentDefinition))]
+    [ModelReaderWriterBuildable(typeof(EnvironmentDefinitionParameter))]
+    [ModelReaderWriterBuildable(typeof(OSDisk))]
+    [ModelReaderWriterBuildable(typeof(RemoteConnection))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(StopOnDisconnectConfiguration))]
     public partial class AzureDeveloperDevCenterContext : ModelReaderWriterContext
     {
     }

@@ -3,10 +3,13 @@
 
 using System;
 using System.Reflection;
+
 using Azure.Core.Serialization;
+
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
+
 using Xunit;
 
 namespace SignalRServiceExtension.Tests.Config
@@ -88,17 +91,18 @@ namespace SignalRServiceExtension.Tests.Config
         }
 
         [Fact]
-        public void TestNullRetryOptions()
+        public void TestDefaultRetryOptions()
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             var options = new ServiceManagerOptions();
             var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
             setup.Configure(options);
-            Assert.Null(options.RetryOptions);
+            Assert.NotNull(options.RetryOptions);
         }
 
+        // We didn't enable retry by default previously, so we utilize a "Default" name for users to set a retry policy with default settings.
         [Fact]
-        public void TestDefaultRetryOptions()
+        public void TestRetryOptionsWithDefaultName()
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration[Constants.AzureSignalRRetry + ":Default"] = "";

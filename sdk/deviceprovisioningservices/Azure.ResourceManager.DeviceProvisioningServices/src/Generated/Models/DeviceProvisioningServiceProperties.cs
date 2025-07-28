@@ -70,8 +70,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Optional.
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </param>
+        /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IdScope = idScope;
             AuthorizationPolicies = authorizationPolicies;
             IsDataResidencyEnabled = isDataResidencyEnabled;
+            PortalOperationsHostName = portalOperationsHostName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -115,5 +117,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </summary>
         public bool? IsDataResidencyEnabled { get; set; }
+        /// <summary> Portal endpoint to enable CORS for this provisioning service. </summary>
+        public string PortalOperationsHostName { get; set; }
     }
 }
