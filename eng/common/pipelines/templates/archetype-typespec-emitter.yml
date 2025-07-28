@@ -322,6 +322,9 @@ extends:
             AzureSdkRepoName: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
           steps:
           - checkout: self
+          - pwsh: |
+              git checkout $(branchName)
+            displayName: 'Checkout PR branch $(branchName)'  
 
           - task: UseNode@1
             displayName: 'Install Node.js'
