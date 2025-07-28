@@ -27,11 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // get the span context of the parent span
             var parentContext = samplingParameters.ParentContext;
 
-            // grab the parent sampling rate if it exists
-            var parentAttributes = Activity.Current?.TagObjects;
-            object? parentSampleRate = parentAttributes?.FirstOrDefault(kv => kv.Key == "microsoft.sample_rate").Value;
-
-            SamplingResult? samplingResult = useLocalParentDecisionIfPossible(parentContext, parentSampleRate) ;
+            SamplingResult? samplingResult = useLocalParentDecisionIfPossible(parentContext);
             if (samplingResult != null)
             {
                 return samplingResult.Value;
@@ -50,29 +46,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (samplingPercentage == 100)
             {
                 // optimization, no need to calculate sample score in this case
-                var attributes = new List<KeyValuePair<string, object>>();
-                attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", samplingPercentage));
-                return new SamplingResult(SamplingDecision.RecordAndSample,
-                    attributes);
+                return new SamplingResult(SamplingDecision.RecordAndSample, [new("microsoft.sample_rate", samplingPercentage)]);
             }
 
             // the sampling score is between 0 and 1, for correct comparison with samplingPercentage, we multiply by 100
             double sampleScore = 100 * SamplerUtils.DJB2SampleScore(samplingParameters.TraceId.ToHexString().ToUpperInvariant());
             if (sampleScore < samplingPercentage)
             {
-                var attributes = new List<KeyValuePair<string, object>>();
-                attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", samplingPercentage));
-                return new SamplingResult(SamplingDecision.RecordAndSample, attributes);
+                return new SamplingResult(SamplingDecision.RecordAndSample, [new("microsoft.sample_rate", samplingPercentage)]);
             }
             else
             {
                 return RecordOnlySamplingResult;
             }
         }
-
-        // this method is meant to honor the sampling decision of the local parent span if possible.
-        // motivated from: https://github.com/microsoft/ApplicationInsights-Java/blob/3a5ab3354775f6454c74da837379afa66ae523e3/agent/agent-tooling/src/main/java/com/microsoft/applicationinsights/agent/internal/sampling/AiSampler.java#L93
-        private SamplingResult? useLocalParentDecisionIfPossible(ActivityContext parentActivityContext, object? parentSampleRate)
+        private SamplingResult? useLocalParentDecisionIfPossible(ActivityContext parentActivityContext)
         {
             // remote parent-based sampling messes up item counts since item count is not propagated in
             // tracestate (yet), but local parent-based sampling doesn't have this issue since we are
@@ -89,12 +77,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return RecordOnlySamplingResult;
             }
 
+            // grab the parent sampling rate if it exists
+            object? parentSampleRate = getSampleRateAttributeFromTagObjects();
+
             // this is a span that has a local parent span that is sampled. Sample it in and include the sample rate from the parent.
             if (parentSampleRate != null)
             {
-                var attributes = new List<KeyValuePair<string, object>>();
-                attributes.Add(new KeyValuePair<string, object>("microsoft.sample_rate", parentSampleRate));
-                return new SamplingResult(SamplingDecision.RecordAndSample, attributes);
+                return new SamplingResult(SamplingDecision.RecordAndSample, [new("microsoft.sample_rate", parentSampleRate)]);
             }
 
             // if we reach here, it means the parent span is sampled but does not have a sample rate set. The child should be sampled, we just
@@ -107,6 +96,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // defining this manually as some dotnet versions do not have ActivityContext.IsValid
             // .NET 5 and earlier (.NET Core 3.1, .NET Standard 2.1, etc.) don't have it
             return context.TraceId != default && context.SpanId != default;
+        }
+
+        private object? getSampleRateAttributeFromTagObjects()
+        {
+            var parentAttributes = Activity.Current?.TagObjects;
+            if (parentAttributes == null)
+            {
+                return null;
+            }
+
+            foreach (var kvp in parentAttributes)
+            {
+                if (kvp.Key == "microsoft.sample_rate") return kvp.Value;
+            }
+            return null;
         }
     }
 }

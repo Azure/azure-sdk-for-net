@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly bool _roundToNearest;
         private readonly Func<long> _nanoTimeSupplier;
         private const double AdaptationTimeSeconds = 0.1;
+        private static readonly double NanoTimeFactor = 1_000_000_000.0 / Stopwatch.Frequency;
 
         public RateLimitedSamplingPercentage(double targetSpansPerSecondLimit)
             : this(targetSpansPerSecondLimit, GetNanoTime, true)
@@ -103,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             // .NET does not have System.nanoTime, so use Stopwatch for high-res time
             // This is not absolute time, but is monotonic and suitable for deltas
-            return (long)(Stopwatch.GetTimestamp() * (1_000_000_000.0 / Stopwatch.Frequency));
+            return (long)(Stopwatch.GetTimestamp() * NanoTimeFactor);
         }
     }
 }
