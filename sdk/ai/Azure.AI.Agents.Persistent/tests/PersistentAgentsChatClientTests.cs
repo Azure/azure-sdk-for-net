@@ -114,26 +114,26 @@ namespace Azure.AI.Agents.Persistent.Tests
             else if (optionsType == ChatOptionsTestType.WithJsonSchemaResponseFormat)
             {
                 var jsonSchema = """
-            {
-                "$schema": "http://json-schema.org/draft-07/schema#",
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "The full name of the person."
+                {
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The full name of the person."
+                        },
+                        "age": {
+                            "type": "integer",
+                            "description": "The age of the person in years."
+                        },
+                        "occupation": {
+                            "type": "string",
+                            "description": "The primary occupation or job title of the person."
+                        }
                     },
-                    "age": {
-                        "type": "integer",
-                        "description": "The age of the person in years."
-                    },
-                    "occupation": {
-                        "type": "string",
-                        "description": "The primary occupation or job title of the person."
-                    }
-                },
-                "required": ["name", "age", "occupation"]
-            }
-            """;
+                    "required": ["name", "age", "occupation"]
+                }
+                """;
 
                 using (var jsonDoc = JsonDocument.Parse(jsonSchema))
                 {
