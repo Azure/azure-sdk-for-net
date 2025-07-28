@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Peering.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering
 {
@@ -13,6 +16,63 @@ namespace Azure.ResourceManager.Peering
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CdnPeeringPrefix))]
+    [ModelReaderWriterBuildable(typeof(CdnPeeringPrefixListResult))]
+    [ModelReaderWriterBuildable(typeof(CheckPeeringServiceProviderAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(ConnectionMonitorTestData))]
+    [ModelReaderWriterBuildable(typeof(ConnectionMonitorTestListResult))]
+    [ModelReaderWriterBuildable(typeof(ConnectionMonitorTestResource))]
+    [ModelReaderWriterBuildable(typeof(DirectPeeringFacility))]
+    [ModelReaderWriterBuildable(typeof(DirectPeeringLocationProperties))]
+    [ModelReaderWriterBuildable(typeof(DirectPeeringProperties))]
+    [ModelReaderWriterBuildable(typeof(ExchangePeeringFacility))]
+    [ModelReaderWriterBuildable(typeof(ExchangePeeringProperties))]
+    [ModelReaderWriterBuildable(typeof(LookingGlassOutput))]
+    [ModelReaderWriterBuildable(typeof(PeerAsnContactDetail))]
+    [ModelReaderWriterBuildable(typeof(PeerAsnData))]
+    [ModelReaderWriterBuildable(typeof(PeerAsnListResult))]
+    [ModelReaderWriterBuildable(typeof(PeerAsnResource))]
+    [ModelReaderWriterBuildable(typeof(PeeringBandwidthOffer))]
+    [ModelReaderWriterBuildable(typeof(PeeringBgpSession))]
+    [ModelReaderWriterBuildable(typeof(PeeringData))]
+    [ModelReaderWriterBuildable(typeof(PeeringDirectConnection))]
+    [ModelReaderWriterBuildable(typeof(PeeringExchangeConnection))]
+    [ModelReaderWriterBuildable(typeof(PeeringListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringLocation))]
+    [ModelReaderWriterBuildable(typeof(PeeringLocationListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringLocationPropertiesExchange))]
+    [ModelReaderWriterBuildable(typeof(PeeringLogAnalyticsWorkspaceProperties))]
+    [ModelReaderWriterBuildable(typeof(PeeringPatch))]
+    [ModelReaderWriterBuildable(typeof(PeeringReceivedRoute))]
+    [ModelReaderWriterBuildable(typeof(PeeringReceivedRouteListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringRegisteredAsnData))]
+    [ModelReaderWriterBuildable(typeof(PeeringRegisteredAsnListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringRegisteredAsnResource))]
+    [ModelReaderWriterBuildable(typeof(PeeringRegisteredPrefixData))]
+    [ModelReaderWriterBuildable(typeof(PeeringRegisteredPrefixListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringRegisteredPrefixResource))]
+    [ModelReaderWriterBuildable(typeof(PeeringResource))]
+    [ModelReaderWriterBuildable(typeof(PeeringResourceTagsPatch))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceCountry))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceCountryListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceData))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceLocation))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceLocationListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringServicePatch))]
+    [ModelReaderWriterBuildable(typeof(PeeringServicePrefixData))]
+    [ModelReaderWriterBuildable(typeof(PeeringServicePrefixEvent))]
+    [ModelReaderWriterBuildable(typeof(PeeringServicePrefixListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringServicePrefixResource))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceProvider))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceProviderListResult))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceResource))]
+    [ModelReaderWriterBuildable(typeof(PeeringServiceSku))]
+    [ModelReaderWriterBuildable(typeof(PeeringSku))]
+    [ModelReaderWriterBuildable(typeof(RoutingPreferenceUnbilledPrefix))]
+    [ModelReaderWriterBuildable(typeof(RpUnbilledPrefixListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerPeeringContext : ModelReaderWriterContext
     {
     }

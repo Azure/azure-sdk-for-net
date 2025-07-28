@@ -245,11 +245,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-streaming-jsonl": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/streaming/jsonl -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-type-array": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/type/array -g AzureStubGenerator",
       "commandName": "Executable",

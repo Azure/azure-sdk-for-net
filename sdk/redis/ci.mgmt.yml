@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Redis
       safeName: AzureResourceManagerRedis
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Redis
+      ExpectedWarningsFilepath: None

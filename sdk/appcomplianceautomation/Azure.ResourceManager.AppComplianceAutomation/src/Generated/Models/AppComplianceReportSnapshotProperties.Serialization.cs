@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
                 writer.WritePropertyName("reportSystemData"u8);
-                JsonSerializer.Serialize(writer, ReportSystemData);
+                ((IJsonModel<SystemData>)ReportSystemData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ComplianceResults))
             {
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     {
                         continue;
                     }
-                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    reportSystemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppComplianceAutomationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("complianceResults"u8))

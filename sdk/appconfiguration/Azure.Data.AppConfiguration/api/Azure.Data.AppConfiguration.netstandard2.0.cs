@@ -27,9 +27,9 @@ namespace Azure.Data.AppConfiguration
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SnapshotSelector))]
     public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureDataAppConfigurationContext() { }
-        public static Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureDataAppConfigurationContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
     }
     public partial class ConfigurationClient
     {
