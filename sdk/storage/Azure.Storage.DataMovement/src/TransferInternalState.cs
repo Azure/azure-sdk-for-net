@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class TransferInternalState
+    internal class TransferInternalState : IDisposable
     {
         private string _id;
         private TransferStatus _status;
@@ -44,6 +44,13 @@ namespace Azure.Storage.DataMovement
                 CompletionSource.TrySetResult(status);
             }
             CancellationTokenSource = new CancellationTokenSource();
+        }
+
+        public void Dispose()
+        {
+            CancellationTokenSource?.Dispose();
+            CompletionSource?.TrySetCanceled();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

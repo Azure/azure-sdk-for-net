@@ -756,7 +756,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -838,7 +838,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -922,7 +922,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationResource,
                 options).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -1015,7 +1015,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationResource,
                 options).ConfigureAwait(false);
 
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -1115,7 +1115,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     options).ConfigureAwait(false);
 
                 // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
                     transfer,
                     testEventsRaised,
@@ -1203,7 +1203,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
                 // Act
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
                     transfer,
                     testEventsRaised,
@@ -1330,7 +1330,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -1399,7 +1399,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,

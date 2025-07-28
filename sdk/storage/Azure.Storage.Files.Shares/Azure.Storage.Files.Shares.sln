@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Shares.Samples.Tests", "samples\Azure.Storage.Files.Shares.Samples.Tests.csproj", "{442BDDB6-0B32-EF9E-11F6-1471AB4C0541}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Shares", "src\Azure.Storage.Files.Shares.csproj", "{161B14C8-6F96-ED98-AD57-929C9F023470}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Shares.Tests", "tests\Azure.Storage.Files.Shares.Tests.csproj", "{B17B434D-C2BD-EBD7-DB47-1FFF92414C5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "perf", "perf", "{5081215B-A8D2-606B-0497-D199D4ED2BF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Shares.Perf", "perf\Azure.Storage.Files.Shares.Perf\Azure.Storage.Files.Shares.Perf.csproj", "{B7FC2F18-F4B0-502C-24EE-467B54BEB937}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Storage.File.Perf", "perf\Microsoft.Azure.Storage.File.Perf\Microsoft.Azure.Storage.File.Perf.csproj", "{2C3FD625-2B33-AFF8-CF66-F2CC0949759B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{442BDDB6-0B32-EF9E-11F6-1471AB4C0541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442BDDB6-0B32-EF9E-11F6-1471AB4C0541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442BDDB6-0B32-EF9E-11F6-1471AB4C0541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442BDDB6-0B32-EF9E-11F6-1471AB4C0541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{161B14C8-6F96-ED98-AD57-929C9F023470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{161B14C8-6F96-ED98-AD57-929C9F023470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{161B14C8-6F96-ED98-AD57-929C9F023470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{161B14C8-6F96-ED98-AD57-929C9F023470}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B17B434D-C2BD-EBD7-DB47-1FFF92414C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B17B434D-C2BD-EBD7-DB47-1FFF92414C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B17B434D-C2BD-EBD7-DB47-1FFF92414C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B17B434D-C2BD-EBD7-DB47-1FFF92414C5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FC2F18-F4B0-502C-24EE-467B54BEB937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FC2F18-F4B0-502C-24EE-467B54BEB937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FC2F18-F4B0-502C-24EE-467B54BEB937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FC2F18-F4B0-502C-24EE-467B54BEB937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C3FD625-2B33-AFF8-CF66-F2CC0949759B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3FD625-2B33-AFF8-CF66-F2CC0949759B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3FD625-2B33-AFF8-CF66-F2CC0949759B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3FD625-2B33-AFF8-CF66-F2CC0949759B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B7FC2F18-F4B0-502C-24EE-467B54BEB937} = {5081215B-A8D2-606B-0497-D199D4ED2BF3}
+		{2C3FD625-2B33-AFF8-CF66-F2CC0949759B} = {5081215B-A8D2-606B-0497-D199D4ED2BF3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF4D8A8C-CC07-4115-8DC0-F93C25D96CB3}
+	EndGlobalSection
+EndGlobal

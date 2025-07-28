@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -12,7 +13,7 @@ namespace Azure.Storage.DataMovement
     /// Containers information about the transfer and its status as well as provides
     /// hooks to perform operations on the transfer.
     /// </summary>
-    public class TransferOperation
+    public class TransferOperation : IDisposable
     {
         private TransferManager _transferManager;
         /// <summary>
@@ -66,6 +67,15 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             status ??= new TransferStatus();
             _state = new TransferInternalState(id, status);
+        }
+
+        /// <summary>
+        /// Disposes the TransferOperation,
+        /// </summary>
+        public void Dispose()
+        {
+            _state?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

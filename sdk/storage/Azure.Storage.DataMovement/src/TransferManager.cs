@@ -480,6 +480,7 @@ namespace Azure.Storage.DataMovement
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Dispose();
             }
             if (_jobsProcessor != default)
             {

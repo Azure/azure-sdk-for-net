@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
             int expectedCompleteFileCount,
             int maxWaitTimeInSec = 6)
         {
-            CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(maxWaitTimeInSec));
             CancellationToken cancellationToken = cancellationSource.Token;
             int currentFailedEventCount = behaviors.InvokeFailedEventHandlerTask.Invocations.Count;
             int currentPutBlockCount = behaviors.PutBlockTask.Invocations.Count;

@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            TransferOperation transfer = new TransferOperation(id: transferId);
+            using TransferOperation transfer = new TransferOperation(id: transferId);
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            TransferOperation transfer = new TransferOperation(
+            using TransferOperation transfer = new TransferOperation(
                 id: transferId,
                 status: new TransferStatus(status, hasFailedItems, false));
 
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            TransferOperation transfer = new TransferOperation(
+            using TransferOperation transfer = new TransferOperation(
                 id: transferId,
                 status: new TransferStatus(state, hasFailedItems, hasSkippedItems));
 
