@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace Azure.Data.AppConfiguration
     // CUSTOM:
     // - Renamed.
     // - Suppressed convenience methods. These are implemented through custom code.
-    // - Suppressed unused internal protocol methods.
+    // - Suppressed protocol methods that do not have an existing convenience method API.
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
