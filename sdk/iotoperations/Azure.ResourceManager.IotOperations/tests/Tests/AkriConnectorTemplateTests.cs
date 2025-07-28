@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.ResourceManager.IotOperations.Models;
 
 namespace Azure.ResourceManager.IotOperations.Tests
 {
@@ -27,30 +28,76 @@ namespace Azure.ResourceManager.IotOperations.Tests
             var templates = await templateCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(templates);
 
-            // Get an existing AkriConnectorTemplate
-            var templateResource = await templateCollection.GetAsync(AkriConnectorTemplateName);
-            Assert.IsNotNull(templateResource);
-            Assert.IsNotNull(templateResource.Value.Data);
-            Assert.AreEqual(templateResource.Value.Data.Name, AkriConnectorTemplateName);
+            // Generate a unique name for the template
+            string akriConnectorTemplateName = Recording.GenerateAssetName("akri-template-");
+
+            var newTemplateData = new AkriConnectorTemplateResourceData
+            {
+                ExtendedLocation = new IotOperationsExtendedLocation
+                {
+                    Name = $"/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}",
+                    Type = "CustomLocation"
+                },
+                Properties = new AkriConnectorTemplateProperties(
+                    new AkriConnectorTemplateHelmConfiguration(
+                        new AkriConnectorTemplateHelmConfigurationSettings(
+                            "my-install",
+                            "my-repo",
+                            "1.0.0"
+                        )
+                    ),
+                    new AkriConnectorTemplateDeviceInboundEndpointType[]
+                    {
+                        new AkriConnectorTemplateDeviceInboundEndpointType("Microsoft.Rest")
+                        {
+                            Version = "0.0.1"
+                        }
+                    })
+                {
+                    AioMetadata = new AkriConnectorTemplateAioMetadata
+                    {
+                        AioMinVersion = "1.2.0",
+                        AioMaxVersion = "1.4.0"
+                    },
+                    MqttConnectionConfiguration = new AkriConnectorsMqttConnectionConfiguration
+                    {
+                        Authentication = new AkriConnectorsServiceAccountAuthentication(
+                            new AkriConnectorsServiceAccountTokenSettings("MQ-SAT")
+                        ),
+                        Host = "aio-broker:18883",
+                        Protocol = AkriConnectorsMqttProtocolType.Mqtt,
+                        KeepAliveSeconds = 10,
+                        MaxInflightMessages = 10,
+                        SessionExpirySeconds = 60,
+                        Tls = new IotOperationsTlsProperties
+                        {
+                            Mode = IotOperationsOperationalMode.Enabled,
+                            TrustedCaCertificateConfigMapRef = "azure-iot-operations-aio-ca-trust-bundle"
+                        }
+                    }
+                    // No Diagnostics or LogsLevel set
+                }
+            };
 
             // Create or Update AkriConnectorTemplate
-            var templateData = CreateAkriConnectorTemplateResourceData(templateResource.Value);
             var resp = await templateCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                "sdk-test-akriconnector-template",
-                templateData
+                akriConnectorTemplateName,
+                newTemplateData
             );
-            var createdTemplate = resp.Value;
-            Assert.IsNotNull(createdTemplate);
-            Assert.IsNotNull(createdTemplate.Data);
-            Assert.IsNotNull(createdTemplate.Data.Properties);
+
+            // Get the created template
+            var templateResource = await templateCollection.GetAsync(akriConnectorTemplateName);
+            Assert.IsNotNull(templateResource);
+            Assert.IsNotNull(templateResource.Value.Data);
+            Assert.AreEqual(templateResource.Value.Data.Name, akriConnectorTemplateName);
 
             // Delete AkriConnectorTemplate
-            await createdTemplate.DeleteAsync(WaitUntil.Completed);
+            await resp.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify AkriConnectorTemplate is deleted
             Assert.ThrowsAsync<RequestFailedException>(
-                async () => await createdTemplate.GetAsync()
+                async () => await resp.Value.GetAsync()
             );
         }
 

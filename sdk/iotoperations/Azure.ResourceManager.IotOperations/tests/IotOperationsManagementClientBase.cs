@@ -44,14 +44,13 @@ namespace Azure.ResourceManager.IotOperations.Tests
             ArmClient = GetArmClient();
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ResourceGroup = "aio-validation-113034243";
-            CustomLocationName = "location-sxy3o";
+            CustomLocationName = "location-qsyv6";
             InstanceName =  "aio-113034243";
             BrokersName = "default";
             BrokersListenersName = "default";
             BrokersAuthenticationsName = "default";
             DataflowProfilesName = "default";
             DataflowEndpointsName = "default";
-            AkriConnectorTemplateName = "default";
             RegistryEndpointName = "default";
             DataflowGraphName =  "default";
             ExtendedLocation =
