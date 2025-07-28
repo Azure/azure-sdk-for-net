@@ -91,70 +91,70 @@ namespace Azure.AI.Agents.Persistent.Tests
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
             }
 
-                using IDisposable _ = SetTestSwitch();
-                PersistentAgentsClient client = GetClient();
-                PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
+            using IDisposable _ = SetTestSwitch();
+            PersistentAgentsClient client = GetClient();
+            PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
 
-                ChatOptions options = null;
-                if (optionsType == ChatOptionsTestType.WithTools)
+            ChatOptions options = null;
+            if (optionsType == ChatOptionsTestType.WithTools)
+            {
+                options = new ChatOptions
                 {
-                    options = new ChatOptions
-                    {
-                        Tools = [AIFunctionFactory.Create(() => "It's 80 degrees and sunny.", "GetWeather")],
-                        ToolMode = ChatToolMode.Auto
-                    };
-                }
-                else if (optionsType == ChatOptionsTestType.WithResponseFormat)
+                    Tools = [AIFunctionFactory.Create(() => "It's 80 degrees and sunny.", "GetWeather")],
+                    ToolMode = ChatToolMode.Auto
+                };
+            }
+            else if (optionsType == ChatOptionsTestType.WithResponseFormat)
+            {
+                options = new ChatOptions
                 {
-                    options = new ChatOptions
-                    {
-                        ResponseFormat = ChatResponseFormat.Json
-                    };
-                }
-                else if (optionsType == ChatOptionsTestType.WithJsonSchemaResponseFormat)
-                {
-                    var jsonSchema = """
-                {
-                    "$schema": "http://json-schema.org/draft-07/schema#",
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "description": "The full name of the person."
-                        },
-                        "age": {
-                            "type": "integer",
-                            "description": "The age of the person in years."
-                        },
-                        "occupation": {
-                            "type": "string",
-                            "description": "The primary occupation or job title of the person."
-                        }
+                    ResponseFormat = ChatResponseFormat.Json
+                };
+            }
+            else if (optionsType == ChatOptionsTestType.WithJsonSchemaResponseFormat)
+            {
+                var jsonSchema = """
+            {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The full name of the person."
                     },
-                    "required": ["name", "age", "occupation"]
-                }
-                """;
-
-                    options = new ChatOptions
-                    {
-                        ResponseFormat = ChatResponseFormatJson.ForJsonSchema(JsonDocument.Parse(jsonSchema).RootElement, "TestSchema", "Schema for testing purposes")
-                    };
-                }
-
-                List<ChatMessage> messages = [new ChatMessage(ChatRole.User, [new TextContent("What's the weather like? Respond in JSON.")])];
-                bool receivedUpdate = false;
-
-                await foreach (ChatResponseUpdate update in chatClient.GetStreamingResponseAsync(messages, options))
-                {
-                    Assert.IsNotNull(update);
-                    Assert.IsNotNull(update.ConversationId);
-                    if (update.Contents.Any(c => (optionsType == ChatOptionsTestType.WithTools && c is FunctionCallContent) || c is TextContent))
-                    {
-                        receivedUpdate = true;
+                    "age": {
+                        "type": "integer",
+                        "description": "The age of the person in years."
+                    },
+                    "occupation": {
+                        "type": "string",
+                        "description": "The primary occupation or job title of the person."
                     }
-                }
+                },
+                "required": ["name", "age", "occupation"]
+            }
+            """;
 
-                Assert.IsTrue(receivedUpdate, "No valid streaming update received.");
+                options = new ChatOptions
+                {
+                    ResponseFormat = ChatResponseFormatJson.ForJsonSchema(JsonDocument.Parse(jsonSchema).RootElement, "TestSchema", "Schema for testing purposes")
+                };
+            }
+
+            List<ChatMessage> messages = [new ChatMessage(ChatRole.User, [new TextContent("What's the weather like? Respond in JSON.")])];
+            bool receivedUpdate = false;
+
+            await foreach (ChatResponseUpdate update in chatClient.GetStreamingResponseAsync(messages, options))
+            {
+                Assert.IsNotNull(update);
+                Assert.IsNotNull(update.ConversationId);
+                if (update.Contents.Any(c => (optionsType == ChatOptionsTestType.WithTools && c is FunctionCallContent) || c is TextContent))
+                {
+                    receivedUpdate = true;
+                }
+            }
+
+            Assert.IsTrue(receivedUpdate, "No valid streaming update received.");
         }
 
         [RecordedTest]
