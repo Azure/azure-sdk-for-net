@@ -358,7 +358,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client;
             var cli = Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
-        {
+            {
                 client = new PersistentAgentsClient(TestEnvironment.PROJECT_ENDPOINT, new AzureCliCredential());
             }
             else
