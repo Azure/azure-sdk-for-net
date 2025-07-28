@@ -323,7 +323,7 @@ namespace Azure.AI.Agents.Persistent
                             BinaryData.FromBytes(JsonSerializer.SerializeToUtf8Bytes(new()
                             {
                                 ["type"] = "json_schema",
-                                ["json_schema"] = JsonSerializer.SerializeToNode(schema, AgentsChatClientJsonContext.Default.JsonNode),
+                                ["json_schema"] = JsonSerializer.SerializeToNode(schema, AgentsChatClientJsonContext.Default.JsonElement),
                             }, AgentsChatClientJsonContext.Default.JsonObject)) :
                             BinaryData.FromString("""{ "type": "json_object" }""");
                     }
