@@ -248,11 +248,9 @@ extends:
         jobs:
         - job: Initialize
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - "/*"
-              - "!SessionRecords"
+          - checkout: self
+            fetchDepth: 0  # Full history as we are writing to the repository
+            clean: true
           
           - task: UseNode@1
             displayName: 'Install Node.js'
