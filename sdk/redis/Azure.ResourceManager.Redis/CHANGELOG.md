@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.ContainerService` AOT-compatible
+- Make `Azure.ResourceManager.Redis` AOT-compatible
 
 ## 1.5.0 (2024-12-18)
 
