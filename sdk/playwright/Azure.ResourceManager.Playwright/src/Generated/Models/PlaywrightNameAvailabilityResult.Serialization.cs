@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
-    public partial class CheckNameAvailabilityResponse : IUtf8JsonSerializable, IJsonModel<CheckNameAvailabilityResponse>
+    public partial class PlaywrightNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<PlaywrightNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckNameAvailabilityResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CheckNameAvailabilityResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlaywrightNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Playwright.Models
             }
         }
 
-        CheckNameAvailabilityResponse IJsonModel<CheckNameAvailabilityResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlaywrightNameAvailabilityResult IJsonModel<PlaywrightNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCheckNameAvailabilityResponse(document.RootElement, options);
+            return DeserializePlaywrightNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PlaywrightNameAvailabilityResult DeserializePlaywrightNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 return null;
             }
             bool? nameAvailable = default;
-            CheckNameAvailabilityReason? reason = default;
+            PlaywrightNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new PlaywrightNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.Playwright.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new PlaywrightNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CheckNameAvailabilityResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PlaywrightNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CheckNameAvailabilityResponse IPersistableModel<CheckNameAvailabilityResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PlaywrightNameAvailabilityResult IPersistableModel<PlaywrightNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCheckNameAvailabilityResponse(document.RootElement, options);
+                        return DeserializePlaywrightNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CheckNameAvailabilityResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlaywrightNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

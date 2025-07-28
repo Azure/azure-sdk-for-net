@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PlaywrightQuotumResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of PlaywrightQuotaResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of PlaywrightQuotumResources and their operations over a PlaywrightQuotumResource. </returns>
-        public virtual PlaywrightQuotumCollection GetPlaywrightQuota(AzureLocation location)
+        /// <returns> An object representing collection of PlaywrightQuotaResources and their operations over a PlaywrightQuotaResource. </returns>
+        public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
-            return new PlaywrightQuotumCollection(Client, Id, location);
+            return new PlaywrightQuotaCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightQuotumResource"/></description>
+        /// <description><see cref="PlaywrightQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightQuotumResource>> GetPlaywrightQuotumAsync(AzureLocation location, QuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightQuotaResource>> GetPlaywrightQuotaAsync(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return await GetPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightQuotumResource"/></description>
+        /// <description><see cref="PlaywrightQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightQuotumResource> GetPlaywrightQuotum(AzureLocation location, QuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
-            return GetPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
+            return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaces_CheckNameAvailability</description>
+        /// <description>PlaywrightWorkspaces_CheckPlaywrightNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityPlaywrightWorkspaceAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightNameAvailabilityResult>> CheckPlaywrightNameAvailabilityAsync(PlaywrightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightWorkspaceClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckNameAvailabilityPlaywrightWorkspace");
+            using var scope = PlaywrightWorkspaceClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability");
             scope.Start();
             try
             {
-                var response = await PlaywrightWorkspaceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await PlaywrightWorkspaceRestClient.CheckPlaywrightNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaces_CheckNameAvailability</description>
+        /// <description>PlaywrightWorkspaces_CheckPlaywrightNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.Playwright.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityPlaywrightWorkspace(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightNameAvailabilityResult> CheckPlaywrightNameAvailability(PlaywrightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightWorkspaceClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckNameAvailabilityPlaywrightWorkspace");
+            using var scope = PlaywrightWorkspaceClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability");
             scope.Start();
             try
             {
-                var response = PlaywrightWorkspaceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = PlaywrightWorkspaceRestClient.CheckPlaywrightNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

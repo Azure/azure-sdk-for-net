@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Playwright.Models;
 
-namespace Azure.ResourceManager.Playwright
+namespace Azure.ResourceManager.Playwright.Models
 {
-    /// <summary>
-    /// A class representing the PlaywrightQuotum data model.
-    /// Subscription-level location-based Playwright quota resource.
-    /// </summary>
-    public partial class PlaywrightQuotumData : ResourceData
+    /// <summary> Subscription-level location-based Playwright quota resource free-trial properties. </summary>
+    public partial class PlaywrightFreeTrialProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,34 @@ namespace Azure.ResourceManager.Playwright
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightQuotumData"/>. </summary>
-        internal PlaywrightQuotumData()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/>. </summary>
+        /// <param name="workspaceId"> Playwright workspace-id that has free-trial in the subscription. </param>
+        /// <param name="state"> The free-trial state. </param>
+        internal PlaywrightFreeTrialProperties(string workspaceId, PlaywrightFreeTrialState state)
         {
+            WorkspaceId = workspaceId;
+            State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightQuotumData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/>. </summary>
+        /// <param name="workspaceId"> Playwright workspace-id that has free-trial in the subscription. </param>
+        /// <param name="state"> The free-trial state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightQuotumData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlaywrightQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightFreeTrialProperties(string workspaceId, PlaywrightFreeTrialState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            WorkspaceId = workspaceId;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PlaywrightQuotaProperties Properties { get; }
+        /// <summary> Initializes a new instance of <see cref="PlaywrightFreeTrialProperties"/> for deserialization. </summary>
+        internal PlaywrightFreeTrialProperties()
+        {
+        }
+
+        /// <summary> Playwright workspace-id that has free-trial in the subscription. </summary>
+        public string WorkspaceId { get; }
+        /// <summary> The free-trial state. </summary>
+        public PlaywrightFreeTrialState State { get; }
     }
 }

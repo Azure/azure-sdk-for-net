@@ -46,31 +46,31 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="regionalAffinity"> This property sets the connection region for client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
         /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(ProvisioningState? provisioningState = null, Uri dataplaneUri = null, EnablementStatus? regionalAffinity = null, EnablementStatus? localAuth = null)
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = null, Uri dataplaneUri = null, PlaywrightEnablementStatus? regionalAffinity = null, PlaywrightEnablementStatus? localAuth = null)
         {
             return new PlaywrightWorkspaceProperties(provisioningState, dataplaneUri, regionalAffinity, localAuth, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResponse"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.PlaywrightNameAvailabilityResult"/> instance for mocking. </returns>
+        public static PlaywrightNameAvailabilityResult PlaywrightNameAvailabilityResult(bool? isNameAvailable = null, PlaywrightNameUnavailableReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new PlaywrightNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Playwright.PlaywrightQuotumData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Playwright.PlaywrightQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Playwright.PlaywrightQuotumData"/> instance for mocking. </returns>
-        public static PlaywrightQuotumData PlaywrightQuotumData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlaywrightQuotaProperties properties = null)
+        /// <returns> A new <see cref="Playwright.PlaywrightQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlaywrightQuotaProperties properties = null)
         {
-            return new PlaywrightQuotumData(
+            return new PlaywrightQuotaData(
                 id,
                 name,
                 resourceType,
@@ -83,30 +83,30 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="freeTrial"> The subscription-level location-based Playwright quota resource free-trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <returns> A new <see cref="Models.PlaywrightQuotaProperties"/> instance for mocking. </returns>
-        public static PlaywrightQuotaProperties PlaywrightQuotaProperties(FreeTrialProperties freeTrial = null, ProvisioningState? provisioningState = null)
+        public static PlaywrightQuotaProperties PlaywrightQuotaProperties(PlaywrightFreeTrialProperties freeTrial = null, PlaywrightProvisioningState? provisioningState = null)
         {
             return new PlaywrightQuotaProperties(freeTrial, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FreeTrialProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightFreeTrialProperties"/>. </summary>
         /// <param name="workspaceId"> Playwright workspace-id that has free-trial in the subscription. </param>
         /// <param name="state"> The free-trial state. </param>
-        /// <returns> A new <see cref="Models.FreeTrialProperties"/> instance for mocking. </returns>
-        public static FreeTrialProperties FreeTrialProperties(string workspaceId = null, FreeTrialState state = default)
+        /// <returns> A new <see cref="Models.PlaywrightFreeTrialProperties"/> instance for mocking. </returns>
+        public static PlaywrightFreeTrialProperties PlaywrightFreeTrialProperties(string workspaceId = null, PlaywrightFreeTrialState state = default)
         {
-            return new FreeTrialProperties(workspaceId, state, serializedAdditionalRawData: null);
+            return new PlaywrightFreeTrialProperties(workspaceId, state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Playwright.PlaywrightWorkspaceQuotumData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Playwright.PlaywrightWorkspaceQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceQuotumData"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceQuotumData PlaywrightWorkspaceQuotumData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlaywrightWorkspaceQuotaProperties properties = null)
+        /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightWorkspaceQuotaData PlaywrightWorkspaceQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlaywrightWorkspaceQuotaProperties properties = null)
         {
-            return new PlaywrightWorkspaceQuotumData(
+            return new PlaywrightWorkspaceQuotaData(
                 id,
                 name,
                 resourceType,
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="freeTrial"> The Playwright workspace quota resource free-trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceQuotaProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceQuotaProperties PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial = null, ProvisioningState? provisioningState = null)
+        public static PlaywrightWorkspaceQuotaProperties PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial = null, PlaywrightProvisioningState? provisioningState = null)
         {
             return new PlaywrightWorkspaceQuotaProperties(freeTrial, provisioningState, serializedAdditionalRawData: null);
         }

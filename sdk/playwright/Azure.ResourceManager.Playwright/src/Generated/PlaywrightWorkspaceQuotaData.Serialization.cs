@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,11 +16,11 @@ using Azure.ResourceManager.Playwright.Models;
 
 namespace Azure.ResourceManager.Playwright
 {
-    public partial class PlaywrightQuotumData : IUtf8JsonSerializable, IJsonModel<PlaywrightQuotumData>
+    public partial class PlaywrightWorkspaceQuotaData : IUtf8JsonSerializable, IJsonModel<PlaywrightWorkspaceQuotaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightQuotumData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightWorkspaceQuotaData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PlaywrightQuotumData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlaywrightWorkspaceQuotaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +31,10 @@ namespace Azure.ResourceManager.Playwright
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotumData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlaywrightQuotumData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -44,19 +45,19 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        PlaywrightQuotumData IJsonModel<PlaywrightQuotumData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlaywrightWorkspaceQuotaData IJsonModel<PlaywrightWorkspaceQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotumData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlaywrightQuotumData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlaywrightQuotumData(document.RootElement, options);
+            return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, options);
         }
 
-        internal static PlaywrightQuotumData DeserializePlaywrightQuotumData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PlaywrightWorkspaceQuotaData DeserializePlaywrightWorkspaceQuotaData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 return null;
             }
-            PlaywrightQuotaProperties properties = default;
+            PlaywrightWorkspaceQuotaProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         continue;
                     }
-                    properties = PlaywrightQuotaProperties.DeserializePlaywrightQuotaProperties(property.Value, options);
+                    properties = PlaywrightWorkspaceQuotaProperties.DeserializePlaywrightWorkspaceQuotaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPlaywrightContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Playwright
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PlaywrightQuotumData(
+            return new PlaywrightWorkspaceQuotaData(
                 id,
                 name,
                 type,
@@ -121,35 +122,35 @@ namespace Azure.ResourceManager.Playwright
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PlaywrightQuotumData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PlaywrightWorkspaceQuotaData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotumData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PlaywrightQuotumData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PlaywrightQuotumData IPersistableModel<PlaywrightQuotumData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PlaywrightWorkspaceQuotaData IPersistableModel<PlaywrightWorkspaceQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightQuotumData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePlaywrightQuotumData(document.RootElement, options);
+                        return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlaywrightQuotumData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PlaywrightQuotumData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlaywrightWorkspaceQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,52 +17,52 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
-    /// A Class representing a PlaywrightQuotum along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightQuotumResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPlaywrightQuotumResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetPlaywrightQuotum method.
+    /// A Class representing a PlaywrightQuota along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightQuotaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPlaywrightQuotaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetPlaywrightQuota method.
     /// </summary>
-    public partial class PlaywrightQuotumResource : ArmResource
+    public partial class PlaywrightQuotaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PlaywrightQuotumResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PlaywrightQuotaResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
         /// <param name="playwrightQuotaName"> The playwrightQuotaName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, QuotaName playwrightQuotaName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, PlaywrightQuotaName playwrightQuotaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/playwrightQuotas/{playwrightQuotaName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _playwrightQuotumPlaywrightQuotasClientDiagnostics;
-        private readonly PlaywrightQuotasRestOperations _playwrightQuotumPlaywrightQuotasRestClient;
-        private readonly PlaywrightQuotumData _data;
+        private readonly ClientDiagnostics _playwrightQuotaClientDiagnostics;
+        private readonly PlaywrightQuotasRestOperations _playwrightQuotaRestClient;
+        private readonly PlaywrightQuotaData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/locations/playwrightQuotas";
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightQuotumResource"/> class for mocking. </summary>
-        protected PlaywrightQuotumResource()
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightQuotaResource"/> class for mocking. </summary>
+        protected PlaywrightQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PlaywrightQuotumResource(ArmClient client, PlaywrightQuotumData data) : this(client, data.Id)
+        internal PlaywrightQuotaResource(ArmClient client, PlaywrightQuotaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PlaywrightQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PlaywrightQuotumResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlaywrightQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _playwrightQuotumPlaywrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string playwrightQuotumPlaywrightQuotasApiVersion);
-            _playwrightQuotumPlaywrightQuotasRestClient = new PlaywrightQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightQuotumPlaywrightQuotasApiVersion);
+            _playwrightQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string playwrightQuotaApiVersion);
+            _playwrightQuotaRestClient = new PlaywrightQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightQuotaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Playwright
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PlaywrightQuotumData Data
+        public virtual PlaywrightQuotaData Data
         {
             get
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightQuotumResource"/></description>
+        /// <description><see cref="PlaywrightQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlaywrightQuotumResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightQuotumPlaywrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotumResource.Get");
+            using var scope = _playwrightQuotaClientDiagnostics.CreateScope("PlaywrightQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = await _playwrightQuotumPlaywrightQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightQuotaRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PlaywrightQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightQuotumResource"/></description>
+        /// <description><see cref="PlaywrightQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlaywrightQuotumResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightQuotaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _playwrightQuotumPlaywrightQuotasClientDiagnostics.CreateScope("PlaywrightQuotumResource.Get");
+            using var scope = _playwrightQuotaClientDiagnostics.CreateScope("PlaywrightQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = _playwrightQuotumPlaywrightQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _playwrightQuotaRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PlaywrightQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Playwright
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PlaywrightWorkspaceQuotumResources in the PlaywrightWorkspace. </summary>
-        /// <returns> An object representing collection of PlaywrightWorkspaceQuotumResources and their operations over a PlaywrightWorkspaceQuotumResource. </returns>
-        public virtual PlaywrightWorkspaceQuotumCollection GetPlaywrightWorkspaceQuota()
+        /// <summary> Gets a collection of PlaywrightWorkspaceQuotaResources in the PlaywrightWorkspace. </summary>
+        /// <returns> An object representing collection of PlaywrightWorkspaceQuotaResources and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
+        public virtual PlaywrightWorkspaceQuotaCollection GetAllPlaywrightWorkspaceQuota()
         {
-            return GetCachedClient(client => new PlaywrightWorkspaceQuotumCollection(client, Id));
+            return GetCachedClient(client => new PlaywrightWorkspaceQuotaCollection(client, Id));
         }
 
         /// <summary>
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotumResource"/></description>
+        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightWorkspaceQuotumResource>> GetPlaywrightWorkspaceQuotumAsync(QuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightWorkspaceQuotaResource>> GetPlaywrightWorkspaceQuotaAsync(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            return await GetPlaywrightWorkspaceQuota().GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightWorkspaceQuota().GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceQuotumResource"/></description>
+        /// <description><see cref="PlaywrightWorkspaceQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The name of the PlaywrightWorkspaceQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightWorkspaceQuotumResource> GetPlaywrightWorkspaceQuotum(QuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightWorkspaceQuotaResource> GetPlaywrightWorkspaceQuota(PlaywrightQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            return GetPlaywrightWorkspaceQuota().Get(quotaName, cancellationToken);
+            return GetAllPlaywrightWorkspaceQuota().Get(quotaName, cancellationToken);
         }
 
         /// <summary>

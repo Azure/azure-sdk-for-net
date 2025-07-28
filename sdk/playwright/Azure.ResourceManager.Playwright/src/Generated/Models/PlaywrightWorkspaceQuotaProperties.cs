@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="freeTrial"> The Playwright workspace quota resource free-trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightWorkspaceQuotaProperties(PlaywrightWorkspaceFreeTrialProperties freeTrial, PlaywrightProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FreeTrial = freeTrial;
             ProvisioningState = provisioningState;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <summary> The Playwright workspace quota resource free-trial properties. </summary>
         public PlaywrightWorkspaceFreeTrialProperties FreeTrial { get; }
         /// <summary> The status of the last resource operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PlaywrightProvisioningState? ProvisioningState { get; }
     }
 }
