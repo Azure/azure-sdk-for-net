@@ -20,13 +20,13 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         public void CreateAuthoringClientForSpecificApiVersion()
         {
             #region Snippet:CreateTextAuthoringClientForSpecificApiVersion
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-            AzureKeyCredential credential = new("your apikey");
+            Uri endpoint = new Uri("{endpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
-            TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+            TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview);
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
             #endregion
         }
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         public void AuthoringClient_CreateWithDefaultAzureCredential()
         {
             #region Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");;
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
 #endif

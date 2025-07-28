@@ -192,3 +192,61 @@ function Install-Standalone-Tool (
 
     return $executable_path
 }
+
+function Get-CommonInstallDirectory {
+    $installDirectory = Join-Path $HOME "bin"
+    if (-not (Test-Path $installDirectory)) {
+        New-Item -ItemType Directory -Path $installDirectory -Force | Out-Null
+    }
+
+    # Update PATH in current session
+    if (-not ($env:PATH -like "*$InstallDirectory*")) {
+        $env:PATH += ";$InstallDirectory"
+    }
+
+    return $installDirectory
+}
+
+function Add-InstallDirectoryToPathInProfile(
+    [Parameter()]
+    [string]$InstallDirectory = (Get-CommonInstallDirectory)
+) {
+    $powershellProfilePath = $PROFILE
+    $bashrcPath = Join-Path $HOME ".bashrc"
+    $zshrcPath = Join-Path $HOME ".zshrc"
+    $markerComment = "  # azsdk install path"
+    $pathCommand = ""
+    $configFile = ""
+
+    if ($IsWindows) {  # expect powershell for windows, cmd.exe path update is not currently supported
+        $configFile = $powershellProfilePath
+        $pathCommand = "if (-not (`$env:PATH -like `'*$InstallDirectory*`')) { `$env:PATH += ';$InstallDirectory`' }" + $markerComment
+    }
+    elseif ($IsLinux) {  # handle bash or zsh shells for linux
+        if (Test-Path $zshrcPath) {
+            $configFile = $zshrcPath
+        }
+        else {
+            $configFile = $bashrcPath
+        }
+        $pathCommand = "export PATH=`"`$PATH:$InstallDirectory`"" + $markerComment
+    }
+    elseif ($IsMacOS) {  # mac os should use zsh by default
+        $configFile = $zshrcPath
+        $pathCommand = "export PATH=`"`$PATH:$InstallDirectory`"" + $markerComment
+    }
+    else {
+        throw "Unsupported platform"
+    }
+
+    if (-not (Test-Path $configFile)) {
+        New-Item -ItemType File -Path $configFile -Force | Out-Null
+    }
+
+    $configContent = Get-Content $configFile -Raw
+
+    if (!$configContent -or !$configContent.Contains($markerComment)) {
+        Write-Host "Adding installation to PATH in shell profile at '$configFile'"
+        Add-Content -Path $configFile -Value ([Environment]::NewLine + $pathCommand)
+    }
+}

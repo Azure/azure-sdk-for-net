@@ -1,0 +1,42 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/deployments/deployment1?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250628.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "4246e425-15ff-479f-b9c1-1778d2477b8f",
+        "Content-Length": "281",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 29 Jun 2025 00:38:29 GMT",
+        "request-id": "4246e425-15ff-479f-b9c1-1778d2477b8f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "46",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "deploymentName": "deployment1",
+        "modelId": "model1-20250627T052846-829bed4c9fc94643941617052f9bc99e",
+        "lastTrainedDateTime": "2025-06-27T17:28:46.7961946Z",
+        "lastDeployedDateTime": "2025-06-27T17:29:54Z",
+        "deploymentExpirationDate": "2026-10-27",
+        "modelTrainingConfigVersion": "2022-05-01"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "370186168"
+  }
+}
