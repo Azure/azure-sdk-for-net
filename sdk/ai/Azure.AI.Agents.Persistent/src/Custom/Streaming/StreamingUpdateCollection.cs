@@ -26,7 +26,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
     private readonly CancellationToken _cancellationToken;
     private readonly OpenTelemetryScope? _scope;
     private readonly ToolCallsResolver? _toolCallsResolver;
-    private readonly Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
+    private readonly Func<ThreadRun, IEnumerable<ToolOutput>, IEnumerable<ToolApproval>, int, CollectionResult<StreamingUpdate>> _submitToolOutputsToStream;
     private readonly int _maxRetry;
     private int _currRetry;
     private readonly Func<string, Response<ThreadRun>> _cancelRun;
@@ -37,7 +37,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         int currentRetry,
         Func<Response> sendRequest,
         Func<string, Response<ThreadRun>> cancelRun,
-        Func<ThreadRun, IEnumerable<ToolOutput>, int, CollectionResult<StreamingUpdate>> submitToolOutputsToStream,
+        Func<ThreadRun, IEnumerable<ToolOutput>, IEnumerable<ToolApproval>, int, CollectionResult<StreamingUpdate>> submitToolOutputsToStream,
         OpenTelemetryScope? scope = null)
     {
         Argument.AssertNotNull(sendRequest, nameof(sendRequest));
@@ -75,7 +75,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         do
         {
             using IEnumerator<StreamingUpdate> enumerator = (toolOutputs.Count > 0 && streamRun != null) ?
-                _submitToolOutputsToStream(streamRun, toolOutputs, _currRetry).GetEnumerator() :
+                _submitToolOutputsToStream(streamRun, toolOutputs, [], _currRetry).GetEnumerator() :
                 new StreamingUpdateEnumerator(page, _cancellationToken, _scope);
             toolOutputs.Clear();
             bool hasError = false;
