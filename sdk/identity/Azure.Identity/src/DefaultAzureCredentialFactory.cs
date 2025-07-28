@@ -41,6 +41,7 @@ namespace Azure.Identity
                     return
                     [
                         CreateVisualStudioCredential(),
+                        CreateVisualStudioCodeCredential(),
                         CreateAzureCliCredential(),
                         CreateAzurePowerShellCredential(),
                         CreateAzureDeveloperCliCredential()
@@ -111,12 +112,10 @@ namespace Azure.Identity
                     chain.Add(CreateVisualStudioCredential());
                 }
 
-#pragma warning disable CS0618 // Type or member is obsolete
                 if (!Options.ExcludeVisualStudioCodeCredential)
                 {
                     chain.Add(CreateVisualStudioCodeCredential());
                 }
-#pragma warning restore CS0618 // Type or member is obsolete
 
                 if (!Options.ExcludeAzureCliCredential)
                 {
@@ -287,13 +286,11 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
-            return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
-#pragma warning restore CS0618 // Type or member is obsolete
+            return new VisualStudioCodeCredential(options);
         }
 
         public virtual TokenCredential CreateAzurePowerShellCredential()

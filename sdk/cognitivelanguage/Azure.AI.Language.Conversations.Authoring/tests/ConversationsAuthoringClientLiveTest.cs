@@ -1,15 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using NUnit.Framework;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Collections.Generic;
-using System.Threading;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests
 {
@@ -126,11 +130,22 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             };
 
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+
+            string json = JsonSerializer.Serialize(exportedProject, jsonOptions);
+            Console.WriteLine("Serialized JSON Request:");
+            Console.WriteLine(json);
+
             // Call the ImportAsync function
             Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 exportedProject: exportedProject,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Assert the operation and response
@@ -141,6 +156,189 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
             Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task ImportProjectAsRawJsonAsync()
+        {
+            string projectName = "Test-data-labels0702";
+
+            // Define the raw JSON string matching the structure of ConversationAuthoringExportedProject
+            string rawJson = """
+            {
+              "projectFileVersion": "2025-05-15-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "Conversation",
+                "language": "en-us",
+                "settings": {
+                  "confidenceThreshold": 0.0
+                },
+                "projectName": "Test-data-labels0702",
+                "multilingual": false,
+                "description": ""
+              },
+              "assets": {
+            		"projectKind": "Conversation",
+                "intents": [
+                  { "category": "None" },
+                  { "category": "Buy" }
+                ],
+                "entities": [
+                  {
+                    "category": "product",
+                    "compositionSetting": "combineComponents"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "text": "I want to buy a house",
+                    "intent": "Buy",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "product", "offset": 16, "length": 5 }
+                    ]
+                  },
+                  {
+                    "text": "I want to buy surface pro",
+                    "intent": "Buy",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "product", "offset": 14, "length": 11 }
+                    ]
+                  },
+                  {
+                    "text": "I want to buy xbox",
+                    "intent": "Buy",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "product", "offset": 14, "length": 4 }
+                    ]
+                  }
+                ]
+              }
+            }
+            """;
+
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
+            // Call the ImportRawJsonAsync method (assumes SDK method exists for raw string input)
+            Operation operation = await projectAuthoringClient.ImportAsync(
+                waitUntil: WaitUntil.Completed,
+                rawJson,
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+            );
+
+            // Assert the operation and response
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task ImportProjectAsync_WithAssignedResourcesAndMetadata()
+        {
+            // Arrange
+            string projectName = "TestImportedApp0623";
+
+            // Create metadata
+            var projectMetadata = new ConversationAuthoringCreateProjectDetails(
+                projectKind: "Conversation",
+                language: "en-us"
+            )
+            {
+                Settings = new ConversationAuthoringProjectSettings(0.7F), // ConfidenceThreshold = 0.7
+                Multilingual = true,
+                Description = "Trying out CLU",
+                ProjectName = projectName
+            };
+
+            // Create assets
+            var projectAssets = new ConversationExportedProjectAsset();
+
+            projectAssets.Intents.Add(new ConversationExportedIntent(category: "Read")
+            {
+                Description = "The read intent",
+                AssociatedEntities = { new ConversationExportedAssociatedEntityLabel(category: "Sender") }
+            });
+            projectAssets.Intents.Add(new ConversationExportedIntent(category: "Delete")
+            {
+                Description = "The delete intent"
+            });
+
+            projectAssets.Entities.Add(new ConversationExportedEntity(category: "Sender")
+            {
+                Description = "The description of Sender"
+            });
+
+            projectAssets.Entities.Add(new ConversationExportedEntity(category: "Number")
+            {
+                Description = "The description of Number",
+                Regex = new ExportedEntityRegex()
+                {
+                    Expressions = {
+                        new ExportedEntityRegexExpression
+                        {
+                            RegexKey = "UK Phone numbers",
+                            Language = "en-us",
+                            RegexPattern = @"^\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$"
+                        }
+                    }
+                }
+            });
+
+            projectAssets.Utterances.Add(new ConversationExportedUtterance(
+                text: "Open Blake's email",
+                intent: "Read")
+            {
+                Dataset = "Train",
+                Entities = {
+                    new ExportedUtteranceEntityLabel(category: "Sender", offset: 5, length: 5)
+                }
+            });
+
+            projectAssets.Utterances.Add(new ConversationExportedUtterance(
+                text: "Delete last email",
+                intent: "Delete")
+            {
+                Language = "en-gb",
+                Dataset = "Test"
+            });
+
+            // Create exported project
+            var exportedProject = new ConversationAuthoringExportedProject(
+                projectFileVersion: "2025-05-15-preview",
+                stringIndexType: StringIndexType.Utf16CodeUnit,
+                metadata: projectMetadata
+            )
+            {
+                Assets = projectAssets
+            };
+
+            // Get project client
+            var projectAuthoringClient = client.GetProject(projectName);
+
+            // Act
+            Operation operation = await projectAuthoringClient.ImportAsync(
+                waitUntil: WaitUntil.Started,
+                exportedProject: exportedProject,
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+            );
+
+            // Assert
+            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected operation status to be 202 (Accepted).");
+
+            // Print operation-location header
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project import request submitted with status: {operation.GetRawResponse().Status}");
         }
 
         [RecordedTest]
@@ -246,6 +444,52 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         }
 
         [RecordedTest]
+        public async Task TrainAsync_withDataGenerationSettings()
+        {
+            // Arrange
+            string projectName = "EmailAppEnglish";
+
+            var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
+                kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
+                deploymentName: "gpt-4o"
+            );
+            connectionInfo.ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai";
+
+            var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
+                modelLabel: "ModelWithDG",
+                trainingMode: ConversationAuthoringTrainingMode.Standard
+            )
+            {
+                TrainingConfigVersion = "2025-05-15-preview-ConvLevel",
+                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                {
+                    Kind = ConversationAuthoringEvaluationKind.Percentage,
+                    TestingSplitPercentage = 20,
+                    TrainingSplitPercentage = 80
+                },
+                DataGenerationSettings = new AnalyzeConversationAuthoringDataGenerationSettings(
+                    enableDataGeneration: true,
+                    dataGenerationConnectionInfo: connectionInfo
+                )
+            };
+
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
+            // Act
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectAuthoringClient.TrainAsync(
+                waitUntil: WaitUntil.Started,
+                details: trainingJobDetails
+            );
+
+            // Assert
+            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected operation status to be 202.");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
+        }
+
+        [RecordedTest]
         public async Task CancelTrainingJobAsync()
         {
             // Arrange
@@ -272,8 +516,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task GetModelEvaluationSummaryAsync()
         {
             // Arrange
-            string projectName = "Aurora-CLU-Prod";
-            string trainedModelLabel = "m1";
+            string projectName = "EmailApp";
+            string trainedModelLabel = "Model1";
 
             ConversationAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
             // Act
@@ -384,8 +628,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task LoadSnapshotAsync()
         {
             // Arrange
-            string projectName = "Aurora-CLU-Prod";
-            string trainedModelLabel = "m1";
+            string projectName = "EmailApp";
+            string trainedModelLabel = "Model1";
 
             ConversationAuthoringTrainedModel trainedodelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
             // Act
@@ -420,9 +664,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task SwapDeploymentsAsync()
         {
             // Arrange
-            string projectName = "Test-data-labels";
-            var deploymentName1 = "deployment1";
-            var deploymentName2 = "deployment2";
+            string projectName = "EmailApp";
+            var deploymentName1 = "staging";
+            var deploymentName2 = "production";
 
             var swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
@@ -465,12 +709,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         [RecordedTest]
         public async Task DeployProjectAsync(){
             // Arrange
-            string projectName = "Test-data-labels";
+            string projectName = "EmailApp";
             var deploymentName = "staging";
 
             ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
 
-            ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
+            ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("Model1");
             // Act
             Operation operation = await deploymentAuthoringClient.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,
@@ -481,6 +725,83 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Assert.IsNotNull(operation, "The operation should not be null.");
             //Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected status to be 200 (OK).");
             Console.WriteLine($"Project created with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task DeployProjectAsync_WithAssignedResources()
+        {
+            // Arrange
+            string projectName = "EmailAppEnglish";
+            string deploymentName = "assignedDeployment";
+
+            // Create the assignedAoaiResource
+            var assignedAoaiResource = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
+                AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
+                deploymentName: "gpt-4o"
+            )
+            {
+                ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+            };
+
+            // Create the assignedResource
+            var assignedResource = new ConversationAuthoringDeploymentResource(
+                resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
+                region: "East US"
+            )
+            {
+                AssignedAoaiResource = assignedAoaiResource
+            };
+
+            // Create deployment details with assigned resources
+            var deploymentDetails = new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
+
+            // Use Add to populate the read-only AssignedResources
+            deploymentDetails.AssignedResources.Add(assignedResource);
+
+            // Create the deployment client
+            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+
+            // Act
+            Operation operation = await deploymentAuthoringClient.DeployProjectAsync(
+                waitUntil: WaitUntil.Started,
+                deploymentDetails
+            );
+
+            // Assert
+            Assert.IsNotNull(operation, "The operation should not be null.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected status to be 202 (Accepted).");
+
+            Console.WriteLine($"Deployment created with status: {operation.GetRawResponse().Status}");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
+        }
+
+        [RecordedTest]
+        public async Task GetDeploymentAsync()
+        {
+            // Arrange
+            string projectName = "EmailAppEnglish";
+            string deploymentName = "assignedDeployment";
+
+            ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
+
+            // Act
+            Response<ConversationAuthoringProjectDeployment> response = await deploymentAuthoringClient.GetDeploymentAsync();
+
+            // Assert
+            Assert.IsNotNull(response, "The response should not be null.");
+            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected status to be 200 (OK).");
+
+            ConversationAuthoringProjectDeployment deployment = response.Value;
+
+            Assert.IsNotNull(deployment, "Deployment details should not be null.");
+            Assert.IsNotNull(deployment.DeploymentName, "DeploymentName should not be null.");
+            Assert.IsNotNull(deployment.ModelId, "ModelId should not be null.");
+            Assert.IsNotNull(deployment.LastTrainedOn, "LastTrainedOn should not be null.");
+            Assert.IsNotNull(deployment.LastDeployedOn, "LastDeployedOn should not be null.");
+            Assert.IsNotNull(deployment.DeploymentExpiredOn, "DeploymentExpiredOn should not be null.");
+            Assert.IsNotNull(deployment.ModelTrainingConfigVersion, "ModelTrainingConfigVersion should not be null.");
         }
     }
 }

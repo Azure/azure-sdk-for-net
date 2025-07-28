@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -13,14 +14,15 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class GetIfExistsOperationMethodProvider(
-        ResourceClientProvider resourceClientProvider,
+        ResourceCollectionClientProvider collection,
+        RestClientInfo restClientInfo,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, isAsync)
+        bool isAsync) : ResourceOperationMethodProvider(collection, collection.ContextualPath, restClientInfo, method, convenienceMethod, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {
-            var returnType = new CSharpType(typeof(NullableResponse<>), _resourceClientProvider.ResourceClientCSharpType)
+            var returnType = new CSharpType(typeof(NullableResponse<>), _resource.Type)
                 .WrapAsync(_isAsync);
 
             return new MethodSignature(
@@ -39,22 +41,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
-            var resourceClientCSharpType = _resourceClientProvider.ResourceClientCSharpType;
-
             List<MethodBodyStatement> statements =
             [
                 new IfStatement(responseVariable.Property("Value").Equal(Null))
                 {
                     Return(
                         New.Instance(
-                            new CSharpType(typeof(NoValueResponse<>), resourceClientCSharpType),
+                            new CSharpType(typeof(NoValueResponse<>), _resource.Type),
                             responseVariable.Invoke("GetRawResponse")
                         )
                     )
                 }
             ];
 
-            var returnValueExpression = New.Instance(resourceClientCSharpType, This.Property("Client"), responseVariable.Property("Value"));
+            var returnValueExpression = New.Instance(_resource.Type, This.Property("Client"), responseVariable.Property("Value"));
             statements.Add(
                 Return(
                     Static(typeof(Response)).Invoke(

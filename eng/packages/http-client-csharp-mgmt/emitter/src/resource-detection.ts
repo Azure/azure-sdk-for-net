@@ -67,7 +67,8 @@ export async function updateClients(
         ),
         resourceScope: getResourceScope(m),
         methods: [],
-        parentResourceId: undefined // this will be populated later
+        parentResourceId: undefined, // this will be populated later
+        resourceName: m.name
       } as ResourceMetadata
     ])
   );

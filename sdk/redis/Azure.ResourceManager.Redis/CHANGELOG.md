@@ -1,14 +1,10 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.5.1 (2025-07-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.Redis` AOT-compatible
 
 ## 1.5.0 (2024-12-18)
 
