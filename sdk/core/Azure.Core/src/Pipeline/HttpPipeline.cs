@@ -22,6 +22,11 @@ namespace Azure.Core.Pipeline
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
         /// <summary>
+        /// Gets the <see cref="HttpPipelineTransport"/> used by this pipeline.
+        /// </summary>
+        public HttpPipelineTransport Transport => _transportPolicy.Transport;
+
+        /// <summary>
         /// A factory function for Updating the transport when <see cref="UpdateTransport"/> is called.
         /// </summary>
         public Func<HttpPipelineTransportOptions, HttpPipelineTransport>? TransportFactory { get; set; }
@@ -259,7 +264,7 @@ namespace Azure.Core.Pipeline
         /// Update only occurs if this pipeline was constructed with a pipeline factory.
         /// </summary>
         /// <param name="transportOptions">The options to customize the <see cref="HttpPipelineTransport"/>.</param>
-        public void UpdateTransport(HttpPipelineTransportOptions transportOptions)
+        internal void UpdateTransport(HttpPipelineTransportOptions transportOptions)
         {
             if (transportOptions == null)
                 throw new ArgumentNullException(nameof(transportOptions));

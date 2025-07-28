@@ -19,35 +19,45 @@ namespace Azure.Core.Pipeline
     {
         private string[] _scopes;
         private readonly AccessTokenCache _accessTokenCache;
+        private readonly TokenCredential _credential;
+        private readonly HttpPipeline _httpPipeline;
+        private string? _currentBindingCertThumbprint;
 
         /// <summary>
         /// Creates a new instance of <see cref="PopTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to be included in acquired tokens.</param>
-        public PopTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope }) { }
+        /// <param name="httpPipeline"></param>
+        public PopTokenAuthenticationPolicy(TokenCredential credential, string scope, HttpPipeline httpPipeline) : this(credential, new[] { scope }, httpPipeline)
+        { }
 
         /// <summary>
         /// Creates a new instance of <see cref="PopTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to be included in acquired tokens.</param>
+        /// <param name="httpPipeline"></param>
         /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
-        public PopTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
-            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30))
+        public PopTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, HttpPipeline httpPipeline)
+            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30), httpPipeline)
         { }
 
         internal PopTokenAuthenticationPolicy(
             TokenCredential credential,
             IEnumerable<string> scopes,
             TimeSpan tokenRefreshOffset,
-            TimeSpan tokenRefreshRetryDelay)
+            TimeSpan tokenRefreshRetryDelay,
+            HttpPipeline httpPipeline)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
+            Argument.AssertNotNull(httpPipeline, nameof(httpPipeline));
 
             _scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay);
+            _httpPipeline = httpPipeline;
+            _credential = credential;
         }
 
         /// <inheritdoc />
@@ -212,8 +222,17 @@ namespace Azure.Core.Pipeline
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
         protected void AuthenticateAndAuthorizeRequest(HttpMessage message, TokenRequestContext context)
         {
-            string headerValue = _accessTokenCache.GetAuthHeaderValueAsync(message, context, false).EnsureCompleted();
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+            // string headerValue = _accessTokenCache.GetAuthHeaderValueAsync(message, context, false).EnsureCompleted();
+            // POC
+            var token = _credential.GetToken(context, message.CancellationToken);
+            if (token.BindingCertificate != null && token.BindingCertificate.Thumbprint != _currentBindingCertThumbprint)
+            {
+                var transportOptions = new HttpPipelineTransportOptions();
+                transportOptions.ClientCertificates.Add(token.BindingCertificate);
+                _httpPipeline.UpdateTransport(transportOptions);
+                _currentBindingCertThumbprint = token.BindingCertificate.Thumbprint;
+            }
+            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"{token.TokenType} {token.Token}");
         }
 
         internal class AccessTokenCache

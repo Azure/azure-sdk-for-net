@@ -46,5 +46,15 @@ namespace Azure.Core.Pipeline
         {
             pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
+
+        /// <summary>
+        /// Updates the internal state of the policy based on the provided options.
+        /// </summary>
+        /// <param name="options"></param>
+        public virtual void Update(object options)
+        {
+            // Default implementation does nothing.
+            // This method can be overridden by derived classes to update their internal state based on the provided options.
+        }
     }
 }

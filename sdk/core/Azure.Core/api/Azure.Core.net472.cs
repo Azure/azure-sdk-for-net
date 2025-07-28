@@ -306,6 +306,8 @@ namespace Azure.Core
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn) { throw null; }
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn) { throw null; }
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn, string tokenType) { throw null; }
+        public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn, string tokenType, System.Security.Cryptography.X509Certificates.X509Certificate2? bindingCertificate) { throw null; }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2? BindingCertificate { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string Token { get { throw null; } }
@@ -412,6 +414,7 @@ namespace Azure.Core
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
+        public System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpPipelineTransport>? TransportFactory { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
@@ -1053,6 +1056,7 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
+        public System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpPipelineTransport>? TransportFactory { get { throw null; } set { } }
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
@@ -1110,6 +1114,19 @@ namespace Azure.Core.Pipeline
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public bool IsClientRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    public partial class PopTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipeline httpPipeline) { }
+        public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipeline httpPipeline) { }
+        protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
+        protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
+        protected virtual void AuthorizeRequest(Azure.Core.HttpMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
     public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {

@@ -82,6 +82,11 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Gets the transport factory for creating <see cref="HttpPipelineTransport"/> instances.
+        /// </summary>
+        public Func<HttpPipelineTransportOptions, HttpPipelineTransport>? TransportFactory { get; set; }
+
+        /// <summary>
         /// Gets the client diagnostic options.
         /// </summary>
         public DiagnosticsOptions Diagnostics { get; }
