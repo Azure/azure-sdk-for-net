@@ -2481,10 +2481,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUrl = new Uri(TestEnvironment.TransportUrl),
+                        Locale = "en-CA",
+                        StartTranscription = false
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
                     callConnectionId = result.CallerCallConnectionId;
@@ -2544,14 +2546,91 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUrl = new Uri(TestEnvironment.TransportUrl),
+                        Locale = "en-CA",
+                        StartTranscription = false
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
                     callConnectionId = result.TargetCallConnectionId;
                     await VerifyTranscription(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateTranscriptionCallWithSentimentAnalysisAndRedaction()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription with sentiment analysis and redaction options
+             * 2. Answer a call
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggered
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string> { "en-AU", "en-US" })
+                    {
+                        Locale = "en-CA",
+                        TransportUrl = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false,
+                        EnableSentimentAnalysis = true,
+                        PiiRedactionOptions = new PiiRedactionOptions()
+                        {
+                            Enable = true,
+                            RedactionType = RedactionType.MaskWithCharacter
+                        },
+                        SummarizationOptions = new SummarizationOptions("en-US")
+                        {
+                            EnableEndCallSummary = true,
+                        }
+                    };
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyTranscription(targetClient, result.CallerCallConnectionId);
                     try
                     {
                         // test get properties

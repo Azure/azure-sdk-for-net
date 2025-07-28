@@ -640,7 +640,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void RecognizeCompletedWithChoiceEventParsed_Test()
         {
-            ChoiceResult choiceResult = new ChoiceResult("testLabel", "testRecognizePhrase");
+            var sentiment = new SentimentAnalysisResult("testSentiment");
+            ChoiceResult choiceResult = new ChoiceResult("testLabel", "testRecognizePhrase", "testLanguageIdentified", sentiment, 0.95);
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
@@ -667,6 +668,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 {
                     Assert.AreEqual("testLabel", choiceRecongizedResult.Label);
                     Assert.AreEqual("testRecognizePhrase", choiceRecongizedResult.RecognizedPhrase);
+                    Assert.AreEqual("testLanguageIdentified", choiceRecongizedResult.LanguageIdentified);
+                    Assert.AreEqual("testSentiment", choiceRecongizedResult.SentimentAnalysisResult.Sentiment);
+                    Assert.AreEqual(0.95, choiceRecongizedResult.Confidence);
                 }
             }
             else
@@ -715,7 +719,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void GetRecognizeResultFromRecognizeCompletedWithChoice_Test()
         {
-            ChoiceResult choiceResult = new ChoiceResult("testLabel", "testRecognizePhrase");
+            var sentiment = new SentimentAnalysisResult("testSentiment");
+            ChoiceResult choiceResult = new ChoiceResult("testLabel", "testRecognizePhrase", "testLanguageIdentified", sentiment, 0.95);
             RecognizeCompleted @event = CallAutomationModelFactory.RecognizeCompleted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
@@ -744,6 +749,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 {
                     Assert.AreEqual("testLabel", choiceRecongizedResult.Label);
                     Assert.AreEqual("testRecognizePhrase", choiceRecongizedResult.RecognizedPhrase);
+                    Assert.AreEqual("testLanguageIdentified", choiceRecongizedResult.LanguageIdentified);
+                    Assert.AreEqual("testSentiment", choiceRecongizedResult.SentimentAnalysisResult.Sentiment);
+                    Assert.AreEqual(0.95, choiceRecongizedResult.Confidence);
                 }
             }
             else

@@ -21,10 +21,16 @@ namespace Azure.Communication.CallAutomation
         /// Phrases are set to the value if choice is selected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
-        internal ChoiceResult(string label, string recognizedPhrase)
+        /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        internal ChoiceResult(string label, string recognizedPhrase, string languageIdentified, SentimentAnalysisResult sentimentAnalysisResult, double? confidence)
         {
             Label = label;
             RecognizedPhrase = recognizedPhrase;
+            LanguageIdentified = languageIdentified;
+            SentimentAnalysisResult = sentimentAnalysisResult;
+            Confidence = confidence;
         }
 
         /// <summary> Label is the primary identifier for the choice detected. </summary>
@@ -34,5 +40,11 @@ namespace Azure.Communication.CallAutomation
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </summary>
         public string RecognizedPhrase { get; }
+        /// <summary> The identified language for a spoken phrase. </summary>
+        public string LanguageIdentified { get; }
+        /// <summary> Gets or sets the sentiment analysis result. </summary>
+        public SentimentAnalysisResult SentimentAnalysisResult { get; }
+        /// <summary> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </summary>
+        public double? Confidence { get; }
     }
 }

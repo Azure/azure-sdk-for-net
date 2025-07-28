@@ -19,6 +19,9 @@ namespace Azure.Communication.CallAutomation
             }
             string label = default;
             string recognizedPhrase = default;
+            string languageIdentified = default;
+            SentimentAnalysisResult sentimentAnalysisResult = default;
+            double? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -31,8 +34,31 @@ namespace Azure.Communication.CallAutomation
                     recognizedPhrase = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("languageIdentified"u8))
+                {
+                    languageIdentified = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sentimentAnalysisResult"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sentimentAnalysisResult = SentimentAnalysisResult.DeserializeSentimentAnalysisResult(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("confidence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidence = property.Value.GetDouble();
+                    continue;
+                }
             }
-            return new ChoiceResult(label, recognizedPhrase);
+            return new ChoiceResult(label, recognizedPhrase, languageIdentified, sentimentAnalysisResult, confidence);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
