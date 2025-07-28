@@ -1,14 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IotOperations.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using Castle.Components.DictionaryAdapter;
-using Microsoft.Win32;
 
 namespace Azure.ResourceManager.IotOperations.Tests
 {
