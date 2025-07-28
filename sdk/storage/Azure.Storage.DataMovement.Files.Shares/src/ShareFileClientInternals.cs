@@ -18,6 +18,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static ShareFileClient WithAdditionalPoliciesClient(
             ShareFileClient client,
             params HttpPipelinePolicy[] policies)
-            => ShareFileClient.WithAdditonalPolicies(client, policies);
+            => ShareFileClient.WithAdditionalPolicies(client, policies);
     }
 }

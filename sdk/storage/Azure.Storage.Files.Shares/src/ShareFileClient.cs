@@ -548,7 +548,7 @@ namespace Azure.Storage.Files.Shares
         /// The additional policies to add to the client.
         /// </param>
         /// <returns></returns>
-        protected static ShareFileClient WithAdditonalPolicies(
+        protected static ShareFileClient WithAdditionalPolicies(
             ShareFileClient client,
             params HttpPipelinePolicy[] policies)
         {
