@@ -107,6 +107,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ];
         }
 
+        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        {
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath);
+        }
+
         protected virtual MethodSignature CreateSignature()
         {
             return new MethodSignature(
@@ -314,47 +319,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
 
             return statements;
-        }
-
-        // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
-        {
-            var requiredParameters = new List<ParameterProvider>();
-            var optionalParameters = new List<ParameterProvider>();
-            if (_serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation())
-            {
-                requiredParameters.Add(KnownAzureParameters.WaitUntil);
-            }
-
-            foreach (var parameter in _serviceMethod.Operation.Parameters)
-            {
-                if (parameter.Kind != InputParameterKind.Method)
-                {
-                    continue;
-                }
-
-                var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                if (!_contextualPath.TryGetContextualParameter(outputParameter, out _))
-                {
-                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                    {
-                        outputParameter.Update(name: "data");
-                    }
-
-                    if (parameter.IsRequired)
-                    {
-                        requiredParameters.Add(outputParameter);
-                    }
-                    else
-                    {
-                        optionalParameters.Add(outputParameter);
-                    }
-                }
-            }
-
-            optionalParameters.Add(KnownParameters.CancellationTokenParameter);
-
-            return [.. requiredParameters, .. optionalParameters];
         }
     }
 }

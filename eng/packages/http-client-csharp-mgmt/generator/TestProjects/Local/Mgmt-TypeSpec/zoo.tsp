@@ -40,6 +40,8 @@ interface Zoos {
     ArmResponse<ZooRecommendation>>;
 }
 
+model uglyZooListListResult is Azure.Core.Page<Zoo>;
+
 model ZooRecommendation {
   /** The recommended value */
   recommendedValue: string;
