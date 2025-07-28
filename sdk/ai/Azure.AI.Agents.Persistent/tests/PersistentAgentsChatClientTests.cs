@@ -135,10 +135,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             """;
 
-                options = new ChatOptions
+                using (var jsonDoc = JsonDocument.Parse(jsonSchema))
                 {
-                    ResponseFormat = ChatResponseFormatJson.ForJsonSchema(JsonDocument.Parse(jsonSchema).RootElement, "TestSchema", "Schema for testing purposes")
-                };
+                    options = new ChatOptions
+                    {
+                        ResponseFormat = ChatResponseFormatJson.ForJsonSchema(jsonDoc.RootElement, "TestSchema", "Schema for testing purposes")
+                    };
+                }
             }
 
             List<ChatMessage> messages = [new ChatMessage(ChatRole.User, [new TextContent("What's the weather like? Respond in JSON.")])];
