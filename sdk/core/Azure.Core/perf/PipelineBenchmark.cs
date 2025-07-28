@@ -66,7 +66,7 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
-        public async Task<Response> LocalPipeline()
+        public async Task<Response> Pipeline()
         {
             // Use round-robin to avoid always sending the same message
 

@@ -30,7 +30,14 @@ if (!args.Contains("--bm"))
 // To run a specific benchmark class and category
 // dotnet run -c Release --framework net8.0 --bm --anyCategories PublicInterface --filter Azure.Core.Perf.SerializationBenchmark*
 
+#if AZURE_CORE_VERSION_nuget
+    string artifactsPath = "BenchmarkDotNet.Artifacts/results/nuget";
+#else
+    string artifactsPath = "BenchmarkDotNet.Artifacts/results/local";
+#endif
+
 var config = ManualConfig.Create(DefaultConfig.Instance);
+config.ArtifactsPath = artifactsPath;
 config.Options = ConfigOptions.JoinSummary | ConfigOptions.StopOnFirstError;
 config = config.AddDiagnoser(MemoryDiagnoser.Default);
 config.AddExporter(JsonExporter.Full);

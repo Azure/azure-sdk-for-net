@@ -9,6 +9,9 @@
     <ProjectReference Condition="'$(AzureCoreVersion)' == ''" Include="../../Azure.Core/src/Azure.Core.csproj" />
     <PackageReference Condition="'$(AzureCoreVersion)' != ''" Include="Azure.Core" />
   </ItemGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);AZURE_CORE_VERSION_$(AzureCoreVersion)</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <!--

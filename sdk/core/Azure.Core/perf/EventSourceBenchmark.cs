@@ -55,21 +55,21 @@ namespace Azure.Core.Perf
             _eventSource.Dispose();
         }
 
-        // Local benchmarks
+        // Benchmarks
         [Benchmark]
-        public void Local_OldImplementation()
+        public void OldImplementation()
         {
             _eventSource.RequestOld(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
 
         [Benchmark]
-        public void Local_NewImplementation()
+        public void NewImplementation()
         {
             _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
 
         [Benchmark]
-        public void Local_NewImplementation_AfterFormatting()
+        public void NewImplementation_AfterFormatting()
         {
             _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
