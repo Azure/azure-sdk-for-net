@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value = default;
+            IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
+                    List<SearchServiceNetworkSecurityPerimeterConfigurationData> array = new List<SearchServiceNetworkSecurityPerimeterConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
+                        array.Add(SearchServiceNetworkSecurityPerimeterConfigurationData.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>(), nextLink, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

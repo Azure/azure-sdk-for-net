@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Information about resource association. </summary>
-    public partial class ResourceAssociation
+    public partial class SearchServiceNetworkSecurityPerimeterResourceAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
-        public ResourceAssociation()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociation"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceAssociation(string name, ResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceNetworkSecurityPerimeterResourceAssociation(string name, SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessMode = accessMode;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.Search.Models
         public string Name { get; set; }
         /// <summary> Access mode of the resource association. </summary>
         [WirePath("accessMode")]
-        public ResourceAssociationAccessMode? AccessMode { get; set; }
+        public SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode? AccessMode { get; set; }
     }
 }

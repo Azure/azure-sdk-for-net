@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NetworkSecurityPerimeterConfigurationProperties : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationProperties>
+    public partial class SearchServiceNetworkSecurityPerimeterConfigurationProperties : IUtf8JsonSerializable, IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkSecurityPerimeterConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        NetworkSecurityPerimeterConfigurationProperties IJsonModel<NetworkSecurityPerimeterConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchServiceNetworkSecurityPerimeterConfigurationProperties IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkSecurityPerimeterConfigurationProperties(document.RootElement, options);
+            return DeserializeSearchServiceNetworkSecurityPerimeterConfigurationProperties(document.RootElement, options);
         }
 
-        internal static NetworkSecurityPerimeterConfigurationProperties DeserializeNetworkSecurityPerimeterConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SearchServiceNetworkSecurityPerimeterConfigurationProperties DeserializeSearchServiceNetworkSecurityPerimeterConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
-            NetworkSecurityPerimeter networkSecurityPerimeter = default;
-            ResourceAssociation resourceAssociation = default;
-            NetworkSecurityProfile profile = default;
+            SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
+            IReadOnlyList<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default;
+            SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter = default;
+            SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation = default;
+            SearchNetworkSecurityProfile profile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    provisioningState = new NetworkSecurityPerimeterConfigurationProvisioningState(property.Value.GetString());
+                    provisioningState = new SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningIssues"u8))
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                    List<SearchServiceNetworkSecurityPerimeterProvisioningIssue> array = new List<SearchServiceNetworkSecurityPerimeterProvisioningIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                        array.Add(SearchServiceNetworkSecurityPerimeterProvisioningIssue.DeserializeSearchServiceNetworkSecurityPerimeterProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property.Value, options);
+                    networkSecurityPerimeter = SearchServiceNetworkSecurityPerimeter.DeserializeSearchServiceNetworkSecurityPerimeter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceAssociation"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(property.Value, options);
+                    resourceAssociation = SearchServiceNetworkSecurityPerimeterResourceAssociation.DeserializeSearchServiceNetworkSecurityPerimeterResourceAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profile"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    profile = NetworkSecurityProfile.DeserializeNetworkSecurityProfile(property.Value, options);
+                    profile = SearchNetworkSecurityProfile.DeserializeSearchNetworkSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkSecurityPerimeterConfigurationProperties(
+            return new SearchServiceNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -286,26 +286,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkSecurityPerimeterConfigurationProperties IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SearchServiceNetworkSecurityPerimeterConfigurationProperties IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkSecurityPerimeterConfigurationProperties(document.RootElement, options);
+                        return DeserializeSearchServiceNetworkSecurityPerimeterConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

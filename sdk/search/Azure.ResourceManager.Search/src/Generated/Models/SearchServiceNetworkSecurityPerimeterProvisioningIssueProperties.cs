@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-    public partial class ProvisioningIssueProperties
+    public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
-        internal ProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        internal SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            SuggestedAccessRules = new ChangeTrackingList<AccessRule>();
+            SuggestedAccessRules = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(IssueType? issueType, Severity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType, SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Severity = severity;
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Type of issue. </summary>
         [WirePath("issueType")]
-        public IssueType? IssueType { get; }
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssueType? IssueType { get; }
         /// <summary> Severity of the issue. </summary>
         [WirePath("severity")]
-        public Severity? Severity { get; }
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get; }
         /// <summary> Description of the issue. </summary>
         [WirePath("description")]
         public string Description { get; }
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.Search.Models
         public IReadOnlyList<ResourceIdentifier> SuggestedResourceIds { get; }
         /// <summary> Access rules that can be added to the network security profile (NSP) to remediate the issue. </summary>
         [WirePath("suggestedAccessRules")]
-        public IReadOnlyList<AccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<SearchServiceNetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get; }
     }
 }

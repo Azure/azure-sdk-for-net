@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationListResult()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>();
+            Value = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
         /// <param name="value"> Array of network security perimeter results. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationListResult(IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterConfigurationListResult(IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Array of network security perimeter results. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterConfigurationData> Value { get; }
+        public IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> Value { get; }
         /// <summary> The link used to get the next page of results. </summary>
         public Uri NextLink { get; }
     }

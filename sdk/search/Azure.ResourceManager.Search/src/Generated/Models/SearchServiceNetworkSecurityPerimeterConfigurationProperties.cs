@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Network security configuration properties. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationProperties
+    public partial class SearchServiceNetworkSecurityPerimeterConfigurationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterConfigurationProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterProvisioningIssue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of a network security perimeter configuration that is being created or updated. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about a network security perimeter (NSP). </param>
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceNetworkSecurityPerimeterConfigurationProperties(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter, SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation, SearchNetworkSecurityProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Provisioning state of a network security perimeter configuration that is being created or updated. </summary>
         [WirePath("provisioningState")]
-        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
+        public SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> List of provisioning issues, if any. </summary>
         [WirePath("provisioningIssues")]
-        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<SearchServiceNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> Information about a network security perimeter (NSP). </summary>
         [WirePath("networkSecurityPerimeter")]
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
+        public SearchServiceNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
         /// <summary> Information about resource association. </summary>
         [WirePath("resourceAssociation")]
-        public ResourceAssociation ResourceAssociation { get; set; }
+        public SearchServiceNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get; set; }
         /// <summary> Network security perimeter configuration profile. </summary>
         [WirePath("profile")]
-        public NetworkSecurityProfile Profile { get; set; }
+        public SearchNetworkSecurityProfile Profile { get; set; }
     }
 }

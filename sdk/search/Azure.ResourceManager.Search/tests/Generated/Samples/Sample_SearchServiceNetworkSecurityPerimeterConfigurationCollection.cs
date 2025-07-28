@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Search.Samples
 {
-    public partial class Sample_NetworkSecurityPerimeterConfigurationCollection
+    public partial class Sample_SearchServiceNetworkSecurityPerimeterConfigurationCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Search.Samples
             ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
-            // get the collection of this NetworkSecurityPerimeterConfigurationResource
-            NetworkSecurityPerimeterConfigurationCollection collection = searchService.GetNetworkSecurityPerimeterConfigurations();
+            // get the collection of this SearchServiceNetworkSecurityPerimeterConfigurationResource
+            SearchServiceNetworkSecurityPerimeterConfigurationCollection collection = searchService.GetSearchServiceNetworkSecurityPerimeterConfigurations();
 
             // invoke the operation
             string nspConfigName = "00000001-2222-3333-4444-111144444444.assoc1";
-            NetworkSecurityPerimeterConfigurationResource result = await collection.GetAsync(nspConfigName);
+            SearchServiceNetworkSecurityPerimeterConfigurationResource result = await collection.GetAsync(nspConfigName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetworkSecurityPerimeterConfigurationData resourceData = result.Data;
+            SearchServiceNetworkSecurityPerimeterConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Search.Samples
             ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
-            // get the collection of this NetworkSecurityPerimeterConfigurationResource
-            NetworkSecurityPerimeterConfigurationCollection collection = searchService.GetNetworkSecurityPerimeterConfigurations();
+            // get the collection of this SearchServiceNetworkSecurityPerimeterConfigurationResource
+            SearchServiceNetworkSecurityPerimeterConfigurationCollection collection = searchService.GetSearchServiceNetworkSecurityPerimeterConfigurations();
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkSecurityPerimeterConfigurationResource item in collection.GetAllAsync())
+            await foreach (SearchServiceNetworkSecurityPerimeterConfigurationResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkSecurityPerimeterConfigurationData resourceData = item.Data;
+                SearchServiceNetworkSecurityPerimeterConfigurationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Search.Samples
             ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
-            // get the collection of this NetworkSecurityPerimeterConfigurationResource
-            NetworkSecurityPerimeterConfigurationCollection collection = searchService.GetNetworkSecurityPerimeterConfigurations();
+            // get the collection of this SearchServiceNetworkSecurityPerimeterConfigurationResource
+            SearchServiceNetworkSecurityPerimeterConfigurationCollection collection = searchService.GetSearchServiceNetworkSecurityPerimeterConfigurations();
 
             // invoke the operation
             string nspConfigName = "00000001-2222-3333-4444-111144444444.assoc1";
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.Search.Samples
             ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
             SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
 
-            // get the collection of this NetworkSecurityPerimeterConfigurationResource
-            NetworkSecurityPerimeterConfigurationCollection collection = searchService.GetNetworkSecurityPerimeterConfigurations();
+            // get the collection of this SearchServiceNetworkSecurityPerimeterConfigurationResource
+            SearchServiceNetworkSecurityPerimeterConfigurationCollection collection = searchService.GetSearchServiceNetworkSecurityPerimeterConfigurations();
 
             // invoke the operation
             string nspConfigName = "00000001-2222-3333-4444-111144444444.assoc1";
-            NullableResponse<NetworkSecurityPerimeterConfigurationResource> response = await collection.GetIfExistsAsync(nspConfigName);
-            NetworkSecurityPerimeterConfigurationResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SearchServiceNetworkSecurityPerimeterConfigurationResource> response = await collection.GetIfExistsAsync(nspConfigName);
+            SearchServiceNetworkSecurityPerimeterConfigurationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Search.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetworkSecurityPerimeterConfigurationData resourceData = result.Data;
+                SearchServiceNetworkSecurityPerimeterConfigurationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -14,10 +14,10 @@ using Azure.ResourceManager.Search.Models;
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
-    /// A class representing the NetworkSecurityPerimeterConfiguration data model.
+    /// A class representing the SearchServiceNetworkSecurityPerimeterConfiguration data model.
     /// Network security perimeter (NSP) configuration resource
     /// </summary>
-    public partial class NetworkSecurityPerimeterConfigurationData : ResourceData
+    public partial class SearchServiceNetworkSecurityPerimeterConfigurationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationData"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Network security configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SearchServiceNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SearchServiceNetworkSecurityPerimeterConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Network security configuration properties. </summary>
         [WirePath("properties")]
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
+        public SearchServiceNetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

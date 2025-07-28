@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Network security perimeter configuration profile. </summary>
-    public partial class NetworkSecurityProfile
+    public partial class SearchNetworkSecurityProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
-        public NetworkSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="SearchNetworkSecurityProfile"/>. </summary>
+        public SearchNetworkSecurityProfile()
         {
-            AccessRules = new ChangeTrackingList<AccessRule>();
+            AccessRules = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchNetworkSecurityProfile"/>. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<AccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchNetworkSecurityProfile(string name, int? accessRulesVersion, IList<SearchServiceNetworkSecurityPerimeterAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Search.Models
         public int? AccessRulesVersion { get; set; }
         /// <summary> List of Access Rules. </summary>
         [WirePath("accessRules")]
-        public IList<AccessRule> AccessRules { get; }
+        public IList<SearchServiceNetworkSecurityPerimeterAccessRule> AccessRules { get; }
         /// <summary> Current diagnostic settings version. </summary>
         [WirePath("diagnosticSettingsVersion")]
         public int? DiagnosticSettingsVersion { get; set; }

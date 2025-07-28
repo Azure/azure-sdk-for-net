@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkSecurityPerimeterConfigurationResource"/> and their operations.
-    /// Each <see cref="NetworkSecurityPerimeterConfigurationResource"/> in the collection will belong to the same instance of <see cref="SearchServiceResource"/>.
-    /// To get a <see cref="NetworkSecurityPerimeterConfigurationCollection"/> instance call the GetNetworkSecurityPerimeterConfigurations method from an instance of <see cref="SearchServiceResource"/>.
+    /// A class representing a collection of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> and their operations.
+    /// Each <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> in the collection will belong to the same instance of <see cref="SearchServiceResource"/>.
+    /// To get a <see cref="SearchServiceNetworkSecurityPerimeterConfigurationCollection"/> instance call the GetSearchServiceNetworkSecurityPerimeterConfigurations method from an instance of <see cref="SearchServiceResource"/>.
     /// </summary>
-    public partial class NetworkSecurityPerimeterConfigurationCollection : ArmCollection, IEnumerable<NetworkSecurityPerimeterConfigurationResource>, IAsyncEnumerable<NetworkSecurityPerimeterConfigurationResource>
+    public partial class SearchServiceNetworkSecurityPerimeterConfigurationCollection : ArmCollection, IEnumerable<SearchServiceNetworkSecurityPerimeterConfigurationResource>, IAsyncEnumerable<SearchServiceNetworkSecurityPerimeterConfigurationResource>
     {
-        private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationClientDiagnostics;
-        private readonly NetworkSecurityPerimeterConfigurationsRestOperations _networkSecurityPerimeterConfigurationRestClient;
+        private readonly ClientDiagnostics _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics;
+        private readonly NetworkSecurityPerimeterConfigurationsRestOperations _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterConfigurationCollection"/> class for mocking. </summary>
-        protected NetworkSecurityPerimeterConfigurationCollection()
+        /// <summary> Initializes a new instance of the <see cref="SearchServiceNetworkSecurityPerimeterConfigurationCollection"/> class for mocking. </summary>
+        protected SearchServiceNetworkSecurityPerimeterConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SearchServiceNetworkSecurityPerimeterConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal NetworkSecurityPerimeterConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SearchServiceNetworkSecurityPerimeterConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkSecurityPerimeterConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", NetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkSecurityPerimeterConfigurationResource.ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
-            _networkSecurityPerimeterConfigurationRestClient = new NetworkSecurityPerimeterConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterConfigurationApiVersion);
+            _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceNetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SearchServiceNetworkSecurityPerimeterConfigurationResource.ResourceType, out string searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsApiVersion);
+            _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetAsync(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceNetworkSecurityPerimeterConfigurationResource>> GetAsync(string nspConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nspConfigName, nameof(nspConfigName));
 
-            using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.Get");
+            using var scope = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("SearchServiceNetworkSecurityPerimeterConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken).ConfigureAwait(false);
+                var response = await _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> Get(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceNetworkSecurityPerimeterConfigurationResource> Get(string nspConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nspConfigName, nameof(nspConfigName));
 
-            using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.Get");
+            using var scope = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("SearchServiceNetworkSecurityPerimeterConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken);
+                var response = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,17 +158,17 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SearchServiceNetworkSecurityPerimeterConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityPerimeterConfigurationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterConfigurationResource(Client, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e)), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "NetworkSecurityPerimeterConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, SearchServiceNetworkSecurityPerimeterConfigurationData.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationData(e)), _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "SearchServiceNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterConfigurationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SearchServiceNetworkSecurityPerimeterConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityPerimeterConfigurationRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterConfigurationResource(Client, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e)), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "NetworkSecurityPerimeterConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, SearchServiceNetworkSecurityPerimeterConfigurationData.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationData(e)), _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "SearchServiceNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.Search
         {
             Argument.AssertNotNullOrEmpty(nspConfigName, nameof(nspConfigName));
 
-            using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.Exists");
+            using var scope = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("SearchServiceNetworkSecurityPerimeterConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.Search
         {
             Argument.AssertNotNullOrEmpty(nspConfigName, nameof(nspConfigName));
 
-            using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.Exists");
+            using var scope = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("SearchServiceNetworkSecurityPerimeterConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken);
+                var response = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,18 +312,18 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
-        public virtual async Task<NullableResponse<NetworkSecurityPerimeterConfigurationResource>> GetIfExistsAsync(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SearchServiceNetworkSecurityPerimeterConfigurationResource>> GetIfExistsAsync(string nspConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nspConfigName, nameof(nspConfigName));
 
-            using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.GetIfExists");
+            using var scope = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("SearchServiceNetworkSecurityPerimeterConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<NetworkSecurityPerimeterConfigurationResource>(response.GetRawResponse());
-                return Response.FromValue(new NetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SearchServiceNetworkSecurityPerimeterConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,18 +357,18 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
-        public virtual NullableResponse<NetworkSecurityPerimeterConfigurationResource> GetIfExists(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SearchServiceNetworkSecurityPerimeterConfigurationResource> GetIfExists(string nspConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nspConfigName, nameof(nspConfigName));
 
-            using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.GetIfExists");
+            using var scope = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("SearchServiceNetworkSecurityPerimeterConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken);
+                var response = _searchServiceNetworkSecurityPerimeterConfigurationNetworkSecurityPerimeterConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nspConfigName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<NetworkSecurityPerimeterConfigurationResource>(response.GetRawResponse());
-                return Response.FromValue(new NetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SearchServiceNetworkSecurityPerimeterConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new SearchServiceNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        IEnumerator<NetworkSecurityPerimeterConfigurationResource> IEnumerable<NetworkSecurityPerimeterConfigurationResource>.GetEnumerator()
+        IEnumerator<SearchServiceNetworkSecurityPerimeterConfigurationResource> IEnumerable<SearchServiceNetworkSecurityPerimeterConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Search
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<NetworkSecurityPerimeterConfigurationResource> IAsyncEnumerable<NetworkSecurityPerimeterConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SearchServiceNetworkSecurityPerimeterConfigurationResource> IAsyncEnumerable<SearchServiceNetworkSecurityPerimeterConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
         /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, UpgradeAvailable? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradedOn = null)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, SearchServiceUpgradeAvailable? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradedOn = null)
         {
             tags ??= new Dictionary<string, string>();
             dataExfiltrationProtections ??= new List<SearchDataExfiltrationProtection>();
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
         /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, UpgradeAvailable? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradedOn = null)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchServiceSkuName? searchSkuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, SearchServiceComputeType? computeType = null, SearchServicePublicInternetAccess? publicInternetAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, SearchServiceNetworkRuleSet networkRuleSet = null, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null, ETag? eTag = null, SearchServiceUpgradeAvailable? isUpgradeAvailable = null, DateTimeOffset? serviceUpgradedOn = null)
         {
             tags ??= new Dictionary<string, string>();
             dataExfiltrationProtections ??= new List<SearchDataExfiltrationProtection>();
@@ -315,16 +315,16 @@ namespace Azure.ResourceManager.Search.Models
             return new QuotaUsageResultName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Search.NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Search.SearchServiceNetworkSecurityPerimeterConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Network security configuration properties. </param>
-        /// <returns> A new <see cref="Search.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterConfigurationProperties properties = null)
+        /// <returns> A new <see cref="Search.SearchServiceNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterConfigurationData SearchServiceNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SearchServiceNetworkSecurityPerimeterConfigurationProperties properties = null)
         {
-            return new NetworkSecurityPerimeterConfigurationData(
+            return new SearchServiceNetworkSecurityPerimeterConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -333,18 +333,18 @@ namespace Azure.ResourceManager.Search.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of a network security perimeter configuration that is being created or updated. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about a network security perimeter (NSP). </param>
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Network security perimeter configuration profile. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, ResourceAssociation resourceAssociation = null, NetworkSecurityProfile profile = null)
+        /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterConfigurationProperties SearchServiceNetworkSecurityPerimeterConfigurationProperties(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter = null, SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation = null, SearchNetworkSecurityProfile profile = null)
         {
-            provisioningIssues ??= new List<ProvisioningIssue>();
+            provisioningIssues ??= new List<SearchServiceNetworkSecurityPerimeterProvisioningIssue>();
 
-            return new NetworkSecurityPerimeterConfigurationProperties(
+            return new SearchServiceNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
                 provisioningIssues?.ToList(),
                 networkSecurityPerimeter,
@@ -353,28 +353,28 @@ namespace Azure.ResourceManager.Search.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = null, ProvisioningIssueProperties properties = null)
+        /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterProvisioningIssue SearchServiceNetworkSecurityPerimeterProvisioningIssue(string name = null, SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties properties = null)
         {
-            return new ProvisioningIssue(name, properties, serializedAdditionalRawData: null);
+            return new SearchServiceNetworkSecurityPerimeterProvisioningIssue(name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = null, Severity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<AccessRule> suggestedAccessRules = null)
+        /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = null, SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = null)
         {
             suggestedResourceIds ??= new List<ResourceIdentifier>();
-            suggestedAccessRules ??= new List<AccessRule>();
+            suggestedAccessRules ??= new List<SearchServiceNetworkSecurityPerimeterAccessRule>();
 
-            return new ProvisioningIssueProperties(
+            return new SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,

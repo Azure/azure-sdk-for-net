@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class AccessRule : IUtf8JsonSerializable, IJsonModel<AccessRule>
+    public partial class SearchServiceNetworkSecurityPerimeterAccessRule : IUtf8JsonSerializable, IJsonModel<SearchServiceNetworkSecurityPerimeterAccessRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceNetworkSecurityPerimeterAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceNetworkSecurityPerimeterAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterAccessRule)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        AccessRule IJsonModel<AccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchServiceNetworkSecurityPerimeterAccessRule IJsonModel<SearchServiceNetworkSecurityPerimeterAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessRule(document.RootElement, options);
+            return DeserializeSearchServiceNetworkSecurityPerimeterAccessRule(document.RootElement, options);
         }
 
-        internal static AccessRule DeserializeAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SearchServiceNetworkSecurityPerimeterAccessRule DeserializeSearchServiceNetworkSecurityPerimeterAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             string name = default;
-            AccessRuleProperties properties = default;
+            SearchServiceNetworkSecurityPerimeterAccessRuleProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    properties = AccessRuleProperties.DeserializeAccessRuleProperties(property.Value, options);
+                    properties = SearchServiceNetworkSecurityPerimeterAccessRuleProperties.DeserializeSearchServiceNetworkSecurityPerimeterAccessRuleProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessRule(name, properties, serializedAdditionalRawData);
+            return new SearchServiceNetworkSecurityPerimeterAccessRule(name, properties, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AccessRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -175,26 +175,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccessRule IPersistableModel<AccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SearchServiceNetworkSecurityPerimeterAccessRule IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAccessRule(document.RootElement, options);
+                        return DeserializeSearchServiceNetworkSecurityPerimeterAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceNetworkSecurityPerimeterAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

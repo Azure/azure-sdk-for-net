@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class AccessRule
+    public partial class SearchServiceNetworkSecurityPerimeterAccessRule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        public AccessRule()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterAccessRule"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of Access Rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceNetworkSecurityPerimeterAccessRule(string name, SearchServiceNetworkSecurityPerimeterAccessRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.Search.Models
         public string Name { get; set; }
         /// <summary> Properties of Access Rule. </summary>
         [WirePath("properties")]
-        public AccessRuleProperties Properties { get; set; }
+        public SearchServiceNetworkSecurityPerimeterAccessRuleProperties Properties { get; set; }
     }
 }

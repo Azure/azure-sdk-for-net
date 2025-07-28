@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Search
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
-            UpgradeAvailable? upgradeAvailable = default;
+            SearchServiceUpgradeAvailable? upgradeAvailable = default;
             DateTimeOffset? serviceUpgradedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            upgradeAvailable = new UpgradeAvailable(property0.Value.GetString());
+                            upgradeAvailable = new SearchServiceUpgradeAvailable(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serviceUpgradedAt"u8))

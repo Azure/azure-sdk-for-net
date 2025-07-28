@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class AccessRuleProperties
+    public partial class SearchServiceNetworkSecurityPerimeterAccessRuleProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRuleProperties"/>. </summary>
-        public AccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<WritableSubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRuleProperties(AccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceNetworkSecurityPerimeterAccessRuleProperties(SearchServiceNetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<WritableSubResource> subscriptions, IList<SearchServiceNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Direction of Access Rule. </summary>
         [WirePath("direction")]
-        public AccessRuleDirection? Direction { get; set; }
+        public SearchServiceNetworkSecurityPerimeterAccessRuleDirection? Direction { get; set; }
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Search.Models
         public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Network security perimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]
-        public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IList<SearchServiceNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
         /// <summary> Fully qualified domain names (FQDN) for outbound rules. </summary>
         [WirePath("fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
