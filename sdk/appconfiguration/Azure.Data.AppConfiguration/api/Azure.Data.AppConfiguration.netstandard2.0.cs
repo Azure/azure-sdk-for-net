@@ -19,17 +19,12 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSetting))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.ConfigurationSnapshot))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SecretReferenceConfigurationSetting))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SettingSelector))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Data.AppConfiguration.SnapshotSelector))]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        public AzureDataAppConfigurationContext() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
+        internal AzureDataAppConfigurationContext() { }
+        public static Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class ConfigurationClient
     {
@@ -214,6 +209,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus left, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.ConfigurationSnapshotStatus (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus left, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -286,6 +282,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.SettingLabelFields (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.SettingLabelFields? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -354,6 +351,7 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Data.AppConfiguration.SnapshotFields left, Azure.Data.AppConfiguration.SnapshotFields right) { throw null; }
         public static implicit operator Azure.Data.AppConfiguration.SnapshotFields (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.SnapshotFields? (string value) { throw null; }
         public static bool operator !=(Azure.Data.AppConfiguration.SnapshotFields left, Azure.Data.AppConfiguration.SnapshotFields right) { throw null; }
         public override string ToString() { throw null; }
     }

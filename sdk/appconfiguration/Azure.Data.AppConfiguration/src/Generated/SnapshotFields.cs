@@ -73,6 +73,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value"> The value. </param>
         public static implicit operator SnapshotFields(string value) => new SnapshotFields(value);
 
+        /// <summary> Converts a string to a <see cref="SnapshotFields"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnapshotFields?(string value) => value == null ? null : new SnapshotFields(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnapshotFields other && Equals(other);

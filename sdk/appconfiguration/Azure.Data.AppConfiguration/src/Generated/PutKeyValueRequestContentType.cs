@@ -56,6 +56,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value"> The value. </param>
         public static implicit operator PutKeyValueRequestContentType(string value) => new PutKeyValueRequestContentType(value);
 
+        /// <summary> Converts a string to a <see cref="PutKeyValueRequestContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PutKeyValueRequestContentType?(string value) => value == null ? null : new PutKeyValueRequestContentType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PutKeyValueRequestContentType other && Equals(other);

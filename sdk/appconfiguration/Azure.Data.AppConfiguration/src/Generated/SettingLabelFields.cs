@@ -44,6 +44,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value"> The value. </param>
         public static implicit operator SettingLabelFields(string value) => new SettingLabelFields(value);
 
+        /// <summary> Converts a string to a <see cref="SettingLabelFields"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SettingLabelFields?(string value) => value == null ? null : new SettingLabelFields(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SettingLabelFields other && Equals(other);

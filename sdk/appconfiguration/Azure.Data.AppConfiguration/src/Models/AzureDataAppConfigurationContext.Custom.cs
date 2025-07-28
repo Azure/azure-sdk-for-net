@@ -13,10 +13,5 @@ namespace Azure.Data.AppConfiguration
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {
-        private AzureDataAppConfigurationContext _azureDataAppConfigurationContext;
-
-        /// <summary> Gets the default instance </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public AzureDataAppConfigurationContext Default => _azureDataAppConfigurationContext ??= new();
     }
 }
