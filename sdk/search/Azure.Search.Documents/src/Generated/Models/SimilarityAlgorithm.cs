@@ -50,11 +50,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SimilarityAlgorithm"/>. </summary>
-        public SimilarityAlgorithm()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SimilarityAlgorithm"/>. </summary>
         /// <param name="oDataType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimilarityAlgorithm(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData)

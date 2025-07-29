@@ -50,11 +50,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
-        public DataChangeDetectionPolicy()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataChangeDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
