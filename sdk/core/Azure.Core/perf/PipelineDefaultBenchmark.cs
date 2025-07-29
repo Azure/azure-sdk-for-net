@@ -36,7 +36,7 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
-        public async Task<Response> DefaultPipeline()
+        public async Task<Response> CeateAndSendWithDefaultPipeline()
         {
             var message = _pipeline.CreateMessage();
             message.Request.Uri.Reset(new Uri("https://www.example.com"));

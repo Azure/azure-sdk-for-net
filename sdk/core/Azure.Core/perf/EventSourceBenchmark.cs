@@ -21,6 +21,7 @@ namespace Azure.Core.Perf
         private static readonly string[] AllowedQueryParameters = { "api-version" };
         private static readonly HttpMessageSanitizer Sanitizer = new(AllowedHeaders, AllowedQueryParameters);
 
+        private RawRequestUriBuilder _uri;
         private string _sanitizedUri;
         private byte[] _headersBytes;
 
@@ -32,15 +33,15 @@ namespace Azure.Core.Perf
         public void SetUp()
         {
             // Build URI and message
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(UriString, true);
+            _uri = new RawRequestUriBuilder();
+            _uri.AppendRaw(UriString, true);
 
             var message = new HttpRequestMessage();
             message.Headers.TryAddWithoutValidation("Date", "10/14/2020");
             message.Headers.TryAddWithoutValidation("Custom-Header", "Value");
             message.Headers.TryAddWithoutValidation("Header-To-Skip", "Skipped Value");
 
-            _sanitizedUri = Sanitizer.SanitizeUrl(uri.ToString());
+            _sanitizedUri = Sanitizer.SanitizeUrl(_uri.ToString());
             _headersBytes = FormatHeaders(message);
 
             _sourceListener = new AzureEventSourceListener(_ => { }, EventLevel.LogAlways);
@@ -56,19 +57,19 @@ namespace Azure.Core.Perf
         }
 
         // Benchmarks
-        [Benchmark]
-        public void OldImplementation()
+        [Benchmark(Description = "Old implementation, includes reformatting")]
+        public void OldImplementation_CallFormatting()
         {
-            _eventSource.RequestOld(_sanitizedUri, _iteration++, _iteration, _headersBytes);
+            _eventSource.RequestOld(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, _headersBytes);
         }
 
-        [Benchmark]
-        public void NewImplementation()
+        [Benchmark(Description = "New implementation, includes reformatting")]
+        public void NewImplementation_CallFormatting()
         {
-            _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
+            _eventSource.RequestNew(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, _headersBytes);
         }
 
-        [Benchmark]
+        [Benchmark(Description = "New implementation, no reformatting")]
         public void NewImplementation_AfterFormatting()
         {
             _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);

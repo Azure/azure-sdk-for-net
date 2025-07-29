@@ -3,13 +3,14 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Perf;
 
 /// <summary>
 /// Custom event source for Azure Core logging.
 /// </summary>
-public class CustomEventSource : EventSource
+internal class CustomEventSource : AzureEventSource
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="CustomEventSource"/> class.
@@ -47,11 +48,10 @@ public class CustomEventSource : EventSource
     /// </summary>
     /// <param name="eventId">The event ID.</param>
     /// <param name="arg0">The string argument.</param>
-    /// <param name="intParam">The integer parameter.</param>
-    /// <param name="doubleParam">The double parameter.</param>
-    /// <param name="bytesParam">The byte array parameter.</param>
-    [NonEvent]
-    private unsafe void WriteEventNew(int eventId, string arg0, int intParam, double doubleParam, byte[] bytesParam)
+    /// <param name="arg1">The integer parameter.</param>
+    /// <param name="arg2">The double parameter.</param>
+    /// <param name="arg3">The byte array parameter.</param>
+    private unsafe void WriteEventNew(int eventId, string arg0, int arg1, double arg2, byte[] arg3)
     {
         if (!IsEnabled())
         {
@@ -64,13 +64,13 @@ public class CustomEventSource : EventSource
             EventData* data = stackalloc EventData[5];
             data[0].DataPointer = (IntPtr)arg0Ptr;
             data[0].Size = (arg0.Length + 1) * 2;
-            data[1].DataPointer = (IntPtr)(&intParam);
+            data[1].DataPointer = (IntPtr)(&arg1);
             data[1].Size = 4;
-            data[2].DataPointer = (IntPtr)(&doubleParam);
+            data[2].DataPointer = (IntPtr)(&arg2);
             data[2].Size = 8;
 
-            var blobSize = bytesParam.Length;
-            fixed (byte* blob = &bytesParam[0])
+            var blobSize = arg3.Length;
+            fixed (byte* blob = &arg3[0])
             {
                 data[3].DataPointer = (IntPtr)(&blobSize);
                 data[3].Size = 4;

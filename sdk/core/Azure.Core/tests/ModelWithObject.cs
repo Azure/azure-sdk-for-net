@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Tests
 {
-    public class ModelWithObject : IUtf8JsonSerializable
+    internal class ModelWithObject : IUtf8JsonSerializable
     {
         public string A { get; set; }
         public object Properties { get; set; }
@@ -36,7 +36,7 @@ namespace Azure.Core.Tests
             writer.WriteEndObject();
         }
 
-        public static ModelWithObject DeserializeModelWithObject(JsonElement element)
+        internal static ModelWithObject DeserializeModelWithObject(JsonElement element)
         {
             Optional<string> a = default;
             Optional<object> properties = default;
