@@ -320,6 +320,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var (methodKind, method) in _resourceServiceMethods)
             {
+                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
                 if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
                 {
                     continue;

@@ -12,12 +12,7 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class OperationMethodParameterHelper
     {
-        /// <summary>
-        /// Gets the operation method parameters for a service method.
-        /// </summary>
-        /// <param name="serviceMethod">The input service method.</param>
-        /// <param name="contextualPath">The contextual path to check for contextual parameters.</param>
-        /// <returns>A list of parameters for the operation method.</returns>
+        // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath)

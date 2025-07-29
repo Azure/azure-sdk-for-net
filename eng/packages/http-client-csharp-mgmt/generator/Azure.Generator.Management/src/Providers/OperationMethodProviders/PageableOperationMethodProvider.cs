@@ -155,7 +155,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 ResourceClientProvider rcp => rcp,
                 ResourceCollectionClientProvider rccp => rccp.Resource, // Return the Resource property
-                _ => throw new InvalidOperationException($"Unexpected enclosing type: {_enclosingType.GetType()}")
+                _ => throw new InvalidOperationException($"Expected ResourceClientProvider or ResourceCollectionClientProvider, but got: {_enclosingType.GetType()}")
             };
         }
 

@@ -119,7 +119,7 @@ namespace Azure.Generator.Management.Providers
                 Description: $"Converts the pages from {sourceTypeName} to {pageUType.Name}.",
                 Modifiers: modifiers,
                 ReturnType: returnType,
-                ReturnDescription: null,
+                ReturnDescription: $"An enumerable of pages containing converted items of type {_uType.Name}.",
                 Parameters: new[] { continuationTokenParam, pageSizeHintParam });
 
             // Build the method body using foreach and yield return pattern
@@ -157,9 +157,7 @@ namespace Azure.Generator.Management.Providers
                             pageVar.Invoke("GetRawResponse", [])
                         ])));
 
-            var bodyStatements = new MethodBodyStatement[] { foreachStatement };
-
-            return new MethodProvider(signature, bodyStatements, this);
+            return new MethodProvider(signature, foreachStatement, this);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -189,9 +187,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription()
         {
-            return _isAsync
-                ? (FormattableString)$"A converter that can convert from type {_tType.Name} to type {_uType.Name} for AsyncPageable operations."
-                : (FormattableString)$"A converter that can convert from type {_tType.Name} to type {_uType.Name} for Pageable operations.";
+            return (FormattableString)$"A converter that can convert from type {_tType.Name} to type {_uType.Name} for {(_isAsync ? "Async" : "")}Pageable operations.";
         }
     }
 }
