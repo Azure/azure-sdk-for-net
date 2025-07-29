@@ -98,7 +98,7 @@ jobs:
         value: ${{ parameters.SDKType }}
 
       # Only run CG and codeql on internal build job
-      ${{ if and(eq(variables['System.TeamProject'], 'internal') }}:
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
         templateContext:
           sdl:
             componentgovernance:
