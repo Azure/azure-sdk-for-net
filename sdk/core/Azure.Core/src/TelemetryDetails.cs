@@ -94,7 +94,7 @@ namespace Azure.Core
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
-            return "azsdk-net-" + assemblyName;
+            return $"azsdk-net-{assemblyName}";
         }
 
         private static string GenerateUserAgentStringWithCustomRuntimeInfo(Assembly clientAssembly, string? applicationId, RuntimeInformationWrapper runtimeInformation)
