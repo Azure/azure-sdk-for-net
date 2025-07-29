@@ -323,7 +323,7 @@ extends:
           steps:
           - checkout: self
           - pwsh: |
-              git checkout $(branchName)
+              git switch $(branchName)
             displayName: 'Checkout PR branch $(branchName)'  
 
           - task: UseNode@1
