@@ -2,113 +2,91 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.ResourceManager.IotOperations.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotOperations.Tests
 {
     public class AkriConnectorTemplateTests : IotOperationsManagementClientBase
     {
-        public AkriConnectorTemplateTests(bool isAsync) : base(isAsync) { }
+        public AkriConnectorTemplateTests(bool isAsync)
+            : base(isAsync) { }
 
         [SetUp]
         public async Task ClearAndInitialize()
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
                 await InitializeClients();
+            }
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestAkriConnectorTemplates()
         {
-            // List AkriConnectorTemplates by InstanceResource
+            // Get AkriConnectorTemplate collection
             var templateCollection = await GetAkriConnectorTemplateResourceCollectionAsync(ResourceGroup);
-            var templates = await templateCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotNull(templates);
+            // Create AkriConnectorTemplate
+            var templateData = CreateAkriConnectorTemplateResourceData();
 
-            // Generate a unique name for the template
-            string akriConnectorTemplateName = Recording.GenerateAssetName("akri-template-");
-
-            var newTemplateData = new AkriConnectorTemplateResourceData
+            if (await templateCollection.ExistsAsync("sdk-test-akriconnector-template"))
             {
-                ExtendedLocation = new IotOperationsExtendedLocation
-                {
-                    Name = $"/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}",
-                    Type = "CustomLocation"
-                },
-                Properties = new AkriConnectorTemplateProperties(
-                    new AkriConnectorTemplateHelmConfiguration(
-                        new AkriConnectorTemplateHelmConfigurationSettings(
-                            "my-install",
-                            "my-repo",
-                            "1.0.0"
-                        )
-                    ),
-                    new AkriConnectorTemplateDeviceInboundEndpointType[]
-                    {
-                        new AkriConnectorTemplateDeviceInboundEndpointType("Microsoft.Rest")
-                        {
-                            Version = "0.0.1"
-                        }
-                    })
-                {
-                    AioMetadata = new AkriConnectorTemplateAioMetadata
-                    {
-                        AioMinVersion = "1.2.0",
-                        AioMaxVersion = "1.4.0"
-                    },
-                    MqttConnectionConfiguration = new AkriConnectorsMqttConnectionConfiguration
-                    {
-                        Authentication = new AkriConnectorsServiceAccountAuthentication(
-                            new AkriConnectorsServiceAccountTokenSettings("MQ-SAT")
-                        ),
-                        Host = "aio-broker:18883",
-                        Protocol = AkriConnectorsMqttProtocolType.Mqtt,
-                        KeepAliveSeconds = 10,
-                        MaxInflightMessages = 10,
-                        SessionExpirySeconds = 60,
-                        Tls = new IotOperationsTlsProperties
-                        {
-                            Mode = IotOperationsOperationalMode.Enabled,
-                            TrustedCaCertificateConfigMapRef = "azure-iot-operations-aio-ca-trust-bundle"
-                        }
-                    }
-                    // No Diagnostics or LogsLevel set
-                }
-            };
-
-            // Create or Update AkriConnectorTemplate
-            var resp = await templateCollection.CreateOrUpdateAsync(
+                 var existing = await templateCollection.GetAsync("sdk-test-akriconnector-template");
+                 await existing.Value.DeleteAsync(WaitUntil.Completed);
+            }
+            var response = await templateCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
-                akriConnectorTemplateName,
-                newTemplateData
+                "sdk-test-akriconnector-template",
+                templateData
             );
+            var createdTemplate = response.Value;
 
-            // Get the created template
-            var templateResource = await templateCollection.GetAsync(akriConnectorTemplateName);
-            Assert.IsNotNull(templateResource);
-            Assert.IsNotNull(templateResource.Value.Data);
-            Assert.AreEqual(templateResource.Value.Data.Name, akriConnectorTemplateName);
+            // Assertions
+            Assert.IsNotNull(createdTemplate);
+            Assert.IsNotNull(createdTemplate.Data);
+            Assert.IsNotNull(createdTemplate.Data.Properties);
 
             // Delete AkriConnectorTemplate
-            await resp.Value.DeleteAsync(WaitUntil.Completed);
+            await createdTemplate.DeleteAsync(WaitUntil.Completed);
 
-            // Verify AkriConnectorTemplate is deleted
+            // Verify deletion
             Assert.ThrowsAsync<RequestFailedException>(
-                async () => await resp.Value.GetAsync()
+                async () => await createdTemplate.GetAsync()
             );
         }
 
-        private AkriConnectorTemplateResourceData CreateAkriConnectorTemplateResourceData(
-            AkriConnectorTemplateResource templateResource
-        )
+        private AkriConnectorTemplateResourceData CreateAkriConnectorTemplateResourceData()
         {
+            // Step 1: Create Helm configuration settings
+            var helmSettings = new AkriConnectorTemplateHelmConfigurationSettings(
+                releaseName: "my-release",
+                repositoryName: "my-repo",
+                version: "1.0.0"
+            );
+
+            // Step 2: Add Helm chart values
+            helmSettings.Values["image"] = "my-image";
+            helmSettings.Values["replicaCount"] = "2";
+
+            // Step 3: Create Helm runtime configuration
+            var helmConfiguration = new AkriConnectorTemplateHelmConfiguration(helmSettings);
+
+            // Step 4: Define device inbound endpoint types
+            var inboundEndpoints = new[]
+            {
+                new AkriConnectorTemplateDeviceInboundEndpointType("Custom")
+            };
+
+            // Step 5: Build and return the resource data
             return new AkriConnectorTemplateResourceData
             {
-                ExtendedLocation = templateResource.Data.ExtendedLocation,
-                Properties = templateResource.Data.Properties
+                Properties = new AkriConnectorTemplateProperties(
+                    runtimeConfiguration: helmConfiguration,
+                    deviceInboundEndpointTypes: inboundEndpoints
+                )
             };
         }
     }

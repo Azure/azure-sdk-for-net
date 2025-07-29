@@ -1117,6 +1117,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public AkriConnectorTemplateProperties(Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeConfiguration runtimeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDeviceInboundEndpointType> deviceInboundEndpointTypes) { }
         public Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateAioMetadata AioMetadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateDeviceInboundEndpointType> DeviceInboundEndpointTypes { get { throw null; } }
+        public string LogsLevel { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.AkriConnectorsMqttConnectionConfiguration MqttConnectionConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.IotOperations.Models.AkriConnectorTemplateRuntimeConfiguration RuntimeConfiguration { get { throw null; } set { } }
