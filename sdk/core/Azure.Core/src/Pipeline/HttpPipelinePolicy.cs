@@ -56,5 +56,12 @@ namespace Azure.Core.Pipeline
             // Default implementation does nothing.
             // This method can be overridden by derived classes to update their internal state based on the provided options.
         }
+
+        /// <summary>
+        /// Gets or sets the owning <see cref="HttpPipeline"/> for this policy.
+        /// This property is used to access the pipeline that this policy belongs to, allowing the policy
+        /// to interact with the pipeline's configuration and other policies.
+        /// </summary>
+        public HttpPipeline? OwningPipeline { get; internal set; }
     }
 }

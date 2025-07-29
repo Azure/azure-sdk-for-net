@@ -27,11 +27,6 @@ namespace Azure.Core.Pipeline
         public HttpPipelineTransport Transport => _transportPolicy.Transport;
 
         /// <summary>
-        /// A factory function for Updating the transport when <see cref="UpdateTransport"/> is called.
-        /// </summary>
-        public Func<HttpPipelineTransportOptions, HttpPipelineTransport>? TransportFactory { get; set; }
-
-        /// <summary>
         /// Indicates whether or not the pipeline was created using its internal constructor.
         /// If it was, we know the indices where we can add per-request policies at positions
         /// <see cref="HttpPipelinePosition.PerCall"/> and <see cref="HttpPipelinePosition.PerRetry"/>.
@@ -69,6 +64,11 @@ namespace Azure.Core.Pipeline
             policies.CopyTo(all, 0);
 
             _pipeline = all;
+            for (int i = 0; i < _pipeline.Length; i++)
+            {
+                HttpPipelinePolicy policy = _pipeline.Span[i];
+                policy.OwningPipeline = this;
+            }
         }
 
         internal HttpPipeline(
@@ -88,6 +88,11 @@ namespace Azure.Core.Pipeline
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
             _internallyConstructed = true;
+            for (int i = 0; i < _pipeline.Length; i++)
+            {
+                HttpPipelinePolicy policy = _pipeline.Span[i];
+                policy.OwningPipeline = this;
+            }
         }
 
         /// <summary>
@@ -260,22 +265,15 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// Updates the transport used by this pipeline in a thread-safe manner.
-        /// Update only occurs if this pipeline was constructed with a pipeline factory.
+        /// Updates the policy at the specified position in the pipeline.
         /// </summary>
-        /// <param name="transportOptions">The options to customize the <see cref="HttpPipelineTransport"/>.</param>
-        internal void UpdateTransport(HttpPipelineTransportOptions transportOptions)
+        /// <param name="position">The position of the policy to update.</param>
+        /// <param name="options">The options to update the policy with.</param>
+        public void UpdatePolicy(HttpPipelineUpdatePosition position, object options)
         {
-            if (transportOptions == null)
-                throw new ArgumentNullException(nameof(transportOptions));
-
-            if (TransportFactory != null)
+            if (position == HttpPipelineUpdatePosition.Transport && options is HttpPipelineTransportOptions transportOptions)
             {
-                HttpPipelineTransport? newTransport = TransportFactory(transportOptions);
-                if (newTransport == null)
-                    throw new ArgumentNullException(nameof(newTransport));
-
-                _transportPolicy.UpdateTransport(newTransport);
+                _transportPolicy.Update(transportOptions);
             }
         }
 

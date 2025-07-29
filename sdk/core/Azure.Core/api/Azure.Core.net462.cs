@@ -536,6 +536,10 @@ namespace Azure.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
+    public enum HttpPipelineUpdatePosition
+    {
+        Transport = 0,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageProcessingContext
     {
@@ -1056,7 +1060,7 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
-        public System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpPipelineTransport>? TransportFactory { get { throw null; } set { } }
+        public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } }
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
@@ -1067,6 +1071,7 @@ namespace Azure.Core.Pipeline
         public System.Threading.Tasks.ValueTask SendAsync(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
         public Azure.Response SendRequest(Azure.Core.Request request, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Response> SendRequestAsync(Azure.Core.Request request, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public void UpdatePolicy(Azure.Core.HttpPipelineUpdatePosition position, object options) { }
     }
     public static partial class HttpPipelineBuilder
     {
@@ -1088,10 +1093,12 @@ namespace Azure.Core.Pipeline
     public abstract partial class HttpPipelinePolicy
     {
         protected HttpPipelinePolicy() { }
+        public Azure.Core.Pipeline.HttpPipeline? OwningPipeline { get { throw null; } }
         public abstract void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
         protected static void ProcessNext(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+        public virtual void Update(object options) { }
     }
     public abstract partial class HttpPipelineSynchronousPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
@@ -1114,6 +1121,7 @@ namespace Azure.Core.Pipeline
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public bool IsClientRedirectEnabled { get { throw null; } set { } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+        public System.Func<Azure.Core.Pipeline.HttpPipelineTransportOptions, Azure.Core.Pipeline.HttpPipelineTransport>? TransportFactory { get { throw null; } set { } }
     }
     public partial class PopTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {

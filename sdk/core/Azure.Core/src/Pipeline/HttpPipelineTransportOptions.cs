@@ -34,12 +34,17 @@ namespace Azure.Core.Pipeline
         /// <value></value>
         public IList<X509Certificate2> ClientCertificates { get; }
 
-         /// <summary>
+        /// <summary>
         /// Gets or sets a value that indicates whether the redirect policy should follow redirection responses.
         /// </summary>
         /// <value>
         /// <c>true</c> if the redirect policy should follow redirection responses; otherwise <c>false</c>. The default value is <c>false</c>.
         /// </value>
         public bool IsClientRedirectEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets a factory method to create the transport.
+        /// </summary>
+        public Func<HttpPipelineTransportOptions, HttpPipelineTransport>? TransportFactory { get; set; }
     }
 }

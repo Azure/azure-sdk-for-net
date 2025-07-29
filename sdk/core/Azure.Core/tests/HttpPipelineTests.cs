@@ -348,13 +348,12 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, [
                 new RetryPolicy(5)
             ], responseClassifier: new CustomResponseClassifier());
-            pipeline.TransportFactory = o => mockTransport2;
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("https://contoso.a.io"));
             // Update the transport while the request is being processed
-            pipeline.UpdateTransport(new HttpPipelineTransportOptions());
+            pipeline.UpdatePolicy(HttpPipelineUpdatePosition.Transport, new HttpPipelineTransportOptions() { TransportFactory = o => mockTransport2 });
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(2, response.Status);
@@ -370,14 +369,13 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(r =>
             {
                 // Update the transport while the request is being processed
-                pipeline.UpdateTransport(new HttpPipelineTransportOptions());
+                pipeline.UpdatePolicy(HttpPipelineUpdatePosition.Transport, new HttpPipelineTransportOptions() { TransportFactory = o => mockTransport2 });
                 return new MockResponse(500);
             });
 
             pipeline = new HttpPipeline(mockTransport, [
                 new RetryPolicy(5)
             ], responseClassifier: new CustomResponseClassifier());
-            pipeline.TransportFactory = o => mockTransport2;
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
@@ -391,7 +389,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task UpdatedTransportStillReturnsResponseFromInitialTransportAfterSend()
+        public async Task CanUpdateTransportWhileProcessingRequest()
         {
             HttpPipeline pipeline = null;
             var mockTransport2 = new MockTransport(
@@ -400,14 +398,13 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(r =>
             {
                 // Update the transport while the request is being processed
-                pipeline.UpdateTransport(new HttpPipelineTransportOptions());
+                pipeline.UpdatePolicy(HttpPipelineUpdatePosition.Transport, new HttpPipelineTransportOptions() { TransportFactory = o => mockTransport2 });
                 return new MockResponse(1);
             });
 
             pipeline = new HttpPipeline(mockTransport, [
                 new RetryPolicy(5)
             ], responseClassifier: new CustomResponseClassifier());
-            pipeline.TransportFactory = o => mockTransport2;
 
             Request request = pipeline.CreateRequest();
             request.Method = RequestMethod.Get;

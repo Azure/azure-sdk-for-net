@@ -229,7 +229,7 @@ namespace Azure.Core.Pipeline
             {
                 var transportOptions = new HttpPipelineTransportOptions();
                 transportOptions.ClientCertificates.Add(token.BindingCertificate);
-                _httpPipeline.UpdateTransport(transportOptions);
+                OwningPipeline?.UpdatePolicy(HttpPipelineUpdatePosition.Transport, transportOptions);
                 _currentBindingCertThumbprint = token.BindingCertificate.Thumbprint;
             }
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"{token.TokenType} {token.Token}");

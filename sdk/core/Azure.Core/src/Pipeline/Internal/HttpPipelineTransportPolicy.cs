@@ -52,9 +52,13 @@ namespace Azure.Core.Pipeline
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
 
-        public void UpdateTransport(HttpPipelineTransport newTransport)
+        public override void Update(object options)
         {
-            _transport = newTransport ?? throw new ArgumentNullException(nameof(newTransport));
+            if (options is HttpPipelineTransportOptions transportOptions)
+            {
+                var newTransport = transportOptions.TransportFactory?.Invoke(transportOptions);
+                _transport = newTransport ?? throw new ArgumentNullException(nameof(newTransport));
+            }
         }
     }
 }
