@@ -16,12 +16,11 @@ namespace Azure.Core.Perf
     [MemoryDiagnoser]
     public class DynamicObjectBenchmark
     {
-        private string _fileName;
         private JsonDocument _jsonDocument;
         private ModelWithBinaryData _modelWithBinaryData;
         private ModelWithObject _modelWithObject;
 
-        private static readonly string FileName = Path.Combine(
+        private static readonly string _fileName = Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "TestData",
             "JsonFormattedString.json");
@@ -29,7 +28,6 @@ namespace Azure.Core.Perf
         [GlobalSetup]
         public void SetUp()
         {
-            _fileName = FileName;
             using var fs = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             _jsonDocument = JsonDocument.Parse(fs);
 
