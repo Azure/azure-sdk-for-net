@@ -323,7 +323,7 @@ extends:
           steps:
           - checkout: self
           - pwsh: |
-              git fetch $(branchName)
+              git fetch origin $(branchName)
               git switch $(branchName)
             displayName: 'Checkout PR branch $(branchName)'  
 
