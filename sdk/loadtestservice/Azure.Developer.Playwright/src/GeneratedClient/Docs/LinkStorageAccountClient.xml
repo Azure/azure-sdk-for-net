@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="PUTAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call PUTAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+LinkStorageAccountClient client = new LinkStorageAccountClient(endpoint);
+
+Response response = await client.PUTAsync("<workspaceId>", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call PUTAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+LinkStorageAccountClient client = new LinkStorageAccountClient(endpoint);
+
+Response response = await client.PUTAsync("<workspaceId>", "<authorization>", "<xCorrelationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("linkedAt").ToString());
+Console.WriteLine(result.GetProperty("accountId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="PUT(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call PUT and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+LinkStorageAccountClient client = new LinkStorageAccountClient(endpoint);
+
+Response response = client.PUT("<workspaceId>", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call PUT with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+LinkStorageAccountClient client = new LinkStorageAccountClient(endpoint);
+
+Response response = client.PUT("<workspaceId>", "<authorization>", "<xCorrelationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("linkedAt").ToString());
+Console.WriteLine(result.GetProperty("accountId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

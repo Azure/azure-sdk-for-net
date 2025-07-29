@@ -83,4 +83,9 @@ internal class PlaywrightVersion : IPlaywrightVersion
         }
         return (major, minor);
     }
+
+    string IPlaywrightVersion.GetPlaywrightVersion()
+    {
+        return GetPlaywrightVersion();
+    }
 }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GETAsync(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GETAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = await client.GETAsync("<workspaceId>", "<storageAccountId>", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GETAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = await client.GETAsync("<workspaceId>", "<storageAccountId>", "<authorization>", "<xCorrelationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("linkedAt").ToString());
+Console.WriteLine(result.GetProperty("accountId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GET(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GET and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = client.GET("<workspaceId>", "<storageAccountId>", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GET with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = client.GET("<workspaceId>", "<storageAccountId>", "<authorization>", "<xCorrelationId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("linkedAt").ToString());
+Console.WriteLine(result.GetProperty("accountId").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,string,bool?,string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = await client.DeleteAsync("<workspaceId>", "<storageAccountId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = await client.DeleteAsync("<workspaceId>", "<storageAccountId>", isSoftDelete: true, authorization: "<authorization>", xCorrelationId: "<xCorrelationId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,string,bool?,string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = client.Delete("<workspaceId>", "<storageAccountId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+StorageAccountClient client = new StorageAccountClient(endpoint);
+
+Response response = client.Delete("<workspaceId>", "<storageAccountId>", isSoftDelete: true, authorization: "<authorization>", xCorrelationId: "<xCorrelationId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>
