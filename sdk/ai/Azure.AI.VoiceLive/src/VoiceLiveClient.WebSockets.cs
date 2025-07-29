@@ -131,7 +131,15 @@ namespace Azure.AI.VoiceLive
                 throw new ArgumentNullException(nameof(httpEndpoint));
             }
 
-            var scheme = httpEndpoint.Scheme == "https" ? "wss" : "ws";
+            var scheme = httpEndpoint.Scheme.ToLower() switch
+            {
+                "wss" => "wss",
+                "ws" => "ws",
+                "https" => "wss",
+                "http" => "ws",
+                _ => throw new ArgumentException($"Scheme {httpEndpoint.Scheme} is not supported."),
+            };
+
             var builder = new UriBuilder(httpEndpoint)
             {
                 Scheme = scheme
@@ -146,5 +154,5 @@ namespace Azure.AI.VoiceLive
             return builder.Uri;
         }
     }
-    #pragma warning restore AZC0015, AZC0107
+#pragma warning restore AZC0015, AZC0107
 }

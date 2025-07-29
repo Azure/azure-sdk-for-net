@@ -13811,7 +13811,7 @@
           "$id": "1025",
           "kind": "basic",
           "name": "force_models",
-          "accessibility": "public",
+          "accessibility": "internal",
           "apiVersions": [
             "2025-05-01-preview"
           ],
@@ -13819,7 +13819,7 @@
             "$id": "1026",
             "name": "force_models",
             "resourceName": "VoiceLive",
-            "accessibility": "public",
+            "accessibility": "internal",
             "parameters": [
               {
                 "$id": "1027",

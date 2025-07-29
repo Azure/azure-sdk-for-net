@@ -233,6 +233,26 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <summary>
+        /// Sends raw data to the service asynchronously.
+        /// </summary>
+        /// <param name="data">The data to send.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="data"/> is null.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task SendCommandAsync(RequestContent data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+            ThrowIfDisposed();
+
+            MemoryStream ms = new MemoryStream();
+            await data.WriteToAsync(ms, cancellationToken).ConfigureAwait(false);
+
+            ms.Seek(0, SeekOrigin.Begin);
+
+            await SendCommandAsync(BinaryData.FromStream(ms), cancellationToken).ConfigureAwait(false);
+        }
+
 #pragma warning disable AZC0107 // Client methods should return approved types
         /// <summary>
         /// Sends raw data to the service.

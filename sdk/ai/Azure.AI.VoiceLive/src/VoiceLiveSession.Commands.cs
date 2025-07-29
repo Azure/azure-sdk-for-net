@@ -156,7 +156,7 @@ namespace Azure.AI.VoiceLive
 
             VoiceLiveRequestSession requestSession = sessionOptions.ToRequestSession();
             VoiceLiveClientEventSessionUpdate updateCommand = new(requestSession);
-            BinaryData requestData = BinaryData.FromObjectAsJson(updateCommand);
+            var requestData = updateCommand.ToRequestContent();
             await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
         }
 
