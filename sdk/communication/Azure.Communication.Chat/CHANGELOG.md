@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.1 (2025-07-25)
+## 1.4.1 (2025-07-29)
 
 ### Other Changes
 - Added support for a new communication identifier `TeamsExtensionUserIdentifierModel`.
