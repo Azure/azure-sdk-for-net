@@ -67,7 +67,7 @@ namespace Azure.Core.Perf
         [Benchmark(Description = "New implementation, includes reformatting")]
         public void NewImplementation_CallFormatting()
         {
-            _eventSource.RequestNew(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, _headersBytes);
+            _eventSource.RequestNew(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, FormatHeaders());
         }
 
         [Benchmark(Description = "New implementation, no reformatting")]

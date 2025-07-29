@@ -91,11 +91,20 @@ namespace Azure.Core.Perf
         {
             var model = ModelWithBinaryData.DeserializeModelWithBinaryData(_jsonDocument.RootElement);
             var properties = model.Properties.ToObjectFromJson<Dictionary<string, object>>();
-            if (properties!["innerProperties"] is JsonElement innerElement && innerElement.ValueKind == JsonValueKind.Object)
+            if (properties == null)
+            {
+                throw new InvalidOperationException("Deserialized properties are null.");
+            }
+            if (properties.TryGetValue("innerProperties", out var innerPropertiesObj) &&
+                innerPropertiesObj is JsonElement innerElement &&
+               innerElement.ValueKind == JsonValueKind.Object)
             {
                 var innerProperties = JsonSerializer.Deserialize<Dictionary<string, object>>(innerElement.GetRawText());
-                // Now you can access innerA
-                var innerA = innerProperties!["a"] as string;
+                if (innerProperties != null && innerProperties.TryGetValue("a", out var innerAObj))
+                {
+                    var innerA = innerAObj as string;
+                    // Use innerA as needed
+                }
             }
         }
 
