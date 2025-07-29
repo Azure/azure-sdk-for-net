@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Added new overloads for `UploadAsync` and `Upload`, enabling callers to upload logs in `BinaryData` form.  This allows for callers to use an AOT-compliant serializer for logs, ensuring the Ingestion package can be trimmed.
 
 ## 1.1.2 (2024-04-03)
 
