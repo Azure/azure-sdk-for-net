@@ -15,37 +15,15 @@ internal static partial class JsonPointer
 {
     // TODO (pri 3): make sure JSON Pointer escaping works, e.g. "/a~/b"u8 finds property "a/b"
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static ReadOnlySpan<byte> GetUtf8(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).ValueSpan;
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static ReadOnlySpan<byte> GetUtf8(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).ValueSpan;
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static ReadOnlySpan<byte> GetUtf8(this BinaryData json)
         => json.ToMemory().Span.GetUtf8();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static ReadOnlySpan<byte> GetUtf8(this ReadOnlySpan<byte> json)
     {
         Utf8JsonReader reader = new(json);
@@ -53,37 +31,15 @@ internal static partial class JsonPointer
         return reader.ValueSpan;
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static string? GetString(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetString();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static string? GetString(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetString();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static string? GetString(this BinaryData json)
         => json.ToMemory().Span.GetString();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static string? GetString(this ReadOnlySpan<byte> json)
     {
         Utf8JsonReader reader = new(json);
@@ -91,61 +47,27 @@ internal static partial class JsonPointer
         return reader.GetString();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static int GetInt32(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetInt32();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static int? GetNullableInt32(this BinaryData json, ReadOnlySpan<byte> pointer)
     {
         var reader = json.Find(pointer);
         return reader.TokenType == JsonTokenType.Null ? default : reader.GetInt32();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static int GetInt32(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetInt32();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static int? GetNullableInt32(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
     {
         var reader = json.Find(pointer);
         return reader.TokenType == JsonTokenType.Null ? default : reader.GetInt32();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static int GetInt32(this BinaryData json)
         => json.ToMemory().Span.GetInt32();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static int GetInt32(this ReadOnlySpan<byte> json)
     {
         Utf8JsonReader reader = new(json);
@@ -153,37 +75,15 @@ internal static partial class JsonPointer
         return reader.GetInt32();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static double GetDouble(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetDouble();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static double GetDouble(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetDouble();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static double GetDouble(this BinaryData json)
         => json.ToMemory().Span.GetDouble();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static double GetDouble(this ReadOnlySpan<byte> json)
     {
         Utf8JsonReader reader = new(json);
@@ -191,37 +91,15 @@ internal static partial class JsonPointer
         return reader.GetDouble();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static bool GetBoolean(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetBoolean();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static bool GetBoolean(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
         => json.Find(pointer).GetBoolean();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static bool GetBoolean(this BinaryData json)
         => json.ToMemory().Span.GetBoolean();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static bool GetBoolean(this ReadOnlySpan<byte> json)
     {
         Utf8JsonReader reader = new(json);
@@ -229,13 +107,6 @@ internal static partial class JsonPointer
         return reader.GetBoolean();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="memory"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
     public static int GetArrayLength(ReadOnlyMemory<byte> memory, ReadOnlySpan<byte> pointer = default)
     {
         var reader = pointer.IsEmpty ? new Utf8JsonReader(memory.Span) : memory.Span.Find(pointer);
@@ -260,21 +131,9 @@ internal static partial class JsonPointer
         return count;
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static string[]? GetStringArray(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.ToMemory().Span.GetStringArray(pointer);
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static string[]? GetStringArray(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
     {
         var reader = json.Find(pointer);
@@ -292,19 +151,9 @@ internal static partial class JsonPointer
         return strings.ToArray();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static string[]? GetStringArray(this BinaryData json)
         => json.ToMemory().Span.GetStringArray();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static string[]? GetStringArray(this ReadOnlySpan<byte> json)
     {
         var reader = new Utf8JsonReader(json);
@@ -325,21 +174,9 @@ internal static partial class JsonPointer
         return strings.ToArray();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static double[]? GetDoubleArray(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.ToMemory().Span.GetDoubleArray(pointer);
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static double[]? GetDoubleArray(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
     {
         var reader = json.Find(pointer);
@@ -357,19 +194,9 @@ internal static partial class JsonPointer
         return doubles.ToArray();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static double[]? GetDoubleArray(this BinaryData json)
         => json.ToMemory().Span.GetDoubleArray();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static double[]? GetDoubleArray(this ReadOnlySpan<byte> json)
     {
         var reader = new Utf8JsonReader(json);
@@ -390,21 +217,9 @@ internal static partial class JsonPointer
         return doubles.ToArray();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static int[]? GetInt32Array(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.ToMemory().Span.GetInt32Array(pointer);
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static int[]? GetInt32Array(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
     {
         var reader = json.Find(pointer);
@@ -422,19 +237,9 @@ internal static partial class JsonPointer
         return ints.ToArray();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static int[]? GetInt32Array(this BinaryData json)
         => json.ToMemory().Span.GetInt32Array();
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <returns></returns>
     public static int[]? GetInt32Array(this ReadOnlySpan<byte> json)
     {
         var reader = new Utf8JsonReader(json);
@@ -455,13 +260,6 @@ internal static partial class JsonPointer
         return ints.ToArray();
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
     public static Utf8JsonReader Find(this ReadOnlySpan<byte> json, ReadOnlySpan<byte> pointer)
     {
         if (json.Length == 0)
@@ -479,23 +277,9 @@ internal static partial class JsonPointer
         return Find(reader, pointer);
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="json"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
     public static Utf8JsonReader Find(this BinaryData json, ReadOnlySpan<byte> pointer)
         => json.ToMemory().Span.Find(pointer);
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="reader"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="NotImplementedException"></exception>
     public static Utf8JsonReader Find(Utf8JsonReader reader, ReadOnlySpan<byte> pointer)
     {
         if (pointer.Length == 0)
@@ -522,13 +306,6 @@ internal static partial class JsonPointer
         return Find(reader, remainingPointer);
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="reader"></param>
-    /// <param name="propertyName"></param>
-    /// <returns></returns>
-    /// <exception cref="KeyNotFoundException"></exception>
     public static Utf8JsonReader FindPropertyValue(Utf8JsonReader reader, ReadOnlySpan<byte> propertyName)
     {
         while (reader.Read())
@@ -548,15 +325,6 @@ internal static partial class JsonPointer
 #endif
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="reader"></param>
-    /// <param name="pointer"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="IndexOutOfRangeException"></exception>
-    /// <exception cref="KeyNotFoundException"></exception>
     public static Utf8JsonReader FindArrayItem(Utf8JsonReader reader, ReadOnlySpan<byte> pointer)
     {
         if (!Utf8Parser.TryParse(pointer, out int index, out _))

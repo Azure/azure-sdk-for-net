@@ -32,8 +32,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"location\":\"eastus\"";
-            if (format == "J")
-                expectedSerializedString += ",\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"";
+            expectedSerializedString += ",\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"";
             expectedSerializedString += "}";
             return expectedSerializedString; ;
         }

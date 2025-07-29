@@ -67,6 +67,10 @@ public partial struct AdditionalProperties
 
         foreach (var kvp in _properties)
         {
+            var keySpan = kvp.Key.AsSpan();
+            if (keySpan.Length <= name.Length)
+                continue;
+
             if (kvp.Key.AsSpan().StartsWith(name))
             {
                 yield return kvp;
@@ -283,26 +287,25 @@ public partial struct AdditionalProperties
 
         foreach (var kvp in _properties)
         {
+            var parent = kvp.Key.GetParent();
+
             if ((kvp.Value[0] & (byte)ValueKind.ArrayItem) != 0)
             {
                 var keySpan = kvp.Key.AsSpan();
-                var slash = keySpan.IndexOf((byte)'/');
-                if (keySpan.Slice(slash + 1).IndexOf((byte)'/') >= 0)
-                {
-                    // skip properties that are multiple layers as those will be propagated to the child objects
-                    continue;
-                }
 
-                var arrayKey = keySpan.Slice(0, slash + 1).ToArray();
+                var arrayKey = keySpan.Slice(0, keySpan.IndexOf((byte)'-')).ToArray();
                 if (arrays.Contains(arrayKey))
                 {
                     continue;
                 }
 
-                writer.WritePropertyName(keySpan.Slice(0, slash));
+                writer.WritePropertyName(parent.GetPropertyName());
                 writer.WriteStartArray();
                 foreach (var arrayItem in EntriesStartsWith(arrayKey))
                 {
+                    if ((arrayItem.Value[0] & (byte)ValueKind.Removed) > 0 || arrayItem.Key.GetIndexSpan().IsEmpty)
+                        continue;
+
                     writer.WriteRawValue(arrayItem.Value.AsSpan().Slice(1));
                 }
                 writer.WriteEndArray();
@@ -311,14 +314,12 @@ public partial struct AdditionalProperties
                 continue;
             }
 
-            if (kvp.Key.AsSpan().IndexOf((byte)'/') >= 0)
+            if (!parent.IsRoot())
             {
                 continue;
             }
 
-            // TODO we are going back and forth from bytes to string and back, which is not efficient.
-            string propertyName = Encoding.UTF8.GetString(kvp.Key);
-            WriteEncodedValueAsJson(writer, propertyName, kvp.Value);
+            WriteEncodedValueAsJson(writer, kvp.Key.GetPropertyName(), kvp.Value);
         }
     }
 
@@ -335,28 +336,37 @@ public partial struct AdditionalProperties
             var inner = entry.Key.AsSpan().Slice(prefix.Length);
             if ((entry.Value[0] & (byte)ValueKind.ArrayItem) > 0)
             {
-                var indexSpan = inner.Slice(inner.LastIndexOf((byte)'/') + 1);
+                var indexSpan = entry.Key.GetIndexSpan();
+                if (indexSpan.Length == 0)
+                {
+                    // If the property name is empty, skip it
+                    continue;
+                }
+                if (indexSpan[0] == (byte)'-')
+                    indexSpan = indexSpan.Slice(1);
+
                 if (Utf8Parser.TryParse(indexSpan, out int index, out _))
                 {
+                    byte[] arrayBytes = [(byte)'$', .. inner.Slice(0, inner.IndexOf((byte)'[') + 2), (byte)']'];
                     if (target._arrayIndices is null)
                     {
                         target._arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
-                        target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = index;
+                        target._arrayIndices[arrayBytes] = index;
                     }
                     else
                     {
-                        if (!target._arrayIndices.TryGetValue(inner.Slice(0, inner.Length - 1).ToArray(), out int existingIndex))
+                        if (!target._arrayIndices.TryGetValue(arrayBytes, out int existingIndex))
                         {
-                            target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = index;
+                            target._arrayIndices[arrayBytes] = index;
                         }
                         else
                         {
-                            target._arrayIndices[inner.Slice(0, inner.Length - 1).ToArray()] = Math.Max(index, existingIndex);
+                            target._arrayIndices[arrayBytes] = Math.Max(index, existingIndex);
                         }
                     }
                 }
             }
-            target.SetInternal(inner, entry.Value);
+            target.SetInternal([(byte)'$', .. inner], entry.Value);
         }
     }
 
@@ -387,5 +397,20 @@ public partial struct AdditionalProperties
         if (_properties.Count > 0)
             sb.AppendLine();
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="array"></param>
+    /// <returns></returns>
+    public int? GetArrayLength(ReadOnlySpan<byte> array)
+    {
+        if (_arrayIndices == null || !_arrayIndices.TryGetValue(array.ToArray(), out var index))
+        {
+            return null;
+        }
+
+        return index;
     }
 }

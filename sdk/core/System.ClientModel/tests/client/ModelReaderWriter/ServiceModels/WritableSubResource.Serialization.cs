@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
@@ -28,11 +30,14 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (OptionalProperty.IsDefined(Id))
+            if (OptionalProperty.IsDefined(Id) && !Patch.Contains("$.id"u8))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+
+            Patch.Write(writer);
+
             writer.WriteEndObject();
         }
 
@@ -46,6 +51,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             options ??= ModelReaderWriterHelper.WireOptions;
 
             string? id = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -57,8 +63,17 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     id = property.Value.GetString();
                     continue;
                 }
+
+                rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            return new WritableSubResource(id);
+            var model = new WritableSubResource(id);
+
+            foreach (var kvp in rawDataDictionary)
+            {
+                model.Patch.Set(Encoding.UTF8.GetBytes([.. "$.", .. kvp.Key]), kvp.Value);
+            }
+
+            return model;
         }
 
         private struct WritableSubResourceProperties

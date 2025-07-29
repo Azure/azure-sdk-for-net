@@ -14,17 +14,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void AddInt32Property()
         {
             var model = GetInitialModel();
+            var pointer = "$.foobar"u8;
+            model.Patch.Set(pointer, 5);
 
-            model.Patch.Set("foobar"u8, 5);
-
-            Assert.AreEqual(5, model.Patch.GetInt32("foobar"u8));
-            Assert.AreEqual(5, model.Patch.GetNullableInt32("foobar"u8));
+            Assert.AreEqual(5, model.Patch.GetInt32(pointer));
+            Assert.AreEqual(5, model.Patch.GetNullableInt32(pointer));
 
             var data = WriteModifiedModel(model, "foobar", "5");
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(5, model2.Patch.GetInt32("foobar"u8));
-            Assert.AreEqual(5, model2.Patch.GetNullableInt32("foobar"u8));
+            Assert.AreEqual(5, model2.Patch.GetInt32(pointer));
+            Assert.AreEqual(5, model2.Patch.GetNullableInt32(pointer));
 
             AssertCommon(model, model2);
         }
@@ -33,13 +33,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void GetInt32FailsWhenNull()
         {
             var model = GetInitialModel();
-            model.Patch.SetNull("foobar"u8);
+            model.Patch.SetNull("$.foobar"u8);
 
-            AssertJsonException(() => model.Patch.GetInt32("foobar"u8));
+            AssertJsonException(() => model.Patch.GetInt32("$.foobar"u8));
             var data = WriteModifiedModel(model, "foobar", "null");
 
             var model2 = GetRoundTripModel(data);
-            AssertJsonException(() => model2.Patch.GetInt32("foobar"u8));
+            AssertJsonException(() => model2.Patch.GetInt32("$.foobar"u8));
 
             AssertCommon(model, model2);
         }
@@ -48,15 +48,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void AddStringProperty()
         {
             var value = "some value";
+            var pointer = "$.foobar"u8;
 
             var model = GetInitialModel();
-            model.Patch.Set("foobar"u8, value);
+            model.Patch.Set(pointer, value);
 
-            Assert.AreEqual(value, model.Patch.GetString("foobar"u8));
+            Assert.AreEqual(value, model.Patch.GetString(pointer));
             var data = WriteModifiedModel(model, "foobar", "\"some value\"");
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(value, model2.Patch.GetString("foobar"u8));
+            Assert.AreEqual(value, model2.Patch.GetString(pointer));
 
             AssertCommon(model, model2);
         }
@@ -64,16 +65,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void AddNullProperty()
         {
+            var pointer = "$.foobar"u8;
+
             var model = GetInitialModel();
-            model.Patch.SetNull("foobar"u8);
-            Assert.AreEqual(null, model.Patch.GetString("foobar"u8));
-            Assert.AreEqual(null, model.Patch.GetNullableInt32("foobar"u8));
+            model.Patch.SetNull(pointer);
+            Assert.AreEqual(null, model.Patch.GetString(pointer));
+            Assert.AreEqual(null, model.Patch.GetNullableInt32(pointer));
 
             var data = WriteModifiedModel(model, "foobar", "null");
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(null, model2.Patch.GetString("foobar"u8));
-            Assert.AreEqual(null, model2.Patch.GetNullableInt32("foobar"u8));
+            Assert.AreEqual(null, model2.Patch.GetString(pointer));
+            Assert.AreEqual(null, model2.Patch.GetNullableInt32(pointer));
 
             AssertCommon(model, model2);
         }
@@ -81,7 +84,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ChangeFlattenedProperty()
         {
-            ReadOnlySpan<byte> propertyNameSpan = "properties/platformUpdateDomainCount"u8;
+            ReadOnlySpan<byte> propertyNameSpan = "$.properties.platformUpdateDomainCount"u8;
             int expectedValue = 999;
 
             var model = GetInitialModel();
@@ -104,7 +107,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ChangeExistingProperty()
         {
-            ReadOnlySpan<byte> propertyNameSpan = "location"u8;
+            ReadOnlySpan<byte> propertyNameSpan = "$.location"u8;
             string propertyName = "location";
             string expectedValue = "new-location";
 
@@ -128,7 +131,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ChangeExistingNestedProperty()
         {
-            ReadOnlySpan<byte> propertyNameSpan = "sku/name"u8;
+            ReadOnlySpan<byte> propertyNameSpan = "$.sku.name"u8;
             string expectedValue = "new-sku-name";
 
             var model = GetInitialModel();
@@ -155,7 +158,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void AddNewNestedProperty()
         {
-            ReadOnlySpan<byte> propertyNameSpan = "sku/something"u8;
+            ReadOnlySpan<byte> propertyNameSpan = "$.sku.something"u8;
             string expectedValue = "something-value";
 
             var model = GetInitialModel();
@@ -168,7 +171,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = GetRoundTripModel(data);
             //Assert.AreEqual(expectedValue, model2.Json.GetString(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("something"u8));
+            Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.something"u8));
 
             AssertCommon(model, model2, "sku");
         }
@@ -177,16 +180,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void AddComplexPropertyAsJson()
         {
             ReadOnlySpan<byte> expectedValue = "{\"x\":{\"y\":123}}"u8;
+            var pointer = "$.foobar"u8;
             var model = GetInitialModel();
 
-            model.Patch.Set("foobar"u8, expectedValue);
+            model.Patch.Set(pointer, expectedValue);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson("foobar"u8).ToArray());
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
 
             var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
 
             var model2 = GetRoundTripModel(data);
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson("foobar"u8).ToArray());
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
 
             AssertCommon(model, model2);
         }
@@ -195,9 +199,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void AddComplexPropertyAsAnonModel()
         {
             ReadOnlySpan<byte> expectedValue = "{\"x\":{\"y\":123}}"u8;
+            var pointer = "$.foobar"u8;
             var model = GetInitialModel();
 
-            model.Patch.Set("foobar"u8, JsonSerializer.SerializeToUtf8Bytes(new
+            model.Patch.Set(pointer, JsonSerializer.SerializeToUtf8Bytes(new
             {
                 x = new
                 {
@@ -205,12 +210,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 }
             }));
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson("foobar"u8).ToArray());
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
 
             var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
 
             var model2 = GetRoundTripModel(data);
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson("foobar"u8).ToArray());
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
 
             AssertCommon(model, model2);
         }
@@ -219,17 +224,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void ReplaceExistingComplex()
         {
             ReadOnlySpan<byte> expectedValue = "{\"name\":\"replaced-name\",\"foo\":123}"u8;
+            var pointer = "$.sku"u8;
             var model = GetInitialModel();
 
-            model.Patch.Set("sku"u8, expectedValue);
+            model.Patch.Set(pointer, expectedValue);
 
-            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson("sku"u8).ToArray());
+            CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
 
             var data = WriteModifiedModel(model, "sku", "{\"name\":\"replaced-name\",\"foo\":123}");
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("replaced-name", model2.Sku.Name);
-            Assert.AreEqual(123, model2.Sku.Patch.GetInt32("foo"u8));
+            Assert.AreEqual(123, model2.Sku.Patch.GetInt32("$.foo"u8));
 
             AssertCommon(model, model2, "sku");
         }
@@ -238,19 +244,26 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void SetClrAfterJsonProperty()
         {
             var model = GetInitialModel();
+            var pointer = "$.location"u8;
 
-            model.Patch.Set("location"u8, "new-location");
-            Assert.AreEqual("new-location", model.Patch.GetString("location"u8));
+            model.Patch.Set(pointer, "new-location");
+            Assert.AreEqual("new-location", model.Patch.GetString(pointer));
 
             //setting the location property directly should override the payload change
             model.Location = "another-location";
-            Assert.AreEqual("another-location", model.Patch.GetString("location"u8));
+            Assert.AreEqual("another-location", model.Patch.GetString(pointer));
 
             var data = WriteModifiedModel(model);
 
             var model2 = GetRoundTripModel(data);
 
             Assert.AreEqual("another-location", model2.Location);
+        }
+
+        [Test]
+        public void AddNewFlattenedProperty()
+        {
+            Assert.Fail("Not implemented");
         }
 
         private AvailabilitySetData GetInitialModel()
@@ -299,8 +312,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         private static void AssertCommon(AvailabilitySetData model, AvailabilitySetData model2, params string[] skips)
         {
-            Assert.AreEqual("extraSku", model2.Patch.GetString("extraSku"u8));
-            Assert.AreEqual("extraRoot", model2.Patch.GetString("extraRoot"u8));
+            Assert.AreEqual("extraSku", model2.Patch.GetString("$.extraSku"u8));
+            Assert.AreEqual("extraRoot", model2.Patch.GetString("$.extraRoot"u8));
             CompareAvailabilitySetData(model, model2, "J", skips);
         }
     }

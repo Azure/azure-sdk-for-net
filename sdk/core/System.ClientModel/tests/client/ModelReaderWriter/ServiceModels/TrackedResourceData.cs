@@ -49,7 +49,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             }
             set
             {
-                Patch.Set("location"u8, value);
+                Patch.Set("$.location"u8, value);
                 _location = value;
             }
         }

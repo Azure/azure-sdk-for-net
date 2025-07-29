@@ -57,32 +57,6 @@ public partial struct AdditionalProperties
         s_falseBooleanArray = [(byte)ValueKind.BooleanFalse, .. "false"u8];
     }
 
-    private bool TryGetFromPointer<T>(ReadOnlySpan<byte> name, SpanParser<T> parser, T defaultValue, out T? result)
-    {
-        // Check if this is a JSON pointer (contains '/')
-        result = default;
-        int slashIndex = name.IndexOf((byte)'/');
-        if (slashIndex >= 0)
-        {
-            // This is a JSON pointer - extract the base property name
-            ReadOnlySpan<byte> baseName = name.Slice(0, slashIndex);
-            ReadOnlySpan<byte> pointer = name.Slice(slashIndex);
-
-            // Get the encoded value for the base property
-            byte[] baseEncodedValue = GetEncodedValue(baseName);
-            if (baseEncodedValue.Length == 0 || (ValueKind)baseEncodedValue[0] != ValueKind.Json)
-            {
-                return false;
-            }
-
-            // Use JsonPointer to navigate to the specific element
-            result = parser(baseEncodedValue.AsSpan(1), pointer) ?? defaultValue;
-            return true;
-        }
-
-        return false;
-    }
-
     // Helper method to get raw encoded value bytes
     private byte[] GetEncodedValue(ReadOnlySpan<byte> name)
     {
@@ -91,54 +65,25 @@ public partial struct AdditionalProperties
             return Array.Empty<byte>();
         }
 
-        if (name.EndsWith("/-"u8))
+        if (name.IsArrayInsert())
         {
-            var rootArrayName = name.Slice(0, name.Length - 1).ToArray();
-            //is it worth it to calculate the size?
-            int size = 0;
-            int count = 0;
-            foreach (var kvp in EntriesStartsWith(rootArrayName))
-            {
-                count++;
-                size += kvp.Value.Length;
-            }
-
-            if (count == 0)
-            {
-                //check for the full array entry
-                if (_properties.TryGetValue(name.Slice(0, name.LastIndexOf((byte)'/')).ToArray(), out byte[]? fullArrayValue))
-                {
-                    return fullArrayValue;
-                }
-                return Array.Empty<byte>();
-            }
-            else
-            {
-                //combine all entries that start with the name
-                using var memoryStream = new MemoryStream(size + count + 2);
-                memoryStream.WriteByte((byte)ValueKind.Json);
-                memoryStream.WriteByte((byte)'[');
-                int current = 0;
-                foreach (var kvp in EntriesStartsWith(rootArrayName))
-                {
-                    memoryStream.Write(kvp.Value, 1, kvp.Value.Length - 1);
-                    if (current++ < count - 1)
-                    {
-                        memoryStream.WriteByte((byte)',');
-                    }
-                }
-                memoryStream.WriteByte((byte)']');
-                return memoryStream.ToArray();
-            }
+            return CombineAllArrayItems(name);
         }
 
         byte[] nameBytes = name.ToArray();
         if (!_properties.TryGetValue(nameBytes, out byte[]? encodedValue))
         {
-            var lastSlashIndex = name.LastIndexOf((byte)'/');
-            if (Utf8Parser.TryParse(name.Slice(lastSlashIndex + 1), out int index, out _))
+            var parent = name.GetParent();
+            if (_properties.TryGetValue(parent.ToArray(), out encodedValue))
             {
-                if (_properties.TryGetValue(name.Slice(0, lastSlashIndex).ToArray(), out encodedValue))
+                var indexSpan = name.GetIndexSpan();
+                if (indexSpan.IsEmpty)
+                    return Array.Empty<byte>();
+
+                if (indexSpan[0] == (byte)'-')
+                    indexSpan = indexSpan.Slice(1);
+
+                if (Utf8Parser.TryParse(indexSpan, out int index, out _))
                 {
                     Utf8JsonReader reader = new Utf8JsonReader(encodedValue.AsSpan(1));
 
@@ -154,7 +99,7 @@ public partial struct AdditionalProperties
                             reader.Skip();
                             long end = reader.BytesConsumed;
 
-                            return encodedValue.AsSpan(1).Slice((int)start - 1, (int)(end - start + 1)).ToArray();
+                            return [encodedValue[0], .. encodedValue.AsSpan(1).Slice((int)start, (int)(end - start))];
                         }
                         else
                         {
@@ -167,6 +112,11 @@ public partial struct AdditionalProperties
                     return Array.Empty<byte>();
                 }
             }
+            if (TryGetParentMatch(name, out var parentPath, out encodedValue))
+            {
+                // generically need to use the JsonPathReader to find the item from the json returned here
+                return encodedValue;
+            }
 
             return Array.Empty<byte>();
         }
@@ -174,18 +124,84 @@ public partial struct AdditionalProperties
         return encodedValue;
     }
 
-    private T? GetPrimitive<T>(ReadOnlySpan<byte> propertyName, SpanParser<T?> parser, ValueKind expectedKind)
+    private bool TryGetParentMatch(ReadOnlySpan<byte> name, [NotNullWhen(true)] out byte[]? parentPath, [NotNullWhen(true)] out byte[]? encodedValue)
     {
-        if (TryGetFromPointer(propertyName, parser, default, out T? result))
+        parentPath = default;
+        encodedValue = null;
+        if (_properties == null)
         {
-            return result;
+            return false;
         }
 
+        var parent = name.GetParent();
+        while (parent.Length > 1)
+        {
+            parentPath = parent.ToArray();
+            if (_properties.TryGetValue(parent.ToArray(), out encodedValue))
+                return true;
+
+            if (parent.IsRoot())
+                return false;
+
+            parent = parent.GetParent();
+        }
+
+        return false;
+    }
+
+    private byte[] CombineAllArrayItems(ReadOnlySpan<byte> name)
+    {
+        if (_properties == null)
+        {
+            return Array.Empty<byte>();
+        }
+
+        var rootArrayName = name.Slice(0, name.Length - 1).ToArray();
+        //is it worth it to calculate the size?
+        int size = 0;
+        int count = 0;
+        foreach (var kvp in EntriesStartsWith(rootArrayName))
+        {
+            count++;
+            size += kvp.Value.Length;
+        }
+
+        if (count == 0)
+        {
+            //check for the full array entry
+            if (_properties.TryGetValue(name.GetParent().ToArray(), out byte[]? fullArrayValue))
+            {
+                return fullArrayValue;
+            }
+            return Array.Empty<byte>();
+        }
+        else
+        {
+            //combine all entries that start with the name
+            using var memoryStream = new MemoryStream(size + count + 2);
+            memoryStream.WriteByte((byte)ValueKind.Json);
+            memoryStream.WriteByte((byte)'[');
+            int current = 0;
+            foreach (var kvp in EntriesStartsWith(rootArrayName))
+            {
+                memoryStream.Write(kvp.Value, 1, kvp.Value.Length - 1);
+                if (current++ < count - 1)
+                {
+                    memoryStream.WriteByte((byte)',');
+                }
+            }
+            memoryStream.WriteByte((byte)']');
+            return memoryStream.ToArray();
+        }
+    }
+
+    private T? GetPrimitive<T>(ReadOnlySpan<byte> pointer, SpanParser<T?> parser, ValueKind expectedKind)
+    {
         // Direct property access
-        byte[] encodedValue = GetEncodedValue(propertyName);
+        byte[] encodedValue = GetEncodedValue(pointer);
         if (encodedValue.Length == 0)
         {
-            ThrowPropertyNotFoundException(propertyName);
+            ThrowPropertyNotFoundException(pointer);
             return default;
         }
         else
@@ -358,37 +374,68 @@ public partial struct AdditionalProperties
         }
     }
 
-    private void SetInternal(ReadOnlySpan<byte> name, byte[] encodedValue)
+    private void SetInternal(ReadOnlySpan<byte> jsonPath, byte[] encodedValue)
     {
         if (_properties == null)
         {
             _properties = new Dictionary<byte[], byte[]>(ByteArrayEqualityComparer.Instance);
         }
 
-        if (name.EndsWith("/-"u8))
-        {
-            if (_arrayIndices == null)
-            {
-                _arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
-            }
+        var nameBytes = jsonPath.ToArray();
 
-            encodedValue[0] |= (byte)ValueKind.ArrayItem; // Mark as array item
-            var arrayNameBytes = name.Slice(0, name.Length - 1).ToArray();
-            if ( !_arrayIndices.TryGetValue(arrayNameBytes, out var index))
+        if (((ValueKind)encodedValue[0]).HasFlag(ValueKind.Removed))
+        {
+            // if its remove we need to look at parents before inserting
+            if (!_properties.TryGetValue(nameBytes, out var currentValue))
             {
-                index = 0;
-                _arrayIndices[arrayNameBytes] = index;
+                if (TryGetParentMatch(jsonPath, out var parentBytes, out currentValue))
+                {
+                    var childSlice = jsonPath.Slice(parentBytes.Length);
+                    Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
+                    childPath[0] = (byte)'$';
+                    childSlice.CopyTo(childPath.Slice(1));
+                    var modifiedValue = currentValue.Remove(childPath);
+                    _properties[parentBytes] = modifiedValue;
+                }
             }
-            else
-            {
-                index++;
-                _arrayIndices[arrayNameBytes] = index;
-            }
-            _properties[[.. arrayNameBytes, .. Encoding.UTF8.GetBytes(index.ToString())]] = encodedValue;
+            _properties[nameBytes] = encodedValue;
         }
         else
         {
-            _properties[name.ToArray()] = encodedValue;
+            var indexSpan = jsonPath.GetIndexSpan();
+            if (!indexSpan.IsEmpty)
+            {
+                encodedValue[0] |= (byte)ValueKind.ArrayItem; // Mark as array item
+            }
+
+            if (indexSpan.Length == 1 && indexSpan[0] == (byte)'-')
+            {
+                // array insert
+                if (_arrayIndices == null)
+                {
+                    _arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
+                }
+
+                if (!_arrayIndices.TryGetValue(nameBytes, out var usedIndex))
+                {
+                    usedIndex = 0;
+                    _arrayIndices[nameBytes] = usedIndex;
+                }
+                else
+                {
+                    usedIndex++;
+                    _arrayIndices[nameBytes] = usedIndex;
+                }
+                _properties[[.. jsonPath.Slice(0, jsonPath.Length - 1), .. Encoding.UTF8.GetBytes(usedIndex.ToString()), (byte)']']] = encodedValue;
+            }
+            else
+            {
+                // need to handle the case where I am setting a specific index in an array
+                // also increment the _arrayIndices if it exists
+                // should the Set method allow the user to say this is an array item since
+                // json properties can be numbers and /foo/1 may not be an array item
+                _properties[jsonPath.ToArray()] = encodedValue;
+            }
         }
     }
 
@@ -406,7 +453,7 @@ public partial struct AdditionalProperties
         return DecodeValue(encodedValue!);
     }
 
-    private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, string propertyName, byte[] encodedValue)
+    private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, byte[] encodedValue)
     {
         // Helper method to write encoded byte values as JSON
 

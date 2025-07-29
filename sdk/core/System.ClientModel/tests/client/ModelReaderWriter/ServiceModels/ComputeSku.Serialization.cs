@@ -77,16 +77,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     capacity = property.Value.GetInt64();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
+                rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             var model = new ComputeSku(name.Value, tier.Value, OptionalProperty.ToNullable(capacity));
 
             foreach(var kvp in rawDataDictionary)
             {
-                model.Patch.Set(Encoding.UTF8.GetBytes(kvp.Key), kvp.Value);
+                model.Patch.Set(Encoding.UTF8.GetBytes([.. "$.", .. kvp.Key]), kvp.Value);
             }
 
             return model;
