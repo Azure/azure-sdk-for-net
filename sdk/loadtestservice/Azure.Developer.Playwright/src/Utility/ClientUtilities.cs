@@ -83,7 +83,6 @@ namespace Azure.Developer.Playwright.Utility
 
         internal string GetTestRunApiUrl()
         {
-            Console.WriteLine("Getting Test Run API URL");
             string apiVersion = ApiVersionConstants.s_latestApiVersion;
             var serviceUrl = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString());
             if (string.IsNullOrEmpty(serviceUrl))
