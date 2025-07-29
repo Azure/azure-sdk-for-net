@@ -61,32 +61,21 @@ namespace Azure.Data.AppConfiguration
         /// Requests the server to respond with the state of the resource at the specified
         /// time.
         /// </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="tags">
         /// A filter used to query by tags. Syntax reference:
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -112,32 +101,21 @@ namespace Azure.Data.AppConfiguration
         /// Requests the server to respond with the state of the resource at the specified
         /// time.
         /// </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="tags">
         /// A filter used to query by tags. Syntax reference:
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, matchConditions, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -160,24 +138,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response SetConfigurationSettingInternal(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        internal virtual Response SetConfigurationSettingInternal(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSettingInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -200,24 +171,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SetConfigurationSettingInternalAsync(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        internal virtual async Task<Response> SetConfigurationSettingInternalAsync(string key, string contentType, RequestContent content = null, string label = default, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSettingInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingInternalRequest(key, contentType, content, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -243,18 +207,14 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteConfigurationSetting(string key, string label, string syncToken, string ifMatch, RequestContext context)
+        internal virtual Response DeleteConfigurationSetting(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
                 using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -281,18 +241,14 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, string ifMatch, RequestContext context)
+        internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, ETag? ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
                 using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -314,28 +270,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSnapshot(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal virtual Response GetSnapshot(string name, IEnumerable<SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -356,28 +301,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> @select, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -394,18 +328,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
+        internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
                 return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
@@ -423,18 +352,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
+        internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
@@ -457,29 +381,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="contentType"> Content-Type header. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateSnapshotStatus(string name, string contentType, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        internal virtual Response UpdateSnapshotStatus(string name, string contentType, RequestContent content, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -501,29 +413,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="contentType"> Content-Type header. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateSnapshotStatusAsync(string name, string contentType, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, string contentType, RequestContent content, string syncToken = default, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -544,28 +444,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key"> The key of the key-value to lock. </param>
         /// <param name="label"> The label, if any, of the key-value to lock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal virtual Response CreateReadOnlyLock(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -586,28 +475,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key"> The key of the key-value to lock. </param>
         /// <param name="label"> The label, if any, of the key-value to lock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -628,28 +506,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key"> The key of the key-value to unlock. </param>
         /// <param name="label"> The label, if any, of the key-value to unlock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal virtual Response DeleteReadOnlyLock(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -670,28 +537,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key"> The key of the key-value to unlock. </param>
         /// <param name="label"> The label, if any, of the key-value to unlock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

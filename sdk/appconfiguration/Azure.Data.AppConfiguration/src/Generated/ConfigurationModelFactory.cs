@@ -37,7 +37,7 @@ namespace Azure.Data.AppConfiguration
             return new ConfigurationSnapshot(
                 name,
                 status,
-                filters?.ToList(),
+                filters.ToList(),
                 snapshotComposition,
                 createdOn,
                 expiresOn,

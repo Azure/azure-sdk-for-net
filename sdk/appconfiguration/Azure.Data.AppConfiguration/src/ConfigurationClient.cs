@@ -250,9 +250,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                string ifNoneMatch = ETag.All.ToString("H");
+                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
-                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -288,9 +288,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                string ifNoneMatch = ETag.All.ToString("H");
+                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
-                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context);
+                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context);
                 switch (response.Status)
                 {
                     case 200:
@@ -358,9 +358,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                string ifMatch = onlyIfUnchanged ? setting.ETag.ToString("H") : null;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
 
-                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifMatch: ifMatch, context: context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context).ConfigureAwait(false);
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
@@ -399,9 +399,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                string ifMatch = onlyIfUnchanged ? setting.ETag.ToString("H") : null;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
 
-                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, ifMatch: ifMatch, context: context);
+                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context);
 
                 return response.Status switch
                 {
@@ -488,8 +488,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                (string ifMatch, _) = GetMatchConditionHeaders(requestOptions);
-                using Response response = await DeleteConfigurationSettingAsync(key, label, _syncToken, ifMatch, context).ConfigureAwait(false);
+                using Response response = await DeleteConfigurationSettingAsync(key, label, _syncToken, requestOptions?.IfMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -516,8 +515,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-                (string ifMatch, _) = GetMatchConditionHeaders(requestOptions);
-                using Response response = DeleteConfigurationSetting(key, label, _syncToken, ifMatch, context);
+
+                using Response response = DeleteConfigurationSetting(key, label, _syncToken, requestOptions?.IfMatch, context);
 
                 return response.Status switch
                 {
@@ -642,9 +641,8 @@ namespace Azure.Data.AppConfiguration
                 context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
 
-                using Response response = await GetConfigurationSettingAsync(key, label, null, _syncToken, dateTime, ifMatch, ifNoneMatch, null, context).ConfigureAwait(false);
+                using Response response = await GetConfigurationSettingAsync(key, label, null, _syncToken, dateTime, conditions, null, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -680,9 +678,8 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 context.AddClassifier(304, isError: false);
 
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = GetConfigurationSetting(key, label, null, _syncToken, dateTime, ifMatch, ifNoneMatch, null, context);
+                using Response response = GetConfigurationSetting(key, label, null, _syncToken, dateTime, conditions, null, context);
 
                 return response.Status switch
                 {
@@ -741,15 +738,13 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
-                return CreateGetConfigurationSettingsRequest(key, label, _syncToken, null, dateTime, fieldsString, null, ifMatch, ifNoneMatch, tags, context);
+                return CreateGetConfigurationSettingsRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
             ;
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
-                return CreateNextGetConfigurationSettingsRequest(ParseNextLink(nextLink), key, label, _syncToken, null, dateTime, fieldsString, null, ifMatch, ifNoneMatch, tags, context);
+                return CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
 
             return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
@@ -767,8 +762,8 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, null, snapshotName, null, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(ParseNextLink(nextLink), null, null, _syncToken, null, null, null, snapshotName, null, null, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, null, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, null, snapshotName, null, null, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -783,8 +778,8 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, null, snapshotName, null, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(ParseNextLink(nextLink), null, null, _syncToken, null, null, null, snapshotName, null, null, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, null, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, null, snapshotName, null, null, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -802,8 +797,8 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(ParseNextLink(nextLink), null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -820,8 +815,8 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(ParseNextLink(nextLink), null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, null, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
@@ -839,7 +834,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-                Response response = await GetSnapshotAsync(snapshotName, fields, _syncToken, null, null, context).ConfigureAwait(false);
+                Response response = await GetSnapshotAsync(snapshotName, fields, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -863,7 +858,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                Response response = GetSnapshot(snapshotName, fields, _syncToken, null, null, context);
+                Response response = GetSnapshot(snapshotName, fields, _syncToken, new MatchConditions(), context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -974,7 +969,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, null, null, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1005,7 +1000,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, null, null, context);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1035,10 +1030,9 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Archived
                 };
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1068,10 +1062,9 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Archived
                 };
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1102,7 +1095,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, null, null, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1133,7 +1126,7 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, null, null, context);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1163,10 +1156,9 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Ready
                 };
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context).ConfigureAwait(false);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1196,10 +1188,9 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Ready
                 };
-                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context);
                 ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
                 return Response.FromValue(value, response);
             }
@@ -1225,7 +1216,7 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, fields, status, _syncToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetSnapshotsRequest(ParseNextLink(nextLink), name, null, fields, status, _syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetSnapshotsRequest(nextLink, name, null, fields, status, _syncToken, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, Pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
@@ -1244,7 +1235,7 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, fields, status, _syncToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetSnapshotsRequest(ParseNextLink(nextLink), name, null, fields, status, _syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetSnapshotsRequest(nextLink, name, null, fields, status, _syncToken, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, Pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
@@ -1288,7 +1279,7 @@ namespace Azure.Data.AppConfiguration
             IEnumerable<string> fieldsString = selector.Fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, _syncToken, null, dateTime, fieldsString, tags, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(ParseNextLink(nextLink), key, label, _syncToken, null, dateTime, fieldsString, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, tags, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
@@ -1308,7 +1299,7 @@ namespace Azure.Data.AppConfiguration
             IEnumerable<string> fieldsString = selector.Fields.Split();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, _syncToken, null, dateTime, fieldsString, tags, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(ParseNextLink(nextLink), key, label, _syncToken, null, dateTime, fieldsString, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, tags, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
@@ -1411,7 +1402,7 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(ParseNextLink(nextLink), name, _syncToken, null, dateTime, fields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
@@ -1430,7 +1421,7 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(ParseNextLink(nextLink), name, _syncToken, null, dateTime, fields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
@@ -1462,19 +1453,17 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> ToCreateAsyncResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(requestOptions);
             Response response = isReadOnly
-                ? await CreateReadOnlyLockAsync(key, label, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false)
-                : await DeleteReadOnlyLockAsync(key, label, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false);
+                ? await CreateReadOnlyLockAsync(key, label, _syncToken, requestOptions, context).ConfigureAwait(false)
+                : await DeleteReadOnlyLockAsync(key, label, _syncToken, requestOptions, context).ConfigureAwait(false);
             return response;
         }
 
         private Response ToCreateResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(requestOptions);
             Response response = isReadOnly
-                ? CreateReadOnlyLock(key, label, _syncToken, ifMatch, ifNoneMatch, context)
-                : DeleteReadOnlyLock(key, label, _syncToken, ifMatch, ifNoneMatch, context);
+                ? CreateReadOnlyLock(key, label, _syncToken, requestOptions, context)
+                : DeleteReadOnlyLock(key, label, _syncToken, requestOptions, context);
             return response;
         }
 
@@ -1559,33 +1548,6 @@ namespace Azure.Data.AppConfiguration
                         return true;
                 }
             }
-        }
-
-        // Helper method to extract IfMatch and IfNoneMatch as nullable strings from MatchConditions
-        private static (string IfMatch, string IfNoneMatch) GetMatchConditionHeaders(MatchConditions conditions)
-        {
-            string ifMatch = conditions?.IfMatch?.ToString("H");
-            string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
-            return (ifMatch, ifNoneMatch);
-        }
-
-        private Uri ParseNextLink(string nextLink)
-        {
-            if (string.IsNullOrEmpty(nextLink))
-            {
-                return null;
-            }
-
-            // If it is an absolute link, we use the nextLink as the entire url
-            if (nextLink.StartsWith(Uri.UriSchemeHttp, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return ParseNextLink(nextLink);
-            }
-
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri.ToUri();
         }
     }
 }
