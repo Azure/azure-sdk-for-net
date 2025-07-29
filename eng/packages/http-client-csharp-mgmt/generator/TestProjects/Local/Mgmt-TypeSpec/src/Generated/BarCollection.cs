@@ -209,14 +209,24 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<BarResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            }
+            ;
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> List Bar resources by Foo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<BarResource> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            }
+            ;
+            return new PageableWrapper<BarData, BarResource>(new BarsGetCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
