@@ -15,6 +15,8 @@ namespace System.ClientModel;
 public class MultiPartFormContent : BinaryContent
 {
     private const string MediaTypeApplicationJson = "application/json";
+    private const string MediaTypeTextPlain = "text/plain";
+    private const string MediatypeApplicationOctetStream = "application/octet-stream";
 
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
     private static readonly Random _random = new Random();
@@ -49,10 +51,6 @@ public class MultiPartFormContent : BinaryContent
         Argument.AssertNotNull(fileContent, nameof(fileContent));
 
         HttpContent content = new FileHttpContentAdapter(fileContent);
-        if (fileContent.MediaType != null)
-        {
-            content.Headers.ContentType = MediaTypeHeaderValue.Parse(fileContent.MediaType);
-        }
 
         Add(content, name, fileContent.MediaType, fileContent.Filename);
     }
@@ -78,19 +76,28 @@ public class MultiPartFormContent : BinaryContent
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         options ??= ModelWriteWireOptions;
-        if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+        if (mediaType is null && options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
         {
             mediaType = MediaTypeApplicationJson;
         }
 
 #pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
         BinaryData data = context != null
-            ? ModelReaderWriter.Write(model, options, context)
-            : ModelReaderWriter.Write(model, options);
+            ? ModelReaderWriter.Write(model, options, context).WithMediaType(mediaType)
+            : ModelReaderWriter.Write(model, options).WithMediaType(mediaType);
 #pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
 
-        Add(name, data, mediaType: mediaType);
+        Add(name, data);
     }
+
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and content.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="name"></param>
+    /// <param name="model"></param>
+    public void Add<T>(string name, IPersistableModel<T> model)
+        => Add(name, model, options: default, context: default, mediaType: default);
 
     // CUSTOM: Add optional content type parameter to the Add method.
     /// <summary>
@@ -99,7 +106,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, string content, string? mediaType = default)
+    public void Add(string name, string content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -114,7 +121,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, int content, string? mediaType = default)
+    public void Add(string name, int content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -130,7 +137,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, long content, string? mediaType = default)
+    public void Add(string name, long content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -146,7 +153,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, float content, string? mediaType = default)
+    public void Add(string name, float content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -162,7 +169,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, double content, string? mediaType = default)
+    public void Add(string name, double content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -178,7 +185,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, decimal content, string? mediaType = default)
+    public void Add(string name, decimal content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -194,7 +201,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, bool content, string? mediaType = default)
+    public void Add(string name, bool content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -210,7 +217,7 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, byte[] content, string? mediaType = default)
+    public void Add(string name, byte[] content, string? mediaType = MediatypeApplicationOctetStream)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -224,13 +231,12 @@ public class MultiPartFormContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="mediaType"></param>
-    public void Add(string name, BinaryData content, string? mediaType = default)
+    public void Add(string name, BinaryData content)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        Add(new ByteArrayContent(content.ToArray()), name, mediaType: mediaType);
+        Add(new ByteArrayContent(content.ToArray()), name, mediaType: content.MediaType);
     }
 
     /// <param name="content"></param>
@@ -242,7 +248,8 @@ public class MultiPartFormContent : BinaryContent
         if (mediaType != null)
         {
             Argument.AssertNotNullOrEmpty(mediaType, nameof(mediaType));
-            AddContentTypeHeader(content, mediaType);
+
+            content.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
         }
         if (filename != null)
         {
@@ -253,14 +260,6 @@ public class MultiPartFormContent : BinaryContent
         {
             _multipartContent.Add(content, name);
         }
-    }
-
-    /// <param name="content"></param>
-    /// <param name="mediaType"></param>
-    private static void AddContentTypeHeader(HttpContent content, string mediaType)
-    {
-        MediaTypeHeaderValue header = new MediaTypeHeaderValue(mediaType);
-        content.Headers.ContentType = header;
     }
 
     private static string CreateBoundary()
