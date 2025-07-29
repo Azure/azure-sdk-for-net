@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core.Pipeline;
 
@@ -63,7 +64,9 @@ namespace Azure.Core
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
-            const string PackagePrefix = "Azure.";
+            // This method is based on System.ClientModel.Primitives.UserAgentPolicy.GenerateUserAgentString
+            // but maintains Azure SDK specific formatting for backward compatibility.
+            // TODO: Replace with direct call to System.ClientModel when available in released package
 
             AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
@@ -73,36 +76,48 @@ namespace Azure.Core
             }
 
             string version = versionAttribute.InformationalVersion;
-
             string assemblyName = clientAssembly.GetName().Name!;
+
+            // Azure SDK specific: Convert assembly name to azsdk-net- format
+            const string PackagePrefix = "Azure.";
             if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
+            assemblyName = "azsdk-net-" + assemblyName;
 
-            int hashSeparator = version.IndexOfOrdinal('+');
+            int hashSeparator = version.IndexOf('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);
             }
-            runtimeInformation ??= new RuntimeInformationWrapper();
 
-            // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
-            // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
-            // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
-            // This was added to support operating systems with non-ascii characters in their release names.
+            // Use RuntimeInformationWrapper for testability, but fall back to direct access
             string osDescription;
+            string frameworkDescription;
+            if (runtimeInformation != null)
+            {
+                osDescription = runtimeInformation.OSDescription;
+                frameworkDescription = runtimeInformation.FrameworkDescription;
+            }
+            else
+            {
+                osDescription = RuntimeInformation.OSDescription;
+                frameworkDescription = RuntimeInformation.FrameworkDescription;
+            }
+
+            // URL encode non-ASCII characters in OS description
 #if NET8_0_OR_GREATER
-            osDescription = Ascii.IsValid(runtimeInformation.OSDescription) ? runtimeInformation.OSDescription : WebUtility.UrlEncode(runtimeInformation.OSDescription);
+            osDescription = Ascii.IsValid(osDescription) ? osDescription : WebUtility.UrlEncode(osDescription);
 #else
-            osDescription = ContainsNonAscii(runtimeInformation.OSDescription) ? WebUtility.UrlEncode(runtimeInformation.OSDescription) : runtimeInformation.OSDescription;
+            osDescription = ContainsNonAscii(osDescription) ? WebUtility.UrlEncode(osDescription) : osDescription;
 #endif
 
-            var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {osDescription})");
+            var platformInformation = EscapeProductInformation($"({frameworkDescription}; {osDescription})");
 
             return applicationId != null
-                ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
-                : $"azsdk-net-{assemblyName}/{version} {platformInformation}";
+                ? $"{applicationId} {assemblyName}/{version} {platformInformation}"
+                : $"{assemblyName}/{version} {platformInformation}";
         }
 
         /// <summary>
