@@ -28,6 +28,7 @@ namespace Azure.Core.Perf
         private AzureEventSourceListener _sourceListener;
         private CustomEventSource _eventSource;
         private int _iteration;
+        private HttpRequestMessage _message;
 
         [GlobalSetup]
         public void SetUp()
@@ -36,13 +37,13 @@ namespace Azure.Core.Perf
             _uri = new RawRequestUriBuilder();
             _uri.AppendRaw(UriString, true);
 
-            var message = new HttpRequestMessage();
-            message.Headers.TryAddWithoutValidation("Date", "10/14/2020");
-            message.Headers.TryAddWithoutValidation("Custom-Header", "Value");
-            message.Headers.TryAddWithoutValidation("Header-To-Skip", "Skipped Value");
+            _message = new HttpRequestMessage();
+            _message.Headers.TryAddWithoutValidation("Date", "10/14/2020");
+            _message.Headers.TryAddWithoutValidation("Custom-Header", "Value");
+            _message.Headers.TryAddWithoutValidation("Header-To-Skip", "Skipped Value");
 
             _sanitizedUri = Sanitizer.SanitizeUrl(_uri.ToString());
-            _headersBytes = FormatHeaders(message);
+            _headersBytes = FormatHeaders();
 
             _sourceListener = new AzureEventSourceListener(_ => { }, EventLevel.LogAlways);
             _eventSource = new CustomEventSource();
@@ -60,7 +61,7 @@ namespace Azure.Core.Perf
         [Benchmark(Description = "Old implementation, includes reformatting")]
         public void OldImplementation_CallFormatting()
         {
-            _eventSource.RequestOld(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, _headersBytes);
+            _eventSource.RequestOld(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, FormatHeaders());
         }
 
         [Benchmark(Description = "New implementation, includes reformatting")]
@@ -75,10 +76,10 @@ namespace Azure.Core.Perf
             _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
         }
 
-        private byte[] FormatHeaders(HttpRequestMessage message)
+        private byte[] FormatHeaders()
         {
             var stringBuilder = new StringBuilder();
-            foreach (var header in message.Headers)
+            foreach (var header in _message.Headers)
             {
                 stringBuilder.Append(header.Key);
                 stringBuilder.Append(':');
