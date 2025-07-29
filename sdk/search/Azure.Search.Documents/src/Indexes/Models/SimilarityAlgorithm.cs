@@ -8,5 +8,9 @@ namespace Azure.Search.Documents.Indexes.Models
     [CodeGenModel("Similarity")]
     public partial class SimilarityAlgorithm
     {
+        /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
+        internal SimilarityAlgorithm()
+        {
+        }
     }
 }
