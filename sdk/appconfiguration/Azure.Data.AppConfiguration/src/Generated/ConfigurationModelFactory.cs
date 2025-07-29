@@ -48,5 +48,28 @@ namespace Azure.Data.AppConfiguration
                 eTag,
                 additionalBinaryDataProperties: null);
         }
+
+        /// <summary>
+        /// Enables filtering of key-values. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapisnapshots
+        /// </summary>
+        /// <param name="key"> Filters key-values by their key field. </param>
+        /// <param name="label"> Filters key-values by their label field. </param>
+        /// <param name="tags"> Filters key-values by their tags field. </param>
+        /// <returns> A new <see cref="AppConfiguration.ConfigurationSettingsFilter"/> instance for mocking. </returns>
+        public static ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = default, string label = default, IEnumerable<string> tags = default)
+        {
+            tags ??= new ChangeTrackingList<string>();
+
+            return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Labels are used to group key-values. </summary>
+        /// <param name="name"> The name of the label. </param>
+        /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
+        public static SettingLabel SettingLabel(string name = default)
+        {
+            return new SettingLabel(name, additionalBinaryDataProperties: null);
+        }
     }
 }

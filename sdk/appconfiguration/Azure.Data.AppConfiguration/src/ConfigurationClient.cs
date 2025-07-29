@@ -835,7 +835,7 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
                 Response response = await GetSnapshotAsync(snapshotName, fields, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -859,7 +859,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
                 Response response = GetSnapshot(snapshotName, fields, _syncToken, new MatchConditions(), context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -887,7 +887,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                using RequestContent content = ConfigurationSnapshot.ToRequestContent(snapshot);
+                using RequestContent content = snapshot;
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
@@ -927,7 +927,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                using RequestContent content = ConfigurationSnapshot.ToRequestContent(snapshot);
+                using RequestContent content = snapshot;
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
@@ -970,7 +970,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1001,7 +1001,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1033,7 +1033,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1065,7 +1065,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1096,7 +1096,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1127,7 +1127,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1159,7 +1159,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1191,7 +1191,7 @@ namespace Azure.Data.AppConfiguration
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)

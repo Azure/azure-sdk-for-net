@@ -11,11 +11,7 @@ namespace Azure.Data.AppConfiguration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status");
-                writer.WriteStringValue(Status.Value.ToString());
-            }
+            JsonModelWriteCore(writer, ModelSerializationExtensions.WireOptions);
             writer.WriteEndObject();
         }
 
@@ -23,7 +19,7 @@ namespace Azure.Data.AppConfiguration
         internal static RequestContent ToRequestContent(SnapshotUpdateParameters snapshotUpdateParameters)
         {
             var content = new Utf8JsonRequestContent();
-            Utf8JsonWriterExtensions.WriteObjectValue(content.JsonWriter, snapshotUpdateParameters);
+            content.JsonWriter.WriteObjectValue(snapshotUpdateParameters);
             return content;
         }
     }

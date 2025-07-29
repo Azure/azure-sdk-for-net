@@ -16,6 +16,11 @@ namespace Azure.Data.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotUpdateParameters"/>. </summary>
+        public SnapshotUpdateParameters()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotUpdateParameters"/>. </summary>
         /// <param name="status"> The desired status of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotUpdateParameters(ConfigurationSnapshotStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -23,5 +28,8 @@ namespace Azure.Data.AppConfiguration
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The desired status of the snapshot. </summary>
+        public ConfigurationSnapshotStatus? Status { get; set; }
     }
 }
