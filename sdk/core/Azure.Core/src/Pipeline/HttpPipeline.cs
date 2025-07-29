@@ -22,11 +22,6 @@ namespace Azure.Core.Pipeline
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipelineTransport"/> used by this pipeline.
-        /// </summary>
-        public HttpPipelineTransport Transport => _transportPolicy.Transport;
-
-        /// <summary>
         /// Indicates whether or not the pipeline was created using its internal constructor.
         /// If it was, we know the indices where we can add per-request policies at positions
         /// <see cref="HttpPipelinePosition.PerCall"/> and <see cref="HttpPipelinePosition.PerRetry"/>.

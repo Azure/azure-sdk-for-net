@@ -1073,7 +1073,6 @@ namespace Azure.Core.Pipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
-        public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } }
         public static System.IDisposable CreateClientRequestIdScope(string? clientRequestId) { throw null; }
         public static System.IDisposable CreateHttpMessagePropertiesScope(System.Collections.Generic.IDictionary<string, object?> messageProperties) { throw null; }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }

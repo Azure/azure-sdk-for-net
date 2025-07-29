@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline
         private string[] _scopes;
         private readonly AccessTokenCache _accessTokenCache;
         private readonly TokenCredential _credential;
-        private readonly HttpPipeline _httpPipeline;
+        private volatile HttpPipelineTransportOptions _transportOptions;
         private string? _currentBindingCertThumbprint;
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scope">The scope to be included in acquired tokens.</param>
-        /// <param name="httpPipeline"></param>
-        public PopTokenAuthenticationPolicy(TokenCredential credential, string scope, HttpPipeline httpPipeline) : this(credential, new[] { scope }, httpPipeline)
+        /// <param name="transportOptions"></param>
+        public PopTokenAuthenticationPolicy(TokenCredential credential, string scope, HttpPipelineTransportOptions transportOptions) : this(credential, new[] { scope }, transportOptions)
         { }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential">The token credential to use for authentication.</param>
         /// <param name="scopes">Scopes to be included in acquired tokens.</param>
-        /// <param name="httpPipeline"></param>
+        /// <param name="transportOptions"></param>
         /// <exception cref="ArgumentNullException">When <paramref name="credential"/> or <paramref name="scopes"/> is null.</exception>
-        public PopTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, HttpPipeline httpPipeline)
-            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30), httpPipeline)
+        public PopTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, HttpPipelineTransportOptions transportOptions)
+            : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30), transportOptions)
         { }
 
         internal PopTokenAuthenticationPolicy(
@@ -48,15 +48,15 @@ namespace Azure.Core.Pipeline
             IEnumerable<string> scopes,
             TimeSpan tokenRefreshOffset,
             TimeSpan tokenRefreshRetryDelay,
-            HttpPipeline httpPipeline)
+            HttpPipelineTransportOptions transportOptions)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
-            Argument.AssertNotNull(httpPipeline, nameof(httpPipeline));
+            Argument.AssertNotNull(transportOptions, nameof(transportOptions));
 
             _scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay);
-            _httpPipeline = httpPipeline;
+            _transportOptions = transportOptions;
             _credential = credential;
         }
 
@@ -227,8 +227,10 @@ namespace Azure.Core.Pipeline
             var token = _credential.GetToken(context, message.CancellationToken);
             if (token.BindingCertificate != null && token.BindingCertificate.Thumbprint != _currentBindingCertThumbprint)
             {
-                var transportOptions = new HttpPipelineTransportOptions();
+                var transportOptions = _transportOptions.Clone();
+                transportOptions.ClientCertificates.Clear();
                 transportOptions.ClientCertificates.Add(token.BindingCertificate);
+                _transportOptions = transportOptions;
                 OwningPipeline?.UpdatePolicy(HttpPipelineUpdatePosition.Transport, transportOptions);
                 _currentBindingCertThumbprint = token.BindingCertificate.Thumbprint;
             }
