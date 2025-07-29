@@ -27,7 +27,13 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error) : base(allTables, statistics, visualization, error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(allTables, statistics, visualization, error, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/> for deserialization. </summary>
+        internal LogsBatchQueryResult()
         {
         }
     }
