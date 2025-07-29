@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.1.0 (2025-07-29)
 
 ### Other Changes
+- Package will target netstandard 2.0 and net 8.0.
+- Package will reference the latest stable releases of its dependencies. 
 
 ## 1.0.1 (2024-06-25)
 
