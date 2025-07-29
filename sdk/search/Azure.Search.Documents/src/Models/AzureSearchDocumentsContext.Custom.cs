@@ -13,10 +13,5 @@ namespace Azure.Search.Documents
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AzureSearchDocumentsContext : ModelReaderWriterContext
     {
-        private AzureSearchDocumentsContext _azureSearchDocumentsContext;
-
-        /// <summary> Gets the default instance </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public AzureSearchDocumentsContext Default => _azureSearchDocumentsContext ??= new();
     }
 }
