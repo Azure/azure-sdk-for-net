@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             if (result is null) throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
+            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions, result.GetRawResponse().Content);
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>

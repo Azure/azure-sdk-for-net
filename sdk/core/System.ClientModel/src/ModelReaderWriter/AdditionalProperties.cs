@@ -287,6 +287,14 @@ public partial struct AdditionalProperties
 
         foreach (var kvp in _properties)
         {
+            if (kvp.Key.IsRoot())
+                continue;
+
+            if (kvp.Value[0] == (byte)ValueKind.Removed)
+            {
+                continue;
+            }
+
             var parent = kvp.Key.GetParent();
 
             if ((kvp.Value[0] & (byte)ValueKind.ArrayItem) != 0)
@@ -412,5 +420,18 @@ public partial struct AdditionalProperties
         }
 
         return index;
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <returns></returns>
+    public bool IsRemoved(byte[] jsonPath)
+    {
+        if (_properties is null)
+            return false;
+
+        return _properties.TryGetValue(jsonPath, out var value) && value[0] == (byte)ValueKind.Removed;
     }
 }

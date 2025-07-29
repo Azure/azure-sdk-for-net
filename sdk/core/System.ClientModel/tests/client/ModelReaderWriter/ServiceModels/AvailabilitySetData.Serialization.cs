@@ -6,13 +6,11 @@
 using System.Buffers.Text;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using Castle.Components.DictionaryAdapter.Xml;
 using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
@@ -21,8 +19,11 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
     {
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
-
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{format}' format.");
+            }
             Serialize(writer, options);
         }
 
@@ -93,7 +94,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     {
                         for (int i = 0; i < VirtualMachines.Count; i++)
                         {
-                            var index = flattenedJson.GetArrayLength("$.virtualMachines[-"u8) ?? 0;
+                            if (flattenedJson.IsRemoved(Encoding.UTF8.GetBytes($"$.virtualMachines[-{i}]")))
+                            {
+                                continue;
+                            }
+
+                            var indexInPatch = flattenedJson.GetArrayLength("$.virtualMachines[-"u8);
+                            var index = indexInPatch.HasValue ? indexInPatch.Value + i : i;
                             var jsonPath = "$.virtualMachines[-"u8;
                             Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
                             jsonPath.CopyTo(buffer);
@@ -132,10 +139,8 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options = default)
+        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options, BinaryData data)
         {
-            options ??= ModelReaderWriterHelper.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -279,6 +284,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
             var model = new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses));
 
+            if (data is not null)
+                model.Patch.Set("$"u8, data);
+
             foreach(var kvp in rawDataDictionary)
             {
                 model.Patch.Set(Encoding.UTF8.GetBytes([.. "$.", .. kvp.Key]), kvp.Value);
@@ -289,10 +297,18 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeAvailabilitySetData(doc.RootElement, options);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvailabilitySetData(document.RootElement, options, data);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support reading '{options.Format}' format.");
+            }
         }
 
         private struct AvailabilitySetDataProperties
@@ -313,17 +329,27 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support reading '{format}' format.");
+            }
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvailabilitySetData(doc.RootElement, options);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailabilitySetData(document.RootElement, options, null);
         }
 
         BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
 
-            return ModelReaderWriter.Write(this, options);
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, TestClientModelReaderWriterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilitySetData)} does not support writing '{options.Format}' format.");
+            }
         }
 
         string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

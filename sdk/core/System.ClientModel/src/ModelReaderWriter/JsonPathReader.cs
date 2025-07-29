@@ -44,10 +44,13 @@ internal ref struct JsonPathReader
 
     public bool Read()
     {
+        if (Current.TokenType == JsonPathTokenType.End)
+            return false;
+
         if (_consumed >= _jsonPath.Length)
         {
             Current = new JsonPathToken(JsonPathTokenType.End, _jsonPath.Length - 1);
-            return false;
+            return true;
         }
 
         byte current = _jsonPath[_consumed];

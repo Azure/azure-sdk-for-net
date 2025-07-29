@@ -58,25 +58,25 @@ public partial struct AdditionalProperties
     }
 
     // Helper method to get raw encoded value bytes
-    private byte[] GetEncodedValue(ReadOnlySpan<byte> name)
+    private byte[] GetEncodedValue(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
         {
             return Array.Empty<byte>();
         }
 
-        if (name.IsArrayInsert())
+        if (jsonPath.IsArrayInsert())
         {
-            return CombineAllArrayItems(name);
+            return CombineAllArrayItems(jsonPath);
         }
 
-        byte[] nameBytes = name.ToArray();
+        byte[] nameBytes = jsonPath.ToArray();
         if (!_properties.TryGetValue(nameBytes, out byte[]? encodedValue))
         {
-            var parent = name.GetParent();
+            var parent = jsonPath.GetParent();
             if (_properties.TryGetValue(parent.ToArray(), out encodedValue))
             {
-                var indexSpan = name.GetIndexSpan();
+                var indexSpan = jsonPath.GetIndexSpan();
                 if (indexSpan.IsEmpty)
                     return Array.Empty<byte>();
 
@@ -112,10 +112,13 @@ public partial struct AdditionalProperties
                     return Array.Empty<byte>();
                 }
             }
-            if (TryGetParentMatch(name, out var parentPath, out encodedValue))
+            if (TryGetParentMatch(jsonPath, true, out var parentBytes, out var currentValue))
             {
-                // generically need to use the JsonPathReader to find the item from the json returned here
-                return encodedValue;
+                var childSlice = jsonPath.Slice(parentBytes.Length);
+                Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
+                childPath[0] = (byte)'$';
+                childSlice.CopyTo(childPath.Slice(1));
+                return [currentValue[0], .. currentValue.GetJson(childPath)];
             }
 
             return Array.Empty<byte>();
@@ -124,7 +127,7 @@ public partial struct AdditionalProperties
         return encodedValue;
     }
 
-    private bool TryGetParentMatch(ReadOnlySpan<byte> name, [NotNullWhen(true)] out byte[]? parentPath, [NotNullWhen(true)] out byte[]? encodedValue)
+    private bool TryGetParentMatch(ReadOnlySpan<byte> name, bool includeRoot, [NotNullWhen(true)] out byte[]? parentPath, [NotNullWhen(true)] out byte[]? encodedValue)
     {
         parentPath = default;
         encodedValue = null;
@@ -134,16 +137,16 @@ public partial struct AdditionalProperties
         }
 
         var parent = name.GetParent();
-        while (parent.Length > 1)
+        while (parent.Length > 0)
         {
             parentPath = parent.ToArray();
             if (_properties.TryGetValue(parent.ToArray(), out encodedValue))
                 return true;
 
-            if (parent.IsRoot())
-                return false;
-
             parent = parent.GetParent();
+
+            if (parent.IsRoot() && !includeRoot)
+                return false;
         }
 
         return false;
@@ -388,7 +391,7 @@ public partial struct AdditionalProperties
             // if its remove we need to look at parents before inserting
             if (!_properties.TryGetValue(nameBytes, out var currentValue))
             {
-                if (TryGetParentMatch(jsonPath, out var parentBytes, out currentValue))
+                if (TryGetParentMatch(jsonPath, false, out var parentBytes, out currentValue))
                 {
                     var childSlice = jsonPath.Slice(parentBytes.Length);
                     Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
@@ -397,8 +400,11 @@ public partial struct AdditionalProperties
                     var modifiedValue = currentValue.Remove(childPath);
                     _properties[parentBytes] = modifiedValue;
                 }
+                else
+                {
+                    _properties[nameBytes] = encodedValue;
+                }
             }
-            _properties[nameBytes] = encodedValue;
         }
         else
         {
@@ -430,11 +436,21 @@ public partial struct AdditionalProperties
             }
             else
             {
-                // need to handle the case where I am setting a specific index in an array
-                // also increment the _arrayIndices if it exists
-                // should the Set method allow the user to say this is an array item since
-                // json properties can be numbers and /foo/1 may not be an array item
-                _properties[jsonPath.ToArray()] = encodedValue;
+                var parent = jsonPath.GetParent();
+                if (parent.IsEmpty || parent.IsRoot() || !_properties.TryGetValue(parent.ToArray(), out var currentValue))
+                {
+                    _properties[jsonPath.ToArray()] = encodedValue;
+                }
+                else
+                {
+                    // if we have a parent, we need to modify the parent value
+                    var childSlice = jsonPath.Slice(parent.Length);
+                    Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
+                    childPath[0] = (byte)'$';
+                    childSlice.CopyTo(childPath.Slice(1));
+                    var modifiedValue = currentValue.Replace(childPath, encodedValue);
+                    _properties[parent.ToArray()] = modifiedValue;
+                }
             }
         }
     }
