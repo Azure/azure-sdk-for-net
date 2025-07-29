@@ -323,7 +323,8 @@ extends:
           steps:
           - checkout: self
           - pwsh: |
-              git fetch origin $(branchName)
+              git remote add azure-sdk https://github.com/$(AzureSdkRepoName).git
+              git fetch azure-sdk $(branchName)
               git switch $(branchName)
             displayName: 'Checkout PR branch $(branchName)'  
 
