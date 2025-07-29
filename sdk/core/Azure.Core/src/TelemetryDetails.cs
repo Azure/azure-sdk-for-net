@@ -65,53 +65,25 @@ namespace Azure.Core
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
-            // TODO: Once System.ClientModel.Primitives.UserAgentPolicy.GenerateUserAgentString is available in released packages,
-            // replace this implementation with a direct call to that method and apply Azure SDK specific transformations.
-            // For now, we implement the same logic structure to align with System.ClientModel's approach.
+            // Use custom runtime information for test scenarios that need to mock RuntimeInformation
+            if (runtimeInformation != null)
+            {
+                return GenerateUserAgentStringWithCustomRuntimeInfo(clientAssembly, applicationId, runtimeInformation);
+            }
 
-            // Use System.ClientModel's logic but handle Azure SDK specific formatting
-            return runtimeInformation != null
-                ? GenerateUserAgentStringWithCustomRuntimeInfo(clientAssembly, applicationId, runtimeInformation)
-                : GenerateAzureSdkUserAgentString(clientAssembly, applicationId);
+            // Use System.ClientModel's UserAgentPolicy.GenerateUserAgentString and apply Azure SDK specific transformations
+            string userAgentString = UserAgentPolicy.GenerateUserAgentString(clientAssembly, applicationId);
+            return ApplyAzureSdkTransformations(userAgentString, clientAssembly);
         }
 
-        private static string GenerateAzureSdkUserAgentString(Assembly clientAssembly, string? applicationId)
+        private static string ApplyAzureSdkTransformations(string userAgentString, Assembly clientAssembly)
         {
-            // This method implements the same logic as System.ClientModel.Primitives.UserAgentPolicy.GenerateUserAgentString
-            // but with Azure SDK specific assembly name transformations.
-
-            AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-            if (versionAttribute == null)
-            {
-                throw new InvalidOperationException(
-                    $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}'.");
-            }
-
-            string version = versionAttribute.InformationalVersion;
+            // Transform the assembly name from System.ClientModel format to Azure SDK format
             string assemblyName = clientAssembly.GetName().Name!;
+            string azureSdkAssemblyName = TransformToAzureSdkAssemblyName(assemblyName);
 
-            // Azure SDK specific: Convert assembly name to azsdk-net- format
-            assemblyName = TransformToAzureSdkAssemblyName(assemblyName);
-
-            int hashSeparator = version.IndexOf('+');
-            if (hashSeparator != -1)
-            {
-                version = version.Substring(0, hashSeparator);
-            }
-
-            // Use the same OS description encoding logic as System.ClientModel
-            string osDescription;
-#if NET8_0_OR_GREATER
-            osDescription = Ascii.IsValid(RuntimeInformation.OSDescription) ? RuntimeInformation.OSDescription : WebUtility.UrlEncode(RuntimeInformation.OSDescription);
-#else
-            osDescription = ContainsNonAscii(RuntimeInformation.OSDescription) ? WebUtility.UrlEncode(RuntimeInformation.OSDescription) : RuntimeInformation.OSDescription;
-#endif
-
-            var platformInformation = EscapeProductInformation($"({RuntimeInformation.FrameworkDescription}; {osDescription})");
-
-            return applicationId != null
-                ? $"{applicationId} {assemblyName}/{version} {platformInformation}"
-                : $"{assemblyName}/{version} {platformInformation}";
+            // Replace the assembly name in the user agent string
+            return userAgentString.Replace($"{assemblyName}/", $"{azureSdkAssemblyName}/");
         }
 
         private static string TransformToAzureSdkAssemblyName(string assemblyName)
