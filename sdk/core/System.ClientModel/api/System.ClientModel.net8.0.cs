@@ -445,4 +445,13 @@ namespace System.ClientModel.Primitives
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
     }
+    public partial class UserAgentPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public UserAgentPolicy(System.Reflection.Assembly callerAssembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public static string GenerateUserAgentString(System.Reflection.Assembly callerAssembly, string? applicationId = null) { throw null; }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
 }
