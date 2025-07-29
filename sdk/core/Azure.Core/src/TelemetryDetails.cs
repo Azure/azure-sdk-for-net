@@ -113,7 +113,7 @@ namespace Azure.Core
             // Azure SDK specific: Convert assembly name to azsdk-net- format
             assemblyName = TransformToAzureSdkAssemblyName(assemblyName);
 
-            int hashSeparator = version.IndexOf('+');
+            int hashSeparator = version.IndexOf('+', StringComparison.Ordinal);
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);
@@ -124,7 +124,7 @@ namespace Azure.Core
 
             // URL encode non-ASCII characters in OS description
 #if NET8_0_OR_GREATER
-            osDescription = Ascii.IsValid(osDescription) ? osDescription : WebUtility.UrlEncode(osDescription);
+            osDescription = System.Text.Ascii.IsValid(osDescription) ? osDescription : WebUtility.UrlEncode(osDescription);
 #else
             osDescription = ContainsNonAscii(osDescription) ? WebUtility.UrlEncode(osDescription) : osDescription;
 #endif

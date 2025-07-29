@@ -144,6 +144,56 @@ namespace Azure.Core.Tests
                     target.ToString());
         }
 
+        [Test]
+        public void UsesSystemClientModelUserAgentGeneration()
+        {
+            // Test that the normal code path (without RuntimeInformationWrapper)
+            // calls System.ClientModel's UserAgentPolicy.GenerateUserAgentString and applies Azure transformations
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, appId);
+
+            var assembly = Assembly.GetAssembly(GetType());
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            string version = versionAttribute.InformationalVersion;
+            int hashSeparator = version.IndexOf('+', StringComparison.Ordinal);
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+
+            // Verify that the assembly name was transformed to Azure SDK format
+            string userAgent = target.ToString();
+            Assert.That(userAgent, Does.Contain("azsdk-net-Core.Tests"));
+            Assert.That(userAgent, Does.Contain($"/{version}"));
+            Assert.That(userAgent, Does.Contain(appId));
+            Assert.That(userAgent, Does.Contain(RuntimeInformation.FrameworkDescription));
+
+            // Verify it does NOT contain the original assembly name format
+            Assert.That(userAgent, Does.Not.Contain("Azure.Core.Tests"));
+        }
+
+        [Test]
+        public void SystemClientModelIntegrationWithoutApplicationId()
+        {
+            // Test System.ClientModel integration without application ID
+            var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, null);
+
+            var assembly = Assembly.GetAssembly(GetType());
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            string version = versionAttribute.InformationalVersion;
+            int hashSeparator = version.IndexOf('+', StringComparison.Ordinal);
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+
+            string userAgent = target.ToString();
+
+            // Should start with azsdk-net-Core.Tests (no application ID prefix)
+            Assert.That(userAgent, Does.StartWith("azsdk-net-Core.Tests"));
+            Assert.That(userAgent, Does.Contain($"/{version}"));
+            Assert.That(userAgent, Does.Contain(RuntimeInformation.FrameworkDescription));
+        }
+
         private class MockRuntimeInformation : RuntimeInformationWrapper
         {
             public string FrameworkDescriptionMock { get; set; }
