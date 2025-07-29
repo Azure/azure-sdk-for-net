@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover
 {
@@ -13,6 +15,73 @@ namespace Azure.ResourceManager.ResourceMover
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AffectedMoverResourceInfo))]
+    [ModelReaderWriterBuildable(typeof(AutomaticResolutionProperties))]
+    [ModelReaderWriterBuildable(typeof(DiskEncryptionSetResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(LoadBalancerBackendAddressPoolReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(LoadBalancerBackendAddressPoolResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(LoadBalancerFrontendIPConfigurationResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(LoadBalancerNatRuleReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(LoadBalancerResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManualResolutionProperties))]
+    [ModelReaderWriterBuildable(typeof(MoveCollectionPropertiesErrors))]
+    [ModelReaderWriterBuildable(typeof(MoveCollectionResultList))]
+    [ModelReaderWriterBuildable(typeof(MoveErrorInfo))]
+    [ModelReaderWriterBuildable(typeof(MoverAvailabilitySetResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(MoverBulkRemoveContent))]
+    [ModelReaderWriterBuildable(typeof(MoverCommitContent))]
+    [ModelReaderWriterBuildable(typeof(MoverDiscardContent))]
+    [ModelReaderWriterBuildable(typeof(MoverDisplayInfo))]
+    [ModelReaderWriterBuildable(typeof(MoveResourceError))]
+    [ModelReaderWriterBuildable(typeof(MoveResourcePropertiesErrors))]
+    [ModelReaderWriterBuildable(typeof(MoverOperationErrorAdditionalInfo))]
+    [ModelReaderWriterBuildable(typeof(MoverOperationsDiscovery))]
+    [ModelReaderWriterBuildable(typeof(MoverOperationsDiscoveryList))]
+    [ModelReaderWriterBuildable(typeof(MoverOperationStatus))]
+    [ModelReaderWriterBuildable(typeof(MoverOperationStatusError))]
+    [ModelReaderWriterBuildable(typeof(MoverPrepareContent))]
+    [ModelReaderWriterBuildable(typeof(MoverResource))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceData))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceDependency))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceDependencyOverride))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceJobStatus))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceList))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceMoveContent))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(MoverResourcePropertiesMoveStatus))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceSetData))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceSetPatch))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceSetProperties))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceSetResource))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(MoverResourceStatus))]
+    [ModelReaderWriterBuildable(typeof(MoverSummaryItemInfo))]
+    [ModelReaderWriterBuildable(typeof(MoverSummaryList))]
+    [ModelReaderWriterBuildable(typeof(MoverUnresolvedDependency))]
+    [ModelReaderWriterBuildable(typeof(MoverUnresolvedDependencyList))]
+    [ModelReaderWriterBuildable(typeof(MoverVirtualNetworkResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(NetworkInterfaceResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityGroupResourceReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityGroupResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityGroupSecurityRule))]
+    [ModelReaderWriterBuildable(typeof(NicIPConfigurationResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(ProxyResourceReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(PublicIPAddressResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(PublicIPReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(RequiredForResourcesList))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SqlDatabaseResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlElasticPoolResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(SqlServerResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(SubnetReferenceInfo))]
+    [ModelReaderWriterBuildable(typeof(SubnetResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownResourceSettings))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineResourceSettings))]
     public partial class AzureResourceManagerResourceMoverContext : ModelReaderWriterContext
     {
     }

@@ -89,7 +89,16 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(
+                threadId: threadId,
+                runId: runId,
+                include: include,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context
+            );
             var asyncPageable = new ContinuationTokenPageableAsync<RunStep>(
                 createPageRequest: PageRequest,
                 valueFactory: e => RunStep.DeserializeRunStep(e),
@@ -100,7 +109,8 @@ namespace Azure.AI.Agents.Persistent
                 itemType: ContinuationItemType.RunStep,
                 threadId: threadId,
                 runId: runId,
-                endpoint: _endpoint
+                endpoint: _endpoint,
+                after: after
             );
 
             return asyncPageable;
@@ -126,7 +136,16 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(
+                threadId: threadId,
+                runId: runId,
+                include: include,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context
+            );
             var pageable = new ContinuationTokenPageable<RunStep>(
                 createPageRequest: PageRequest,
                 valueFactory: e => RunStep.DeserializeRunStep(e),
@@ -137,7 +156,8 @@ namespace Azure.AI.Agents.Persistent
                 itemType: ContinuationItemType.RunStep,
                 threadId: threadId,
                 runId: runId,
-                endpoint: _endpoint
+                endpoint: _endpoint,
+                after: after
             );
 
             return pageable;

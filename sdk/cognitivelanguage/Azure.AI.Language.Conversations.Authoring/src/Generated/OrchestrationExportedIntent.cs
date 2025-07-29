@@ -62,11 +62,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// The available derived classes include <see cref="ExportedConversationOrchestrationDetails"/>, <see cref="ExportedLuisOrchestrationDetails"/> and <see cref="ExportedQuestionAnsweringOrchestrationDetails"/>.
         /// </param>
         /// <param name="category"> The intent category. </param>
+        /// <param name="description"> The intent description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration, string category, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Orchestration = orchestration;
             Category = category;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,5 +85,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ExportedOrchestrationDetails Orchestration { get; set; }
         /// <summary> The intent category. </summary>
         public string Category { get; }
+        /// <summary> The intent description. </summary>
+        public string Description { get; set; }
     }
 }

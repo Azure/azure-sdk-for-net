@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Kubernetes.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
@@ -13,6 +15,17 @@ namespace Azure.ResourceManager.Kubernetes
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterData))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterList))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(ConnectedClusterResource))]
+    [ModelReaderWriterBuildable(typeof(CredentialResult))]
+    [ModelReaderWriterBuildable(typeof(CredentialResults))]
+    [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
+    [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesContext : ModelReaderWriterContext
     {
     }

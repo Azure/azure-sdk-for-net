@@ -56,19 +56,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource> Update(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource>> UpdateAsync(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCoreSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.CapacitySku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.CheckCapacityNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.DedicatedCapacityPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.PowerBIDedicatedResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.SkuDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PowerBIDedicated.Models.SystemData))]
     public partial class AzureResourceManagerPowerBIDedicatedContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPowerBIDedicatedContext() { }

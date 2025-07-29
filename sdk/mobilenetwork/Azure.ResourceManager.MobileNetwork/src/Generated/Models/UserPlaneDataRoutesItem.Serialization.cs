@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
-                JsonSerializer.Serialize(writer, AttachedDataNetwork);
+                ((IJsonModel<WritableSubResource>)AttachedDataNetwork).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Routes))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    attachedDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    attachedDataNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("routes"u8))

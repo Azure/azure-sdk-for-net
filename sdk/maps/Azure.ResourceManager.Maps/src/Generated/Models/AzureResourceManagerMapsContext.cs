@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Maps.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maps
 {
@@ -13,6 +15,31 @@ namespace Azure.ResourceManager.Maps
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CorsRules))]
+    [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
+    [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryptionKeyIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountData))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountKeys))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountPatch))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountResource))]
+    [ModelReaderWriterBuildable(typeof(MapsAccounts))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountSasContent))]
+    [ModelReaderWriterBuildable(typeof(MapsAccountSasToken))]
+    [ModelReaderWriterBuildable(typeof(MapsCorsRule))]
+    [ModelReaderWriterBuildable(typeof(MapsCreatorData))]
+    [ModelReaderWriterBuildable(typeof(MapsCreatorListResult))]
+    [ModelReaderWriterBuildable(typeof(MapsCreatorPatch))]
+    [ModelReaderWriterBuildable(typeof(MapsCreatorProperties))]
+    [ModelReaderWriterBuildable(typeof(MapsCreatorResource))]
+    [ModelReaderWriterBuildable(typeof(MapsEncryption))]
+    [ModelReaderWriterBuildable(typeof(MapsKeySpecification))]
+    [ModelReaderWriterBuildable(typeof(MapsLinkedResource))]
+    [ModelReaderWriterBuildable(typeof(MapsSku))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMapsContext : ModelReaderWriterContext
     {
     }

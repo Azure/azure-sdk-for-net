@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
@@ -13,6 +16,46 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ApiEntityReference))]
+    [ModelReaderWriterBuildable(typeof(BackupRestoreBaseResultProperties))]
+    [ModelReaderWriterBuildable(typeof(BackupRestoreRequestBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterBackupContent))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterBackupResult))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterBackupResultProperties))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterData))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateLinkData))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterResource))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterRestoreContent))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterRestoreResult))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmClusterSku))]
+    [ModelReaderWriterBuildable(typeof(CloudHsmProperties))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmData))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmEgressEndpoint))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmEgressEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmEndpointDependency))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmEndpointDetail))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmListResult))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmNetworkInterface))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmPatch))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmProperties))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmResource))]
+    [ModelReaderWriterBuildable(typeof(DedicatedHsmSku))]
+    [ModelReaderWriterBuildable(typeof(HardwareSecurityModulesPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(HardwareSecurityModulesPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerHardwareSecurityModulesContext : ModelReaderWriterContext
     {
     }

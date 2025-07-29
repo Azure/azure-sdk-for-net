@@ -23,28 +23,6 @@ namespace Azure.AI.Translation.Text
         public static Azure.AI.Translation.Text.TransliteratedText TransliteratedText(string text = null, string script = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliterationLanguage TransliterationLanguage(string name = null, string nativeName = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TransliterableScript> scripts = null) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.BackTranslation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.BreakSentenceItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.DetectedLanguage))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.DictionaryExample))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.DictionaryExampleItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.DictionaryExampleTextItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.DictionaryLookupItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.DictionaryTranslation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.GetSupportedLanguagesResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.InputTextItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.LanguageScript))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.SentenceBoundaries))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.SourceDictionaryLanguage))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.SourceText))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TargetDictionaryLanguage))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TranslatedTextAlignment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TranslatedTextItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TranslationLanguage))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TranslationText))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TransliterableScript))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TransliteratedText))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Translation.Text.TransliterationLanguage))]
     public partial class AzureAITranslationTextContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAITranslationTextContext() { }

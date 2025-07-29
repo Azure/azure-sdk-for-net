@@ -458,6 +458,10 @@ extends:
     Artifacts:
       - name: Azure.ResourceManager
         safeName: AzureResourceManager
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager
+      ExpectedWarningsFilepath: None
     TestSetupSteps:
       - template: /sdk/storage/tests-install-azurite.yml
     TestDependsOnDependency: Azure.ResourceManager

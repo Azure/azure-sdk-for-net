@@ -1,18 +1,5 @@
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ManagedNetworkData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.Models.Scope))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource))]
     public partial class AzureResourceManagerManagedNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerManagedNetworkContext() { }

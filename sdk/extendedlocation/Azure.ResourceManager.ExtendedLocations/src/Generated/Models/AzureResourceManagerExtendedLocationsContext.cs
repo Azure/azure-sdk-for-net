@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ExtendedLocations.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations
 {
@@ -13,6 +15,17 @@ namespace Azure.ResourceManager.ExtendedLocations
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CustomLocationAuthentication))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationData))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceType))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceTypeMetadata))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationEnabledResourceTypesResult))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationListResult))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationPatch))]
+    [ModelReaderWriterBuildable(typeof(CustomLocationResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerExtendedLocationsContext : ModelReaderWriterContext
     {
     }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
@@ -22,6 +21,7 @@ namespace Azure.Generator.Management
         private const string ResourceScope = "resourceScope";
         private const string Methods = "methods";
         private const string ParentResourceId = "parentResourceId";
+        private const string ResourceName = "resourceName";
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
@@ -118,13 +118,13 @@ namespace Azure.Generator.Management
                 var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator != null)
                 {
-                    var metadata = BuildResourceMetadata(decorator);
+                    var metadata = BuildResourceMetadata(decorator, model);
                     resourceMetadata.Add(model, metadata);
                 }
             }
             return resourceMetadata;
 
-            ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator)
+            ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator, InputModelType inputModel)
             {
                 var args = decorator.Arguments ?? throw new InvalidOperationException();
                 string? resourceIdPattern = null;
@@ -133,6 +133,7 @@ namespace Azure.Generator.Management
                 ResourceScope? resourceScope = null;
                 var methods = new List<ResourceMethod>();
                 string? parentResource = null;
+                string? resourceName = null;
                 if (args.TryGetValue(ResourceIdPattern, out var resourceIdPatternData))
                 {
                     resourceIdPattern = resourceIdPatternData.ToObjectFromJson<string>();
@@ -192,6 +193,21 @@ namespace Azure.Generator.Management
                     parentResource = parentResourceData.ToObjectFromJson<string>();
                 }
 
+                if (args.TryGetValue(ResourceName, out var resourceNameData))
+                {
+                    resourceName = resourceNameData.ToObjectFromJson<string>();
+                }
+
+                var methodToClientMap = new Dictionary<string, InputClient>();
+                foreach (var method in methods)
+                {
+                    var inputClient = GetClientByMethod(GetMethodByCrossLanguageDefinitionId(method.Id)!);
+                    if (inputClient != null)
+                    {
+                        methodToClientMap[method.Id] = inputClient;
+                    }
+                }
+
                 // TODO -- I know we should never throw the exception, but here we just put it here and refine it later
                 return new(
                     resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
@@ -199,7 +215,9 @@ namespace Azure.Generator.Management
                     resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),
                     methods,
                     singletonResourceName,
-                    parentResource);
+                    parentResource,
+                    resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
+                    methodToClientMap);
             }
         }
 

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(ExpireOn.Value, "R");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Thumbprint))
             {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(CreatedOn.Value, "R");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "R");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    expiry = property.Value.GetDateTimeOffset("R");
+                    expiry = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("thumbprint"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("R");
+                    created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("updated"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("R");
+                    updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")

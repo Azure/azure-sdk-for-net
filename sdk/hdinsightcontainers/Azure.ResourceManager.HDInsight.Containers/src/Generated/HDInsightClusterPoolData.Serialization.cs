@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHDInsightContainersContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

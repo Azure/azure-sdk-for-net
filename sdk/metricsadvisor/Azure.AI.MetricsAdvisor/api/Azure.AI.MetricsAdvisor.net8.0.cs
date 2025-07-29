@@ -14,12 +14,6 @@ namespace Azure.AI.MetricsAdvisor
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MaximumSeverity { get { throw null; } }
         public Azure.AI.MetricsAdvisor.Models.AnomalySeverity? MinimumSeverity { get { throw null; } }
     }
-    public partial class AzureAIMetricsAdvisorContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAIMetricsAdvisorContext() { }
-        public static Azure.AI.MetricsAdvisor.AzureAIMetricsAdvisorContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class FeedbackFilter
     {
         public FeedbackFilter() { }

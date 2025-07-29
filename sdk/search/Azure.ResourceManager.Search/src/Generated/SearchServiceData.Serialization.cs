@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet, options);
             }
-            if (Optional.IsCollectionDefined(DisabledDataExfiltrationOptions))
+            if (Optional.IsCollectionDefined(DataExfiltrationProtections))
             {
-                writer.WritePropertyName("disabledDataExfiltrationOptions"u8);
+                writer.WritePropertyName("dataExfiltrationProtections"u8);
                 writer.WriteStartArray();
-                foreach (var item in DisabledDataExfiltrationOptions)
+                foreach (var item in DataExfiltrationProtections)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -170,15 +170,15 @@ namespace Azure.ResourceManager.Search
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUpgradeAvailable))
+            if (Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable"u8);
-                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
+                writer.WriteStringValue(IsUpgradeAvailable.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceUpgradeOn))
+            if (options.Format != "W" && Optional.IsDefined(ServiceUpgradedOn))
             {
-                writer.WritePropertyName("serviceUpgradeDate"u8);
-                writer.WriteStringValue(ServiceUpgradeOn.Value, "O");
+                writer.WritePropertyName("serviceUpgradedAt"u8);
+                writer.WriteStringValue(ServiceUpgradedOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Search
             string statusDetails = default;
             SearchServiceProvisioningState? provisioningState = default;
             SearchServiceNetworkRuleSet networkRuleSet = default;
-            IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = default;
+            IList<SearchDataExfiltrationProtection> dataExfiltrationProtections = default;
             SearchEncryptionWithCmk encryptionWithCmk = default;
             bool? disableLocalAuth = default;
             SearchAadAuthDataPlaneAuthOptions authOptions = default;
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Search
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
-            bool? upgradeAvailable = default;
-            DateTimeOffset? serviceUpgradeDate = default;
+            SearchServiceUpgradeAvailable? upgradeAvailable = default;
+            DateTimeOffset? serviceUpgradedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -391,18 +391,18 @@ namespace Azure.ResourceManager.Search
                             networkRuleSet = SearchServiceNetworkRuleSet.DeserializeSearchServiceNetworkRuleSet(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("disabledDataExfiltrationOptions"u8))
+                        if (property0.NameEquals("dataExfiltrationProtections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<SearchDisabledDataExfiltrationOption> array = new List<SearchDisabledDataExfiltrationOption>();
+                            List<SearchDataExfiltrationProtection> array = new List<SearchDataExfiltrationProtection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new SearchDisabledDataExfiltrationOption(item.GetString()));
+                                array.Add(new SearchDataExfiltrationProtection(item.GetString()));
                             }
-                            disabledDataExfiltrationOptions = array;
+                            dataExfiltrationProtections = array;
                             continue;
                         }
                         if (property0.NameEquals("encryptionWithCmk"u8))
@@ -486,16 +486,16 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            upgradeAvailable = property0.Value.GetBoolean();
+                            upgradeAvailable = new SearchServiceUpgradeAvailable(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceUpgradeDate"u8))
+                        if (property0.NameEquals("serviceUpgradedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            serviceUpgradeDate = property0.Value.GetDateTimeOffset("O");
+                            serviceUpgradedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Search
                 statusDetails,
                 provisioningState,
                 networkRuleSet,
-                disabledDataExfiltrationOptions ?? new ChangeTrackingList<SearchDisabledDataExfiltrationOption>(),
+                dataExfiltrationProtections ?? new ChangeTrackingList<SearchDataExfiltrationProtection>(),
                 encryptionWithCmk,
                 disableLocalAuth,
                 authOptions,
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Search
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 eTag,
                 upgradeAvailable,
-                serviceUpgradeDate,
+                serviceUpgradedAt,
                 serializedAdditionalRawData);
         }
 
@@ -845,21 +845,21 @@ namespace Azure.ResourceManager.Search
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisabledDataExfiltrationOptions), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataExfiltrationProtections), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    disabledDataExfiltrationOptions: ");
+                builder.Append("    dataExfiltrationProtections: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsCollectionDefined(DisabledDataExfiltrationOptions))
+                if (Optional.IsCollectionDefined(DataExfiltrationProtections))
                 {
-                    if (DisabledDataExfiltrationOptions.Any())
+                    if (DataExfiltrationProtections.Any())
                     {
-                        builder.Append("    disabledDataExfiltrationOptions: ");
+                        builder.Append("    dataExfiltrationProtections: ");
                         builder.AppendLine("[");
-                        foreach (var item in DisabledDataExfiltrationOptions)
+                        foreach (var item in DataExfiltrationProtections)
                         {
                             builder.AppendLine($"      '{item.ToString()}'");
                         }
@@ -1001,23 +1001,22 @@ namespace Azure.ResourceManager.Search
                 if (Optional.IsDefined(IsUpgradeAvailable))
                 {
                     builder.Append("    upgradeAvailable: ");
-                    var boolValue = IsUpgradeAvailable.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
+                    builder.AppendLine($"'{IsUpgradeAvailable.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUpgradeOn), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUpgradedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    serviceUpgradeDate: ");
+                builder.Append("    serviceUpgradedAt: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(ServiceUpgradeOn))
+                if (Optional.IsDefined(ServiceUpgradedOn))
                 {
-                    builder.Append("    serviceUpgradeDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ServiceUpgradeOn.Value, "o");
+                    builder.Append("    serviceUpgradedAt: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ServiceUpgradedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

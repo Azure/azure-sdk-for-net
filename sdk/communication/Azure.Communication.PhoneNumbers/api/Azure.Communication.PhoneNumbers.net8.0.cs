@@ -16,9 +16,9 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class AzureCommunicationPhoneNumbersContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
-        internal AzureCommunicationPhoneNumbersContext() { }
-        public static Azure.Communication.PhoneNumbers.AzureCommunicationPhoneNumbersContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+        public AzureCommunicationPhoneNumbersContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Communication.PhoneNumbers.AzureCommunicationPhoneNumbersContext Default { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingFrequency : System.IEquatable<Azure.Communication.PhoneNumbers.BillingFrequency>

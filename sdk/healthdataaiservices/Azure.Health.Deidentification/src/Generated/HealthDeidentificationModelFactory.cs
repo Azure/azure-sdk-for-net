@@ -60,7 +60,7 @@ namespace Azure.Health.Deidentification
         {
             extensions ??= new ChangeTrackingList<string>();
 
-            return new SourceStorageLocation(location, prefix, extensions?.ToList(), additionalBinaryDataProperties: null);
+            return new SourceStorageLocation(location, prefix, extensions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Storage location. </summary>
@@ -177,7 +177,7 @@ namespace Azure.Health.Deidentification
         {
             entities ??= new ChangeTrackingList<PhiEntity>();
 
-            return new PhiTaggerResult(entities?.ToList(), additionalBinaryDataProperties: null);
+            return new PhiTaggerResult(entities.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> PHI Entity tag in the input. </summary>

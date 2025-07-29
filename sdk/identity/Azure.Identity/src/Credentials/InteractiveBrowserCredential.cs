@@ -245,7 +245,7 @@ namespace Azure.Identity
                     }
                     catch (MsalUiRequiredException e)
                     {
-                        if (UseOperatingSystemAccount && IsChainedCredential)
+                        if ((UseOperatingSystemAccount && IsChainedCredential) || (Record is not null && IsChainedCredential))
                         {
                             throw;
                         }

@@ -21,8 +21,8 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooResource : ArmResource
     {
-        private readonly ClientDiagnostics _fooClientDiagnostics;
-        private readonly Foos _fooRestClient;
+        private readonly ClientDiagnostics _foosClientDiagnostics;
+        private readonly Foos _foosRestClient;
         private readonly FooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos";
@@ -46,9 +46,9 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _foosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FooResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Get");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.Get");
             scope.Start();
             try
             {
@@ -101,7 +101,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -121,7 +121,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FooResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.GetAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.GetAsync");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -151,7 +151,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Delete");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.Delete");
             scope.Start();
             try
             {
@@ -160,9 +160,9 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -181,7 +181,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.DeleteAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.DeleteAsync");
             scope.Start();
             try
             {
@@ -190,9 +190,9 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -215,7 +215,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Update");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.Update");
             scope.Start();
             try
             {
@@ -224,11 +224,11 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
-                    _fooClientDiagnostics,
+                    _foosClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -255,7 +255,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.UpdateAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -264,11 +264,11 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _fooRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
-                    _fooClientDiagnostics,
+                    _foosClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -296,7 +296,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.AddTag");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.AddTag");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -340,7 +340,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.AddTag");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.AddTag");
             scope.Start();
             try
             {
@@ -354,7 +354,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -382,7 +382,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.SetTags");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.SetTags");
             scope.Start();
             try
             {
@@ -397,7 +397,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -425,7 +425,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.SetTags");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.SetTags");
             scope.Start();
             try
             {
@@ -440,7 +440,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -468,7 +468,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.RemoveTag");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.RemoveTag");
             scope.Start();
             try
             {
@@ -482,7 +482,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -510,7 +510,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.RemoveTag");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.RemoveTag");
             scope.Start();
             try
             {
@@ -524,7 +524,7 @@ namespace MgmtTypeSpec
                         CancellationToken = cancellationToken
                     }
                     ;
-                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());

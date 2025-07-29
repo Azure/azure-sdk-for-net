@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -245,11 +245,11 @@ namespace Azure.ResourceManager.Search
             return GetSharedSearchServicePrivateLinkResources().Get(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurationResources in the SearchService. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurationResources and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
+        /// <summary> Gets a collection of SearchServiceNetworkSecurityPerimeterConfigurationResources in the SearchService. </summary>
+        /// <returns> An object representing collection of SearchServiceNetworkSecurityPerimeterConfigurationResources and their operations over a SearchServiceNetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual SearchServiceNetworkSecurityPerimeterConfigurationCollection GetSearchServiceNetworkSecurityPerimeterConfigurations()
         {
-            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
+            return GetCachedClient(client => new SearchServiceNetworkSecurityPerimeterConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -265,22 +265,22 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="nspConfigName"> The network security configuration name. </param>
+        /// <param name="nspConfigName"> The network security perimeter configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceNetworkSecurityPerimeterConfigurationResource>> GetSearchServiceNetworkSecurityPerimeterConfigurationAsync(string nspConfigName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(nspConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetSearchServiceNetworkSecurityPerimeterConfigurations().GetAsync(nspConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -296,22 +296,22 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterConfigurationResource"/></description>
+        /// <description><see cref="SearchServiceNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="nspConfigName"> The network security configuration name. </param>
+        /// <param name="nspConfigName"> The network security perimeter configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nspConfigName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nspConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string nspConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceNetworkSecurityPerimeterConfigurationResource> GetSearchServiceNetworkSecurityPerimeterConfiguration(string nspConfigName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkSecurityPerimeterConfigurations().Get(nspConfigName, cancellationToken);
+            return GetSearchServiceNetworkSecurityPerimeterConfigurations().Get(nspConfigName, cancellationToken);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1051,7 +1051,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1315,7 +1315,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
+        /// <description>2025-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

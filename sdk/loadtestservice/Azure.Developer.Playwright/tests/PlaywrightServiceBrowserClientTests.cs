@@ -41,10 +41,62 @@ public class PlaywrightServiceBrowserClientTests
             Assert.AreEqual(client._options.OS, OSPlatform.Linux);
             Assert.AreEqual(client._options.ExposeNetwork, Constants.s_default_expose_network);
             Assert.That(Guid.TryParse(client._options.RunId, out _), Is.True);
+            Assert.That(client._options.RunName, Is.EqualTo(client._options.RunId)); // RunName defaults to RunId
 
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_os_environment_variable.ToString()), Is.EqualTo(Constants.s_default_os));
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_expose_network_environment_variable.ToString()), Is.EqualTo(Constants.s_default_expose_network));
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable.ToString().ToString()), Is.Not.Null);
+            Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable), Is.EqualTo(client._options.RunId));
+        });
+    }
+
+    [Test]
+    public void Constructor_CustomRunName_SetsCustomRunNameValue()
+    {
+        var environment = new TestEnvironment();
+        var playwrightVersion = new PlaywrightVersion();
+        var customRunName = "Custom Run Name";
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+        {
+            RunName = customRunName
+        };
+        PlaywrightServiceBrowserClient client = new(environment, options: clientOptions, playwrightVersion: playwrightVersion);
+        Assert.Multiple(() =>
+        {
+            Assert.That(client._options.RunName, Is.EqualTo(customRunName));
+            Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable), Is.EqualTo(customRunName));
+        });
+    }
+
+    [Test]
+    public void Constructor_RunNameExceedsMaxLength_TruncatesRunName()
+    {
+        var environment = new TestEnvironment();
+        var playwrightVersion = new PlaywrightVersion();
+        var longRunName = new string('a', 250);
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
+        {
+            RunName = longRunName
+        };
+        PlaywrightServiceBrowserClient client = new(environment, options: clientOptions, playwrightVersion: playwrightVersion);
+        Assert.Multiple(() =>
+        {
+            Assert.That(client._options.RunName.Length, Is.EqualTo(200));
+            Assert.That(client._options.RunName, Is.EqualTo(longRunName.Substring(0, 200)));
+        });
+    }
+
+    [Test]
+    public void Constructor_RunNameSetFromEnvironment_UsesEnvironmentValue()
+    {
+        var environment = new TestEnvironment();
+        var playwrightVersion = new PlaywrightVersion();
+        var environmentRunName = "Environment Run Name";
+        environment.SetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable, environmentRunName);
+        PlaywrightServiceBrowserClient client = new(environment, playwrightVersion: playwrightVersion);
+        Assert.Multiple(() =>
+        {
+            Assert.That(client._options.RunName, Is.EqualTo(environmentRunName));
         });
     }
 
@@ -637,6 +689,18 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
+    public void SetOptions_WhenRunIdExceedsMaxLength_ThrowsArgumentException()
+    {
+        var environment = new TestEnvironment();
+        var playwrightVersion = new PlaywrightVersion();
+        var notGuidRunId = new string('a', 201);
+        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
+        ArgumentException? exception = Assert.Throws<ArgumentException>(() => clientOptions.RunId = notGuidRunId);
+        Assert.That(exception, Is.Not.Null);
+        Assert.That(exception!.Message, Is.EqualTo(Constants.s_playwright_service_runId_not_guid_error_message));
+    }
+
+    [Test]
     public void GetConnectOptionsAsync_WhenServiceEndpointIsNotSet_ThrowsException()
     {
         var environment = new TestEnvironment();
@@ -849,10 +913,12 @@ public class PlaywrightServiceBrowserClientTests
     public async Task GetConnectOptionsAsync_WhenServiceParametersAreSetViaEnvironment_SetsServiceParameters()
     {
         var runId = "run-id";
+        var runName = "run-name";
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "https://playwright.microsoft.com");
         environment.SetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable, runId);
+        environment.SetEnvironmentVariable(Constants.s_playwright_service_run_name_environment_variable, runName);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "valid_token");
@@ -871,6 +937,7 @@ public class PlaywrightServiceBrowserClientTests
         {
             Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={OSConstants.s_wINDOWS}&runId={runId}&api-version=2025-07-01-preview"));
             Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("localhost"));
+            Assert.That(client._options.RunName, Is.EqualTo(runName));
         });
     }
 

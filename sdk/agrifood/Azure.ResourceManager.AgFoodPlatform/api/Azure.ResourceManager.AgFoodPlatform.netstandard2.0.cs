@@ -110,25 +110,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.ExtensionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.ExtensionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.FarmBeatData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.FarmBeatResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.AgFoodPlatformPrivateLinkServiceConnectionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.ArmAsyncOperation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.DetailedInformation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.SensorIntegration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo))]
     public partial class AzureResourceManagerAgFoodPlatformContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAgFoodPlatformContext() { }

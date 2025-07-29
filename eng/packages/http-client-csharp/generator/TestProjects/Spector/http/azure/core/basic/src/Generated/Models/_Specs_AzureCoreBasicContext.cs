@@ -6,9 +6,14 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace _Specs_.Azure.Core.Basic
 {
+    [ModelReaderWriterBuildable(typeof(User))]
+    [ModelReaderWriterBuildable(typeof(UserOrder))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(UserList))]
     public partial class _Specs_AzureCoreBasicContext : ModelReaderWriterContext
     {
     }

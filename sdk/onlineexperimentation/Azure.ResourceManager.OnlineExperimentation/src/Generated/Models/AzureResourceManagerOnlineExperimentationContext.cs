@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OnlineExperimentation.Models;
 
 namespace Azure.ResourceManager.OnlineExperimentation
 {
@@ -13,6 +15,20 @@ namespace Azure.ResourceManager.OnlineExperimentation
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
+    [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceData))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceListResult))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspacePatch))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspacePatchProperties))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceProperties))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceResource))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceSku))]
+    [ModelReaderWriterBuildable(typeof(ResourceEncryptionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerOnlineExperimentationContext : ModelReaderWriterContext
     {
     }

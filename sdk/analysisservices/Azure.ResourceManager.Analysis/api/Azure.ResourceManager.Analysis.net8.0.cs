@@ -87,17 +87,6 @@ namespace Azure.ResourceManager.Analysis
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.AnalysisServerData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.AnalysisServerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisExistingSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisGatewayDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisGatewayStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallRule))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisIPv4FirewallSettings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisResourceSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Analysis.Models.AnalysisServerPatch))]
     public partial class AzureResourceManagerAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerAnalysisContext() { }

@@ -31,19 +31,6 @@ namespace Azure.Analytics.OnlineExperimentation
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.AverageMetricDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.AverageMetricDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.AggregatedValue))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.AverageMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.DiagnosticDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.ExperimentMetric))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.ObservedEvent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.SumMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition))]
     public partial class AzureAnalyticsOnlineExperimentationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAnalyticsOnlineExperimentationContext() { }

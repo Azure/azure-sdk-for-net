@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PlaywrightTesting.Models;
 
 namespace Azure.ResourceManager.PlaywrightTesting
 {
@@ -13,6 +15,26 @@ namespace Azure.ResourceManager.PlaywrightTesting
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccountListResult))]
+    [ModelReaderWriterBuildable(typeof(AccountQuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(AccountUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountFreeTrialProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountPatch))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountQuotaData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingAccountResource))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingFreeTrialProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingQuotaData))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(PlaywrightTestingQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(QuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPlaywrightTestingContext : ModelReaderWriterContext
     {
     }

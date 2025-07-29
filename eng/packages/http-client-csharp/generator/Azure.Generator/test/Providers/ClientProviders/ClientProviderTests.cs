@@ -45,7 +45,7 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
                 () => [_animalClient, _dogClient, _huskyClient] :
                 null;
             Func<InputApiKeyAuth>? apiKeyAuth = _hasKeyAuth ? () => new InputApiKeyAuth("mock", null) : null;
-            Func<InputOAuth2Auth>? oauth2Auth = _hasOAuth2 ? () => new InputOAuth2Auth(["mock"]) : null;
+            Func<InputOAuth2Auth>? oauth2Auth = _hasOAuth2 ? () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]) : null;
             MockHelpers.LoadMockGenerator(
                 apiKeyAuth: apiKeyAuth,
                 oauth2Auth: oauth2Auth,

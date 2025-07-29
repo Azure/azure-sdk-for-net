@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNewRelicObservabilityContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNewRelicObservabilityContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

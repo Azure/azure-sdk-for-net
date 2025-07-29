@@ -1,6 +1,5 @@
 namespace Azure.Core.Expressions.DataFactory
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactoryElement<>))]
     public partial class DataFactoryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal DataFactoryContext() { }

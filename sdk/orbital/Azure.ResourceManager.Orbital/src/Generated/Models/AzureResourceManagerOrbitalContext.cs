@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Orbital.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
@@ -13,6 +16,33 @@ namespace Azure.ResourceManager.Orbital
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AuthorizedGroundStation))]
+    [ModelReaderWriterBuildable(typeof(AvailableGroundStationData))]
+    [ModelReaderWriterBuildable(typeof(AvailableGroundStationListResult))]
+    [ModelReaderWriterBuildable(typeof(AvailableGroundStationResource))]
+    [ModelReaderWriterBuildable(typeof(ContactProfileListResult))]
+    [ModelReaderWriterBuildable(typeof(ContactProfilesPropertiesNetworkConfiguration))]
+    [ModelReaderWriterBuildable(typeof(OrbitalAvailableContact))]
+    [ModelReaderWriterBuildable(typeof(OrbitalAvailableContactsContent))]
+    [ModelReaderWriterBuildable(typeof(OrbitalAvailableContactsResult))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactAntennaConfiguration))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactData))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactEndpoint))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactListResult))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactProfileData))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactProfileLink))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactProfileLinkChannel))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactProfileResource))]
+    [ModelReaderWriterBuildable(typeof(OrbitalContactResource))]
+    [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftData))]
+    [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftLink))]
+    [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftListResult))]
+    [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftResource))]
+    [ModelReaderWriterBuildable(typeof(OrbitalSpacecraftTags))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerOrbitalContext : ModelReaderWriterContext
     {
     }

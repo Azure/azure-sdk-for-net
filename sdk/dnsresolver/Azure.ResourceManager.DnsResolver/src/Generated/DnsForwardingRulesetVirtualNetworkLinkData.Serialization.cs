@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
-            JsonSerializer.Serialize(writer, VirtualNetwork);
+            ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         if (property0.NameEquals("virtualNetwork"u8))
                         {
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("metadata"u8))

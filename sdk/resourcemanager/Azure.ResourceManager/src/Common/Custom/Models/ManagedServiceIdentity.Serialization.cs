@@ -263,7 +263,8 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerContext.Default));
+                        var data = new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText()));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelReaderWriter.Read<UserAssignedIdentity>(data, options, AzureResourceManagerContext.Default));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

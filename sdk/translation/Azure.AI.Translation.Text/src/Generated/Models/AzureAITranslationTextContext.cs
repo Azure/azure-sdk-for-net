@@ -13,6 +13,28 @@ namespace Azure.AI.Translation.Text
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BackTranslation))]
+    [ModelReaderWriterBuildable(typeof(BreakSentenceItem))]
+    [ModelReaderWriterBuildable(typeof(DetectedLanguage))]
+    [ModelReaderWriterBuildable(typeof(DictionaryExample))]
+    [ModelReaderWriterBuildable(typeof(DictionaryExampleItem))]
+    [ModelReaderWriterBuildable(typeof(DictionaryExampleTextItem))]
+    [ModelReaderWriterBuildable(typeof(DictionaryLookupItem))]
+    [ModelReaderWriterBuildable(typeof(DictionaryTranslation))]
+    [ModelReaderWriterBuildable(typeof(GetSupportedLanguagesResult))]
+    [ModelReaderWriterBuildable(typeof(InputTextItem))]
+    [ModelReaderWriterBuildable(typeof(LanguageScript))]
+    [ModelReaderWriterBuildable(typeof(SentenceBoundaries))]
+    [ModelReaderWriterBuildable(typeof(SourceDictionaryLanguage))]
+    [ModelReaderWriterBuildable(typeof(SourceText))]
+    [ModelReaderWriterBuildable(typeof(TargetDictionaryLanguage))]
+    [ModelReaderWriterBuildable(typeof(TranslatedTextAlignment))]
+    [ModelReaderWriterBuildable(typeof(TranslatedTextItem))]
+    [ModelReaderWriterBuildable(typeof(TranslationLanguage))]
+    [ModelReaderWriterBuildable(typeof(TranslationText))]
+    [ModelReaderWriterBuildable(typeof(TransliterableScript))]
+    [ModelReaderWriterBuildable(typeof(TransliteratedText))]
+    [ModelReaderWriterBuildable(typeof(TransliterationLanguage))]
     public partial class AzureAITranslationTextContext : ModelReaderWriterContext
     {
     }

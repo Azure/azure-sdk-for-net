@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
@@ -13,6 +15,45 @@ namespace Azure.ResourceManager.Sphere
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CatalogListResult))]
+    [ModelReaderWriterBuildable(typeof(CertificateListResult))]
+    [ModelReaderWriterBuildable(typeof(ClaimSphereDevicesContent))]
+    [ModelReaderWriterBuildable(typeof(CountDevicesResult))]
+    [ModelReaderWriterBuildable(typeof(CountElementsResult))]
+    [ModelReaderWriterBuildable(typeof(DeploymentListResult))]
+    [ModelReaderWriterBuildable(typeof(DeviceGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(DeviceListResult))]
+    [ModelReaderWriterBuildable(typeof(GenerateCapabilityImageContent))]
+    [ModelReaderWriterBuildable(typeof(ImageListResult))]
+    [ModelReaderWriterBuildable(typeof(ListSphereDeviceGroupsContent))]
+    [ModelReaderWriterBuildable(typeof(PagedDeviceInsight))]
+    [ModelReaderWriterBuildable(typeof(ProductListResult))]
+    [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceContent))]
+    [ModelReaderWriterBuildable(typeof(ProofOfPossessionNonceResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SignedCapabilityImageResponse))]
+    [ModelReaderWriterBuildable(typeof(SphereCatalogData))]
+    [ModelReaderWriterBuildable(typeof(SphereCatalogPatch))]
+    [ModelReaderWriterBuildable(typeof(SphereCatalogResource))]
+    [ModelReaderWriterBuildable(typeof(SphereCertificateChainResult))]
+    [ModelReaderWriterBuildable(typeof(SphereCertificateData))]
+    [ModelReaderWriterBuildable(typeof(SphereCertificateProperties))]
+    [ModelReaderWriterBuildable(typeof(SphereCertificateResource))]
+    [ModelReaderWriterBuildable(typeof(SphereDeploymentData))]
+    [ModelReaderWriterBuildable(typeof(SphereDeploymentResource))]
+    [ModelReaderWriterBuildable(typeof(SphereDeviceData))]
+    [ModelReaderWriterBuildable(typeof(SphereDeviceGroupData))]
+    [ModelReaderWriterBuildable(typeof(SphereDeviceGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(SphereDeviceGroupResource))]
+    [ModelReaderWriterBuildable(typeof(SphereDeviceInsight))]
+    [ModelReaderWriterBuildable(typeof(SphereDevicePatch))]
+    [ModelReaderWriterBuildable(typeof(SphereDeviceResource))]
+    [ModelReaderWriterBuildable(typeof(SphereImageData))]
+    [ModelReaderWriterBuildable(typeof(SphereImageResource))]
+    [ModelReaderWriterBuildable(typeof(SphereProductData))]
+    [ModelReaderWriterBuildable(typeof(SphereProductPatch))]
+    [ModelReaderWriterBuildable(typeof(SphereProductResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSphereContext : ModelReaderWriterContext
     {
     }

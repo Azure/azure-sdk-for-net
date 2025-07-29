@@ -405,5 +405,37 @@ namespace BasicTypeSpec
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateConditionalRequestRequest(MatchConditions matchConditions, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/conditionalrequest", false);
+            request.Uri = uri;
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateConditionalRequestDateRequest(RequestConditions requestConditions, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/conditionalrequest/date", false);
+            request.Uri = uri;
+            if (requestConditions != null)
+            {
+                request.Headers.Add(requestConditions);
+            }
+            return message;
+        }
     }
 }

@@ -9,6 +9,9 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Empty
 {
+    [ModelReaderWriterBuildable(typeof(EmptyInput))]
+    [ModelReaderWriterBuildable(typeof(EmptyOutput))]
+    [ModelReaderWriterBuildable(typeof(EmptyInputOutput))]
     public partial class _TypeModelEmptyContext : ModelReaderWriterContext
     {
     }

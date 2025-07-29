@@ -1,11 +1,5 @@
 namespace Azure.Communication.Sms
 {
-    public partial class AzureCommunicationSmsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureCommunicationSmsContext() { }
-        public static Azure.Communication.Sms.AzureCommunicationSmsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class MessagingConnectOptions
     {
         public MessagingConnectOptions(string apiKey, string partner) { }

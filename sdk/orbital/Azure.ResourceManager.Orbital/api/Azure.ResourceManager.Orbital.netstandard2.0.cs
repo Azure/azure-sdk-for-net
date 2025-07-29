@@ -44,24 +44,6 @@ namespace Azure.ResourceManager.Orbital
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Orbital.AvailableGroundStationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.AvailableGroundStationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.AvailableGroundStationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.AuthorizedGroundStation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalAvailableContact))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalAvailableContactsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalContactAntennaConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalContactEndpoint))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLink))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalContactProfileLinkChannel))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftTags))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.OrbitalContactData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.OrbitalContactProfileData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.OrbitalContactProfileResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.OrbitalContactResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.OrbitalSpacecraftData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Orbital.OrbitalSpacecraftResource))]
     public partial class AzureResourceManagerOrbitalContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerOrbitalContext() { }

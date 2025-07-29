@@ -114,21 +114,14 @@ prepend-rp-prefix:
   - DatabaseBlobAuditingPolicy
   - DatabaseSecurityAlertPolicy
   - TimeZone
-  - Metric
-  - MetricListResult
-  - MetricAvalability
-  - MetricName
-  - MetricType
-  - MetricValue
-  - MetricDefinition
   - Server
   - Database
   - DayOfWeek
+  - MetricType
   - ServerAutomaticTuning
   - ServerAzureADAdministrator
   - ServerAzureADOnlyAuthentication
   - ServerBlobAuditingPolicy
-  - ServerCommunicationLink
   - ServerConnectionPolicy
   - ServerDnsAlias
   - ServerKey
@@ -150,6 +143,7 @@ prepend-rp-prefix:
   - ServerUsage
   - AdvisorStatus
   - Advisor
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -165,10 +159,6 @@ override-operation-name:
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedInstances_ListOutboundNetworkDependenciesByManagedInstance: GetOutboundNetworkDependencies
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
-  Metrics_ListDatabase: GetMetrics
-  MetricDefinitions_ListDatabase: GetMetricDefinitions
-  Metrics_ListElasticPool: GetMetrics
-  MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
   Servers_CheckNameAvailability: CheckSqlServerNameAvailability
   LongTermRetentionBackups_ListByResourceGroupLocation: GetLongTermRetentionBackupsWithLocation
@@ -266,8 +256,6 @@ rename-mapping:
   CreateMode: SqlDatabaseCreateMode
   OperationMode: DatabaseExtensionOperationMode
   ProvisioningState: JobExecutionProvisioningState
-  UnitType: SqlMetricUnitType
-  UnitDefinitionType: SqlMetricDefinitionUnitType
   ManagedDatabaseUpdate.properties.autoCompleteRestore: AllowAutoCompleteRestore
   ManagedDatabase.properties.autoCompleteRestore: AllowAutoCompleteRestore
   ManagedInstanceAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
@@ -281,7 +269,6 @@ rename-mapping:
   ExportDatabaseDefinition: DatabaseExportDefinition
   ImportNewDatabaseDefinition: DatabaseImportDefinition
   PartnerInfo: PartnerServerInfo
-  ReplicationMode: DistributedAvailabilityGroupReplicationMode
   ReplicationState: ReplicationLinkState
   ServerInfo: ServerTrustGroupServerInfo
   DatabaseExtensions: SqlDatabaseExtension
@@ -291,7 +278,6 @@ rename-mapping:
   UpdateVirtualClusterDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
   VirtualNetworkRule: SqlServerVirtualNetworkRule
   VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
-  MetricAvailability: SqlMetricAvailability
   PrivateEndpointConnectionProperties: ServerPrivateEndpointConnectionProperties
   PrivateEndpointProvisioningState: SqlPrivateEndpointProvisioningState
   PrivateLinkServiceConnectionStateActionsRequire: SqlPrivateLinkServiceConnectionActionsRequired
@@ -304,7 +290,6 @@ rename-mapping:
   ServerVersionCapability: SqlServerVersionCapability
   RestorePoint: SqlServerDatabaseRestorePoint
   BackupStorageRedundancy: SqlBackupStorageRedundancy
-  PrimaryAggregationType: SqlMetricPrimaryAggregationType
   DNSRefreshOperationStatus: DnsRefreshConfigurationPropertiesStatus
   DatabaseSqlVulnerabilityAssessmentBaselineSet: SqlVulnerabilityAssessmentBaseline
   BaselineName: SqlVulnerabilityAssessmentBaselineName
@@ -349,7 +334,6 @@ rename-mapping:
   ServerConfigurationOption: ManagedInstanceServerConfigurationOption
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
-  MetricDefinition.resourceUri: ResourceUriString
   FailoverGroup.properties.databases: FailoverDatabases
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
@@ -362,9 +346,6 @@ rename-mapping:
   PhaseDetails: DatabaseOperationPhaseDetails
   ManagementOperationStepState: UpsertManagedServerOperationStepStatus
   UpsertManagedServerOperationStepWithEstimatesAndDuration: UpsertManagedServerOperationStep
-  StorageAccountType: StorageCapabilityStorageAccountType
-  SqlAgentState: SqlAgentConfigurationPropertiesState
-  TrustScope: ServerTrustGroupPropertiesTrustScopesItem
   GeoBackupPolicy.properties.state: GeoBackupPolicyState
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
   RecommendedAction.properties.details: ActionDetails

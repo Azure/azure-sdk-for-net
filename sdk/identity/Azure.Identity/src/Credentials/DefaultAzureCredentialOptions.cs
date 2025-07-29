@@ -150,8 +150,6 @@ namespace Azure.Identity
         /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("VisualStudioCodeCredential is deprecated because the VS Code Azure Account extension on which this credential relies has been deprecated. Consider using other dev-time credentials, such as VisualStudioCredential, AzureCliCredential, AzureDeveloperCliCredential, AzurePowerShellCredential. See the Azure Account extension deprecation notice here: https://github.com/microsoft/vscode-azure-account/issues/964.")]
         public string VisualStudioCodeTenantId
         {
             get => _visualStudioCodeTenantId.Value;
@@ -279,11 +277,9 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// The default is <c>true</c>.
+        /// By default, VisualStudioCodeCredential is enabled to support SSO with VS Code on supported platforms when Azure.Identity.Broker is referenced.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("VisualStudioCodeCredential is deprecated because the VS Code Azure Account extension on which this credential relies has been deprecated. Consider using other dev-time credentials, such as VisualStudioCredential, AzureCliCredential, AzureDeveloperCliCredential, AzurePowerShellCredential. See the Azure Account extension deprecation notice here: https://github.com/microsoft/vscode-azure-account/issues/964.")]
-        public bool ExcludeVisualStudioCodeCredential { get; set; } = true;
+        public bool ExcludeVisualStudioCodeCredential { get; set; }
 
         /// <summary>
         /// Specifies whether the <see cref="AzurePowerShellCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.

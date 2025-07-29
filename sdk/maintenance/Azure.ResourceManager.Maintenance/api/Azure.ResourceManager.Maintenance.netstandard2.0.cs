@@ -1,18 +1,5 @@
 namespace Azure.ResourceManager.Maintenance
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.MaintenanceConfigurationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.MaintenancePublicConfigurationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceLinuxPatchSettings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenancePatchConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.ScheduledEventApproveResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Maintenance.Models.VmTagSettings))]
     public partial class AzureResourceManagerMaintenanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMaintenanceContext() { }

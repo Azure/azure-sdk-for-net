@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="location"> The location. </param>
         public SearchServiceData(AzureLocation location) : base(location)
         {
-            DisabledDataExfiltrationOptions = new ChangeTrackingList<SearchDisabledDataExfiltrationOption>();
+            DataExfiltrationProtections = new ChangeTrackingList<SearchDataExfiltrationProtection>();
             PrivateEndpointConnections = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.Search
         /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
         /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
-        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </param>
         /// <param name="publicInternetAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
         /// <param name="provisioningState"> The state of the last provisioning operation performed on the search service. Provisioning is an intermediate state that occurs while service capacity is being established. After capacity is set up, provisioningState changes to either 'Succeeded' or 'Failed'. Client applications can poll provisioning status (the recommended polling interval is from 30 seconds to one minute) by using the Get Search Service operation to see when an operation is completed. If you are using the free service, this value tends to come back as 'Succeeded' directly in the call to Create search service. This is because the free service uses capacity that is already set up. </param>
         /// <param name="networkRuleSet"> Network specific rules that determine how the Azure AI Search service may be reached. </param>
-        /// <param name="disabledDataExfiltrationOptions"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
+        /// <param name="dataExfiltrationProtections"> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </param>
         /// <param name="encryptionWithCmk"> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </param>
         /// <param name="isLocalAuthDisabled"> When set to true, calls to the search service will not be permitted to utilize API keys for authentication. This cannot be set to true if 'dataPlaneAuthOptions' are defined. </param>
         /// <param name="authOptions"> Defines the options for how the data plane API of a search service authenticates requests. This cannot be set if 'disableLocalAuth' is set to true. </param>
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Search
         /// <param name="privateEndpointConnections"> The list of private endpoint connections to the Azure AI Search service. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
-        /// <param name="isUpgradeAvailable"> Indicates whether or not the search service has an upgrade available. </param>
-        /// <param name="serviceUpgradeOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
+        /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
+        /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, bool? isUpgradeAvailable, DateTimeOffset? serviceUpgradeOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, Uri endpoint, SearchServiceHostingMode? hostingMode, SearchServiceComputeType? computeType, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDataExfiltrationProtection> dataExfiltrationProtections, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, SearchServiceUpgradeAvailable? isUpgradeAvailable, DateTimeOffset? serviceUpgradedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SearchSku = searchSku;
             Identity = identity;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search
             StatusDetails = statusDetails;
             ProvisioningState = provisioningState;
             NetworkRuleSet = networkRuleSet;
-            DisabledDataExfiltrationOptions = disabledDataExfiltrationOptions;
+            DataExfiltrationProtections = dataExfiltrationProtections;
             EncryptionWithCmk = encryptionWithCmk;
             IsLocalAuthDisabled = isLocalAuthDisabled;
             AuthOptions = authOptions;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Search
             SharedPrivateLinkResources = sharedPrivateLinkResources;
             ETag = eTag;
             IsUpgradeAvailable = isUpgradeAvailable;
-            ServiceUpgradeOn = serviceUpgradeOn;
+            ServiceUpgradedOn = serviceUpgradedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Search
         /// <summary> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </summary>
         [WirePath("properties.hostingMode")]
         public SearchServiceHostingMode? HostingMode { get; set; }
-        /// <summary> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </summary>
+        /// <summary> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </summary>
         [WirePath("properties.computeType")]
         public SearchServiceComputeType? ComputeType { get; set; }
         /// <summary> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </summary>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Search
         [WirePath("properties.networkRuleSet")]
         public SearchServiceNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </summary>
-        [WirePath("properties.disabledDataExfiltrationOptions")]
-        public IList<SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions { get; }
+        [WirePath("properties.dataExfiltrationProtections")]
+        public IList<SearchDataExfiltrationProtection> DataExfiltrationProtections { get; }
         /// <summary> Specifies any policy regarding encryption of resources (such as indexes) using customer manager keys within a search service. </summary>
         [WirePath("properties.encryptionWithCmk")]
         public SearchEncryptionWithCmk EncryptionWithCmk { get; set; }
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.Search
         /// <summary> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </summary>
         [WirePath("properties.eTag")]
         public ETag? ETag { get; }
-        /// <summary> Indicates whether or not the search service has an upgrade available. </summary>
+        /// <summary> Indicates if the search service has an upgrade available. </summary>
         [WirePath("properties.upgradeAvailable")]
-        public bool? IsUpgradeAvailable { get; }
+        public SearchServiceUpgradeAvailable? IsUpgradeAvailable { get; set; }
         /// <summary> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </summary>
-        [WirePath("properties.serviceUpgradeDate")]
-        public DateTimeOffset? ServiceUpgradeOn { get; }
+        [WirePath("properties.serviceUpgradedAt")]
+        public DateTimeOffset? ServiceUpgradedOn { get; }
     }
 }

@@ -9,11 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The ZooProperties. </summary>
+    [JsonConverter(typeof(ZooPropertiesConverter))]
     internal partial class ZooProperties : IJsonModel<ZooProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -137,5 +139,27 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ZooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        internal partial class ZooPropertiesConverter : JsonConverter<ZooProperties>
+        {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, ZooProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<ZooProperties>>(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override ZooProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeZooProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
+        }
     }
 }

@@ -1,12 +1,5 @@
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource))]
     public partial class AzureResourceManagerManagedServiceIdentitiesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerManagedServiceIdentitiesContext() { }

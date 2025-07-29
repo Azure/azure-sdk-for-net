@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DevOpsInfrastructure.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
@@ -13,6 +15,59 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AutomaticResourcePredictionsProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsAzureOrganizationProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsAzurePermissionProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsAzureSku))]
+    [ModelReaderWriterBuildable(typeof(DevOpsDataDisk))]
+    [ModelReaderWriterBuildable(typeof(DevOpsFabricProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsGitHubOrganization))]
+    [ModelReaderWriterBuildable(typeof(DevOpsGitHubOrganizationProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsImageVersion))]
+    [ModelReaderWriterBuildable(typeof(DevOpsNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsOrganization))]
+    [ModelReaderWriterBuildable(typeof(DevOpsOrganizationProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsOSProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsPoolAgentProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsPoolData))]
+    [ModelReaderWriterBuildable(typeof(DevOpsPoolPatch))]
+    [ModelReaderWriterBuildable(typeof(DevOpsPoolProperties))]
+    [ModelReaderWriterBuildable(typeof(DevOpsPoolResource))]
+    [ModelReaderWriterBuildable(typeof(DevOpsPoolVmImage))]
+    [ModelReaderWriterBuildable(typeof(DevOpsResourceDetails))]
+    [ModelReaderWriterBuildable(typeof(DevOpsResourceDetailsProperties))]
+    [ModelReaderWriterBuildable(typeof(DevOpsResourceQuota))]
+    [ModelReaderWriterBuildable(typeof(DevOpsResourceQuotaName))]
+    [ModelReaderWriterBuildable(typeof(DevOpsResourceSku))]
+    [ModelReaderWriterBuildable(typeof(DevOpsResourceSkuProperties))]
+    [ModelReaderWriterBuildable(typeof(DevOpsStateful))]
+    [ModelReaderWriterBuildable(typeof(DevOpsStatelessAgentProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsVmssFabricProfile))]
+    [ModelReaderWriterBuildable(typeof(ImageVersionListResult))]
+    [ModelReaderWriterBuildable(typeof(ImageVersionProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManualResourcePredictionsProfile))]
+    [ModelReaderWriterBuildable(typeof(PagedQuota))]
+    [ModelReaderWriterBuildable(typeof(PoolListResult))]
+    [ModelReaderWriterBuildable(typeof(PoolUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceDetailsObjectListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourcePredictions))]
+    [ModelReaderWriterBuildable(typeof(ResourcePredictionsProfile))]
+    [ModelReaderWriterBuildable(typeof(ResourceSkuCapabilities))]
+    [ModelReaderWriterBuildable(typeof(ResourceSkuListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceSkuLocationInfo))]
+    [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictionInfo))]
+    [ModelReaderWriterBuildable(typeof(ResourceSkuRestrictions))]
+    [ModelReaderWriterBuildable(typeof(ResourceSkuZoneDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SecretsManagementSettings))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownDevOpsFabricProfile))]
+    [ModelReaderWriterBuildable(typeof(UnknownDevOpsOrganizationProfile))]
+    [ModelReaderWriterBuildable(typeof(UnknownDevOpsPoolAgentProfile))]
+    [ModelReaderWriterBuildable(typeof(UnknownResourcePredictionsProfile))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : ModelReaderWriterContext
     {
     }

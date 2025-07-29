@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private EventGridTopicResource _eventGridTopic;
         private TopicEventSubscriptionCollection _topicEventSubscriptionCollection;
         // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
-        // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
-        private const string AzureFunctionEndpointUrl = "https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
+        // from the Azure Portal for "sdk-test-logic-app" -> workflowUrl.
+        private const string LogicAppEndpointUrl = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
 
         public EventGridTopicEventSubscriptionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
             };
             var topicEventSubscription = await _topicEventSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, data);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -122,6 +122,31 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await topicEventSubscription.DeleteAsync(WaitUntil.Completed);
             flag = await _topicEventSubscriptionCollection.ExistsAsync(eventSubscriptionName);
             Assert.IsFalse(flag);
+        }
+
+        //TopicEventSubscriptionResource GetAsync'
+        [Test]
+        public async Task TopicEventSubscriptionResourceGetAsync()
+        {
+            // Arrange
+            string eventSubscriptionName = Recording.GenerateAssetName("topicSubscription");
+            var topicEventSubscriptionResource = await CreateTopicEventSubscription(eventSubscriptionName);
+
+            // Act
+            var response = await topicEventSubscriptionResource.GetAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Value);
+            Assert.IsNotNull(response.Value.Data);
+            Assert.AreEqual(eventSubscriptionName, response.Value.Data.Name);
+            Assert.AreEqual("Succeeded", response.Value.Data.ProvisioningState.ToString());
+            Assert.AreEqual("EventGridSchema", response.Value.Data.EventDeliverySchema.ToString());
+            Assert.AreEqual("Microsoft.EventGrid/topics/eventSubscriptions", response.Value.Data.ResourceType.ToString());
+            Assert.AreEqual("WebHook", response.Value.Data.Destination.EndpointType.ToString());
+
+            // Delete the event subscription resource
+            await topicEventSubscriptionResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private void ValidateTopicEventSubscription(TopicEventSubscriptionResource topicEventSubscription, string eventSubscriptionName)

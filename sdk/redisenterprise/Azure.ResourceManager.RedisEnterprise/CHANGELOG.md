@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,18 @@
 
 ### Other Changes
 
+## 1.2.1 (2025-07-25)
+
+### Bugs Fixed
+
+- Added some missing attributes on `AzureResourceManagerRedisEnterpriseContext` to fix potential missing models during serialization.
+
+## 1.2.0 (2025-07-23)
+
+### Features Added
+
+- Updated api-version to `2025-04-01`.
+
 ## 1.2.0-beta.3 (2025-04-30)
 
 ### Features Added
@@ -17,7 +29,7 @@
 - Upgraded api-version tag from 'package-preview-2024-09' to 'package-preview-2025-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/eb9abbcdb08fe6c2faca5c2a6182568b52a3b1ce/specification/redisenterprise/resource-manager/readme.md.
   - Adds support for listing all SKUs a cluster can scale to.
   - Clustering policy has a new enum: NoCluster.
- 
+
 ## 1.2.0-beta.2 (2025-03-11)
 
 ### Features Added

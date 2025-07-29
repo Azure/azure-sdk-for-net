@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -42,12 +43,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                JsonSerializer.Serialize(writer, PublicIPAddress);
+                ((IJsonModel<WritableSubResource>)PublicIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            publicIPAddress = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("subnet"u8))
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddress"u8))

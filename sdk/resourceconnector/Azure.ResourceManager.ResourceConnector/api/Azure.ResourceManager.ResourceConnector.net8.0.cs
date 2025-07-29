@@ -1,20 +1,5 @@
 namespace Azure.ResourceManager.ResourceConnector
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceArtifactProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserCredentialResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceClusterUserKeysResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceCredentialKubeconfig))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceSshKey))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersionCatalogVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceSupportedVersionCatalogVersionProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraph))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ApplianceUpgradeGraphProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.HybridConnectionConfig))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorAppliancePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource))]
     public partial class AzureResourceManagerResourceConnectorContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerResourceConnectorContext() { }

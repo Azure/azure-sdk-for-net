@@ -1,28 +1,5 @@
 namespace Azure.ResourceManager.ServiceLinker
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.LinkerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.LinkerResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.AzureKeyVaultProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.AzureResourceBaseProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.AzureResourceInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.ConfluentBootstrapServerInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.ConfluentSchemaRegistryInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.KeyVaultSecretReferenceSecretInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.KeyVaultSecretUriSecretInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.LinkerValidateOperationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.LinkerValidationResultItemInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.RawValueSecretInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.SecretAuthInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.SecretBaseInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.ServicePrincipalCertificateAuthInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.ServicePrincipalSecretAuthInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.SourceConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.SystemAssignedIdentityAuthInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ServiceLinker.Models.UserAssignedIdentityAuthInfo))]
     public partial class AzureResourceManagerServiceLinkerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerServiceLinkerContext() { }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -85,12 +83,7 @@ namespace MgmtTypeSpec
         /// <param name="rehydrationToken"> The token to rehydrate a long-running operation. </param>
         private string GetOperationId(RehydrationToken? rehydrationToken)
         {
-            if (rehydrationToken is null)
-            {
-                return null;
-            }
-            Dictionary<string, string> lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
-            return lroDetails["id"];
+            return rehydrationToken?.Id;
         }
 
         /// <inheritdoc/>

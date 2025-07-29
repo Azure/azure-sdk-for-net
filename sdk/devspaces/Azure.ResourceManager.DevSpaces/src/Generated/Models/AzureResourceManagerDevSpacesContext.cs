@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.DevSpaces.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevSpaces
 {
@@ -13,6 +15,19 @@ namespace Azure.ResourceManager.DevSpaces
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ContainerHostMapping))]
+    [ModelReaderWriterBuildable(typeof(ControllerConnectionDetails))]
+    [ModelReaderWriterBuildable(typeof(ControllerConnectionDetailsList))]
+    [ModelReaderWriterBuildable(typeof(ControllerData))]
+    [ModelReaderWriterBuildable(typeof(ControllerList))]
+    [ModelReaderWriterBuildable(typeof(ControllerPatch))]
+    [ModelReaderWriterBuildable(typeof(ControllerResource))]
+    [ModelReaderWriterBuildable(typeof(DevSpacesSku))]
+    [ModelReaderWriterBuildable(typeof(KubernetesConnectionDetails))]
+    [ModelReaderWriterBuildable(typeof(ListConnectionDetailsContent))]
+    [ModelReaderWriterBuildable(typeof(OrchestratorSpecificConnectionDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownOrchestratorSpecificConnectionDetails))]
     public partial class AzureResourceManagerDevSpacesContext : ModelReaderWriterContext
     {
     }

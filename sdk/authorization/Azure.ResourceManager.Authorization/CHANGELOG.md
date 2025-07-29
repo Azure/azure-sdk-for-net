@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.1.5 (2025-07-28)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Authorization` AOT-compatible.
+
 ## 1.1.4 (2025-03-11)
 
 ### Features Added

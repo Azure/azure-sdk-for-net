@@ -1,30 +1,5 @@
 namespace Azure.ResourceManager.Dynatrace
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.DynatraceMonitorData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.DynatraceMonitorResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.DynatraceTagRuleData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult))]
     public partial class AzureResourceManagerDynatraceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDynatraceContext() { }

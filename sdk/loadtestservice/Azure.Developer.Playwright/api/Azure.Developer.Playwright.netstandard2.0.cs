@@ -26,6 +26,7 @@ namespace Azure.Developer.Playwright
         public Microsoft.Extensions.Logging.ILogger? Logger { get { throw null; } set { } }
         public System.Runtime.InteropServices.OSPlatform OS { get { throw null; } set { } }
         public string RunId { get { throw null; } set { } }
+        public string RunName { get { throw null; } set { } }
         public Azure.Developer.Playwright.ServiceAuthType ServiceAuth { get { throw null; } set { } }
         public string? ServiceEndpoint { get { throw null; } set { } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }

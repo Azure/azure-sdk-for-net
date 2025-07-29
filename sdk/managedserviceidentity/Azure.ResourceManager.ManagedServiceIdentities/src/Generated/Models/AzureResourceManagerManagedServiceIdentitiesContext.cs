@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ManagedServiceIdentities.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
@@ -13,6 +15,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialData))]
+    [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialResource))]
+    [ModelReaderWriterBuildable(typeof(FederatedIdentityCredentialsListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityData))]
+    [ModelReaderWriterBuildable(typeof(SystemAssignedIdentityResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesListResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityPatch))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentityResource))]
     public partial class AzureResourceManagerManagedServiceIdentitiesContext : ModelReaderWriterContext
     {
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.CarbonOptimization.Models;
 
 namespace Azure.ResourceManager.CarbonOptimization
 {
@@ -13,6 +14,31 @@ namespace Azure.ResourceManager.CarbonOptimization
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CarbonEmission))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionAvailableDateRange))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionItemDetail))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionListResult))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionMonthlySummary))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionOverallSummary))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionQueryDateRange))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionTopItemMonthlySummary))]
+    [ModelReaderWriterBuildable(typeof(CarbonEmissionTopItemsSummary))]
+    [ModelReaderWriterBuildable(typeof(ItemDetailsQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(MonthlySummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(OverallSummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(ResourceCarbonEmissionItemDetail))]
+    [ModelReaderWriterBuildable(typeof(ResourceCarbonEmissionTopItemMonthlySummary))]
+    [ModelReaderWriterBuildable(typeof(ResourceCarbonEmissionTopItemsSummary))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionItemDetail))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemMonthlySummary))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupCarbonEmissionTopItemsSummary))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionAccessDecision))]
+    [ModelReaderWriterBuildable(typeof(TopItemsMonthlySummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(TopItemsSummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(UnknownCarbonEmission))]
+    [ModelReaderWriterBuildable(typeof(UnknownCarbonEmissionQueryFilter))]
     public partial class AzureResourceManagerCarbonOptimizationContext : ModelReaderWriterContext
     {
     }

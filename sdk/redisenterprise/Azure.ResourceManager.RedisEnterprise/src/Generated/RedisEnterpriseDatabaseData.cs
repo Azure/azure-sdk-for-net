@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="port"> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </param>
         /// <param name="provisioningState"> Current provisioning status of the database. </param>
         /// <param name="resourceState"> Current resource status of the database. </param>
-        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </param>
+        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </param>
         /// <param name="evictionPolicy"> Redis eviction policy - default is VolatileLRU. </param>
         /// <param name="persistence"> Persistence settings. </param>
         /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <summary> Current resource status of the database. </summary>
         [WirePath("properties.resourceState")]
         public RedisEnterpriseClusterResourceState? ResourceState { get; }
-        /// <summary> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </summary>
+        /// <summary> Clustering policy - default is OSSCluster. This property must be chosen at create time, and cannot be changed without deleting the database. </summary>
         [WirePath("properties.clusteringPolicy")]
         public RedisEnterpriseClusteringPolicy? ClusteringPolicy { get; set; }
         /// <summary> Redis eviction policy - default is VolatileLRU. </summary>

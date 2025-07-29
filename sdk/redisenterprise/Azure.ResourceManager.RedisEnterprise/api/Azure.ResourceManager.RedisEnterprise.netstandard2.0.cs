@@ -49,36 +49,6 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.ForceLinkContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.ForceLinkParametersGeoReplication))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.ForceUnlinkRedisEnterpriseDatabaseContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.ImportRedisEnterpriseDatabaseContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDataAccessKeys))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseGeoReplication))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabasePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseModule))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseOperationStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePrivateLinkResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePrivateLinkServiceConnectionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRegenerateKeyContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.Models.RedisPersistenceSettings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource))]
     public partial class AzureResourceManagerRedisEnterpriseContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerRedisEnterpriseContext() { }
@@ -146,8 +116,6 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource> GetRedisEnterprisePrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource>> GetRedisEnterprisePrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionCollection GetRedisEnterprisePrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList> GetSkusForScaling(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>> GetSkusForScalingAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -210,8 +178,8 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Export(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExportAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ExportRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Flush(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FlushAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Flush(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FlushAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.FlushRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ForceLinkToReplicationGroup(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ForceLinkContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ForceLinkToReplicationGroupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ForceLinkContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ForceUnlink(Azure.WaitUntil waitUntil, Azure.ResourceManager.RedisEnterprise.Models.ForceUnlinkRedisEnterpriseDatabaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -368,8 +336,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseOperationStatus RedisEnterpriseOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string status = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePrivateLinkResource RedisEnterprisePrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails RedisEnterpriseSkuDetails(string name = null, float? sizeInGB = default(float?)) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList RedisEnterpriseSkuDetailsList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails> skus = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeferUpgradeSetting : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.DeferUpgradeSetting>
@@ -523,7 +489,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private readonly int _dummyPrimitive;
         public RedisEnterpriseClusteringPolicy(string value) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy EnterpriseCluster { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy NoCluster { get { throw null; } }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy OssCluster { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -926,29 +891,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RedisEnterpriseSkuDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>
-    {
-        internal RedisEnterpriseSkuDetails() { }
-        public string Name { get { throw null; } }
-        public float? SizeInGB { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RedisEnterpriseSkuDetailsList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>
-    {
-        internal RedisEnterpriseSkuDetailsList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails> Skus { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedisEnterpriseSkuName : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuName>

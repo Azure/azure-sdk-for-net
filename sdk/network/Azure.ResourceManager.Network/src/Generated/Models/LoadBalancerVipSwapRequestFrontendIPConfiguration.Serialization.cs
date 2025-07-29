@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                JsonSerializer.Serialize(writer, PublicIPAddress);
+                ((IJsonModel<WritableSubResource>)PublicIPAddress).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            publicIPAddress = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            publicIPAddress = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                     }

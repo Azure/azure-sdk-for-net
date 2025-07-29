@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
@@ -13,6 +16,43 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterServerData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterServerListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlClusterServerResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlCoordinatorConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlFirewallRuleData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlFirewallRuleListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlFirewallRuleResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlMaintenanceWindow))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlNodeConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlRoleData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlRoleListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlRoleResource))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerNameItem))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlServerRoleGroupConfiguration))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBForPostgreSqlSimplePrivateEndpointConnection))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerCosmosDBForPostgreSqlContext : ModelReaderWriterContext
     {
     }

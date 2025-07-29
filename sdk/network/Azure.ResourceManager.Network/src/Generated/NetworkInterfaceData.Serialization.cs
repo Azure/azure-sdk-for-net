@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
-                JsonSerializer.Serialize(writer, VirtualMachine);
+                ((IJsonModel<WritableSubResource>)VirtualMachine).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
-                JsonSerializer.Serialize(writer, DscpConfiguration);
+                ((IJsonModel<WritableSubResource>)DscpConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -242,7 +243,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualMachine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualMachine = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("networkSecurityGroup"u8))
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            dscpConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))

@@ -1,17 +1,5 @@
 namespace Azure.Health.Insights.CancerProfiling
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.ClinicalCodedElement))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.DocumentContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.InferenceEvidence))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientDocument))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Health.Insights.CancerProfiling.PatientRecord))]
     public partial class AzureHealthInsightsCancerProfilingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureHealthInsightsCancerProfilingContext() { }

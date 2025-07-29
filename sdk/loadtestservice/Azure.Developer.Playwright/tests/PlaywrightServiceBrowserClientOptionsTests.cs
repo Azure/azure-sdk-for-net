@@ -68,7 +68,7 @@ namespace Azure.Developer.Playwright.Tests
                 environment: environment,
                 serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
 
-            var expectedRunId = "new-run-id";
+            var expectedRunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d4188e4";
             options.RunId = expectedRunId;
 
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable),
@@ -276,14 +276,14 @@ namespace Azure.Developer.Playwright.Tests
         public void RunId_WhenSetAndEnvironmentAlreadySet_DoesNotUpdateEnvironment()
         {
             var environment = new TestEnvironment();
-            var existingRunId = "existing-run-id";
+            var existingRunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d4188e4";
             environment.SetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable, existingRunId);
 
             _ = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
                 serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
             {
-                RunId = "new-run-id"
+                RunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d418878"
             };
 
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable),

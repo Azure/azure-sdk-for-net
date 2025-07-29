@@ -36,3 +36,9 @@ jobs:
       # Example: Display .NET SDK version
       - name: Show .NET SDK version
         run: dotnet --version
+
+      - name: Install azsdk mcp server
+        shell: pwsh
+        run: |
+          ./eng/common/mcp/azure-sdk-mcp.ps1 -InstallDirectory $HOME/bin
+

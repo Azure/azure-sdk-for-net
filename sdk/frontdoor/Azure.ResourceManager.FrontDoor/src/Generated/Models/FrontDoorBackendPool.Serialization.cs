@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                JsonSerializer.Serialize(writer, LoadBalancingSettings);
+                ((IJsonModel<WritableSubResource>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                JsonSerializer.Serialize(writer, HealthProbeSettings);
+                ((IJsonModel<WritableSubResource>)HealthProbeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancingSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            healthProbeSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))

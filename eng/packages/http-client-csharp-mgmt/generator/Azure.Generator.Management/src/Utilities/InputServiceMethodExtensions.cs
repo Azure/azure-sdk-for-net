@@ -43,7 +43,7 @@ namespace Azure.Generator.Management.Utilities
             return responseBodyType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(responseBodyType);
         }
 
-        public static CSharpType GetOperationMethodReturnType(this InputServiceMethod method, bool isAsync, CSharpType resourceClientCSharpType, CSharpType resourceDataType)
+        public static CSharpType GetOperationMethodReturnType(this InputServiceMethod method, bool isAsync, CSharpType? resourceClientCSharpType, CSharpType? resourceDataType)
         {
             bool isLongRunningOperation = method.IsLongRunningOperation() || method.IsFakeLongRunningOperation();
             var responseBodyCSharpType = method.GetResponseBodyType();
@@ -55,7 +55,7 @@ namespace Azure.Generator.Management.Utilities
             return contentType.WrapResponse(isLongRunningOperation).WrapAsync(isAsync);
         }
 
-        private static CSharpType? DetermineContentType(CSharpType? responseBodyCSharpType, CSharpType resourceClientCSharpType, CSharpType resourceDataType)
+        private static CSharpType? DetermineContentType(CSharpType? responseBodyCSharpType, CSharpType? resourceClientCSharpType, CSharpType? resourceDataType)
         {
             // Use response body type if it exists and differs from the resource data type,
             // otherwise use the resource client type

@@ -18,5 +18,9 @@ namespace Azure.Generator.Primitives
         public static readonly ParameterProvider OptionalRequestContext = new("context", $"The request context, which can override default behaviors of the client pipeline on a per-call basis.", new CSharpType(typeof(RequestContext)).WithNullable(true), defaultValue: Null);
 
         public static readonly ParameterProvider CancellationTokenWithoutDefault = new("cancellationToken", $"The cancellation token to use.", new CSharpType(typeof(CancellationToken)));
+        public static readonly ParameterProvider OptionalMatchConditionsParameter = new("matchConditions", $"The content to send as the request conditions of the request.", new CSharpType(typeof(MatchConditions)).WithNullable(true), defaultValue: Default, location: ParameterLocation.Header);
+        public static readonly ParameterProvider MatchConditionsParameter = new("matchConditions", $"The content to send as the request conditions of the request.", new CSharpType(typeof(MatchConditions)).WithNullable(true), location: ParameterLocation.Header);
+        public static readonly ParameterProvider RequestConditionsParameter = new("requestConditions", $"The content to send as the request conditions of the request.", new CSharpType(typeof(RequestConditions)).WithNullable(true), location: ParameterLocation.Header);
+        public static readonly ParameterProvider OptionalRequestConditionsParameter = new("requestConditions", $"The content to send as the request conditions of the request.", new CSharpType(typeof(RequestConditions)).WithNullable(true), defaultValue: Default, location: ParameterLocation.Header);
     }
 }

@@ -1,32 +1,5 @@
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.HelmOperatorProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.HelmReleaseProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlob))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesAzureBlobUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucket))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesBucketUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionScope))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesClusterExtensionStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesConfigurationComplianceStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesFluxConfigurationPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepository))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryRef))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesGitRepositoryUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectReference))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatus))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesObjectStatusCondition))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipal))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KubernetesServicePrincipalUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.Kustomization))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.KubernetesConfiguration.Models.KustomizationUpdateContent))]
     public partial class AzureResourceManagerKubernetesConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerKubernetesConfigurationContext() { }

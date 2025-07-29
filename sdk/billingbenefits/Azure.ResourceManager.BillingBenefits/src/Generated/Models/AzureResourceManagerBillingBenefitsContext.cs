@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.BillingBenefits.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
@@ -13,6 +15,43 @@ namespace Azure.ResourceManager.BillingBenefits
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsAppliedScopeProperties))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsCommitment))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsExtendedStatusInfo))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsPrice))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsPurchaseContent))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsReservationOrderAliasCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsReservationOrderAliasData))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsReservationOrderAliasResource))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsRoleAssignmentEntity))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanData))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanOrderAliasData))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanOrderAliasResource))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanOrderData))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanOrderResource))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanPatch))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanResource))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanUtilization))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSavingsPlanUtilizationAggregate))]
+    [ModelReaderWriterBuildable(typeof(BillingBenefitsSku))]
+    [ModelReaderWriterBuildable(typeof(BillingPlanInformation))]
+    [ModelReaderWriterBuildable(typeof(RenewProperties))]
+    [ModelReaderWriterBuildable(typeof(ReservationOrderAliasRequestPropertiesReservedResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ReservationOrderAliasResponsePropertiesReservedResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanModelList))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanModelListResult))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanOrderModelList))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanOrderPaymentDetail))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanPurchaseValidateContent))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanSummary))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanSummaryCount))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanUpdateValidateContent))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResponse))]
+    [ModelReaderWriterBuildable(typeof(SavingsPlanValidateResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TenantResourceGetBillingBenefitsSavingsPlansOptions))]
     public partial class AzureResourceManagerBillingBenefitsContext : ModelReaderWriterContext
     {
     }

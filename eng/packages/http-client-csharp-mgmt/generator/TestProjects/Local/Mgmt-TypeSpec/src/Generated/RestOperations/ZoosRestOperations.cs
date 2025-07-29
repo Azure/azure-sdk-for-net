@@ -41,7 +41,7 @@ namespace MgmtTypeSpec
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateZooRequest(Guid subscriptionId, string resourceGroupName, string zooName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

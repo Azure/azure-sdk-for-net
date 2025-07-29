@@ -57,7 +57,41 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchNodeFillType? taskSchedulingNodeFillType, IEnumerable<BatchUserAccount> userAccounts, IEnumerable<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IEnumerable<BatchCertificateReference> certificates, IEnumerable<BatchApplicationPackageReference> applicationPackages, IEnumerable<string> applicationLicenses, BatchResizeOperationStatus resizeOperationStatus, IEnumerable<BatchMountConfiguration> mountConfiguration, NodeCommunicationMode? targetNodeCommunicationMode, NodeCommunicationMode? currentNodeCommunicationMode, ETag? etag)
         {
             BatchVmConfiguration deploymentVmConfiguration = deploymentConfiguration == null ? null : deploymentConfiguration.VmConfiguration;
-            return BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentVmConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, taskSchedulingNodeFillType, userAccounts, metadata, startTask, certificates, applicationPackages, applicationLicenses, resizeOperationStatus, mountConfiguration, targetNodeCommunicationMode, currentNodeCommunicationMode, null, etag: etag);
+            return BatchAccountPoolData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                identity: identity,
+                displayName: displayName,
+                lastModifiedOn: lastModifiedOn,
+                createdOn: createdOn,
+                provisioningState: provisioningState,
+                provisioningStateTransitOn: provisioningStateTransitOn,
+                allocationState: allocationState,
+                allocationStateTransitionOn: allocationStateTransitionOn,
+                vmSize: vmSize,
+                deploymentVmConfiguration: deploymentVmConfiguration,
+                currentDedicatedNodes: currentDedicatedNodes,
+                currentLowPriorityNodes: currentLowPriorityNodes,
+                scaleSettings: scaleSettings,
+                autoScaleRun: autoScaleRun,
+                interNodeCommunication: interNodeCommunication,
+                networkConfiguration: networkConfiguration,
+                taskSlotsPerNode: taskSlotsPerNode,
+                taskSchedulingNodeFillType: taskSchedulingNodeFillType,
+                userAccounts: userAccounts,
+                metadata: metadata,
+                startTask: startTask,
+                certificates: certificates,
+                applicationPackages: applicationPackages,
+                applicationLicenses: applicationLicenses,
+                resizeOperationStatus: resizeOperationStatus,
+                mountConfiguration: mountConfiguration,
+                targetNodeCommunicationMode: targetNodeCommunicationMode,
+                currentNodeCommunicationMode: currentNodeCommunicationMode,
+                etag: etag
+            );
         }
     }
 }

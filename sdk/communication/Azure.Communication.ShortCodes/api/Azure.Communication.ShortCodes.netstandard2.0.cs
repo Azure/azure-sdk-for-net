@@ -1,11 +1,5 @@
 namespace Azure.Communication.ShortCodes
 {
-    public partial class AzureCommunicationShortCodesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureCommunicationShortCodesContext() { }
-        public static Azure.Communication.ShortCodes.AzureCommunicationShortCodesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class ShortCodesClient
     {
         protected ShortCodesClient() { }

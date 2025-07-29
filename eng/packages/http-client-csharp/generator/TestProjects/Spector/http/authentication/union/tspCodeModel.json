@@ -134,8 +134,13 @@
       "in": "header"
     },
     "oAuth2": {
-      "scopes": [
-        "https://security.microsoft.com/.default"
+      "flows": [
+        {
+          "scopes": [
+            "https://security.microsoft.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
       ]
     }
   }

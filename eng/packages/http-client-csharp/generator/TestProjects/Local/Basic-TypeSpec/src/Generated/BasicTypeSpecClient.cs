@@ -2029,5 +2029,163 @@ namespace BasicTypeSpec
         {
             return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
+
+        /// <summary>
+        /// [Protocol Method] A sample operation with conditional requests
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ConditionalRequest(MatchConditions matchConditions, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateConditionalRequestRequest(matchConditions, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] A sample operation with conditional requests
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ConditionalRequestAsync(MatchConditions matchConditions, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateConditionalRequestRequest(matchConditions, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> A sample operation with conditional requests. </summary>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ConditionalRequest(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            return ConditionalRequest(matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> A sample operation with conditional requests. </summary>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ConditionalRequestAsync(MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        {
+            return await ConditionalRequestAsync(matchConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] A sample operation with conditional requests
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ConditionalRequestDate(RequestConditions requestConditions, RequestContext context)
+        {
+            if (requestConditions.IfUnmodifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
+            }
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] A sample operation with conditional requests
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions, RequestContext context)
+        {
+            if (requestConditions.IfUnmodifiedSince != null)
+            {
+                throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
+            }
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ConditionalRequestDate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateConditionalRequestDateRequest(requestConditions, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> A sample operation with conditional requests. </summary>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ConditionalRequestDate(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        {
+            return ConditionalRequestDate(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> A sample operation with conditional requests. </summary>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        {
+            return await ConditionalRequestDateAsync(requestConditions, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

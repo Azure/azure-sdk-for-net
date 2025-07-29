@@ -1,9 +1,5 @@
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource))]
     public partial class AzureResourceManagerPortalServicesCopilotContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPortalServicesCopilotContext() { }

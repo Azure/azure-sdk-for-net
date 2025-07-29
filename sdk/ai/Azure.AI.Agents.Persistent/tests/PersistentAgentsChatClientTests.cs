@@ -339,7 +339,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Pageable<PersistentAgent> agents = client.Administration.GetAgents();
             foreach (PersistentAgent agent in agents)
             {
-                if (agent.Name.StartsWith(AGENT_NAME))
+                if (agent.Name is not null && agent.Name.StartsWith(AGENT_NAME))
                     client.Administration.DeleteAgent(agent.Id);
             }
 

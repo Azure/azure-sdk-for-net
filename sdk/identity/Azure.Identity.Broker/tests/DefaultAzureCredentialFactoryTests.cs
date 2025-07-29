@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -55,9 +56,8 @@ namespace Azure.Identity.Broker.Tests
                     Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
-                    // VS Code and InteractiveBrowser are always excluded by default.
-                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
-                    Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
+                    Assert.IsTrue(chain.Any(cred => cred.GetType() == typeof(VisualStudioCodeCredential)));
+                    Assert.IsFalse(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {
@@ -115,8 +115,7 @@ namespace Azure.Identity.Broker.Tests
                         Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential), "AzurePowerShellCredential should be in the chain");
                         Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential), "VisualStudioCredential should be in the chain");
                         Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential), "AzureDeveloperCliCredential should be in the chain");
-                        // VS Code is always excluded.
-                        Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential), "VisualStudioCodeCredential should not be in the chain");
+                        Assert.IsTrue(chain.Any(cred => cred is VisualStudioCodeCredential), "VisualStudioCodeCredential should be in the chain");
                     });
                 }
             }

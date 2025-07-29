@@ -1,30 +1,5 @@
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateLinkResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountLocationDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAccountPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateAvailabilityContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateEncryption))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateInstancePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateIotHubSettings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateNameAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointConnectionDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateEndpointUpdate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnection))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceConnectionState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdatePrivateLinkServiceProxy))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DeviceUpdateRemotePrivateEndpoint))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.DiagnosticStorageProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceUpdate.Models.GroupConnectivityInformation))]
     public partial class AzureResourceManagerDeviceUpdateContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDeviceUpdateContext() { }

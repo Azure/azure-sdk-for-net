@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
@@ -13,6 +15,54 @@ namespace Azure.ResourceManager.StorageMover
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AgentList))]
+    [ModelReaderWriterBuildable(typeof(AzureKeyVaultSmbCredentials))]
+    [ModelReaderWriterBuildable(typeof(AzureStorageBlobContainerEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureStorageBlobContainerEndpointUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureStorageSmbFileShareEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(AzureStorageSmbFileShareEndpointUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(EndpointBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(EndpointBaseUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(EndpointList))]
+    [ModelReaderWriterBuildable(typeof(JobDefinitionData))]
+    [ModelReaderWriterBuildable(typeof(JobDefinitionList))]
+    [ModelReaderWriterBuildable(typeof(JobDefinitionPatch))]
+    [ModelReaderWriterBuildable(typeof(JobDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(JobRunData))]
+    [ModelReaderWriterBuildable(typeof(JobRunError))]
+    [ModelReaderWriterBuildable(typeof(JobRunList))]
+    [ModelReaderWriterBuildable(typeof(JobRunResource))]
+    [ModelReaderWriterBuildable(typeof(JobRunResourceId))]
+    [ModelReaderWriterBuildable(typeof(NfsMountEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(NfsMountEndpointUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ProjectList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ScheduleRecurrence))]
+    [ModelReaderWriterBuildable(typeof(ScheduleTime))]
+    [ModelReaderWriterBuildable(typeof(ScheduleWeeklyRecurrence))]
+    [ModelReaderWriterBuildable(typeof(SmbMountEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(SmbMountEndpointUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverAgentData))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverAgentPatch))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverAgentPropertiesErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverAgentResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverCredentials))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverData))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverEndpointData))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverEndpointPatch))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverEndpointResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverList))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverPatch))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverProjectData))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverProjectPatch))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverProjectResource))]
+    [ModelReaderWriterBuildable(typeof(StorageMoverResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownCredentials))]
+    [ModelReaderWriterBuildable(typeof(UnknownEndpointBaseProperties))]
+    [ModelReaderWriterBuildable(typeof(UnknownEndpointBaseUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(UploadLimitSchedule))]
+    [ModelReaderWriterBuildable(typeof(UploadLimitWeeklyRecurrence))]
     public partial class AzureResourceManagerStorageMoverContext : ModelReaderWriterContext
     {
     }

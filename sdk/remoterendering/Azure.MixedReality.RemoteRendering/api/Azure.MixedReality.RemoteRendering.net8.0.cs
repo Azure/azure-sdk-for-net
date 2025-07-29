@@ -72,12 +72,6 @@ namespace Azure.MixedReality.RemoteRendering
         public static bool operator !=(Azure.MixedReality.RemoteRendering.AssetConversionStatus left, Azure.MixedReality.RemoteRendering.AssetConversionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureMixedRealityRemoteRenderingContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureMixedRealityRemoteRenderingContext() { }
-        public static Azure.MixedReality.RemoteRendering.AzureMixedRealityRemoteRenderingContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class RemoteRenderingClient
     {
         protected RemoteRenderingClient() { }

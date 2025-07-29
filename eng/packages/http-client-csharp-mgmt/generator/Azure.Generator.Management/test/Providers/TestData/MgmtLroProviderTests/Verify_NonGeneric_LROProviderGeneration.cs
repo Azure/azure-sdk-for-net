@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -63,12 +61,7 @@ namespace Samples
 
         private string GetOperationId(global::Azure.Core.RehydrationToken? rehydrationToken)
         {
-            if ((rehydrationToken is null))
-            {
-                return null;
-            }
-            global::System.Collections.Generic.Dictionary<string, string> lroDetails = global::System.ClientModel.Primitives.ModelReaderWriter.Write(rehydrationToken, global::System.ClientModel.Primitives.ModelReaderWriterOptions.Json).ToObjectFromJson<global::System.Collections.Generic.Dictionary<string, string>>();
-            return lroDetails["id"];
+            return rehydrationToken?.Id;
         }
 
         public override global::Azure.Core.RehydrationToken? GetRehydrationToken() => (_nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken);

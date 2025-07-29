@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteCircuit))
             {
                 writer.WritePropertyName("expressRouteCircuit"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteCircuit);
+                ((IJsonModel<WritableSubResource>)ExpressRouteCircuit).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceProviderProvisioningState))
             {
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteCircuit = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteCircuit = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("serviceProviderProvisioningState"u8))

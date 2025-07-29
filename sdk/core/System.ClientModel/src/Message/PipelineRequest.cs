@@ -10,7 +10,7 @@ namespace System.ClientModel.Primitives;
 /// The type of a <see cref="PipelineRequest"/> is specific to the type of the
 /// <see cref="PipelineTransport"/> used by the <see cref="ClientPipeline"/>
 /// that sends the request.  Because of this,
-/// <see cref="ClientPipeline.CreateMessage"/> is used to create an instance of
+/// <see cref="ClientPipeline.CreateMessage()"/> is used to create an instance of
 /// <see cref="PipelineRequest"/> for a given pipeline.
 /// </summary>
 public abstract class PipelineRequest : IDisposable

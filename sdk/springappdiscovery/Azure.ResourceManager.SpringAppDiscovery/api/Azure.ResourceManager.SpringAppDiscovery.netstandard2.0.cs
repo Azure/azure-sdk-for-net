@@ -1,29 +1,5 @@
 namespace Azure.ResourceManager.SpringAppDiscovery
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppApplicationConfigurationsItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppInstancesItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServerProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummariesProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteErrorSummaryModel))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteModelExtendedLocation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteSummariesProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootAppData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootServerData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootServerResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteErrorSummaryResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SpringAppDiscovery.SpringBootSiteSummaryResource))]
     public partial class AzureResourceManagerSpringAppDiscoveryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSpringAppDiscoveryContext() { }

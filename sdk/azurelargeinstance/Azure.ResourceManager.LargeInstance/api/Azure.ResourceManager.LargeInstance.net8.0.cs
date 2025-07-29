@@ -1,21 +1,5 @@
 namespace Azure.ResourceManager.LargeInstance
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.LargeInstanceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.LargeInstanceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.LargeStorageInstanceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.LargeStorageInstanceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceDisk))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceForceState))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceHardwareProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceIPAddress))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceNetworkProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceOperationStatusResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceOSProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstancePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageBillingProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProfile))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeInstanceStorageProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LargeInstance.Models.LargeStorageInstancePatch))]
     public partial class AzureResourceManagerLargeInstanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerLargeInstanceContext() { }

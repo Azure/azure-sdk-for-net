@@ -1,22 +1,5 @@
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryExtendedLocation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryServerInstancePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoverySitePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.SapInstancePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.SapMigrateError))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.Models.ServerInstanceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapDiscoveryServerInstanceResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapDiscoverySiteResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapInstanceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MigrationDiscoverySap.SapInstanceResource))]
     public partial class AzureResourceManagerMigrationDiscoverySapContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMigrationDiscoverySapContext() { }

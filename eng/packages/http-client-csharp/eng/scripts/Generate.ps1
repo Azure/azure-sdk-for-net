@@ -50,6 +50,7 @@ function IsSpecDir {
 }
 
 $failingSpecs = @(
+    Join-Path 'http' 'streaming' 'jsonl'
     Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'versioning' 'added'
     Join-Path 'http' 'versioning' 'madeOptional'
@@ -63,6 +64,7 @@ $failingSpecs = @(
     # Azure scenarios not yet buildable
     Join-Path 'http' 'client' 'namespace'
     Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization'
+    Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
     Join-Path 'http' 'azure' 'payload' 'pageable'

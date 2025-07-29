@@ -1,26 +1,5 @@
 namespace Azure.ResourceManager.StoragePool
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.DiskPoolResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.DiskPoolPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails))]
     public partial class AzureResourceManagerStoragePoolContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerStoragePoolContext() { }

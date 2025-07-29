@@ -1,17 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Extensions;
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
-using Azure.Generator.Management.Snippets;
-using Azure.Generator.Management.Utilities;
-using Azure.Generator.Management.Extensions;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using System.Linq;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
@@ -20,23 +22,32 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
         protected readonly TypeProvider _enclosingType;
-        protected readonly ResourceClientProvider _resourceClientProvider;
+        protected readonly ResourceClientProvider _resource;
         protected readonly MethodProvider _updateMethodProvider;
+        protected readonly ClientProvider _restClient;
+        protected readonly RequestPathPattern _contextualPath;
+        protected readonly FieldProvider _clientDiagnosticsField;
+        protected readonly FieldProvider _restClientField;
         protected readonly bool _isAsync;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         protected BaseTagMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
             MethodProvider updateMethodProvider,
+            RestClientInfo restClientInfo,
             bool isAsync,
             string methodName,
             string methodDescription)
         {
-            _resourceClientProvider = resourceClientProvider;
+            _resource = resource;
             _updateMethodProvider = updateMethodProvider;
-            _enclosingType = resourceClientProvider;
+            _contextualPath = resource.ContextualPath;
+            _enclosingType = resource;
+            _restClient = restClientInfo.RestClientProvider;
             _isAsync = isAsync;
+            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
+            _restClientField = restClientInfo.RestClientField;
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();
@@ -47,7 +58,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         protected MethodSignature CreateMethodSignature(string methodName, string description)
         {
-            var returnType = new CSharpType(typeof(Azure.Response<>), _resourceClientProvider.ResourceClientCSharpType).WrapAsync(_isAsync);
+            var returnType = new CSharpType(typeof(Response<>), _resource.Type).WrapAsync(_isAsync);
             var modifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual;
             if (_isAsync)
             {
@@ -93,18 +104,17 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             foreach (var (kind, method) in resourceClientProvider.ResourceServiceMethods)
             {
                 var operation = method.Operation;
-                if (kind == Models.ResourceOperationKind.Get)
+                if (kind == ResourceOperationKind.Get)
                 {
                     getServiceMethod = method;
                     break;
                 }
             }
 
-            var clientProvider = resourceClientProvider.GetClientProvider();
-            var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod!.Operation);
-            var arguments = resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, getServiceMethod.Operation);
+            var requestMethod = _restClient.GetRequestMethodByOperation(getServiceMethod!.Operation);
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, "CreateGetRequest", arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
@@ -117,15 +127,15 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         }
 
         protected static List<MethodBodyStatement> CreatePrimaryPathResponseStatements(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
             VariableExpression responseVar)
         {
             return
             [
                 // return Response.FromValue(new ResourceType(Client, response.Value), response.GetRawResponse());
                 Return(Static(typeof(Response)).Invoke("FromValue", [
-                    New.Instance(resourceClientProvider.ResourceClientCSharpType, [
-                        This.Property("Client"),
+                    New.Instance(resource.Type, [
+                        This.As<ArmResource>().Client(),
                         responseVar.Property("Value")
                     ]),
                     responseVar.Invoke("GetRawResponse")
@@ -183,7 +193,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             return Declare(
                 "result",
-                new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
+                new CSharpType(typeof(ArmOperation<>), _resource.Type),
                 This.Invoke(updateMethod, [
                     Static(typeof(WaitUntil)).Property("Completed"),
                     dataVar,
@@ -200,12 +210,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var statements = new List<MethodBodyStatement>();
 
             // Get current resource data
-            statements.Add(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var resourceDataVar));
+            statements.Add(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var resourceDataVar));
 
             var updateParam = _updateMethodProvider.Signature.Parameters[1];
 
             VariableExpression resultVar;
-            if (!updateParam.Type.Equals(_resourceClientProvider.ResourceData.Type)) // patch case
+            if (!updateParam.Type.Equals(_resource.ResourceData.Type)) // patch case
             {
                 // Create a new instance of the update patch type
                 statements.Add(Declare(
@@ -279,13 +289,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             // Add RequestContext/HttpMessage/Pipeline processing statements
             statements.AddRange(CreateRequestContextAndProcessMessage(
-                _resourceClientProvider,
+                _resource,
                 _isAsync,
                 cancellationTokenParam,
                 out var responseVar));
 
             // Add primary path response creation statements
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
+            statements.AddRange(CreatePrimaryPathResponseStatements(_resource, responseVar));
 
             return statements;
         }

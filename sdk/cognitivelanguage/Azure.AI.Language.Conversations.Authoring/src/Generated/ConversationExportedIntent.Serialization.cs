@@ -36,6 +36,21 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(AssociatedEntities))
+            {
+                writer.WritePropertyName("associatedEntities"u8);
+                writer.WriteStartArray();
+                foreach (var item in AssociatedEntities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,6 +89,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             string category = default;
+            string description = default;
+            IList<ConversationExportedAssociatedEntityLabel> associatedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +100,32 @@ namespace Azure.AI.Language.Conversations.Authoring
                     category = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("associatedEntities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ConversationExportedAssociatedEntityLabel> array = new List<ConversationExportedAssociatedEntityLabel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ConversationExportedAssociatedEntityLabel.DeserializeConversationExportedAssociatedEntityLabel(item, options));
+                    }
+                    associatedEntities = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationExportedIntent(category, serializedAdditionalRawData);
+            return new ConversationExportedIntent(category, description, associatedEntities ?? new ChangeTrackingList<ConversationExportedAssociatedEntityLabel>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConversationExportedIntent>.Write(ModelReaderWriterOptions options)

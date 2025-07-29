@@ -1,26 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Azure.Generator.Management.Utilities;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class UpdateOperationMethodProvider(
-        ResourceClientProvider resourceClientProvider,
+        ResourceClientProvider resource,
+        RestClientInfo restClientInfo,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, isAsync)
+        bool isAsync) : ResourceOperationMethodProvider(resource, resource.ContextualPath, restClientInfo, method, convenienceMethod, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {
             return new MethodSignature(
                 _isAsync ? "UpdateAsync" : "Update",
-                $"Update a {_resourceClientProvider.SpecName}",
+                $"Update a {_resource.ResourceName}",
                 _convenienceMethod.Signature.Modifiers,
-                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
+                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
