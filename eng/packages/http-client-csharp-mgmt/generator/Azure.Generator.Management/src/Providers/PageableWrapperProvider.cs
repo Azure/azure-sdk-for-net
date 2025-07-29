@@ -172,7 +172,7 @@ namespace Azure.Generator.Management.Providers
 
             var signature = new ConstructorSignature(
                 Type,
-                null,
+                $"Initializes a new instance of the {(_isAsync ? "Async" : "")}PageableWrapper class.",
                 MethodSignatureModifiers.Public,
                 [sourceParameter, converterParameter]);
 

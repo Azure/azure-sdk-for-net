@@ -18,6 +18,7 @@ namespace MgmtTypeSpec
         /// <summary> The converter function from T to U. </summary>
         private Func<T, U> _converter;
 
+        /// <summary> Initializes a new instance of the PageableWrapper class. </summary>
         /// <param name="source"> The source pageable value of type Pageable&lt;T&gt;. </param>
         /// <param name="converter"> The converter function from T to U. </param>
         public PageableWrapper(Pageable<T> source, Func<T, U> converter)
