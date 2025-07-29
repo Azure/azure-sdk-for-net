@@ -7,6 +7,10 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
+```yaml
+use-model-reader-writer: true
+```
+
 ## Swagger Source(s)
 ```yaml
 title: SearchServiceClient
