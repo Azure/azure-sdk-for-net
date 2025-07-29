@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core.Pipeline;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {
@@ -64,9 +65,20 @@ namespace Azure.Core
 
         internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
-            // This method is based on System.ClientModel.Primitives.UserAgentPolicy.GenerateUserAgentString
-            // but maintains Azure SDK specific formatting for backward compatibility.
-            // TODO: Replace with direct call to System.ClientModel when available in released package
+            // TODO: Once System.ClientModel.Primitives.UserAgentPolicy.GenerateUserAgentString is available in released packages,
+            // replace this implementation with a direct call to that method and apply Azure SDK specific transformations.
+            // For now, we implement the same logic structure to align with System.ClientModel's approach.
+
+            // Use System.ClientModel's logic but handle Azure SDK specific formatting
+            return runtimeInformation != null
+                ? GenerateUserAgentStringWithCustomRuntimeInfo(clientAssembly, applicationId, runtimeInformation)
+                : GenerateAzureSdkUserAgentString(clientAssembly, applicationId);
+        }
+
+        private static string GenerateAzureSdkUserAgentString(Assembly clientAssembly, string? applicationId)
+        {
+            // This method implements the same logic as System.ClientModel.Primitives.UserAgentPolicy.GenerateUserAgentString
+            // but with Azure SDK specific assembly name transformations.
 
             AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
@@ -79,12 +91,7 @@ namespace Azure.Core
             string assemblyName = clientAssembly.GetName().Name!;
 
             // Azure SDK specific: Convert assembly name to azsdk-net- format
-            const string PackagePrefix = "Azure.";
-            if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
-            {
-                assemblyName = assemblyName.Substring(PackagePrefix.Length);
-            }
-            assemblyName = "azsdk-net-" + assemblyName;
+            assemblyName = TransformToAzureSdkAssemblyName(assemblyName);
 
             int hashSeparator = version.IndexOf('+');
             if (hashSeparator != -1)
@@ -92,19 +99,56 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
 
-            // Use RuntimeInformationWrapper for testability, but fall back to direct access
+            // Use the same OS description encoding logic as System.ClientModel
             string osDescription;
-            string frameworkDescription;
-            if (runtimeInformation != null)
+#if NET8_0_OR_GREATER
+            osDescription = Ascii.IsValid(RuntimeInformation.OSDescription) ? RuntimeInformation.OSDescription : WebUtility.UrlEncode(RuntimeInformation.OSDescription);
+#else
+            osDescription = ContainsNonAscii(RuntimeInformation.OSDescription) ? WebUtility.UrlEncode(RuntimeInformation.OSDescription) : RuntimeInformation.OSDescription;
+#endif
+
+            var platformInformation = EscapeProductInformation($"({RuntimeInformation.FrameworkDescription}; {osDescription})");
+
+            return applicationId != null
+                ? $"{applicationId} {assemblyName}/{version} {platformInformation}"
+                : $"{assemblyName}/{version} {platformInformation}";
+        }
+
+        private static string TransformToAzureSdkAssemblyName(string assemblyName)
+        {
+            // Azure SDK specific: Convert assembly name to azsdk-net- format
+            const string PackagePrefix = "Azure.";
+            if (assemblyName.StartsWith(PackagePrefix, StringComparison.Ordinal))
             {
-                osDescription = runtimeInformation.OSDescription;
-                frameworkDescription = runtimeInformation.FrameworkDescription;
+                assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
-            else
+            return "azsdk-net-" + assemblyName;
+        }
+
+        private static string GenerateUserAgentStringWithCustomRuntimeInfo(Assembly clientAssembly, string? applicationId, RuntimeInformationWrapper runtimeInformation)
+        {
+            // This preserves the original implementation for test scenarios that need to mock RuntimeInformation
+            AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
             {
-                osDescription = RuntimeInformation.OSDescription;
-                frameworkDescription = RuntimeInformation.FrameworkDescription;
+                throw new InvalidOperationException(
+                    $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{clientAssembly.FullName}'.");
             }
+
+            string version = versionAttribute.InformationalVersion;
+            string assemblyName = clientAssembly.GetName().Name!;
+
+            // Azure SDK specific: Convert assembly name to azsdk-net- format
+            assemblyName = TransformToAzureSdkAssemblyName(assemblyName);
+
+            int hashSeparator = version.IndexOf('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+
+            string osDescription = runtimeInformation.OSDescription;
+            string frameworkDescription = runtimeInformation.FrameworkDescription;
 
             // URL encode non-ASCII characters in OS description
 #if NET8_0_OR_GREATER
