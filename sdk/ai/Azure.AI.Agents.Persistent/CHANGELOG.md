@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+### Sample updates
+
+- Added the streaming sample for Bing grounding.
+
 ## 1.2.0-beta.1 (2025-07-25)
 
 ### Bugs Fixed
