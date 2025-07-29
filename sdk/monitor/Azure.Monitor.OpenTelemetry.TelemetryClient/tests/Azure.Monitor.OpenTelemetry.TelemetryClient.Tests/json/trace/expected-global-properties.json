@@ -1,0 +1,24 @@
+{
+  "name": "Message",
+  "time": "2025-06-26T09:01:18.4196291Z",
+  "iKey": "12345678-1234-1234-1234-123456789012",
+  "tags": {
+    "ai.cloud.role": "unknown_service:dotnet",
+    "ai.cloud.roleInstance": "host-not-compared",
+    "ai.application.ver": null,
+    "ai.internal.sdkVersion": "dotnet9.0.2:otel1.12.0:ext1.4.0"
+  },
+  "data": {
+    "baseType": "MessageData",
+    "baseData": {
+      "ver": 2,
+      "message": "Application Insights trace",
+      "severityLevel": "Information",
+      "properties": {
+        "global-Key2": "global-Value2",
+        "global-Key1": "global-Value1",
+        "CategoryName": "ApplicationInsightsLogger"
+      }
+    }
+  }
+}
