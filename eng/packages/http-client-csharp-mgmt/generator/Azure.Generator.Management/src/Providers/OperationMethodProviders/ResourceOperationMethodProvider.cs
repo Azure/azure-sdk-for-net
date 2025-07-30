@@ -3,10 +3,12 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Extensions;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -15,8 +17,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -26,49 +26,82 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     /// </summary>
     internal class ResourceOperationMethodProvider
     {
-        protected readonly ResourceClientProvider _resourceClientProvider;
+        protected readonly TypeProvider _enclosingType;
+        protected readonly RequestPathPattern _contextualPath;
+        protected readonly ResourceClientProvider _resource;
+        protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
         protected readonly bool _isAsync;
         protected readonly ValueExpression _clientDiagnosticsField;
+        protected readonly ValueExpression _restClientField;
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly string _methodName;
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
         private readonly bool _isFakeLongRunningOperation;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
+        /// </summary>
+        /// <param name="enclosingType">The enclosing type of this operation. </param>
+        /// <param name="contextualPath">The contextual path of the enclosing type. </param>
+        /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
+        /// <param name="method">The input service method that we are building from. </param>
+        /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
+        /// <param name="isAsync">Whether this method is an async method. </param>
+        /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         public ResourceOperationMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            TypeProvider enclosingType,
+            RequestPathPattern contextualPath,
+            RestClientInfo restClientInfo,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
-            bool isAsync)
+            bool isAsync,
+            string? methodName = null)
         {
-            _resourceClientProvider = resourceClientProvider;
+            _enclosingType = enclosingType;
+            _contextualPath = contextualPath;
+            _resource = InitializeResource(enclosingType);
+            _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
+            _methodName = methodName ?? convenienceMethod.Signature.Name;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
-            _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
+            _clientDiagnosticsField = restClientInfo.DiagnosticsField;
+            _restClientField = restClientInfo.RestClientField;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
+
+        // TODO -- we should not need to do this. We need the resource only because sometimes we need to wrap the return type into its corresponding resource.
+        // We should have a cache in the outputlibrary for it.
+        private static ResourceClientProvider InitializeResource(TypeProvider enclosingType)
+            => enclosingType switch
+            {
+                ResourceClientProvider resourceProvider => resourceProvider,
+                ResourceCollectionClientProvider collectionProvider => collectionProvider.Resource,
+                _ => throw new NotImplementedException()
+            };
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
             return new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._resourceClientProvider.Source);
+                resourceOperationMethodProvider._enclosingType);
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
         {
-            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, _signature.Name, out var scopeVariable);
+            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_enclosingType, _clientDiagnosticsField, _signature.Name, out var scopeVariable);
             return [
                 .. scopeStatements,
                 new TryCatchFinallyStatement(
@@ -78,13 +111,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ];
         }
 
+        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        {
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath);
+        }
+
         protected virtual MethodSignature CreateSignature()
         {
             return new MethodSignature(
-                _convenienceMethod.Signature.Name,
+                _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
-                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
+                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
@@ -98,16 +136,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
-            var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
+            var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _serviceMethod.Operation);
+            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
-            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out var messageVariable));
+            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
@@ -115,8 +153,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 tryStatements.AddRange(
                     _isFakeLongRunningOperation ?
-                    BuildFakeLroHandling(messageVariable,responseVariable,cancellationTokenParameter) :
-                    BuildLroHandling(messageVariable,responseVariable,cancellationTokenParameter));
+                    BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
+                    BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
             }
             else
             {
@@ -158,7 +196,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
-                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
+                    .MakeGenericType([_resource.Type])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
@@ -169,7 +207,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var responseFromValueExpression = Static(typeof(Response)).Invoke(
                 nameof(Response.FromValue),
                 New.Instance(
-                    _resourceClientProvider.ResourceClientCSharpType,
+                    _resource.Type,
                     This.Property("Client"),
                     responseVariable.Property("Value")),
                 responseVariable.Invoke("GetRawResponse"));
@@ -197,7 +235,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
-                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
+                    .MakeGenericType([_resource.Type])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             ValueExpression[] armOperationArguments = [
@@ -210,7 +248,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var operationInstanceArguments = _isGeneric
                 ? [
-                    New.Instance(_resourceClientProvider.Source.Type, This.Property("Client")),
+                    New.Instance(_resource.Source.Type, This.Property("Client")), // TODO -- this is incorrect: https://github.com/Azure/azure-sdk-for-net/issues/51177
                     .. armOperationArguments
                   ]
                 : armOperationArguments;
@@ -264,60 +302,27 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             List<MethodBodyStatement> statements = [nullCheckStatement];
 
-            var resourceType = typeof(ArmResource);
+            var returnType = signature.ReturnType!.UnWrap();
             var returnValueExpression = New.Instance(
-                _resourceClientProvider.ResourceClientCSharpType,
+                returnType,
                 This.Property("Client"),
                 responseVariable.Property("Value"));
-
-            var returnStatement = Return(
-                Static(typeof(Response)).Invoke(
-                    nameof(Response.FromValue),
-                    returnValueExpression,
-                    responseVariable.Invoke("GetRawResponse")));
-            statements.Add(returnStatement);
+            // If the return type is the same as the resource type, we need to the convert work (from resource data to resource)
+            if (returnType.Equals(_resource.Type))
+            {
+                var returnStatement = Return(
+                    Static(typeof(Response)).Invoke(
+                        nameof(Response.FromValue),
+                        returnValueExpression,
+                        responseVariable.Invoke("GetRawResponse")));
+                statements.Add(returnStatement);
+            }
+            else
+            {
+                statements.Add(Return(responseVariable));
+            }
 
             return statements;
-        }
-
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
-        {
-            var requiredParameters = new List<ParameterProvider>();
-            var optionalParameters = new List<ParameterProvider>();
-            if (_serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation())
-            {
-                requiredParameters.Add(KnownAzureParameters.WaitUntil);
-            }
-
-            foreach (var parameter in _serviceMethod.Operation.Parameters)
-            {
-                if (parameter.Kind != InputParameterKind.Method)
-                {
-                    continue;
-                }
-
-                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
-                {
-                    var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
-                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
-                    {
-                        outputParameter.Update(name: "data");
-                    }
-
-                    if (parameter.IsRequired)
-                    {
-                        requiredParameters.Add(outputParameter);
-                    }
-                    else
-                    {
-                        optionalParameters.Add(outputParameter);
-                    }
-                }
-            }
-
-            optionalParameters.Add(KnownParameters.CancellationTokenParameter);
-
-            return requiredParameters.Concat(optionalParameters).ToList();
         }
     }
 }

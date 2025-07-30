@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="DatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        protected DatasetVersion(string dataUri)
+        protected DatasetVersion(Uri dataUri)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetVersion(string dataUri, DatasetType type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatasetVersion(Uri dataUri, DatasetType type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataUri = dataUri;
             Type = type;
@@ -89,9 +89,6 @@ namespace Azure.AI.Projects
         internal DatasetVersion()
         {
         }
-
-        /// <summary> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </summary>
-        public string DataUri { get; set; }
         /// <summary> Dataset type. </summary>
         internal DatasetType Type { get; set; }
         /// <summary> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </summary>

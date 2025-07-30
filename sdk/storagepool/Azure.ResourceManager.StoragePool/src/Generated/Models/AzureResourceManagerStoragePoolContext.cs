@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
@@ -13,6 +16,35 @@ namespace Azure.ResourceManager.StoragePool
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DiskPoolCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolData))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolIscsiTargetCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolIscsiTargetData))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolIscsiTargetList))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolIscsiTargetPatch))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolIscsiTargetPortalGroupAcl))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolIscsiTargetResource))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolListResult))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolPatch))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolResource))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolZoneInfo))]
+    [ModelReaderWriterBuildable(typeof(DiskPoolZoneListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedDiskIscsiLun))]
+    [ModelReaderWriterBuildable(typeof(OutboundEndpointDependency))]
+    [ModelReaderWriterBuildable(typeof(OutboundEndpointDetail))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolOutboundEnvironment))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolOutboundEnvironmentList))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSku))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuCapability))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuInfo))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuListResult))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuLocationInfo))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuRestrictionInfo))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuRestrictions))]
+    [ModelReaderWriterBuildable(typeof(StoragePoolSkuZoneDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerStoragePoolContext : ModelReaderWriterContext
     {
     }

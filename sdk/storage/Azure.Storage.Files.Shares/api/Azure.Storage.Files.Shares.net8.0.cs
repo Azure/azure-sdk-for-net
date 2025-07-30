@@ -1,11 +1,5 @@
 namespace Azure.Storage.Files.Shares
 {
-    public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureStorageFilesSharesContext() { }
-        public static Azure.Storage.Files.Shares.AzureStorageFilesSharesContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class ShareClient
     {
         protected ShareClient() { }
@@ -1123,7 +1117,7 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public partial class ShareFileSymbolicLinkInfo
     {
-        public ShareFileSymbolicLinkInfo() { }
+        internal ShareFileSymbolicLinkInfo() { }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LinkText { get { throw null; } }

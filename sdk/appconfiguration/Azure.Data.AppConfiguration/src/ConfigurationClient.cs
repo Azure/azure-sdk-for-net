@@ -9,26 +9,93 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using static Azure.Core.Pipeline.TaskExtensions;
 
 #pragma warning disable AZC0007
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Renamed.
+    // - Suppressed convenience methods. These are implemented through custom code.
+    // - Suppressed protocol methods that do not have an existing convenience method API.
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
+    [CodeGenType("AzureAppConfigurationClient")]
     [CodeGenSuppress("ConfigurationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(ConfigurationClientOptions))]
+    [CodeGenSuppress("GetKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSetting", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSettingAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(CancellationToken))]
+    [CodeGenSuppress("SetConfigurationSettingInternal", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("SetConfigurationSettingInternalAsync", typeof(string), typeof(PutKeyValueRequestContentType), typeof(ConfigurationSetting), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteConfigurationSettingAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSnapshot", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSnapshotAsync", typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSnapshots", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSnapshotsAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckSnapshotsAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSnapshot", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(ConfigurationSnapshot), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSnapshotAsync", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(ConfigurationSnapshot), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateReadOnlyLockAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteReadOnlyLockAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
+    [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckSnapshotsAsync", typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetSnapshots", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetSnapshotsAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
+    [CodeGenSuppress("GetLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingLabelFields>), typeof(RequestContext))]
+    [CodeGenSuppress("GetRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("GetRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SettingFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
+
     public partial class ConfigurationClient
     {
         private const string OTelAttributeKey = "az.appconfiguration.key";
         private readonly SyncTokenPolicy _syncTokenPolicy;
-
-        /// <summary>
-        /// Protected constructor to allow mocking.
-        /// </summary>
-        protected ConfigurationClient()
-        {
-        }
+        private readonly string _syncToken;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
@@ -54,19 +121,9 @@ namespace Azure.Data.AppConfiguration
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
             _apiVersion = options.Version;
             _syncTokenPolicy = new SyncTokenPolicy();
-            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
-        /// <param name="credential">The token credential used to sign requests.</param>
-        public ConfigurationClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, new ConfigurationClientOptions())
-        {
         }
 
         /// <summary>
@@ -85,7 +142,7 @@ namespace Azure.Data.AppConfiguration
 
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
-            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
             _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -113,7 +170,7 @@ namespace Azure.Data.AppConfiguration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _syncToken = syncToken;
             _apiVersion = options.Version;
@@ -133,7 +190,7 @@ namespace Azure.Data.AppConfiguration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _syncToken = syncToken;
             _apiVersion = options.Version;
@@ -195,7 +252,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
-                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -233,7 +290,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
-                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
+                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context);
                 switch (response.Status)
                 {
                     case 200:
@@ -303,7 +360,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
 
-                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingInternalAsync(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context).ConfigureAwait(false);
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
@@ -344,7 +401,7 @@ namespace Azure.Data.AppConfiguration
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
 
-                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
+                using Response response = SetConfigurationSettingInternal(setting.Key, contentType.ToString(), content, setting.Label, _syncToken, requestOptions, context: context);
 
                 return response.Status switch
                 {
@@ -431,7 +488,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
+                using Response response = await DeleteConfigurationSettingAsync(key, label, _syncToken, requestOptions?.IfMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -459,7 +516,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
+                using Response response = DeleteConfigurationSetting(key, label, _syncToken, requestOptions?.IfMatch, context);
 
                 return response.Status switch
                 {
@@ -584,7 +641,8 @@ namespace Azure.Data.AppConfiguration
                 context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
+
+                using Response response = await GetConfigurationSettingAsync(key, label, null, _syncToken, dateTime, conditions, null, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -621,7 +679,7 @@ namespace Azure.Data.AppConfiguration
                 context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
+                using Response response = GetConfigurationSetting(key, label, null, _syncToken, dateTime, conditions, null, context);
 
                 return response.Status switch
                 {
@@ -680,15 +738,16 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, tags, conditions, context);
-            };
+                return CreateGetConfigurationSettingsRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+            }
+            ;
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, tags, conditions, context);
+                return CreateNextGetConfigurationSettingsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -703,9 +762,9 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, null, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, null, snapshotName, null, null, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -719,9 +778,9 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, null, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, null, snapshotName, null, null, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -738,9 +797,9 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -756,9 +815,9 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetConfigurationSettingsRequest(nextLink, null, null, _syncToken, null, null, fieldsString, snapshotName, null, null, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a single configuration snapshot. </summary>
@@ -774,18 +833,9 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                List<string> snapshotFields = null;
-                if (fields != null)
-                {
-                    snapshotFields = new();
-                    foreach (var field in fields)
-                    {
-                        snapshotFields.Add(field.ToString());
-                    }
-                }
 
-                Response response = await GetSnapshotAsync(snapshotName, snapshotFields, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = await GetSnapshotAsync(snapshotName, fields, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -808,18 +858,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                List<string> snapshotFields = null;
-                if (fields != null)
-                {
-                    snapshotFields = new();
-                    foreach (var field in fields)
-                    {
-                        snapshotFields.Add(field.ToString());
-                    }
-                }
-
-                Response response = GetSnapshot(snapshotName, snapshotFields, new MatchConditions(), context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = GetSnapshot(snapshotName, fields, _syncToken, new MatchConditions(), context);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -847,11 +887,11 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                using RequestContent content = ConfigurationSnapshot.ToRequestContent(snapshot);
+                using RequestContent content = snapshot;
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
-                var operationT = await CreateSnapshotAsync(wait, snapshotName, content, contentType, context).ConfigureAwait(false);
+                var operationT = await CreateSnapshotAsync(wait, snapshotName, contentType.ToString(), content, _syncToken, context).ConfigureAwait(false);
 
                 var createSnapshotOperation = new CreateSnapshotOperation(snapshotName, ClientDiagnostics, operationT);
 
@@ -887,11 +927,11 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-                using RequestContent content = ConfigurationSnapshot.ToRequestContent(snapshot);
+                using RequestContent content = snapshot;
                 ContentType contentType = new(HttpHeader.Common.JsonContentType.Value.ToString());
 
                 // Start the operation
-                var operationT = CreateSnapshot(wait, snapshotName, content, contentType, context);
+                var operationT = CreateSnapshot(wait, snapshotName, contentType.ToString(), content, _syncToken, context);
 
                 var createSnapshotOperation = new CreateSnapshotOperation(snapshotName, ClientDiagnostics, operationT);
 
@@ -929,8 +969,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -960,8 +1000,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, new MatchConditions(), context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -992,8 +1032,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, matchConditions, context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context).ConfigureAwait(false);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1024,8 +1064,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, matchConditions, context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1055,8 +1095,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, new MatchConditions(), context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context).ConfigureAwait(false);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1086,8 +1126,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, new MatchConditions(), context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, new MatchConditions(), context);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1118,8 +1158,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = await UpdateSnapshotStatusAsync(snapshotName, content, contentType, matchConditions, context).ConfigureAwait(false);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context).ConfigureAwait(false);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1150,8 +1190,8 @@ namespace Azure.Data.AppConfiguration
                 };
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
-                Response response = UpdateSnapshotStatus(snapshotName, content, contentType, matchConditions, context);
-                ConfigurationSnapshot value = ConfigurationSnapshot.FromResponse(response);
+                Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, matchConditions, context);
+                ConfigurationSnapshot value = (ConfigurationSnapshot)response;
                 return Response.FromValue(value, response);
             }
             catch (Exception e)
@@ -1168,26 +1208,16 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
-            var fields = selector.Fields;
+            IList<SnapshotFields> fields = selector.Fields?.Count > 0
+                ? [ .. selector.Fields]
+                : null;
             var status = selector.Status;
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            var snapshotFields = new ChangeTrackingList<string>();
-            foreach (SnapshotFields field in fields)
-            {
-                snapshotFields.Add(field.ToString());
-            }
-
-            var snapshotStatus = new ChangeTrackingList<string>();
-            foreach (ConfigurationSnapshotStatus st in status)
-            {
-                snapshotStatus.Add(st.ToString());
-            }
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, null, snapshotFields, snapshotStatus, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, fields, status, _syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetSnapshotsRequest(nextLink, name, null, fields, status, _syncToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, Pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary> Gets a list of configuration snapshots. </summary>
@@ -1197,26 +1227,16 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
-            var fields = selector.Fields;
+            IList<SnapshotFields> fields = selector.Fields?.Count > 0
+                ? [.. selector.Fields]
+                : null;
             var status = selector.Status;
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            var snapshotFields = new ChangeTrackingList<string>();
-            foreach (SnapshotFields field in fields)
-            {
-                snapshotFields.Add(field.ToString());
-            }
-
-            var snapshotStatus = new ChangeTrackingList<string>();
-            foreach (ConfigurationSnapshotStatus st in status)
-            {
-                snapshotStatus.Add(st.ToString());
-            }
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, null, snapshotFields, snapshotStatus, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, fields, status, _syncToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetSnapshotsRequest(nextLink, name, null, fields, status, _syncToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, Pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1258,9 +1278,9 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, tags, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, tags, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, _syncToken, null, dateTime, fieldsString, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, tags, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1278,9 +1298,9 @@ namespace Azure.Data.AppConfiguration
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, tags, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, tags, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, _syncToken, null, dateTime, fieldsString, tags, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetRevisionsRequest(nextLink, key, label, _syncToken, null, dateTime, fieldsString, tags, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1374,20 +1394,16 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
-            var fields = selector.Fields;
+            List<SettingLabelFields> fields = selector.Fields?.Count > 0
+                ? [.. selector.Fields]
+                : null;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            var labelFields = new ChangeTrackingList<string>();
-            foreach (SettingLabelFields field in fields)
-            {
-                labelFields.Add(field.ToString());
-            }
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -1397,20 +1413,16 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
-            var fields = selector.Fields;
+            List<SettingLabelFields> fields = selector.Fields?.Count > 0
+               ? [.. selector.Fields]
+               : null;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
 
-            var labelFields = new ChangeTrackingList<string>();
-            foreach (SettingLabelFields field in fields)
-            {
-                labelFields.Add(field.ToString());
-            }
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, _syncToken, null, dateTime, fields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(nextLink, name, _syncToken, null, dateTime, fields, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
@@ -1441,13 +1453,17 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> ToCreateAsyncResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            Response response = isReadOnly ? await CreateReadOnlyLockAsync(key, label, requestOptions, context).ConfigureAwait(false) : await DeleteReadOnlyLockAsync(key, label, requestOptions, context).ConfigureAwait(false);
+            Response response = isReadOnly
+                ? await CreateReadOnlyLockAsync(key, label, _syncToken, requestOptions, context).ConfigureAwait(false)
+                : await DeleteReadOnlyLockAsync(key, label, _syncToken, requestOptions, context).ConfigureAwait(false);
             return response;
         }
 
         private Response ToCreateResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            Response response = isReadOnly ? CreateReadOnlyLock(key, label, requestOptions, context) : DeleteReadOnlyLock(key, label, requestOptions, context);
+            Response response = isReadOnly
+                ? CreateReadOnlyLock(key, label, _syncToken, requestOptions, context)
+                : DeleteReadOnlyLock(key, label, _syncToken, requestOptions, context);
             return response;
         }
 

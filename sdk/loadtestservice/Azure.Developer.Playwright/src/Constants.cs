@@ -151,7 +151,7 @@ internal class Constants
     internal static readonly string s_invalid_os_error = "Invalid operating system, supported values are 'linux' and 'windows'.";
     internal static readonly string s_workspace_mismatch_error = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.";
     internal static readonly string s_invalid_service_endpoint_error_message = "The service endpoint provided is invalid. Please verify the endpoint URL and try again.";
-    internal static readonly string s_playwright_service_runId_length_exceeded_error_message = "Error: The Run Id you provided exceeds 200 characters. Please provide a shorter Run ID.";
+    internal static readonly string s_playwright_service_runId_not_guid_error_message = "Error: The Run ID must be a valid GUID format. Please provide a valid GUID for the Run ID.";
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
     internal static readonly string s_playwright_Version_not_supported_error_message = "The Playwright version you are using does not support playwright workspaces. Please update to Playwright version 1.50.0 or higher.";
     internal static readonly string s_playwright_Invalid_version = "The Playwright version you are using is not supported. See the list of supported versions at https://aka.ms/mpt/supported-versions.";
@@ -162,6 +162,7 @@ internal class Constants
     internal static readonly string s_playwright_service_expose_network_environment_variable = "PLAYWRIGHT_SERVICE_EXPOSE_NETWORK";
     internal static readonly string s_playwright_service_os_environment_variable = "PLAYWRIGHT_SERVICE_OS";
     internal static readonly string s_playwright_service_run_id_environment_variable = "PLAYWRIGHT_SERVICE_RUN_ID";
+    internal static readonly string s_playwright_service_run_name_environment_variable = "PLAYWRIGHT_SERVICE_RUN_NAME";
 }
 
 internal class OSConstants
