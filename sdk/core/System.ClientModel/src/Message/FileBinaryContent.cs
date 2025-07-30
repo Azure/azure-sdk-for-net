@@ -17,35 +17,35 @@ public partial class FileBinaryContent : BinaryContent
     /// </summary>
     /// <param name="data"></param>
     /// <param name="mediaType"></param>
-    public FileBinaryContent(BinaryData data, string? mediaType = default)
+    public FileBinaryContent(BinaryData data, string? mediaType = "application/octet-stream")
     {
         Argument.AssertNotNull(data, nameof(data));
 
         _content = Create(data);
-        MediaType = mediaType ?? "application/octet-stream";
+        MediaType = mediaType;
     }
 
     /// <summary>
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
-    public FileBinaryContent(Stream stream, string? mediaType = default)
+    public FileBinaryContent(Stream stream, string? mediaType = "application/octet-stream")
     {
         Argument.AssertNotNull(stream, nameof(stream));
 
         _content = Create(stream);
-        MediaType = mediaType ?? "application/octet-stream";
+        MediaType = mediaType;
     }
 
     /// <summary>
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
-    public FileBinaryContent(string path, string? mediaType = default)
+    public FileBinaryContent(string path, string? mediaType = "application/octet-stream")
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         FileStream fileStream = File.OpenRead(path);
         _content = Create(fileStream);
-        MediaType = mediaType ?? "application/octet-stream";
+        MediaType = mediaType;
     }
 
     /// <summary>
