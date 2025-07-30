@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.4 (2025-07-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.ResourceGraph` AOT-compatible
 
 ## 1.1.0-beta.3 (2025-03-11)
 

@@ -134,6 +134,7 @@ namespace Azure.Generator.Management.Providers
             }
             fields.Add(_dataField);
             fields.Add(_resourceTypeField);
+
             return fields.ToArray();
         }
 
@@ -310,7 +311,7 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceTypeValue => _resourceMetadata.ResourceType;
 
-        protected override CSharpType? GetBaseType() => typeof(ArmResource);
+        protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -319,20 +320,26 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var (methodKind, method) in _resourceServiceMethods)
             {
-                // Get the appropriate rest client for this specific method
-                var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
-
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
-                // exclude the List operations for resource, they will be in ResourceCollection
-                var returnType = convenienceMethod.Signature.ReturnType!;
-                if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
+                // exclude the List operations for resource and Create operations for non-singleton resources (they will be in ResourceCollection)
+                if (methodKind == ResourceOperationKind.List || (!IsSingleton && methodKind == ResourceOperationKind.Create))
                 {
                     continue;
                 }
 
-                // Skip Create operations for non-singleton resources
-                if (!IsSingleton && methodKind == ResourceOperationKind.Create)
+                // Get the appropriate rest client for this specific method
+                var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);
+
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
+
+                if (method is InputPagingServiceMethod)
                 {
+                    // Use PageableOperationMethodProvider for InputPagingServiceMethod
+                    var itemType = convenienceMethod.Signature.ReturnType!.UnWrap();
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, convenienceMethod, false, itemType, methodKind));
+
+                    var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    operationMethods.Add(new PageableOperationMethodProvider(this, ContextualPath, restClientInfo, method, asyncConvenienceMethod, true, itemType, methodKind));
+
                     continue;
                 }
 
