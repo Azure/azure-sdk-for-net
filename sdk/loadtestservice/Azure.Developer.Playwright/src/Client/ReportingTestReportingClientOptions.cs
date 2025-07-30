@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.Developer.Playwright
 {
-    /// <summary> Client options for TestRunsClient. </summary>
-    public partial class TestRunsClientOptions : ClientOptions
+    /// <summary> Client options for ReportingTestReportingClient. </summary>
+    public partial class ReportingTestReportingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01_Preview;
 
@@ -24,8 +24,8 @@ namespace Azure.Developer.Playwright
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of TestRunsClientOptions. </summary>
-        public TestRunsClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of ReportingTestReportingClientOptions. </summary>
+        public ReportingTestReportingClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
