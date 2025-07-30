@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo)
+        public ConnectToSourceSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="validateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the source server. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? collectDatabases, bool? collectLogins, bool? collectAgentJobs, bool? collectTdeCertificateInfo, bool? validateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? collectDatabases, bool? collectLogins, bool? collectAgentJobs, bool? collectTdeCertificateInfo, bool? validateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for Source SQL Server. </summary>
-        public SqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Permission group for validations. </summary>
         public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
         /// <summary> Flag for whether to collect databases from source server. </summary>

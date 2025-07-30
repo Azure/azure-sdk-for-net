@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceServiceTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskName, ProjectTaskData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceServiceTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
             Argument.AssertNotNull(data, nameof(data));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceServiceTaskResource> CreateOrUpdate(WaitUntil waitUntil, string taskName, ProjectTaskData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceServiceTaskResource> CreateOrUpdate(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
             Argument.AssertNotNull(data, nameof(data));
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceServiceTaskServiceTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceServiceTaskServiceTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceServiceTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceServiceTaskServiceTasksClientDiagnostics, Pipeline, "ServiceServiceTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceServiceTaskResource(Client, DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(e)), _serviceServiceTaskServiceTasksClientDiagnostics, Pipeline, "ServiceServiceTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceServiceTaskServiceTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceServiceTaskServiceTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceServiceTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceServiceTaskServiceTasksClientDiagnostics, Pipeline, "ServiceServiceTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceServiceTaskResource(Client, DataMigrationProjectTaskData.DeserializeDataMigrationProjectTaskData(e)), _serviceServiceTaskServiceTasksClientDiagnostics, Pipeline, "ServiceServiceTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

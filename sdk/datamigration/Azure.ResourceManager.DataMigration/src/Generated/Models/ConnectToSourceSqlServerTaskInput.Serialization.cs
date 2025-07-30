@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            SqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
             ServerLevelPermissionsGroup? checkPermissionsGroup = default;
             bool? collectDatabases = default;
             bool? collectLogins = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("checkPermissionsGroup"u8))

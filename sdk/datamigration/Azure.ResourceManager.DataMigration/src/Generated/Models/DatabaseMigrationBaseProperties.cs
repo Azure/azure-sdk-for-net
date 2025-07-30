@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseMigrationBaseProperties(ResourceType kind, string scope, ProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatabaseMigrationBaseProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Scope = scope;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Resource Id of the target resource. </summary>
         public string Scope { get; set; }
         /// <summary> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataMigrationProvisioningState? ProvisioningState { get; }
         /// <summary> Migration status. </summary>
         public string MigrationStatus { get; }
         /// <summary> Database migration start time. </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> ID for current migration operation. </summary>
         public string MigrationOperationId { get; set; }
         /// <summary> Error details in case of migration failure. </summary>
-        public ErrorInfo MigrationFailureError { get; }
+        public SqlMigrationErrorInfo MigrationFailureError { get; }
         /// <summary> Error message for migration provisioning failure, if any. </summary>
         public string ProvisioningError { get; set; }
     }

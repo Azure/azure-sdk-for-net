@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        internal DatabaseMigrationProperties(ResourceType kind, string scope, ProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData)
+        internal DatabaseMigrationProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData)
         {
             SourceSqlConnection = sourceSqlConnection;
             SourceDatabaseName = sourceDatabaseName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Source SQL Server connection details. </summary>
-        public SqlConnectionInformation SourceSqlConnection { get; set; }
+        public DataMigrationSqlConnectionInformation SourceSqlConnection { get; set; }
         /// <summary> Name of the source database. </summary>
         public string SourceDatabaseName { get; set; }
         /// <summary> Name of the source sql server. </summary>

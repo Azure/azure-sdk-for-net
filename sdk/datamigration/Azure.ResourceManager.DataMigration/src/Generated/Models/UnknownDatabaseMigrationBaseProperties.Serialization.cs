@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             ResourceType kind = "Unknown";
             string scope = default;
-            ProvisioningState? provisioningState = default;
+            DataMigrationProvisioningState? provisioningState = default;
             string migrationStatus = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             ResourceIdentifier migrationService = default;
             string migrationOperationId = default;
-            ErrorInfo migrationFailureError = default;
+            SqlMigrationErrorInfo migrationFailureError = default;
             string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new DataMigrationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationStatus"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
+                    migrationFailureError = SqlMigrationErrorInfo.DeserializeSqlMigrationErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningError"u8))

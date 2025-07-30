@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             string projectName = "DmsSdkProject";
             ProjectData data = new ProjectData(new AzureLocation("southcentralus"))
             {
-                SourcePlatform = ProjectSourcePlatform.Sql,
-                TargetPlatform = ProjectTargetPlatform.SqlDB,
+                SourcePlatform = DataMigrationProjectSourcePlatform.Sql,
+                TargetPlatform = DataMigrationProjectTargetPlatform.SqlDB,
             };
             ArmOperation<ProjectResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, data);
             ProjectResource result = lro.Value;

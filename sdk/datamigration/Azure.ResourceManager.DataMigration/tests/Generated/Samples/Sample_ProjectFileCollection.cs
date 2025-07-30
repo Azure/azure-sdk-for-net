@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             string fileName = "x114d023d8";
             ProjectFileData data = new ProjectFileData
             {
-                Properties = new ProjectFileProperties
+                Properties = new DataMigrationProjectFileProperties
                 {
                     FilePath = "DmsSdkFilePath/DmsSdkFile.sql",
                 },

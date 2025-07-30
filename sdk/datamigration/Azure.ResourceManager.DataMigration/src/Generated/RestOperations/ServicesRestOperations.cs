@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal RequestUriBuilder CreateCheckChildrenNameAvailabilityRequestUri(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest)
+        internal RequestUriBuilder CreateCheckChildrenNameAvailabilityRequestUri(string subscriptionId, string groupName, string serviceName, DataMigrationServiceNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.DataMigration
             return uri;
         }
 
-        internal HttpMessage CreateCheckChildrenNameAvailabilityRequest(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest)
+        internal HttpMessage CreateCheckChildrenNameAvailabilityRequest(string subscriptionId, string groupName, string serviceName, DataMigrationServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -807,9 +807,9 @@ namespace Azure.ResourceManager.DataMigration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -818,26 +818,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="groupName"> Name of the resource group. </param>
         /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailabilityResponse>> CheckChildrenNameAvailabilityAsync(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckChildrenNameAvailabilityAsync(string subscriptionId, string groupName, string serviceName, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckChildrenNameAvailabilityRequest(subscriptionId, groupName, serviceName, nameAvailabilityRequest);
+            using var message = CreateCheckChildrenNameAvailabilityRequest(subscriptionId, groupName, serviceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NameAvailabilityResponse value = default;
+                        DataMigrationServiceNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailabilityResponse.DeserializeNameAvailabilityResponse(document.RootElement);
+                        value = DataMigrationServiceNameAvailabilityResult.DeserializeDataMigrationServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -849,26 +849,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="groupName"> Name of the resource group. </param>
         /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="groupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailabilityResponse> CheckChildrenNameAvailability(string subscriptionId, string groupName, string serviceName, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public Response<DataMigrationServiceNameAvailabilityResult> CheckChildrenNameAvailability(string subscriptionId, string groupName, string serviceName, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckChildrenNameAvailabilityRequest(subscriptionId, groupName, serviceName, nameAvailabilityRequest);
+            using var message = CreateCheckChildrenNameAvailabilityRequest(subscriptionId, groupName, serviceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NameAvailabilityResponse value = default;
+                        DataMigrationServiceNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NameAvailabilityResponse.DeserializeNameAvailabilityResponse(document.RootElement);
+                        value = DataMigrationServiceNameAvailabilityResult.DeserializeDataMigrationServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest)
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, DataMigrationServiceNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.DataMigration
             return uri;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, DataMigrationServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1069,9 +1069,9 @@ namespace Azure.ResourceManager.DataMigration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nameAvailabilityRequest, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1079,24 +1079,24 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> This method checks whether a proposed top-level resource name is valid and available. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, nameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NameAvailabilityResponse value = default;
+                        DataMigrationServiceNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailabilityResponse.DeserializeNameAvailabilityResponse(document.RootElement);
+                        value = DataMigrationServiceNameAvailabilityResult.DeserializeDataMigrationServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1107,24 +1107,24 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> This method checks whether a proposed top-level resource name is valid and available. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailabilityResponse> CheckNameAvailability(string subscriptionId, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public Response<DataMigrationServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, nameAvailabilityRequest);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, location, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NameAvailabilityResponse value = default;
+                        DataMigrationServiceNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NameAvailabilityResponse.DeserializeNameAvailabilityResponse(document.RootElement);
+                        value = DataMigrationServiceNameAvailabilityResult.DeserializeDataMigrationServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

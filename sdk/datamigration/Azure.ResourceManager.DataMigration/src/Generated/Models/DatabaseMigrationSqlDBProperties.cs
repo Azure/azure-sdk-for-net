@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetSqlConnection"> Target SQL DB connection details. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
-        internal DatabaseMigrationSqlDBProperties(ResourceType kind, string scope, ProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, SqlDBMigrationStatusDetails migrationStatusDetails, SqlConnectionInformation targetSqlConnection, SqlDBOfflineConfiguration offlineConfiguration, IList<string> tableList) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation)
+        internal DatabaseMigrationSqlDBProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails, DataMigrationSqlConnectionInformation targetSqlConnection, DataMigrationSqlDBOfflineConfiguration offlineConfiguration, IList<string> tableList) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation)
         {
             MigrationStatusDetails = migrationStatusDetails;
             TargetSqlConnection = targetSqlConnection;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Detailed migration status. Not included by default. </summary>
-        public SqlDBMigrationStatusDetails MigrationStatusDetails { get; }
+        public DataMigrationSqlDBMigrationStatusDetails MigrationStatusDetails { get; }
         /// <summary> Target SQL DB connection details. </summary>
-        public SqlConnectionInformation TargetSqlConnection { get; set; }
+        public DataMigrationSqlConnectionInformation TargetSqlConnection { get; set; }
         /// <summary> Offline configuration. </summary>
-        internal SqlDBOfflineConfiguration OfflineConfiguration { get; }
+        internal DataMigrationSqlDBOfflineConfiguration OfflineConfiguration { get; }
         /// <summary> Offline migration. </summary>
         public bool? Offline
         {

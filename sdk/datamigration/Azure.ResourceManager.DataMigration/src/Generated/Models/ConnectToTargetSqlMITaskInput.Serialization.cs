@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            SqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
             bool? collectLogins = default;
             bool? collectAgentJobs = default;
             bool? validateSsisCatalogOnly = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("collectLogins"u8))

@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // invoke the operation
             ProjectData data = new ProjectData(new AzureLocation("southcentralus"))
             {
-                SourcePlatform = ProjectSourcePlatform.Sql,
-                TargetPlatform = ProjectTargetPlatform.SqlDB,
+                SourcePlatform = DataMigrationProjectSourcePlatform.Sql,
+                TargetPlatform = DataMigrationProjectTargetPlatform.SqlDB,
             };
             ProjectResource result = await project.UpdateAsync(data);
 

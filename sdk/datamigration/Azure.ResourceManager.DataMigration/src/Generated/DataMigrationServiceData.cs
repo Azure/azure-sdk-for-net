@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
         /// <param name="deleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, ServiceSku sku, ServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, DataMigrationServiceSku sku, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? deleteResourcesOnStop, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Kind = kind;
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> The resource kind. Only 'vm' (the default) is supported. </summary>
         public string Kind { get; set; }
         /// <summary> Service SKU. </summary>
-        public ServiceSku Sku { get; set; }
+        public DataMigrationServiceSku Sku { get; set; }
         /// <summary> The resource's provisioning state. </summary>
-        public ServiceProvisioningState? ProvisioningState { get; }
+        public DataMigrationServiceProvisioningState? ProvisioningState { get; }
         /// <summary> The public key of the service, used to encrypt secrets sent to the service. </summary>
         public string PublicKey { get; set; }
         /// <summary> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </summary>

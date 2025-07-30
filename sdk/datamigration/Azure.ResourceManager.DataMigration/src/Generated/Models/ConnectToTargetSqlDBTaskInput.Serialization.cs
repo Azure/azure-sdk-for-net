@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            SqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
             bool? queryObjectCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryObjectCounts"u8))

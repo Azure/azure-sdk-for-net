@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DataMigrationServiceResource dataMigrationService = client.GetDataMigrationServiceResource(dataMigrationServiceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AvailableServiceSku item in dataMigrationService.GetSkusAsync())
+            await foreach (DataMigrationAvailableServiceSku item in dataMigrationService.GetSkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckChildrenNameAvailability_ServicesCheckChildrenNameAvailability()
+        public async Task CheckDataMigrationServiceNameAvailability_ServicesCheckChildrenNameAvailability()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/Services_CheckChildrenNameAvailability.json
             // this example is just showing the usage of "Services_CheckChildrenNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DataMigrationServiceResource dataMigrationService = client.GetDataMigrationServiceResource(dataMigrationServiceResourceId);
 
             // invoke the operation
-            NameAvailabilityRequest nameAvailabilityRequest = new NameAvailabilityRequest
+            DataMigrationServiceNameAvailabilityContent content = new DataMigrationServiceNameAvailabilityContent
             {
                 Name = "Task1",
                 ResourceType = "tasks",
             };
-            NameAvailabilityResponse result = await dataMigrationService.CheckChildrenNameAvailabilityAsync(nameAvailabilityRequest);
+            DataMigrationServiceNameAvailabilityResult result = await dataMigrationService.CheckDataMigrationServiceNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

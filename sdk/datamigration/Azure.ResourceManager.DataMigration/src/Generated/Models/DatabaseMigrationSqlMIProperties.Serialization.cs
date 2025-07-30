@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MigrationStatusDetails migrationStatusDetails = default;
-            BackupConfiguration backupConfiguration = default;
-            OfflineConfiguration offlineConfiguration = default;
-            SqlConnectionInformation sourceSqlConnection = default;
+            DataMigrationStatusDetails migrationStatusDetails = default;
+            DataMigrationBackupConfiguration backupConfiguration = default;
+            DataMigrationOfflineConfiguration offlineConfiguration = default;
+            DataMigrationSqlConnectionInformation sourceSqlConnection = default;
             string sourceDatabaseName = default;
             string sourceServerName = default;
             string targetDatabaseCollation = default;
             ResourceType kind = default;
             string scope = default;
-            ProvisioningState? provisioningState = default;
+            DataMigrationProvisioningState? provisioningState = default;
             string migrationStatus = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             ResourceIdentifier migrationService = default;
             string migrationOperationId = default;
-            ErrorInfo migrationFailureError = default;
+            SqlMigrationErrorInfo migrationFailureError = default;
             string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationStatusDetails = MigrationStatusDetails.DeserializeMigrationStatusDetails(property.Value, options);
+                    migrationStatusDetails = DataMigrationStatusDetails.DeserializeDataMigrationStatusDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupConfiguration"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupConfiguration = BackupConfiguration.DeserializeBackupConfiguration(property.Value, options);
+                    backupConfiguration = DataMigrationBackupConfiguration.DeserializeDataMigrationBackupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offlineConfiguration"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    offlineConfiguration = OfflineConfiguration.DeserializeOfflineConfiguration(property.Value, options);
+                    offlineConfiguration = DataMigrationOfflineConfiguration.DeserializeDataMigrationOfflineConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceSqlConnection"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
+                    sourceSqlConnection = DataMigrationSqlConnectionInformation.DeserializeDataMigrationSqlConnectionInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new DataMigrationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationStatus"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
+                    migrationFailureError = SqlMigrationErrorInfo.DeserializeSqlMigrationErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningError"u8))

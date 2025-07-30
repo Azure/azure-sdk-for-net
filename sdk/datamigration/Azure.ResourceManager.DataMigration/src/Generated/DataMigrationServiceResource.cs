@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.DataMigration
             return GetServiceServiceTasks().Get(taskName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProjectResources in the DataMigrationService. </summary>
-        /// <returns> An object representing collection of ProjectResources and their operations over a ProjectResource. </returns>
-        public virtual ProjectCollection GetProjects()
+        /// <summary> Gets a collection of DataMigrationProjectResources in the DataMigrationService. </summary>
+        /// <returns> An object representing collection of DataMigrationProjectResources and their operations over a DataMigrationProjectResource. </returns>
+        public virtual DataMigrationProjectCollection GetDataMigrationProjects()
         {
-            return GetCachedClient(client => new ProjectCollection(client, Id));
+            return GetCachedClient(client => new DataMigrationProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectResource"/></description>
+        /// <description><see cref="DataMigrationProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataMigrationProjectResource>> GetDataMigrationProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            return await GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetDataMigrationProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProjectResource"/></description>
+        /// <description><see cref="DataMigrationProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<DataMigrationProjectResource> GetDataMigrationProject(string projectName, CancellationToken cancellationToken = default)
         {
-            return GetProjects().Get(projectName, cancellationToken);
+            return GetDataMigrationProjects().Get(projectName, cancellationToken);
         }
 
         /// <summary>
@@ -755,12 +755,12 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableServiceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableServiceSku> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataMigrationAvailableServiceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataMigrationAvailableServiceSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableServiceSku.DeserializeAvailableServiceSku(e), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataMigrationAvailableServiceSku.DeserializeDataMigrationAvailableServiceSku(e), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -785,12 +785,12 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableServiceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableServiceSku> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataMigrationAvailableServiceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataMigrationAvailableServiceSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableServiceSku.DeserializeAvailableServiceSku(e), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataMigrationAvailableServiceSku.DeserializeDataMigrationAvailableServiceSku(e), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -814,18 +814,18 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
-        public virtual async Task<Response<NameAvailabilityResponse>> CheckChildrenNameAvailabilityAsync(NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckDataMigrationServiceNameAvailabilityAsync(DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.CheckChildrenNameAvailability");
+            using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.CheckDataMigrationServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = await _dataMigrationServiceServicesRestClient.CheckChildrenNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _dataMigrationServiceServicesRestClient.CheckChildrenNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -856,18 +856,18 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
-        public virtual Response<NameAvailabilityResponse> CheckChildrenNameAvailability(NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DataMigrationServiceNameAvailabilityResult> CheckDataMigrationServiceNameAvailability(DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.CheckChildrenNameAvailability");
+            using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceResource.CheckDataMigrationServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = _dataMigrationServiceServicesRestClient.CheckChildrenNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nameAvailabilityRequest, cancellationToken);
+                var response = _dataMigrationServiceServicesRestClient.CheckChildrenNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

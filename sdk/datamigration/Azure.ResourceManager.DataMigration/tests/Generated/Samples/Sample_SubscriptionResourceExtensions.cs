@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ResourceSku item in subscriptionResource.GetSkusResourceSkusAsync())
+            await foreach (DataMigrationSku item in subscriptionResource.GetSkusResourceSkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckNameAvailabilityService_ServicesCheckNameAvailability()
+        public async Task CheckDataMigrationNameAvailability_ServicesCheckNameAvailability()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/Services_CheckNameAvailability.json
             // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            NameAvailabilityRequest nameAvailabilityRequest = new NameAvailabilityRequest
+            DataMigrationServiceNameAvailabilityContent content = new DataMigrationServiceNameAvailabilityContent
             {
                 Name = "DmsSdkService",
                 ResourceType = "services",
             };
-            NameAvailabilityResponse result = await subscriptionResource.CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest);
+            DataMigrationServiceNameAvailabilityResult result = await subscriptionResource.CheckDataMigrationNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus");
-            await foreach (Quota item in subscriptionResource.GetUsagesAsync(location))
+            await foreach (DataMigrationQuota item in subscriptionResource.GetUsagesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

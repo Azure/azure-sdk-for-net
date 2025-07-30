@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             string serviceName = "DmsSdkService";
             DataMigrationServiceData data = new DataMigrationServiceData(new AzureLocation("southcentralus"))
             {
-                Sku = new ServiceSku
+                Sku = new DataMigrationServiceSku
                 {
                     Name = "Basic_1vCore",
                 },

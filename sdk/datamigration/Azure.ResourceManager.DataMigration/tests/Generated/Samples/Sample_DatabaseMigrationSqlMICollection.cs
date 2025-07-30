@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlMIProperties
                 {
-                    BackupConfiguration = new BackupConfiguration
+                    BackupConfiguration = new DataMigrationBackupConfiguration
                     {
-                        SourceLocation = new SourceLocation
+                        SourceLocation = new DataMigrationBackupSourceLocation
                         {
-                            AzureBlob = new AzureBlob
+                            AzureBlob = new SqlMigrationBlobDetails
                             {
-                                AuthType = AuthType.ManagedIdentity,
+                                AuthType = SqlMigrationBlobAuthType.ManagedIdentity,
                                 Identity = new ManagedServiceIdentity("UserAssigned")
                                 {
                                     UserAssignedIdentities =
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                             },
                         },
                     },
-                    OfflineConfiguration = new OfflineConfiguration
+                    OfflineConfiguration = new DataMigrationOfflineConfiguration
                     {
                         Offline = true,
                         LastBackupName = "last_backup_file_name",
@@ -115,29 +115,29 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlMIProperties
                 {
-                    BackupConfiguration = new BackupConfiguration
+                    BackupConfiguration = new DataMigrationBackupConfiguration
                     {
-                        SourceLocation = new SourceLocation
+                        SourceLocation = new DataMigrationBackupSourceLocation
                         {
-                            FileShare = new SqlFileShare
+                            FileShare = new DataMigrationSqlFileShare
                             {
                                 Path = "C:\\aaa\\bbb\\ccc",
                                 Username = "name",
                                 Password = "placeholder",
                             },
                         },
-                        TargetLocation = new TargetLocation
+                        TargetLocation = new DataMigrationBackupTargetLocation
                         {
                             StorageAccountResourceId = "account.database.windows.net",
                             AccountKey = "abcd",
                         },
                     },
-                    OfflineConfiguration = new OfflineConfiguration
+                    OfflineConfiguration = new DataMigrationOfflineConfiguration
                     {
                         Offline = true,
                         LastBackupName = "last_backup_file_name",
                     },
-                    SourceSqlConnection = new SqlConnectionInformation
+                    SourceSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
@@ -190,24 +190,24 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlMIProperties
                 {
-                    BackupConfiguration = new BackupConfiguration
+                    BackupConfiguration = new DataMigrationBackupConfiguration
                     {
-                        SourceLocation = new SourceLocation
+                        SourceLocation = new DataMigrationBackupSourceLocation
                         {
-                            FileShare = new SqlFileShare
+                            FileShare = new DataMigrationSqlFileShare
                             {
                                 Path = "C:\\aaa\\bbb\\ccc",
                                 Username = "name",
                                 Password = "placeholder",
                             },
                         },
-                        TargetLocation = new TargetLocation
+                        TargetLocation = new DataMigrationBackupTargetLocation
                         {
                             StorageAccountResourceId = "account.database.windows.net",
                             AccountKey = "abcd",
                         },
                     },
-                    SourceSqlConnection = new SqlConnectionInformation
+                    SourceSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",

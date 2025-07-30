@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // invoke the operation
             ProjectFileData data = new ProjectFileData
             {
-                Properties = new ProjectFileProperties
+                Properties = new DataMigrationProjectFileProperties
                 {
                     FilePath = "DmsSdkFilePath/DmsSdkFile.sql",
                 },
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ProjectFileResource projectFile = client.GetProjectFileResource(projectFileResourceId);
 
             // invoke the operation
-            FileStorageInfo result = await projectFile.ReadAsync();
+            DataMigrationFileStorageInfo result = await projectFile.ReadAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ProjectFileResource projectFile = client.GetProjectFileResource(projectFileResourceId);
 
             // invoke the operation
-            FileStorageInfo result = await projectFile.ReadWriteAsync();
+            DataMigrationFileStorageInfo result = await projectFile.ReadWriteAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

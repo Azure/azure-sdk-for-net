@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.DataMigration
             }
             ETag? etag = default;
             string kind = default;
-            ServiceSku sku = default;
+            DataMigrationServiceSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
             SystemData systemData = default;
-            ServiceProvisioningState? provisioningState = default;
+            DataMigrationServiceProvisioningState? provisioningState = default;
             string publicKey = default;
             string virtualSubnetId = default;
             string virtualNicId = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    sku = ServiceSku.DeserializeServiceSku(property.Value, options);
+                    sku = DataMigrationServiceSku.DeserializeDataMigrationServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            provisioningState = new ServiceProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataMigrationServiceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicKey"u8))

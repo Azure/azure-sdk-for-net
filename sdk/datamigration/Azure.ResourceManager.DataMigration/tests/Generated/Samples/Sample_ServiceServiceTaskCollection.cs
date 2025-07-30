@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // invoke the operation
             string taskName = "DmsSdkTask";
-            ProjectTaskData data = new ProjectTaskData
+            DataMigrationProjectTaskData data = new DataMigrationProjectTaskData
             {
                 Properties = new ConnectToSourceMySqlTaskProperties
                 {
-                    Input = new ConnectToSourceMySqlTaskInput(new MySqlConnectionInfo("localhost", 3306)),
+                    Input = new ConnectToSourceMySqlTaskInput(new DataMigrationMySqlConnectionInfo("localhost", 3306)),
                 },
             };
             ArmOperation<ServiceServiceTaskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, taskName, data);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProjectTaskData resourceData = result.Data;
+            DataMigrationProjectTaskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ProjectTaskData resourceData = result.Data;
+            DataMigrationProjectTaskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProjectTaskData resourceData = item.Data;
+                DataMigrationProjectTaskData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ProjectTaskData resourceData = result.Data;
+                DataMigrationProjectTaskData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

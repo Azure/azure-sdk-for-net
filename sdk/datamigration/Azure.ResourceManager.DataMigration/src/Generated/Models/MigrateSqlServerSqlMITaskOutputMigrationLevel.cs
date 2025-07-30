@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputMigrationLevel()
         {
-            OrphanedUsersInfo = new ChangeTrackingList<OrphanedUserInfo>();
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            OrphanedUsersInfo = new ChangeTrackingList<DataMigrationSqlServerOrphanedUserInfo>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMITaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationStatus? status, MigrationState? state, string agentJobs, string logins, string message, string serverRoleResults, IReadOnlyList<OrphanedUserInfo> orphanedUsersInfo, string databases, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMITaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationStatus? status, DataMigrationState? state, string agentJobs, string logins, string message, string serverRoleResults, IReadOnlyList<DataMigrationSqlServerOrphanedUserInfo> orphanedUsersInfo, string databases, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Current status of migration. </summary>
-        public MigrationStatus? Status { get; }
+        public DataMigrationStatus? Status { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Selected agent jobs as a map from name to id. </summary>
         public string AgentJobs { get; }
         /// <summary> Selected logins as a map from name to id. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Map of server role migration results. </summary>
         public string ServerRoleResults { get; }
         /// <summary> List of orphaned users. </summary>
-        public IReadOnlyList<OrphanedUserInfo> OrphanedUsersInfo { get; }
+        public IReadOnlyList<DataMigrationSqlServerOrphanedUserInfo> OrphanedUsersInfo { get; }
         /// <summary> Selected databases as a map from database name to database id. </summary>
         public string Databases { get; }
         /// <summary> Source server version. </summary>
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
         /// <summary> Migration exceptions and warnings. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

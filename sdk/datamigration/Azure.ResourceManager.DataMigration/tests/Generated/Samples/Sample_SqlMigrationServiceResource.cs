@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            AuthenticationKeys result = await sqlMigrationService.GetAuthKeysAsync();
+            SqlMigrationAuthenticationKeys result = await sqlMigrationService.GetAuthKeysAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            RegenAuthKeys regenAuthKeys = new RegenAuthKeys
+            SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys = new SqlMigrationRegenAuthKeys
             {
                 KeyName = "authKey1",
             };
-            RegenAuthKeys result = await sqlMigrationService.RegenerateAuthKeysAsync(regenAuthKeys);
+            SqlMigrationRegenAuthKeys result = await sqlMigrationService.RegenerateAuthKeysAsync(sqlMigrationRegenAuthKeys);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            DeleteNode deleteNode = new DeleteNode
+            DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult = new DeletedIntegrationRuntimeNodeResult
             {
                 NodeName = "nodeName",
                 IntegrationRuntimeName = "IRName",
             };
-            DeleteNode result = await sqlMigrationService.DeleteNodeAsync(deleteNode);
+            DeletedIntegrationRuntimeNodeResult result = await sqlMigrationService.DeleteNodeAsync(deletedIntegrationRuntimeNodeResult);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            IntegrationRuntimeMonitoringData result = await sqlMigrationService.GetMonitoringDataAsync();
+            IntegrationRuntimeMonitoringResult result = await sqlMigrationService.GetMonitoringDataAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

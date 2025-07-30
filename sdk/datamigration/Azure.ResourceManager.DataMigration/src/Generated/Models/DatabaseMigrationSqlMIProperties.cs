@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
-        internal DatabaseMigrationSqlMIProperties(ResourceType kind, string scope, ProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, MigrationStatusDetails migrationStatusDetails, BackupConfiguration backupConfiguration, OfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation)
+        internal DatabaseMigrationSqlMIProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation)
         {
             MigrationStatusDetails = migrationStatusDetails;
             BackupConfiguration = backupConfiguration;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Detailed migration status. Not included by default. </summary>
-        public MigrationStatusDetails MigrationStatusDetails { get; }
+        public DataMigrationStatusDetails MigrationStatusDetails { get; }
         /// <summary> Backup configuration info. </summary>
-        public BackupConfiguration BackupConfiguration { get; set; }
+        public DataMigrationBackupConfiguration BackupConfiguration { get; set; }
         /// <summary> Offline configuration. </summary>
-        public OfflineConfiguration OfflineConfiguration { get; set; }
+        public DataMigrationOfflineConfiguration OfflineConfiguration { get; set; }
     }
 }

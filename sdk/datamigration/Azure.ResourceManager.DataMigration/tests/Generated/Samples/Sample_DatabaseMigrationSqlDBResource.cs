@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlDBProperties
                 {
-                    TargetSqlConnection = new SqlConnectionInformation
+                    TargetSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "sqldbinstance",
                         Authentication = "SqlAuthentication",
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         TrustServerCertificate = true,
                     },
                     TableList = { "[Schema1].[TableName1]", "[Schema2].[TableName2]" },
-                    SourceSqlConnection = new SqlConnectionInformation
+                    SourceSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             {
                 Properties = new DatabaseMigrationSqlDBProperties
                 {
-                    TargetSqlConnection = new SqlConnectionInformation
+                    TargetSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "sqldbinstance",
                         Authentication = "SqlAuthentication",
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         EncryptConnection = true,
                         TrustServerCertificate = true,
                     },
-                    SourceSqlConnection = new SqlConnectionInformation
+                    SourceSqlConnection = new DataMigrationSqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
