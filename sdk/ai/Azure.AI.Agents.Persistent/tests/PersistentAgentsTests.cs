@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,11 +10,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Agents.Persistent.Custom.Streaming;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests
@@ -1734,7 +1733,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public async Task TestAzureAiSearchStreaming(AzureAISearchQueryTypeEnum queryType)
         {
             using var _ = SetTestSwitch();
-            if (!IsAsync)
+            if (!IsAsync && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
             PersistentAgentsClient client = GetClient();
             ToolResources searchResource = GetAISearchToolResource(queryType);
@@ -1786,7 +1785,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(false)]
         public async Task TestAutomaticSubmitToolOutputs(bool correctDefinition)
         {
-            if (!IsAsync)
+            if (!IsAsync && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive(STREAMING_CONSTRAINT);
 
             string GetHumidityByAddress(string address)
@@ -1895,6 +1894,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 {
                     cancelled = true;
                 }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
+                {
+                    Assert.Fail(errorStep.Value.LastError.Message);
+                }
             }
 
             if (correctDefinition)
@@ -1972,6 +1975,146 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             // Note sometimes this assumption fails because agent asks additional question.
             Assert.That(annotationFound, "Annotations were not found, the data are not grounded.");
+        }
+
+        [RecordedTest]
+        public async Task TestMcpTool()
+        {
+            PersistentAgentsClient client = GetClient();
+            MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
+            string searchApiCode = "search_azure_rest_api_code";
+            mcpTool.AllowedTools.Add(searchApiCode);
+
+            PersistentAgent agent = await GetAgent(
+                client,
+                instruction: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+                tools: [mcpTool]);
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Please summarize the Azure REST API specifications Readme");
+
+            MCPToolResource mcpToolResource = new("github");
+            mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            ToolResources toolResources = mcpToolResource.ToToolResources();
+
+            // Run the agent with MCP tool resources
+            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent, toolResources);
+
+            // Handle run execution and tool approvals
+            bool isApprovalRequested = false;
+            while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
+            {
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(1000));
+                run = await client.Runs.GetRunAsync(thread.Id, run.Id);
+
+                if (run.Status == RunStatus.RequiresAction && run.RequiredAction is SubmitToolApprovalAction toolApprovalAction)
+                {
+                    var toolApprovals = new List<ToolApproval>();
+                    foreach (RequiredToolCall toolCall in toolApprovalAction.SubmitToolApproval.ToolCalls)
+                    {
+                        if (toolCall is RequiredMcpToolCall mcpToolCall)
+                        {
+                            Console.WriteLine($"Approving MCP tool call: {mcpToolCall.Name}");
+                            toolApprovals.Add(new ToolApproval(mcpToolCall.Id, approve: true)
+                            {
+                                Headers = { ["SuperSecret"] = "123456" }
+                            });
+                            isApprovalRequested = true;
+                        }
+                    }
+
+                    if (toolApprovals.Count > 0)
+                    {
+                        run = await client.Runs.SubmitToolOutputsToRunAsync(thread.Id, run.Id, toolApprovals: toolApprovals);
+                    }
+                }
+            }
+            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
+            AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
+            bool isRunStepMCPPresent = false;
+            await foreach (RunStep step in steps)
+            {
+                if (step.StepDetails is RunStepToolCallDetails details)
+                {
+                    foreach (RunStepToolCall call in details.ToolCalls)
+                        if (call is RunStepMcpToolCall)
+                            isRunStepMCPPresent = true;
+                }
+            }
+            Assert.IsTrue(isRunStepMCPPresent, "No MCP tool call step is present.");
+        }
+
+        [RecordedTest]
+        public async Task TestMcpToolStreaming()
+        {
+            PersistentAgentsClient client = GetClient();
+            MCPToolDefinition mcpTool = new("github", "https://gitmcp.io/Azure/azure-rest-api-specs");
+            string searchApiCode = "search_azure_rest_api_code";
+            mcpTool.AllowedTools.Add(searchApiCode);
+            PersistentAgent agent = await GetAgent(
+                client,
+                instruction: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+                tools: [mcpTool]);
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Please summarize the Azure REST API specifications Readme");
+            MCPToolResource mcpToolResource = new("github");
+            mcpToolResource.UpdateHeader("SuperSecret", "123456");
+            ToolResources toolResources = mcpToolResource.ToToolResources();
+            CreateRunStreamingOptions options = new()
+            {
+                ToolResources = toolResources
+            };
+            List<ToolApproval> toolApprovals = [];
+            ThreadRun streamRun = null;
+            bool isApprovalRequested = false;
+            bool isMCPStepCreated = false;
+            AsyncCollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: options);
+            do
+            {
+                toolApprovals.Clear();
+                await foreach (StreamingUpdate streamingUpdate in stream)
+                {
+                    if (streamingUpdate is SubmitToolApprovalUpdate submitToolApprovalUpdate)
+                    {
+                        toolApprovals.Add(new ToolApproval(submitToolApprovalUpdate.ToolCallId, approve: true)
+                        {
+                            Headers = { ["SuperSecret"] = "123456" }
+                        });
+                        streamRun = submitToolApprovalUpdate.Value;
+                        isApprovalRequested = true;
+                    }
+                    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+                    {
+                        Console.Write(contentUpdate.Text);
+                    }
+                    else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
+                    {
+                        Assert.Fail(errorStep.Value.LastError.Message);
+                    }
+                    else if (streamingUpdate is RunStepDetailsUpdate runStepDelta)
+                    {
+                        if (!string.IsNullOrEmpty(runStepDelta.FunctionArguments))
+                        {
+                            isMCPStepCreated = true;
+                        }
+                    }
+                }
+                if (toolApprovals.Count > 0)
+                {
+                    stream = client.Runs.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs: [], toolApprovals: toolApprovals);
+                }
+            }
+            while (toolApprovals.Count > 0);
+            Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
+            Assert.IsTrue(isMCPStepCreated, "The Delta MCP step was not encountered.");
+            Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
         }
 
         #region Helpers

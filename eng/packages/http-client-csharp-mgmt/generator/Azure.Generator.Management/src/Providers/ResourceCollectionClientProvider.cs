@@ -135,7 +135,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override CSharpType? GetBaseType() => typeof(ArmCollection);
+        protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
             _getAll is null
@@ -283,7 +283,7 @@ namespace Azure.Generator.Management.Providers
         {
             var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(_getAll!, _clientInfos);
             var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_getAll!.Operation, isAsync);
-            return new GetAllOperationMethodProvider(this, restClientInfo, _getAll, convenienceMethod, isAsync);
+            return new PageableOperationMethodProvider(this, this.ContextualPath, restClientInfo, _getAll, convenienceMethod, isAsync, Resource.ResourceData.Type, ResourceOperationKind.List);
         }
 
         private List<MethodProvider> BuildGetMethods()

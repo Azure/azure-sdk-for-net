@@ -144,16 +144,16 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Gets the client for managing connections. </summary>
-        public Connections Connections { get => GetConnectionsClient(); }
+        public virtual Connections Connections { get => GetConnectionsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
-        public Datasets Datasets { get => GetDatasetsClient(); }
+        public virtual Datasets Datasets { get => GetDatasetsClient(); }
         /// <summary> Gets the client for managing deployments. </summary>
-        public Deployments Deployments { get => GetDeploymentsClient(); }
+        public virtual Deployments Deployments { get => GetDeploymentsClient(); }
         /// <summary> Gets the client for evaluations operations. </summary>
-        public Evaluations Evaluations { get => GetEvaluationsClient(); }
+        public virtual Evaluations Evaluations { get => GetEvaluationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
-        public Indexes Indexes { get => GetIndexesClient(); }
+        public virtual Indexes Indexes { get => GetIndexesClient(); }
         /// <summary> Gets the client for telemetry operations. </summary>
-        public Telemetry Telemetry { get => new Telemetry(this); }
+        public virtual Telemetry Telemetry { get => new Telemetry(this); }
     }
 }

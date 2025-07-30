@@ -1,10 +1,5 @@
 namespace Azure.ResourceManager.GraphServices
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GraphServices.GraphServicesAccountResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate))]
     public partial class AzureResourceManagerGraphServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerGraphServicesContext() { }

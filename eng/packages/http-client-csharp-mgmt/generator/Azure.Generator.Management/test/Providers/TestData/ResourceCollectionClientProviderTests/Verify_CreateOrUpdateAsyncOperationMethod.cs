@@ -5,8 +5,7 @@ try
     global::Azure.RequestContext context = new global::Azure.RequestContext
     {
         CancellationToken = cancellationToken
-    }
-    ;
+    };
     global::Azure.Core.HttpMessage message = _testClientRestClient.CreateCreateTestRequest(testName, global::System.Guid.Parse(this.Id.SubscriptionId), global::Samples.Models.ResponseTypeData.ToRequestContent(data), context);
     global::Azure.Response result = await this.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
         }
         // For live tests, replace "SANITIZED_FUNCTION_KEY" with the actual function key
-        // from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
-        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
+        // from the Azure Portal for "sdk-test-logic-app" -> workflowUrl.
+        private const string LogicAppEndpointUrl = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
         private EventGridDomainCollection DomainCollection { get; set; }
         private ResourceGroupResource ResourceGroup { get; set; }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -207,6 +207,84 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await getDomainResponse.DeleteAsync(WaitUntil.Completed);
             resultFalse = (await DomainCollection.ExistsAsync(domainName)).Value;
             Assert.IsFalse(resultFalse);
+        }
+
+        [Test]
+        public async Task DomainEventSubscriptionNegativeScenarios()
+        {
+            await SetCollection();
+            var domainName = Recording.GenerateAssetName("sdk-Domain-");
+
+            var domain = (await DomainCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed, domainName, new EventGridDomainData(DefaultLocation))).Value;
+
+            var eventSubscriptions = domain.GetDomainEventSubscriptions();
+
+            // Get non-existent event subscription
+            var response = await eventSubscriptions.GetIfExistsAsync("notexistentsub");
+            Assert.IsFalse(response.HasValue);
+
+            // GetAsync on non-existent subscription should throw
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await eventSubscriptions.GetAsync("notexistentsub");
+            });
+
+            // Create subscription with invalid URI
+            var invalidSubscriptionName = Recording.GenerateAssetName("sdk-BadSub-");
+            var badSub = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri("http://invalid.local")
+                },
+                Filter = new EventSubscriptionFilter()
+                {
+                    SubjectBeginsWith = "Invalid",
+                    SubjectEndsWith = "Data"
+                }
+            };
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, invalidSubscriptionName, badSub);
+            });
+
+            // Create valid subscription
+            var validSubscriptionName = Recording.GenerateAssetName("sdk-ValidSub-");
+            var validSub = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl)
+                },
+                Filter = new EventSubscriptionFilter()
+                {
+                    SubjectBeginsWith = "A",
+                    SubjectEndsWith = "Z"
+                }
+            };
+
+            var createdValidSub = (await eventSubscriptions.CreateOrUpdateAsync(WaitUntil.Completed, validSubscriptionName, validSub)).Value;
+            Assert.NotNull(createdValidSub);
+
+            // Delete the valid subscription
+            await createdValidSub.DeleteAsync(WaitUntil.Completed);
+            var exists = await eventSubscriptions.ExistsAsync(validSubscriptionName);
+            Assert.IsFalse(exists.Value);
+
+            // Patch after deletion should throw (either 400 or 404)
+            var emptyPatch = new EventGridSubscriptionPatch();
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await createdValidSub.UpdateAsync(WaitUntil.Completed, emptyPatch);
+            });
+
+            Assert.IsTrue(ex.Status == 404 || ex.Status == 400, $"Expected 404 or 400, but was {ex.Status}");
+
+            // Delete domain
+            await domain.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
