@@ -774,7 +774,6 @@ namespace Azure.Communication.CallAutomation
                 TransportUrl = configuration.TransportUri?.AbsoluteUri,
                 TransportType = configuration.TranscriptionTransport,
                 EnableIntermediateResults = configuration.EnableIntermediateResults,
-                SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
                 PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.Enable, configuration.PiiRedactionOptions.RedactionType),
                 EnableSentimentAnalysis = configuration.EnableSentimentAnalysis,
                 SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.EnableEndCallSummary, configuration.SummarizationOptions.Locale)

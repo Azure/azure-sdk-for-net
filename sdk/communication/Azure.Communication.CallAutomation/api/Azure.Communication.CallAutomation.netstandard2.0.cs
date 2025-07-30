@@ -1685,10 +1685,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(System.Collections.Generic.IEnumerable<string> locales, Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
+        public TranscriptionOptions(Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
+        public TranscriptionOptions(string locale, Azure.Communication.CallAutomation.StreamingTransport streamingTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
         public bool? EnableSentimentAnalysis { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Locales { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
         public bool? StartTranscription { get { throw null; } set { } }

@@ -16,12 +16,19 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionOptions
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
         /// <param name="streamingTransport"> Transport URL for live transcription. </param>
-        /// <param name="locales"> Defines the list locale for the language identification e.g en-CA, en-AU. </param>
-        public TranscriptionOptions(IEnumerable<string> locales, StreamingTransport streamingTransport = default)
+        public TranscriptionOptions(string locale, StreamingTransport streamingTransport = default)
+        {
+            Locale = locale;
+            TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
+        public TranscriptionOptions(StreamingTransport streamingTransport = default)
         {
             TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
-            this.Locales = locales.ToList<string>();
         }
 
         /// <summary> Transport URL for live transcription. </summary>
@@ -41,7 +48,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Indicating if sentiment analysis should be used. </summary>
         public bool? EnableSentimentAnalysis { get; set; }
         /// <summary> List of languages for Language Identification. </summary>
-        internal IList<string> Locales { get; }
+        public IList<string> Locales { get; set; }
         /// <summary> Summarization configuration options. </summary>
         public SummarizationOptions SummarizationOptions { get; set; }
     }
