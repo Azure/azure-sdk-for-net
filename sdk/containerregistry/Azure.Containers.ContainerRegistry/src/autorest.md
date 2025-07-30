@@ -193,3 +193,12 @@ directive:
   where: $..[?(@.operationId=='ContainerRegistryBlob_GetBlob' || @.operationId=='ContainerRegistryBlob_GetChunk')]
   transform: $["x-csharp-buffer-response"] = false;
 ```
+
+# Make AuthenticationRestClient a public class
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='Authentication_ExchangeAadAccessTokenForAcrRefreshToken' || @.operationId=='Authentication_ExchangeAcrRefreshTokenForAcrAccessToken')]
+  transform: >
+    $["x-accessibility"] = "public";
+```
