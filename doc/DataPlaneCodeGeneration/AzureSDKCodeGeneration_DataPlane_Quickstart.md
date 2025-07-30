@@ -31,7 +31,7 @@ dotnet build /t:GenerateCode
 
 #### Run with tracing enabled
 ```dotnetcli
-dotnet build /t:GenerateCode /p:trace=true -v d
+dotnet build /t:GenerateCode /p:Trace=true -v d
 ```
 
 #### Run with additional emitter options
