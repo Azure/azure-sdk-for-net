@@ -566,7 +566,6 @@
 /sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @jorgerangel-msft @Azure/azure-sdk-write-keyvault
 # ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %Kubernetes Configuration
