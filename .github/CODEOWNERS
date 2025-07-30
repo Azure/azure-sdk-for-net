@@ -563,11 +563,11 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @jorgerangel-msft @jsquire @christothes
+/sdk/keyvault/                                                     @jorgerangel-msft @jsquire @christothes @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @jorgerangel-msft
-# ServiceOwners:                                                   @cheathamb36 @chen-karen
+# AzureSdkOwners:                                                  @jorgerangel-msft @Azure/azure-sdk-write-keyvault
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
