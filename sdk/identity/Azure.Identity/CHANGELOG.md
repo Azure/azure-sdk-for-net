@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+#### Behavioral Breaking Changes
+
+- Deprecated `SharedTokenCacheCredential` and removed it from `DefaultAzureCredential`'s authentication flow. This credential was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. The `VisualStudioCredential` should now be used instead for Visual Studio authentication. The following changes have been made:
+  - `SharedTokenCacheCredential` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheCredentialOptions` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheCredential` is no longer included in the `DefaultAzureCredential` authentication flow
+
 ### Bugs Fixed
 
 ### Other Changes
