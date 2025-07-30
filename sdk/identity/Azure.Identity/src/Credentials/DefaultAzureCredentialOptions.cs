@@ -314,9 +314,7 @@ namespace Azure.Identity
                 dacClone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
                 dacClone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
-#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
-#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
