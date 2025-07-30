@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers
             return TypeSignatureModifiers.Internal | TypeSignatureModifiers.Class;
         }
 
-        protected override CSharpType? GetBaseType()
+        protected override CSharpType? BuildBaseType()
         {
             return _isAsync ? _asyncPageableU : _pageableU;
         }
