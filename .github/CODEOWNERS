@@ -80,6 +80,12 @@
 
 # ######## Services ########
 
+# PRLabel: %Contoso Widget Manager
+/sdk/contosowidgetmanager/ @ReilleyMilne
+
+# ServiceLabel: %Contoso Widget Manager
+# ServiceOwners: @ReilleyMilne
+
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
