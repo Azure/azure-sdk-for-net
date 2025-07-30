@@ -93,6 +93,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         // Call getters to set default environment variables if not already set before
         _ = _options.OS;
         _ = _options.RunId;
+        _ = _options.RunName;
         _ = _options.ExposeNetwork;
         _ = _options.ServiceAuth;
         _ = _options.UseCloudHostedBrowsers;

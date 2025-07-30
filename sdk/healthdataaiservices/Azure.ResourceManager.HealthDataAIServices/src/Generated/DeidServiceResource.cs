@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
     /// <summary></summary>
     public partial class DeidServiceResource : ArmResource
     {
-        private readonly ClientDiagnostics _deidserviceClientDiagnostics;
-        private readonly DeidServices _deidserviceRestClient;
+        private readonly ClientDiagnostics _deidServicesClientDiagnostics;
+        private readonly DeidServices _deidServicesRestClient;
         private readonly DeidServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HealthDataAIServices/deidServices";
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeidServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deidserviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deidserviceApiVersion);
-            _deidserviceRestClient = new DeidServices(_deidserviceClientDiagnostics, Pipeline, Endpoint, deidserviceApiVersion);
+            _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string deidServiceApiVersion);
+            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion);
             ValidateResourceId(id);
         }
 
@@ -93,16 +93,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeidServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.Get");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Get");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -122,16 +121,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeidServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.GetAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.GetAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -156,20 +154,19 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.Update");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Update");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
                     new DeidServiceOperationSource(Client),
-                    _deidserviceClientDiagnostics,
+                    _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -196,20 +193,19 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.UpdateAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.UpdateAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
                     new DeidServiceOperationSource(Client),
-                    _deidserviceClientDiagnostics,
+                    _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -232,18 +228,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.Delete");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.Delete");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_deidserviceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_deidServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -262,18 +257,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.DeleteAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.DeleteAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_deidserviceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_deidServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -297,7 +291,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.AddTag");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.AddTag");
             scope.Start();
             try
             {
@@ -309,9 +303,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
-                    }
-                    ;
-                    HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    };
+                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -346,7 +339,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.AddTag");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.AddTag");
             scope.Start();
             try
             {
@@ -358,9 +351,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
-                    }
-                    ;
-                    HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    };
+                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -393,7 +385,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.SetTags");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.SetTags");
             scope.Start();
             try
             {
@@ -406,9 +398,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
-                    }
-                    ;
-                    HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    };
+                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -437,7 +428,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.SetTags");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.SetTags");
             scope.Start();
             try
             {
@@ -450,9 +441,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
-                    }
-                    ;
-                    HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    };
+                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -481,7 +471,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.RemoveTag");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -493,9 +483,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
-                    }
-                    ;
-                    HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    };
+                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -528,7 +517,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceResource.RemoveTag");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -540,9 +529,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
-                    }
-                    ;
-                    HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    };
+                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="value"> The value. </param>
         public static implicit operator PrivateEndpointServiceConnectionStatus(string value) => new PrivateEndpointServiceConnectionStatus(value);
 
+        /// <summary> Converts a string to a <see cref="PrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new PrivateEndpointServiceConnectionStatus(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateEndpointServiceConnectionStatus other && Equals(other);

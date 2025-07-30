@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
     /// <summary></summary>
     public partial class HealthDataAIServicesPrivateEndpointConnectionResourceResource : ArmResource
     {
-        private readonly ClientDiagnostics _healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics;
-        private readonly PrivateEndpointConnections _healthdataaiservicesprivateendpointconnectionresourceRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
         private readonly HealthDataAIServicesPrivateEndpointConnectionResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HealthDataAIServices/deidServices/privateEndpointConnections";
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthDataAIServicesPrivateEndpointConnectionResourceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string healthdataaiservicesprivateendpointconnectionresourceApiVersion);
-            _healthdataaiservicesprivateendpointconnectionresourceRestClient = new PrivateEndpointConnections(_healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics, Pipeline, Endpoint, healthdataaiservicesprivateendpointconnectionresourceApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string healthDataAIServicesPrivateEndpointConnectionResourceApiVersion);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, healthDataAIServicesPrivateEndpointConnectionResourceApiVersion);
             ValidateResourceId(id);
         }
 
@@ -91,16 +91,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HealthDataAIServicesPrivateEndpointConnectionResourceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.Get");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _healthdataaiservicesprivateendpointconnectionresourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = Response.FromValue(HealthDataAIServicesPrivateEndpointConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,16 +119,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HealthDataAIServicesPrivateEndpointConnectionResourceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.GetAsync");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.GetAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _healthdataaiservicesprivateendpointconnectionresourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = Response.FromValue(HealthDataAIServicesPrivateEndpointConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -150,18 +148,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.Delete");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _healthdataaiservicesprivateendpointconnectionresourceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -180,18 +177,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.DeleteAsync");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HealthDataAIServicesPrivateEndpointConnectionResourceResource.DeleteAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _healthdataaiservicesprivateendpointconnectionresourceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_healthdataaiservicesprivateendpointconnectionresourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);

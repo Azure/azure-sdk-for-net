@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="value"> The value. </param>
         public static implicit operator ManagedServiceIdentityType(string value) => new ManagedServiceIdentityType(value);
 
+        /// <summary> Converts a string to a <see cref="ManagedServiceIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedServiceIdentityType?(string value) => value == null ? null : new ManagedServiceIdentityType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedServiceIdentityType other && Equals(other);

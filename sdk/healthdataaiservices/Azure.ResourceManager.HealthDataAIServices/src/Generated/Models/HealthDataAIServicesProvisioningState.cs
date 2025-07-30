@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <param name="value"> The value. </param>
         public static implicit operator HealthDataAIServicesProvisioningState(string value) => new HealthDataAIServicesProvisioningState(value);
 
+        /// <summary> Converts a string to a <see cref="HealthDataAIServicesProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HealthDataAIServicesProvisioningState?(string value) => value == null ? null : new HealthDataAIServicesProvisioningState(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthDataAIServicesProvisioningState other && Equals(other);

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
     /// <summary></summary>
     public partial class DeidServiceCollection : ArmCollection, IEnumerable<DeidServiceResource>, IAsyncEnumerable<DeidServiceResource>
     {
-        private readonly ClientDiagnostics _deidserviceClientDiagnostics;
-        private readonly DeidServices _deidserviceRestClient;
+        private readonly ClientDiagnostics _deidServicesClientDiagnostics;
+        private readonly DeidServices _deidServicesRestClient;
 
         /// <summary> Initializes a new instance of DeidServiceCollection for mocking. </summary>
         protected DeidServiceCollection()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeidServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deidserviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceGroupResource.ResourceType, out string deidserviceApiVersion);
-            _deidserviceRestClient = new DeidServices(_deidserviceClientDiagnostics, Pipeline, Endpoint, deidserviceApiVersion);
+            _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", DeidServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeidServiceResource.ResourceType, out string deidServiceApiVersion);
+            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion);
             ValidateResourceId(id);
         }
 
@@ -58,25 +58,24 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deidServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deidServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DeidServiceResource>> CreateAsync(WaitUntil waitUntil, string deidServiceName, DeidServiceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeidServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deidServiceName, DeidServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.CreateAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.CreateOrUpdateAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, DeidServiceData.ToRequestContent(data), context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, DeidServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
                     new DeidServiceOperationSource(Client),
-                    _deidserviceClientDiagnostics,
+                    _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -101,25 +100,24 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deidServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deidServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DeidServiceResource> Create(WaitUntil waitUntil, string deidServiceName, DeidServiceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeidServiceResource> CreateOrUpdate(WaitUntil waitUntil, string deidServiceName, DeidServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.Create");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, DeidServiceData.ToRequestContent(data), context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, DeidServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
                     new DeidServiceOperationSource(Client),
-                    _deidserviceClientDiagnostics,
+                    _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -146,16 +144,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.GetAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.GetAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,16 +177,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.Get");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.Get");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -205,18 +201,26 @@ namespace Azure.ResourceManager.HealthDataAIServices
             }
         }
 
-        /// <summary> List DeidService resources by subscription ID. </summary>
+        /// <summary> List DeidService resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<DeidServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
         }
 
-        /// <summary> List DeidService resources by subscription ID. </summary>
+        /// <summary> List DeidService resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<DeidServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
@@ -228,16 +232,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.ExistsAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.ExistsAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
@@ -258,16 +261,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.Exists");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.Exists");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
@@ -288,16 +290,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,16 +323,15 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             Argument.AssertNotNullOrEmpty(deidServiceName, nameof(deidServiceName));
 
-            using DiagnosticScope scope = _deidserviceClientDiagnostics.CreateScope("DeidServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _deidServicesClientDiagnostics.CreateScope("DeidServiceCollection.GetIfExists");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _deidserviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
+                };
+                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)

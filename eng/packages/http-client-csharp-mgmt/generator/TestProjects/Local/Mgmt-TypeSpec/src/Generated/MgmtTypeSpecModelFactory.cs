@@ -114,7 +114,7 @@ namespace MgmtTypeSpec.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
-                stringArray?.ToList());
+                stringArray.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -150,6 +150,15 @@ namespace MgmtTypeSpec.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ZooPatch(tags, something is null ? default : new ZooUpdateProperties(something, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ZooRecommendation. </summary>
+        /// <param name="recommendedValue"> The recommended value. </param>
+        /// <param name="reason"> The reason for the recommendation. </param>
+        /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
+        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
+        {
+            return new ZooRecommendation(recommendedValue, reason, additionalBinaryDataProperties: null);
         }
     }
 }

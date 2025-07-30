@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnection>();
 
-            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections?.ToList(), publicNetworkAccess, additionalBinaryDataProperties: null);
+            return new DeidServiceProperties(provisioningState, serviceUri, privateEndpointConnections.ToList(), publicNetworkAccess, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The private endpoint connection resource. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds?.ToList(), id is null ? default : new PrivateEndpoint(id, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), id is null ? default : new PrivateEndpoint(id, new Dictionary<string, BinaryData>()), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>

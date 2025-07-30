@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.HealthDataAIServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthDataAIServices
 {
@@ -13,6 +15,23 @@ namespace Azure.ResourceManager.HealthDataAIServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DeidServiceData))]
+    [ModelReaderWriterBuildable(typeof(DeidServiceProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnection))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(DeidServiceListResult))]
+    [ModelReaderWriterBuildable(typeof(DeidServicePatch))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentityUpdate))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(DeidPropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(HealthDataAIServicesPrivateEndpointConnectionResourceData))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResourceProperties))]
     public partial class AzureResourceManagerHealthDataAIServicesContext : ModelReaderWriterContext
     {
     }
