@@ -14,19 +14,19 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class DataMigrationMongoDBFinishCommandInput : DataMigrationMongoDBCommandInput
     {
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBFinishCommandInput"/>. </summary>
-        /// <param name="immediate"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
-        public DataMigrationMongoDBFinishCommandInput(bool immediate)
+        /// <param name="shouldStopReplicationImmediately"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
+        public DataMigrationMongoDBFinishCommandInput(bool shouldStopReplicationImmediately)
         {
-            Immediate = immediate;
+            ShouldStopReplicationImmediately = shouldStopReplicationImmediately;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBFinishCommandInput"/>. </summary>
         /// <param name="objectName"> The qualified name of a database or collection to act upon, or null to act upon the entire migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="immediate"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
-        internal DataMigrationMongoDBFinishCommandInput(string objectName, IDictionary<string, BinaryData> serializedAdditionalRawData, bool immediate) : base(objectName, serializedAdditionalRawData)
+        /// <param name="shouldStopReplicationImmediately"> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </param>
+        internal DataMigrationMongoDBFinishCommandInput(string objectName, IDictionary<string, BinaryData> serializedAdditionalRawData, bool shouldStopReplicationImmediately) : base(objectName, serializedAdditionalRawData)
         {
-            Immediate = immediate;
+            ShouldStopReplicationImmediately = shouldStopReplicationImmediately;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBFinishCommandInput"/> for deserialization. </summary>
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> If true, replication for the affected objects will be stopped immediately. If false, the migrator will finish replaying queued events before finishing the replication. </summary>
-        public bool Immediate { get; set; }
+        public bool ShouldStopReplicationImmediately { get; set; }
     }
 }

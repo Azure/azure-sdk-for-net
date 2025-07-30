@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("autoStopDelay"u8);
                 writer.WriteStringValue(AutoStopDelay);
             }
-            if (Optional.IsDefined(DeleteResourcesOnStop))
+            if (Optional.IsDefined(ShouldDeleteResourcesOnStop))
             {
                 writer.WritePropertyName("deleteResourcesOnStop"u8);
-                writer.WriteBooleanValue(DeleteResourcesOnStop.Value);
+                writer.WriteBooleanValue(ShouldDeleteResourcesOnStop.Value);
             }
             writer.WriteEndObject();
         }

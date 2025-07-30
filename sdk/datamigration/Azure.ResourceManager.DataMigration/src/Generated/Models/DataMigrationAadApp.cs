@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="applicationId"> Application ID of the Azure Active Directory Application. </param>
         /// <param name="appKey"> Key used to authenticate to the Azure Active Directory Application. </param>
         /// <param name="tenantId"> Tenant id of the customer. </param>
-        /// <param name="ignoreAzurePermissions"> Ignore checking azure permissions on the AAD app. </param>
+        /// <param name="doesIgnoreAzurePermissions"> Ignore checking azure permissions on the AAD app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationAadApp(string applicationId, string appKey, Guid? tenantId, bool? ignoreAzurePermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataMigrationAadApp(string applicationId, string appKey, Guid? tenantId, bool? doesIgnoreAzurePermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationId = applicationId;
             AppKey = appKey;
             TenantId = tenantId;
-            IgnoreAzurePermissions = ignoreAzurePermissions;
+            DoesIgnoreAzurePermissions = doesIgnoreAzurePermissions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Tenant id of the customer. </summary>
         public Guid? TenantId { get; set; }
         /// <summary> Ignore checking azure permissions on the AAD app. </summary>
-        public bool? IgnoreAzurePermissions { get; set; }
+        public bool? DoesIgnoreAzurePermissions { get; set; }
     }
 }

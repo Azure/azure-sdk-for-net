@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("immediate"u8);
-            writer.WriteBooleanValue(Immediate);
+            writer.WriteBooleanValue(ShouldStopReplicationImmediately);
         }
 
         DataMigrationMongoDBFinishCommandInput IJsonModel<DataMigrationMongoDBFinishCommandInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

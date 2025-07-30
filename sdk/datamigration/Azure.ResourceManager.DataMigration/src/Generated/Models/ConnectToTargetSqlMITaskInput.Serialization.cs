@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo, options);
-            if (Optional.IsDefined(CollectLogins))
+            if (Optional.IsDefined(ShouldCollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
-                writer.WriteBooleanValue(CollectLogins.Value);
+                writer.WriteBooleanValue(ShouldCollectLogins.Value);
             }
-            if (Optional.IsDefined(CollectAgentJobs))
+            if (Optional.IsDefined(ShouldCollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
-                writer.WriteBooleanValue(CollectAgentJobs.Value);
+                writer.WriteBooleanValue(ShouldCollectAgentJobs.Value);
             }
-            if (Optional.IsDefined(ValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ShouldValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
-                writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
+                writer.WriteBooleanValue(ShouldValidateSsisCatalogOnly.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

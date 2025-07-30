@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isCapped"> Whether the collection is a capped collection (i.e. whether it has a fixed size and acts like a circular buffer). </param>
         /// <param name="isSystemCollection"> Whether the collection is system collection. </param>
         /// <param name="isView"> Whether the collection is a view of another collection. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="qualifiedName"/> or <paramref name="databaseName"/> is null. </exception>
-        internal DataMigrationMongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, string databaseName, bool isCapped, bool isSystemCollection, bool isView, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
+        internal DataMigrationMongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, string databaseName, bool isCapped, bool isSystemCollection, bool isView, bool isShardingSupported) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IsCapped = isCapped;
             IsSystemCollection = isSystemCollection;
             IsView = isView;
-            SupportsSharding = supportsSharding;
+            IsShardingSupported = isShardingSupported;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBCollectionInfo"/>. </summary>
@@ -50,16 +50,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isSystemCollection"> Whether the collection is system collection. </param>
         /// <param name="isView"> Whether the collection is a view of another collection. </param>
         /// <param name="shardKey"> The shard key on the collection, or null if the collection is not sharded. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <param name="viewOf"> The name of the collection that this is a view of, if IsView is true. </param>
-        internal DataMigrationMongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, bool isCapped, bool isSystemCollection, bool isView, DataMigrationMongoDBShardKeyInfo shardKey, bool supportsSharding, string viewOf) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData)
+        internal DataMigrationMongoDBCollectionInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, bool isCapped, bool isSystemCollection, bool isView, DataMigrationMongoDBShardKeyInfo shardKey, bool isShardingSupported, string viewOf) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             IsCapped = isCapped;
             IsSystemCollection = isSystemCollection;
             IsView = isView;
             ShardKey = shardKey;
-            SupportsSharding = supportsSharding;
+            IsShardingSupported = isShardingSupported;
             ViewOf = viewOf;
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> The shard key on the collection, or null if the collection is not sharded. </summary>
         public DataMigrationMongoDBShardKeyInfo ShardKey { get; }
         /// <summary> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </summary>
-        public bool SupportsSharding { get; }
+        public bool IsShardingSupported { get; }
         /// <summary> The name of the collection that this is a view of, if IsView is true. </summary>
         public string ViewOf { get; }
     }

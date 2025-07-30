@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("supportsSharding"u8);
-            writer.WriteBooleanValue(SupportsSharding);
+            writer.WriteBooleanValue(IsShardingSupported);
         }
 
         DataMigrationMongoDBDatabaseInfo IJsonModel<DataMigrationMongoDBDatabaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSqlDBOfflineConfiguration"/>. </summary>
-        /// <param name="offline"> Offline migration. </param>
+        /// <param name="isOfflineMigration"> Offline migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationSqlDBOfflineConfiguration(bool? offline, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataMigrationSqlDBOfflineConfiguration(bool? isOfflineMigration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Offline = offline;
+            IsOfflineMigration = isOfflineMigration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offline migration. </summary>
-        public bool? Offline { get; }
+        public bool? IsOfflineMigration { get; }
     }
 }

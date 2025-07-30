@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
         /// <param name="objectSummary"> Summary of object results in the migration. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationState? state, DatabaseMigrationStage? stage, string statusMessage, string message, long? numberOfObjects, long? numberOfObjectsCompleted, long? errorCount, string errorPrefix, string resultPrefix, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdate, string objectSummary) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationState? state, DatabaseMigrationStage? stage, string statusMessage, string message, long? numberOfObjects, long? numberOfObjectsCompleted, long? errorCount, string errorPrefix, string resultPrefix, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, DateTimeOffset? lastStorageUpdatedOn, string objectSummary) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ErrorPrefix = errorPrefix;
             ResultPrefix = resultPrefix;
             ExceptionsAndWarnings = exceptionsAndWarnings;
-            LastStorageUpdate = lastStorageUpdate;
+            LastStorageUpdatedOn = lastStorageUpdatedOn;
             ObjectSummary = objectSummary;
             ResultType = resultType ?? "DatabaseLevelOutput";
         }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration exceptions and warnings. </summary>
         public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
         /// <summary> Last time the storage was updated. </summary>
-        public DateTimeOffset? LastStorageUpdate { get; }
+        public DateTimeOffset? LastStorageUpdatedOn { get; }
         /// <summary> Summary of object results in the migration. </summary>
         public string ObjectSummary { get; }
     }

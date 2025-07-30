@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serverBrandVersion"> server brand version. </param>
         /// <param name="resourceId"> Represents the ID of an HTTP resource represented by an Azure resource provider. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
+        /// <param name="shouldEncryptConnection"> Whether to encrypt the connection. </param>
         /// <param name="additionalSettings"> Additional connection settings. </param>
-        /// <param name="trustServerCertificate"> Whether to trust the server certificate. </param>
+        /// <param name="shouldTrustServerCertificate"> Whether to trust the server certificate. </param>
         /// <param name="platform"> Server platform type for connection. </param>
-        internal DataMigrationSqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string dataSource, string serverName, int? port, string serverVersion, string serverBrandVersion, string resourceId, DataMigrationAuthenticationType? authentication, bool? encryptConnection, string additionalSettings, bool? trustServerCertificate, DataMigrationSqlSourcePlatform? platform) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
+        internal DataMigrationSqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string dataSource, string serverName, int? port, string serverVersion, string serverBrandVersion, string resourceId, DataMigrationAuthenticationType? authentication, bool? shouldEncryptConnection, string additionalSettings, bool? shouldTrustServerCertificate, DataMigrationSqlSourcePlatform? platform) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             DataSource = dataSource;
             ServerName = serverName;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             ServerBrandVersion = serverBrandVersion;
             ResourceId = resourceId;
             Authentication = authentication;
-            EncryptConnection = encryptConnection;
+            ShouldEncryptConnection = shouldEncryptConnection;
             AdditionalSettings = additionalSettings;
-            TrustServerCertificate = trustServerCertificate;
+            ShouldTrustServerCertificate = shouldTrustServerCertificate;
             Platform = platform;
             ConnectionInfoType = connectionInfoType ?? "SqlConnectionInfo";
         }
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Authentication type to use for connection. </summary>
         public DataMigrationAuthenticationType? Authentication { get; set; }
         /// <summary> Whether to encrypt the connection. </summary>
-        public bool? EncryptConnection { get; set; }
+        public bool? ShouldEncryptConnection { get; set; }
         /// <summary> Additional connection settings. </summary>
         public string AdditionalSettings { get; set; }
         /// <summary> Whether to trust the server certificate. </summary>
-        public bool? TrustServerCertificate { get; set; }
+        public bool? ShouldTrustServerCertificate { get; set; }
         /// <summary> Server platform type for connection. </summary>
         public DataMigrationSqlSourcePlatform? Platform { get; set; }
     }

@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MakeSourceServerReadOnly))
+            if (Optional.IsDefined(ShouldMakeSourceServerReadOnly))
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
-                writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
+                writer.WriteBooleanValue(ShouldMakeSourceServerReadOnly.Value);
             }
             if (Optional.IsDefined(StartedOn))
             {

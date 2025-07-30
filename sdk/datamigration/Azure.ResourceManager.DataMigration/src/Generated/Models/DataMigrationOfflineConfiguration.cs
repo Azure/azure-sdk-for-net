@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationOfflineConfiguration"/>. </summary>
-        /// <param name="offline"> Offline migration. </param>
+        /// <param name="isOfflineMigration"> Offline migration. </param>
         /// <param name="lastBackupName"> Last backup name for offline migration. This is optional for migrations from file share. If it is not provided, then the service will determine the last backup file name based on latest backup files present in file share. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationOfflineConfiguration(bool? offline, string lastBackupName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataMigrationOfflineConfiguration(bool? isOfflineMigration, string lastBackupName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Offline = offline;
+            IsOfflineMigration = isOfflineMigration;
             LastBackupName = lastBackupName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offline migration. </summary>
-        public bool? Offline { get; set; }
+        public bool? IsOfflineMigration { get; set; }
         /// <summary> Last backup name for offline migration. This is optional for migrations from file share. If it is not provided, then the service will determine the last backup file name based on latest backup files present in file share. </summary>
         public string LastBackupName { get; set; }
     }

@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="authentication"> Authentication type. </param>
         /// <param name="userName"> User name to connect to source SQL. </param>
         /// <param name="password"> Password to connect to source SQL. </param>
-        /// <param name="encryptConnection"> Whether to encrypt connection or not. </param>
-        /// <param name="trustServerCertificate"> Whether to trust server certificate or not. </param>
+        /// <param name="shouldEncryptConnection"> Whether to encrypt connection or not. </param>
+        /// <param name="shouldTrustServerCertificate"> Whether to trust server certificate or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationSqlConnectionInformation(string dataSource, string authentication, string userName, string password, bool? encryptConnection, bool? trustServerCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataMigrationSqlConnectionInformation(string dataSource, string authentication, string userName, string password, bool? shouldEncryptConnection, bool? shouldTrustServerCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSource = dataSource;
             Authentication = authentication;
             UserName = userName;
             Password = password;
-            EncryptConnection = encryptConnection;
-            TrustServerCertificate = trustServerCertificate;
+            ShouldEncryptConnection = shouldEncryptConnection;
+            ShouldTrustServerCertificate = shouldTrustServerCertificate;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Password to connect to source SQL. </summary>
         public string Password { get; set; }
         /// <summary> Whether to encrypt connection or not. </summary>
-        public bool? EncryptConnection { get; set; }
+        public bool? ShouldEncryptConnection { get; set; }
         /// <summary> Whether to trust server certificate or not. </summary>
-        public bool? TrustServerCertificate { get; set; }
+        public bool? ShouldTrustServerCertificate { get; set; }
     }
 }

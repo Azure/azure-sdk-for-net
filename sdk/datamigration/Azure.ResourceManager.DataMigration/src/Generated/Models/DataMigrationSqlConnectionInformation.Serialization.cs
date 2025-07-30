@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(EncryptConnection))
+            if (Optional.IsDefined(ShouldEncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
-                writer.WriteBooleanValue(EncryptConnection.Value);
+                writer.WriteBooleanValue(ShouldEncryptConnection.Value);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (Optional.IsDefined(ShouldTrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                writer.WriteBooleanValue(TrustServerCertificate.Value);
+                writer.WriteBooleanValue(ShouldTrustServerCertificate.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

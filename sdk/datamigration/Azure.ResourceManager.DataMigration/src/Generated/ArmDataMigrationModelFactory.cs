@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="targetSqlConnection"> Target SQL DB connection details. </param>
-        /// <param name="offline"> Offline configuration. </param>
+        /// <param name="isOfflineMigration"> Offline configuration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = null, DataMigrationSqlConnectionInformation targetSqlConnection = null, bool? offline = null, IEnumerable<string> tableList = null)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, DataMigrationProvisioningState? provisioningState = null, string migrationStatus = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ResourceIdentifier migrationService = null, string migrationOperationId = null, SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = null, DataMigrationSqlConnectionInformation targetSqlConnection = null, bool? isOfflineMigration = null, IEnumerable<string> tableList = null)
         {
             tableList ??= new List<string>();
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 targetDatabaseCollation,
                 migrationStatusDetails,
                 targetSqlConnection,
-                offline != null ? new DataMigrationSqlDBOfflineConfiguration(offline, serializedAdditionalRawData: null) : null,
+                isOfflineMigration != null ? new DataMigrationSqlDBOfflineConfiguration(isOfflineMigration, serializedAdditionalRawData: null) : null,
                 tableList?.ToList());
         }
 
@@ -620,9 +620,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
-        /// <param name="deleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
+        /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string kind = null, DataMigrationServiceSku sku = null, DataMigrationServiceProvisioningState? provisioningState = null, string publicKey = null, string virtualSubnetId = null, string virtualNicId = null, string autoStopDelay = null, bool? deleteResourcesOnStop = null)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string kind = null, DataMigrationServiceSku sku = null, DataMigrationServiceProvisioningState? provisioningState = null, string publicKey = null, string virtualSubnetId = null, string virtualNicId = null, string autoStopDelay = null, bool? shouldDeleteResourcesOnStop = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 virtualSubnetId,
                 virtualNicId,
                 autoStopDelay,
-                deleteResourcesOnStop,
+                shouldDeleteResourcesOnStop,
                 serializedAdditionalRawData: null);
         }
 
@@ -1493,10 +1493,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(
                 id,
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -1689,10 +1689,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel(
                 id,
@@ -1711,7 +1711,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -1825,10 +1825,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(
                 id,
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -2546,15 +2546,15 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBClusterInfo"/>. </summary>
         /// <param name="databases"> A list of non-system databases in the cluster. </param>
-        /// <param name="supportsSharding"> Whether the cluster supports sharded collections. </param>
+        /// <param name="isShardingSupported"> Whether the cluster supports sharded collections. </param>
         /// <param name="clusterType"> The type of data source. </param>
         /// <param name="version"> The version of the data source in the form x.y.z (e.g. 3.6.7). Not used if Type is BlobContainer. </param>
         /// <returns> A new <see cref="Models.DataMigrationMongoDBClusterInfo"/> instance for mocking. </returns>
-        public static DataMigrationMongoDBClusterInfo DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases = null, bool supportsSharding = default, DataMigrationMongoDBClusterType clusterType = default, string version = null)
+        public static DataMigrationMongoDBClusterInfo DataMigrationMongoDBClusterInfo(IEnumerable<DataMigrationMongoDBDatabaseInfo> databases = null, bool isShardingSupported = default, DataMigrationMongoDBClusterType clusterType = default, string version = null)
         {
             databases ??= new List<DataMigrationMongoDBDatabaseInfo>();
 
-            return new DataMigrationMongoDBClusterInfo(databases?.ToList(), supportsSharding, clusterType, version, serializedAdditionalRawData: null);
+            return new DataMigrationMongoDBClusterInfo(databases?.ToList(), isShardingSupported, clusterType, version, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBDatabaseInfo"/>. </summary>
@@ -2564,9 +2564,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The unqualified name of the database or collection. </param>
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
         /// <param name="collections"> A list of supported collections in a MongoDB database. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <returns> A new <see cref="Models.DataMigrationMongoDBDatabaseInfo"/> instance for mocking. </returns>
-        public static DataMigrationMongoDBDatabaseInfo DataMigrationMongoDBDatabaseInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, IEnumerable<DataMigrationMongoDBCollectionInfo> collections = null, bool supportsSharding = default)
+        public static DataMigrationMongoDBDatabaseInfo DataMigrationMongoDBDatabaseInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, IEnumerable<DataMigrationMongoDBCollectionInfo> collections = null, bool isShardingSupported = default)
         {
             collections ??= new List<DataMigrationMongoDBCollectionInfo>();
 
@@ -2578,7 +2578,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 qualifiedName,
                 serializedAdditionalRawData: null,
                 collections?.ToList(),
-                supportsSharding);
+                isShardingSupported);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataMigrationMongoDBCollectionInfo"/>. </summary>
@@ -2592,10 +2592,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isSystemCollection"> Whether the collection is system collection. </param>
         /// <param name="isView"> Whether the collection is a view of another collection. </param>
         /// <param name="shardKey"> The shard key on the collection, or null if the collection is not sharded. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <param name="viewOf"> The name of the collection that this is a view of, if IsView is true. </param>
         /// <returns> A new <see cref="Models.DataMigrationMongoDBCollectionInfo"/> instance for mocking. </returns>
-        public static DataMigrationMongoDBCollectionInfo DataMigrationMongoDBCollectionInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, string databaseName = null, bool isCapped = default, bool isSystemCollection = default, bool isView = default, DataMigrationMongoDBShardKeyInfo shardKey = null, bool supportsSharding = default, string viewOf = null)
+        public static DataMigrationMongoDBCollectionInfo DataMigrationMongoDBCollectionInfo(long averageDocumentSize = default, long dataSize = default, long documentCount = default, string name = null, string qualifiedName = null, string databaseName = null, bool isCapped = default, bool isSystemCollection = default, bool isView = default, DataMigrationMongoDBShardKeyInfo shardKey = null, bool isShardingSupported = default, string viewOf = null)
         {
             return new DataMigrationMongoDBCollectionInfo(
                 averageDocumentSize,
@@ -2609,7 +2609,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 isSystemCollection,
                 isView,
                 shardKey,
-                supportsSharding,
+                isShardingSupported,
                 viewOf);
         }
 
@@ -2962,10 +2962,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? initializationCompleted = null, long? latency = null)
+        public static MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, SyncDatabaseMigrationReportingState? migrationState = null, long? incomingChanges = null, long? appliedChanges = null, long? cdcInsertCounter = null, long? cdcDeleteCounter = null, long? cdcUpdateCounter = null, long? fullLoadCompletedTables = null, long? fullLoadLoadingTables = null, long? fullLoadQueuedTables = null, long? fullLoadErroredTables = null, bool? isInitializationCompleted = null, long? latency = null)
         {
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(
                 id,
@@ -2984,7 +2984,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 fullLoadLoadingTables,
                 fullLoadQueuedTables,
                 fullLoadErroredTables,
-                initializationCompleted,
+                isInitializationCompleted,
                 latency);
         }
 
@@ -4477,10 +4477,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
         /// <param name="objectSummary"> Summary of object results in the migration. </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/> instance for mocking. </returns>
-        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationState? state = null, DatabaseMigrationStage? stage = null, string statusMessage = null, string message = null, long? numberOfObjects = null, long? numberOfObjectsCompleted = null, long? errorCount = null, string errorPrefix = null, string resultPrefix = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null, DateTimeOffset? lastStorageUpdate = null, string objectSummary = null)
+        public static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(string id = null, string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, DataMigrationState? state = null, DatabaseMigrationStage? stage = null, string statusMessage = null, string message = null, long? numberOfObjects = null, long? numberOfObjectsCompleted = null, long? errorCount = null, string errorPrefix = null, string resultPrefix = null, IEnumerable<DataMigrationReportableException> exceptionsAndWarnings = null, DateTimeOffset? lastStorageUpdatedOn = null, string objectSummary = null)
         {
             exceptionsAndWarnings ??= new List<DataMigrationReportableException>();
 
@@ -4501,7 +4501,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 errorPrefix,
                 resultPrefix,
                 exceptionsAndWarnings?.ToList(),
-                lastStorageUpdate,
+                lastStorageUpdatedOn,
                 objectSummary);
         }
 

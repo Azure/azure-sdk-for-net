@@ -67,20 +67,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptConnection))
+            if (Optional.IsDefined(ShouldEncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
-                writer.WriteBooleanValue(EncryptConnection.Value);
+                writer.WriteBooleanValue(ShouldEncryptConnection.Value);
             }
             if (Optional.IsDefined(AdditionalSettings))
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (Optional.IsDefined(ShouldTrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                writer.WriteBooleanValue(TrustServerCertificate.Value);
+                writer.WriteBooleanValue(ShouldTrustServerCertificate.Value);
             }
             if (Optional.IsDefined(Platform))
             {

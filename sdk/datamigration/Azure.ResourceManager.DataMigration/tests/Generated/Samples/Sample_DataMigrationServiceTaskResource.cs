@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     Input = new ConnectToTargetSqlDBTaskInput(new DataMigrationSqlConnectionInfo("ssma-test-server.database.windows.net")
                     {
                         Authentication = DataMigrationAuthenticationType.SqlAuthentication,
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                         UserName = "testuser",
                         Password = "testpassword",
                     }),

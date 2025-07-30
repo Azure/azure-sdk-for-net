@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="dataSource"> Data source. </param>
         /// <param name="port"> Port for Server. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
+        /// <param name="shouldEncryptConnection"> Whether to encrypt the connection. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
         /// <param name="additionalSettings"> Additional connection settings. </param>
-        internal DataMigrationMySqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverName, string dataSource, int port, bool? encryptConnection, DataMigrationAuthenticationType? authentication, string additionalSettings) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
+        internal DataMigrationMySqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverName, string dataSource, int port, bool? shouldEncryptConnection, DataMigrationAuthenticationType? authentication, string additionalSettings) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             ServerName = serverName;
             DataSource = dataSource;
             Port = port;
-            EncryptConnection = encryptConnection;
+            ShouldEncryptConnection = shouldEncryptConnection;
             Authentication = authentication;
             AdditionalSettings = additionalSettings;
             ConnectionInfoType = connectionInfoType ?? "MySqlConnectionInfo";
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Port for Server. </summary>
         public int Port { get; set; }
         /// <summary> Whether to encrypt the connection. </summary>
-        public bool? EncryptConnection { get; set; }
+        public bool? ShouldEncryptConnection { get; set; }
         /// <summary> Authentication type to use for connection. </summary>
         public DataMigrationAuthenticationType? Authentication { get; set; }
         /// <summary> Additional connection settings. </summary>

@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdate))
+            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdatedOn))
             {
                 writer.WritePropertyName("lastStorageUpdate"u8);
-                writer.WriteStringValue(LastStorageUpdate.Value, "O");
+                writer.WriteStringValue(LastStorageUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ObjectSummary))
             {

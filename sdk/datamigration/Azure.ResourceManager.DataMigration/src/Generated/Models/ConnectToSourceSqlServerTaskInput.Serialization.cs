@@ -41,30 +41,30 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CollectDatabases))
+            if (Optional.IsDefined(ShouldCollectDatabases))
             {
                 writer.WritePropertyName("collectDatabases"u8);
-                writer.WriteBooleanValue(CollectDatabases.Value);
+                writer.WriteBooleanValue(ShouldCollectDatabases.Value);
             }
-            if (Optional.IsDefined(CollectLogins))
+            if (Optional.IsDefined(ShouldCollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
-                writer.WriteBooleanValue(CollectLogins.Value);
+                writer.WriteBooleanValue(ShouldCollectLogins.Value);
             }
-            if (Optional.IsDefined(CollectAgentJobs))
+            if (Optional.IsDefined(ShouldCollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
-                writer.WriteBooleanValue(CollectAgentJobs.Value);
+                writer.WriteBooleanValue(ShouldCollectAgentJobs.Value);
             }
-            if (Optional.IsDefined(CollectTdeCertificateInfo))
+            if (Optional.IsDefined(ShouldCollectTdeCertificateInfo))
             {
                 writer.WritePropertyName("collectTdeCertificateInfo"u8);
-                writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
+                writer.WriteBooleanValue(ShouldCollectTdeCertificateInfo.Value);
             }
-            if (Optional.IsDefined(ValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ShouldValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
-                writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
+                writer.WriteBooleanValue(ShouldValidateSsisCatalogOnly.Value);
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {

@@ -10,6 +10,7 @@ library-name: DataMigration
 namespace: Azure.ResourceManager.DataMigration
 # default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/86c6306649b02e542117adb46c61e8019dbd78e9/specification/datamigration/resource-manager/readme.md
+#tag: package-preview-2025-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -28,45 +29,79 @@ rename-mapping:
   AuthType: SqlMigrationBlobAuthType
   AvailableServiceSkuCapacity: DataMigrationAvailableServiceSkuCapacity
   AvailableServiceSkuSku: DataMigrationAvailableServiceSkuDetails
+  AzureActiveDirectoryApp.ignoreAzurePermissions: DoesIgnoreAzurePermissions
   AzureActiveDirectoryApp: DataMigrationAadApp
   AzureBlob: SqlMigrationBlobDetails
   ConnectionInfo: ServerConnectionInfo
+  ConnectToSourceSqlServerTaskInput.collectAgentJobs: ShouldCollectAgentJobs
+  ConnectToSourceSqlServerTaskInput.collectDatabases: ShouldCollectDatabases
+  ConnectToSourceSqlServerTaskInput.collectLogins: ShouldCollectLogins
+  ConnectToSourceSqlServerTaskInput.collectTdeCertificateInfo: ShouldCollectTdeCertificateInfo
+  ConnectToSourceSqlServerTaskInput.validateSsisCatalogOnly: ShouldValidateSsisCatalogOnly
+  ConnectToTargetSqlDbTaskInput.queryObjectCounts: ShouldQueryObjectCounts
   ConnectToTargetSqlDbTaskProperties.createdOn: -|date-time
+  ConnectToTargetSqlMITaskInput.collectAgentJobs: ShouldCollectAgentJobs
+  ConnectToTargetSqlMITaskInput.collectLogins: ShouldCollectLogins
+  ConnectToTargetSqlMITaskInput.validateSsisCatalogOnly: ShouldValidateSsisCatalogOnly
   CopyProgressDetails.copyStart: CopyStartOn
   DatabaseBackupInfo.backupFinishDate: BackupFinishedOn
   DatabaseFileType: DataMigrationSqlDatabaseFileType
   DatabaseInfo: DataMigrationProjectDatabaseInfo
   DatabaseState: DataMigrationSqlDatabaseState
+  DataMigrationService.properties.deleteResourcesOnStop: ShouldDeleteResourcesOnStop
   DeleteNode: DeletedIntegrationRuntimeNodeResult
   ErrorInfo: SqlMigrationErrorInfo
+  ExecutionStatistics.cpuTimeMs: CpuTimeInMilliseconds
+  ExecutionStatistics.elapsedTimeMs: ElapsedTimeInMilliseconds
   FileShare: DataMigrationFileShareInfo
   IntegrationRuntimeMonitoringData: IntegrationRuntimeMonitoringResult
+  MigrateMySqlAzureDbForMySqlOfflineTaskInput.makeSourceServerReadOnly: ShouldMakeSourceServerReadOnly
+  MigrateMySqlAzureDbForMySqlOfflineTaskOutputDatabaseLevel.lastStorageUpdate: LastStorageUpdatedOn
   MigrateMySqlAzureDbForMySqlOfflineTaskOutputMigrationLevel.lastStorageUpdate: LastStorageUpdatedOn
   MigrateMySqlAzureDbForMySqlOfflineTaskOutputTableLevel.lastStorageUpdate: LastStorageUpdatedOn
+  MigrateMySqlAzureDbForMySqlSyncTaskOutputDatabaseLevel.initializationCompleted: IsInitializationCompleted
   MigrateMySqlAzureDbForMySqlSyncTaskOutputTableLevel.fullLoadEstFinishTime: FullLoadEstFinishedOn
+  MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseLevel.initializationCompleted: IsInitializationCompleted
   MigrateOracleAzureDbPostgreSqlSyncTaskOutputTableLevel.fullLoadEstFinishTime: FullLoadEstFinishedOn
+  MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseLevel.initializationCompleted: IsInitializationCompleted
   MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputTableLevel.fullLoadEstFinishTime: FullLoadEstFinishedOn
   MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties.createdOn: -|date-time
   MigrateSchemaSqlServerSqlDbTaskInput.startedOn: -|date-time
   MigrateSchemaSqlServerSqlDbTaskProperties.createdOn: -|date-time
+  MigrateSqlServerSqlDbDatabaseInput.makeSourceDbReadOnly: ShouldMakeSourceDBReadOnly
+  MigrateSqlServerSqlDbSyncTaskOutputDatabaseLevel.initializationCompleted: IsInitializationCompleted
   MigrateSqlServerSqlDbSyncTaskOutputTableLevel.fullLoadEstFinishTime: FullLoadEstFinishedOn
-  MigrateSqlServerSqlMISyncTaskProperties.createdOn: -|date-time
   MigrateSqlServerSqlDbTaskInput.startedOn: -|date-time
   MigrateSqlServerSqlDbTaskProperties.createdOn: -|date-time
+  MigrateSqlServerSqlMISyncTaskProperties.createdOn: -|date-time
   MigrateSqlServerSqlMITaskInput.startedOn: -|date-time
   MigrateSqlServerSqlMITaskProperties.createdOn: -|date-time
+  MigrateSyncCompleteCommandInput.commitTimeStamp: CompletedOn
   MigrationState: DataMigrationState
   MigrationStatus: DataMigrationStatus
   MigrationStatusDetails: DataMigrationStatusDetails
-  MigrateSyncCompleteCommandInput.commitTimeStamp: CompletedOn
+  MigrationValidationOptions.enableDataIntegrityValidation: IsDataIntegrityValidationEnabled
+  MigrationValidationOptions.enableQueryAnalysisValidation: IsQueryAnalysisValidationEnabled
+  MigrationValidationOptions.enableSchemaValidation: IsSchemaValidationEnabled
   MiSqlConnectionInfo.managedInstanceResourceId: -|arm-id
+  MongoDbClusterInfo.supportsSharding: IsShardingSupported
+  MongoDbCollectionInfo.supportsSharding: IsShardingSupported
+  MongoDbConnectionInfo.encryptConnection: ShouldEncryptConnection
+  MongoDbConnectionInfo.enforceSSL: DoesEnforceSsl
+  MongoDbConnectionInfo.trustServerCertificate: ShouldTrustServerCertificate
+  MongoDbDatabaseInfo.supportsSharding: IsShardingSupported
+  MongoDbFinishCommandInput.immediate: ShouldStopReplicationImmediately
+  MySqlConnectionInfo.encryptConnection: ShouldEncryptConnection
   NameAvailabilityRequest: DataMigrationServiceNameAvailabilityContent
-  NameAvailabilityResponse: DataMigrationServiceNameAvailabilityResult
   NameAvailabilityResponse.nameAvailable: IsNameAvailable
+  NameAvailabilityResponse: DataMigrationServiceNameAvailabilityResult
   NameCheckFailureReason: DataMigrationServiceNameUnavailableReason
   NodeMonitoringData: IntegrationRuntimeMonitoringNode
   ObjectType: DataMigrationDatabaseObjectType
+  OfflineConfiguration.offline: IsOfflineMigration
   OrphanedUserInfo: DataMigrationSqlServerOrphanedUserInfo
+  PostgreSqlConnectionInfo.encryptConnection: ShouldEncryptConnection
+  PostgreSqlConnectionInfo.trustServerCertificate: ShouldTrustServerCertificate
   ProjectFileProperties.lastModified: LastModifiedOn
   RegenAuthKeys: SqlMigrationRegenAuthKeys
   ResourceSku: DataMigrationSku
@@ -75,20 +110,23 @@ rename-mapping:
   ResourceSkuCosts: DataMigrationSkuCosts
   ResourceSkuRestrictions: DataMigrationSkuRestrictions
   ResourceSkuRestrictionsType: DataMigrationSkuRestrictionsType
-  ScenarioSource.SQLRDS: SqlRds
   ScenarioSource.MySQLRDS: MySqlRds
   ScenarioSource.PostgreSQLRDS: PostgreSqlRds
+  ScenarioSource.SQLRDS: SqlRds
   ServerProperties: DataMigrationMySqlServerProperties
   Severity: MigrationValidationSeverity
   SourceLocation: DataMigrationBackupSourceLocation
+  SqlConnectionInfo.encryptConnection: ShouldEncryptConnection
+  SqlConnectionInfo.trustServerCertificate: ShouldTrustServerCertificate
+  SqlConnectionInformation.encryptConnection: ShouldEncryptConnection
+  SqlConnectionInformation.trustServerCertificate: ShouldTrustServerCertificate
+  SqlDbOfflineConfiguration.offline: IsOfflineMigration
   TargetLocation: DataMigrationBackupTargetLocation
   UpdateActionType: MigrationValidatioUpdateActionType
   ValidationError: MigrationValidationError
   ValidationStatus: MigrationValidationStatus
-  WaitStatistics: MigrationValidationWaitStatistics
-  ExecutionStatistics.cpuTimeMs: CpuTimeInMilliseconds
-  ExecutionStatistics.elapsedTimeMs: ElapsedTimeInMilliseconds
   WaitStatistics.waitTimeMs: WaitTimeInMilliseconds
+  WaitStatistics: MigrationValidationWaitStatistics
 
 prepend-rp-prefix:
   - AuthenticationType

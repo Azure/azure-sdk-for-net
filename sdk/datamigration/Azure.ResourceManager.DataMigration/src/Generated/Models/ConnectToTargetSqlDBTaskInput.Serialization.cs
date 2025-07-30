@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo, options);
-            if (Optional.IsDefined(QueryObjectCounts))
+            if (Optional.IsDefined(ShouldQueryObjectCounts))
             {
                 writer.WritePropertyName("queryObjectCounts"u8);
-                writer.WriteBooleanValue(QueryObjectCounts.Value);
+                writer.WriteBooleanValue(ShouldQueryObjectCounts.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

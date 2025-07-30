@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 throw new FormatException($"The model {nameof(DataMigrationOfflineConfiguration)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Offline))
+            if (Optional.IsDefined(IsOfflineMigration))
             {
                 writer.WritePropertyName("offline"u8);
-                writer.WriteBooleanValue(Offline.Value);
+                writer.WriteBooleanValue(IsOfflineMigration.Value);
             }
             if (Optional.IsDefined(LastBackupName))
             {

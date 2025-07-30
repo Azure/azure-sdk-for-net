@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
-            if (Optional.IsDefined(EncryptConnection))
+            if (Optional.IsDefined(ShouldEncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
-                writer.WriteBooleanValue(EncryptConnection.Value);
+                writer.WriteBooleanValue(ShouldEncryptConnection.Value);
             }
             if (Optional.IsDefined(ServerBrandVersion))
             {
@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (Optional.IsDefined(ShouldTrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                writer.WriteBooleanValue(TrustServerCertificate.Value);
+                writer.WriteBooleanValue(ShouldTrustServerCertificate.Value);
             }
-            if (Optional.IsDefined(EnforceSSL))
+            if (Optional.IsDefined(DoesEnforceSsl))
             {
                 writer.WritePropertyName("enforceSSL"u8);
-                writer.WriteBooleanValue(EnforceSSL.Value);
+                writer.WriteBooleanValue(DoesEnforceSsl.Value);
             }
             if (Optional.IsDefined(Port))
             {

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(ShardKey, options);
             }
             writer.WritePropertyName("supportsSharding"u8);
-            writer.WriteBooleanValue(SupportsSharding);
+            writer.WriteBooleanValue(IsShardingSupported);
             if (Optional.IsDefined(ViewOf))
             {
                 writer.WritePropertyName("viewOf"u8);

@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IgnoreAzurePermissions))
+            if (Optional.IsDefined(DoesIgnoreAzurePermissions))
             {
                 writer.WritePropertyName("ignoreAzurePermissions"u8);
-                writer.WriteBooleanValue(IgnoreAzurePermissions.Value);
+                writer.WriteBooleanValue(DoesIgnoreAzurePermissions.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

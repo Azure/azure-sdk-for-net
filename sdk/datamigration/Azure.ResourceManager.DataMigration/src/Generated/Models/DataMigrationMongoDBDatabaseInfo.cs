@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The unqualified name of the database or collection. </param>
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
         /// <param name="collections"> A list of supported collections in a MongoDB database. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="qualifiedName"/> or <paramref name="collections"/> is null. </exception>
-        internal DataMigrationMongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IEnumerable<DataMigrationMongoDBCollectionInfo> collections, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
+        internal DataMigrationMongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IEnumerable<DataMigrationMongoDBCollectionInfo> collections, bool isShardingSupported) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
             Argument.AssertNotNull(collections, nameof(collections));
 
             Collections = collections.ToList();
-            SupportsSharding = supportsSharding;
+            IsShardingSupported = isShardingSupported;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBDatabaseInfo"/>. </summary>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="collections"> A list of supported collections in a MongoDB database. </param>
-        /// <param name="supportsSharding"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
-        internal DataMigrationMongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataMigrationMongoDBCollectionInfo> collections, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData)
+        /// <param name="isShardingSupported"> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </param>
+        internal DataMigrationMongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DataMigrationMongoDBCollectionInfo> collections, bool isShardingSupported) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData)
         {
             Collections = collections;
-            SupportsSharding = supportsSharding;
+            IsShardingSupported = isShardingSupported;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBDatabaseInfo"/> for deserialization. </summary>
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> A list of supported collections in a MongoDB database. </summary>
         public IReadOnlyList<DataMigrationMongoDBCollectionInfo> Collections { get; }
         /// <summary> Whether the database has sharding enabled. Note that the migration task will enable sharding on the target if necessary. </summary>
-        public bool SupportsSharding { get; }
+        public bool IsShardingSupported { get; }
     }
 }

@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(EncryptConnection))
+            if (Optional.IsDefined(ShouldEncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
-                writer.WriteBooleanValue(EncryptConnection.Value);
+                writer.WriteBooleanValue(ShouldEncryptConnection.Value);
             }
             if (Optional.IsDefined(Authentication))
             {

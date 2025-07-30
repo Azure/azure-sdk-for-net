@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("supportsSharding"u8);
-            writer.WriteBooleanValue(SupportsSharding);
+            writer.WriteBooleanValue(IsShardingSupported);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ClusterType.ToString());
             writer.WritePropertyName("version"u8);

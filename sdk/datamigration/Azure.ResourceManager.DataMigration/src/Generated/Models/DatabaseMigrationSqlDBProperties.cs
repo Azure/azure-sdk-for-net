@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Offline configuration. </summary>
         internal DataMigrationSqlDBOfflineConfiguration OfflineConfiguration { get; }
         /// <summary> Offline migration. </summary>
-        public bool? Offline
+        public bool? IsOfflineMigration
         {
-            get => OfflineConfiguration?.Offline;
+            get => OfflineConfiguration?.IsOfflineMigration;
         }
 
         /// <summary> List of tables to copy. </summary>

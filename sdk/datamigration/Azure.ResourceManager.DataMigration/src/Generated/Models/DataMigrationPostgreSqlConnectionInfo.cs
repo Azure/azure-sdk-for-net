@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serverVersion"> server version. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="port"> Port for Server. </param>
-        /// <param name="encryptConnection"> Whether to encrypt the connection. </param>
-        /// <param name="trustServerCertificate"> Whether to trust the server certificate. </param>
+        /// <param name="shouldEncryptConnection"> Whether to encrypt the connection. </param>
+        /// <param name="shouldTrustServerCertificate"> Whether to trust the server certificate. </param>
         /// <param name="additionalSettings"> Additional connection settings. </param>
         /// <param name="serverBrandVersion"> server brand version. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
-        internal DataMigrationPostgreSqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverName, string dataSource, string serverVersion, string databaseName, int port, bool? encryptConnection, bool? trustServerCertificate, string additionalSettings, string serverBrandVersion, DataMigrationAuthenticationType? authentication) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
+        internal DataMigrationPostgreSqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverName, string dataSource, string serverVersion, string databaseName, int port, bool? shouldEncryptConnection, bool? shouldTrustServerCertificate, string additionalSettings, string serverBrandVersion, DataMigrationAuthenticationType? authentication) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             ServerName = serverName;
             DataSource = dataSource;
             ServerVersion = serverVersion;
             DatabaseName = databaseName;
             Port = port;
-            EncryptConnection = encryptConnection;
-            TrustServerCertificate = trustServerCertificate;
+            ShouldEncryptConnection = shouldEncryptConnection;
+            ShouldTrustServerCertificate = shouldTrustServerCertificate;
             AdditionalSettings = additionalSettings;
             ServerBrandVersion = serverBrandVersion;
             Authentication = authentication;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Port for Server. </summary>
         public int Port { get; set; }
         /// <summary> Whether to encrypt the connection. </summary>
-        public bool? EncryptConnection { get; set; }
+        public bool? ShouldEncryptConnection { get; set; }
         /// <summary> Whether to trust the server certificate. </summary>
-        public bool? TrustServerCertificate { get; set; }
+        public bool? ShouldTrustServerCertificate { get; set; }
         /// <summary> Additional connection settings. </summary>
         public string AdditionalSettings { get; set; }
         /// <summary> server brand version. </summary>

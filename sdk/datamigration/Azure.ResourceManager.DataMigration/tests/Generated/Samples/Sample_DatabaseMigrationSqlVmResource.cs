@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     },
                     OfflineConfiguration = new DataMigrationOfflineConfiguration
                     {
-                        Offline = true,
+                        IsOfflineMigration = true,
                         LastBackupName = "last_backup_file_name",
                     },
                     SourceSqlConnection = new DataMigrationSqlConnectionInformation
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         Authentication = "WindowsAuthentication",
                         UserName = "bbb",
                         Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                     },
                     SourceDatabaseName = "aaa",
                     Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.DataMigration.Samples
                         Authentication = "WindowsAuthentication",
                         UserName = "bbb",
                         Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
+                        ShouldEncryptConnection = true,
+                        ShouldTrustServerCertificate = true,
                     },
                     SourceDatabaseName = "aaa",
                     Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
