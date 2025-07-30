@@ -322,6 +322,21 @@ public class PlaywrightServiceBrowserClient : IDisposable
             await _entraLifecycle.FetchEntraIdAccessTokenAsync(default).ConfigureAwait(false);
         }
     }
+    /// <summary>
+    /// Creates a TestRunsClient with configured retry policy
+    /// </summary>
+    /// <param name="endpoint">API endpoint URI</param>
+    /// <returns>Configured TestRunsClient</returns>
+    private static TestRunsClient CreateTestRunsClientWithRetry(Uri endpoint)
+    {
+        var clientOptions = new ReportingTestReportingClientOptions();
+        clientOptions.Diagnostics.IsLoggingEnabled = true;
+        clientOptions.Diagnostics.IsTelemetryEnabled = true;
+        clientOptions.Retry.MaxRetries = ServiceClientConstants.s_mAX_RETRIES;
+        clientOptions.Retry.Delay = TimeSpan.FromMilliseconds(ServiceClientConstants.s_iNITIAL_DELAY_MS);
+        clientOptions.Retry.MaxDelay = TimeSpan.FromMilliseconds(ServiceClientConstants.s_mAX_DELAY_MS);
+        return new TestRunsClient(endpoint, clientOptions);
+    }
 
     /// <summary>
     /// Sets up the TestRunsClient and performs the PATCH operation to create test run
@@ -336,9 +351,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
             _logger?.LogError("Cannot update test run: Auth token is null or empty");
             return;
         }
-       string apiUrl = _clientUtility.GetTestRunApiUrl();
+        string apiUrl = _clientUtility.GetTestRunApiUrl();
         Uri endpoint = new(apiUrl);
-        _testRunsClient = new TestRunsClient(endpoint);
+        _testRunsClient = CreateTestRunsClientWithRetry(endpoint);
         Model.CIInfo cIInfo = _ciProvider.GetCIInfo();
         Model.RunConfig runConfig = _clientUtility.GetTestRunConfig();
         var patchBody = new
@@ -370,6 +385,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         catch (RequestFailedException ex)
         {
             _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}");
+            throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
 
@@ -386,7 +402,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
         string apiUrl = _clientUtility.GetTestRunApiUrl();
         Uri endpoint = new(apiUrl);
-        _testRunsClient = new TestRunsClient(endpoint);
+        _testRunsClient = CreateTestRunsClientWithRetry(endpoint);
         Model.CIInfo cIInfo = _ciProvider.GetCIInfo();
         Model.RunConfig runConfig = _clientUtility.GetTestRunConfig();
         var patchBody = new
@@ -413,10 +429,12 @@ public class PlaywrightServiceBrowserClient : IDisposable
                 authorization: $"Bearer {authToken}",
                 xCorrelationId: Guid.NewGuid().ToString()
             );
-            _logger?.LogInformation("Test run created successfully.");        }
+            _logger?.LogInformation("Test run created successfully.");
+        }
         catch (RequestFailedException ex)
         {
             _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}");
+            throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
 }

@@ -198,6 +198,13 @@ internal class RunConfigConstants
     internal static readonly string s_tEST_FRAMEWORK_RUNNERNAME = "PLAYWRIGHT";
 }
 
+internal class ServiceClientConstants
+{
+    internal static readonly int s_mAX_RETRIES = 3;
+    internal static readonly int s_iNITIAL_DELAY_MS = 1000;
+    internal static readonly int s_mAX_DELAY_MS = 64000;
+}
+
 internal class ApiVersionConstants
 {
     internal static readonly string s_latestApiVersion = "2025-07-01-preview";
