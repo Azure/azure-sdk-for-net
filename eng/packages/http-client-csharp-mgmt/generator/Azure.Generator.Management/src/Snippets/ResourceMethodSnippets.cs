@@ -4,12 +4,15 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
+using System.Diagnostics;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Snippets
@@ -33,18 +36,18 @@ namespace Azure.Generator.Management.Snippets
         }
 
         public static List<MethodBodyStatement> CreateDiagnosticScopeStatements(
-            ResourceClientProvider resourceClientProvider,
+            TypeProvider enclosingType,
+            ValueExpression clientDiagnostics,
             string operationName,
             out VariableExpression scopeVariable)
         {
             var statements = new List<MethodBodyStatement>();
 
             // using var scope = _clientDiagnostics.CreateScope("ResourceName.OperationName");
-            var clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             var scopeDeclaration = UsingDeclare(
                 "scope",
                 typeof(DiagnosticScope),
-                clientDiagnosticsField.Invoke("CreateScope", [Literal($"{resourceClientProvider.Name}.{operationName}")]),
+                clientDiagnostics.Invoke("CreateScope", [Literal($"{enclosingType.Name}.{operationName}")]),
                 out scopeVariable);
             statements.Add(scopeDeclaration);
 
@@ -56,7 +59,7 @@ namespace Azure.Generator.Management.Snippets
 
         // TODO: The generated code has format issue https://github.com/microsoft/typespec/issues/7283
         public static MethodBodyStatement CreateRequestContext(
-            ProviderParameterProvider cancellationTokenParam,
+            ParameterProvider cancellationTokenParam,
             out VariableExpression contextVariable)
         {
             var requestContextParams = new Dictionary<ValueExpression, ValueExpression>
@@ -72,17 +75,27 @@ namespace Azure.Generator.Management.Snippets
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
+        public static MethodBodyStatement CreateUriFromMessage(VariableExpression messageVariable, out VariableExpression uriVariable)
+        {
+            // Uri uri = message.Request.Uri;
+            return Declare(
+                "uri",
+                typeof(RequestUriBuilder),
+                messageVariable.Property("Request").Property("Uri"),
+                out uriVariable);
+        }
+
         public static MethodBodyStatement CreateHttpMessage(
-            ResourceClientProvider resourceClientProvider,
+            ValueExpression restClient,
             string methodName,
-            ValueExpression[] arguments,
+            IReadOnlyList<ValueExpression> arguments,
             out VariableExpression messageVariable)
         {
             // HttpMessage message = _restClient.{methodName}(...arguments);
             return Declare(
                 "message",
                 typeof(HttpMessage),
-                resourceClientProvider.GetRestClientField().Invoke(methodName, arguments),
+                restClient.Invoke(methodName, arguments),
                 out messageVariable);
         }
 
@@ -110,7 +123,7 @@ namespace Azure.Generator.Management.Snippets
                 new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [resultVariable.CastTo(responseGenericType), resultVariable]),
+                    [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
                 out responseVariable);
             statements.Add(responseDeclaration);
 
@@ -135,6 +148,24 @@ namespace Azure.Generator.Management.Snippets
             statements.Add(responseDeclaration);
 
             return statements;
+        }
+
+        public static MethodProvider BuildValidateResourceIdMethod(TypeProvider enclosingType, ValueExpression resourceType)
+        {
+            var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
+            var signature = new MethodSignature(
+                "ValidateResourceId",
+                null,
+                MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                null,
+                null,
+                [idParameter],
+                [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
+            var bodyStatements = new IfStatement(idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(resourceType))
+            {
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), resourceType), false))
+            };
+            return new MethodProvider(signature, bodyStatements, enclosingType);
         }
     }
 }

@@ -124,16 +124,6 @@ jobs:
             Pool: $(Pool)
             ${{ insert }}: ${{ parameters.EnvVars }}
 
-      - pwsh: |
-          $project = "${{ parameters.Project }}"
-          $directory = "${{ parameters.ServiceDirectory }}"
-          if ($project -and $project -ne "**" -and (Test-Path "$(Build.SourcesDirectory)/sdk/$directory/$project/test-resources.*")) {
-            $directory = "$directory/$project"
-          }
-          Write-Host "Setting TestResourcesDirectory to '$directory'"
-          Write-Host "##vso[task.setvariable variable=TestResourcesDirectory]$directory"
-        displayName: Set TestResources Location
-
       # Install dotnet before resource deployment so the pre/post scripts can run dotnet commands.
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
@@ -146,7 +136,6 @@ jobs:
               ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
                 Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
               ServiceDirectory: '${{ directory }}'
-              TestResourcesDirectory: '$(TestResourcesDirectory)'
               SubscriptionConfiguration: $(SubscriptionConfiguration)
               ArmTemplateParameters: $(ArmTemplateParameters)
               UseFederatedAuth: ${{ parameters.UseFederatedAuth }}

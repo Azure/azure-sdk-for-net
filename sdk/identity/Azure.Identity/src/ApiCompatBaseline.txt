@@ -1,0 +1,9 @@
+# Baselining these as we are intentionally reintroduinc these obsolete types and properties.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.ExcludeVisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.ExcludeVisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.VisualStudioCodeTenantId' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.VisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.VisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.VisualStudioCodeCredentialOptions' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.VisualStudioCodeCredentialOptions' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.VisualStudioCodeTenantId' in the contract but not the implementation.

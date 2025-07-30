@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.LabServices.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
@@ -13,6 +15,59 @@ namespace Azure.ResourceManager.LabServices
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AvailableLabServicesSku))]
+    [ModelReaderWriterBuildable(typeof(AvailableLabServicesSkuCapability))]
+    [ModelReaderWriterBuildable(typeof(AvailableLabServicesSkuCapacity))]
+    [ModelReaderWriterBuildable(typeof(AvailableLabServicesSkuCost))]
+    [ModelReaderWriterBuildable(typeof(AvailableLabServicesSkuRestrictions))]
+    [ModelReaderWriterBuildable(typeof(LabAutoShutdownProfile))]
+    [ModelReaderWriterBuildable(typeof(LabConnectionProfile))]
+    [ModelReaderWriterBuildable(typeof(LabData))]
+    [ModelReaderWriterBuildable(typeof(LabNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(LabPatch))]
+    [ModelReaderWriterBuildable(typeof(LabPlanData))]
+    [ModelReaderWriterBuildable(typeof(LabPlanNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(LabPlanPatch))]
+    [ModelReaderWriterBuildable(typeof(LabPlanResource))]
+    [ModelReaderWriterBuildable(typeof(LabPlanSupportInfo))]
+    [ModelReaderWriterBuildable(typeof(LabResource))]
+    [ModelReaderWriterBuildable(typeof(LabRosterProfile))]
+    [ModelReaderWriterBuildable(typeof(LabSecurityProfile))]
+    [ModelReaderWriterBuildable(typeof(LabServicesPatchBaseInfo))]
+    [ModelReaderWriterBuildable(typeof(LabServicesRecurrencePattern))]
+    [ModelReaderWriterBuildable(typeof(LabServicesScheduleData))]
+    [ModelReaderWriterBuildable(typeof(LabServicesSchedulePatch))]
+    [ModelReaderWriterBuildable(typeof(LabServicesScheduleResource))]
+    [ModelReaderWriterBuildable(typeof(LabServicesSku))]
+    [ModelReaderWriterBuildable(typeof(LabServicesUsage))]
+    [ModelReaderWriterBuildable(typeof(LabServicesUsageListResult))]
+    [ModelReaderWriterBuildable(typeof(LabServicesUsageName))]
+    [ModelReaderWriterBuildable(typeof(LabUserData))]
+    [ModelReaderWriterBuildable(typeof(LabUserInviteRequestContent))]
+    [ModelReaderWriterBuildable(typeof(LabUserPatch))]
+    [ModelReaderWriterBuildable(typeof(LabUserResource))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineAdditionalCapability))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineConnectionProfile))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineCredential))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineData))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineImageContent))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineImageData))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineImagePatch))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineImageReference))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineImageResource))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineProfile))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineResetPasswordContent))]
+    [ModelReaderWriterBuildable(typeof(LabVirtualMachineResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(PagedImages))]
+    [ModelReaderWriterBuildable(typeof(PagedLabPlans))]
+    [ModelReaderWriterBuildable(typeof(PagedLabs))]
+    [ModelReaderWriterBuildable(typeof(PagedLabServicesSkus))]
+    [ModelReaderWriterBuildable(typeof(PagedSchedules))]
+    [ModelReaderWriterBuildable(typeof(PagedUsers))]
+    [ModelReaderWriterBuildable(typeof(PagedVirtualMachines))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerLabServicesContext : ModelReaderWriterContext
     {
     }

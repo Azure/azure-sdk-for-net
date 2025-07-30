@@ -82,13 +82,13 @@ namespace MgmtTypeSpec
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            string name = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             string location = default;
             FooProperties properties = default;
-            string name = default;
             ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -101,9 +101,18 @@ namespace MgmtTypeSpec
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -166,13 +175,13 @@ namespace MgmtTypeSpec
             }
             return new FooData(
                 id,
-                @type,
+                name,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                name,
                 extendedLocation);
         }
 
@@ -217,7 +226,7 @@ namespace MgmtTypeSpec
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="fooData"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooData fooData)
+        internal static RequestContent ToRequestContent(FooData fooData)
         {
             if (fooData == null)
             {
@@ -229,7 +238,7 @@ namespace MgmtTypeSpec
         }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooData"/> from. </param>
-        public static explicit operator FooData(Response result)
+        internal static FooData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

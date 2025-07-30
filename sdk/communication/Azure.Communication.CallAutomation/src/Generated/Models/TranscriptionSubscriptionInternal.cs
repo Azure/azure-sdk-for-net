@@ -22,11 +22,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="id"> Subscription Id. </param>
         /// <param name="state"> Transcription subscription state. </param>
         /// <param name="subscribedResultTypes"> Subscribed transcription result types. </param>
-        internal TranscriptionSubscriptionInternal(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultState> subscribedResultTypes)
+        /// <param name="locale"> Specifies the locale used for transcription, e.g., en-CA or en-AU. </param>
+        internal TranscriptionSubscriptionInternal(string id, TranscriptionSubscriptionState? state, IReadOnlyList<TranscriptionResultState> subscribedResultTypes, string locale)
         {
             Id = id;
             State = state;
             SubscribedResultTypes = subscribedResultTypes;
+            Locale = locale;
         }
 
         /// <summary> Subscription Id. </summary>
@@ -35,5 +37,7 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionSubscriptionState? State { get; }
         /// <summary> Subscribed transcription result types. </summary>
         public IReadOnlyList<TranscriptionResultState> SubscribedResultTypes { get; }
+        /// <summary> Specifies the locale used for transcription, e.g., en-CA or en-AU. </summary>
+        public string Locale { get; }
     }
 }

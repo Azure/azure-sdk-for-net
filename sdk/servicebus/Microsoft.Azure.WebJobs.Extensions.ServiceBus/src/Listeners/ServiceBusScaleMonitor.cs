@@ -23,6 +23,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly ILogger<ServiceBusScaleMonitor> _logger;
         private readonly ServiceBusMetricsProvider _serviceBusMetricsProvider;
 
+        // to avoid frequent scaling out when queue time is increasing, we wait for at least 2s before scaling out (backward compatibility with SCV2).
+        public static TimeSpan MinimumLastQueueMessageInSecondsThreshold = TimeSpan.FromSeconds(2.0);
+
         public ServiceBusScaleMonitor(
             string functionId,
             string entityPath,
@@ -137,7 +140,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
             }
 
-            if (metrics[0].QueueTime > TimeSpan.Zero && metrics[0].QueueTime < metrics[NumberOfSamplesToConsider - 1].QueueTime)
+            var lastSampleQueueTime = metrics[NumberOfSamplesToConsider - 1].QueueTime;
+
+            if (metrics[0].QueueTime > TimeSpan.Zero && metrics[0].QueueTime < lastSampleQueueTime)
             {
                 bool queueTimeIncreasing =
                     IsTrueForLastN(
@@ -146,9 +151,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         (prev, next) => prev.QueueTime <= next.QueueTime);
                 if (queueTimeIncreasing)
                 {
-                    status.Vote = ScaleVote.ScaleOut;
-                    _logger.LogInformation($"Queue time is increasing for '{_entityPath}'.");
-                    return status;
+                    // to avoid frequent scaling out when queue time is increasing, we wait for at least 2s (backward compatibility with SCV2).
+                    if (lastSampleQueueTime >= MinimumLastQueueMessageInSecondsThreshold)
+                    {
+                        status.Vote = ScaleVote.ScaleOut;
+                        _logger.LogInformation($"Queue time is increasing for '{_entityPath}'.");
+                        return status;
+                    }
+                    else
+                    {
+                        status.Vote = ScaleVote.None;
+                        _logger.LogInformation($"Queue time is increasing for '{_entityPath}' but we do not scale out unless queue latency is greater than {MinimumLastQueueMessageInSecondsThreshold.TotalSeconds}s. Current queue latency is {lastSampleQueueTime.TotalSeconds}s.");
+                        return status;
+                    }
                 }
             }
 
