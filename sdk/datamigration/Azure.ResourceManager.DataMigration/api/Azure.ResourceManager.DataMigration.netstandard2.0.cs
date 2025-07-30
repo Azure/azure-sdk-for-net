@@ -611,6 +611,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlMITaskProperties ConnectToTargetSqlMITaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationODataError> errors = null, Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState? state = default(Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlMITaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlMITaskOutput> output = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.CopyProgressDetails CopyProgressDetails(string tableName = null, string status = null, string parallelCopyType = null, int? usedParallelCopies = default(int?), long? dataRead = default(long?), long? dataWritten = default(long?), long? rowsRead = default(long?), long? rowsCopied = default(long?), System.DateTimeOffset? copyStartOn = default(System.DateTimeOffset?), double? copyThroughput = default(double?), int? copyDuration = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.DatabaseMigration DatabaseMigration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties properties = null) { throw null; }
+<<<<<<< HEAD
         public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationBaseProperties DatabaseMigrationBaseProperties(string kind = null, string scope = null, Azure.ResourceManager.DataMigration.Models.DataMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.DataMigrationProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties DatabaseMigrationProperties(string scope = null, Azure.ResourceManager.DataMigration.Models.DataMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.DataMigrationProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.SqlMigrationErrorInfo migrationFailureError = null, string provisioningError = null, Azure.ResourceManager.DataMigration.Models.DataMigrationSqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData DatabaseMigrationSqlDBData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlDBProperties properties = null) { throw null; }
@@ -657,6 +658,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static Azure.ResourceManager.DataMigration.Models.DataMigrationReportableException DataMigrationReportableException(string message = null, string actionableMessage = null, string filePath = null, string lineNumber = null, int? hResult = default(int?), string stackTrace = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.DataMigrationServiceData DataMigrationServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), string kind = null, Azure.ResourceManager.DataMigration.Models.DataMigrationServiceSku sku = null, Azure.ResourceManager.DataMigration.Models.DataMigrationServiceProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.DataMigrationServiceProvisioningState?), string publicKey = null, string virtualSubnetId = null, string virtualNicId = null, string autoStopDelay = null, bool? deleteResourcesOnStop = default(bool?)) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.DataMigrationServiceNameAvailabilityResult DataMigrationServiceNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.DataMigration.Models.DataMigrationServiceNameUnavailableReason? reason = default(Azure.ResourceManager.DataMigration.Models.DataMigrationServiceNameUnavailableReason?), string message = null) { throw null; }
+=======
+        public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationBaseProperties DatabaseMigrationBaseProperties(string kind = null, string scope = null, Azure.ResourceManager.DataMigration.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.ProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.ErrorInfo migrationFailureError = null, string provisioningError = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties DatabaseMigrationProperties(string scope = null, Azure.ResourceManager.DataMigration.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.ProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.ErrorInfo migrationFailureError = null, string provisioningError = null, Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData DatabaseMigrationSqlDBData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlDBProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = null, Azure.ResourceManager.DataMigration.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.ProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.ErrorInfo migrationFailureError = null, string provisioningError = null, Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, Azure.ResourceManager.DataMigration.Models.SqlDBMigrationStatusDetails migrationStatusDetails = null, Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation targetSqlConnection = null, bool? offline = default(bool?), System.Collections.Generic.IEnumerable<string> tableList = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData DatabaseMigrationSqlMIData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlMIProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = null, Azure.ResourceManager.DataMigration.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.ProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.ErrorInfo migrationFailureError = null, string provisioningError = null, Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, Azure.ResourceManager.DataMigration.Models.MigrationStatusDetails migrationStatusDetails = null, Azure.ResourceManager.DataMigration.Models.BackupConfiguration backupConfiguration = null, Azure.ResourceManager.DataMigration.Models.OfflineConfiguration offlineConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData DatabaseMigrationSqlVmData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlVmProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = null, Azure.ResourceManager.DataMigration.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.ProvisioningState?), string migrationStatus = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier migrationService = null, string migrationOperationId = null, Azure.ResourceManager.DataMigration.Models.ErrorInfo migrationFailureError = null, string provisioningError = null, Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation sourceSqlConnection = null, string sourceDatabaseName = null, string sourceServerName = null, string targetDatabaseCollation = null, Azure.ResourceManager.DataMigration.Models.MigrationStatusDetails migrationStatusDetails = null, Azure.ResourceManager.DataMigration.Models.BackupConfiguration backupConfiguration = null, Azure.ResourceManager.DataMigration.Models.OfflineConfiguration offlineConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.DatabaseTable DatabaseTable(bool? hasRows = default(bool?), string name = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.DataIntegrityValidationResult DataIntegrityValidationResult(System.Collections.Generic.IReadOnlyDictionary<string, string> failedObjects = null, Azure.ResourceManager.DataMigration.Models.ValidationError validationErrors = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DataMigrationServiceData DataMigrationServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), string kind = null, Azure.ResourceManager.DataMigration.Models.ServiceSku sku = null, Azure.ResourceManager.DataMigration.Models.ServiceProvisioningState? provisioningState = default(Azure.ResourceManager.DataMigration.Models.ServiceProvisioningState?), string publicKey = null, string virtualSubnetId = null, string virtualNicId = null, string autoStopDelay = null, bool? deleteResourcesOnStop = default(bool?)) { throw null; }
+>>>>>>> 2779363aa46dac0bcce052c766dc4ad3f5294ddb
         public static Azure.ResourceManager.DataMigration.Models.DataMigrationServiceStatusResponse DataMigrationServiceStatusResponse(string agentVersion = null, System.BinaryData agentConfiguration = null, string status = null, string vmSize = null, System.Collections.Generic.IEnumerable<string> supportedTaskTypes = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.DataMigrationSku DataMigrationSku(string resourceType = null, string name = null, string tier = null, string size = null, string family = null, string kind = null, Azure.ResourceManager.DataMigration.Models.DataMigrationSkuCapacity capacity = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationSkuCosts> costs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationSkuCapabilities> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationSkuRestrictions> restrictions = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.DataMigrationSkuCapabilities DataMigrationSkuCapabilities(string name = null, string value = null) { throw null; }
@@ -769,6 +783,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static Azure.ResourceManager.DataMigration.Models.SqlMigrationErrorInfo SqlMigrationErrorInfo(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.SqlMigrationServiceData SqlMigrationServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null, string integrationRuntimeState = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent SyncMigrationDatabaseErrorEvent(string timestampString = null, string eventTypeString = null, string eventText = null) { throw null; }
+<<<<<<< HEAD
         public static Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskOutput UploadOciDriverTaskOutput(string driverPackageName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationReportableException> validationErrors = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskProperties UploadOciDriverTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationODataError> errors = null, Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState? state = default(Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.DataMigrationFileShareInfo inputDriverShare = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskOutput> output = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationODataError> errors = null, Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState? state = default(Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskOutput> output = null) { throw null; }
@@ -780,6 +795,249 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationODataError> errors = null, Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState? state = default(Azure.ResourceManager.DataMigration.Models.DataMigrationTaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationCommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput> output = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput ValidateOracleAzureDBPostgreSqlSyncTaskOutput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationReportableException> validationErrors = null) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskOutput ValidateSyncMigrationInputSqlServerTaskOutput(string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.DataMigrationReportableException> validationErrors = null) { throw null; }
+=======
+        public static Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskOutput UploadOciDriverTaskOutput(string driverPackageName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> validationErrors = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskProperties UploadOciDriverTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ODataError> errors = null, Azure.ResourceManager.DataMigration.Models.TaskState? state = default(Azure.ResourceManager.DataMigration.Models.TaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.CommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.FileShare inputDriverShare = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskOutput> output = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ODataError> errors = null, Azure.ResourceManager.DataMigration.Models.TaskState? state = default(Azure.ResourceManager.DataMigration.Models.TaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.CommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskOutput> output = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMISyncTaskOutput ValidateMigrationInputSqlServerSqlMISyncTaskOutput(string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> validationErrors = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties ValidateMigrationInputSqlServerSqlMISyncTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ODataError> errors = null, Azure.ResourceManager.DataMigration.Models.TaskState? state = default(Azure.ResourceManager.DataMigration.Models.TaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.CommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMISyncTaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMISyncTaskOutput> output = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskOutput ValidateMigrationInputSqlServerSqlMITaskOutput(string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> restoreDatabaseNameErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> backupFolderErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> backupShareCredentialsErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> backupStorageAccountErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> existingBackupErrors = null, Azure.ResourceManager.DataMigration.Models.DatabaseBackupInfo databaseBackupInfo = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskProperties ValidateMigrationInputSqlServerSqlMITaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ODataError> errors = null, Azure.ResourceManager.DataMigration.Models.TaskState? state = default(Azure.ResourceManager.DataMigration.Models.TaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.CommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskOutput> output = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateMongoDBTaskProperties ValidateMongoDBTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ODataError> errors = null, Azure.ResourceManager.DataMigration.Models.TaskState? state = default(Azure.ResourceManager.DataMigration.Models.TaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.CommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationSettings input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MongoDBMigrationProgress> output = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ODataError> errors = null, Azure.ResourceManager.DataMigration.Models.TaskState? state = default(Azure.ResourceManager.DataMigration.Models.TaskState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.CommandProperties> commands = null, System.Collections.Generic.IDictionary<string, string> clientData = null, Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput> output = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput ValidateOracleAzureDBPostgreSqlSyncTaskOutput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> validationErrors = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskOutput ValidateSyncMigrationInputSqlServerTaskOutput(string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.ReportableException> validationErrors = null) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ValidationError ValidationError(string text = null, Azure.ResourceManager.DataMigration.Models.Severity? severity = default(Azure.ResourceManager.DataMigration.Models.Severity?)) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.WaitStatistics WaitStatistics(string waitType = null, float? waitTimeMs = default(float?), long? waitCount = default(long?)) { throw null; }
+    }
+    public partial class AuthenticationKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>
+    {
+        internal AuthenticationKeys() { }
+        public string AuthKey1 { get { throw null; } }
+        public string AuthKey2 { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AuthenticationKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AuthenticationKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AuthenticationKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AuthenticationType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.AuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.AuthenticationType ActiveDirectoryIntegrated { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.AuthenticationType ActiveDirectoryPassword { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.AuthenticationType None { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.AuthenticationType SqlAuthentication { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.AuthenticationType WindowsAuthentication { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.AuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.AuthenticationType left, Azure.ResourceManager.DataMigration.Models.AuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.AuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.AuthenticationType left, Azure.ResourceManager.DataMigration.Models.AuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum AuthType
+    {
+        AccountKey = 0,
+        ManagedIdentity = 1,
+    }
+    public partial class AvailableServiceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>
+    {
+        internal AvailableServiceSku() { }
+        public Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity Capacity { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku Sku { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AvailableServiceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AvailableServiceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvailableServiceSkuCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>
+    {
+        internal AvailableServiceSkuCapacity() { }
+        public int? Default { get { throw null; } }
+        public int? Maximum { get { throw null; } }
+        public int? Minimum { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.ServiceScalability? ScaleType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuCapacity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AvailableServiceSkuSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>
+    {
+        internal AvailableServiceSkuSku() { }
+        public string Family { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Size { get { throw null; } }
+        public string Tier { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AvailableServiceSkuSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureActiveDirectoryApp : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>
+    {
+        public AzureActiveDirectoryApp() { }
+        public string AppKey { get { throw null; } set { } }
+        public string ApplicationId { get { throw null; } set { } }
+        public bool? IgnoreAzurePermissions { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureBlob : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>
+    {
+        public AzureBlob() { }
+        public string AccountKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.AuthType? AuthType { get { throw null; } set { } }
+        public string BlobContainerName { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string StorageAccountResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AzureBlob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.AzureBlob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.AzureBlob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BackupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>
+    {
+        public BackupConfiguration() { }
+        public Azure.ResourceManager.DataMigration.Models.SourceLocation SourceLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.TargetLocation TargetLocation { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BackupConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BackupConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BackupFileInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>
+    {
+        internal BackupFileInfo() { }
+        public int? FamilySequenceNumber { get { throw null; } }
+        public string FileLocation { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.BackupFileStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BackupFileInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BackupFileInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupFileInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupFileStatus : System.IEquatable<Azure.ResourceManager.DataMigration.Models.BackupFileStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupFileStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Arrived { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Queued { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Restored { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Restoring { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Uploaded { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupFileStatus Uploading { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.BackupFileStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.BackupFileStatus left, Azure.ResourceManager.DataMigration.Models.BackupFileStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.BackupFileStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.BackupFileStatus left, Azure.ResourceManager.DataMigration.Models.BackupFileStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupMode : System.IEquatable<Azure.ResourceManager.DataMigration.Models.BackupMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupMode(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.BackupMode CreateBackup { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupMode ExistingBackup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.BackupMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.BackupMode left, Azure.ResourceManager.DataMigration.Models.BackupMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.BackupMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.BackupMode left, Azure.ResourceManager.DataMigration.Models.BackupMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BackupSetInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>
+    {
+        internal BackupSetInfo() { }
+        public System.DateTimeOffset? BackupFinishedOn { get { throw null; } }
+        public string BackupSetId { get { throw null; } }
+        public System.DateTimeOffset? BackupStartOn { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.BackupType? BackupType { get { throw null; } }
+        public string DatabaseName { get { throw null; } }
+        public string FirstLsn { get { throw null; } }
+        public bool? IsBackupRestored { get { throw null; } }
+        public string LastLsn { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.BackupFileInfo> ListOfBackupFiles { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BackupSetInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BackupSetInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BackupSetInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.BackupType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupType(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType Database { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType DifferentialDatabase { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType DifferentialFile { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType DifferentialPartial { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType File { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType Partial { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.BackupType TransactionLog { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.BackupType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.BackupType left, Azure.ResourceManager.DataMigration.Models.BackupType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.BackupType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.BackupType left, Azure.ResourceManager.DataMigration.Models.BackupType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BlobShare : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BlobShare>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BlobShare>
+    {
+        public BlobShare() { }
+        public System.Uri SasUri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BlobShare System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BlobShare>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.BlobShare>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.BlobShare System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BlobShare>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BlobShare>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.BlobShare>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+>>>>>>> 2779363aa46dac0bcce052c766dc4ad3f5294ddb
     }
     public partial class CheckOciDriverTaskOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.CheckOciDriverTaskOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.CheckOciDriverTaskOutput>
     {
@@ -1330,7 +1588,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.Core.ResourceIdentifier MigrationService { get { throw null; } set { } }
         public string MigrationStatus { get { throw null; } }
         public string ProvisioningError { get { throw null; } set { } }
+<<<<<<< HEAD
         public Azure.ResourceManager.DataMigration.Models.DataMigrationProvisioningState? ProvisioningState { get { throw null; } }
+=======
+        public Azure.ResourceManager.DataMigration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+>>>>>>> 2779363aa46dac0bcce052c766dc4ad3f5294ddb
         public string Scope { get { throw null; } set { } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1345,7 +1607,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         public DatabaseMigrationProperties() { }
         public string SourceDatabaseName { get { throw null; } set { } }
         public string SourceServerName { get { throw null; } }
+<<<<<<< HEAD
         public Azure.ResourceManager.DataMigration.Models.DataMigrationSqlConnectionInformation SourceSqlConnection { get { throw null; } set { } }
+=======
+        public Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation SourceSqlConnection { get { throw null; } set { } }
+>>>>>>> 2779363aa46dac0bcce052c766dc4ad3f5294ddb
         public string TargetDatabaseCollation { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4962,6 +5228,461 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MigrationValidatioUpdateActionType left, Azure.ResourceManager.DataMigration.Models.MigrationValidatioUpdateActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+<<<<<<< HEAD
+=======
+    public partial class MongoDBObjectInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>
+    {
+        internal MongoDBObjectInfo() { }
+        public long AverageDocumentSize { get { throw null; } }
+        public long DataSize { get { throw null; } }
+        public long DocumentCount { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string QualifiedName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class MongoDBProgress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>
+    {
+        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) { }
+        public long BytesCopied { get { throw null; } }
+        public long DocumentsCopied { get { throw null; } }
+        public string ElapsedTime { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> Errors { get { throw null; } }
+        public long EventsPending { get { throw null; } }
+        public long EventsReplayed { get { throw null; } }
+        public System.DateTimeOffset? LastEventOn { get { throw null; } }
+        public System.DateTimeOffset? LastReplayOn { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string QualifiedName { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState State { get { throw null; } }
+        public long TotalBytes { get { throw null; } }
+        public long TotalDocuments { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoDBReplication : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBReplication>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoDBReplication(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBReplication Continuous { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBReplication Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBReplication OneTime { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBReplication other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBReplication left, Azure.ResourceManager.DataMigration.Models.MongoDBReplication right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBReplication (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBReplication left, Azure.ResourceManager.DataMigration.Models.MongoDBReplication right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MongoDBRestartCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>
+    {
+        public MongoDBRestartCommand() { }
+        public string InputObjectName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBRestartCommand>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoDBShardKeyField : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>
+    {
+        public MongoDBShardKeyField(string name, Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder order) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Order { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoDBShardKeyInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>
+    {
+        internal MongoDBShardKeyInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField> Fields { get { throw null; } }
+        public bool IsUnique { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MongoDBShardKeyOrder : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MongoDBShardKeyOrder(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Forward { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Hashed { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Reverse { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder left, Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder left, Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MongoDBShardKeySetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>
+    {
+        public MongoDBShardKeySetting(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField> fields) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField> Fields { get { throw null; } }
+        public bool? IsUnique { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MongoDBThrottlingSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>
+    {
+        public MongoDBThrottlingSettings() { }
+        public int? MaxParallelism { get { throw null; } set { } }
+        public int? MinFreeCpu { get { throw null; } set { } }
+        public int? MinFreeMemoryMb { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MySqlConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>
+    {
+        public MySqlConnectionInfo(string serverName, int port) { }
+        public string AdditionalSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.AuthenticationType? Authentication { get { throw null; } set { } }
+        public string DataSource { get { throw null; } set { } }
+        public bool? EncryptConnection { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
+        public string ServerName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlTargetPlatformType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlTargetPlatformType(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType AzureDBForMySql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType SqlServer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType left, Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType left, Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NameAvailabilityRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>
+    {
+        public NameAvailabilityRequest() { }
+        public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NameAvailabilityResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>
+    {
+        internal NameAvailabilityResponse() { }
+        public string Message { get { throw null; } }
+        public bool? NameAvailable { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason? Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NameCheckFailureReason : System.IEquatable<Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NameCheckFailureReason(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason left, Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason left, Azure.ResourceManager.DataMigration.Models.NameCheckFailureReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NodeMonitoringData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>
+    {
+        internal NodeMonitoringData() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public int? AvailableMemoryInMB { get { throw null; } }
+        public int? ConcurrentJobsLimit { get { throw null; } }
+        public int? ConcurrentJobsRunning { get { throw null; } }
+        public int? CpuUtilization { get { throw null; } }
+        public int? MaxConcurrentJobs { get { throw null; } }
+        public string NodeName { get { throw null; } }
+        public double? ReceivedBytes { get { throw null; } }
+        public double? SentBytes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.NodeMonitoringData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.NodeMonitoringData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.NodeMonitoringData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ObjectType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.ObjectType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ObjectType(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ObjectType Function { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ObjectType StoredProcedures { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ObjectType Table { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ObjectType User { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ObjectType View { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.ObjectType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.ObjectType left, Azure.ResourceManager.DataMigration.Models.ObjectType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.ObjectType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.ObjectType left, Azure.ResourceManager.DataMigration.Models.ObjectType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ODataError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ODataError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ODataError>
+    {
+        internal ODataError() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ODataError> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.ODataError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ODataError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ODataError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.ODataError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ODataError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ODataError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ODataError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OfflineConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>
+    {
+        public OfflineConfiguration() { }
+        public string LastBackupName { get { throw null; } set { } }
+        public bool? Offline { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OfflineConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OfflineConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OfflineConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OracleConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>
+    {
+        public OracleConnectionInfo(string dataSource) { }
+        public Azure.ResourceManager.DataMigration.Models.AuthenticationType? Authentication { get { throw null; } set { } }
+        public string DataSource { get { throw null; } set { } }
+        public int? Port { get { throw null; } set { } }
+        public string ServerName { get { throw null; } set { } }
+        public string ServerVersion { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OracleOciDriverInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>
+    {
+        internal OracleOciDriverInfo() { }
+        public string ArchiveChecksum { get { throw null; } }
+        public string AssemblyVersion { get { throw null; } }
+        public string DriverName { get { throw null; } }
+        public string DriverSize { get { throw null; } }
+        public string OracleChecksum { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> SupportedOracleVersions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OrphanedUserInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>
+    {
+        internal OrphanedUserInfo() { }
+        public string DatabaseName { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.OrphanedUserInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PostgreSqlConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>
+    {
+        public PostgreSqlConnectionInfo(string serverName, int port) { }
+        public string AdditionalSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.AuthenticationType? Authentication { get { throw null; } set { } }
+        public string DatabaseName { get { throw null; } set { } }
+        public string DataSource { get { throw null; } set { } }
+        public bool? EncryptConnection { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
+        public string ServerBrandVersion { get { throw null; } set { } }
+        public string ServerName { get { throw null; } set { } }
+        public string ServerVersion { get { throw null; } set { } }
+        public bool? TrustServerCertificate { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProjectFileProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>
+    {
+        public ProjectFileProperties() { }
+        public string Extension { get { throw null; } set { } }
+        public string FilePath { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModified { get { throw null; } }
+        public string MediaType { get { throw null; } set { } }
+        public long? Size { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.ProjectFileProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.ProjectFileProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectFileProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProjectProvisioningState : System.IEquatable<Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProjectProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState left, Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState left, Azure.ResourceManager.DataMigration.Models.ProjectProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProjectSourcePlatform : System.IEquatable<Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProjectSourcePlatform(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform MongoDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform MySql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform PostgreSql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform Sql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform left, Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform left, Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProjectTargetPlatform : System.IEquatable<Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProjectTargetPlatform(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform AzureDBForMySql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform AzureDBForPostgreSql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform MongoDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform SqlDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform SqlMI { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform left, Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform left, Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public abstract partial class ProjectTaskProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>
+    {
+        protected ProjectTaskProperties() { }
+        public System.Collections.Generic.IDictionary<string, string> ClientData { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.CommandProperties> Commands { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ODataError> Errors { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.TaskState? State { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.DataMigration.Models.ProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.ProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.ProvisioningState left, Azure.ResourceManager.DataMigration.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.ProvisioningState left, Azure.ResourceManager.DataMigration.Models.ProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+>>>>>>> 2779363aa46dac0bcce052c766dc4ad3f5294ddb
     public partial class QueryAnalysisValidationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataMigration.Models.QueryAnalysisValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataMigration.Models.QueryAnalysisValidationResult>
     {
         internal QueryAnalysisValidationResult() { }
