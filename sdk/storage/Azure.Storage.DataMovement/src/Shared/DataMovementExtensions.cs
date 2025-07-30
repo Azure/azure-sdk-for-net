@@ -179,7 +179,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource)
         {
-            // If saved path equals the cotnainer Uri, its a single item trasfer, so the resource name
+            // If saved path equals the container Uri, it's a single item transfer, so the resource name
             // does not matter. Just set it to the path.
             string childSourceName = header.SourcePath == sourceResource.Uri.AbsoluteUri.ToString() ?
                 header.SourcePath :
