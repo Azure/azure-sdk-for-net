@@ -348,7 +348,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         if (string.IsNullOrEmpty(authToken))
         {
-            _logger?.LogError("Cannot update test run: Auth token is null or empty");
+            _logger?.LogError("Cannot create test run: Auth token is null or empty");
             return;
         }
         string apiUrl = _clientUtility.GetTestRunApiUrl();
@@ -397,7 +397,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         if (string.IsNullOrEmpty(authToken))
         {
-            _logger?.LogError("Cannot update test run: Auth token is null or empty");
+            _logger?.LogError("Cannot create test run: Auth token is null or empty");
             return;
         }
         string apiUrl = _clientUtility.GetTestRunApiUrl();
