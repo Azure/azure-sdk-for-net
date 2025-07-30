@@ -75,8 +75,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateCreateZooRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
@@ -118,8 +117,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateCreateZooRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
@@ -158,8 +156,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -192,8 +189,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -214,14 +210,22 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ZooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
         /// <summary> List Zoo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ZooResource> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
@@ -240,8 +244,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -270,8 +273,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -300,8 +302,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -334,8 +335,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
