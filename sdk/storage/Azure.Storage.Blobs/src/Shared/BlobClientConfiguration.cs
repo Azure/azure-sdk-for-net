@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services">
         /// Versioning for Azure Storage Services</see>.
         /// </summary>
-        public virtual BlobClientOptions.ServiceVersion Version { get; internal set; }
+        public virtual BlobClientOptions.ServiceVersion Version => ClientOptions.Version;
 
         /// <summary>
         /// The encryption key to be used with client provided key server-side encryption.
@@ -40,7 +40,6 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with token authentication.
         /// </summary>
-
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             TokenCredential tokenCredential,
