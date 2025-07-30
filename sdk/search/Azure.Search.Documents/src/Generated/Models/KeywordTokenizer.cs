@@ -18,9 +18,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxTokenLength"> The maximum token length. Default is 256. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        internal KeywordTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength) : base(oDataType, name, serializedAdditionalRawData)
+        /// <param name="bufferSize"></param>
+        internal KeywordTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength, int? bufferSize) : base(oDataType, name, serializedAdditionalRawData)
         {
             MaxTokenLength = maxTokenLength;
+            BufferSize = bufferSize;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordTokenizerV2";
         }
 

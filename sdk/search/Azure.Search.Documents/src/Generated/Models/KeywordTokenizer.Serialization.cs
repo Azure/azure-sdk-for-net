@@ -38,6 +38,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
+            if (Optional.IsDefined(BufferSize))
+            {
+                if (BufferSize != null)
+                {
+                    writer.WritePropertyName("bufferSize"u8);
+                    writer.WriteNumberValue(BufferSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("bufferSize");
+                }
+            }
         }
 
         KeywordTokenizer IJsonModel<KeywordTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -61,6 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             int? maxTokenLength = default;
+            int? bufferSize = default;
             string odataType = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -74,6 +87,16 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     maxTokenLength = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("bufferSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        bufferSize = null;
+                        continue;
+                    }
+                    bufferSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -92,7 +115,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeywordTokenizer(odataType, name, serializedAdditionalRawData, maxTokenLength);
+            return new KeywordTokenizer(odataType, name, serializedAdditionalRawData, maxTokenLength, bufferSize);
         }
 
         BinaryData IPersistableModel<KeywordTokenizer>.Write(ModelReaderWriterOptions options)
