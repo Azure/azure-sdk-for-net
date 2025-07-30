@@ -2926,7 +2926,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     OperationContext = "dtmfContext",
                     InterToneTimeout = TimeSpan.FromSeconds(5)
                 },
-                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices(), new List<string>() { "en-CA","en-AU"})
+                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices())
                 {
                     InterruptCallMediaOperation = false,
                     InterruptPrompt = false,
@@ -2935,14 +2935,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     PlayPrompts = playSources,
                     OperationContext = "choiceContext"
                 },
-                "speech" => new CallMediaRecognizeSpeechOptions(target, new List<string>() { "en-CA", "en-AU" })
+                "speech" => new CallMediaRecognizeSpeechOptions(target)
                 {
                     Prompt = playSource ?? null,
                     PlayPrompts = playSources,
                     EndSilenceTimeout = TimeSpan.FromMilliseconds(1000),
                     OperationContext = "speechContext"
                 },
-                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2, new List<string>() { "en-CA", "en-AU" })
+                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2)
                 {
                     PlayPrompts = playSources,
                     Prompt = playSource ?? null,

@@ -10,12 +10,5 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableEndCallSummary { get; set; }
         /// <summary> Locale for summarization (e.g., en-US). </summary>
         public string Locale { get; set; }
-
-        /// <summary>
-        /// Locale for summarization (e.g., en-US).
-        /// </summary>
-        public SummarizationOptions()
-        {
-        }
     }
 }

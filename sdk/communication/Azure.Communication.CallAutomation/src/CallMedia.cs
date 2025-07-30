@@ -1549,14 +1549,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Get summary of the call.
+        /// Gets a summary of the call so far.
         /// </summary>
-        /// <param name="options">An optional object containing summarizeCallOptions options and configurations.</param>
-        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <param name="options">An optional object containing options and configurations for summarizing the call.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
         public virtual Response SummarizeCall(SummarizeCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SummarizeCall)}");
             scope.Start();
             try
             {
@@ -1578,14 +1578,14 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Get summary of the call.
+        /// Gets a summary of the call so far.
         /// </summary>
-        /// <param name="options">An optional object containing summarizeCallOptions options and configurations.</param>
-        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <param name="options">An optional object containing options and configurations for summarizing the call.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
         public virtual async Task<Response> SummarizeCallAsync(SummarizeCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SummarizeCall)}");
             scope.Start();
             try
             {
