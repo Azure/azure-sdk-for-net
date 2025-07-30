@@ -1661,11 +1661,11 @@ namespace Azure.Communication.CallAutomation
         public double Confidence { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
         public string Format { get { throw null; } }
-        public string LanguageIdentified { get { throw null; } set { } }
+        public string LanguageIdentified { get { throw null; } }
         public System.TimeSpan Offset { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } }
-        public Azure.Communication.CallAutomation.TranscriptionSentimentResult SentimentAnalysisResult { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.SentimentAnalysisResult SentimentAnalysisResult { get { throw null; } }
         public string Text { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } }
     }

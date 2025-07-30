@@ -65,7 +65,7 @@ namespace Azure.Communication.CallAutomation
         /// SentimentAnalysisResult result.
         /// </summary>
         [JsonPropertyName("sentimentAnalysisResult")]
-        public TranscriptionSentimentResult SentimentAnalysisResult { get; set; }
+        public SentimentAnalysisResult SentimentAnalysisResult { get; set; }
 
         /// <summary>
         /// Language identified

@@ -10,15 +10,6 @@
 - Added support for PiiRedaction and summarization in transcription.
 - Added support for sentiments analysis in speech and choice recognition.
 
-## 1.5.0 (2025-06-15)
-
-### Features Added
-
-- Added support for Teams multipersona users in create call, add participant, transfer, and redirect scenarios in OPS calls
-- Added TeamsAppSource for use when creating outbound OPS calls
-- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
-- Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
-
 ## 1.4.0 (2025-06-04)
 
 ### Features Added

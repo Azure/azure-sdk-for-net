@@ -12,7 +12,14 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordDataInternal> words, string participantRawID, TranscriptionResultState resultState, TranscriptionSentimentResult sentimentAnalysisResult, string languageIdentified)
+        internal TranscriptionData(string text,
+            string format,
+            double confidence,
+            long offset,
+            long duration,
+            IEnumerable<WordDataInternal> words,
+            string participantRawID,
+            TranscriptionResultState resultState)
         {
             Text = text;
             Format = format;
@@ -26,8 +33,6 @@ namespace Azure.Communication.CallAutomation
                 Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
             ResultState = resultState;
-            SentimentAnalysisResult = sentimentAnalysisResult;
-            LanguageIdentified = languageIdentified;
         }
 
         /// <summary>
@@ -74,12 +79,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// SentimentAnalysisResult result.
         /// </summary>
-        public TranscriptionSentimentResult SentimentAnalysisResult { get; set; }
+        public SentimentAnalysisResult SentimentAnalysisResult { get; internal set; }
 
         /// <summary>
         /// Language identified
         /// </summary>
-        public string LanguageIdentified { get; set; }
+        public string LanguageIdentified { get; internal set; }
 
         private static IEnumerable<WordData> ConvertToWordData(IEnumerable<WordDataInternal> wordData)
         {
