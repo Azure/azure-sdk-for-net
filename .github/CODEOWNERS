@@ -80,6 +80,12 @@
 
 # ######## Services ########
 
+# PRLabel: %Contoso
+/sdk/contoso/             @ReilleyMilne
+
+# ServiceLabel: %Contoso
+# ServiceOwners: @ReilleyMilne
+
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
