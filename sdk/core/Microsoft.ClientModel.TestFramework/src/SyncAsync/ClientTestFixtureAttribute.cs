@@ -15,47 +15,59 @@ using System.Threading.Tasks;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// A test fixture attribute that automatically generates both synchronous and asynchronous variants of test classes.
+/// This attribute creates separate test suites for sync and async execution modes, allowing tests to validate
+/// both synchronous and asynchronous code paths without duplicating test logic.
 /// </summary>
 public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
 {
     /// <summary>
-    /// TODO.
+    /// Property key used to mark tests that should only run synchronously.
+    /// This is set when a test or class is decorated with <see cref="SyncOnlyAttribute"/>.
     /// </summary>
     public static readonly string SyncOnlyKey = "SyncOnly";
 
     /// <summary>
-    /// TODO
+    /// Property key used to store the recording directory suffix for tests with additional parameters.
+    /// This helps organize test recordings when multiple parameter variations exist.
     /// </summary>
     public static readonly string RecordingDirectorySuffixKey = "RecordingDirectory";
 
     private readonly object[] _additionalParameters;
 
     /// <summary>
-    /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
+    /// Initializes a new instance of the <see cref="ClientTestFixtureAttribute"/> class.
     /// </summary>
-    /// <param name="additionalParameters">An array of additional parameters that will be passed to the test suite.</param>
+    /// <param name="additionalParameters">
+    /// Optional additional parameters that will be passed to the test class constructor.
+    /// When provided, creates separate test fixtures for each parameter value combined with sync/async modes.
+    /// This is useful for testing different client configurations or service versions.
+    /// </param>
     public ClientTestFixtureAttribute(params object[] additionalParameters)
     {
         _additionalParameters = additionalParameters ?? new object[] { };
     }
 
     /// <summary>
-    /// TODO.
+    /// Builds test suites from the specified type information using this attribute as the filter.
     /// </summary>
-    /// <param name="typeInfo"></param>
-    /// <returns></returns>
+    /// <param name="typeInfo">The type information for the test class.</param>
+    /// <returns>An enumerable collection of test suites generated for sync and async execution modes.</returns>
     public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
     {
         return BuildFrom(typeInfo, this);
     }
 
     /// <summary>
-    /// TODO
+    /// Builds test suites from the specified type information, creating separate fixtures for synchronous
+    /// and asynchronous execution modes based on the class and method attributes.
     /// </summary>
-    /// <param name="typeInfo"></param>
-    /// <param name="filter"></param>
-    /// <returns></returns>
+    /// <param name="typeInfo">The type information for the test class.</param>
+    /// <param name="filter">The pre-filter to apply when building test suites.</param>
+    /// <returns>
+    /// An enumerable collection of test suites. Each suite represents either synchronous or asynchronous
+    /// execution mode, potentially combined with additional parameter variations.
+    /// </returns>
     public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
     {
         bool includeSync = !typeInfo.GetCustomAttributes<AsyncOnlyAttribute>(true).Any();
@@ -77,6 +89,15 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
         }
     }
 
+    /// <summary>
+    /// Generates all possible combinations of test fixtures based on sync/async modes and additional parameters.
+    /// </summary>
+    /// <param name="includeSync">Whether to include synchronous test fixtures.</param>
+    /// <param name="includeAsync">Whether to include asynchronous test fixtures.</param>
+    /// <returns>
+    /// A list of tuples containing the test fixture attribute, execution mode, and parameter value
+    /// for each combination that should be generated.
+    /// </returns>
     private List<(TestFixtureAttribute Suite, bool IsAsync, object? Parameter)> GeneratePermutations(bool includeSync, bool includeAsync)
     {
         var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object? Parameter)>();
@@ -118,6 +139,12 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
         return result;
     }
 
+    /// <summary>
+    /// Processes a test suite by setting properties and recursively processing all contained tests.
+    /// </summary>
+    /// <param name="testSuite">The test suite to process.</param>
+    /// <param name="isAsync">Whether this test suite is for asynchronous execution.</param>
+    /// <param name="parameter">The additional parameter value associated with this test suite, if any.</param>
     private void Process(TestSuite testSuite, bool isAsync, object? parameter)
     {
         if (parameter != null)
@@ -128,6 +155,13 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
         ProcessTestList(testSuite, isAsync, parameter);
     }
 
+    /// <summary>
+    /// Recursively processes all tests within a test suite, handling both individual tests and parameterized test suites.
+    /// Removes tests that are not applicable for the current execution mode.
+    /// </summary>
+    /// <param name="testSuite">The test suite containing tests to process.</param>
+    /// <param name="isAsync">Whether this is an asynchronous execution mode.</param>
+    /// <param name="parameter">The additional parameter value, if any.</param>
     private void ProcessTestList(TestSuite testSuite, bool isAsync, object? parameter)
     {
         List<Test>? testsToDelete = null;
@@ -162,6 +196,15 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
         }
     }
 
+    /// <summary>
+    /// Processes an individual test, applying execution mode restrictions and setting appropriate properties.
+    /// </summary>
+    /// <param name="isAsync">Whether this test is running in asynchronous mode.</param>
+    /// <param name="parameter">The additional parameter value associated with this test, if any.</param>
+    /// <param name="test">The test to process.</param>
+    /// <returns>
+    /// <c>true</c> if the test should be included in the test suite; <c>false</c> if it should be removed.
+    /// </returns>
     private bool ProcessTest(bool isAsync, object? parameter, Test test)
     {
         if (parameter != null)
@@ -194,7 +237,18 @@ public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPre
         return true;
     }
 
+    /// <summary>
+    /// Determines if a type is suitable for test fixture generation.
+    /// </summary>
+    /// <param name="type">The type to evaluate.</param>
+    /// <returns>Always returns <c>true</c> as all types are considered suitable for fixture generation.</returns>
     bool IPreFilter.IsMatch(Type type) => true;
 
+    /// <summary>
+    /// Determines if a method is suitable for test generation.
+    /// </summary>
+    /// <param name="type">The containing type of the method.</param>
+    /// <param name="method">The method to evaluate.</param>
+    /// <returns>Always returns <c>true</c> as all methods are considered suitable for test generation.</returns>
     bool IPreFilter.IsMatch(Type type, MethodInfo method) => true;
 }

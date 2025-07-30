@@ -94,7 +94,7 @@ internal class UseSyncMethodsInterceptor : IInterceptor
 
             // Get the original target to avoid infinite recursion
             object? target = invocation.InvocationTarget;
-            if (target is IWrappedClient wrapped)
+            if (target is IProxiedClient wrapped)
             {
                 target = wrapped.Original;
             }

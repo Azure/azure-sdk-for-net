@@ -10,41 +10,41 @@ using System.Threading.Tasks;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// Base class for testing pipeline policies in both synchronous and asynchronous scenarios.
 /// </summary>
 [TestFixture(true)]
 [TestFixture(false)]
 public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
 {
     /// <summary>
-    /// TODO
+    /// Initializes a new instance of the <see cref="SyncAsyncPolicyTestBase"/> class.
     /// </summary>
-    /// <param name="isAsync"></param>
+    /// <param name="isAsync">Whether to use asynchronous pipeline operations.</param>
     public SyncAsyncPolicyTestBase(bool isAsync) : base(isAsync)
     {
     }
 
     /// <summary>
-    /// TODO
+    /// Sends an HTTP request through the specified pipeline using a request configuration action.
     /// </summary>
-    /// <param name="pipeline"></param>
-    /// <param name="requestAction"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="pipeline">The client pipeline to send the request through.</param>
+    /// <param name="requestAction">Action to configure the pipeline request.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline response.</returns>
     protected Task<PipelineResponse> SendRequestAsync(ClientPipeline pipeline, Action<PipelineRequest> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
     {
         return SendRequestAsync(pipeline, message => requestAction(message.Request), bufferResponse, cancellationToken);
     }
 
     /// <summary>
-    /// TODO.
+    /// Sends an HTTP request through the specified pipeline using a message configuration action.
     /// </summary>
-    /// <param name="pipeline"></param>
-    /// <param name="messageAction"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="pipeline">The client pipeline to send the request through.</param>
+    /// <param name="messageAction">Action to configure the pipeline message.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline response.</returns>
     protected async Task<PipelineResponse> SendRequestAsync(ClientPipeline pipeline, Action<PipelineMessage> messageAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
     {
         PipelineMessage message = await SendMessageRequestAsync(pipeline, messageAction, bufferResponse, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -52,14 +52,14 @@ public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Sends an HTTP request through the pipeline and returns the complete message with response.
     /// </summary>
-    /// <param name="pipeline"></param>
-    /// <param name="messageAction"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="message"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="pipeline">The client pipeline to send the request through.</param>
+    /// <param name="messageAction">Action to configure the pipeline message.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="message">Optional existing message to use, or null to create a new one.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline message containing both request and response.</returns>
     protected async Task<PipelineMessage> SendMessageRequestAsync(ClientPipeline pipeline, Action<PipelineMessage> messageAction, bool bufferResponse = true, PipelineMessage? message = default, CancellationToken cancellationToken = default)
     {
         message ??= pipeline.CreateMessage();
@@ -80,15 +80,15 @@ public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
     }
 
     /// <summary>
-    /// TODO
+    /// Sends an HTTP request through a transport with a custom policy applied.
     /// </summary>
-    /// <param name="transport"></param>
-    /// <param name="messageAction"></param>
-    /// <param name="policy"></param>
-    /// <param name="responseClassifier"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="transport">The HTTP transport to use.</param>
+    /// <param name="messageAction">Action to configure the pipeline message.</param>
+    /// <param name="policy">The pipeline policy to apply.</param>
+    /// <param name="responseClassifier">Optional classifier for response handling.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline response.</returns>
     protected async Task<PipelineResponse> SendRequestAsync(HttpClientPipelineTransport transport, Action<PipelineMessage> messageAction, PipelinePolicy policy, PipelineMessageClassifier? responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
     {
         await Task.Yield();
@@ -103,30 +103,30 @@ public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Sends an HTTP request through a transport with a custom policy applied using a request configuration action.
     /// </summary>
-    /// <param name="transport"></param>
-    /// <param name="requestAction"></param>
-    /// <param name="policy"></param>
-    /// <param name="responseClassifier"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="transport">The HTTP transport to use.</param>
+    /// <param name="requestAction">Action to configure the pipeline request.</param>
+    /// <param name="policy">The pipeline policy to apply.</param>
+    /// <param name="responseClassifier">Optional classifier for response handling.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline response.</returns>
     protected Task<PipelineResponse> SendRequestAsync(HttpClientPipelineTransport transport, Action<PipelineRequest> requestAction, PipelinePolicy policy, PipelineMessageClassifier? responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
     {
         return SendRequestAsync(transport, message => requestAction(message.Request), policy, responseClassifier, bufferResponse, cancellationToken);
     }
 
     /// <summary>
-    /// TODO.
+    /// Sends a GET request through a transport with a custom policy applied.
     /// </summary>
-    /// <param name="transport"></param>
-    /// <param name="policy"></param>
-    /// <param name="responseClassifier"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="uri"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="transport">The HTTP transport to use.</param>
+    /// <param name="policy">The pipeline policy to apply.</param>
+    /// <param name="responseClassifier">Optional classifier for response handling.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="uri">The URI to send the GET request to, or null to use http://example.com.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline response.</returns>
     protected async Task<PipelineResponse> SendGetRequest(HttpClientPipelineTransport transport, PipelinePolicy policy, PipelineMessageClassifier? responseClassifier = null, bool bufferResponse = true, Uri? uri = null, CancellationToken cancellationToken = default)
     {
         var response = await SendRequestAsync(transport, message =>
@@ -139,15 +139,15 @@ public class SyncAsyncPolicyTestBase : SyncAsyncTestBase
     }
 
     /// <summary>
-    /// TODO.
+    /// Sends a GET request through a pipeline and returns the complete message with response.
     /// </summary>
-    /// <param name="pipeline"></param>
-    /// <param name="message"></param>
-    /// <param name="responseClassifier"></param>
-    /// <param name="bufferResponse"></param>
-    /// <param name="uri"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <param name="pipeline">The client pipeline to send the request through.</param>
+    /// <param name="message">The pipeline message to use for the request.</param>
+    /// <param name="responseClassifier">Optional classifier for response handling.</param>
+    /// <param name="bufferResponse">Whether to buffer the response content in memory.</param>
+    /// <param name="uri">The URI to send the GET request to, or null to use http://example.com.</param>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>The pipeline message containing both request and response.</returns>
     protected async Task<PipelineMessage> SendMessageGetRequest(ClientPipeline pipeline, PipelineMessage message, PipelineMessageClassifier? responseClassifier = null, bool bufferResponse = true, Uri? uri = null, CancellationToken cancellationToken = default)
     {
         await Task.Yield();

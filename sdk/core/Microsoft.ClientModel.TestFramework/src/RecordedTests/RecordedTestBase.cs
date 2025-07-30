@@ -340,7 +340,7 @@ public abstract class RecordedTestBase : ClientTestBase
 
         if (Mode == RecordedTestMode.Playback)
         {
-            clientOptions.RetryPolicy = new PlaybackRetryPolicy(TimeSpan.FromMilliseconds(10));
+            // TODO - clientOptions.RetryPolicy = new PlaybackRetryPolicy(TimeSpan.FromMilliseconds(10));
         }
         // No need to set the transport if we are in Live mode
         if (Mode != RecordedTestMode.Live)
@@ -700,25 +700,26 @@ public abstract class RecordedTestBase : ClientTestBase
     /// The instrumented client maintains the same API surface as the original client but routes
     /// HTTP requests through the test recording infrastructure for capture and replay.
     /// </remarks>
-    protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor>? preInterceptors)
+    protected internal override object CreateProxyFromClient(Type clientType, object client, IEnumerable<IInterceptor>? preInterceptors)
     {
         ValidateClientInstrumentation = false;
-        return base.InstrumentClient(clientType, client, preInterceptors);
+        return base.CreateProxyFromClient(clientType, client, preInterceptors);
     }
 
     /// <summary>
-    /// TODO.
+    /// Instruments an operation result instance for test recording and playback.
+    /// This override ensures that operations use the correct recording mode for intercepting long-running operations.
     /// </summary>
-    /// <param name="operationType"></param>
-    /// <param name="operation"></param>
-    /// <returns></returns>
-    protected internal override object InstrumentOperation(Type operationType, object operation)
+    /// <param name="operationType">The type of the operation to instrument.</param>
+    /// <param name="operation">The operation instance to instrument.</param>
+    /// <returns>An instrumented operation instance with the appropriate interceptors for the current recording mode.</returns>
+    protected internal override object CreateProxyFromOperationResult(Type operationType, object operation)
     {
         var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
-        var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(Mode) }).ToArray();
+        var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationResultInterceptor(Mode) }).ToArray();
         return ProxyGenerator.CreateClassProxyWithTarget(
             operationType,
-            new[] { typeof(IInstrumented) },
+            new[] { typeof(IProxiedOperationResult) },
             operation,
             interceptorArray);
     }

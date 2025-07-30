@@ -32,7 +32,7 @@ internal class AsyncCollectionResultInterceptor<T> : IAsyncEnumerator<T>
     /// <summary>
     /// TODO.
     /// </summary>
-    public T Current => _testBase.InstrumentClient(_inner.Current.GetType(), _inner.Current, []) as T ?? throw new InvalidOperationException();
+    public T Current => _testBase.CreateProxyFromClient(_inner.Current.GetType(), _inner.Current, []) as T ?? throw new InvalidOperationException();
 
     /// <summary>
     /// TODO.

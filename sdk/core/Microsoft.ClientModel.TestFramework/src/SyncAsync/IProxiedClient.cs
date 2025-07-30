@@ -4,9 +4,9 @@
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// An interface implemented by instrumented clients that allows interceptors to retrieve the original value.
+/// An interface implemented by wrapped clients that allows interceptors to retrieve the original value.
 /// </summary>
-public interface IWrappedClient
+public interface IProxiedClient
 {
     /// <summary>
     /// Gets the original value.
