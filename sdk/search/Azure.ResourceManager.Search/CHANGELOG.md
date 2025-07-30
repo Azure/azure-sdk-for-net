@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.6 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-07-23)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2025-02-01' to 'package-2025-05-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/6fa80ad3a37a580d5c29f5612e8ea536902fce4e/specification/search/resource-manager/readme.md.
+- Make `Azure.ResourceManager.Search` AOT-compatible.
 
 ## 1.3.0-beta.5 (2025-04-29)
 

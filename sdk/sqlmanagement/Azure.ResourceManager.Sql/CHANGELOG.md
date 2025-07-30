@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.2 (2025-07-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Make `Azure.ResourceManager.Sql` AOT-compatible.
 
 ### Other Changes
+
+- Marked all classes and methods that are dependent on the retiring 2014-04-01 API version as obsolete. Further information at https://learn.microsoft.com/rest/api/sql/retirement.
 
 ## 1.4.0-beta.1 (2025-05-14)
 

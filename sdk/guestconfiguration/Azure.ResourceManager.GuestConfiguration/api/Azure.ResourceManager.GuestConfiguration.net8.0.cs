@@ -1,25 +1,5 @@
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.GuestConfigurationAssignmentData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.GuestConfigurationHcrpAssignmentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmAssignmentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.GuestConfigurationVmssAssignmentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.GuestConfigurationVMwarevSphereAssignmentResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReport))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmssVmInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting))]
     public partial class AzureResourceManagerGuestConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerGuestConfigurationContext() { }
