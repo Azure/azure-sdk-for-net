@@ -70,7 +70,7 @@ public class MultiPartFormContent : BinaryContent
         IPersistableModel<T> model,
         ModelReaderWriterOptions? options = default,
         ModelReaderWriterContext? context = default,
-        string? mediaType = default)
+        string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(model, nameof(model));
         Argument.AssertNotNullOrEmpty(name, nameof(name));

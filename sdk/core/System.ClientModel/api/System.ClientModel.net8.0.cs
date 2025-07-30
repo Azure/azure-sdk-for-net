@@ -97,7 +97,7 @@ namespace System.ClientModel
         public void Add(string name, float content, string? mediaType = "text/plain") { }
         public void Add(string name, string content, string? mediaType = "text/plain") { }
         public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, string? mediaType = null) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, string? mediaType = "application/json") { }
         public override void Dispose() { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
