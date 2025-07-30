@@ -14,7 +14,7 @@ namespace Azure.Developer.Playwright
 {
     // Data plane generated client.
     /// <summary> The ReportingTestReporting service client. </summary>
-    internal partial class ReportingTestReportingClient
+    public partial class ReportingTestReportingClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -73,16 +73,17 @@ namespace Azure.Developer.Playwright
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> or <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TestRunsVAsync(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
+        /// <include file="Docs/ReportingTestReportingClient.xml" path="doc/members/member[@name='TestRunsAsync(string,string,RequestContent,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> TestRunsAsync(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("ReportingTestReportingClient.TestRunsV");
+            using var scope = ClientDiagnostics.CreateScope("ReportingTestReportingClient.TestRuns");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTestRunsVRequest(workspaceId, testRunId, content, authorization, xCorrelationId, context);
+                using HttpMessage message = CreateTestRunsRequest(workspaceId, testRunId, content, authorization, xCorrelationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -112,16 +113,17 @@ namespace Azure.Developer.Playwright
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> or <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response TestRunsV(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
+        /// <include file="Docs/ReportingTestReportingClient.xml" path="doc/members/member[@name='TestRuns(string,string,RequestContent,string,string,RequestContext)']/*" />
+        public virtual Response TestRuns(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("ReportingTestReportingClient.TestRunsV");
+            using var scope = ClientDiagnostics.CreateScope("ReportingTestReportingClient.TestRuns");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateTestRunsVRequest(workspaceId, testRunId, content, authorization, xCorrelationId, context);
+                using HttpMessage message = CreateTestRunsRequest(workspaceId, testRunId, content, authorization, xCorrelationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -131,7 +133,7 @@ namespace Azure.Developer.Playwright
             }
         }
 
-        internal HttpMessage CreateTestRunsVRequest(string workspaceId, string testRunId, RequestContent content, string authorization, string xCorrelationId, RequestContext context)
+        internal HttpMessage CreateTestRunsRequest(string workspaceId, string testRunId, RequestContent content, string authorization, string xCorrelationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
