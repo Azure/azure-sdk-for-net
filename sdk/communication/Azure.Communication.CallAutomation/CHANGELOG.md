@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for Teams multipersona users in create call, add participant, transfer, and redirect scenarios in OPS calls
+- Added TeamsAppSource for use when creating outbound OPS calls
+- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
+- Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
+- Adds support for SIP headers prefixed with 'X-' and 'X-MS-Custom-' within the CustomCallingContext.
 
 ## 1.4.0 (2025-06-04)
 
