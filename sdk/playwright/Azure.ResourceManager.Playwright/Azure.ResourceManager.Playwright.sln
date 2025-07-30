@@ -7,8 +7,6 @@ Project("{623E33E0-602F-4311-8668-80E874701BEB}") = "Azure.ResourceManager.Playw
 EndProject
 Project("{623E33E0-602F-4311-8668-80E874701BEB}") = "Azure.ResourceManager.Playwright.Tests", "tests\Azure.ResourceManager.Playwright.Tests.csproj", "{954D155E-D893-4632-992C-5FF3EF0C9571}"
 EndProject
-Project("{623E33E0-602F-4311-8668-80E874701BEB}") = "Azure.ResourceManager.Playwright.Samples", "samples\Azure.ResourceManager.Playwright.Samples.csproj", "{F0D65263-E045-4620-A115-C31513837974}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
