@@ -2481,10 +2481,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUrl = new Uri(TestEnvironment.TransportUrl),
+                        Locale = "en-CA",
+                        StartTranscription = false
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
                     callConnectionId = result.CallerCallConnectionId;
@@ -2544,14 +2546,91 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUrl = new Uri(TestEnvironment.TransportUrl),
+                        Locale = "en-CA",
+                        StartTranscription = false
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
                     callConnectionId = result.TargetCallConnectionId;
                     await VerifyTranscription(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateTranscriptionCallWithSentimentAnalysisAndRedaction()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription with sentiment analysis and redaction options
+             * 2. Answer a call
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggered
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string> { "en-AU", "en-US" })
+                    {
+                        Locale = "en-CA",
+                        TransportUrl = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false,
+                        EnableSentimentAnalysis = true,
+                        PiiRedactionOptions = new PiiRedactionOptions()
+                        {
+                            Enable = true,
+                            RedactionType = RedactionType.MaskWithCharacter
+                        },
+                        SummarizationOptions = new SummarizationOptions("en-US")
+                        {
+                            EnableEndCallSummary = true,
+                        }
+                    };
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyTranscription(targetClient, result.CallerCallConnectionId);
                     try
                     {
                         // test get properties
@@ -2973,7 +3052,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
         {
             //Start Transcription
-            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
+            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions(new List<string> { "en-CA" })
             {
                 Locale = "en-CA",
                 OperationContext = "StartTranscription"
@@ -2996,7 +3075,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
 
             // Update Transcription
-            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions("en-US") { OperationContext = "UpdateTranscription" };
+            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions() { Locale = "en-US", OperationContext = "UpdateTranscription" };
             var updateTranscriptionResponse = await callerMedia.UpdateTranscriptionAsync(updateTranscriptionOptions);
             var updateTranscriptionEvent = await WaitForEvent<TranscriptionUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(updateTranscriptionEvent);
@@ -3085,7 +3164,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             CallMediaRecognizeOptions? recognizeOptions = type.ToString() switch
             {
-                "dtmf" => new CallMediaRecognizeDtmfOptions(targetParticipant: target, 2)
+                "dtmf" => new CallMediaRecognizeDtmfOptions(targetParticipant: target, maxTonesToCollect: 2)
                 {
                     InterruptPrompt = false,
                     InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -3094,7 +3173,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     OperationContext = "dtmfContext",
                     InterToneTimeout = TimeSpan.FromSeconds(5)
                 },
-                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices())
+                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices(), speechLanguages: new List<string>() { "en-US", "en-CA"})
                 {
                     InterruptCallMediaOperation = false,
                     InterruptPrompt = false,
@@ -3103,14 +3182,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     PlayPrompts = playSources,
                     OperationContext = "choiceContext"
                 },
-                "speech" => new CallMediaRecognizeSpeechOptions(target)
+                "speech" => new CallMediaRecognizeSpeechOptions(target, speechLanguages: new List<string>() { "en-US", "en-CA" })
                 {
                     Prompt = playSource ?? null,
                     PlayPrompts = playSources,
                     EndSilenceTimeout = TimeSpan.FromMilliseconds(1000),
                     OperationContext = "speechContext"
                 },
-                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2)
+                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2, speechLanguages: new List<string>() { "en-US", "en-CA" })
                 {
                     PlayPrompts = playSources,
                     Prompt = playSource ?? null,

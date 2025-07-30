@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of <see cref="PostProcessingOptions"/>. </summary>
         /// <param name="cognitiveServicesEndpoint">
-        /// The identifier of the Cognitive Service resource assigned to the post recording processing.
+        /// The endpoint of the Cognitive Service resource assigned to the post recording processing.
         /// The Cognitive Service resource will be used by the summarization feature.
         /// </param>
         /// <param name="transcription"> Define options of the transcription for the post recording processing. </param>
