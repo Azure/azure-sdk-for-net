@@ -312,7 +312,9 @@ namespace Azure.Identity
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
                 dacClone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
                 dacClone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
+#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
+#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
                 dacClone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;

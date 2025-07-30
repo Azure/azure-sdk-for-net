@@ -10,6 +10,7 @@ namespace Azure.Identity.Broker.Tests
 {
     public class SharedTokenCacheCredentialBrokerOptionsTests
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         [Test]
         public void VerifyTokenCacheOptionsCtorParam()
         {
@@ -53,5 +54,6 @@ namespace Azure.Identity.Broker.Tests
             Console.WriteLine(options);
             return options as BrokerOptions;
         }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }

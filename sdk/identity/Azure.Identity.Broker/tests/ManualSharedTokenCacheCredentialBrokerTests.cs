@@ -12,6 +12,7 @@ namespace Azure.Identity.Broker.Tests
 {
     public class ManualSharedTokenCacheCredentialBrokerTests
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
@@ -53,5 +54,6 @@ namespace Azure.Identity.Broker.Tests
 
             Assert.NotNull(token.Token);
         }
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 }
