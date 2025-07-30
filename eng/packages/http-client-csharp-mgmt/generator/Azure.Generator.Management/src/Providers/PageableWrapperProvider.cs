@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -127,7 +128,9 @@ namespace Azure.Generator.Management.Providers
             var foreachStatement = new ForEachStatement(
                 pageType,
                 "page",
-                _sourceField.Invoke("AsPages", [continuationTokenParam, pageSizeHintParam]),
+                _isAsync
+                ? _sourceField.Invoke("AsPages", [continuationTokenParam, pageSizeHintParam]).Invoke(nameof(TaskAsyncEnumerableExtensions.ConfigureAwait), [False], null, false, false, extensionType: typeof(TaskAsyncEnumerableExtensions))
+                : _sourceField.Invoke("AsPages", [continuationTokenParam, pageSizeHintParam]),
                 isAsync: _isAsync,
                 out var pageVar);
 
