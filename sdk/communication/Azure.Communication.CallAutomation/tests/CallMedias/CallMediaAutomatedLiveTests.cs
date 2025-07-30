@@ -2472,7 +2472,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string>() { "en-CA"})
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions("en-CA")
                     { TransportUri = new Uri(TestEnvironment.TransportUrl), StartTranscription = false };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
@@ -2533,7 +2533,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string>() { "en-CA"})
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions("en-CA")
                     { TransportUri = new Uri(TestEnvironment.TransportUrl), StartTranscription = false };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
@@ -2635,9 +2635,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string> { "en-AU", "en-US" })
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
                     {
-                        Locale = "en-CA",
                         TransportUri = new Uri(TestEnvironment.TransportUrl),
                         StartTranscription = false,
                         EnableSentimentAnalysis = true,
@@ -2650,7 +2649,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         {
                             Locale = "en-CA",
                             EnableEndCallSummary = true,
-                        }
+                        },
+                        Locales = new List<string>() { "en-CA" }
                     };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
@@ -2806,7 +2806,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
         {
             //Start Transcription
-            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions(new List<string>() { "en-CA"})
+            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
             {
                 OperationContext = "StartTranscription"
             };

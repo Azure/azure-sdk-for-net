@@ -1027,7 +1027,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions(new List<string>(){"en-US"}){OperationContext = "OperationContext"})
+                   callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions(){OperationContext = "OperationContext"})
                 }
             };
         }
