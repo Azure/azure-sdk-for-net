@@ -763,14 +763,16 @@ namespace Azure.Communication.CallAutomation
                 {
                     InterToneTimeoutInSeconds = (int)recognizeDtmfOptions.InterToneTimeout.TotalSeconds,
                     MaxTonesToCollect = recognizeDtmfOptions.MaxTonesToCollect,
-                    StopTones = recognizeDtmfOptions.StopTones.ToList<DtmfTone>()
+                    StopTones = recognizeDtmfOptions.StopTones.ToList<DtmfTone>(),
                 };
 
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))
                 {
                     DtmfOptions = dtmfConfigurations,
                     InterruptPrompt = recognizeDtmfOptions.InterruptPrompt,
-                    InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeout.TotalSeconds
+                    InitialSilenceTimeoutInSeconds = (int)recognizeDtmfOptions.InitialSilenceTimeout.TotalSeconds,
+                    SpeechLanguage = recognizeDtmfOptions.SpeechLanguage,
+                    EnableSentimentAnalysis = recognizeDtmfOptions.EnableSentimentAnalysis,
                 };
 
                 RecognizeRequestInternal request = new RecognizeRequestInternal(recognizeDtmfOptions.InputType, recognizeConfigurationsInternal);
@@ -789,7 +791,8 @@ namespace Azure.Communication.CallAutomation
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
-                    InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
+                    InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds,
+                    EnableSentimentAnalysis = recognizeChoiceOptions.EnableSentimentAnalysis,
                 };
 
                 recognizeChoiceOptions.Choices
@@ -798,6 +801,11 @@ namespace Azure.Communication.CallAutomation
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeChoiceOptions.SpeechLanguage;
+                }
+
+                if (recognizeChoiceOptions.SpeechLanguages != null && recognizeChoiceOptions.SpeechLanguages.Any())
+                {
+                    recognizeChoiceOptions.SpeechLanguages.ToList().ForEach(t => recognizeConfigurationsInternal.SpeechLanguages.Add(t));
                 }
 
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechModelEndpointId))
@@ -827,12 +835,18 @@ namespace Azure.Communication.CallAutomation
                 {
                     InterruptPrompt = recognizeSpeechOptions.InterruptPrompt,
                     InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOptions.InitialSilenceTimeout.TotalSeconds,
-                    SpeechOptions = speechConfigurations
+                    SpeechOptions = speechConfigurations,
+                    EnableSentimentAnalysis = recognizeSpeechOptions.EnableSentimentAnalysis
                 };
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechLanguage))
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOptions.SpeechLanguage;
+                }
+
+                if (recognizeSpeechOptions.SpeechLanguages != null && recognizeSpeechOptions.SpeechLanguages.Any())
+                {
+                    recognizeSpeechOptions.SpeechLanguages.ToList().ForEach(t => recognizeConfigurationsInternal.SpeechLanguages.Add(t));
                 }
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOptions.SpeechModelEndpointId))
@@ -871,11 +885,17 @@ namespace Azure.Communication.CallAutomation
                     InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InitialSilenceTimeout.TotalSeconds,
                     SpeechOptions = speechConfigurations,
                     DtmfOptions = dtmfConfigurations,
+                    EnableSentimentAnalysis = recognizeSpeechOrDtmfOptions.EnableSentimentAnalysis
                 };
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechLanguage))
                 {
                     recognizeConfigurationsInternal.SpeechLanguage = recognizeSpeechOrDtmfOptions.SpeechLanguage;
+                }
+
+                if (recognizeSpeechOrDtmfOptions.SpeechLanguages != null && recognizeSpeechOrDtmfOptions.SpeechLanguages.Any())
+                {
+                    recognizeSpeechOrDtmfOptions.SpeechLanguages.ToList().ForEach(t => recognizeConfigurationsInternal.SpeechLanguages.Add(t));
                 }
 
                 if (!String.IsNullOrEmpty(recognizeSpeechOrDtmfOptions.SpeechModelEndpointId))

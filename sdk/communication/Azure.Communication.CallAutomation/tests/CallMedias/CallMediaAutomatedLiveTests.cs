@@ -3052,7 +3052,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
         {
             //Start Transcription
-            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
+            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions(new List<string> { "en-CA" })
             {
                 Locale = "en-CA",
                 OperationContext = "StartTranscription"
@@ -3075,7 +3075,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
 
             // Update Transcription
-            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions("en-US") { OperationContext = "UpdateTranscription" };
+            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions() { Locale = "en-US", OperationContext = "UpdateTranscription" };
             var updateTranscriptionResponse = await callerMedia.UpdateTranscriptionAsync(updateTranscriptionOptions);
             var updateTranscriptionEvent = await WaitForEvent<TranscriptionUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(updateTranscriptionEvent);
@@ -3164,7 +3164,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             CallMediaRecognizeOptions? recognizeOptions = type.ToString() switch
             {
-                "dtmf" => new CallMediaRecognizeDtmfOptions(targetParticipant: target, 2)
+                "dtmf" => new CallMediaRecognizeDtmfOptions(targetParticipant: target, maxTonesToCollect: 2)
                 {
                     InterruptPrompt = false,
                     InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -3173,7 +3173,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     OperationContext = "dtmfContext",
                     InterToneTimeout = TimeSpan.FromSeconds(5)
                 },
-                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices())
+                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices(), speechLanguages: new List<string>() { "en-US", "en-CA"})
                 {
                     InterruptCallMediaOperation = false,
                     InterruptPrompt = false,
@@ -3182,14 +3182,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     PlayPrompts = playSources,
                     OperationContext = "choiceContext"
                 },
-                "speech" => new CallMediaRecognizeSpeechOptions(target)
+                "speech" => new CallMediaRecognizeSpeechOptions(target, speechLanguages: new List<string>() { "en-US", "en-CA" })
                 {
                     Prompt = playSource ?? null,
                     PlayPrompts = playSources,
                     EndSilenceTimeout = TimeSpan.FromMilliseconds(1000),
                     OperationContext = "speechContext"
                 },
-                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2)
+                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2, speechLanguages: new List<string>() { "en-US", "en-CA" })
                 {
                     PlayPrompts = playSources,
                     Prompt = playSource ?? null,

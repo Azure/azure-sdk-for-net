@@ -13,14 +13,18 @@ namespace Azure.Communication.CallAutomation
     public class CallMediaRecognizeChoiceOptions : CallMediaRecognizeOptions
     {
         /// <summary> Initializes a new instance of CallMediaRecognizeChoiceOptions. </summary>
-        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognitionChoice> choices) : base(RecognizeInputType.Choices, targetParticipant)
+        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognitionChoice> choices, List<string> speechLanguages) : base(RecognizeInputType.Choices, targetParticipant)
         {
             Choices = choices.ToList<RecognitionChoice>();
+            SpeechLanguages = speechLanguages ?? throw new ArgumentNullException(nameof(speechLanguages), "Speech languages cannot be null.");
         }
 
         /// <summary>
         /// The IvR choices for recognize
         /// </summary>
         public IList<RecognitionChoice> Choices { get; }
+
+        /// <summary> Gets or sets a list of languages for Language Identification. </summary>
+        public IList<string> SpeechLanguages { get; }
     }
 }

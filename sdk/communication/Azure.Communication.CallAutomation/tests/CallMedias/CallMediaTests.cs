@@ -100,7 +100,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
         };
 
-        private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
+        private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices, speechLanguages: new List<string>())
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -116,7 +116,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
-        private static CallMediaRecognizeOptions _choiceRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
+        private static CallMediaRecognizeOptions _choiceRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices, speechLanguages: new List<string>())
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptions = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"), speechLanguages: new List<string>())
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -150,7 +150,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
-        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"))
+        private static CallMediaRecognizeSpeechOptions _speechRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOptions(new CommunicationUserIdentifier("targetUserId"), speechLanguages: new List<string>())
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -168,7 +168,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             PlayPrompts = new List<PlaySource> { new FileSource(new Uri("https://localhost")), new TextSource("Multiple Play Prompt Test") }
         };
 
-        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptions = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10, speechLanguages: new List<string>())
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -185,7 +185,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
-        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10)
+        private static CallMediaRecognizeSpeechOrDtmfOptions _speechOrDtmfRecognizeOptionsWithMultiplePlaySources = new CallMediaRecognizeSpeechOrDtmfOptions(new CommunicationUserIdentifier("targetUserId"), 10, speechLanguages: new List<string>())
         {
             InterruptCallMediaOperation = true,
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
@@ -989,7 +989,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions(){OperationContext = "OperationContext"})
+                   callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions(new List<string> { "locale" }) { OperationContext = "OperationContext" })
                 }
             };
         }
@@ -1022,7 +1022,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions("locale"))
+                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions() { Locale = "locale" })
                 }
             };
         }
@@ -1037,7 +1037,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions("locale"){SpeechRecognitionModelEndpointId = "customEndpoint", OperationContext="context" })
+                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions() { Locale = "locale", SpeechRecognitionModelEndpointId = "customEndpoint", OperationContext = "context" })
                 }
             };
         }

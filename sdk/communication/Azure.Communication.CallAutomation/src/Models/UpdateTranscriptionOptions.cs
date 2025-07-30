@@ -8,16 +8,8 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class UpdateTranscriptionOptions
     {
-        /// <summary>
-        /// Options for the Update Transcription operation.
-        /// </summary>
-        public UpdateTranscriptionOptions(string locale)
-        {
-            this.Locale = locale;
-        }
-
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
-        internal string Locale { get; set; }
+        public string Locale { get; set; }
 
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

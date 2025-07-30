@@ -11,6 +11,12 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class StartTranscriptionOptions
     {
+        /// <summary> Initializes a new instance of <see cref="StartTranscriptionOptions"/>. </summary>
+        /// <param name="locales"> Defines the list locale for the language identification e.g en-CA, en-AU. </param>
+        public StartTranscriptionOptions(IEnumerable<string> locales)
+        {
+            Locales = locales.ToList<string>();
+        }
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
         public string Locale { get; set; }
         /// <summary> Endpoint where the custom model was deployed. </summary>
