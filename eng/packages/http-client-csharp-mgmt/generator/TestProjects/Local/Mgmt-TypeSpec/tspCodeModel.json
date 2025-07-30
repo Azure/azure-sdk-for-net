@@ -4175,7 +4175,7 @@
                   "decorators": []
                 },
                 "optional": true,
-                "readOnly": false,
+                "readOnly": true,
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
@@ -12230,13 +12230,8 @@
   ],
   "auth": {
     "oAuth2": {
-      "flows": [
-        {
-          "scopes": [
-            "user_impersonation"
-          ],
-          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
-        }
+      "scopes": [
+        "user_impersonation"
       ]
     }
   }

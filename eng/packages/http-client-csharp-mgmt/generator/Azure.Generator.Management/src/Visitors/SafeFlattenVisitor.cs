@@ -47,18 +47,20 @@ namespace Azure.Generator.Management.Visitors
                         internalizedProperties.Add(internalSingleProperty);
 
                         // flatten the single property to public and associate it with the internal property
-                        var flattenPropertyName = $"{singleProperty.Name}"; // TODO: handle name conflicts
+                        var flattenPropertyName = $"{internalSingleProperty.Name}{singleProperty.Name}"; // TODO: handle name conflicts
                         var checkNullExpression = This.Property(internalSingleProperty.Name).Is(Null);
-                        var flattenPropertyBody = new MethodPropertyBody(
-                            Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalSingleProperty, singleProperty.Name))),
-                            new List<MethodBodyStatement>
+                        MethodBodyStatement setter = new List<MethodBodyStatement>
                             {
                                 new IfStatement(checkNullExpression)
                                 {
                                     internalSingleProperty.Assign(New.Instance(propertyTypeProvider.Type!)).Terminate()
                                 },
                                 This.Property(internalSingleProperty.Name).Property(singleProperty.Name).Assign(Value).Terminate()
-                            });
+                            };
+                        var flattenPropertyBody = new MethodPropertyBody(
+                            Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalSingleProperty, singleProperty.Name))),
+                            singleProperty.Body?.HasSetter == true ? setter : null
+                        );
                         var flattenedProperty = new PropertyProvider(singleProperty.Description, singleProperty.Modifiers, singleProperty.Type, flattenPropertyName, flattenPropertyBody, type, singleProperty.ExplicitInterface, singleProperty.WireInfo, singleProperty.Attributes);
                         flattenedProperties.Add(flattenedProperty);
                         flattenedPropertyMap.Add(internalSingleProperty.Type, flattenedProperty);
