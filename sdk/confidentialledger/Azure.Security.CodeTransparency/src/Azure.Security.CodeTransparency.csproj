@@ -6,6 +6,7 @@
     <PackageTags>Azure.Security.CodeTransparency;scitt;cose;ccf;receipt;countersignature;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
