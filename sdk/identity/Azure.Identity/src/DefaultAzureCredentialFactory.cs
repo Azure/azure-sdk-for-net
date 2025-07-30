@@ -136,12 +136,10 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateInteractiveBrowserCredential());
                 }
-#if PREVIEW_FEATURE_FLAG
                 if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
                 {
                     chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
                 }
-#endif
             }
             if (chain.Count == 0)
             {
