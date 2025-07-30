@@ -8,7 +8,6 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("KeywordTokenizerV2")]
     [CodeGenSerialization(nameof(BufferSize), "bufferSize")]
-    [CodeGenSuppress(nameof(KeywordTokenizer), typeof(string), typeof(string), typeof(int?))]
     public partial class KeywordTokenizer : IUtf8JsonSerializable
     {
         /// <summary>

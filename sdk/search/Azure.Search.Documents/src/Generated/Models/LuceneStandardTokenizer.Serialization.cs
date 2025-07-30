@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IJsonModel<LuceneStandardTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(document.RootElement, options);
+            return DeserializeLuceneStandardTokenizer(document.RootElement, options);
         }
 
         internal static LuceneStandardTokenizer DeserializeLuceneStandardTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(document.RootElement, options);
+                        return DeserializeLuceneStandardTokenizer(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(LuceneStandardTokenizer)} does not support reading '{options.Format}' format.");

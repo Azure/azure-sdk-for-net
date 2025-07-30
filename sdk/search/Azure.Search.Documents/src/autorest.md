@@ -85,6 +85,19 @@ directive:
     $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
 ```
 
+### Remove models that have newer versions
+
+These classes have `CodeGenModel` pointing to newer models. Don't try to generate the
+old models into the same class.
+
+```yaml
+directive:
+  - remove-model: EdgeNGramTokenFilter
+  - remove-model: KeywordTokenizer
+  - remove-model: LuceneStandardTokenizer
+  - remove-model: NGramTokenFilter
+```
+
 ## Renaming models after the AI Studio rebrand to AI Foundry
 These should eventually be fixed in the swagger files.
 ```yaml

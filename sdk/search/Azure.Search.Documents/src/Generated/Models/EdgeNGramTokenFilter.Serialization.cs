@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IJsonModel<EdgeNGramTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(document.RootElement, options);
+            return DeserializeEdgeNGramTokenFilter(document.RootElement, options);
         }
 
         internal static EdgeNGramTokenFilter DeserializeEdgeNGramTokenFilter(JsonElement element, ModelReaderWriterOptions options = null)
@@ -153,7 +153,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return EdgeNGramTokenFilter.DeserializeEdgeNGramTokenFilter(document.RootElement, options);
+                        return DeserializeEdgeNGramTokenFilter(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EdgeNGramTokenFilter)} does not support reading '{options.Format}' format.");

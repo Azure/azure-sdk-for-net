@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IJsonModel<KeywordTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            this.JsonModelWriteCore(writer, options);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return KeywordTokenizer.DeserializeKeywordTokenizer(document.RootElement, options);
+            return DeserializeKeywordTokenizer(document.RootElement, options);
         }
 
         internal static KeywordTokenizer DeserializeKeywordTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return KeywordTokenizer.DeserializeKeywordTokenizer(document.RootElement, options);
+                        return DeserializeKeywordTokenizer(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(KeywordTokenizer)} does not support reading '{options.Format}' format.");
