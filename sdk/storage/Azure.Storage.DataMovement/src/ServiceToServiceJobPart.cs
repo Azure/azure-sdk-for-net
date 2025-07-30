@@ -443,7 +443,7 @@ namespace Azure.Storage.DataMovement
         {
             if (_commitBlockHandler != default)
             {
-                await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
+                await _commitBlockHandler.TryComplete().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
         }

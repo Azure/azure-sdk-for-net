@@ -12,10 +12,10 @@ namespace Azure.Storage.DataMovement;
 
 internal delegate Task ProcessAsync<T>(T item, CancellationToken cancellationToken);
 
-internal interface IProcessor<TItem> : IAsyncDisposable
+internal interface IProcessor<TItem>
 {
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
-    bool TryComplete();
+    Task<bool> TryCompleteAsync();
     ProcessAsync<TItem> Process { get; set; }
 }
 
@@ -46,7 +46,7 @@ internal static class ChannelProcessing
             : new ParallelChannelProcessor<T>(channel, readers);
     }
 
-    private abstract class ChannelProcessor<TItem> : IProcessor<TItem>, IAsyncDisposable
+    private abstract class ChannelProcessor<TItem> : IProcessor<TItem>
     {
         /// <summary>
         /// Async channel reader task. Loops for lifetime of object.
@@ -94,20 +94,14 @@ internal static class ChannelProcessing
             await _channel.Writer.WriteAsync(item, cancellationToken).ConfigureAwait(false);
         }
 
-        public bool TryComplete() => _channel.Writer.TryComplete();
+        public async Task<bool> TryCompleteAsync()
+        {
+            bool completionValue = _channel.Writer.TryComplete();
+            await _processorTaskCompletionSource.Task.ConfigureAwait(false);
+            return completionValue;
+        }
 
         protected abstract ValueTask NotifyOfPendingItemProcessing();
-
-        public async ValueTask DisposeAsync()
-        {
-            _channel.Writer.TryComplete();
-            if (!_cancellationTokenSource.IsCancellationRequested)
-            {
-                _cancellationTokenSource.Cancel();
-            }
-            await _processorTaskCompletionSource.Task.ConfigureAwait(false);
-            GC.SuppressFinalize(this);
-        }
     }
 
     private class SequentialChannelProcessor<TItem> : ChannelProcessor<TItem>

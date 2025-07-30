@@ -8,7 +8,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CommitChunkHandler : IAsyncDisposable
+    internal class CommitChunkHandler
     {
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
@@ -83,10 +83,10 @@ namespace Azure.Storage.DataMovement
             _isChunkHandlerRunning = true;
         }
 
-        public async ValueTask DisposeAsync()
+        public Task TryComplete()
         {
             _isChunkHandlerRunning = false;
-            await _stageChunkProcessor.DisposeAsync().ConfigureAwait(false);
+            return _stageChunkProcessor.TryCompleteAsync();
         }
 
         public async ValueTask QueueChunkAsync(QueueStageChunkArgs args)
