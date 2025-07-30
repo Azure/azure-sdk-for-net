@@ -76,10 +76,6 @@ public class MultiPartFormContent : BinaryContent
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         options ??= ModelWriteWireOptions;
-        if (mediaType is null && options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
-        {
-            mediaType = MediaTypeApplicationJson;
-        }
 
 #pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
         BinaryData data = context != null
