@@ -8,7 +8,13 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOIN
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
 var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
-PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+// Enable experimantal headers (needed only to list activity steps).
+PersistentAgentsAdministrationClientOptions options = new();
+CustomHeadersPolicy experimentalFeaturesHeader = new();
+experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
+options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
+//
+PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: options);
 ```
 
 2. We will create the MCP tool definition and configure allowed tools.
@@ -150,73 +156,97 @@ Assert.AreEqual(
 5. We will create the helper method `PrintActivitySteps` to list the functions being called with the descriptions and arguments.
 
 ```C# Snippet:AgentsMcpPrintActivityStep
+private static void PrintActivitySteps(IReadOnlyList<RunStep> runSteps)
+{
+    foreach (RunStep step in runSteps)
+    {
+        if (step.StepDetails is RunStepActivityDetails activityDetails)
+        {
+            foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+            {
+                foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+                {
+                    Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                    if (activityFunction.Value.Parameters.Properties.Count > 0)
+                    {
+                        Console.WriteLine("Function parameters:");
+                        foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                        {
+                            Console.WriteLine($"\t{arg.Key}");
+                            Console.WriteLine($"\t\t Type: {arg.Value.Type}");
+                            if (!string.IsNullOrEmpty(arg.Value.Description))
+                                Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This function has no parameters");
+                    }
+                }
+            }
+        }
+    }
+}
 ```
 
 6. Print activities description.
 
 Synchronous sample:
 ```C# Snippet:AgentsMCP_PrintRunSteps
+IReadOnlyList<RunStep> runSteps = [..agentClient.Runs.GetRunSteps(run: run)];
+PrintActivitySteps(runSteps);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsMCPAsync_PrintRunSteps
+IReadOnlyList<RunStep> runSteps = [.. agentClient.Runs.GetRunSteps(run: run)];
+PrintActivitySteps(runSteps);
 ```
 
 7. To print messages, we will use the helper method `PrintMessages`.
 
 ```C# Snippet:AgentsMcpPrintMessages
+private static void PrintMessages(IReadOnlyList<PersistentThreadMessage> messages)
+{
+    foreach (PersistentThreadMessage threadMessage in messages)
+    {
+        Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+        foreach (MessageContent contentItem in threadMessage.ContentItems)
+        {
+            if (contentItem is MessageTextContent textItem)
+            {
+                Console.Write(textItem.Text);
+            }
+            else if (contentItem is MessageImageFileContent imageFileItem)
+            {
+                Console.Write($"<image from ID: {imageFileItem.FileId}>");
+            }
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 8. Print the agent messages to console in chronological order.
 
 Synchronous sample:
 ```C# Snippet:AgentsMCP_Print
-Pageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessages(
+IReadOnlyList<PersistentThreadMessage> messages = [..agentClient.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
-);
+)];
 
-foreach (PersistentThreadMessage threadMessage in messages)
-{
-    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-    foreach (MessageContent contentItem in threadMessage.ContentItems)
-    {
-        if (contentItem is MessageTextContent textItem)
-        {
-            Console.Write(textItem.Text);
-        }
-        else if (contentItem is MessageImageFileContent imageFileItem)
-        {
-            Console.Write($"<image from ID: {imageFileItem.FileId}>");
-        }
-        Console.WriteLine();
-    }
-}
+PrintMessages(messages);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsMCPAsync_Print
-AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(
+IReadOnlyList<PersistentThreadMessage> messages = await agentClient.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
-);
+).ToListAsync();
 
-await foreach (PersistentThreadMessage threadMessage in messages)
-{
-    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-    foreach (MessageContent contentItem in threadMessage.ContentItems)
-    {
-        if (contentItem is MessageTextContent textItem)
-        {
-            Console.Write(textItem.Text);
-        }
-        else if (contentItem is MessageImageFileContent imageFileItem)
-        {
-            Console.Write($"<image from ID: {imageFileItem.FileId}>");
-        }
-        Console.WriteLine();
-    }
-}
+PrintMessages(messages);
 ```
 
 9. Clean up resources by deleting thread and agent.

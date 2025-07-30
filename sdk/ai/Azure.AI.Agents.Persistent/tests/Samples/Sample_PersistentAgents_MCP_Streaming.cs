@@ -31,7 +31,13 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+        // Enable experimantal headers (needed only to list activity steps).
+        PersistentAgentsAdministrationClientOptions headerOptions = new();
+        CustomHeadersPolicy experimentalFeaturesHeader = new();
+        experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
+        headerOptions.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
+        //
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: headerOptions);
         #endregion
 
         #region Snippet:AgentsMCPStreamingAsync_CreateMCPTool
@@ -97,6 +103,10 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
                 {
                     Console.Write(contentUpdate.Text);
                 }
+                else if (streamingUpdate is RunStepUpdate runStepUpdate)
+                {
+                    PrintActivityStep(runStepUpdate.Value);
+                }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
                     Console.WriteLine();
@@ -136,7 +146,13 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+        // Enable experimantal headers (needed only to list activity steps).
+        PersistentAgentsAdministrationClientOptions headerOptions = new();
+        CustomHeadersPolicy experimentalFeaturesHeader = new();
+        experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
+        headerOptions.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
+        //
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: headerOptions);
 
         // Create MCP tool definition
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
@@ -196,6 +212,10 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
                 {
                     Console.Write(contentUpdate.Text);
                 }
+                else if (streamingUpdate is RunStepUpdate runStepUpdate)
+                {
+                    PrintActivityStep(runStepUpdate.Value);
+                }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
                     Console.WriteLine();
@@ -219,4 +239,35 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         agentClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
+
+    #region Snippet:AgentsMCPStreaming_PrintActivityStep
+    private static void PrintActivityStep(RunStep step)
+    {
+        if (step.StepDetails is RunStepActivityDetails activityDetails)
+        {
+            foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+            {
+                foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+                {
+                    Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                    if (activityFunction.Value.Parameters.Properties.Count > 0)
+                    {
+                        Console.WriteLine("Function parameters:");
+                        foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                        {
+                            Console.WriteLine($"\t{arg.Key}");
+                            Console.WriteLine($"\t\t Type: {arg.Value.Type}");
+                            if (!string.IsNullOrEmpty(arg.Value.Description))
+                                Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This function has no parameters");
+                    }
+                }
+            }
+        }
+    }
+    #endregion
 }

@@ -37,7 +37,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
         options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
         //
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options);
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: options);
         #endregion
 
         #region Snippet:AgentsMCP_CreateMCPTool
@@ -110,7 +110,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
             run.LastError?.Message);
         #endregion
 
-        #region Snippet: AgentsMCPAsync_PrintRunSteps
+        #region Snippet:AgentsMCPAsync_PrintRunSteps
         IReadOnlyList<RunStep> runSteps = [.. agentClient.Runs.GetRunSteps(run: run)];
         PrintActivitySteps(runSteps);
         #endregion
@@ -150,7 +150,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         experimentalFeaturesHeader.AddHeader("x-ms-oai-assistants-testenv", "chat99");
         options.AddPolicy(experimentalFeaturesHeader, Core.HttpPipelinePosition.PerCall);
         //
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options);
+        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential(), options: options);
 
         // Create MCP tool definition
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);
