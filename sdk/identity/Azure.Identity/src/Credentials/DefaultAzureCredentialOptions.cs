@@ -248,6 +248,8 @@ namespace Azure.Identity
         /// Setting to <c>true</c> disables single sign-on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
         /// </summary>
+        [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ExcludeSharedTokenCacheCredential { get; set; } = true;
 
         /// <summary>
