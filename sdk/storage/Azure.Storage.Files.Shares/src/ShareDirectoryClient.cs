@@ -552,7 +552,7 @@ namespace Azure.Storage.Files.Shares
         {
             Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
-            // Update the client options with the injected user agent policy.
+            // Update the client options with the provided additional policies.
             ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
             foreach (HttpPipelinePolicy policy in policies)
@@ -561,8 +561,7 @@ namespace Azure.Storage.Files.Shares
             }
 
             // Create a deep copy of the ShareDirectoryClient but with updated client options
-            // and an additional injected pipeline policy with the user agent string
-            // based on the credential type.
+            // and the provided additional pipeline policies.
             if (client.ClientConfiguration?.TokenCredential != default)
             {
                 return new ShareDirectoryClient(

@@ -372,7 +372,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
-            // Update the client options with the injected policies.
+            // Update the client options with the provided additional policies.
             BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
             foreach (HttpPipelinePolicy policy in policies)
@@ -381,8 +381,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
 
             // Create a deep copy of the BlobBaseClient but with updated client options
-            // and an additional injected pipeline policy with the user agent string
-            // based on the credential type.
+            // and the provided additional pipeline policies.
             if (client.ClientConfiguration?.TokenCredential != default)
             {
                 return new AppendBlobClient(

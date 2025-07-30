@@ -506,7 +506,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Get a <see cref="ShareFileClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
@@ -554,7 +554,7 @@ namespace Azure.Storage.Files.Shares
         {
             Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
-            // Update the client options with the injected user agent policy.
+            // Update the client options with the provided additional policies.
             ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
             foreach (HttpPipelinePolicy policy in policies)
@@ -562,9 +562,8 @@ namespace Azure.Storage.Files.Shares
                 options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             }
 
-            // Create a deep copy of the ShareFileClient but with updated client options
-            // and an additional injected pipeline policy with the user agent string
-            // based on the credential type.
+            // Create a deep copy of the ShareDirectoryClient but with updated client options
+            // and the provided additional pipeline policies.
             if (client.ClientConfiguration?.TokenCredential != default)
             {
                 return new ShareFileClient(
