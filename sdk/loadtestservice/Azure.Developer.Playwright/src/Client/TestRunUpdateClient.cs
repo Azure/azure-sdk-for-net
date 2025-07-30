@@ -73,7 +73,6 @@ namespace Azure.Developer.Playwright
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> or <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TestRunUpdateClient.xml" path="doc/members/member[@name='TestRunsAsync(string,string,RequestContent,string,string,RequestContext)']/*" />
         public virtual async Task<Response> TestRunsAsync(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
@@ -113,7 +112,6 @@ namespace Azure.Developer.Playwright
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> or <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TestRunUpdateClient.xml" path="doc/members/member[@name='TestRuns(string,string,RequestContent,string,string,RequestContext)']/*" />
         public virtual Response TestRuns(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
