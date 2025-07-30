@@ -12,27 +12,27 @@ using Azure.Developer.Playwright;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="ReportingTestReportingClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="TestRunsClient"/> to client builder. </summary>
     public static partial class DeveloperPlaywrightClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="ReportingTestReportingClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TestRunsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> server parameter. </param>
-        public static IAzureClientBuilder<ReportingTestReportingClient, ReportingTestReportingClientOptions> AddReportingTestReportingClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<TestRunsClient, TestRunsClientOptions> AddTestRunsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<ReportingTestReportingClient, ReportingTestReportingClientOptions>((options) => new ReportingTestReportingClient(endpoint, options));
+            return builder.RegisterClientFactory<TestRunsClient, TestRunsClientOptions>((options) => new TestRunsClient(endpoint, options));
         }
 
-        /// <summary> Registers a <see cref="ReportingTestReportingClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="TestRunsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<ReportingTestReportingClient, ReportingTestReportingClientOptions> AddReportingTestReportingClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<TestRunsClient, TestRunsClientOptions> AddTestRunsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<ReportingTestReportingClient, ReportingTestReportingClientOptions>(configuration);
+            return builder.RegisterClientFactory<TestRunsClient, TestRunsClientOptions>(configuration);
         }
     }
 }

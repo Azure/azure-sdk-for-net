@@ -13,8 +13,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Developer.Playwright
 {
     // Data plane generated client.
-    /// <summary> The ReportingTestReporting service client. </summary>
-    public partial class ReportingTestReportingClient
+    /// <summary> The TestRuns service client. </summary>
+    public partial class TestRunsClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -26,26 +26,26 @@ namespace Azure.Developer.Playwright
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ReportingTestReportingClient for mocking. </summary>
-        protected ReportingTestReportingClient()
+        /// <summary> Initializes a new instance of TestRunsClient for mocking. </summary>
+        protected TestRunsClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportingTestReportingClient. </summary>
+        /// <summary> Initializes a new instance of TestRunsClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ReportingTestReportingClient(Uri endpoint) : this(endpoint, new ReportingTestReportingClientOptions())
+        public TestRunsClient(Uri endpoint) : this(endpoint, new TestRunsClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ReportingTestReportingClient. </summary>
+        /// <summary> Initializes a new instance of TestRunsClient. </summary>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ReportingTestReportingClient(Uri endpoint, ReportingTestReportingClientOptions options)
+        public TestRunsClient(Uri endpoint, TestRunsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new ReportingTestReportingClientOptions();
+            options ??= new TestRunsClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
@@ -73,13 +73,13 @@ namespace Azure.Developer.Playwright
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> or <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ReportingTestReportingClient.xml" path="doc/members/member[@name='TestRunsAsync(string,string,RequestContent,string,string,RequestContext)']/*" />
+        /// <include file="Docs/TestRunsClient.xml" path="doc/members/member[@name='TestRunsAsync(string,string,RequestContent,string,string,RequestContext)']/*" />
         public virtual async Task<Response> TestRunsAsync(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("ReportingTestReportingClient.TestRuns");
+            using var scope = ClientDiagnostics.CreateScope("TestRunsClient.TestRuns");
             scope.Start();
             try
             {
@@ -113,13 +113,13 @@ namespace Azure.Developer.Playwright
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> or <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ReportingTestReportingClient.xml" path="doc/members/member[@name='TestRuns(string,string,RequestContent,string,string,RequestContext)']/*" />
+        /// <include file="Docs/TestRunsClient.xml" path="doc/members/member[@name='TestRuns(string,string,RequestContent,string,string,RequestContext)']/*" />
         public virtual Response TestRuns(string workspaceId, string testRunId, RequestContent content, string authorization = null, string xCorrelationId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("ReportingTestReportingClient.TestRuns");
+            using var scope = ClientDiagnostics.CreateScope("TestRunsClient.TestRuns");
             scope.Start();
             try
             {
