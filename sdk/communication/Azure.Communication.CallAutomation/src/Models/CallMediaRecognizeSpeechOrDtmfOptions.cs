@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -15,11 +16,12 @@ namespace Azure.Communication.CallAutomation
         private static readonly TimeSpan _defaultEndSilenceTimeoutInMs = TimeSpan.FromMilliseconds(500);
 
         /// <summary> Initializes a new instance of CallMediaRecognizeSpeechOrDtmfOptions. </summary>
-        public CallMediaRecognizeSpeechOrDtmfOptions(CommunicationIdentifier targetParticipant, int maxTonesToCollect) : base(RecognizeInputType.SpeechOrDtmf, targetParticipant)
+        public CallMediaRecognizeSpeechOrDtmfOptions(CommunicationIdentifier targetParticipant, int maxTonesToCollect, IEnumerable<string> speechLanguages) : base(RecognizeInputType.SpeechOrDtmf, targetParticipant)
         {
             EndSilenceTimeout = _defaultInterToneTimeout;
             MaxTonesToCollect = maxTonesToCollect;
             StopTones = Array.Empty<DtmfTone>();
+            SpeechLanguages = speechLanguages.ToList<string>();
         }
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>
@@ -40,5 +42,8 @@ namespace Azure.Communication.CallAutomation
         /// List of tones that will stop recognizing.
         /// </summary>
         public IList<DtmfTone> StopTones { get; set; }
+
+        /// <summary> Gets or sets a list of languages for Language Identification. </summary>
+        public IList<string> SpeechLanguages { get; }
     }
 }

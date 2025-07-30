@@ -16,8 +16,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             MediaStreamingAudioChannel.Mixed)
         { TransportUri = new Uri("https://websocket") };
 
-        private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
-            "en-CA")
+        private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(new List<string>() { "en-US" })
         {
             TransportUri = new Uri("https://websocket"),
             StartTranscription = true

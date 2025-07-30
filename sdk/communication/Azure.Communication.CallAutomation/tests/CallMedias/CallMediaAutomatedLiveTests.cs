@@ -2472,8 +2472,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
-                    { Locale = "en-CA", TransportUri = new Uri(TestEnvironment.TransportUrl), StartTranscription = false };
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string>() { "en-CA"})
+                    { TransportUri = new Uri(TestEnvironment.TransportUrl), StartTranscription = false };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
                     callConnectionId = result.CallerCallConnectionId;
@@ -2533,8 +2533,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
-                    { Locale = "en-CA",TransportUri = new Uri(TestEnvironment.TransportUrl), StartTranscription = false };
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(new List<string>() { "en-CA"})
+                    { TransportUri = new Uri(TestEnvironment.TransportUrl), StartTranscription = false };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
                     callConnectionId = result.TargetCallConnectionId;
@@ -2646,8 +2646,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                             Enable = true,
                             RedactionType = RedactionType.MaskWithCharacter
                         },
-                        SummarizationOptions = new SummarizationOptions("en-US")
+                        SummarizationOptions = new SummarizationOptions()
                         {
+                            Locale = "en-CA",
                             EnableEndCallSummary = true,
                         }
                     };
@@ -2805,9 +2806,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
         {
             //Start Transcription
-            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
+            StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions(new List<string>() { "en-CA"})
             {
-                Locale = "en-CA",
                 OperationContext = "StartTranscription"
             };
 
@@ -2828,7 +2828,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
 
             // Update Transcription
-            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions("en-US") { OperationContext = "UpdateTranscription" };
+            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions() {Locale = "en-CA", OperationContext = "UpdateTranscription" };
             var updateTranscriptionResponse = await callerMedia.UpdateTranscriptionAsync(updateTranscriptionOptions);
             var updateTranscriptionEvent = await WaitForEvent<TranscriptionUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(updateTranscriptionEvent);
@@ -2926,7 +2926,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     OperationContext = "dtmfContext",
                     InterToneTimeout = TimeSpan.FromSeconds(5)
                 },
-                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices())
+                "choices" => new CallMediaRecognizeChoiceOptions(targetParticipant: target, GetChoices(), new List<string>() { "en-CA","en-AU"})
                 {
                     InterruptCallMediaOperation = false,
                     InterruptPrompt = false,
@@ -2935,14 +2935,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     PlayPrompts = playSources,
                     OperationContext = "choiceContext"
                 },
-                "speech" => new CallMediaRecognizeSpeechOptions(target)
+                "speech" => new CallMediaRecognizeSpeechOptions(target, new List<string>() { "en-CA", "en-AU" })
                 {
                     Prompt = playSource ?? null,
                     PlayPrompts = playSources,
                     EndSilenceTimeout = TimeSpan.FromMilliseconds(1000),
                     OperationContext = "speechContext"
                 },
-                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2)
+                "speechOrDtmf" => new CallMediaRecognizeSpeechOrDtmfOptions(target, 2, new List<string>() { "en-CA", "en-AU" })
                 {
                     PlayPrompts = playSources,
                     Prompt = playSource ?? null,
