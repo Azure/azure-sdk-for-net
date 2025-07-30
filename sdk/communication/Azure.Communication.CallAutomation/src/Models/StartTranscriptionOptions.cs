@@ -15,10 +15,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Constructor for StartTranscriptionOptions.
         /// </summary>
-        /// <param name="locales">Defines the list locale for the language identification e.g en-CA, en-AU.</param>
-        public StartTranscriptionOptions(IEnumerable<string> locales)
+        public StartTranscriptionOptions()
         {
-            this.Locales = locales.ToList<string>();
         }
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>
         public string Locale { get; set; }
@@ -37,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Indicating if sentiment analysis should be used. </summary>
         public bool? EnableSentimentAnalysis { get; set; }
         /// <summary> List of languages for Language Identification. </summary>
-        internal IList<string> Locales { get; }
+        internal IList<string> Locales { get; set; }
         /// <summary> Summarization configuration options. </summary>
         public SummarizationOptions SummarizationOptions { get; set; }
     }
