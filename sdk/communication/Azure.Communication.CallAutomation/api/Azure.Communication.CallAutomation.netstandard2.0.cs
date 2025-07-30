@@ -342,7 +342,6 @@ namespace Azure.Communication.CallAutomation
     public partial class CallInvite
     {
         public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
-        public CallInvite(Azure.Communication.MicrosoftTeamsAppIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
         public CallInvite(Azure.Communication.TeamsExtensionUserIdentifier targetIdentity) { }
@@ -1679,7 +1678,9 @@ namespace Azure.Communication.CallAutomation
         internal TranscriptionMetadata() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
+        public bool? EnableSentimentAnalysis { get { throw null; } }
         public string Locale { get { throw null; } }
+        public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } }
         public string TranscriptionSubscriptionId { get { throw null; } }
     }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
@@ -39,5 +40,17 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         [JsonPropertyName("speechRecognitionModelEndpointId")]
         public string SpeechRecognitionModelEndpointId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating if sentiment analysis should be used
+        /// </summary>
+        [JsonPropertyName("enableSentimentAnalysis")]
+        public bool? EnableSentimentAnalysis { get; set; }
+
+        /// <summary>
+        /// Gets or sets Options for Pii redaction
+        /// </summary>
+        [JsonPropertyName("piiRedactionOptions")]
+        public PiiRedactionOptions PiiRedactionOptions { get; set; }
     }
 }

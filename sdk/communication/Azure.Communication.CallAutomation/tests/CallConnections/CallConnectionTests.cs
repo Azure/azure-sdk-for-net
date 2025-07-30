@@ -672,16 +672,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext()
         {
-            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("teamsAppId123"));
+            var callInvite = new CallInvite(new MicrosoftTeamsUserIdentifier("teamsUserId123"));
             callInvite.CustomCallingContext.AddVoip("teamsKey", "teamsValue");
 
             // Create TeamsPhoneCallerDetails
-            var teamsPhoneCallerDetails = new TeamsPhoneCallerDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), name: "John Doe", phoneNumber: "+14255551234");
+            var teamsPhoneCallerDetails = new TeamsPhoneCallerDetails((new MicrosoftTeamsUserIdentifier("teamsUserId123")), name: "John Doe", phoneNumber: "+14255551234");
             teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Department", "Sales");
             teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Priority", "High");
 
             // Create TeamsPhoneSourceDetails
-            var teamsPhoneSourceDetails = new TeamsPhoneSourceDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), language: "en-US", status: "Active");
+            var teamsPhoneSourceDetails = new TeamsPhoneSourceDetails((new MicrosoftTeamsUserIdentifier("teamsUserId123")), language: "en-US", status: "Active");
 
             // Create TeamsPhoneCallDetails
             var teamsPhoneCallDetails = new TeamsPhoneCallDetails()

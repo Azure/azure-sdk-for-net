@@ -12,27 +12,22 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text,
-            string format,
-            double confidence,
-            long offset,
-            long duration,
-            IEnumerable<WordDataInternal> words,
-            string participantRawID,
-            TranscriptionResultState resultState)
+        internal TranscriptionData(TranscriptionDataInternal transcriptionDataInternal)
         {
-            Text = text;
-            Format = format;
-            Confidence = confidence;
-            Offset = TimeSpan.FromTicks(offset);
-            Duration = TimeSpan.FromTicks(duration);
-            if (words != null)
-                Words = ConvertToWordData(words);
-            if (participantRawID != null)
+            Text = transcriptionDataInternal.Text;
+            Format = transcriptionDataInternal.Format;
+            Confidence = transcriptionDataInternal.Confidence;
+            Offset = TimeSpan.FromTicks(transcriptionDataInternal.Offset);
+            Duration = TimeSpan.FromTicks(transcriptionDataInternal.Duration);
+            if (transcriptionDataInternal.Words != null)
+                Words = ConvertToWordData(transcriptionDataInternal.Words);
+            if (transcriptionDataInternal.ParticipantRawID != null)
             {
-                Participant = CommunicationIdentifier.FromRawId(participantRawID);
+                Participant = CommunicationIdentifier.FromRawId(transcriptionDataInternal.ParticipantRawID);
             }
-            ResultState = resultState;
+            ResultState = transcriptionDataInternal.ResultState;
+            SentimentAnalysisResult = transcriptionDataInternal.SentimentAnalysisResult;
+            LanguageIdentified = transcriptionDataInternal.LanguageIdentified;
         }
 
         /// <summary>

@@ -17,6 +17,8 @@ namespace Azure.Communication.CallAutomation
             CallConnectionId = transcriptionMetadataInternal.CallConnectionId;
             CorrelationId = transcriptionMetadataInternal.CorrelationId;
             SpeechRecognitionModelEndpointId = transcriptionMetadataInternal.SpeechRecognitionModelEndpointId;
+            EnableSentimentAnalysis = transcriptionMetadataInternal.EnableSentimentAnalysis;
+            PiiRedactionOptions = transcriptionMetadataInternal.PiiRedactionOptions;
         }
         /// <summary>
         /// Transcription Subscription Id.
@@ -42,5 +44,15 @@ namespace Azure.Communication.CallAutomation
         /// The custom speech recognition model endpoint id
         /// </summary>
         public string SpeechRecognitionModelEndpointId { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating if sentiment analysis should be used
+        /// </summary>
+        public bool? EnableSentimentAnalysis { get; }
+
+        /// <summary>
+        /// Gets or sets Options for Pii redaction
+        /// </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; }
     }
 }

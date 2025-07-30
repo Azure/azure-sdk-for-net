@@ -79,20 +79,7 @@ namespace Azure.Communication.CallAutomation
                     TranscriptionDataInternal transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(
                    streamingData.GetProperty("transcriptionData").ToString()
                    );
-                    return new TranscriptionData(
-                        transcriptionDataInternal.Text,
-                        transcriptionDataInternal.Format,
-                        transcriptionDataInternal.Confidence,
-                        transcriptionDataInternal.Offset,
-                        transcriptionDataInternal.Duration,
-                        transcriptionDataInternal.Words,
-                        transcriptionDataInternal.ParticipantRawID,
-                        transcriptionDataInternal.ResultState
-                        )
-                    {
-                        SentimentAnalysisResult = transcriptionDataInternal.SentimentAnalysisResult,
-                        LanguageIdentified = transcriptionDataInternal.LanguageIdentified
-                    };
+                    return new TranscriptionData(transcriptionDataInternal);
 
                 #endregion
 
