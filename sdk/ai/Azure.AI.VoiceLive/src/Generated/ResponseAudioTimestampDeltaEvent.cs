@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
-    public partial class ResponseAudioTimestampDeltaEvent : VoiceLiveServerEvent
+    public partial class ResponseAudioTimestampDeltaEvent : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTimestampDeltaEvent"/>. </summary>
         /// <param name="responseId"></param>
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(itemId, nameof(itemId));
             Argument.AssertNotNull(text, nameof(text));
 
-            Type = VoiceLiveServerEventType.ResponseAudioTimestampDelta;
+            Type = ServerEventType.ResponseAudioTimestampDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -50,7 +50,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         /// <param name="timestampType"></param>
-        internal ResponseAudioTimestampDeltaEvent(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, ResponseAudioTimestampDeltaEventTimestampType timestampType) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAudioTimestampDeltaEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, ResponseAudioTimestampDeltaEventTimestampType timestampType) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             ItemId = itemId;

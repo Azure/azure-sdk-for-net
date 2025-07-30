@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the completion of blendshape animation processing for a specific output of a response. </summary>
-    public partial class ResponseAnimationBlendshapeDoneEvent : VoiceLiveServerEvent
+    public partial class ResponseAnimationBlendshapeDoneEvent : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDoneEvent"/>. </summary>
         /// <param name="responseId"></param>
@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(responseId, nameof(responseId));
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = VoiceLiveServerEventType.ResponseAnimationBlendshapesDone;
+            Type = ServerEventType.ResponseAnimationBlendshapesDone;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -36,7 +36,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal ResponseAnimationBlendshapeDoneEvent(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAnimationBlendshapeDoneEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             ItemId = itemId;

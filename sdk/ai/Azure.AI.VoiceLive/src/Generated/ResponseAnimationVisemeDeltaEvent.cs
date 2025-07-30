@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
-    public partial class ResponseAnimationVisemeDeltaEvent : VoiceLiveServerEvent
+    public partial class ResponseAnimationVisemeDeltaEvent : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDeltaEvent"/>. </summary>
         /// <param name="responseId"></param>
@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(responseId, nameof(responseId));
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = VoiceLiveServerEventType.ResponseAnimationVisemeDelta;
+            Type = ServerEventType.ResponseAnimationVisemeDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        internal ResponseAnimationVisemeDeltaEvent(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAnimationVisemeDeltaEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             ItemId = itemId;

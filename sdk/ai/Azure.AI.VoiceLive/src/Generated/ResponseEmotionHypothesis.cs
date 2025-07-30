@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents an emotion hypothesis detected from response audio with multiple candidates. </summary>
-    public partial class ResponseEmotionHypothesis : VoiceLiveServerEvent
+    public partial class ResponseEmotionHypothesis : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseEmotionHypothesis"/>. </summary>
         /// <param name="emotion"></param>
@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(candidates, nameof(candidates));
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = VoiceLiveServerEventType.ResponseEmotionHypothesis;
+            Type = ServerEventType.ResponseEmotionHypothesis;
             Emotion = emotion;
             Candidates = candidates.ToList();
             AudioOffsetMs = audioOffsetMs;
@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
-        internal ResponseEmotionHypothesis(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string emotion, IReadOnlyList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseEmotionHypothesis(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string emotion, IReadOnlyList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(type, eventId, serializedAdditionalRawData)
         {
             Emotion = emotion;
             Candidates = candidates;

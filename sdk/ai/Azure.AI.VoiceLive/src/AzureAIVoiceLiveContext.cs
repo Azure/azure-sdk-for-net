@@ -7,9 +7,9 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.VoiceLive
 {
-    [ModelReaderWriterBuildable(typeof(VoiceLiveFunctionTool))]
-    [ModelReaderWriterBuildable(typeof(VoiceLiveResponseUsageInputTokenDetails))]
-    [ModelReaderWriterBuildable(typeof(VoiceLiveTool))]
+    [ModelReaderWriterBuildable(typeof(FunctionTool))]
+    [ModelReaderWriterBuildable(typeof(ResponseUsageInputTokenDetails))]
+    [ModelReaderWriterBuildable(typeof(ToolCall))]
 
     public partial class AzureAIVoiceLiveContext : ModelReaderWriterContext
     {

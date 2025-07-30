@@ -91,15 +91,15 @@ namespace Azure.AI.VoiceLive
         /// <param name="session"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="session"/> is null. </exception>
-        internal virtual async Task<Response<VoiceLiveServerEventResponseAudioDone>> ForceModelsAsync(string accept, VoiceLiveClientEventSessionUpdate session, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ServerEventResponseAudioDone>> ForceModelsAsync(string accept, ClientEventSessionUpdate session, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(session, nameof(session));
 
             ForceModelsRequest forceModelsRequest = new ForceModelsRequest(session, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(VoiceLiveServerEventResponseAudioDone.FromResponse(response), response);
+            Azure.Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Azure.Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
         }
 
         /// <summary> Force models. </summary>
@@ -107,15 +107,15 @@ namespace Azure.AI.VoiceLive
         /// <param name="session"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="session"/> is null. </exception>
-        internal virtual Response<VoiceLiveServerEventResponseAudioDone> ForceModels(string accept, VoiceLiveClientEventSessionUpdate session, CancellationToken cancellationToken = default)
+        internal virtual Response<ServerEventResponseAudioDone> ForceModels(string accept, ClientEventSessionUpdate session, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(session, nameof(session));
 
             ForceModelsRequest forceModelsRequest = new ForceModelsRequest(session, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
-            return Response.FromValue(VoiceLiveServerEventResponseAudioDone.FromResponse(response), response);
+            Azure.Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
+            return Azure.Response.FromValue(ServerEventResponseAudioDone.FromResponse(response), response);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.AI.VoiceLive
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ForceModelsAsync(string,VoiceLiveClientEventSessionUpdate,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ForceModelsAsync(string,ClientEventSessionUpdate,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -139,7 +139,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ForceModelsAsync(string accept, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Azure.Response> ForceModelsAsync(string accept, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(content, nameof(content));
@@ -168,7 +168,7 @@ namespace Azure.AI.VoiceLive
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ForceModels(string,VoiceLiveClientEventSessionUpdate,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ForceModels(string,ClientEventSessionUpdate,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -179,7 +179,7 @@ namespace Azure.AI.VoiceLive
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ForceModels(string accept, RequestContent content, RequestContext context = null)
+        internal virtual Azure.Response ForceModels(string accept, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(content, nameof(content));

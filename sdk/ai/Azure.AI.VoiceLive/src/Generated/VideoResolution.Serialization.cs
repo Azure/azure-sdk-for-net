@@ -133,7 +133,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static VideoResolution FromResponse(Response response)
+        internal static VideoResolution FromResponse(Azure.Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVideoResolution(document.RootElement);

@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// This class provides configuration options specifically tailored for conversational interactions
     /// with the VoiceLive service, including voice selection, tool usage, and conversation management.
     /// </remarks>
-    public class ConversationSessionOptions : VoiceLiveSessionOptions
+    public class ConversationSessionOptions : SessionOptions
     {
         /// <summary>
         /// Gets or sets the voice configuration for the conversation.
@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         /// <value>
         /// A list of tools that the assistant can use during the conversation.
         /// </value>
-        public IList<VoiceLiveTool> Tools { get; set; } = new List<VoiceLiveTool>();
+        public IList<ToolCall> Tools { get; set; } = new List<ToolCall>();
 
         /// <summary>
         /// Gets or sets the tool choice strategy for the conversation.
@@ -76,10 +76,10 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
-        /// Converts the conversation session options to a <see cref="VoiceLiveRequestSession"/> instance.
+        /// Converts the conversation session options to a <see cref="RequestSession"/> instance.
         /// </summary>
-        /// <returns>A <see cref="VoiceLiveRequestSession"/> instance configured with the current options.</returns>
-        internal override VoiceLiveRequestSession ToRequestSession()
+        /// <returns>A <see cref="RequestSession"/> instance configured with the current options.</returns>
+        internal override RequestSession ToRequestSession()
         {
             var session = base.ToRequestSession();
 

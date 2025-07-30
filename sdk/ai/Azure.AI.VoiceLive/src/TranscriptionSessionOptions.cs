@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// This class provides configuration options specifically tailored for audio transcription
     /// scenarios with the VoiceLive service, focusing on audio processing and transcription accuracy.
     /// </remarks>
-    public class TranscriptionSessionOptions : VoiceLiveSessionOptions
+    public class TranscriptionSessionOptions : SessionOptions
     {
         /// <summary>
         /// Gets or sets the language for transcription.
@@ -60,7 +60,7 @@ namespace Azure.AI.VoiceLive
         /// Configuration for reducing noise in the input audio to improve transcription accuracy.
         /// If not specified, default noise reduction settings will be used.
         /// </value>
-        public VoiceLiveAudioNoiseReduction NoiseReduction { get; set; }
+        public AudioNoiseReduction NoiseReduction { get; set; }
 
         /// <summary>
         /// Gets or sets the echo cancellation settings.
@@ -69,7 +69,7 @@ namespace Azure.AI.VoiceLive
         /// Configuration for cancelling echo in the input audio to improve transcription accuracy.
         /// If not specified, default echo cancellation settings will be used.
         /// </value>
-        public VoiceLiveAudioEchoCancellation EchoCancellation { get; set; }
+        public AudioEchoCancellation EchoCancellation { get; set; }
 
         /// <summary>
         /// Gets or sets a list of words or phrases to boost recognition accuracy.
@@ -86,14 +86,14 @@ namespace Azure.AI.VoiceLive
         public TranscriptionSessionOptions() : base()
         {
             // Default modalities for transcription sessions - typically just audio
-            Modalities = new List<VoiceLiveModality> { VoiceLiveModality.Audio };
+            Modalities = new List<InputModality> { InputModality.Audio };
         }
 
         /// <summary>
-        /// Converts the transcription session options to a <see cref="VoiceLiveRequestSession"/> instance.
+        /// Converts the transcription session options to a <see cref="RequestSession"/> instance.
         /// </summary>
-        /// <returns>A <see cref="VoiceLiveRequestSession"/> instance configured with the current options.</returns>
-        internal override VoiceLiveRequestSession ToRequestSession()
+        /// <returns>A <see cref="RequestSession"/> instance configured with the current options.</returns>
+        internal override RequestSession ToRequestSession()
         {
             var session = base.ToRequestSession();
 

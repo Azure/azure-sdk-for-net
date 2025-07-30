@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ForceModelsRequest"/>. </summary>
         /// <param name="session"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
-        internal ForceModelsRequest(VoiceLiveClientEventSessionUpdate session)
+        internal ForceModelsRequest(ClientEventSessionUpdate session)
         {
             Argument.AssertNotNull(session, nameof(session));
 
@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ForceModelsRequest"/>. </summary>
         /// <param name="session"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceModelsRequest(VoiceLiveClientEventSessionUpdate session, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ForceModelsRequest(ClientEventSessionUpdate session, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Session = session;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +70,6 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets the session. </summary>
-        public VoiceLiveClientEventSessionUpdate Session { get; }
+        public ClientEventSessionUpdate Session { get; }
     }
 }

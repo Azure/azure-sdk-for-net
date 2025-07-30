@@ -100,7 +100,7 @@ namespace Azure.AI.VoiceLive
                     ReadOnlyMemory<byte> audioMemory = buffer.AsMemory(0, bytesRead);
                     BinaryData audioData = BinaryData.FromBytes(audioMemory);
                     string base64Audio = Convert.ToBase64String(audioData.ToArray());
-                    VoiceLiveClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
+                    ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
                     BinaryData requestData = BinaryData.FromObjectAsJson(appendCommand);
                     await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
                 }
@@ -154,7 +154,7 @@ namespace Azure.AI.VoiceLive
                     ReadOnlyMemory<byte> audioMemory = buffer.AsMemory(0, bytesRead);
                     BinaryData audioData = BinaryData.FromBytes(audioMemory);
                     string base64Audio = Convert.ToBase64String(audioData.ToArray());
-                    VoiceLiveClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
+                    ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
                     BinaryData requestData = BinaryData.FromObjectAsJson(appendCommand);
                     SendCommand(requestData, cancellationToken);
                 }
@@ -179,7 +179,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="command"/> is null.</exception>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public virtual async Task SendCommandAsync(VoiceLiveClientEvent command, CancellationToken cancellationToken = default)
+        public virtual async Task SendCommandAsync(ClientEvent command, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(command, nameof(command));
             ThrowIfDisposed();
@@ -194,7 +194,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="command">The command to send.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="command"/> is null.</exception>
-        public virtual void SendCommand(VoiceLiveClientEvent command, CancellationToken cancellationToken = default)
+        public virtual void SendCommand(ClientEvent command, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(command, nameof(command));
             ThrowIfDisposed();

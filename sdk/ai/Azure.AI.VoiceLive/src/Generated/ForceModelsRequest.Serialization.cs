@@ -73,14 +73,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            VoiceLiveClientEventSessionUpdate session = default;
+            ClientEventSessionUpdate session = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("session"u8))
                 {
-                    session = VoiceLiveClientEventSessionUpdate.DeserializeVoiceLiveClientEventSessionUpdate(property.Value, options);
+                    session = ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +125,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ForceModelsRequest FromResponse(Response response)
+        internal static ForceModelsRequest FromResponse(Azure.Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeForceModelsRequest(document.RootElement);

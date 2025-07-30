@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The VoiceLiveRequestSession. </summary>
-    public partial class VoiceLiveRequestSession
+    public partial class RequestSession
     {
         /// <summary>
         /// Serialized additional properties for the request session

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of viseme animation delivery for a response. </summary>
-    public partial class ResponseAnimationVisemeDoneEvent : VoiceLiveServerEvent
+    public partial class ResponseAnimationVisemeDoneEvent : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDoneEvent"/>. </summary>
         /// <param name="responseId"></param>
@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(responseId, nameof(responseId));
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = VoiceLiveServerEventType.ResponseAnimationVisemeDone;
+            Type = ServerEventType.ResponseAnimationVisemeDone;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal ResponseAnimationVisemeDoneEvent(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAnimationVisemeDoneEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             ItemId = itemId;

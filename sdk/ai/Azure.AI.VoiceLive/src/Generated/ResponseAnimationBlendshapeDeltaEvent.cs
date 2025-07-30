@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
-    public partial class ResponseAnimationBlendshapeDeltaEvent : VoiceLiveServerEvent
+    public partial class ResponseAnimationBlendshapeDeltaEvent : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDeltaEvent"/>. </summary>
         /// <param name="responseId"></param>
@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(itemId, nameof(itemId));
             Argument.AssertNotNull(frames, nameof(frames));
 
-            Type = VoiceLiveServerEventType.ResponseAnimationBlendshapesDelta;
+            Type = ServerEventType.ResponseAnimationBlendshapesDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal ResponseAnimationBlendshapeDeltaEvent(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAnimationBlendshapeDeltaEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             ItemId = itemId;

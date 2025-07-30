@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
-    public partial class ResponseAudioTimestampDoneEvent : VoiceLiveServerEvent
+    public partial class ResponseAudioTimestampDoneEvent : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTimestampDoneEvent"/>. </summary>
         /// <param name="responseId"></param>
@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(responseId, nameof(responseId));
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = VoiceLiveServerEventType.ResponseAudioTimestampDone;
+            Type = ServerEventType.ResponseAudioTimestampDone;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal ResponseAudioTimestampDoneEvent(VoiceLiveServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAudioTimestampDoneEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex) : base(type, eventId, serializedAdditionalRawData)
         {
             ResponseId = responseId;
             ItemId = itemId;
