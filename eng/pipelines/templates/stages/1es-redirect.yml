@@ -66,6 +66,9 @@ extends:
       componentgovernance:
         enabled: false
         justificationForDisabling: "To reduce redundant CG runs across all our pipeline jobs we are disabling and only running in our main build job."
+      eslint:
+        enabled: false
+        justificationForDisabling: 'ESLint is interesting for this repo as it is .NET code mostly and any JS/TS in the repo is updated outside of this repo.'
       psscriptanalyzer:
         compiled: true
         break: true
