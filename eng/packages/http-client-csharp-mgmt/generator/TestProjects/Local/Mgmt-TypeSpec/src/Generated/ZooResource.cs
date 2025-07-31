@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
@@ -284,6 +285,42 @@ namespace MgmtTypeSpec
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> A synchronous resource action. </summary>
+        /// <param name="maxpagesize"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<SubResource> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ZoosZooAddressListCollectionResultOfT(
+                _zoosRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                maxpagesize,
+                context);
+        }
+
+        /// <summary> A synchronous resource action. </summary>
+        /// <param name="maxpagesize"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<SubResource> ZooAddressListAsyncAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ZoosZooAddressListAsyncCollectionResultOfT(
+                _zoosRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                maxpagesize,
+                context);
         }
 
         /// <summary> A synchronous resource action. </summary>
