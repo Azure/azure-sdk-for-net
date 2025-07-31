@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ApplicationInsights
+namespace Azure.Monitor.OpenTelemetry.TelemetryClient
 {
     /// <summary>
     /// Constants for semantic attribute names outlined by the OpenTelemetry specifications.

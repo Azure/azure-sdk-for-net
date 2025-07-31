@@ -63,6 +63,11 @@ There are certain differences in the telemetry data sent to Application Insights
     * The `customDimension` column contains an `OriginalFormat` entry with the exception message value
     * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
 
+* **TrackRequest(string name, DateTimeOffset startTime, TimeSpan duration, string responseCode, bool success)**
+
+  Additional data within the `requests` Kusto table:
+    * The `customDimension` column contains the entry `"_MS.ProcessedByMetricExtractors": "(Name: X,Ver:'1.1')"`
+
 #### TrackException methods
 
 #### TrackEvent methods

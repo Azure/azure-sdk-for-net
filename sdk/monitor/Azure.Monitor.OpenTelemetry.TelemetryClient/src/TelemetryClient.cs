@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.TelemetryClient
 {
@@ -22,6 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
     {
         private readonly LoggerProvider loggerProvider;
         private readonly ILogger logger;
+        private readonly TracerProvider tracerProvider;
+        private readonly Tracer tracer;
 
         /// <summary>
         /// Send events, metrics, and other telemetry to the Application Insights service.
@@ -40,9 +44,11 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         public TelemetryClient(string connectionString)
         {
             var serviceCollection = new ServiceCollection();
+            var appInsightsTracerName = "ApplicationInsightsTracer";
             serviceCollection
                 .AddLogging(builder => { builder.SetMinimumLevel(LogLevel.Trace); })
                 .AddOpenTelemetry()
+                .WithTracing(tracingBuilder => tracingBuilder.AddSource(appInsightsTracerName))
                 .WithLogging(
                     configureBuilder: _ => { },
                     configureOptions: options => { options.IncludeScopes = true; })
@@ -54,6 +60,9 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
             loggerProvider = serviceProvider.GetRequiredService<LoggerProvider>();
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
             logger = loggerFactory.CreateLogger("ApplicationInsightsLogger");
+
+            tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+            tracer = tracerProvider.GetTracer(appInsightsTracerName);
         }
 
         /// <summary>
@@ -160,6 +169,35 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         }
 
         /// <summary>
+        /// Send information about a request handled by the application.
+        /// </summary>
+        /// <param name="name">The request name.</param>
+        /// <param name="startTime">The time when the page was requested.</param>
+        /// <param name="duration">The time taken by the application to handle the request.</param>
+        /// <param name="responseCode">The response status code.</param>
+        /// <param name="success">True if the request was handled successfully by the application.</param>
+        /// <remarks>
+        /// <a href="https://go.microsoft.com/fwlink/?linkid=525722#trackrequest">Learn more</a>
+        /// </remarks>
+        public void TrackRequest(string name, DateTimeOffset startTime, TimeSpan duration, string responseCode,
+            bool success)
+        {
+            using (var activity = tracer.StartActiveSpan(name, SpanKind.Server))
+            {
+                SetActivityStartAndEndTimes(startTime, duration);
+
+                SetActivityWithContextProperties();
+
+                activity.SetStatus(success ? Status.Ok : Status.Error);
+
+                // The OpenTelemetry .net exporter requires an HTTP method to set the response code.
+                // This fake HTTP method won't be exported to Breeze.
+                Activity.Current?.SetTag(SemanticConventions.AttributeHttpMethod, "FAKE");
+                Activity.Current?.SetTag(SemanticConventions.AttributeHttpStatusCode, responseCode);
+            }
+        }
+
+        /// <summary>
         /// Flushes the in-memory buffer and any metrics being pre-aggregated.
         /// </summary>
         /// <remarks>
@@ -168,6 +206,7 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         public void Flush()
         {
             loggerProvider.ForceFlush();
+            tracerProvider.ForceFlush();
         }
 
         private async Task StartHostedServicesAsync(ServiceProvider serviceProvider)
@@ -214,6 +253,27 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
                 SeverityLevel.Critical => LogLevel.Critical,
                 _ => LogLevel.Information
             };
+        }
+
+        private void SetActivityStartAndEndTimes(DateTimeOffset startTime, TimeSpan duration)
+        {
+            Activity.Current?.SetStartTime(startTime.UtcDateTime);
+            DateTime endTimeUtc = startTime.UtcDateTime.Add(duration);
+            Activity.Current?.SetEndTime(endTimeUtc);
+        }
+
+        private void SetActivityWithContextProperties()
+        {
+            IDictionary<string, string> properties = Context.GlobalProperties;
+            if (properties == null)
+            {
+                return;
+            }
+
+            foreach (var kvp in properties)
+            {
+                Activity.Current?.SetTag(kvp.Key, kvp.Value);
+            }
         }
     }
 }
