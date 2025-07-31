@@ -28,8 +28,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly bool _isAsync;
         private readonly CSharpType _itemType;
         private readonly ResourceOperationKind _methodKind;
-        protected readonly MethodSignature _signature;
-        protected readonly MethodBodyStatement[] _bodyStatements;
+        private readonly MethodSignature _signature;
+        private readonly MethodBodyStatement[] _bodyStatements;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
