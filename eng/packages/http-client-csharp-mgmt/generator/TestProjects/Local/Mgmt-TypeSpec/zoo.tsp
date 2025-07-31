@@ -5,7 +5,7 @@ using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 
-namespace MgmtTypeSpec;
+namespace MgmtTypeSpec {
 
 @resource("zoos")
 model Zoo is TrackedResource<ZooProperties> {
@@ -68,3 +68,10 @@ model ZooRecommendation {
 }
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
+}
+
+namespace Azure.ResourceManager.Models {
+model SubResource { }
+}
+
+@@alternateType(MgmtTypeSpec.ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
