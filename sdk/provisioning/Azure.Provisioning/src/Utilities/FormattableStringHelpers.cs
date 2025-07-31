@@ -7,6 +7,12 @@ namespace Azure.Provisioning.Utilities
 {
     internal static class FormattableStringHelpers
     {
+        /// <summary>
+        /// Parses the format from a <see cref="FormattableString"/> and returns an enumerator
+        /// that yields the parts of the format.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static GetFormatPartsEnumerator GetFormattableStringFormatParts(ReadOnlySpan<char> format) => new GetFormatPartsEnumerator(format);
 
         public ref struct GetFormatPartsEnumerator
