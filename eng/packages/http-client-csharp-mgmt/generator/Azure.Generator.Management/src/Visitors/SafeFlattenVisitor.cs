@@ -59,7 +59,7 @@ namespace Azure.Generator.Management.Visitors
                             };
                         var flattenPropertyBody = new MethodPropertyBody(
                             Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalSingleProperty, singleProperty.Name))),
-                            singleProperty.Body?.HasSetter == true ? setter : null
+                            singleProperty.Body?.HasSetter == true ? setter : null // only add setter for flattend property if the internal property has a setter
                         );
                         var flattenedProperty = new PropertyProvider(singleProperty.Description, singleProperty.Modifiers, singleProperty.Type, flattenPropertyName, flattenPropertyBody, type, singleProperty.ExplicitInterface, singleProperty.WireInfo, singleProperty.Attributes);
                         flattenedProperties.Add(flattenedProperty);
