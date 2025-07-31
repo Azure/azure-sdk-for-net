@@ -38,8 +38,12 @@ namespace Azure.AI.VoiceLive
 
                 string base64Audio = Convert.ToBase64String(audio);
                 ClientEventInputAudioBufferAppend appendCommand = new(base64Audio);
-                BinaryData requestData = BinaryData.FromObjectAsJson(appendCommand);
-                await SendCommandAsync(requestData, cancellationToken).ConfigureAwait(false);
+                var request = appendCommand.ToRequestContent();
+                var ms = new MemoryStream();
+                await request.WriteToAsync(ms, cancellationToken).ConfigureAwait(false);
+                ms.Seek(0, SeekOrigin.Begin);
+                var bd = await BinaryData.FromStreamAsync(ms).ConfigureAwait(false);
+                await SendCommandAsync(bd, cancellationToken).ConfigureAwait(false);
             }
         }
 
