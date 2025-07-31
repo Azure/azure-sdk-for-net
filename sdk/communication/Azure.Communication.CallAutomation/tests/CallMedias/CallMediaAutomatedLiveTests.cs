@@ -2917,7 +2917,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                 await client.GetCallConnection(callConnectionId).GetCallMedia().SummarizeCallAsync(summarizeCallOptions);
 
-                var summarizeCallEvent = await WaitForEvent<TranscriptionCallSummaryUpdate>(callConnectionId, TimeSpan.FromSeconds(20));
+                var summarizeCallEvent = await WaitForEvent<TranscriptionCallSummaryUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(summarizeCallEvent);
             }
 
