@@ -19,7 +19,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 {
