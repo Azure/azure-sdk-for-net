@@ -17,6 +17,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- `BrokerAuthenticationCredential` has been renamed as `BrokerCredential`.
 
 ## 1.15.0-beta.1 (2025-07-17)
 
