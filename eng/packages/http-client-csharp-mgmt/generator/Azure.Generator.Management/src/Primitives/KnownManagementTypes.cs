@@ -110,8 +110,6 @@ namespace Azure.Generator.Management.Primitives
             => _typeToSerializationExpression.TryGetValue(type, out expression);
 
         public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-        {
-            return _typeToDeserializationExpression.TryGetValue(type, out expression);
-        }
+            => _typeToDeserializationExpression.TryGetValue(type, out expression);
     }
 }
