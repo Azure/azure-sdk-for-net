@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed the data contract for MCP tool.
+
 ### Other Changes
 
 ### Sample updates

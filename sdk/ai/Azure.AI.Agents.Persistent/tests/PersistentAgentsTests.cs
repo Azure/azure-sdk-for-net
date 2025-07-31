@@ -1988,6 +1988,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(
                 client,
                 instruction: "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+                model: "gpt-4o",
                 tools: [mcpTool]);
             PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
             PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
@@ -2028,10 +2029,11 @@ namespace Azure.AI.Agents.Persistent.Tests
 
                     if (toolApprovals.Count > 0)
                     {
-                        run = await client.Runs.SubmitToolOutputsToRunAsync(thread.Id, run.Id, toolApprovals: toolApprovals);
+                        run = await client.Runs.SubmitToolOutputsToRunAsync(thread.Id, run.Id, toolApprovals: toolApprovals, stream: false);
                     }
                 }
             }
+            Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
             Assert.IsTrue(isApprovalRequested, "The approval was not requested.");
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
             AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(thread.Id, run.Id);
@@ -2311,7 +2313,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             Pageable<PersistentAgent> agents = client.Administration.GetAgents();
             foreach (PersistentAgent agent in agents)
             {
-                if (agent.Name.StartsWith(AGENT_NAME))
+               if (agent.Name != null && agent.Name.StartsWith(AGENT_NAME))
                     client.Administration.DeleteAgent(agent.Id);
             }
         }

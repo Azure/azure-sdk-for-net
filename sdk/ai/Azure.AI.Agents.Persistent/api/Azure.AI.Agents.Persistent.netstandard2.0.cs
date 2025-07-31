@@ -538,6 +538,36 @@ namespace Azure.AI.Agents.Persistent
         public static bool operator !=(Azure.AI.Agents.Persistent.ListSortOrder left, Azure.AI.Agents.Persistent.ListSortOrder right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MCPApprovalPerTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>
+    {
+        public MCPApprovalPerTool() { }
+        public Azure.AI.Agents.Persistent.MCPToolList Always { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.MCPToolList Never { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPApprovalPerTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPApprovalPerTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MCPApprovalRequirement : System.IEquatable<Azure.AI.Agents.Persistent.MCPApprovalRequirement>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MCPApprovalRequirement(string value) { throw null; }
+        public static Azure.AI.Agents.Persistent.MCPApprovalRequirement Always { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.MCPApprovalRequirement Never { get { throw null; } }
+        public bool Equals(Azure.AI.Agents.Persistent.MCPApprovalRequirement other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Agents.Persistent.MCPApprovalRequirement left, Azure.AI.Agents.Persistent.MCPApprovalRequirement right) { throw null; }
+        public static implicit operator Azure.AI.Agents.Persistent.MCPApprovalRequirement (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Agents.Persistent.MCPApprovalRequirement left, Azure.AI.Agents.Persistent.MCPApprovalRequirement right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MCPToolDefinition : Azure.AI.Agents.Persistent.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolDefinition>
     {
         public MCPToolDefinition(string serverLabel, string serverUrl) { }
@@ -551,12 +581,23 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MCPToolList : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolList>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>
+    {
+        public MCPToolList(System.Collections.Generic.IEnumerable<string> toolNames) { }
+        public System.Collections.Generic.IList<string> ToolNames { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPToolList System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPToolList System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MCPToolResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>
     {
         public MCPToolResource(string serverLabel) { }
         public MCPToolResource(string serverLabel, System.Collections.Generic.IDictionary<string, string> headers) { }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
-        public Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval? RequireApproval { get { throw null; } set { } }
+        public System.BinaryData RequireApproval { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.MCPToolResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -566,24 +607,6 @@ namespace Azure.AI.Agents.Persistent
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public Azure.AI.Agents.Persistent.ToolResources ToToolResources() { throw null; }
         public void UpdateHeader(string key, string value) { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MCPToolResourceRequireApproval : System.IEquatable<Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MCPToolResourceRequireApproval(string value) { throw null; }
-        public static Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval Always { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval Never { get { throw null; } }
-        public bool Equals(Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval left, Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval right) { throw null; }
-        public static implicit operator Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval left, Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MessageAttachment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MessageAttachment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MessageAttachment>
     {
