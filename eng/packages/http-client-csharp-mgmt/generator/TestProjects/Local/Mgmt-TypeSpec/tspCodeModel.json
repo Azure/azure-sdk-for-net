@@ -12661,8 +12661,13 @@
   ],
   "auth": {
     "oAuth2": {
-      "scopes": [
-        "user_impersonation"
+      "flows": [
+        {
+          "scopes": [
+            "user_impersonation"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
       ]
     }
   }
