@@ -4097,6 +4097,7 @@ namespace Azure.Storage.Blobs
             foreach (HttpPipelinePolicy policy in policies)
             {
                 options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+                options.AddPolicy(policy, HttpPipelinePosition.PerRetry);
             }
 
             // Create a deep copy of the BlobContainerClient but with an updated client options
