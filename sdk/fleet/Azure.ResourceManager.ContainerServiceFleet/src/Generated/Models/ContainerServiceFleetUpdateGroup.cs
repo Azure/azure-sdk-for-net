@@ -56,6 +56,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            BeforeGates = new ChangeTrackingList<GateConfiguration>();
+            AfterGates = new ChangeTrackingList<GateConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroup"/>. </summary>
@@ -63,10 +65,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// Name of the group.
         /// It must match a group name of an existing fleet member.
         /// </param>
+        /// <param name="beforeGates"> A list of Gates that will be created before this Group is executed. </param>
+        /// <param name="afterGates"> A list of Gates that will be created after this Group is executed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroup(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetUpdateGroup(string name, IList<GateConfiguration> beforeGates, IList<GateConfiguration> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            BeforeGates = beforeGates;
+            AfterGates = afterGates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,5 +86,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// It must match a group name of an existing fleet member.
         /// </summary>
         public string Name { get; set; }
+        /// <summary> A list of Gates that will be created before this Group is executed. </summary>
+        public IList<GateConfiguration> BeforeGates { get; }
+        /// <summary> A list of Gates that will be created after this Group is executed. </summary>
+        public IList<GateConfiguration> AfterGates { get; }
     }
 }
