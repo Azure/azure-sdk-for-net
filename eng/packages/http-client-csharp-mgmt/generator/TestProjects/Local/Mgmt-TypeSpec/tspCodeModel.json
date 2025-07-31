@@ -4175,7 +4175,7 @@
                   "decorators": []
                 },
                 "optional": true,
-                "readOnly": false,
+                "readOnly": true,
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
