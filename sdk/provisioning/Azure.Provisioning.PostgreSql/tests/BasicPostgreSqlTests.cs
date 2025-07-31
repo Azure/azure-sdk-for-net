@@ -20,6 +20,7 @@ public class BasicPostgreSqlTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:PostgreSqlBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter adminLogin =
@@ -99,6 +100,7 @@ public class BasicPostgreSqlTests(bool async)
                         PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal
                     };
                 infra.Add(admin);
+                #endregion
 
                 return infra;
             })

@@ -67,11 +67,12 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputModelType model && KnownManagementTypes.TryGetManagementType(model.CrossLanguageDefinitionId, out var replacedType))
+            if (inputType is InputModelType model && (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType) || KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType)))
             {
                 return replacedType;
             }
-            else if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
+
+            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
             {
                 return csharpType;
             }
@@ -81,9 +82,14 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
-            if (KnownManagementTypes.TryGetManagementType(model.CrossLanguageDefinitionId, out var replacedType))
+            if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
                 return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
+            }
+
+            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType))
+            {
+                return new SystemObjectModelProvider(replacedType.FrameworkType, model);
             }
             return base.CreateModelCore(model);
         }
