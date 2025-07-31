@@ -2685,6 +2685,83 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [RecordedTest]
+        public async Task CreateTranscriptionCallWithSummarizeCall()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription and summarize call.
+             * 2. Answer a call
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggerred
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false,
+                        EnableSentimentAnalysis = true,
+                        PiiRedactionOptions = new PiiRedactionOptions()
+                        {
+                            Enable = true,
+                            RedactionType = RedactionType.MaskWithCharacter
+                        },
+                        SummarizationOptions = new SummarizationOptions()
+                        {
+                            Locale = "en-CA",
+                            EnableEndCallSummary = false,
+                        },
+                        Locales = new List<string>() { "en-CA" }
+                    };
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyTranscription(targetClient, result.CallerCallConnectionId, true);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
         private async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCallWithMediaOrTranscriptionOptions(
             CallAutomationClient client,
             CallAutomationClient targetClient,
@@ -2803,7 +2880,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
         }
 
-        private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
+        private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId, bool isSummarizeCall = false)
         {
             //Start Transcription
             StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
@@ -2826,6 +2903,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.IsNotNull(connectionProperties);
             Assert.IsNotNull(connectionProperties.Value.TranscriptionSubscription);
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
+
+            if (isSummarizeCall)
+            {
+                SummarizeCallOptions summarizeCallOptions = new SummarizeCallOptions()
+                {
+                    OperationContext = "SummarizeCallContext",
+                    SummarizationOptions = new SummarizationOptions
+                    {
+                        Locale = "en-US",
+                    }
+                };
+
+                await client.GetCallConnection(callConnectionId).GetCallMedia().SummarizeCallAsync(summarizeCallOptions);
+
+                var summarizeCallEvent = await WaitForEvent<TranscriptionCallSummaryUpdate>(callConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(summarizeCallEvent);
+            }
 
             // Update Transcription
             UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions() {Locale = "en-CA", OperationContext = "UpdateTranscription" };
