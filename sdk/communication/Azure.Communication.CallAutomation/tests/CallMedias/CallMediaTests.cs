@@ -1133,7 +1133,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.SummarizeCall(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = "https://test", SummarizationOptions = new SummarizationOptions(){ Locale="en-US", EnableEndCallSummary = true } })
+                   callMedia => callMedia.SummarizeCall(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", EnableEndCallSummary = true } })
                 }
             };
         }
@@ -1144,7 +1144,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.SummarizeCallAsync(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = "https://test", SummarizationOptions = new SummarizationOptions(){ Locale="en-US", EnableEndCallSummary = true } })
+                   callMedia => callMedia.SummarizeCallAsync(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", EnableEndCallSummary = true } })
                 }
             };
         }

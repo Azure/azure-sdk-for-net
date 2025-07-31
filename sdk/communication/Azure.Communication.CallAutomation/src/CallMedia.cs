@@ -1562,8 +1562,8 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default ? new SummarizeCallRequestInternal() : new SummarizeCallRequestInternal(
                     operationContext: options.OperationContext,
-                    operationCallbackUri: options.OperationCallbackUri,
-                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                    operationCallbackUri: options.OperationCallbackUri?.AbsoluteUri,
+                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions?.EnableEndCallSummary, options.SummarizationOptions?.Locale)
                 );
 
                 return CallMediaRestClient.SummarizeCall(CallConnectionId,
@@ -1591,8 +1591,9 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default? new SummarizeCallRequestInternal() : new SummarizeCallRequestInternal(
                     operationContext: options.OperationContext,
-                    operationCallbackUri: options.OperationCallbackUri,
-                    summarizationOptions: options.SummarizationOptions == null ? null : new SummarizationOptionsInternal(options.SummarizationOptions.EnableEndCallSummary, options.SummarizationOptions.Locale)
+                    operationCallbackUri: options.OperationCallbackUri?.AbsoluteUri,
+                    summarizationOptions: options.SummarizationOptions == null ? null :
+                    new SummarizationOptionsInternal(options.SummarizationOptions?.EnableEndCallSummary, options.SummarizationOptions?.Locale)
                 );
 
                 return await CallMediaRestClient.SummarizeCallAsync(CallConnectionId,
