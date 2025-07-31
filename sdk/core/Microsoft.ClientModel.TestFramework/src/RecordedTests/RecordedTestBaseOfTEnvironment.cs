@@ -7,18 +7,18 @@ using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework;
 /// <summary>
-/// TODO.
+/// Base class for recorded tests that use a specific test environment type.
 /// </summary>
-/// <typeparam name="TEnvironment"></typeparam>
+/// <typeparam name="TEnvironment">The type of test environment to use.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
 public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TEnvironment : TestEnvironment, new()
 #pragma warning restore SA1649 // File name should match first type name
 {
     /// <summary>
-    /// TODO
+    /// Initializes a new instance of the <see cref="RecordedTestBase{TEnvironment}"/> class.
     /// </summary>
-    /// <param name="isAsync"></param>
-    /// <param name="mode"></param>
+    /// <param name="isAsync">Whether to use asynchronous test execution.</param>
+    /// <param name="mode">The recording mode to use, or null to use the global default.</param>
     protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
     {
         TestEnvironment = new TEnvironment();
@@ -26,9 +26,10 @@ public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TE
     }
 
     /// <summary>
-    /// TODO.
+    /// Starts test recording and configures the test environment with the recording session.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when recording fails to start.</exception>
     public override async Task StartTestRecordingAsync()
     {
         // Set the TestEnvironment Mode here so that any Mode changes in RecordedTestBase are picked up here also.
@@ -43,14 +44,14 @@ public abstract class RecordedTestBase<TEnvironment> : RecordedTestBase where TE
     }
 
     /// <summary>
-    /// TODO.
+    /// Gets the test environment instance configured for this test.
     /// </summary>
     public TEnvironment TestEnvironment { get; }
 
     /// <summary>
-    /// TODO.
+    /// Waits for the test environment to become ready before running tests.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [OneTimeSetUp]
     public async ValueTask WaitForEnvironment()
     {

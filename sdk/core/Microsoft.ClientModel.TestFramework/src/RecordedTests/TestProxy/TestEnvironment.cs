@@ -40,29 +40,35 @@ public abstract class TestEnvironment
     // TODO - private readonly ClientDiagnostics _clientDiagnostics;
 
     /// <summary>
-    /// TODO.
+    /// Gets the root directory of the repository containing the test project.
+    /// This is determined by searching for common repository indicators like .git directories or build files.
     /// </summary>
     public static string? RepositoryRoot { get; }
 
     /// <summary>
-    /// TODO.
+    /// Gets or sets the path to the development certificate used by the test proxy for HTTPS connections.
+    /// Can be overridden by derived classes to specify custom certificate locations.
     /// </summary>
-    public static string? DevCertPath { get; }
+    public static string? DevCertPath { get; protected set; }
 
     /// <summary>
-    /// TODO.
+    /// Gets or sets the path to the PowerShell script used for bootstrapping test resources.
+    /// This script is executed when environment variables are missing and bootstrapping is enabled.
     /// </summary>
     public string? PathToTestResourceBootstrappingScript { get; set; }
 
     /// <summary>
-    /// TODO.
+    /// The default password used for development certificates in test environments.
     /// </summary>
     public const string DevCertPassword = "password";
 
     /// <summary>
-    /// TODO.
+    /// Initializes a new instance of the <see cref="TestEnvironment"/> class.
+    /// Validates that repository root and certificate paths are available, then loads environment configuration.
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when RepositoryRoot is null.
+    /// </exception>
     protected TestEnvironment()
     {
         if (RepositoryRoot == null)
@@ -70,9 +76,10 @@ public abstract class TestEnvironment
             throw new InvalidOperationException("Repository root is not set");
         }
 
-        if (DevCertPath == null)
+        // DevCertPath is optional - if null, the test proxy will run without HTTPS support
+        if (DevCertPath != null && !File.Exists(DevCertPath))
         {
-            throw new InvalidOperationException("Dev cert path is not set.");
+            Console.WriteLine($"Warning: Dev certificate not found at {DevCertPath}. HTTPS tests may not work.");
         }
 
         _type = GetType();
@@ -82,7 +89,8 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// TODO.
+    /// Initializes static members of the <see cref="TestEnvironment"/> class.
+    /// Discovers the repository root and sets the default development certificate path.
     /// </summary>
     static TestEnvironment()
     {
@@ -136,18 +144,24 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// TODO.
+    /// Gets or sets the recording mode for this test environment instance.
+    /// Determines whether tests run against live services, record interactions, or replay recorded data.
     /// </summary>
     public RecordedTestMode? Mode { get; set; }
 
     /// <summary>
-    /// TODO.
+    /// Gets a value indicating whether the current platform is Windows.
+    /// Used for platform-specific test behavior and resource bootstrapping.
     /// </summary>
     public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
     /// <summary>
-    /// TODO.
+    /// Gets the credential provider for authenticating with Azure services during tests.
+    /// Returns a mock credential in Playback mode, otherwise must be overridden by derived classes.
     /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when accessed in Live or Record mode without being overridden by a derived class.
+    /// </exception>
     public virtual AuthenticationTokenProvider Credential
     {
         get
@@ -171,8 +185,10 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// TODO.
+    /// Parses and returns environment variables from configuration files and system environment.
+    /// Must be implemented by derived classes to define how environment configuration is loaded.
     /// </summary>
+    /// <returns>A dictionary containing environment variable names and values.</returns>
     public abstract Dictionary<string, string> ParseEnvironmentFile();
 
     /// <summary>
@@ -184,6 +200,8 @@ public abstract class TestEnvironment
     /// <summary>
     /// Returns and records an environment variable value when running live or recorded value during playback.
     /// </summary>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <returns>The environment variable value, or null if not found.</returns>
     protected string? GetRecordedOptionalVariable(string name)
     {
         return GetRecordedOptionalVariable(name, _ => { });
@@ -192,6 +210,9 @@ public abstract class TestEnvironment
     /// <summary>
     /// Returns and records an environment variable value when running live or recorded value during playback.
     /// </summary>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <param name="options">Optional configuration for how the variable should be sanitized when recorded.</param>
+    /// <returns>The environment variable value, or null if not found.</returns>
     protected string? GetRecordedOptionalVariable(string name, Action<RecordedVariableOptions>? options)
     {
         if (Mode == RecordedTestMode.Playback)
@@ -230,6 +251,9 @@ public abstract class TestEnvironment
     /// Returns and records an environment variable value when running live or recorded value during playback.
     /// Throws when variable is not found.
     /// </summary>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <returns>The environment variable value.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the variable is not found.</exception>
     protected string GetRecordedVariable(string name)
     {
         return GetRecordedVariable(name, null);
@@ -239,6 +263,10 @@ public abstract class TestEnvironment
     /// Returns and records an environment variable value when running live or recorded value during playback.
     /// Throws when variable is not found.
     /// </summary>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <param name="options">Optional configuration for how the variable should be sanitized when recorded.</param>
+    /// <returns>The environment variable value.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the variable is not found.</exception>
     protected string GetRecordedVariable(string name, Action<RecordedVariableOptions>? options)
     {
         var value = GetRecordedOptionalVariable(name, options);
@@ -253,7 +281,10 @@ public abstract class TestEnvironment
 
     /// <summary>
     /// Returns an environment variable value or null when variable is not found.
+    /// Searches system environment variables and configuration files for the specified variable.
     /// </summary>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <returns>The environment variable value, or null if not found.</returns>
     protected string? GetOptionalVariable(string name)
     {
         // TODO - add prefix var prefixedName = _prefix + name;
@@ -288,6 +319,9 @@ public abstract class TestEnvironment
     /// Returns an environment variable value.
     /// Throws when variable is not found.
     /// </summary>
+    /// <param name="name">The name of the environment variable to retrieve.</param>
+    /// <returns>The environment variable value.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when the variable is not found.</exception>
     protected string GetVariable(string name)
     {
         var value = GetOptionalVariable(name);
@@ -320,9 +354,10 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// TODO.
+    /// Associates a test recording with this environment for variable recording and playback.
+    /// Resets the credential provider to ensure proper authentication context for the recording mode.
     /// </summary>
-    /// <param name="recording"></param>
+    /// <param name="recording">The test recording to associate with this environment.</param>
     public void SetRecording(TestRecording recording)
     {
         _credential = null;
@@ -340,12 +375,13 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// TODO.
+    /// Gets the source path for the specified assembly using metadata attributes or fallback logic.
+    /// Used to determine the test directory for recording session files.
     /// </summary>
-    /// <param name="assembly"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <param name="assembly">The assembly to get the source path for.</param>
+    /// <returns>The source path for the assembly.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when assembly is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the source path cannot be determined.</exception>
     public static string GetSourcePath(Assembly assembly)
     {
         if (assembly == null)
@@ -450,9 +486,12 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// TODO.
+    /// Attempts to bootstrap test resources by running the configured PowerShell script.
+    /// Only runs on Windows platforms when bootstrapping is enabled and not in Playback mode.
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when PathToTestResourceBootstrappingScript is null and bootstrapping is attempted.
+    /// </exception>
     public void BootStrapTestResources()
     {
         lock (s_syncLock)

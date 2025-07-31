@@ -10,6 +10,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
+#if NET8_0_OR_GREATER
+using System.Runtime.Loader;
+#endif
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.TestProxy;
@@ -24,19 +27,11 @@ namespace Microsoft.ClientModel.TestFramework;
 public class TestProxyProcess
 {
     private static readonly string s_dotNetExe;
-    private readonly int? _proxyPortHttp;
-    private readonly int? _proxyPortHttps;
-    private readonly Process? _testProxyProcess;
-    private readonly StringBuilder _errorBuffer = new();
-    private static readonly object _lock = new();
-    private static TestProxyProcess? _shared;
-    private readonly StringBuilder _output = new();
-    private static readonly bool s_enableDebugProxyLogging = false;
 
-    // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
     /// <summary>
     /// TODO.
     /// </summary>
+    // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
     public const string IpAddress = "127.0.0.1";
 
     /// <summary>
@@ -45,14 +40,26 @@ public class TestProxyProcess
     public int? ProxyPortHttp => _proxyPortHttp;
 
     /// <summary>
-    /// The port used for HTTP connections to the proxy.
+    /// TODO.
     /// </summary>
     public int? ProxyPortHttps => _proxyPortHttps;
 
-    internal TestProxyClient? Client { get; }
+    private readonly int? _proxyPortHttp;
+    private readonly int? _proxyPortHttps;
+    private readonly Process? _testProxyProcess;
 
     /// <summary>
-    /// Initializes static members of the <see cref="TestProxyProcess"/> class.
+    /// TODO.
+    /// </summary>
+    internal TestFrameworkClient Client { get; }
+    private readonly StringBuilder _errorBuffer = new();
+    private static readonly object _lock = new();
+    private static TestProxyProcess? _shared;
+    private readonly StringBuilder _output = new();
+    private static readonly bool s_enableDebugProxyLogging;
+
+    /// <summary>
+    /// TODO.
     /// </summary>
     /// <exception cref="InvalidOperationException"></exception>
     static TestProxyProcess()
@@ -72,10 +79,10 @@ public class TestProxyProcess
         s_dotNetExe = Path.Combine(installDir, dotNetExeName);
 
         bool HasDotNetExe(string? dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
-        // TODO - s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
+        s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
     }
 
-    private TestProxyProcess(string proxyPath, bool debugMode = false)
+    private TestProxyProcess(string? proxyPath, bool debugMode = false)
     {
         bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
 
@@ -89,21 +96,22 @@ public class TestProxyProcess
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             EnvironmentVariables =
-                {
-                    ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error",
-                    ["Logging__LogLevel__Default"] = "Error",
-                    ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error",
-                    ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
-                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
-                }
+            {
+                ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
+                ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error",
+                ["Logging__LogLevel__Default"] = "Error",
+                ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error",
+                ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
+                ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
+                ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
+            }
         };
 
         _testProxyProcess = Process.Start(testProxyProcessInfo);
+
         if (_testProxyProcess == null)
         {
-            throw new InvalidOperationException("Failed to start test proxy process. Process.Start() returned null.");
+            throw new InvalidOperationException("Failed to start the test proxy process.");
         }
 
         ProcessTracker.Add(_testProxyProcess);
@@ -153,9 +161,8 @@ public class TestProxyProcess
                                                 $"https: {_proxyPortHttps}");
         }
 
-        var options = new TestProxyClientOptions();
-        var pipeline = ClientPipeline.Create(options);
-        Client = new TestProxyClient(pipeline, new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
+        var options = new TestFrameworkClientOptions();
+        Client = new TestFrameworkClient(new Uri($"http://{IpAddress}:{_proxyPortHttp}"), options);
 
         _ = Task.Run(
             () =>
@@ -187,16 +194,12 @@ public class TestProxyProcess
             var shared = _shared;
             if (shared == null)
             {
-                var proxyPathFromMetadata = typeof(TestProxyProcess)
+                shared = new TestProxyProcess(typeof(TestProxyProcess)
                     .Assembly
                     .GetCustomAttributes<AssemblyMetadataAttribute>()
                     .Single(a => a.Key == "TestProxyPath")
-                    .Value;
-                if (proxyPathFromMetadata == null)
-                {
-                    throw new InvalidOperationException("TestProxyPath metadata is missing from the assembly.");
-                }
-                shared = new TestProxyProcess(proxyPathFromMetadata, debugMode);
+                    .Value,
+                    debugMode);
 
                 AppDomain.CurrentDomain.DomainUnload += (_, _) =>
                 {
@@ -209,30 +212,6 @@ public class TestProxyProcess
             return shared;
         }
     }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <returns></returns>
-    public async Task CheckProxyOutputAsync()
-    {
-        if (s_enableDebugProxyLogging)
-        {
-            // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
-            await Task.Delay(20).ConfigureAwait(false);
-
-            // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
-            lock (_output)
-            {
-                TestContext.Out.WriteLine(_output.ToString());
-                _output.Clear();
-            }
-        }
-
-        CheckForErrors();
-    }
-
-    #region Helpers
 
     private static bool TryParsePort(string? output, string scheme, out int? port)
     {
@@ -257,6 +236,28 @@ public class TestProxyProcess
         return false;
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <returns></returns>
+    public async Task CheckProxyOutputAsync()
+    {
+        if (s_enableDebugProxyLogging)
+        {
+            // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
+            await Task.Delay(20).ConfigureAwait(false);
+
+            // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
+            lock (_output)
+            {
+                TestContext.Out.WriteLine(_output.ToString());
+                _output.Clear();
+            }
+        }
+
+        CheckForErrors();
+    }
+
     private void CheckForErrors()
     {
         if (_errorBuffer.Length > 0)
@@ -266,6 +267,4 @@ public class TestProxyProcess
             throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
         }
     }
-
-    #endregion
 }

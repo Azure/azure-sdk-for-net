@@ -79,7 +79,7 @@ public class TestRecording : IAsyncDisposable
         switch (Mode)
         {
             case RecordedTestMode.Record:
-                ClientResult<StartRecordResponse> recordResponse = await _proxy.Client.StartRecordAsync(body: new TestProxyStartInformation(_sessionFile, assetsJson), cancellationToken).ConfigureAwait(false);
+                ClientResult<StartRecordResponse> recordResponse = await _proxy.Client.StartRecordAsync(body: new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
                 var rawRecordResponse = recordResponse.GetRawResponse();
                 rawRecordResponse.Headers.TryGetValue("x-recording-id", out string? recordRecordingId);
                 RecordingId = recordRecordingId;
@@ -90,7 +90,7 @@ public class TestRecording : IAsyncDisposable
                 ClientResult<IReadOnlyDictionary<string, string>>? playbackResult;
                 try
                 {
-                    playbackResult = await _proxy.Client.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson ), cancellationToken).ConfigureAwait(false);
+                    playbackResult = await _proxy.Client.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
                 }
                 catch (ClientResultException ex)
                     when (ex.Status == 404)

@@ -19,15 +19,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
-        /// <param name="xRecordingAssetsFiles"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> or <paramref name="xRecordingAssetsFiles"/> is null. </exception>
-        public TestProxyStartInformation(string xRecordingFile, string xRecordingAssetsFiles)
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
+        public TestProxyStartInformation(string xRecordingFile)
         {
             Argument.AssertNotNull(xRecordingFile, nameof(xRecordingFile));
-            Argument.AssertNotNull(xRecordingAssetsFiles, nameof(xRecordingAssetsFiles));
 
             XRecordingFile = xRecordingFile;
-            XRecordingAssetsFiles = xRecordingAssetsFiles;
         }
 
         /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
@@ -44,7 +41,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Gets the XRecordingFile. </summary>
         public string XRecordingFile { get; }
 
-        /// <summary> Gets the XRecordingAssetsFiles. </summary>
-        public string XRecordingAssetsFiles { get; }
+        /// <summary> Gets or sets the XRecordingAssetsFiles. </summary>
+        public string XRecordingAssetsFiles { get; set; }
     }
 }

@@ -42,8 +42,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             }
             writer.WritePropertyName("xRecordingFile"u8);
             writer.WriteStringValue(XRecordingFile);
-            writer.WritePropertyName("xRecordingAssetsFiles"u8);
-            writer.WriteStringValue(XRecordingAssetsFiles);
+            if (Optional.IsDefined(XRecordingAssetsFiles))
+            {
+                writer.WritePropertyName("xRecordingAssetsFiles"u8);
+                writer.WriteStringValue(XRecordingAssetsFiles);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
