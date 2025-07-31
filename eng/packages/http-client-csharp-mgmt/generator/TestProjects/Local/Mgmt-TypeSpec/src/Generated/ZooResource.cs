@@ -295,8 +295,7 @@ namespace MgmtTypeSpec
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
-            }
-            ;
+            };
             return new ZoosZooAddressListCollectionResultOfT(
                 _zoosRestClient,
                 Guid.Parse(Id.SubscriptionId),
@@ -314,8 +313,7 @@ namespace MgmtTypeSpec
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
-            }
-            ;
+            };
             return new ZoosZooAddressListAsyncCollectionResultOfT(
                 _zoosRestClient,
                 Guid.Parse(Id.SubscriptionId),

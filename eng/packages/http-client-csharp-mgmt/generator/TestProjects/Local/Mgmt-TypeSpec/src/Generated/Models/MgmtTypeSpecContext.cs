@@ -38,6 +38,8 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(ZooPatch))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
+    [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     public partial class MgmtTypeSpecContext : ModelReaderWriterContext
     {
