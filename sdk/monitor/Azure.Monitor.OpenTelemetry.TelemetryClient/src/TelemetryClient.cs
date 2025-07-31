@@ -142,6 +142,24 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         }
 
         /// <summary>
+        /// Send an event telemetry for display in Diagnostic Search and in the Analytics Portal.
+        /// </summary>
+        /// <remarks>
+        /// <a href="https://go.microsoft.com/fwlink/?linkid=525722#trackevent">Learn more</a>
+        /// </remarks>
+        /// <param name="eventName">A name for the event.</param>
+        /// <param name="properties">Named string values you can use to search and classify events.</param>
+        public void TrackEvent(string eventName, IDictionary<string, string> properties = null!)
+        {
+            var scopeState = CreateScopeState(properties);
+
+            using (this.logger.BeginScope(scopeState))
+            {
+                this.logger.LogInformation("{microsoft.custom_event.name}", eventName);
+            }
+        }
+
+        /// <summary>
         /// Flushes the in-memory buffer and any metrics being pre-aggregated.
         /// </summary>
         /// <remarks>

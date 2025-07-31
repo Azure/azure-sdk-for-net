@@ -1,0 +1,18 @@
+{
+  "name": "Event",
+  "time": "2025-07-15T09:11:10.6821353Z",
+  "iKey": "12345678-1234-1234-1234-123456789012",
+  "tags": {
+    "ai.cloud.role": "unknown_service:dotnet",
+    "ai.cloud.roleInstance": "host-not-compared",
+    "ai.application.ver": null,
+    "ai.internal.sdkVersion": "dotnet9.0.2:otel1.12.0:ext1.4.0"
+  },
+  "data": {
+    "baseType": "EventData",
+    "baseData": {
+      "name": "TestEvent",
+      "ver": 2
+    }
+  }
+}
