@@ -238,7 +238,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.SipDiagnosticInfo SipDiagnosticInfo(int? code = default(int?), string message = null) { throw null; }
         public static Azure.Communication.CallAutomation.SpeechResult SpeechResult(string speech = null, double? confidence = default(double?), string languageIdentified = null, Azure.Communication.CallAutomation.SentimentAnalysisResult sentimentAnalysisResult = null) { throw null; }
         public static Azure.Communication.CallAutomation.StartRecordingFailed StartRecordingFailed(string recordingId = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionCallSummaryUpdate TranscriptionCallSummaryUpdate(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionCallSummaryUpdated TranscriptionCallSummaryUpdated(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionFailed TranscriptionFailed(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStarted TranscriptionStarted(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStopped TranscriptionStopped(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -1647,11 +1647,11 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.VoiceKind? VoiceKind { get { throw null; } set { } }
         public string VoiceName { get { throw null; } set { } }
     }
-    public partial class TranscriptionCallSummaryUpdate : Azure.Communication.CallAutomation.CallAutomationEventBase
+    public partial class TranscriptionCallSummaryUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
-        internal TranscriptionCallSummaryUpdate() { }
+        internal TranscriptionCallSummaryUpdated() { }
         public Azure.Communication.CallAutomation.TranscriptionUpdate TranscriptionUpdate { get { throw null; } }
-        public static Azure.Communication.CallAutomation.TranscriptionCallSummaryUpdate Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallAutomation.TranscriptionCallSummaryUpdated Deserialize(string content) { throw null; }
     }
     public partial class TranscriptionData : Azure.Communication.CallAutomation.StreamingData
     {
@@ -1736,7 +1736,7 @@ namespace Azure.Communication.CallAutomation
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TranscriptionStatus(string value) { throw null; }
-        public static Azure.Communication.CallAutomation.TranscriptionStatus CallSummaryUpdate { get { throw null; } }
+        public static Azure.Communication.CallAutomation.TranscriptionStatus CallSummaryUpdated { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionStatus TranscriptionFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionStatus TranscriptionResumed { get { throw null; } }
         public static Azure.Communication.CallAutomation.TranscriptionStatus TranscriptionStarted { get { throw null; } }

@@ -219,7 +219,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
-        /// <param name="message"></param>
+        /// <param name="message"> Optional message providing additional context about the transcription update. </param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
         public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null, string message = null)
         {
@@ -283,17 +283,17 @@ namespace Azure.Communication.CallAutomation
                 resultInformation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionCallSummaryUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/>. </summary>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <returns> A new <see cref="CallAutomation.TranscriptionCallSummaryUpdate"/> instance for mocking. </returns>
-        public static TranscriptionCallSummaryUpdate TranscriptionCallSummaryUpdate(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        /// <returns> A new <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/> instance for mocking. </returns>
+        public static TranscriptionCallSummaryUpdated TranscriptionCallSummaryUpdated(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new TranscriptionCallSummaryUpdate(
+            return new TranscriptionCallSummaryUpdated(
                 transcriptionUpdate,
                 callConnectionId,
                 serverCallId,

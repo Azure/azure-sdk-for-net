@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class TranscriptionCallSummaryUpdate
+    public partial class TranscriptionCallSummaryUpdated
     {
-        internal static TranscriptionCallSummaryUpdate DeserializeTranscriptionCallSummaryUpdate(JsonElement element)
+        internal static TranscriptionCallSummaryUpdated DeserializeTranscriptionCallSummaryUpdated(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,7 +64,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new TranscriptionCallSummaryUpdate(
+            return new TranscriptionCallSummaryUpdated(
                 transcriptionUpdate,
                 callConnectionId,
                 serverCallId,
@@ -75,10 +75,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranscriptionCallSummaryUpdate FromResponse(Response response)
+        internal static TranscriptionCallSummaryUpdated FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTranscriptionCallSummaryUpdate(document.RootElement);
+            return DeserializeTranscriptionCallSummaryUpdated(document.RootElement);
         }
     }
 }
