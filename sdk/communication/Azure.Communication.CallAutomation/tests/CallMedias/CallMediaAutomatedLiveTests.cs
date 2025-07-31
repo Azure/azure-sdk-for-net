@@ -2922,7 +2922,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
 
             // Update Transcription
-            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions() {Locale = "en-CA", OperationContext = "UpdateTranscription" };
+            UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions("en-CA")
+            {
+                OperationContext = "UpdateTranscription"
+            };
             var updateTranscriptionResponse = await callerMedia.UpdateTranscriptionAsync(updateTranscriptionOptions);
             var updateTranscriptionEvent = await WaitForEvent<TranscriptionUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
             Assert.IsNotNull(updateTranscriptionEvent);

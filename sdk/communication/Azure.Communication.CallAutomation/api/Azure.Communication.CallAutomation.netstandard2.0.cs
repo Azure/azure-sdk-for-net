@@ -1533,6 +1533,7 @@ namespace Azure.Communication.CallAutomation
         public StartTranscriptionOptions() { }
         public bool? EnableSentimentAnalysis { get { throw null; } set { } }
         public string Locale { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Locales { get { throw null; } set { } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }
@@ -1598,7 +1599,7 @@ namespace Azure.Communication.CallAutomation
     public partial class SummarizeCallOptions
     {
         public SummarizeCallOptions() { }
-        public string OperationCallbackUri { get { throw null; } set { } }
+        public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.SummarizationOptions SummarizationOptions { get { throw null; } set { } }
     }
@@ -1868,9 +1869,8 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class UpdateTranscriptionOptions
     {
-        public UpdateTranscriptionOptions() { }
+        public UpdateTranscriptionOptions(string locale) { }
         public bool? EnableSentimentAnalysis { get { throw null; } set { } }
-        public string Locale { get { throw null; } set { } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } set { } }

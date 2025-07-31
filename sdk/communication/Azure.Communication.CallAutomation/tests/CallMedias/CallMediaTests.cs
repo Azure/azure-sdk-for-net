@@ -1085,7 +1085,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions())
+                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions("en-US"))
                 }
             };
         }
@@ -1100,14 +1100,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions(){SpeechRecognitionModelEndpointId = "customEndpoint", OperationContext="context" })
+                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions("en-US") { OperationContext = "context" })
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.UpdateTranscriptionAsync(
-                       new UpdateTranscriptionOptions()
+                       new UpdateTranscriptionOptions("en-US")
                        {
-                           Locale = "en-US",
                            OperationContext = "OperationContext",
                            SpeechRecognitionModelEndpointId = "customEndpoint",
                            PiiRedactionOptions = new PiiRedactionOptions()
