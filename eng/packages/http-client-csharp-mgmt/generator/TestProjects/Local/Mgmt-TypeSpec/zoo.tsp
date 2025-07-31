@@ -70,9 +70,9 @@ model ZooRecommendation {
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
 }
 
-// Testing if we can replace certain InputModel with SubResource via the combination of alternateType and SubResource model mocking
+// We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource via alternateType
 namespace Azure.ResourceManager.Models {
-model SubResource { }
+  model SubResource { }
 }
 
 @@alternateType(MgmtTypeSpec.ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
