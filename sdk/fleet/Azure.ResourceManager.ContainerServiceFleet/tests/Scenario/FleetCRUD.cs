@@ -73,7 +73,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Debug.Assert(updateFleetLRO.Value.Data.Tags.ContainsKey("newtag1"), "new tag was not found, update failed");
 
             // Create a managed cluster to be able to become a Fleet Member
-            ContainerServiceManagedClusterResource managedCluster = await CreateContainerServiceAsync(resourceGroupResource, "aks-cluster", DefaultLocation);
+            string clusterName = Recording.GenerateAssetName("cluster-");
+            ContainerServiceManagedClusterResource managedCluster = await CreateContainerServiceAsync(resourceGroupResource, clusterName, DefaultLocation);
 
             // Test Member operations
             ContainerServiceFleetMemberCollection memberCollection = fleetResource.GetContainerServiceFleetMembers();
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 DisplayName = "group after gate"
             };
 
-            // Create group (just name + gates, no members here)
+            // Create group
             group1.BeforeGates.Add(groupBeforeGate);
             group1.AfterGates.Add(groupAfterGate);
 
@@ -158,7 +159,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                     ),
                     new NodeImageSelection(NodeImageSelectionType.Latest),
                     null
-                )
+                ),
+                StrategyStages = new List<ContainerServiceFleetUpdateStage>()
             };
 
             // Add stages into the update run
@@ -178,10 +180,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // Start UpdateRun
             ArmOperation<ContainerServiceFleetUpdateRunResource> startUpdateRunLRO = await updateRunResource.StartAsync(WaitUntil.Completed);
             Console.WriteLine($"Succeeded on id: {startUpdateRunLRO.Value.Data.Id}");
-
-            // Stop UpdateRun
-            ArmOperation<ContainerServiceFleetUpdateRunResource> stopUpdateRunLRO = await updateRunResource.StopAsync(WaitUntil.Completed);
-            Console.WriteLine($"Succeeded on id: {stopUpdateRunLRO.Value.Data.Id}");
 
             // Test Gates
             // List Gates
@@ -218,7 +216,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             {
                 Channel = ContainerServiceFleetUpgradeChannel.TargetKubernetesVersion,
                 LongTermSupport = true,
-                TargetKubernetesVersion = "1.33.0"
+                TargetKubernetesVersion = "1.30"
             };
             ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData);
             AutoUpgradeProfileResource createAutoUpgradeProfileResult = createAutoUpgradeProfileLRO.Value;
