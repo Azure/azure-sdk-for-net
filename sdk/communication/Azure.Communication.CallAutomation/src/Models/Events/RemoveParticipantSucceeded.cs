@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         {
             OperationContext = internalEvent.OperationContext;
             ResultInformation = internalEvent.ResultInformation;
-            Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
+            Participant = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.Participant);
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;

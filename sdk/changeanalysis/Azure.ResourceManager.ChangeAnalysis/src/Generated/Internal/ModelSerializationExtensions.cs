@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.ChangeAnalysis
     {
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+        internal static readonly ModelReaderWriterOptions WireV3Options = new ModelReaderWriterOptions("W|v3");
+        internal static readonly ModelReaderWriterOptions JsonV3Options = new ModelReaderWriterOptions("J|v3");
         internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
 
         public static object GetObject(this JsonElement element)

@@ -1,4 +1,4 @@
-# Azure.Provisioning.Redis client library for .NET
+# Azure Provisioning Redis client library for .NET
 
 Azure.Provisioning.Redis simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,31 @@ dotnet add package Azure.Provisioning.Redis
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Redis Cache
+
+This example demonstrates how to create an Azure Cache for Redis instance with standard configuration settings.
+
+```C# Snippet:RedisBasic
+Infrastructure infra = new();
+
+RedisResource cache =
+    new(nameof(cache), "2020-06-01")
+    {
+        EnableNonSslPort = false,
+        MinimumTlsVersion = RedisTlsVersion.Tls1_2,
+        Sku =
+            new RedisSku
+            {
+                Name = RedisSkuName.Standard,
+                Family = RedisSkuFamily.BasicOrStandard,
+                Capacity = 1
+            },
+    };
+infra.Add(cache);
+```
 
 ## Troubleshooting
 
