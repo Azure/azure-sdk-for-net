@@ -205,7 +205,7 @@ namespace Azure.Storage.DataMovement
                 JobPartStatusEvents -= JobPartStatusEventAsync;
             }
             // This will block until all pending progress reports have gone out
-            await _progressTracker.DisposeAsync().ConfigureAwait(false);
+            await _progressTracker.TryCompleteAsync().ConfigureAwait(false);
         }
 
         /// <summary>
