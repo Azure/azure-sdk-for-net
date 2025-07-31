@@ -1,6 +1,6 @@
 # Microsoft Azure StorageDiscovery management client library for .NET
 
-**[Describe the service briefly first.]**
+**Microsoft Azure Storage Discovery** is a service designed to address the growing complexity and scale of customer data estates. With the rise of Generative AI and the need for managing vast amounts of data across multiple solutions, **Microsoft Azure Storage Discovery** provides comprehensive insights into data capacity, activity, compliance, and regional distribution. 
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
