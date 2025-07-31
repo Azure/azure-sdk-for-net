@@ -99,7 +99,8 @@ namespace Azure.Generator.Management.Providers
                 modifiers,
                 target.ReturnType,
                 target.ReturnDescription,
-                parameters);
+                parameters,
+                Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
 
             var body = new MethodBodyStatement[]
             {

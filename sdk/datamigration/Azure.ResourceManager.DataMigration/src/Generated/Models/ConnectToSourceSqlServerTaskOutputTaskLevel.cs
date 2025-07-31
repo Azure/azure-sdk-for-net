@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputTaskLevel()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "TaskLevelOutput";
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerVersion"> Source server version. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal ConnectToSourceSqlServerTaskOutputTaskLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databases, string logins, string agentJobs, string databaseTdeCertificateMapping, string sourceServerVersion, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors) : base(id, resultType, serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskOutputTaskLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databases, string logins, string agentJobs, string databaseTdeCertificateMapping, string sourceServerVersion, string sourceServerBrandVersion, IReadOnlyList<DataMigrationReportableException> validationErrors) : base(id, resultType, serializedAdditionalRawData)
         {
             Databases = databases;
             Logins = logins;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Source server brand version. </summary>
         public string SourceServerBrandVersion { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

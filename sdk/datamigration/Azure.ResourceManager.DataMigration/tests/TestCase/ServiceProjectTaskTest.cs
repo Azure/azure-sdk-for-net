@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.DataMigration.Tests
             var serviceInput = ResourceDataHelpers.GetServiceData(subnet.Id);
             var serviceResource = (await serviceCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, serviceInput)).Value;
             //Create Project
-            var projectCollection = serviceResource.GetProjects();
+            var projectCollection = serviceResource.GetDataMigrationProjects();
             var projectInput = ResourceDataHelpers.GetTaskProject();
             var projectResource = (await projectCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectInput)).Value;
             //Create
-            var collection = projectResource.GetServiceProjectTasks();
+            var collection = projectResource.GetDataMigrationServiceTasks();
             var input = ResourceDataHelpers.GetProjectTaskData();
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, taskName, input)).Value;
             Assert.AreEqual(taskName, resource.Data.Name);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputDatabaseLevel()
         {
-            DatabaseFiles = new ChangeTrackingList<DatabaseFileInfo>();
+            DatabaseFiles = new ChangeTrackingList<DataMigrationDatabaseFileInfo>();
             ResultType = "DatabaseLevelOutput";
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databaseFiles"> The list of database files. </param>
         /// <param name="compatibilityLevel"> SQL Server compatibility level of database. </param>
         /// <param name="databaseState"> State of the database. </param>
-        internal ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, double? sizeMB, IReadOnlyList<DatabaseFileInfo> databaseFiles, DatabaseCompatLevel? compatibilityLevel, DatabaseState? databaseState) : base(id, resultType, serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, double? sizeMB, IReadOnlyList<DataMigrationDatabaseFileInfo> databaseFiles, DataMigrationDatabaseCompatLevel? compatibilityLevel, DataMigrationSqlDatabaseState? databaseState) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             SizeMB = sizeMB;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Size of the file in megabytes. </summary>
         public double? SizeMB { get; }
         /// <summary> The list of database files. </summary>
-        public IReadOnlyList<DatabaseFileInfo> DatabaseFiles { get; }
+        public IReadOnlyList<DataMigrationDatabaseFileInfo> DatabaseFiles { get; }
         /// <summary> SQL Server compatibility level of database. </summary>
-        public DatabaseCompatLevel? CompatibilityLevel { get; }
+        public DataMigrationDatabaseCompatLevel? CompatibilityLevel { get; }
         /// <summary> State of the database. </summary>
-        public DatabaseState? DatabaseState { get; }
+        public DataMigrationSqlDatabaseState? DatabaseState { get; }
     }
 }
