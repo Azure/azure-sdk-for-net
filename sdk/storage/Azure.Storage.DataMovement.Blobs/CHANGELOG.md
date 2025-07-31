@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue that could cause an exception when trying to resume a transfer that contained resources with special characters in the name.
 
 ### Other Changes
 
