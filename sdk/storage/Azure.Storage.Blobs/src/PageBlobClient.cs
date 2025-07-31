@@ -361,22 +361,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// The storage client which to clone the configurations from.
         /// </param>
         /// <param name="policies">
-        /// The additional policies to add to the client.
+        /// The additional policies and its pipeline position to add to the client.
         /// </param>
         /// <returns></returns>
         protected static PageBlobClient WithAdditionalPolicies(
             PageBlobClient client,
-            params HttpPipelinePolicy[] policies)
+            params (HttpPipelinePolicy Policy, HttpPipelinePosition Position)[] policies)
         {
             Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
             // Update the client options with the provided additional policies.
             BlobClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             BlobClientOptions options = existingOptions != default ? new(existingOptions) : new BlobClientOptions();
-            foreach (HttpPipelinePolicy policy in policies)
+            foreach ((HttpPipelinePolicy policy, HttpPipelinePosition position) in policies)
             {
-                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-                options.AddPolicy(policy, HttpPipelinePosition.PerRetry);
+                options.AddPolicy(policy, position);
             }
 
             // Create a deep copy of the BlobBaseClient but with updated client options

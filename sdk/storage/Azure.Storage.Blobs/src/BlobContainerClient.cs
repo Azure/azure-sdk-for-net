@@ -4082,7 +4082,7 @@ namespace Azure.Storage.Blobs
         /// The storage client which to clone the configurations from.
         /// </param>
         /// <param name="policies">
-        /// The additional policies and it's pipeline position to add to the client.
+        /// The additional policies and its pipeline position to add to the client.
         /// </param>
         /// <returns></returns>
         protected static BlobContainerClient WithAdditionalPolicies(

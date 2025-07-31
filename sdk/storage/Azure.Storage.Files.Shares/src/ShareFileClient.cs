@@ -545,22 +545,21 @@ namespace Azure.Storage.Files.Shares
         /// The storage client which to clone the configurations from.
         /// </param>
         /// <param name="policies">
-        /// The additional policies to add to the client.
+        /// The additional policies and its pipeline position to add to the client.
         /// </param>
         /// <returns></returns>
         protected static ShareFileClient WithAdditionalPolicies(
             ShareFileClient client,
-            params HttpPipelinePolicy[] policies)
+            params (HttpPipelinePolicy Policy, HttpPipelinePosition Position)[] policies)
         {
             Argument.AssertNotNullOrEmpty(policies, nameof(policies));
 
             // Update the client options with the provided additional policies.
             ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
             ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
-            foreach (HttpPipelinePolicy policy in policies)
+            foreach ((HttpPipelinePolicy policy, HttpPipelinePosition position) in policies)
             {
                 options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-                options.AddPolicy(policy, HttpPipelinePosition.PerRetry);
             }
 
             // Create a deep copy of the ShareDirectoryClient but with updated client options
