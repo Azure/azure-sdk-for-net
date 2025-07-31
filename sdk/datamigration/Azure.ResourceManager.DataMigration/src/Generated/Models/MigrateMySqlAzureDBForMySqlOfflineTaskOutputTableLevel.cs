@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="itemsCompletedCount"> Number of successfully completed items. </param>
         /// <param name="errorPrefix"> Wildcard string prefix to use for querying all errors of the item. </param>
         /// <param name="resultPrefix"> Wildcard string prefix to use for querying all sub-tem results of the item. </param>
-        /// <param name="lastStorageUpdate"> Last time the storage was updated. </param>
-        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string objectName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, MigrationState? state, string statusMessage, long? itemsCount, long? itemsCompletedCount, string errorPrefix, string resultPrefix, DateTimeOffset? lastStorageUpdate) : base(id, resultType, serializedAdditionalRawData)
+        /// <param name="lastStorageUpdatedOn"> Last time the storage was updated. </param>
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string objectName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationState? state, string statusMessage, long? itemsCount, long? itemsCompletedCount, string errorPrefix, string resultPrefix, DateTimeOffset? lastStorageUpdatedOn) : base(id, resultType, serializedAdditionalRawData)
         {
             ObjectName = objectName;
             StartedOn = startedOn;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ItemsCompletedCount = itemsCompletedCount;
             ErrorPrefix = errorPrefix;
             ResultPrefix = resultPrefix;
-            LastStorageUpdate = lastStorageUpdate;
+            LastStorageUpdatedOn = lastStorageUpdatedOn;
             ResultType = resultType ?? "TableLevelOutput";
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Current state of migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Status message. </summary>
         public string StatusMessage { get; }
         /// <summary> Number of items. </summary>
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Wildcard string prefix to use for querying all sub-tem results of the item. </summary>
         public string ResultPrefix { get; }
         /// <summary> Last time the storage was updated. </summary>
-        public DateTimeOffset? LastStorageUpdate { get; }
+        public DateTimeOffset? LastStorageUpdatedOn { get; }
     }
 }

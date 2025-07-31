@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="queryResults"> List of queries executed and it's execution results in source and target. </param>
         /// <param name="validationErrors"> Errors that are part of the execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryAnalysisValidationResult(QueryExecutionResult queryResults, ValidationError validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueryAnalysisValidationResult(QueryExecutionResult queryResults, MigrationValidationError validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueryResults = queryResults;
             ValidationErrors = validationErrors;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> List of queries executed and it's execution results in source and target. </summary>
         public QueryExecutionResult QueryResults { get; }
         /// <summary> Errors that are part of the execution. </summary>
-        public ValidationError ValidationErrors { get; }
+        public MigrationValidationError ValidationErrors { get; }
     }
 }

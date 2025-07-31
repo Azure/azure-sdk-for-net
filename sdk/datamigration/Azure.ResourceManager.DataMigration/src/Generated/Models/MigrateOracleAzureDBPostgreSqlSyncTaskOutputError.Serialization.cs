@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            ReportableException error = default;
+            DataMigrationReportableException error = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    error = ReportableException.DeserializeReportableException(property.Value, options);
+                    error = DataMigrationReportableException.DeserializeDataMigrationReportableException(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

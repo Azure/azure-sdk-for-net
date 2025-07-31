@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputAgentJobLevel()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "AgentJobLevelOutput";
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="lastExecutedOn"> UTC Date and time when the Agent Job was last executed. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="migrationEligibility"> Information about eligibility of agent job for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<ReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
+        internal ConnectToSourceSqlServerTaskOutputAgentJobLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string jobCategory, bool? isEnabled, string jobOwner, DateTimeOffset? lastExecutedOn, IReadOnlyList<DataMigrationReportableException> validationErrors, MigrationEligibilityInfo migrationEligibility) : base(id, resultType, serializedAdditionalRawData)
         {
             Name = name;
             JobCategory = jobCategory;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> UTC Date and time when the Agent Job was last executed. </summary>
         public DateTimeOffset? LastExecutedOn { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
         /// <summary> Information about eligibility of agent job for migration. </summary>
         public MigrationEligibilityInfo MigrationEligibility { get; }
     }
