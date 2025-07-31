@@ -36,24 +36,32 @@ There are certain differences in the telemetry data sent to Application Insights
 
  * **TrackTrace(string message)**
 
-   Within the traces Kusto table:
-   * The customDimension column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
+   Additional data within the `traces` Kusto table:
+   * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
    * The severity level is set to `1` (Information) in the `severityLevel` column
 
 * **TrackTrace(string message, SeverityLevel severityLevel)**
 
-  Within the traces Kusto table:
-    * The customDimension column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
+  Within the `traces` Kusto table:
+    * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
 
 * **TrackTrace(string message, IDictionary<string, string> properties)**
 
-  Within the traces Kusto table:
-    * The customDimension column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
+  Additional data within the `traces` Kusto table:
+    * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
 
 * **TrackTrace(string message, SeverityLevel severityLevel, IDictionary<string, string> properties)**
 
-  Within the traces Kusto table:
-    * The customDimension column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
+  Additional data within the `traces` Kusto table:
+    * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
+
+* **void TrackException(Exception? exception, IDictionary<string, string> properties = null!)**
+
+  Additional data within the `exceptions` Kusto table:
+    * The severity level is set to `3` (Error) in the `severityLevel` column
+    * The problem id is set with the exception name in the `problemId` column
+    * The `customDimension` column contains an `OriginalFormat` entry with the exception message value
+    * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
 
 #### TrackException methods
 

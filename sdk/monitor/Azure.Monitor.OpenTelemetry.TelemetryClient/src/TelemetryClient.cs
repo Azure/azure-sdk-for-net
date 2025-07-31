@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -116,6 +117,27 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
             {
                 var logLevel = ConvertSeverityLevelToLogLevel(severityLevel);
                 logger.Log(logLevel, message);
+            }
+        }
+
+        /// <summary>
+        /// Send an ExceptionTelemetry for display in Diagnostic Search.
+        /// </summary>
+        /// <param name="exception">The exception to log.</param>
+        /// <param name="properties">Named string values you can use to classify and search for this exception.</param>
+        /// <remarks>
+        /// <a href="https://go.microsoft.com/fwlink/?linkid=525722#trackexception">Learn more</a>
+        /// </remarks>
+        public void TrackException(Exception? exception, IDictionary<string, string> properties = null!)
+        {
+            if (exception == null)
+            {
+                exception = new Exception("n/a");
+            }
+            var scopeState = CreateScopeState(properties);
+            using (logger.BeginScope(scopeState))
+            {
+                logger.LogError(exception, exception.Message);
             }
         }
 
