@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
         /// The voice configuration to use for generating spoken responses. If not specified,
         /// the service will use a default voice.
         /// </value>
-        public BinaryData Voice { get; set; }
+        public VoiceBase Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the model to use for the conversation.
@@ -85,7 +85,7 @@ namespace Azure.AI.VoiceLive
 
             if (Voice != null)
             {
-                session.Voice = Voice;
+                session.Voice = Voice.ToBinaryData();
             }
 
             if (!string.IsNullOrEmpty(Model))
