@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Indicating if sentiment analysis should be used. </summary>
         public bool? EnableSentimentAnalysis { get; set; }
         /// <summary> List of languages for Language Identification. </summary>
-        internal IList<string> Locales { get; set; }
+        public IList<string> Locales { get; set; }
         /// <summary> Summarization configuration options. </summary>
         public SummarizationOptions SummarizationOptions { get; set; }
     }

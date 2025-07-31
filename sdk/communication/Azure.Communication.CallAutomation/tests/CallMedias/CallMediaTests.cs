@@ -113,6 +113,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            EnableSentimentAnalysis = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -147,6 +149,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            EnableSentimentAnalysis = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -182,6 +186,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            EnableSentimentAnalysis = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -1028,6 +1034,25 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions(){OperationContext = "OperationContext"})
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions()
+                   {
+                       OperationContext = "OperationContext",
+                       PiiRedactionOptions = new PiiRedactionOptions()
+                       {
+                           Enable = true,
+                           RedactionType = RedactionType.MaskWithCharacter
+                       },
+                       SummarizationOptions = new SummarizationOptions()
+                       {
+                           EnableEndCallSummary = true,
+                           Locale="en-US"
+                       },
+                       EnableSentimentAnalysis = true,
+                       Locales = new List<string>() { "en-US", "fr-FR" },
+                   })
                 }
             };
         }
@@ -1076,6 +1101,28 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions(){SpeechRecognitionModelEndpointId = "customEndpoint", OperationContext="context" })
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.UpdateTranscriptionAsync(
+                       new UpdateTranscriptionOptions()
+                       {
+                           Locale = "en-US",
+                           OperationContext = "OperationContext",
+                           SpeechRecognitionModelEndpointId = "customEndpoint",
+                           PiiRedactionOptions = new PiiRedactionOptions()
+                           {
+                               Enable = true,
+                               RedactionType = RedactionType.MaskWithCharacter
+                           },
+                           SummarizationOptions = new SummarizationOptions()
+                           {
+                               EnableEndCallSummary = false,
+                               Locale = "en-US"
+                           },
+                           EnableSentimentAnalysis = true
+                       }
+                   )
                 }
             };
         }
