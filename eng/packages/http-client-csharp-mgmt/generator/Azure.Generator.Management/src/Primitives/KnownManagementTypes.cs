@@ -44,6 +44,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
+            ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
@@ -109,6 +110,8 @@ namespace Azure.Generator.Management.Primitives
             => _typeToSerializationExpression.TryGetValue(type, out expression);
 
         public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-            => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        {
+            return _typeToDeserializationExpression.TryGetValue(type, out expression);
+        }
     }
 }

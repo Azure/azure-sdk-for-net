@@ -28,6 +28,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly bool _isAsync;
         private readonly CSharpType _itemType;
         private readonly ResourceOperationKind _methodKind;
+        protected readonly MethodSignature _signature;
+        protected readonly MethodBodyStatement[] _bodyStatements;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
@@ -47,13 +49,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _itemType = itemType;
             _methodKind = methodKind;
+            _signature = CreateSignature();
+            _bodyStatements = BuildBodyStatements();
         }
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
             return new MethodProvider(
-                pageableOperationMethodProvider.CreateSignature(),
-                pageableOperationMethodProvider.BuildBodyStatements(),
+                pageableOperationMethodProvider._signature,
+                pageableOperationMethodProvider._bodyStatements,
                 pageableOperationMethodProvider._enclosingType);
         }
 
@@ -95,7 +99,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 _restClientInfo.RestClientField,
             };
-            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _convenienceMethod.Signature.Parameters));
+            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 
             // Handle ResourceData type conversion if needed
             if (IsResourceDataType(_itemType))

@@ -76,6 +76,7 @@ namespace Azure.Generator.Management
             {
                 return csharpType;
             }
+
             return base.CreateCSharpTypeCore(inputType);
         }
 

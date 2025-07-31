@@ -22,7 +22,7 @@ model ZooProperties {
 
 @armResourceOperations
 interface Zoos {
-  createZoo is ArmResourceCreateOrUpdateAsync<Zoo>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<Zoo>;
 
   get is ArmResourceRead<Zoo>;
 
@@ -38,6 +38,25 @@ interface Zoos {
     Zoo, 
     void,
     ArmResponse<ZooRecommendation>>;
+
+  @get
+  @action("ZooAddressList")
+  zooAddressList is ArmResourceActionSync<
+    Zoo,
+    void,
+    ArmResponse<ZooAddressListListResult>,
+    Parameters = {
+      @query("$maxpagesize")
+      $maxpagesize?: int32;
+    }
+  >;
+}
+
+model ZooAddressListListResult is Azure.Core.Page<ZooAddress>;
+
+model ZooAddress {
+  @visibility(Lifecycle.Read)
+  id?: Azure.Core.armResourceIdentifier;
 }
 
 model ZooRecommendation {
