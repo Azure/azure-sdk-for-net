@@ -21,7 +21,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateGetVersionsRequest(string name, RequestOptions options)
+        internal PipelineMessage CreateGetIndexVersionsRequest(string name, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetVersionsRequest(Uri nextPage, string name, RequestOptions options)
+        internal PipelineMessage CreateNextGetIndexVersionsRequest(Uri nextPage, string name, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(RequestOptions options)
+        internal PipelineMessage CreateGetIndexesRequest(RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -69,7 +69,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetRequest(Uri nextPage, RequestOptions options)
+        internal PipelineMessage CreateNextGetIndexesRequest(Uri nextPage, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(string name, string version, RequestOptions options)
+        internal PipelineMessage CreateGetIndexRequest(string name, string version, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;

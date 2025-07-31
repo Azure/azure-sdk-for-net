@@ -49,11 +49,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetVersions(string name, RequestOptions options)
+        public virtual CollectionResult GetDatasetVersions(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DatasetsGetVersionsCollectionResult(this, name, options);
+            return new DatasetsGetDatasetVersionsCollectionResult(this, name, options);
         }
 
         /// <summary>
@@ -70,11 +70,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetVersionsAsync(string name, RequestOptions options)
+        public virtual AsyncCollectionResult GetDatasetVersionsAsync(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DatasetsGetVersionsAsyncCollectionResult(this, name, options);
+            return new DatasetsGetDatasetVersionsAsyncCollectionResult(this, name, options);
         }
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
@@ -83,11 +83,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DatasetVersion> GetVersions(string name, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<DatasetVersion> GetDatasetVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DatasetsGetVersionsCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new DatasetsGetDatasetVersionsCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
@@ -96,11 +96,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DatasetVersion> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<DatasetVersion> GetDatasetVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new DatasetsGetVersionsAsyncCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new DatasetsGetDatasetVersionsAsyncCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult Get(RequestOptions options)
+        public virtual CollectionResult GetDatasets(RequestOptions options)
         {
-            return new DatasetsGetCollectionResult(this, options);
+            return new DatasetsGetDatasetsCollectionResult(this, options);
         }
 
         /// <summary>
@@ -130,25 +130,25 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAsync(RequestOptions options)
+        public virtual AsyncCollectionResult GetDatasetsAsync(RequestOptions options)
         {
-            return new DatasetsGetAsyncCollectionResult(this, options);
+            return new DatasetsGetDatasetsAsyncCollectionResult(this, options);
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<DatasetVersion> Get(CancellationToken cancellationToken = default)
+        public virtual CollectionResult<DatasetVersion> GetDatasets(CancellationToken cancellationToken = default)
         {
-            return new DatasetsGetCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new DatasetsGetDatasetsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<DatasetVersion> GetAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<DatasetVersion> GetDatasetsAsync(CancellationToken cancellationToken = default)
         {
-            return new DatasetsGetAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new DatasetsGetDatasetsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -166,12 +166,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string name, string version, RequestOptions options)
+        public virtual ClientResult GetDataset(string name, string version, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetRequest(name, version, options);
+            using PipelineMessage message = CreateGetDatasetRequest(name, version, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -190,12 +190,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, string version, RequestOptions options)
+        public virtual async Task<ClientResult> GetDatasetAsync(string name, string version, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetRequest(name, version, options);
+            using PipelineMessage message = CreateGetDatasetRequest(name, version, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -206,12 +206,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DatasetVersion> Get(string name, string version, CancellationToken cancellationToken = default)
+        public virtual ClientResult<DatasetVersion> GetDataset(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = Get(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetDataset(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((DatasetVersion)result, result.GetRawResponse());
         }
 
@@ -222,12 +222,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DatasetVersion>> GetAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<DatasetVersion>> GetDatasetAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetDatasetAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((DatasetVersion)result, result.GetRawResponse());
         }
 

@@ -14,30 +14,16 @@ namespace Azure.AI.Projects
     /// <summary> The Deployments sub-client. </summary>
     public partial class Deployments
     {
-        public virtual ModelDeployment GetModelDeployment(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult<ModelDeployment> GetModelDeployment(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult response = Get(name, clientRequestId, options);
-            ModelDeployment deployment = (ModelDeployment)response;
-            return deployment;
-        }
-        public virtual ModelDeployment GetModelDeployment(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult response = Get(name, clientRequestId, cancellationToken);
-            ModelDeployment deployment = (ModelDeployment)response;
-            return deployment;
-        }
-        public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, string clientRequestId, RequestOptions options)
-        {
-            ClientResult response = await GetAsync(name, clientRequestId, options).ConfigureAwait(false);
-            ModelDeployment deployment = (ModelDeployment)response;
-            return deployment;
+            ClientResult<AssetDeployment> result = GetDeployment(name, clientRequestId, cancellationToken);
+            return ClientResult.FromValue((ModelDeployment)result, result.GetRawResponse());
         }
 
-        public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ModelDeployment>> GetModelDeploymentAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult response = await GetAsync(name, clientRequestId, cancellationToken).ConfigureAwait(false);
-            ModelDeployment deployment = (ModelDeployment)response;
-            return deployment;
+            ClientResult<AssetDeployment> response = await GetDeploymentAsync(name, clientRequestId, cancellationToken).ConfigureAwait(false);
+            return ClientResult.FromValue((ModelDeployment)response, response.GetRawResponse());
         }
     }
 }

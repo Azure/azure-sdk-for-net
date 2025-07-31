@@ -6,30 +6,28 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core.Foundations;
+using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ConnectionsGetCollectionResult : CollectionResult
+    internal partial class DatasetsGetDatasetVersionsCollectionResult : CollectionResult
     {
-        private readonly Connections _client;
-        private readonly string _connectionType;
-        private readonly bool? _defaultConnection;
-        private readonly string _clientRequestId;
+        private readonly Datasets _client;
+        private readonly string _name;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ConnectionsGetCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Connections client used to send requests. </param>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
+        /// <summary> Initializes a new instance of DatasetsGetDatasetVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Datasets client used to send requests. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConnectionsGetCollectionResult(Connections client, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public DatasetsGetDatasetVersionsCollectionResult(Datasets client, string name, RequestOptions options)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             _client = client;
-            _connectionType = connectionType;
-            _defaultConnection = defaultConnection;
-            _clientRequestId = clientRequestId;
+            _name = name;
             _options = options;
         }
 
@@ -37,19 +35,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetRequest(_connectionType, _defaultConnection, _clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetDatasetVersionsRequest(_name, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextPageUri = ((PagedConnection)result).NextLink;
+                nextPageUri = ((PagedDatasetVersion)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _connectionType, _defaultConnection, _clientRequestId, _options);
+                message = _client.CreateNextGetDatasetVersionsRequest(nextPageUri, _name, _options);
             }
         }
 
@@ -58,7 +56,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedConnection)page).NextLink;
+            Uri nextPage = ((PagedDatasetVersion)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));

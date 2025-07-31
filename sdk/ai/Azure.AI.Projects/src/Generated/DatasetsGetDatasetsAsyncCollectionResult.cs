@@ -6,30 +6,21 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core.Foundations;
+using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ConnectionsGetAsyncCollectionResult : AsyncCollectionResult
+    internal partial class DatasetsGetDatasetsAsyncCollectionResult : AsyncCollectionResult
     {
-        private readonly Connections _client;
-        private readonly string _connectionType;
-        private readonly bool? _defaultConnection;
-        private readonly string _clientRequestId;
+        private readonly Datasets _client;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ConnectionsGetAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Connections client used to send requests. </param>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
+        /// <summary> Initializes a new instance of DatasetsGetDatasetsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Datasets client used to send requests. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConnectionsGetAsyncCollectionResult(Connections client, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        public DatasetsGetDatasetsAsyncCollectionResult(Datasets client, RequestOptions options)
         {
             _client = client;
-            _connectionType = connectionType;
-            _defaultConnection = defaultConnection;
-            _clientRequestId = clientRequestId;
             _options = options;
         }
 
@@ -37,19 +28,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRequest(_connectionType, _defaultConnection, _clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetDatasetsRequest(_options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
-                nextPageUri = ((PagedConnection)result).NextLink;
+                nextPageUri = ((PagedDatasetVersion)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _connectionType, _defaultConnection, _clientRequestId, _options);
+                message = _client.CreateNextGetDatasetsRequest(nextPageUri, _options);
             }
         }
 
@@ -58,7 +49,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedConnection)page).NextLink;
+            Uri nextPage = ((PagedDatasetVersion)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));

@@ -50,11 +50,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult GetDeployment(string name, string clientRequestId, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetDeploymentRequest(name, clientRequestId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -73,11 +73,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetDeploymentAsync(string name, string clientRequestId, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetDeploymentRequest(name, clientRequestId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -88,11 +88,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AssetDeployment> Get(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AssetDeployment> GetDeployment(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = Get(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetDeployment(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((AssetDeployment)result, result.GetRawResponse());
         }
 
@@ -103,11 +103,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AssetDeployment>> GetAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AssetDeployment>> GetDeploymentAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetDeploymentAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((AssetDeployment)result, result.GetRawResponse());
         }
 
@@ -126,9 +126,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult Get(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetDeployments(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
         {
-            return new DeploymentsGetCollectionResult(
+            return new DeploymentsGetDeploymentsCollectionResult(
                 this,
                 modelPublisher,
                 modelName,
@@ -152,9 +152,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAsync(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
         {
-            return new DeploymentsGetAsyncCollectionResult(
+            return new DeploymentsGetDeploymentsAsyncCollectionResult(
                 this,
                 modelPublisher,
                 modelName,
@@ -170,9 +170,9 @@ namespace Azure.AI.Projects
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<AssetDeployment> Get(string modelPublisher = default, string modelName = default, DeploymentType? deploymentType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<AssetDeployment> GetDeployments(string modelPublisher = default, string modelName = default, DeploymentType? deploymentType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new DeploymentsGetCollectionResultOfT(
+            return new DeploymentsGetDeploymentsCollectionResultOfT(
                 this,
                 modelPublisher,
                 modelName,
@@ -188,9 +188,9 @@ namespace Azure.AI.Projects
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<AssetDeployment> GetAsync(string modelPublisher = default, string modelName = default, DeploymentType? deploymentType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<AssetDeployment> GetDeploymentsAsync(string modelPublisher = default, string modelName = default, DeploymentType? deploymentType = default, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new DeploymentsGetAsyncCollectionResultOfT(
+            return new DeploymentsGetDeploymentsAsyncCollectionResultOfT(
                 this,
                 modelPublisher,
                 modelName,

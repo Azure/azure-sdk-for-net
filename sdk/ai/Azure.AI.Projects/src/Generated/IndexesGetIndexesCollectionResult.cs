@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class IndexesGetAsyncCollectionResult : AsyncCollectionResult
+    internal partial class IndexesGetIndexesCollectionResult : CollectionResult
     {
         private readonly Indexes _client;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of IndexesGetAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of IndexesGetIndexesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Indexes client used to send requests. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public IndexesGetAsyncCollectionResult(Indexes client, RequestOptions options)
+        public IndexesGetIndexesCollectionResult(Indexes client, RequestOptions options)
         {
             _client = client;
             _options = options;
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetRequest(_options);
+            PipelineMessage message = _client.CreateGetIndexesRequest(_options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextPageUri = ((PagedIndex)result).NextLink;
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _options);
+                message = _client.CreateNextGetIndexesRequest(nextPageUri, _options);
             }
         }
 

@@ -10,25 +10,28 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class ConnectionsGetCollectionResultOfT : CollectionResult<ConnectionProperties>
+    internal partial class DeploymentsGetDeploymentsCollectionResult : CollectionResult
     {
-        private readonly Connections _client;
-        private readonly string _connectionType;
-        private readonly bool? _defaultConnection;
+        private readonly Deployments _client;
+        private readonly string _modelPublisher;
+        private readonly string _modelName;
+        private readonly string _deploymentType;
         private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of ConnectionsGetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Connections client used to send requests. </param>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <summary> Initializes a new instance of DeploymentsGetDeploymentsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Deployments client used to send requests. </param>
+        /// <param name="modelPublisher"> Model publisher to filter models by. </param>
+        /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
+        /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConnectionsGetCollectionResultOfT(Connections client, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        public DeploymentsGetDeploymentsCollectionResult(Deployments client, string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
         {
             _client = client;
-            _connectionType = connectionType;
-            _defaultConnection = defaultConnection;
+            _modelPublisher = modelPublisher;
+            _modelName = modelName;
+            _deploymentType = deploymentType;
             _clientRequestId = clientRequestId;
             _options = options;
         }
@@ -37,19 +40,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetRequest(_connectionType, _defaultConnection, _clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetDeploymentsRequest(_modelPublisher, _modelName, _deploymentType, _clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextPageUri = ((PagedConnection)result).NextLink;
+                nextPageUri = ((PagedDeployment)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _connectionType, _defaultConnection, _clientRequestId, _options);
+                message = _client.CreateNextGetDeploymentsRequest(nextPageUri, _modelPublisher, _modelName, _deploymentType, _clientRequestId, _options);
             }
         }
 
@@ -58,7 +61,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedConnection)page).NextLink;
+            Uri nextPage = ((PagedDeployment)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
@@ -67,14 +70,6 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-        }
-
-        /// <summary> Gets the values from the specified page. </summary>
-        /// <param name="page"></param>
-        /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<ConnectionProperties> GetValuesFromPage(ClientResult page)
-        {
-            return ((PagedConnection)page).Value;
         }
     }
 }

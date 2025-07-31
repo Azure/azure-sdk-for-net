@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class IndexesGetVersionsCollectionResultOfT : CollectionResult<SearchIndex>
+    internal partial class DatasetsGetDatasetVersionsCollectionResultOfT : CollectionResult<DatasetVersion>
     {
-        private readonly Indexes _client;
+        private readonly Datasets _client;
         private readonly string _name;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of IndexesGetVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Indexes client used to send requests. </param>
+        /// <summary> Initializes a new instance of DatasetsGetDatasetVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Datasets client used to send requests. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndexesGetVersionsCollectionResultOfT(Indexes client, string name, RequestOptions options)
+        public DatasetsGetDatasetVersionsCollectionResultOfT(Datasets client, string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -35,19 +35,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _options);
+            PipelineMessage message = _client.CreateGetDatasetVersionsRequest(_name, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextPageUri = ((PagedIndex)result).NextLink;
+                nextPageUri = ((PagedDatasetVersion)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _options);
+                message = _client.CreateNextGetDatasetVersionsRequest(nextPageUri, _name, _options);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedIndex)page).NextLink;
+            Uri nextPage = ((PagedDatasetVersion)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
@@ -70,9 +70,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<SearchIndex> GetValuesFromPage(ClientResult page)
+        protected override IEnumerable<DatasetVersion> GetValuesFromPage(ClientResult page)
         {
-            return ((PagedIndex)page).Value;
+            return ((PagedDatasetVersion)page).Value;
         }
     }
 }

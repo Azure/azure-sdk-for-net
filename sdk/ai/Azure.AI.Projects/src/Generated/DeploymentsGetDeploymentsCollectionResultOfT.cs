@@ -10,7 +10,7 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class DeploymentsGetAsyncCollectionResult : AsyncCollectionResult
+    internal partial class DeploymentsGetDeploymentsCollectionResultOfT : CollectionResult<AssetDeployment>
     {
         private readonly Deployments _client;
         private readonly string _modelPublisher;
@@ -19,14 +19,14 @@ namespace Azure.AI.Projects
         private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of DeploymentsGetAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DeploymentsGetDeploymentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Deployments client used to send requests. </param>
         /// <param name="modelPublisher"> Model publisher to filter models by. </param>
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeploymentsGetAsyncCollectionResult(Deployments client, string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
+        public DeploymentsGetDeploymentsCollectionResultOfT(Deployments client, string modelPublisher, string modelName, string deploymentType, string clientRequestId, RequestOptions options)
         {
             _client = client;
             _modelPublisher = modelPublisher;
@@ -38,13 +38,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetRequest(_modelPublisher, _modelName, _deploymentType, _clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetDeploymentsRequest(_modelPublisher, _modelName, _deploymentType, _clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextPageUri = ((PagedDeployment)result).NextLink;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _modelPublisher, _modelName, _deploymentType, _clientRequestId, _options);
+                message = _client.CreateNextGetDeploymentsRequest(nextPageUri, _modelPublisher, _modelName, _deploymentType, _clientRequestId, _options);
             }
         }
 
@@ -70,6 +70,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+        }
+
+        /// <summary> Gets the values from the specified page. </summary>
+        /// <param name="page"></param>
+        /// <returns> The values from the specified page. </returns>
+        protected override IEnumerable<AssetDeployment> GetValuesFromPage(ClientResult page)
+        {
+            return ((PagedDeployment)page).Value;
         }
     }
 }

@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class DatasetsGetAsyncCollectionResult : AsyncCollectionResult
+    internal partial class IndexesGetIndexesCollectionResultOfT : CollectionResult<SearchIndex>
     {
-        private readonly Datasets _client;
+        private readonly Indexes _client;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of DatasetsGetAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Datasets client used to send requests. </param>
+        /// <summary> Initializes a new instance of IndexesGetIndexesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Indexes client used to send requests. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DatasetsGetAsyncCollectionResult(Datasets client, RequestOptions options)
+        public IndexesGetIndexesCollectionResultOfT(Indexes client, RequestOptions options)
         {
             _client = client;
             _options = options;
@@ -26,21 +26,21 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetRequest(_options);
+            PipelineMessage message = _client.CreateGetIndexesRequest(_options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
-                nextPageUri = ((PagedDatasetVersion)result).NextLink;
+                nextPageUri = ((PagedIndex)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _options);
+                message = _client.CreateNextGetIndexesRequest(nextPageUri, _options);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedDatasetVersion)page).NextLink;
+            Uri nextPage = ((PagedIndex)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
@@ -58,6 +58,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+        }
+
+        /// <summary> Gets the values from the specified page. </summary>
+        /// <param name="page"></param>
+        /// <returns> The values from the specified page. </returns>
+        protected override IEnumerable<SearchIndex> GetValuesFromPage(ClientResult page)
+        {
+            return ((PagedIndex)page).Value;
         }
     }
 }

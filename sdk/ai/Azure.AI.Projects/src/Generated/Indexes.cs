@@ -49,11 +49,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetVersions(string name, RequestOptions options)
+        public virtual CollectionResult GetIndexVersions(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new IndexesGetVersionsCollectionResult(this, name, options);
+            return new IndexesGetIndexVersionsCollectionResult(this, name, options);
         }
 
         /// <summary>
@@ -70,11 +70,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetVersionsAsync(string name, RequestOptions options)
+        public virtual AsyncCollectionResult GetIndexVersionsAsync(string name, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new IndexesGetVersionsAsyncCollectionResult(this, name, options);
+            return new IndexesGetIndexVersionsAsyncCollectionResult(this, name, options);
         }
 
         /// <summary> List all versions of the given Index. </summary>
@@ -83,11 +83,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<SearchIndex> GetVersions(string name, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<SearchIndex> GetIndexVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new IndexesGetVersionsCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new IndexesGetIndexVersionsCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List all versions of the given Index. </summary>
@@ -96,11 +96,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<SearchIndex> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<SearchIndex> GetIndexVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new IndexesGetVersionsAsyncCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new IndexesGetIndexVersionsAsyncCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult Get(RequestOptions options)
+        public virtual CollectionResult GetIndexes(RequestOptions options)
         {
-            return new IndexesGetCollectionResult(this, options);
+            return new IndexesGetIndexesCollectionResult(this, options);
         }
 
         /// <summary>
@@ -130,25 +130,25 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAsync(RequestOptions options)
+        public virtual AsyncCollectionResult GetIndexesAsync(RequestOptions options)
         {
-            return new IndexesGetAsyncCollectionResult(this, options);
+            return new IndexesGetIndexesAsyncCollectionResult(this, options);
         }
 
         /// <summary> List the latest version of each Index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<SearchIndex> Get(CancellationToken cancellationToken = default)
+        public virtual CollectionResult<SearchIndex> GetIndexes(CancellationToken cancellationToken = default)
         {
-            return new IndexesGetCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new IndexesGetIndexesCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List the latest version of each Index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<SearchIndex> GetAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<SearchIndex> GetIndexesAsync(CancellationToken cancellationToken = default)
         {
-            return new IndexesGetAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new IndexesGetIndexesAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -166,12 +166,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string name, string version, RequestOptions options)
+        public virtual ClientResult GetIndex(string name, string version, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetRequest(name, version, options);
+            using PipelineMessage message = CreateGetIndexRequest(name, version, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -190,12 +190,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, string version, RequestOptions options)
+        public virtual async Task<ClientResult> GetIndexAsync(string name, string version, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetRequest(name, version, options);
+            using PipelineMessage message = CreateGetIndexRequest(name, version, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -206,12 +206,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SearchIndex> Get(string name, string version, CancellationToken cancellationToken = default)
+        public virtual ClientResult<SearchIndex> GetIndex(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = Get(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetIndex(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((SearchIndex)result, result.GetRawResponse());
         }
 
@@ -222,12 +222,12 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SearchIndex>> GetAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<SearchIndex>> GetIndexAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetIndexAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((SearchIndex)result, result.GetRawResponse());
         }
 

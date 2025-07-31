@@ -6,40 +6,34 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class DatasetsGetVersionsCollectionResult : CollectionResult
+    internal partial class DatasetsGetDatasetsAsyncCollectionResultOfT : AsyncCollectionResult<DatasetVersion>
     {
         private readonly Datasets _client;
-        private readonly string _name;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of DatasetsGetVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DatasetsGetDatasetsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Datasets client used to send requests. </param>
-        /// <param name="name"> The name of the resource. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public DatasetsGetVersionsCollectionResult(Datasets client, string name, RequestOptions options)
+        public DatasetsGetDatasetsAsyncCollectionResultOfT(Datasets client, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             _client = client;
-            _name = name;
             _options = options;
         }
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _options);
+            PipelineMessage message = _client.CreateGetDatasetsRequest(_options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
                 nextPageUri = ((PagedDatasetVersion)result).NextLink;
@@ -47,7 +41,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _options);
+                message = _client.CreateNextGetDatasetsRequest(nextPageUri, _options);
             }
         }
 
@@ -64,6 +58,18 @@ namespace Azure.AI.Projects
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary> Gets the values from the specified page. </summary>
+        /// <param name="page"></param>
+        /// <returns> The values from the specified page. </returns>
+        protected override async IAsyncEnumerable<DatasetVersion> GetValuesFromPageAsync(ClientResult page)
+        {
+            foreach (DatasetVersion item in ((PagedDatasetVersion)page).Value)
+            {
+                yield return item;
+                await Task.Yield();
             }
         }
     }

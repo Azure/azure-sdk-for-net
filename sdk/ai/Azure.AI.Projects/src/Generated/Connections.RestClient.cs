@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        internal PipelineMessage CreateGetRequest(string name, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetConnectionRequest(string name, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetWithCredentialsRequest(string name, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetConnectionWithCredentialsRequest(string name, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetConnectionsRequest(string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -85,7 +85,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetRequest(Uri nextPage, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateNextGetConnectionsRequest(Uri nextPage, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;

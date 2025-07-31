@@ -7,28 +7,30 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class IndexesGetVersionsAsyncCollectionResultOfT : AsyncCollectionResult<SearchIndex>
+    internal partial class ConnectionsGetConnectionsAsyncCollectionResultOfT : AsyncCollectionResult<ConnectionProperties>
     {
-        private readonly Indexes _client;
-        private readonly string _name;
+        private readonly Connections _client;
+        private readonly string _connectionType;
+        private readonly bool? _defaultConnection;
+        private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of IndexesGetVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Indexes client used to send requests. </param>
-        /// <param name="name"> The name of the resource. </param>
+        /// <summary> Initializes a new instance of ConnectionsGetConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Connections client used to send requests. </param>
+        /// <param name="connectionType"> List connections of this specific type. </param>
+        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public IndexesGetVersionsAsyncCollectionResultOfT(Indexes client, string name, RequestOptions options)
+        public ConnectionsGetConnectionsAsyncCollectionResultOfT(Connections client, string connectionType, bool? defaultConnection, string clientRequestId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             _client = client;
-            _name = name;
+            _connectionType = connectionType;
+            _defaultConnection = defaultConnection;
+            _clientRequestId = clientRequestId;
             _options = options;
         }
 
@@ -36,19 +38,19 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _options);
+            PipelineMessage message = _client.CreateGetConnectionsRequest(_connectionType, _defaultConnection, _clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
                 ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
-                nextPageUri = ((PagedIndex)result).NextLink;
+                nextPageUri = ((PagedConnection)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetVersionsRequest(nextPageUri, _name, _options);
+                message = _client.CreateNextGetConnectionsRequest(nextPageUri, _connectionType, _defaultConnection, _clientRequestId, _options);
             }
         }
 
@@ -57,7 +59,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedIndex)page).NextLink;
+            Uri nextPage = ((PagedConnection)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
@@ -71,9 +73,9 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<SearchIndex> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<ConnectionProperties> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (SearchIndex item in ((PagedIndex)page).Value)
+            foreach (ConnectionProperties item in ((PagedConnection)page).Value)
             {
                 yield return item;
                 await Task.Yield();
