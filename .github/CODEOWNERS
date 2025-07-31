@@ -928,6 +928,12 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
+# PRLabel: %Widget Manager
+/sdk/contosowidgetmanager/ @ReilleyMilne
+
+# ServiceLabel: %Widget Manager
+# ServiceOwners: @ReilleyMilne
+
 
 # ######## Management Plane ########
 
