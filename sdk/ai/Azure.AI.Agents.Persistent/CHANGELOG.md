@@ -10,7 +10,7 @@
 
 ### Bugs Fixed
 
-- Fixed the data contract for MCP tool.
+- Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
 
 ### Other Changes
 

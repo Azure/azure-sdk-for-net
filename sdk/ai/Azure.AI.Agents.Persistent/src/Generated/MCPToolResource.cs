@@ -96,7 +96,10 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="string"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="MCPApprovalRequirement"/></description>
+        /// <description>"never"</description>
+        /// </item>
+        /// <item>
+        /// <description>"always"</description>
         /// </item>
         /// <item>
         /// <description><see cref="MCPApprovalPerTool"/></description>
