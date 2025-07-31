@@ -85,12 +85,9 @@ internal class NameVisitor : ScmLibraryVisitor
 
     private static void UpdateSerialization(ModelProvider type, string newName)
     {
-        if (type.SerializationProviders.Count > 0)
+        foreach (var serializationProvider in type.SerializationProviders)
         {
-            foreach (var serializationProvider in type.SerializationProviders)
-            {
-                serializationProvider.Update(name: newName);
-            }
+            serializationProvider.Update(name: newName);
         }
     }
 
