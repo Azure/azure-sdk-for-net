@@ -1,4 +1,4 @@
-# Azure.Provisioning.Search client library for .NET
+# Azure Provisioning Search client library for .NET
 
 Azure.Provisioning.Search simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,26 @@ dotnet add package Azure.Provisioning.Search
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Search Service
+
+This example demonstrates how to create an Azure Cognitive Search service, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.search/azure-search-create/main.bicep).
+
+```C# Snippet:SearchBasic
+Infrastructure infra = new();
+
+SearchService search =
+    new(nameof(search))
+    {
+        SearchSkuName = SearchServiceSkuName.Standard,
+        ReplicaCount = 1,
+        PartitionCount = 1,
+        HostingMode = SearchServiceHostingMode.Default,
+    };
+infra.Add(search);
+```
 
 ## Troubleshooting
 
