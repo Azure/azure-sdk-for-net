@@ -1,24 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.Diagnostics;
-using Newtonsoft.Json.Linq;
+using System.Drawing;
+using System.Security.AccessControl;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerServiceFleet.Models;
-using Azure.ResourceManager.ContainerService;
-using Azure.ResourceManager.Resources.Models;
-using System.Security.AccessControl;
-using System;
-using Azure.ResourceManager.Models;
+using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.ContainerService.Models;
-using System.Drawing;
+using Azure.ResourceManager.ContainerServiceFleet.Models;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 {
@@ -77,10 +78,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // Test Member operations
             ContainerServiceFleetMemberCollection memberCollection = fleetResource.GetContainerServiceFleetMembers();
             string fleetMemberName = "fleetmember1";
+            var group1 = new ContainerServiceFleetUpdateGroup("group1");
             ContainerServiceFleetMemberData memberData = new ContainerServiceFleetMemberData()
             {
                 ClusterResourceId = new ResourceIdentifier(managedCluster.Data.Id),
+                Group = group1.Name
             };
+            memberData.Labels["team"] = "fleet";
             ArmOperation<ContainerServiceFleetMemberResource> createMemberLRO = await memberCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetMemberName, memberData);
             ContainerServiceFleetMemberResource memberResource = createMemberLRO.Value;
             Console.WriteLine($"Succeeded on id: {createMemberLRO.Value.Data.Id}");
@@ -98,13 +102,69 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // Test GetAsync
             ContainerServiceFleetMemberResource getMemberAsyncResult = await memberCollection.GetAsync(fleetMemberName);
             Debug.Assert(getMemberAsyncResult.HasData, "GetAsync Result was not valid");
+            Debug.Assert(
+                getMemberAsyncResult.Data.Labels != null &&
+                getMemberAsyncResult.Data.Labels.TryGetValue("team", out var teamValue) &&
+                teamValue == "fleet",
+                "\"team\" label was missing or not equal to \"fleet\""
+            );
 
             // Create UpdateRun
             ContainerServiceFleetUpdateRunCollection updateRunCollection = fleetResource.GetContainerServiceFleetUpdateRuns();
             string updateRunName = "run1";
-            ContainerServiceFleetUpdateRunData updateRunData = new ContainerServiceFleetUpdateRunData();
-            updateRunData.ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
-                new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full, "1.29.8", null), new NodeImageSelection(NodeImageSelectionType.Latest), null);
+            // Stage before/after gates
+            var stageBeforeGate = new GateConfiguration(GateType.Approval)
+            {
+                DisplayName = "stage before gate"
+            };
+
+            var stageAfterGate = new GateConfiguration(GateType.Approval)
+            {
+                DisplayName = "stage after gate"
+            };
+
+            // Group before/after gates
+            var groupBeforeGate = new GateConfiguration(GateType.Approval)
+            {
+                DisplayName = "group before gate"
+            };
+
+            var groupAfterGate = new GateConfiguration(GateType.Approval)
+            {
+                DisplayName = "group after gate"
+            };
+
+            // Create group (just name + gates, no members here)
+            group1.BeforeGates.Add(groupBeforeGate);
+            group1.AfterGates.Add(groupAfterGate);
+
+            // Create stage and attach group
+            var stage1 = new ContainerServiceFleetUpdateStage("stage1")
+            {
+                AfterStageWaitInSeconds = 3600
+            };
+            stage1.BeforeGates.Add(stageBeforeGate);
+            stage1.AfterGates.Add(stageAfterGate);
+            stage1.Groups.Add(group1);
+
+            // Create the update run data
+            var updateRunData = new ContainerServiceFleetUpdateRunData
+            {
+                ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
+                    new ContainerServiceFleetManagedClusterUpgradeSpec(
+                        ContainerServiceFleetManagedClusterUpgradeType.Full,
+                        "1.33.0", // Kubernetes version
+                        null
+                    ),
+                    new NodeImageSelection(NodeImageSelectionType.Latest),
+                    null
+                )
+            };
+
+            // Add stages into the update run
+            updateRunData.StrategyStages.Add(stage1);
+
+            Console.WriteLine("Fleet update run created!");
 
             ArmOperation<ContainerServiceFleetUpdateRunResource> createUpdateRunLRO = await updateRunCollection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, updateRunData);
             ContainerServiceFleetUpdateRunResource updateRunResource = createUpdateRunLRO.Value;
@@ -123,12 +183,42 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ArmOperation<ContainerServiceFleetUpdateRunResource> stopUpdateRunLRO = await updateRunResource.StopAsync(WaitUntil.Completed);
             Console.WriteLine($"Succeeded on id: {stopUpdateRunLRO.Value.Data.Id}");
 
+            // Test Gates
+            // List Gates
+            fleetResource = armClient.GetContainerServiceFleetResource(fleetResourceId);
+            GateCollection gates = fleetResource.GetGates();
+            Console.WriteLine($"Listing all gates in fleet '{fleetName}'...");
+            List<GateResource> gateList = new List<GateResource>();
+            await foreach (GateResource gate in gates.GetAllAsync())
+            {
+                gateList.Add(gate);
+                Console.WriteLine($"- Gate Name: {gate.Data.Name}");
+            }
+            Debug.Assert(gateList.Count > 0, "No gates were found in the fleet");
+            var gateName = gateList[0].Data.Name;
+            // Get Gates
+            GateResource getGate = await gates.GetAsync(gateName);
+            Debug.Assert(getGate != null, $"Gate '{gateName}' was not found.");
+            // Patch Gate
+            GatePatch patch = new GatePatch
+            {
+                GatePatchState = GateState.Completed
+            };
+            ArmOperation<GateResource> updateOperation = await getGate.UpdateAsync(WaitUntil.Completed, patch);
+            GateResource updatedGate = updateOperation.Value;
+            Debug.Assert(
+                updatedGate.Data.State == GateState.Completed,
+                $"Gate '{updatedGate.Data.Name}' did not reach the expected state. Actual: {updatedGate.Data.State}"
+            );
+
             // Create AutoUpgradeProfile
             AutoUpgradeProfileCollection autoUpgradeProfileCollection = fleetResource.GetAutoUpgradeProfiles();
             string autoUpgradeProfileName = "autoupgradeprofile1";
             AutoUpgradeProfileData createAutoUpgradeProfileData = new AutoUpgradeProfileData()
             {
-                Channel = ContainerServiceFleetUpgradeChannel.Stable,
+                Channel = ContainerServiceFleetUpgradeChannel.TargetKubernetesVersion,
+                LongTermSupport = true,
+                TargetKubernetesVersion = "1.33.0"
             };
             ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData);
             AutoUpgradeProfileResource createAutoUpgradeProfileResult = createAutoUpgradeProfileLRO.Value;
@@ -146,6 +236,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Console.WriteLine($"Get AutoUpgradeProfile was: {getAutoUpgradeProfileData.Id}");
             Debug.Assert(getAutoUpgradeProfileData.Name == createAutoUpgradeProfileData.Name, "GetAutoUpgradeProfile did not retrieve the correct data.");
             Debug.Assert(getAutoUpgradeProfileData.Id == createAutoUpgradeProfileData.Id, "GetAutoUpgradeProfile did not retrieve the correct data.");
+            Debug.Assert(getAutoUpgradeProfileData.TargetKubernetesVersion == createAutoUpgradeProfileData.TargetKubernetesVersion, "GetAutoUpgradeProfile did not retrieve the correct data.");
 
             // Update AutoUpgradeProfile
             AutoUpgradeProfileData updateAutoUpgradeProfileData = new AutoUpgradeProfileData()
