@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+## 1.2.0 (2025-08-02)
+
+### Features Added
+
+- Add Gates support
+- Add FleetMember labels support
+- Add TargetKubernetesVersion support
+
 ## 1.1.0 (2025-04-22)
 
 ### Features Added
