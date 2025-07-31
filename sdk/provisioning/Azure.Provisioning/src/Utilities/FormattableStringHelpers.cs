@@ -7,68 +7,67 @@ namespace Azure.Provisioning.Utilities
 {
     internal static class FormattableStringHelpers
     {
-        public static GetPathPartsEnumerator GetFormattableStringFormatParts(ReadOnlySpan<char> format) => new GetPathPartsEnumerator(format);
+        public static GetFormatPartsEnumerator GetFormattableStringFormatParts(ReadOnlySpan<char> format) => new GetFormatPartsEnumerator(format);
 
-        public ref struct GetPathPartsEnumerator
+        public ref struct GetFormatPartsEnumerator
         {
-            private ReadOnlySpan<char> _path;
+            private ReadOnlySpan<char> _format;
             public Part Current { get; private set; }
 
-            public GetPathPartsEnumerator(ReadOnlySpan<char> format)
+            public GetFormatPartsEnumerator(ReadOnlySpan<char> format)
             {
-                _path = format;
+                _format = format;
                 Current = default;
             }
 
-            public readonly GetPathPartsEnumerator GetEnumerator() => this;
+            public readonly GetFormatPartsEnumerator GetEnumerator() => this;
 
             public bool MoveNext()
             {
-                var span = _path;
-                if (span.Length == 0)
+                if (_format.Length == 0)
                 {
                     return false;
                 }
 
-                var separatorIndex = span.IndexOfAny('{', '}');
+                var separatorIndex = _format.IndexOfAny('{', '}');
 
                 if (separatorIndex == -1)
                 {
-                    Current = new Part(span, true);
-                    _path = ReadOnlySpan<char>.Empty;
+                    Current = new Part(_format, true);
+                    _format = ReadOnlySpan<char>.Empty;
                     return true;
                 }
 
-                var separator = span[separatorIndex];
+                var separator = _format[separatorIndex];
                 // Handle {{ and }} escape sequences
-                if (separatorIndex + 1 < span.Length && span[separatorIndex + 1] == separator)
+                if (separatorIndex + 1 < _format.Length && _format[separatorIndex + 1] == separator)
                 {
-                    Current = new Part(span.Slice(0, separatorIndex + 1), true);
-                    _path = span.Slice(separatorIndex + 2);
+                    Current = new Part(_format.Slice(0, separatorIndex + 1), true);
+                    _format = _format.Slice(separatorIndex + 2);
                     return true;
                 }
 
                 var isLiteral = separator == '{';
 
                 // Skip empty literals
-                if (isLiteral && separatorIndex == 0 && span.Length > 1)
+                if (isLiteral && separatorIndex == 0 && _format.Length > 1)
                 {
-                    separatorIndex = span.IndexOf('}');
+                    separatorIndex = _format.IndexOf('}');
                     if (separatorIndex == -1)
                     {
-                        Current = new Part(span.Slice(1), true);
-                        _path = ReadOnlySpan<char>.Empty;
+                        Current = new Part(_format.Slice(1), true);
+                        _format = ReadOnlySpan<char>.Empty;
                         return true;
                     }
 
-                    Current = new Part(span.Slice(1, separatorIndex - 1), false);
+                    Current = new Part(_format.Slice(1, separatorIndex - 1), false);
                 }
                 else
                 {
-                    Current = new Part(span.Slice(0, separatorIndex), isLiteral);
+                    Current = new Part(_format.Slice(0, separatorIndex), isLiteral);
                 }
 
-                _path = span.Slice(separatorIndex + 1);
+                _format = _format.Slice(separatorIndex + 1);
                 return true;
             }
 
@@ -82,12 +81,6 @@ namespace Azure.Provisioning.Utilities
 
                 public ReadOnlySpan<char> Span { get; }
                 public bool IsLiteral { get; }
-
-                public void Deconstruct(out ReadOnlySpan<char> span, out bool isLiteral)
-                {
-                    span = Span;
-                    isLiteral = IsLiteral;
-                }
 
                 public void Deconstruct(out ReadOnlySpan<char> span, out bool isLiteral, out int argumentIndex)
                 {

@@ -55,13 +55,6 @@ public class BicepStringBuilder
         return this;
     }
 
-    public BicepStringBuilder Append(FormattableString value)
-    {
-        var handler = new BicepInterpolatedStringHandler(value.Format.Length, value.ArgumentCount);
-        handler.AppendFormattableString(value);
-        return Append(handler);
-    }
-
     /// <summary>
     /// Combine all the subexpressions into a single interpolated string.
     /// </summary>
