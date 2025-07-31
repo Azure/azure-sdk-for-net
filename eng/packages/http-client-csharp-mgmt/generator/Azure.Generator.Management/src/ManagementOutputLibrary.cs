@@ -184,7 +184,7 @@ namespace Azure.Generator.Management
             var extensions = BuildExtensions(resources);
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 ArmOperation,
                 GenericArmOperation,
                 .. resources,
