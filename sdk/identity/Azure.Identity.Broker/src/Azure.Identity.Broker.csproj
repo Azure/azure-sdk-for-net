@@ -13,7 +13,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" VersionOverride="1.14.0-beta.4" />
+    <PackageReference Include="Azure.Identity" VersionOverride="1.15.0-beta.1" />
     <PackageReference Include="Microsoft.Identity.Client.Broker" />
   </ItemGroup>
 </Project>
