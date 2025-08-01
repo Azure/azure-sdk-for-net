@@ -335,7 +335,7 @@ namespace Azure.Storage.DataMovement
                         ? current.Uri.GetPath()
                         : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
                     // Decode the container name as it was pulled from encoded Uri and will be re-encoded on destination.
-                    subContainerPath = WebUtility.UrlDecode(subContainerPath);
+                    subContainerPath = Uri.UnescapeDataString(subContainerPath);
                     StorageResourceContainer subContainer =
                         _destinationResourceContainer.GetChildStorageResourceContainer(subContainerPath);
 
@@ -372,7 +372,7 @@ namespace Azure.Storage.DataMovement
                                 string containerUriPath = _sourceResourceContainer.Uri.GetPath();
                                 sourceName = current.Uri.GetPath().Substring(containerUriPath.Length + 1);
                                 // Decode the resource name as it was pulled from encoded Uri and will be re-encoded on destination.
-                                sourceName = WebUtility.UrlDecode(sourceName);
+                                sourceName = Uri.UnescapeDataString(sourceName);
                             }
 
                             StorageResourceItem sourceItem = (StorageResourceItem)current;
