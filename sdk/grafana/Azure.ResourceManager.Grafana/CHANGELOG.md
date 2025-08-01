@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2025-08-01)
+
+### Bugs Fixed
+
+- Add missing long running operation header for `Grafana_Update` operation
 
 ## 1.2.0-beta.1 (2025-06-24)
 
