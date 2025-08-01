@@ -5,8 +5,10 @@ using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
+using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -17,6 +19,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -99,7 +102,7 @@ namespace Azure.Generator.Management
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), [value]).Terminate();
+                return value.CastTo(new CSharpType(typeof(IJsonModel<>, valueType)).Invoke(nameof(IJsonModel<object>.Write)).Terminate();
             }
 
             if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
@@ -117,7 +120,23 @@ namespace Azure.Generator.Management
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), [element], [valueType], false);
+                IReadOnlyList<ValueExpression> readBody =
+                [
+                    New.Instance(
+                    typeof(BinaryData),
+                    [
+                        new MemberExpression(typeof(Encoding), nameof(Encoding.UTF8)).Invoke(nameof(UTF8Encoding.GetBytes),
+                            [
+                                element.GetRawText()
+                            ])
+                    ]),
+                    ModelSerializationExtensionsSnippets.Wire
+                ];
+
+                return Static<ModelReaderWriter>(
+                    nameof(ModelReaderWriter.Read),
+                    [.. readBody, ModelReaderWriterContextExpression.Default],
+                    TypeArguments: [valueType]);
             }
 
             if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
