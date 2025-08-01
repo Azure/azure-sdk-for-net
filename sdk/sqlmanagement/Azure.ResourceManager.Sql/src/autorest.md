@@ -114,6 +114,7 @@ prepend-rp-prefix:
   - DatabaseSecurityAlertPolicy
   - TimeZone
   - Server
+  - ServerCreateMode
   - Database
   - DayOfWeek
   - MetricType
@@ -382,6 +383,7 @@ rename-mapping:
   ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
   ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
   ErrorType: SqlInstancePoolOperationErrorType
+  InaccessibilityReason: ManagedDatabaseInaccessibilityReason 
 
 prompted-enum-values:
   - Default

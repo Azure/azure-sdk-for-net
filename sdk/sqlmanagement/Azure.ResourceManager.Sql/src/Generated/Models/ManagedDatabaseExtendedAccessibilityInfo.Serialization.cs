@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string inaccessibilityReasonErrorCode = default;
             string inaccessibilityReasonDescription = default;
-            InaccessibilityReason inaccessibilityReasonKind = default;
+            ManagedDatabaseInaccessibilityReason inaccessibilityReasonKind = default;
             Uri inaccessibilityReasonTdeKeyUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("inaccessibilityReasonKind"u8))
                 {
-                    inaccessibilityReasonKind = new InaccessibilityReason(property.Value.GetString());
+                    inaccessibilityReasonKind = new ManagedDatabaseInaccessibilityReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("inaccessibilityReasonTdeKeyUri"u8))

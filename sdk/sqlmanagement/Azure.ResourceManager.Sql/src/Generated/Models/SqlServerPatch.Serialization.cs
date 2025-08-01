@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql.Models
             ServerNetworkAccessFlag? isIPv6Enabled = default;
             ExternalGovernanceStatus? externalGovernanceStatus = default;
             int? retentionDays = default;
-            ServerCreateMode? createMode = default;
+            SqlServerCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            createMode = new ServerCreateMode(property0.Value.GetString());
+                            createMode = new SqlServerCreateMode(property0.Value.GetString());
                             continue;
                         }
                     }

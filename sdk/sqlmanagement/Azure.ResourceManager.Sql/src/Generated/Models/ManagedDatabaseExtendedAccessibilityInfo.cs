@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="inaccessibilityReasonErrorCode"> SQL Server error code connected to the inaccessibility root cause. </param>
         /// <param name="inaccessibilityReasonDescription"> Root cause explanation and mitigation action. </param>
         /// <param name="inaccessibilityReasonKind"> Root cause kind. Allowed values are “TransparentDataEncryption”, “DatabaseReplication”, and “Unknown”. </param>
-        internal ManagedDatabaseExtendedAccessibilityInfo(string inaccessibilityReasonErrorCode, string inaccessibilityReasonDescription, InaccessibilityReason inaccessibilityReasonKind)
+        internal ManagedDatabaseExtendedAccessibilityInfo(string inaccessibilityReasonErrorCode, string inaccessibilityReasonDescription, ManagedDatabaseInaccessibilityReason inaccessibilityReasonKind)
         {
             InaccessibilityReasonErrorCode = inaccessibilityReasonErrorCode;
             InaccessibilityReasonDescription = inaccessibilityReasonDescription;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="inaccessibilityReasonKind"> Root cause kind. Allowed values are “TransparentDataEncryption”, “DatabaseReplication”, and “Unknown”. </param>
         /// <param name="inaccessibilityReasonTdeKeyUri"> For the root cause kind “TransparentDataEncryption”, the CMK URI. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabaseExtendedAccessibilityInfo(string inaccessibilityReasonErrorCode, string inaccessibilityReasonDescription, InaccessibilityReason inaccessibilityReasonKind, Uri inaccessibilityReasonTdeKeyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDatabaseExtendedAccessibilityInfo(string inaccessibilityReasonErrorCode, string inaccessibilityReasonDescription, ManagedDatabaseInaccessibilityReason inaccessibilityReasonKind, Uri inaccessibilityReasonTdeKeyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InaccessibilityReasonErrorCode = inaccessibilityReasonErrorCode;
             InaccessibilityReasonDescription = inaccessibilityReasonDescription;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string InaccessibilityReasonDescription { get; }
         /// <summary> Root cause kind. Allowed values are “TransparentDataEncryption”, “DatabaseReplication”, and “Unknown”. </summary>
         [WirePath("inaccessibilityReasonKind")]
-        public InaccessibilityReason InaccessibilityReasonKind { get; }
+        public ManagedDatabaseInaccessibilityReason InaccessibilityReasonKind { get; }
         /// <summary> For the root cause kind “TransparentDataEncryption”, the CMK URI. </summary>
         [WirePath("inaccessibilityReasonTdeKeyUri")]
         public Uri InaccessibilityReasonTdeKeyUri { get; }
