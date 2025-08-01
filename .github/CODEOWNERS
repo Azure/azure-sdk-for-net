@@ -61,10 +61,10 @@
 /sdk/core/                                                         @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Azure.Core
-# AzureSdkOwners:                                                  @m-redding
+# AzureSdkOwners:                                                  @m-nash
 
 # ServiceLabel: %System.ClientModel
-# AzureSdkOwners:                                                  @m-redding
+# AzureSdkOwners:                                                  @m-nash
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                                     @christothes @JonathanCrd @Azure/azure-sdk-write-identity
@@ -207,7 +207,7 @@
 /sdk/contentsafety/                                                @bowgong @mengaims
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners:                     	                           @bowgong @mengaims
+# ServiceOwners:                     	                             @bowgong @mengaims
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -237,14 +237,12 @@
 /sdk/formrecognizer/                                               @ctstone @vkurpad
 
 # ServiceLabel: %Cognitive - Form Recognizer
-# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Metrics Advisor
-/sdk/metricsadvisor/                                               @jsquire
+/sdk/metricsadvisor/                                               @bowgong
 
 # ServiceLabel: %Cognitive - Metrics Advisor
-# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @bowgong
 
 # PRLabel: %Cognitive - Anomaly Detector
@@ -324,6 +322,7 @@
 
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/              @minwoolee-msft
+
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
 
@@ -503,14 +502,13 @@
 /sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @Kishp01 @shankarsama @rajeshka
 
 # ServiceLabel: %Event Grid
-# AzureSdkOwners:                                                  @Kishp01 @shankarsama @rajeshka
 # ServiceOwners:                                                   @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                                     @jsquire @m-redding
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @m-redding @jsquire @jeo02
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @m-redding @jsquire
 
 # ServiceLabel: %Event Hubs
 # AzureSdkOwners:                                                  @jsquire
@@ -822,10 +820,10 @@
 # ServiceOwners:                                                   @arv100kri @bleroy @tjacobhi
 
 # PRLabel: %Service Bus
-/sdk/servicebus/                                                   @jeo02 @jsquire @m-redding
+/sdk/servicebus/                                                   @jsquire @m-redding
 
 # PRLabel: %Service Bus %Functions
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @m-redding @jsquire @jeo02
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @m-redding @jsquire
 
 # ServiceLabel: %Service Bus
 # AzureSdkOwners:                                                  @jsquire
@@ -1167,7 +1165,7 @@
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /.github/workflows/                                                @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @Azure/azure-sdk-eng
+/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.config/1espt/                                                    @benbp @weshaggard
 
 # Add owners for notifications for specific pipelines
