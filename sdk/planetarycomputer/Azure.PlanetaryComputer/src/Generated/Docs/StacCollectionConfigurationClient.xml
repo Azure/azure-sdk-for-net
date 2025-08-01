@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateCollectionAssetAsync(string,FormContent,CancellationToken)">
+      <example>
+This sample shows how to call CreateCollectionAssetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+FormContent body = null;
+Response<StacCollectionModel> response = await client.CreateCollectionAssetAsync("test-collection-d45537668d06", body);
+]]></code></example>
+    </member>
+    <member name="CreateCollectionAsset(string,FormContent,CancellationToken)">
+      <example>
+This sample shows how to call CreateCollectionAsset.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+FormContent body = null;
+Response<StacCollectionModel> response = client.CreateCollectionAsset("test-collection-d45537668d06", body);
+]]></code></example>
+    </member>
+    <member name="CreateCollectionAssetAsync(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call CreateCollectionAssetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.CreateCollectionAssetAsync("test-collection-d45537668d06", content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("license").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("spatial").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("temporal").GetProperty("interval")[0][0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateCollectionAsset(string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call CreateCollectionAsset and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.CreateCollectionAsset("test-collection-d45537668d06", content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("license").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("spatial").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("temporal").GetProperty("interval")[0][0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceCollectionAssetAsync(string,string,FormContent,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceCollectionAssetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+FormContent body = null;
+Response<StacCollectionModel> response = await client.CreateOrReplaceCollectionAssetAsync("test-collection-d45537668d06", "visual", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceCollectionAsset(string,string,FormContent,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceCollectionAsset.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+FormContent body = null;
+Response<StacCollectionModel> response = client.CreateOrReplaceCollectionAsset("test-collection-d45537668d06", "visual", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceCollectionAssetAsync(string,string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceCollectionAssetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.CreateOrReplaceCollectionAssetAsync("test-collection-d45537668d06", "visual", content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("license").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("spatial").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("temporal").GetProperty("interval")[0][0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceCollectionAsset(string,string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceCollectionAsset and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.CreateOrReplaceCollectionAsset("test-collection-d45537668d06", "visual", content, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("license").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("spatial").ToString());
+Console.WriteLine(result.GetProperty("extent").GetProperty("temporal").GetProperty("interval")[0][0].ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteCollectionAssetAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteCollectionAssetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.DeleteCollectionAssetAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteCollectionAsset(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteCollectionAsset.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.DeleteCollectionAsset("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetCollectionConfigAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetCollectionConfigAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<UserCollectionSettings> response = await client.GetCollectionConfigAsync("sentinel-2-l2a-tutorial-7");
+]]></code></example>
+    </member>
+    <member name="GetCollectionConfig(string,CancellationToken)">
+      <example>
+This sample shows how to call GetCollectionConfig.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<UserCollectionSettings> response = client.GetCollectionConfig("sentinel-2-l2a-tutorial-7");
+]]></code></example>
+    </member>
+    <member name="GetCollectionConfigAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetCollectionConfigAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetCollectionConfigAsync("sentinel-2-l2a-tutorial-7", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("tileSettings").GetProperty("minZoom").ToString());
+Console.WriteLine(result.GetProperty("tileSettings").GetProperty("maxItemsPerTile").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("mosaics")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("mosaics")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("mosaics")[0].GetProperty("cql")[0].ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("renderOptions")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("renderOptions")[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCollectionConfig(string,RequestContext)">
+      <example>
+This sample shows how to call GetCollectionConfig and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetCollectionConfig("sentinel-2-l2a-tutorial-7", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("tileSettings").GetProperty("minZoom").ToString());
+Console.WriteLine(result.GetProperty("tileSettings").GetProperty("maxItemsPerTile").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("mosaics")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("mosaics")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("mosaics")[0].GetProperty("cql")[0].ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("renderOptions")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("mosaicInfo").GetProperty("renderOptions")[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAllMosaicsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAllMosaicsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<IReadOnlyList<StacMosaic>> response = await client.GetAllMosaicsAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+]]></code></example>
+    </member>
+    <member name="GetAllMosaics(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAllMosaics.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<IReadOnlyList<StacMosaic>> response = client.GetAllMosaics("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+]]></code></example>
+    </member>
+    <member name="GetAllMosaicsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetAllMosaicsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetAllMosaicsAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+Console.WriteLine(result[0].GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetAllMosaics(string,RequestContext)">
+      <example>
+This sample shows how to call GetAllMosaics and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetAllMosaics("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+Console.WriteLine(result[0].GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="AddMosaicAsync(string,StacMosaic,CancellationToken)">
+      <example>
+This sample shows how to call AddMosaicAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+StacMosaic body = new StacMosaic("mos1", "Most recent available", Array.Empty<CqlFilter>())
+{
+    Description = "Most recent available imagery in this collection",
+};
+Response<StacMosaic> response = await client.AddMosaicAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", body);
+]]></code></example>
+    </member>
+    <member name="AddMosaic(string,StacMosaic,CancellationToken)">
+      <example>
+This sample shows how to call AddMosaic.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+StacMosaic body = new StacMosaic("mos1", "Most recent available", Array.Empty<CqlFilter>())
+{
+    Description = "Most recent available imagery in this collection",
+};
+Response<StacMosaic> response = client.AddMosaic("36fcb8da-9b15-49e0-b400-0d2e751e2061", body);
+]]></code></example>
+    </member>
+    <member name="AddMosaicAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddMosaicAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "mos1",
+    name = "Most recent available",
+    description = "Most recent available imagery in this collection",
+    cql = Array.Empty<object>(),
+});
+Response response = await client.AddMosaicAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="AddMosaic(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AddMosaic and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "mos1",
+    name = "Most recent available",
+    description = "Most recent available imagery in this collection",
+    cql = Array.Empty<object>(),
+});
+Response response = client.AddMosaic("36fcb8da-9b15-49e0-b400-0d2e751e2061", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetMosaicAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMosaicAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<StacMosaic> response = await client.GetMosaicAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "mos1");
+]]></code></example>
+    </member>
+    <member name="GetMosaic(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMosaic.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<StacMosaic> response = client.GetMosaic("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "mos1");
+]]></code></example>
+    </member>
+    <member name="GetMosaicAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMosaicAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetMosaicAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "mos1", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetMosaic(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMosaic and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetMosaic("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "mos1", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceMosaicAsync(string,string,StacMosaic,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceMosaicAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+StacMosaic body = new StacMosaic("mosaic-default", "Imagery", Array.Empty<CqlFilter>())
+{
+    Description = "Updated description",
+};
+Response<StacMosaic> response = await client.CreateOrReplaceMosaicAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "f1b3b3b3-0b3b-4b3b-8b3b-3b3b3b3b3b3b", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceMosaic(string,string,StacMosaic,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceMosaic.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+StacMosaic body = new StacMosaic("mosaic-default", "Imagery", Array.Empty<CqlFilter>())
+{
+    Description = "Updated description",
+};
+Response<StacMosaic> response = client.CreateOrReplaceMosaic("36fcb8da-9b15-49e0-b400-0d2e751e2061", "f1b3b3b3-0b3b-4b3b-8b3b-3b3b3b3b3b3b", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceMosaicAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceMosaicAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "mosaic-default",
+    name = "Imagery",
+    description = "Updated description",
+    cql = Array.Empty<object>(),
+});
+Response response = await client.CreateOrReplaceMosaicAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "f1b3b3b3-0b3b-4b3b-8b3b-3b3b3b3b3b3b", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceMosaic(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceMosaic and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = "mosaic-default",
+    name = "Imagery",
+    description = "Updated description",
+    cql = Array.Empty<object>(),
+});
+Response response = client.CreateOrReplaceMosaic("36fcb8da-9b15-49e0-b400-0d2e751e2061", "f1b3b3b3-0b3b-4b3b-8b3b-3b3b3b3b3b3b", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("cql")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteMosaicAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteMosaicAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.DeleteMosaicAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteMosaic(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteMosaic.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.DeleteMosaic("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetPartitionTypeAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetPartitionTypeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<PartitionType> response = await client.GetPartitionTypeAsync("naip");
+]]></code></example>
+    </member>
+    <member name="GetPartitionType(string,CancellationToken)">
+      <example>
+This sample shows how to call GetPartitionType.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<PartitionType> response = client.GetPartitionType("naip");
+]]></code></example>
+    </member>
+    <member name="GetPartitionTypeAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetPartitionTypeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetPartitionTypeAsync("naip", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetPartitionType(string,RequestContext)">
+      <example>
+This sample shows how to call GetPartitionType and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetPartitionType("naip", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="ReplacePartitionTypeAsync(string,PartitionType,CancellationToken)">
+      <example>
+This sample shows how to call ReplacePartitionTypeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+PartitionType body = new PartitionType
+{
+    Scheme = PartitionTypeScheme.None,
+};
+Response<PartitionType> response = await client.ReplacePartitionTypeAsync("naip", body);
+]]></code></example>
+    </member>
+    <member name="ReplacePartitionType(string,PartitionType,CancellationToken)">
+      <example>
+This sample shows how to call ReplacePartitionType.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+PartitionType body = new PartitionType
+{
+    Scheme = PartitionTypeScheme.None,
+};
+Response<PartitionType> response = client.ReplacePartitionType("naip", body);
+]]></code></example>
+    </member>
+    <member name="ReplacePartitionTypeAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ReplacePartitionTypeAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    scheme = "none",
+});
+Response response = await client.ReplacePartitionTypeAsync("naip", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="ReplacePartitionType(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ReplacePartitionType and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    scheme = "none",
+});
+Response response = client.ReplacePartitionType("naip", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetAllRenderOptionsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAllRenderOptionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<IReadOnlyList<RenderOptionModel>> response = await client.GetAllRenderOptionsAsync("sentinel-2-l2a-tutorial-7");
+]]></code></example>
+    </member>
+    <member name="GetAllRenderOptions(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAllRenderOptions.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<IReadOnlyList<RenderOptionModel>> response = client.GetAllRenderOptions("sentinel-2-l2a-tutorial-7");
+]]></code></example>
+    </member>
+    <member name="GetAllRenderOptionsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetAllRenderOptionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetAllRenderOptionsAsync("sentinel-2-l2a-tutorial-7", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAllRenderOptions(string,RequestContext)">
+      <example>
+This sample shows how to call GetAllRenderOptions and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetAllRenderOptions("sentinel-2-l2a-tutorial-7", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRenderOptionAsync(string,RenderOptionModel,CancellationToken)">
+      <example>
+This sample shows how to call CreateRenderOptionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+RenderOptionModel body = new RenderOptionModel("atmospheric-penetration", "Atmospheric penetration")
+{
+    Description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    Type = RenderOptionType.RasterTile,
+    Options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    MinZoom = 9,
+};
+Response<RenderOptionModel> response = await client.CreateRenderOptionAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", body);
+]]></code></example>
+    </member>
+    <member name="CreateRenderOption(string,RenderOptionModel,CancellationToken)">
+      <example>
+This sample shows how to call CreateRenderOption.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+RenderOptionModel body = new RenderOptionModel("atmospheric-penetration", "Atmospheric penetration")
+{
+    Description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    Type = RenderOptionType.RasterTile,
+    Options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    MinZoom = 9,
+};
+Response<RenderOptionModel> response = client.CreateRenderOption("36fcb8da-9b15-49e0-b400-0d2e751e2061", body);
+]]></code></example>
+    </member>
+    <member name="CreateRenderOptionAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRenderOptionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "Atmospheric penetration",
+    description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    type = "raster-tile",
+    options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    minZoom = 9,
+    id = "atmospheric-penetration",
+});
+Response response = await client.CreateRenderOptionAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRenderOption(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRenderOption and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "Atmospheric penetration",
+    description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    type = "raster-tile",
+    options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    minZoom = 9,
+    id = "atmospheric-penetration",
+});
+Response response = client.CreateRenderOption("36fcb8da-9b15-49e0-b400-0d2e751e2061", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRenderOptionAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRenderOptionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<IReadOnlyList<RenderOptionModel>> response = await client.GetRenderOptionAsync("sentinel-2-l2a-tutorial-7", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+]]></code></example>
+    </member>
+    <member name="GetRenderOption(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRenderOption.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<IReadOnlyList<RenderOptionModel>> response = client.GetRenderOption("sentinel-2-l2a-tutorial-7", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+]]></code></example>
+    </member>
+    <member name="GetRenderOptionAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRenderOptionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetRenderOptionAsync("sentinel-2-l2a-tutorial-7", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRenderOption(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRenderOption and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetRenderOption("sentinel-2-l2a-tutorial-7", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("id").ToString());
+Console.WriteLine(result[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceRenderOptionAsync(string,string,RenderOptionModel,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceRenderOptionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+RenderOptionModel body = new RenderOptionModel("atmospheric-penetration", "Atmospheric penetration")
+{
+    Description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    Type = RenderOptionType.RasterTile,
+    Options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    MinZoom = 9,
+};
+Response<RenderOptionModel> response = await client.CreateOrReplaceRenderOptionAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "atmospheric-penetration", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceRenderOption(string,string,RenderOptionModel,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceRenderOption.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+RenderOptionModel body = new RenderOptionModel("atmospheric-penetration", "Atmospheric penetration")
+{
+    Description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    Type = RenderOptionType.RasterTile,
+    Options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    MinZoom = 9,
+};
+Response<RenderOptionModel> response = client.CreateOrReplaceRenderOption("36fcb8da-9b15-49e0-b400-0d2e751e2061", "atmospheric-penetration", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceRenderOptionAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceRenderOptionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "Atmospheric penetration",
+    description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    type = "raster-tile",
+    options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    minZoom = 9,
+    id = "atmospheric-penetration",
+});
+Response response = await client.CreateOrReplaceRenderOptionAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "atmospheric-penetration", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceRenderOption(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceRenderOption and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "Atmospheric penetration",
+    description = "False color rendering with non-visible bands to reduce effects of atmospheric particles (B12, B11, B8A).",
+    type = "raster-tile",
+    options = "nodata=0&assets=B12&assets=B11&assets=B8A&color_formula=Gamma RGB 3.7 Saturation 1.5 Sigmoidal RGB 15 0.35",
+    minZoom = 9,
+    id = "atmospheric-penetration",
+});
+Response response = client.CreateOrReplaceRenderOption("36fcb8da-9b15-49e0-b400-0d2e751e2061", "atmospheric-penetration", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteRenderOptionAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteRenderOptionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.DeleteRenderOptionAsync("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteRenderOption(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteRenderOption.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.DeleteRenderOption("c1007ec2-3ddc-4335-9edd-b1c26b1b4c92", "a1007ec2-3ddc-4335-9edd-b1c26b1b4c92");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetTileSettingsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTileSettingsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<TileSettings> response = await client.GetTileSettingsAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061");
+]]></code></example>
+    </member>
+    <member name="GetTileSettings(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTileSettings.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<TileSettings> response = client.GetTileSettings("36fcb8da-9b15-49e0-b400-0d2e751e2061");
+]]></code></example>
+    </member>
+    <member name="GetTileSettingsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetTileSettingsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetTileSettingsAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("minZoom").ToString());
+Console.WriteLine(result.GetProperty("maxItemsPerTile").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileSettings(string,RequestContext)">
+      <example>
+This sample shows how to call GetTileSettings and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetTileSettings("36fcb8da-9b15-49e0-b400-0d2e751e2061", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("minZoom").ToString());
+Console.WriteLine(result.GetProperty("maxItemsPerTile").ToString());
+]]></code></example>
+    </member>
+    <member name="ReplaceTileSettingsAsync(string,TileSettings,CancellationToken)">
+      <example>
+This sample shows how to call ReplaceTileSettingsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+TileSettings body = new TileSettings(13, 10)
+{
+    DefaultLocation = new DefaultLocation(10, new float[] { 0F, 0F }),
+};
+Response<TileSettings> response = await client.ReplaceTileSettingsAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", body);
+]]></code></example>
+    </member>
+    <member name="ReplaceTileSettings(string,TileSettings,CancellationToken)">
+      <example>
+This sample shows how to call ReplaceTileSettings.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+TileSettings body = new TileSettings(13, 10)
+{
+    DefaultLocation = new DefaultLocation(10, new float[] { 0F, 0F }),
+};
+Response<TileSettings> response = client.ReplaceTileSettings("36fcb8da-9b15-49e0-b400-0d2e751e2061", body);
+]]></code></example>
+    </member>
+    <member name="ReplaceTileSettingsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ReplaceTileSettingsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    minZoom = 13,
+    maxItemsPerTile = 10,
+    defaultLocation = new
+    {
+        zoom = 10,
+        coordinates = new object[]
+        {
+            0F,
+            0F
+        },
+    },
+});
+Response response = await client.ReplaceTileSettingsAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("minZoom").ToString());
+Console.WriteLine(result.GetProperty("maxItemsPerTile").ToString());
+]]></code></example>
+    </member>
+    <member name="ReplaceTileSettings(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ReplaceTileSettings and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    minZoom = 13,
+    maxItemsPerTile = 10,
+    defaultLocation = new
+    {
+        zoom = 10,
+        coordinates = new object[]
+        {
+            0F,
+            0F
+        },
+    },
+});
+Response response = client.ReplaceTileSettings("36fcb8da-9b15-49e0-b400-0d2e751e2061", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("minZoom").ToString());
+Console.WriteLine(result.GetProperty("maxItemsPerTile").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceQueryableAsync(string,string,QueryableProperty,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceQueryableAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+QueryableProperty body = new QueryableProperty("naip:state", new QueryableDefinitionType());
+Response<QueryableProperty> response = await client.CreateOrReplaceQueryableAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "naip:state", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceQueryable(string,string,QueryableProperty,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceQueryable.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+QueryableProperty body = new QueryableProperty("naip:state", new QueryableDefinitionType());
+Response<QueryableProperty> response = client.CreateOrReplaceQueryable("36fcb8da-9b15-49e0-b400-0d2e751e2061", "naip:state", body);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceQueryableAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceQueryableAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "naip:state",
+    definition = new object(),
+});
+Response response = await client.CreateOrReplaceQueryableAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "naip:state", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("definition").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceQueryable(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceQueryable and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "naip:state",
+    definition = new object(),
+});
+Response response = client.CreateOrReplaceQueryable("36fcb8da-9b15-49e0-b400-0d2e751e2061", "naip:state", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("definition").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteQueryableAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteQueryableAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.DeleteQueryableAsync("36fcb8da-9b15-49e0-b400-0d2e751e2061", "queryableName");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteQueryable(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteQueryable.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.DeleteQueryable("36fcb8da-9b15-49e0-b400-0d2e751e2061", "queryableName");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetCollectionThumbnailAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetCollectionThumbnailAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetCollectionThumbnailAsync("sentinel-2-l2a-tutorial-7", null);
+]]></code></example>
+    </member>
+    <member name="GetCollectionThumbnail(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetCollectionThumbnail.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetCollectionThumbnail("sentinel-2-l2a-tutorial-7", null);
+]]></code></example>
+    </member>
+    <member name="GetCollectionThumbnailAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCollectionThumbnailAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = await client.GetCollectionThumbnailAsync("sentinel-2-l2a-tutorial-7", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetCollectionThumbnail(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCollectionThumbnail and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+StacCollectionConfigurationClient client = new StacCollectionConfigurationClient(endpoint, credential);
+
+Response response = client.GetCollectionThumbnail("sentinel-2-l2a-tutorial-7", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

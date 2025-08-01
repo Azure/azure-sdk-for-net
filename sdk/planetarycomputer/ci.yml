@@ -8,7 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/planetarycomputer/
+    - sdk/planetarycomputer
+    - sdk/planetarycomputer/ci.yml
+    - sdk/planetarycomputer/Azure.PlanetaryComputer
 
 pr:
   branches:
@@ -19,7 +21,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/planetarycomputer/
+    - sdk/planetarycomputer
+    - sdk/planetarycomputer/ci.yml
+    - sdk/planetarycomputer/Azure.PlanetaryComputer
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -27,7 +31,5 @@ extends:
     ServiceDirectory: planetarycomputer
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Analytics.PlanetaryComputer
-      safeName: MicrosoftAnalyticsPlanetaryComputer
-    - name: Azure.Analytics.PlanetaryComputer
-      safeName: AzureAnalyticsPlanetaryComputer
+    - name: Azure.PlanetaryComputer
+      safeName: AzurePlanetaryComputer

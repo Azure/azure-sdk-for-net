@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetAuthConfigAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetAuthConfigAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response<AuthConfig> response = await client.GetAuthConfigAsync();
+]]></code></example>
+    </member>
+    <member name="GetAuthConfig(CancellationToken)">
+      <example>
+This sample shows how to call GetAuthConfig.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response<AuthConfig> response = client.GetAuthConfig();
+]]></code></example>
+    </member>
+    <member name="GetAuthConfigAsync(RequestContext)">
+      <example>
+This sample shows how to call GetAuthConfigAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response response = await client.GetAuthConfigAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authn_app_id").ToString());
+Console.WriteLine(result.GetProperty("tenant_id").ToString());
+Console.WriteLine(result.GetProperty("instance").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAuthConfig(RequestContext)">
+      <example>
+This sample shows how to call GetAuthConfig and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response response = client.GetAuthConfig(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("authn_app_id").ToString());
+Console.WriteLine(result.GetProperty("tenant_id").ToString());
+Console.WriteLine(result.GetProperty("instance").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAzmapsClientIdAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetAzmapsClientIdAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response<AzMapsClientId> response = await client.GetAzmapsClientIdAsync();
+]]></code></example>
+    </member>
+    <member name="GetAzmapsClientId(CancellationToken)">
+      <example>
+This sample shows how to call GetAzmapsClientId.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response<AzMapsClientId> response = client.GetAzmapsClientId();
+]]></code></example>
+    </member>
+    <member name="GetAzmapsClientIdAsync(RequestContext)">
+      <example>
+This sample shows how to call GetAzmapsClientIdAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response response = await client.GetAzmapsClientIdAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("client_id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAzmapsClientId(RequestContext)">
+      <example>
+This sample shows how to call GetAzmapsClientId and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response response = client.GetAzmapsClientId(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("client_id").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAzmapsTokenAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetAzmapsTokenAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response<AzMapsToken> response = await client.GetAzmapsTokenAsync();
+]]></code></example>
+    </member>
+    <member name="GetAzmapsToken(CancellationToken)">
+      <example>
+This sample shows how to call GetAzmapsToken.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response<AzMapsToken> response = client.GetAzmapsToken();
+]]></code></example>
+    </member>
+    <member name="GetAzmapsTokenAsync(RequestContext)">
+      <example>
+This sample shows how to call GetAzmapsTokenAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response response = await client.GetAzmapsTokenAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("token").ToString());
+Console.WriteLine(result.GetProperty("expires_on").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAzmapsToken(RequestContext)">
+      <example>
+This sample shows how to call GetAzmapsToken and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+GeocatalogClient client = new GeocatalogClient(endpoint, credential);
+
+Response response = client.GetAzmapsToken(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("token").ToString());
+Console.WriteLine(result.GetProperty("expires_on").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

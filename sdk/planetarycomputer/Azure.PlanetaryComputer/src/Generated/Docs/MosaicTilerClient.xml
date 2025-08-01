@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetTileAsync(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,TileMatrixSetId?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetTileAsync("search-0df36a74d7ed", 12F, 47.6062F, 17F, 1F, "png", null);
+]]></code></example>
+    </member>
+    <member name="GetTile(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,TileMatrixSetId?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetTile("search-0df36a74d7ed", 12F, 47.6062F, 17F, 1F, "png", null);
+]]></code></example>
+    </member>
+    <member name="GetTileAsync(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetTileAsync("search-0df36a74d7ed", 12F, 47.6062F, 17F, 1F, "png", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTile(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetTile("search-0df36a74d7ed", 12F, 47.6062F, 17F, 1F, "png", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileWithMatrixSetAsync(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileWithMatrixSetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetTileWithMatrixSetAsync("search-0df36a74d7ed", "WebMercatorQuad", 12F, 47.6062F, 17F, 1F, "png", null);
+]]></code></example>
+    </member>
+    <member name="GetTileWithMatrixSet(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileWithMatrixSet.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetTileWithMatrixSet("search-0df36a74d7ed", "WebMercatorQuad", 12F, 47.6062F, 17F, 1F, "png", null);
+]]></code></example>
+    </member>
+    <member name="GetTileWithMatrixSetAsync(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileWithMatrixSetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetTileWithMatrixSetAsync("search-0df36a74d7ed", "WebMercatorQuad", 12F, 47.6062F, 17F, 1F, "png", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileWithMatrixSet(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileWithMatrixSet and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetTileWithMatrixSet("search-0df36a74d7ed", "WebMercatorQuad", 12F, 47.6062F, 17F, 1F, "png", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileJsonAsync(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,TileMatrixSetId?,ImageType?,int?,int?,int?,double?,string,string,ResamplingMethod?,PixelSelection?,AlgorithmInfo?,string,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileJsonAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<TileJsonResult> response = await client.GetTileJsonAsync("searchid-0df36a74d7ed");
+]]></code></example>
+    </member>
+    <member name="GetTileJson(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,TileMatrixSetId?,ImageType?,int?,int?,int?,double?,string,string,ResamplingMethod?,PixelSelection?,AlgorithmInfo?,string,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileJson.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<TileJsonResult> response = client.GetTileJson("searchid-0df36a74d7ed");
+]]></code></example>
+    </member>
+    <member name="GetTileJsonAsync(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,int?,double?,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileJsonAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetTileJsonAsync("searchid-0df36a74d7ed", new string[] { "B04" }, null, null, null, 1F, null, null, null, null, null, null, null, "png", 2, 9, null, null, "Gamma RGB 3.2 Saturation 0.8 Sigmoidal RGB 25 0.35", "sentinel-2-l2a-tutorial-7", null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("tiles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileJson(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,int?,double?,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileJson and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetTileJson("searchid-0df36a74d7ed", new string[] { "B04" }, null, null, null, 1F, null, null, null, null, null, null, null, "png", 2, 9, null, null, "Gamma RGB 3.2 Saturation 0.8 Sigmoidal RGB 25 0.35", "sentinel-2-l2a-tutorial-7", null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("tiles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileJsonWithMatrixSetAsync(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,int?,int?,ImageType?,int?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileJsonWithMatrixSetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<TileJsonResult> response = await client.GetTileJsonWithMatrixSetAsync("search-0df36a74d7ed", "WebMercatorQuad");
+]]></code></example>
+    </member>
+    <member name="GetTileJsonWithMatrixSet(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,int?,int?,ImageType?,int?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetTileJsonWithMatrixSet.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<TileJsonResult> response = client.GetTileJsonWithMatrixSet("search-0df36a74d7ed", "WebMercatorQuad");
+]]></code></example>
+    </member>
+    <member name="GetTileJsonWithMatrixSetAsync(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,string,int?,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileJsonWithMatrixSetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetTileJsonWithMatrixSetAsync("search-0df36a74d7ed", "WebMercatorQuad", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("tiles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetTileJsonWithMatrixSet(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,string,int?,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetTileJsonWithMatrixSet and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetTileJsonWithMatrixSet("search-0df36a74d7ed", "WebMercatorQuad", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("tiles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilitiesAsync(string,TileMatrixSetId?,ImageType?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetWmtsCapabilitiesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<string> response = await client.GetWmtsCapabilitiesAsync("search-0df36a74d7ed");
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilities(string,TileMatrixSetId?,ImageType?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetWmtsCapabilities.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<string> response = client.GetWmtsCapabilities("search-0df36a74d7ed");
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilitiesAsync(string,string,string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetWmtsCapabilitiesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetWmtsCapabilitiesAsync("search-0df36a74d7ed", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilities(string,string,string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetWmtsCapabilities and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetWmtsCapabilities("search-0df36a74d7ed", null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilitiesWithMatrixSetAsync(string,string,ImageType?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetWmtsCapabilitiesWithMatrixSetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<string> response = await client.GetWmtsCapabilitiesWithMatrixSetAsync("searchid-0df36a74d7ed", "WebMercatorQuad");
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilitiesWithMatrixSet(string,string,ImageType?,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetWmtsCapabilitiesWithMatrixSet.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<string> response = client.GetWmtsCapabilitiesWithMatrixSet("searchid-0df36a74d7ed", "WebMercatorQuad");
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilitiesWithMatrixSetAsync(string,string,string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetWmtsCapabilitiesWithMatrixSetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetWmtsCapabilitiesWithMatrixSetAsync("searchid-0df36a74d7ed", "WebMercatorQuad", null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetWmtsCapabilitiesWithMatrixSet(string,string,string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetWmtsCapabilitiesWithMatrixSet and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetWmtsCapabilitiesWithMatrixSet("searchid-0df36a74d7ed", "WebMercatorQuad", null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="RegisterSearchAsync(IEnumerable{string},IEnumerable{string},double?,GeoJsonGeometry,StacQuery,string,string,IEnumerable{SortExtension},FilterLang?,MosaicMetadata,CancellationToken)">
+      <example>
+This sample shows how to call RegisterSearchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<RegisterResult> response = await client.RegisterSearchAsync();
+]]></code></example>
+    </member>
+    <member name="RegisterSearch(IEnumerable{string},IEnumerable{string},double?,GeoJsonGeometry,StacQuery,string,string,IEnumerable{SortExtension},FilterLang?,MosaicMetadata,CancellationToken)">
+      <example>
+This sample shows how to call RegisterSearch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<RegisterResult> response = client.RegisterSearch();
+]]></code></example>
+    </member>
+    <member name="RegisterSearchAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RegisterSearchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new Dictionary<string, object>
+{
+    ["filter-lang"] = "cql2-json",
+    ["sortby"] = new object[]
+    {
+        new
+        {
+            field = "datetime",
+            direction = "desc",
+        }
+    }
+});
+Response response = await client.RegisterSearchAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("searchId").ToString());
+]]></code></example>
+    </member>
+    <member name="RegisterSearch(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RegisterSearch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new Dictionary<string, object>
+{
+    ["filter-lang"] = "cql2-json",
+    ["sortby"] = new object[]
+    {
+        new
+        {
+            field = "datetime",
+            direction = "desc",
+        }
+    }
+});
+Response response = client.RegisterSearch(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("searchId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSearchInfoAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSearchInfoAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<TitilerPgstacModelInfo> response = await client.GetSearchInfoAsync("e32e0b12176246816953d75e3356d613");
+]]></code></example>
+    </member>
+    <member name="GetSearchInfo(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSearchInfo.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<TitilerPgstacModelInfo> response = client.GetSearchInfo("e32e0b12176246816953d75e3356d613");
+]]></code></example>
+    </member>
+    <member name="GetSearchInfoAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetSearchInfoAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetSearchInfoAsync("e32e0b12176246816953d75e3356d613", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("search").GetProperty("hash").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("search").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("_where").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("orderby").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("lastused").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("usecount").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("metadata").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSearchInfo(string,RequestContext)">
+      <example>
+This sample shows how to call GetSearchInfo and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetSearchInfo("e32e0b12176246816953d75e3356d613", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("search").GetProperty("hash").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("search").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("_where").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("orderby").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("lastused").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("usecount").ToString());
+Console.WriteLine(result.GetProperty("search").GetProperty("metadata").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTileAsync(string,float,float,float,int?,int?,int?,bool?,bool?,TileMatrixSetId?,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsForTileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<IReadOnlyList<BinaryData>> response = await client.GetAssetsForTileAsync("e32e0b12176246816953d75e3356d613", 12F, 47.6062F, 17F);
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTile(string,float,float,float,int?,int?,int?,bool?,bool?,TileMatrixSetId?,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsForTile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<IReadOnlyList<BinaryData>> response = client.GetAssetsForTile("e32e0b12176246816953d75e3356d613", 12F, 47.6062F, 17F);
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTileAsync(string,float,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsForTileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetAssetsForTileAsync("e32e0b12176246816953d75e3356d613", 12F, 47.6062F, 17F, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTile(string,float,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsForTile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetAssetsForTile("e32e0b12176246816953d75e3356d613", 12F, 47.6062F, 17F, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTileWithMatrixSetAsync(string,string,float,float,float,int?,int?,int?,bool?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsForTileWithMatrixSetAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<IReadOnlyList<BinaryData>> response = await client.GetAssetsForTileWithMatrixSetAsync("e32e0b12176246816953d75e3356d613", "WebMercatorQuad", 12F, 47.6062F, 17F);
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTileWithMatrixSet(string,string,float,float,float,int?,int?,int?,bool?,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsForTileWithMatrixSet.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<IReadOnlyList<BinaryData>> response = client.GetAssetsForTileWithMatrixSet("e32e0b12176246816953d75e3356d613", "WebMercatorQuad", 12F, 47.6062F, 17F);
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTileWithMatrixSetAsync(string,string,float,float,float,int?,int?,int?,bool?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsForTileWithMatrixSetAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetAssetsForTileWithMatrixSetAsync("e32e0b12176246816953d75e3356d613", "WebMercatorQuad", 12F, 47.6062F, 17F, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsForTileWithMatrixSet(string,string,float,float,float,int?,int?,int?,bool?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsForTileWithMatrixSet and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetAssetsForTileWithMatrixSet("e32e0b12176246816953d75e3356d613", "WebMercatorQuad", 12F, 47.6062F, 17F, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsForPointAsync(string,float,float,int?,int?,int?,bool?,bool?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsForPointAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<IReadOnlyList<BinaryData>> response = await client.GetAssetsForPointAsync("e32e0b12176246816953d75e3356d613", -122.3321F, 47.6062F);
+]]></code></example>
+    </member>
+    <member name="GetAssetsForPoint(string,float,float,int?,int?,int?,bool?,bool?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetsForPoint.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response<IReadOnlyList<BinaryData>> response = client.GetAssetsForPoint("e32e0b12176246816953d75e3356d613", -122.3321F, 47.6062F);
+]]></code></example>
+    </member>
+    <member name="GetAssetsForPointAsync(string,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsForPointAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = await client.GetAssetsForPointAsync("e32e0b12176246816953d75e3356d613", -122.3321F, 47.6062F, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetsForPoint(string,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetsForPoint and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MosaicTilerClient client = new MosaicTilerClient(endpoint, credential);
+
+Response response = client.GetAssetsForPoint("e32e0b12176246816953d75e3356d613", -122.3321F, 47.6062F, null, null, null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

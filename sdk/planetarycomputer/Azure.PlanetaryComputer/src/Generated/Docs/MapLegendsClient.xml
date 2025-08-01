@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetClassmapLegendAsync(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetClassmapLegendAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response<ClassmapLegendResult> response = await client.GetClassmapLegendAsync("mtbs-severity");
+]]></code></example>
+    </member>
+    <member name="GetClassmapLegend(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetClassmapLegend.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response<ClassmapLegendResult> response = client.GetClassmapLegend("mtbs-severity");
+]]></code></example>
+    </member>
+    <member name="GetClassmapLegendAsync(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetClassmapLegendAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response response = await client.GetClassmapLegendAsync("mtbs-severity", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetClassmapLegend(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetClassmapLegend and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response response = client.GetClassmapLegend("mtbs-severity", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetLegendAsync(string,double?,double?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetLegendAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response<BinaryData> response = await client.GetLegendAsync("rdylgn");
+]]></code></example>
+    </member>
+    <member name="GetLegend(string,double?,double?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetLegend.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response<BinaryData> response = client.GetLegend("rdylgn");
+]]></code></example>
+    </member>
+    <member name="GetLegendAsync(string,double?,double?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetLegendAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response response = await client.GetLegendAsync("rdylgn", 0.08, 4.1, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetLegend(string,double?,double?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetLegend and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response response = client.GetLegend("rdylgn", 0.08, 4.1, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetIntervalLegendAsync(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetIntervalLegendAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response<IReadOnlyList<IList<BinaryData>>> response = await client.GetIntervalLegendAsync("modis-64A1");
+]]></code></example>
+    </member>
+    <member name="GetIntervalLegend(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetIntervalLegend.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response<IReadOnlyList<IList<BinaryData>>> response = client.GetIntervalLegend("modis-64A1");
+]]></code></example>
+    </member>
+    <member name="GetIntervalLegendAsync(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetIntervalLegendAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response response = await client.GetIntervalLegendAsync("modis-64A1", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0][0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetIntervalLegend(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetIntervalLegend and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+MapLegendsClient client = new MapLegendsClient(endpoint, credential);
+
+Response response = client.GetIntervalLegend("modis-64A1", null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0][0].ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
