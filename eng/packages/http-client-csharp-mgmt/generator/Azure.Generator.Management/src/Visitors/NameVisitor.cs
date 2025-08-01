@@ -100,6 +100,11 @@ internal class NameVisitor : ScmLibraryVisitor
         foreach (MrwSerializationTypeDefinition serializationProvider in type.SerializationProviders)
         {
             // Update the serialization provider name to match the model name
+            var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.Equals($"Deserialize{originalName}"));
+            if (deserializationMethod != null)
+            {
+                deserializationMethod.Signature.Update(name: $"Deserialize{newName}");
+            }
             serializationProvider.Update(name: newName);
             _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
         }
