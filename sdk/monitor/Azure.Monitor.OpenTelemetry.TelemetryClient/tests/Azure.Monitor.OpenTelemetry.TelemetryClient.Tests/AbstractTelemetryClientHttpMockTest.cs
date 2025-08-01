@@ -48,8 +48,6 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient {
 
             var telemetryRequests = await FindRequestsOfTrackEndpoint();
 
-            var httpRequestsSent = FindHttpRequestsSent(telemetryRequests);
-
             // Assert
             Assert.Single(telemetryRequests);
 
@@ -57,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient {
 
             if (telemetryRequest.RequestMessage.Body != null)
             {
-                VerifyTrackHttpRequests(httpRequestsSent, telemetryRequest.RequestMessage.Body, Path.Combine("json",
+                VerifyTrackHttpRequests( telemetryRequest.RequestMessage.Body, Path.Combine("json",
                     expectedFileName), assertions);
             }
         }
@@ -86,28 +84,12 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient {
             return _mockServer.LogEntries;
         }
 
-        private static string FindHttpRequestsSent(IEnumerable<ILogEntry> telemetryRequests)
-        {
-            string httpRequestsSent = "";
-
-            foreach (var request in telemetryRequests)
-            {
-                if (request.RequestMessage.Body != null)
-                {
-                    httpRequestsSent += JToken.Parse(request.RequestMessage.Body).ToString(Formatting.Indented);
-                }
-            }
-
-            return httpRequestsSent;
-        }
-
-        private static void VerifyTrackHttpRequests(string httpRequestsSent, string current, string expectedFileName,
+        private static void VerifyTrackHttpRequests(string current, string expectedFileName,
             IEnumerable<Action<JObject>> assertions)
         {
             var expectedAsString = ReadFileAsString(expectedFileName);
-
-            var currentJson = JObject.Parse(current);
-            var expectedJSon = JObject.Parse(expectedAsString);
+            JObject currentJson = ParseJson(current);
+            var expectedJSon = ParseJson(expectedAsString);
 
             TimeShouldBeProvided(currentJson);
             SdkVersionShouldBeProvided(currentJson);
@@ -123,9 +105,22 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient {
             RemoveNonComparableProperties(currentJson, expectedJSon);
 
             var frameworkName = FindDotNetEnv();
+            string currentBody = currentJson.ToString(Formatting.Indented);
             var message =
-                $"Expected ({expectedFileName}, {frameworkName}) {expectedJSon.ToString(Formatting.Indented)}\nActual: {currentJson.ToString(Formatting.Indented)}\nHTTP requests sent: {httpRequestsSent}";
+                $"Expected ({expectedFileName}, {frameworkName}) {expectedJSon.ToString(Formatting.Indented)}\nActual: {currentBody}\nHTTP requests sent: {currentBody}";
             Assert.True(JToken.DeepEquals(expectedJSon, currentJson), message);
+        }
+
+        private static JObject ParseJson(string jsonAsString)
+        {
+            try
+            {
+                return JObject.Parse(jsonAsString);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed to parse JSON: {jsonAsString}", ex);
+            }
         }
 
         private static string FindDotNetEnv()
