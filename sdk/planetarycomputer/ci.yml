@@ -10,7 +10,7 @@ trigger:
     include:
     - sdk/planetarycomputer
     - sdk/planetarycomputer/ci.yml
-    - sdk/planetarycomputer/Azure.PlanetaryComputer
+    - sdk/planetarycomputer
 
 pr:
   branches:
@@ -23,7 +23,7 @@ pr:
     include:
     - sdk/planetarycomputer
     - sdk/planetarycomputer/ci.yml
-    - sdk/planetarycomputer/Azure.PlanetaryComputer
+    - sdk/planetarycomputer
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -31,5 +31,5 @@ extends:
     ServiceDirectory: planetarycomputer
     ArtifactName: packages
     Artifacts:
-    - name: Azure.PlanetaryComputer
-      safeName: AzurePlanetaryComputer
+    - name: Azure.Analytics.PlanetaryComputer
+      safeName: AzureAnalyticsPlanetaryComputer
