@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2025-08-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Supported `FormattableString` in `BicepFunction.Interpolate` method.
 
 ## 1.2.1 (2025-07-09)
 
