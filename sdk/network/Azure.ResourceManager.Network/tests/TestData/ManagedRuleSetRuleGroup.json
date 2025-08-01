@@ -1,0 +1,12 @@
+{
+  "ruleGroupName": "OWASP_3.2",
+  "description": "OWASP Core Rule Set 3.2",
+  "rules": [
+    "920100",
+    920110,
+    "920120",
+    920130,
+    "920140",
+    920150
+  ]
+}
