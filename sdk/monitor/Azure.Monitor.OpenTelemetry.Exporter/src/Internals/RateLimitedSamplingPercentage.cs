@@ -26,7 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly double _inverseAdaptationTimeNanos;
         private readonly double _targetTracesPerNanosecondLimit;
         private State _state;
-        //private readonly Func<long> _nanoTimeSupplier;
         private const double AdaptationTimeSeconds = 0.1;
         private static readonly double NanoTimeFactor = 1_000_000_000.0 / Stopwatch.Frequency;
 
@@ -34,8 +33,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (targetTracesPerSecondLimit < 0.0)
                 throw new ArgumentOutOfRangeException(nameof(targetTracesPerSecondLimit), "Limit for sampled Traces per second must be nonnegative!");
-
-            //_nanoTimeSupplier = nanoTimeSupplier ?? throw new ArgumentNullException(nameof(nanoTimeSupplier));
             _inverseAdaptationTimeNanos = 1e-9 / AdaptationTimeSeconds;
             _targetTracesPerNanosecondLimit = 1e-9 * targetTracesPerSecondLimit;
             _state = new State(0, 0, GetNanoTime());
