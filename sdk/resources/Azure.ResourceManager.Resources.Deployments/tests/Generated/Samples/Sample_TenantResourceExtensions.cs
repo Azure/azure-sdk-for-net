@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Samples
                     ["string"] = "string"
                 }
             });
-            TemplateHashResult result = await tenantResource.CalculateDeploymentTemplateHashAsync(template);
+            TemplateHashResult result = await tenantResource.CalculateTemplateHashAsync(template);
 
             Console.WriteLine($"Succeeded: {result}");
         }

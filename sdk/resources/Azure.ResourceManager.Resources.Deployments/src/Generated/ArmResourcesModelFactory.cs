@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> Deployment tags. </param>
         /// <param name="identity"> The Managed Identity configuration for a deployment. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentContent"/> instance for mocking. </returns>
-        public static ArmDeploymentContent ArmDeploymentContent(AzureLocation? location = null, ArmDeploymentProperties properties = null, IDictionary<string, string> tags = null, DeploymentIdentity identity = null)
+        public static ArmDeploymentContent ArmDeploymentContent(AzureLocation? location = null, ArmDeploymentProperties properties = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -91,17 +91,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static ArmDeploymentExtensionConfigItem ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = null, BinaryData value = null, KeyVaultParameterReference keyVaultReference = null)
         {
             return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentIdentity"/>. </summary>
-        /// <param name="identityType"> The identity type. </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. </param>
-        /// <returns> A new <see cref="Models.DeploymentIdentity"/> instance for mocking. </returns>
-        public static DeploymentIdentity DeploymentIdentity(DeploymentIdentityType identityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
-        {
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-
-            return new DeploymentIdentity(identityType, userAssignedIdentities, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentData"/>. </summary>

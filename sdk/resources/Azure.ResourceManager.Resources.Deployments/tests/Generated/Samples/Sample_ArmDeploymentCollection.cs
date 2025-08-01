@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this ArmDeploymentResource
-            ArmDeploymentCollection collection = subscriptionResource.GetArmDeployments();
+            ArmDeploymentCollection collection = subscriptionResource.GetDeployments();
 
             // invoke the operation
             string deploymentName = "my-deployment";
