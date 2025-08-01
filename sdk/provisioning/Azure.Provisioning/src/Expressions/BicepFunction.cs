@@ -310,11 +310,17 @@ public static class BicepFunction
     }
 
     /// <summary>
-    /// Convert a formattable string with literal text, C# expressions, and
-    /// Bicep expressions into an interpolated Bicep string.
+    /// Builds a Bicep interpolated string expression from C# interpolated string syntax
+    /// or a <see cref="FormattableString"/> instance.
+    /// Use this method to combine literal text, C# expressions and Bicep expressions
+    /// into a single Bicep string value.
     /// </summary>
-    /// <param name="handler">A bicep interpolated string handler.</param>
-    /// <returns>An interpolated string.</returns>
+    /// <param name="handler">
+    /// The <see cref="BicepInterpolatedStringHandler"/> that collects literal and formatted segments from the interpolated string.
+    /// </param>
+    /// <returns>
+    /// A <see cref="BicepValue{String}"/> representing the constructed Bicep interpolated string expression of type <c>string</c>.
+    /// </returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
 }
