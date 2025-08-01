@@ -1,4 +1,4 @@
-directory: specification/recoveryservices/Recoveryservices.Management
+directory: specification/recoveryservices/RecoveryServices.Management
 repo: Azure/azure-rest-api-specs
-commit: efad0001a2bf02d62ffde011c621a7e809e2f171
+commit: c521eaa930d35a61615c4ae1e64e412fb163990e
 additionalDirectories: []
