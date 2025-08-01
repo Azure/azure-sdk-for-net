@@ -84,7 +84,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 3. Run [sdk details in release plan](sdk-details-in-release-plan.prompt.md) to add languages and package names to the release plan
 4. If TypeSpec project is for management plane, run [verify namespace approval](verify-namespace-approval.prompt.md) to check package namespace approval.
 This step should not check package readiness to verify namespace approval for management plane SDK.
-5. Run [run sdk gen pipeline](run-sdk-gen-pipeline.prompt.md) with the spec PR
+5. Run [run SDK gen pipeline](run-sdk-gen-pipeline.prompt.md) with the spec PR
 6. Monitor pipeline status and provide updates
 7. Display generated SDK PR links when available
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
