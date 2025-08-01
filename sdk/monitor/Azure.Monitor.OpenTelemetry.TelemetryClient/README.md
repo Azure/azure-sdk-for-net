@@ -68,6 +68,21 @@ There are certain differences in the telemetry data sent to Application Insights
   Additional data within the `requests` Kusto table:
     * The `customDimension` column contains the entry `"_MS.ProcessedByMetricExtractors": "(Name: X,Ver:'1.1')"`
 
+* **TrackDependency(string? dependencyTypeName, string target, string dependencyName, string data, DateTimeOffset startTime, TimeSpan duration, string resultCode, bool success)**
+  and **void TrackDependency(string? dependencyTypeName, string dependencyName, string data, DateTimeOffset startTime, TimeSpan duration, bool success)**
+    * If the dependency type is `SQL` (case insensitive)
+      * The dependency type sent to Application Insights is `SQL` for the `mssql` (Microsoft SQL Server) `target` parameter. This limitation could be addressed if needed.
+      * The `resultCode` method argument is sent to Application Insights.
+    * If the dependency type is `HTTP` (case insensitive)
+      * The `dependencyName` method argument should contain the HTTP method (GET, POST, ...) to allow the method to work correctly
+      * The dependency name sent to Application Insights is based on the `data` and `dependencyName` method arguments. For example,
+        if the `data` argument is `https://api.example.com/api/orders` and the `dependencyName` argument is `"GET order`,
+        the dependency name sent to Application Insights will be `GET /api/orders` (concatenation of the HTTP method and the path
+        without the domain name).
+    * If the dependency type is not `SQL` or `HTTP` (case insensitive)
+      * Only the `data` and `target` method arguments are sent to Application Insights.
+    * The `customDimension` column contains the entry `"_MS.ProcessedByMetricExtractors": "(Name: X,Ver:'1.1')"`
+
 #### TrackException methods
 
 #### TrackEvent methods

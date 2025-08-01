@@ -22,6 +22,11 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
     [SuppressMessage("Azure.Sdk.Analyzers", "AZC0005", Justification = "Class is sealed by design")]
     public sealed class TelemetryClient
     {
+        private static readonly string[] HttpMethods =
+        {
+            "GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH", "TRACE", "CONNECT"
+        };
+
         private readonly LoggerProvider loggerProvider;
         private readonly ILogger logger;
         private readonly TracerProvider tracerProvider;
@@ -198,6 +203,72 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
         }
 
         /// <summary>
+        /// Send information about an external dependency (outgoing call) in the application.
+        /// </summary>
+        /// <param name="dependencyTypeName">External dependency type. Very low cardinality value for logical grouping and interpretation of fields. Examples are SQL, Azure table, and HTTP.</param>
+        /// <param name="dependencyName">Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template.</param>
+        /// <param name="data">Command initiated by this dependency call. Examples are SQL statement and HTTP URL's with all query parameters.</param>
+        /// <param name="startTime">The time when the dependency was called.</param>
+        /// <param name="duration">The time taken by the external dependency to handle the call.</param>
+        /// <param name="success">True if the dependency call was handled successfully.</param>
+        /// <remarks>
+        /// <a href="https://go.microsoft.com/fwlink/?linkid=525722#trackdependency">Learn more</a>
+        /// </remarks>
+        public void TrackDependency(string? dependencyTypeName, string dependencyName, string data,
+            DateTimeOffset startTime, TimeSpan duration, bool success)
+        {
+            TrackDependency(dependencyTypeName, null!, dependencyName, data, startTime, duration, null!, success);
+        }
+
+        /// <summary>
+        /// Tracks information about an external dependency call made by the application.
+        /// </summary>
+        /// <param name="dependencyTypeName">The type of the external dependency, used for grouping and understanding dependencies. Common values include SQL, HTTP, or custom values.</param>
+        /// <param name="target">The resource or endpoint targeted by the external dependency call.</param>
+        /// <param name="dependencyName">The name describing the specific command or call initiated. Examples include procedure names or URL paths.</param>
+        /// <param name="data">The executed command or operation associated with the dependency call, such as SQL queries or complete URLs.</param>
+        /// <param name="startTime">The time when the dependency call began execution.</param>
+        /// <param name="duration">The total time taken by the dependency call to complete execution.</param>
+        /// <param name="resultCode">Indicates the result or status code returned from the dependency call.</param>
+        /// <param name="success">A boolean value indicating whether the dependency call completed successfully.</param>
+        public void TrackDependency(string? dependencyTypeName, string target, string dependencyName, string data,
+            DateTimeOffset startTime, TimeSpan duration, string resultCode, bool success)
+        {
+            using (var activity = tracer.StartActiveSpan(dependencyName, SpanKind.Client))
+            {
+                SetActivityWithContextProperties();
+                SetActivityStartAndEndTimes(startTime, duration);
+                activity.SetStatus(success ? Status.Ok : Status.Error);
+
+                if (IsSqlDependency(dependencyTypeName))
+                {
+                    SetActivityForSqlDependency(data, target);
+                }
+                else if (IsHttpDependency(dependencyTypeName))
+                {
+                    Activity.Current?.SetTag(SemanticConventions.AttributeUrlFull, data);
+
+                    Activity.Current?.SetTag(SemanticConventions.AttributeHttpResponseStatusCode, resultCode);
+
+                    // The HTTP method is required to have the HTTP type exported to Breeze
+                    string? httpMethod = FindHttpMethod(dependencyName);
+                    Activity.Current?.SetTag(SemanticConventions.AttributeHttpRequestMethod, httpMethod);
+
+                    // The dependency name exported to Breeze is deduced by the .net exporter
+                    // from the data and dependencyName (http method) method arguments.
+
+                    Activity.Current?.SetTag(SemanticConventions.AttributeServerAddress, target);
+                }
+                else
+                {
+                    // We process the dependency as a SQL one to be able to export the data method parameter to Breeze.
+                    // The type exported to Breeze won't be SQL. No type willl be exported.
+                    SetActivityForSqlDependency(data, null);
+                }
+            }
+        }
+
+        /// <summary>
         /// Flushes the in-memory buffer and any metrics being pre-aggregated.
         /// </summary>
         /// <remarks>
@@ -274,6 +345,45 @@ namespace Azure.Monitor.OpenTelemetry.TelemetryClient
             {
                 Activity.Current?.SetTag(kvp.Key, kvp.Value);
             }
+        }
+
+        private string? FindHttpMethod(string dependencyName)
+        {
+            if (string.IsNullOrEmpty(dependencyName))
+            {
+                return null;
+            }
+
+            foreach (var method in HttpMethods)
+            {
+                bool containsHttpMethod = dependencyName.IndexOf(method, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (containsHttpMethod)
+                {
+                    return method;
+                }
+            }
+
+            return null;
+        }
+
+        private bool IsSqlDependency(string? dependencyTypeName)
+        {
+            return dependencyTypeName != null && dependencyTypeName.Equals("SQL", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsHttpDependency(string? dependencyTypeName)
+        {
+            return dependencyTypeName != null && dependencyTypeName.Equals("HTTP", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void SetActivityForSqlDependency(string data, string? target)
+        {
+            Activity.Current?.SetTag(SemanticConventions.AttributeDbStatement, data);
+
+            // Only "mssql" is mapped to the SQL type by the .net exporter today: https://github.com/Azure/azure-sdk-for-net/blob/7bcb4cd862cc692320c8692eba16321df21ea196/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/src/Internals/AzMonListExtensions.cs#L18
+            // If the target is "oracle" for example, then the dependency type will be "oracle" (instead of "SQL") in Application Insights.
+            target ??= "unknown"; // Without this, if target is null then then .net exporter would not export the data method argument
+            Activity.Current?.SetTag(SemanticConventions.AttributeDbSystem, target);
         }
     }
 }
