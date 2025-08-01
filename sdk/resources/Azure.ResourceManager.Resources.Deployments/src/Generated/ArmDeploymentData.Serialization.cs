@@ -13,9 +13,9 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments
+namespace Azure.ResourceManager.Resources
 {
     public partial class ArmDeploymentData : IUtf8JsonSerializable, IJsonModel<ArmDeploymentData>
     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

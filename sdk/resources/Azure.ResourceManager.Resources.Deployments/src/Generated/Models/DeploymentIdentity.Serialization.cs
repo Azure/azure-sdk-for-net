@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class DeploymentIdentity : IUtf8JsonSerializable, IJsonModel<DeploymentIdentity>
     {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentIdentity)} does not support writing '{options.Format}' format.");
             }

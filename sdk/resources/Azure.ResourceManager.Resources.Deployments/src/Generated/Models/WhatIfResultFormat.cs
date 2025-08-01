@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The format of the What-If results. </summary>
     public enum WhatIfResultFormat

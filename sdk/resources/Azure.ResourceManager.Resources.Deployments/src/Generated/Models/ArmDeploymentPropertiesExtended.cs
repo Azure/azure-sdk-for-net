@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment properties with additional details. </summary>
     public partial class ArmDeploymentPropertiesExtended
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentPropertiesExtended"/>. </summary>
         internal ArmDeploymentPropertiesExtended()
         {
-            Providers = new ChangeTrackingList<Provider>();
+            Providers = new ChangeTrackingList<ResourceProviderData>();
             Dependencies = new ChangeTrackingList<ArmDependency>();
             Extensions = new ChangeTrackingList<ArmDeploymentExtensionDefinition>();
             OutputResourceDetails = new ChangeTrackingList<ArmResourceReference>();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<Provider> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<ArmDeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ArmResourceReference> outputResourceDetails, IReadOnlyList<ArmResourceReference> validatedResourceDetails, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<ArmDeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ArmResourceReference> outputResourceDetails, IReadOnlyList<ArmResourceReference> validatedResourceDetails, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         public BinaryData Outputs { get; }
         /// <summary> The list of resource providers needed for the deployment. </summary>
         [WirePath("providers")]
-        public IReadOnlyList<Provider> Providers { get; }
+        public IReadOnlyList<ResourceProviderData> Providers { get; }
         /// <summary> The list of deployment dependencies. </summary>
         [WirePath("dependencies")]
         public IReadOnlyList<ArmDependency> Dependencies { get; }

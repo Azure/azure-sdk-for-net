@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The Managed Identity configuration for a deployment. </summary>
     public partial class DeploymentIdentity

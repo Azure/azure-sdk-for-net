@@ -10,6 +10,6 @@ using Azure.Core;
 // to avoid the compile error, we need this attribute to remove it
 [assembly: CodeGenSuppressType("SubResource")]
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
 }

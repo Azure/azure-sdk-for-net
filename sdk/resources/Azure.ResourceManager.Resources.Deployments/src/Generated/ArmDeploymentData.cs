@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the ArmDeployment data model.

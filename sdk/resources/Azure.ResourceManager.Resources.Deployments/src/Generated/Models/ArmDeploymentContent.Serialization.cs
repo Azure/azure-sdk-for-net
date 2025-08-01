@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentContent : IUtf8JsonSerializable, IJsonModel<ArmDeploymentContent>
     {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentContent)} does not support writing '{options.Format}' format.");
             }

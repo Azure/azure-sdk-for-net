@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Deployments
+namespace Azure.ResourceManager.Resources
 {
     internal class ArmDeploymentOperationSource : IOperationSource<ArmDeploymentResource>
     {
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources.Deployments
 
         ArmDeploymentResource IOperationSource<ArmDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArmDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesDeploymentsContext.Default);
+            var data = ModelReaderWriter.Read<ArmDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new ArmDeploymentResource(_client, data);
         }
 
         async ValueTask<ArmDeploymentResource> IOperationSource<ArmDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArmDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesDeploymentsContext.Default);
+            var data = ModelReaderWriter.Read<ArmDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return await Task.FromResult(new ArmDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }

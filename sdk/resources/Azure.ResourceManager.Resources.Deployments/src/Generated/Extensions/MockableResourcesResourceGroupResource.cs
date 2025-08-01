@@ -10,20 +10,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Deployments.Mocking
+namespace Azure.ResourceManager.Resources.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    public partial class MockableResourcesDeploymentsResourceGroupResource : ArmResource
+    public partial class MockableResourcesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsResourceGroupResource"/> class for mocking. </summary>
-        protected MockableResourcesDeploymentsResourceGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class for mocking. </summary>
+        protected MockableResourcesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesDeploymentsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

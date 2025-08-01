@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
     public partial class ArmDeploymentValidateResult : ResourceData

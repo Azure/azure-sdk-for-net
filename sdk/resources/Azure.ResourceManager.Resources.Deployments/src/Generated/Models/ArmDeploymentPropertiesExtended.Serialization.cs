@@ -13,7 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentPropertiesExtended : IUtf8JsonSerializable, IJsonModel<ArmDeploymentPropertiesExtended>
     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<ResourceProviderData>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             DateTimeOffset? timestamp = default;
             TimeSpan? duration = default;
             BinaryData outputs = default;
-            IReadOnlyList<Provider> providers = default;
+            IReadOnlyList<ResourceProviderData> providers = default;
             IReadOnlyList<ArmDependency> dependencies = default;
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    List<Provider> array = new List<Provider>();
+                    List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Provider.DeserializeProvider(item, options));
+                        array.Add(ModelReaderWriter.Read<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
                     }
                     providers = array;
                     continue;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"u8))
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 timestamp,
                 duration,
                 outputs,
-                providers ?? new ChangeTrackingList<Provider>(),
+                providers ?? new ChangeTrackingList<ResourceProviderData>(),
                 dependencies ?? new ChangeTrackingList<ArmDependency>(),
                 templateLink,
                 parameters,
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

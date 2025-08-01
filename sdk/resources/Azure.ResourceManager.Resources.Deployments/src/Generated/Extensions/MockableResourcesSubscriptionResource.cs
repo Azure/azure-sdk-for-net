@@ -10,20 +10,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Deployments.Mocking
+namespace Azure.ResourceManager.Resources.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class MockableResourcesDeploymentsSubscriptionResource : ArmResource
+    public partial class MockableResourcesSubscriptionResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsSubscriptionResource"/> class for mocking. </summary>
-        protected MockableResourcesDeploymentsSubscriptionResource()
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesSubscriptionResource"/> class for mocking. </summary>
+        protected MockableResourcesSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesDeploymentsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

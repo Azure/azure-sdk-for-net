@@ -10,29 +10,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments.Mocking
+namespace Azure.ResourceManager.Resources.Mocking
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
-    public partial class MockableResourcesDeploymentsTenantResource : ArmResource
+    public partial class MockableResourcesTenantResource : ArmResource
     {
         private ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
         private DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsTenantResource"/> class for mocking. </summary>
-        protected MockableResourcesDeploymentsTenantResource()
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesTenantResource"/> class for mocking. </summary>
+        protected MockableResourcesTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesDeploymentsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+        private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
         private DeploymentsRestOperations ArmDeploymentDeploymentsRestClient => _armDeploymentDeploymentsRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Mocking
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesDeploymentsTenantResource.CalculateDeploymentTemplateHash");
+            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Mocking
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesDeploymentsTenantResource.CalculateDeploymentTemplateHash");
+            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {

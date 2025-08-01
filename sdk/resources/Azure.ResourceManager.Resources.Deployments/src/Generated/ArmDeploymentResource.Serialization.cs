@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources.Deployments
+namespace Azure.ResourceManager.Resources
 {
     public partial class ArmDeploymentResource : IJsonModel<ArmDeploymentData>
     {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources.Deployments
 
         ArmDeploymentData IJsonModel<ArmDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArmDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArmDeploymentData>(Data, options, AzureResourceManagerResourcesDeploymentsContext.Default);
+        BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArmDeploymentData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        ArmDeploymentData IPersistableModel<ArmDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentData>(data, options, AzureResourceManagerResourcesDeploymentsContext.Default);
+        ArmDeploymentData IPersistableModel<ArmDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentData>(data, options, AzureResourceManagerResourcesContext.Default);
 
         string IPersistableModel<ArmDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArmDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }

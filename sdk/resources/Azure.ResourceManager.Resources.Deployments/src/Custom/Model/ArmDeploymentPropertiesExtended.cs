@@ -8,9 +8,8 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment properties with additional details. </summary>
     [CodeGenSuppress("DebugSettingDetailLevel")]

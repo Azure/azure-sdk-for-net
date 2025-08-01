@@ -10,7 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 

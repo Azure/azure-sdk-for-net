@@ -14,9 +14,9 @@ using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArmDeploymentResource"/> and their operations.
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Deployments
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ArmDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _armDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+            _armDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ArmDeploymentResource.ResourceType, out string armDeploymentDeploymentsApiVersion);
             _armDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentDeploymentsApiVersion);
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentsArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScope(Id, deploymentName, content, cancellationToken);
-                var operation = new DeploymentsArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

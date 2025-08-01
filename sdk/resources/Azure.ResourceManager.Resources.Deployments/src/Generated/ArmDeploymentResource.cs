@@ -14,9 +14,9 @@ using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Deployments
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing an ArmDeployment along with the instance operations that can be performed on it.
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Resources.Deployments
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArmDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _armDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ResourceType.Namespace, Diagnostics);
+            _armDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string armDeploymentDeploymentsApiVersion);
             _armDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentDeploymentsApiVersion);
-            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _deploymentOperationsRestClient = new DeploymentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentsArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.DeleteAtScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new DeploymentsArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentsArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.CreateOrUpdateAtScope(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new DeploymentsArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentResource>(new ArmDeploymentOperationSource(Client), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = await _armDeploymentDeploymentsRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentsArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             try
             {
                 var response = _armDeploymentDeploymentsRestClient.ValidateAtScope(Id.Parent, Id.Name, content, cancellationToken);
-                var operation = new DeploymentsArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(new ArmDeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 if (Id.Parent.ResourceType == TenantResource.ResourceType)
                 {
                     var response = await _armDeploymentDeploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
                 {
                     var response = await _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
                 {
                     var response = await _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
                     var response = await _armDeploymentDeploymentsRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 if (Id.Parent.ResourceType == TenantResource.ResourceType)
                 {
                     var response = _armDeploymentDeploymentsRestClient.WhatIfAtTenantScope(Id.Name, content, cancellationToken);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
                 {
                     var response = _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, content, cancellationToken);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
                 {
                     var response = _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, content, cancellationToken);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
                     var response = _armDeploymentDeploymentsRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                    var operation = new DeploymentsArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;

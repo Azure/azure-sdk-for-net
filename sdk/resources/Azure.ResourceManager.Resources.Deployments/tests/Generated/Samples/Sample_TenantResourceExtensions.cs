@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Resources.Deployments.Samples
+namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {

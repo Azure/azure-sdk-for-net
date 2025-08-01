@@ -7,24 +7,24 @@
 
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.Deployments.Mocking
+namespace Azure.ResourceManager.Resources.Mocking
 {
     /// <summary> A class to add extension methods to ArmClient. </summary>
-    public partial class MockableResourcesDeploymentsArmClient : ArmResource
+    public partial class MockableResourcesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsArmClient"/> class for mocking. </summary>
-        protected MockableResourcesDeploymentsArmClient()
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesArmClient"/> class for mocking. </summary>
+        protected MockableResourcesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesDeploymentsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableResourcesDeploymentsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        internal MockableResourcesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
         }
 

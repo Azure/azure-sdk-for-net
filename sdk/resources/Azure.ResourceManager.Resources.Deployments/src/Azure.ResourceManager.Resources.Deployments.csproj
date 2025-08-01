@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.Resources.Deployments</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Resources.Deployments.</Description>
     <PackageTags>azure;management;arm;resource manager;resources.deployments</PackageTags>
+    <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 </Project>
