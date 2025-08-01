@@ -32,13 +32,12 @@ public class PlaybackOnlyAttribute : NUnitAttribute, IApplyToTest
     {
         if (test.RunState != RunState.NotRunnable)
         {
-            //TODO
-            //RecordedTestMode mode = TestEnvironment.GlobalTestMode;
-            //if (mode != RecordedTestMode.Playback)
-            //{
-            //    test.RunState = RunState.Ignored;
-            //    test.Properties.Set("_SKIPREASON", $"Playback tests will not run when AZURE_TEST_MODE is {mode}.  This test was skipped for the following reason: {_reason}");
-            //}
+            RecordedTestMode mode = TestEnvironment.GlobalTestMode;
+            if (mode != RecordedTestMode.Playback)
+            {
+                test.RunState = RunState.Ignored;
+                test.Properties.Set("_SKIPREASON", $"Playback tests will not run when CLIENTMODEL_TEST_MODE is {mode}.  This test was skipped for the following reason: {_reason}");
+            }
         }
     }
 }

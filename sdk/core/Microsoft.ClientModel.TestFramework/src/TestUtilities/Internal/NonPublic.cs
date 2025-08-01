@@ -9,7 +9,7 @@ namespace Microsoft.ClientModel.TestFramework;
 /// <summary>
 /// Helpers to make accessing the many internal or private members of the Azure test framework more streamlined
 /// </summary>
-public static class NonPublic
+internal static class NonPublic
 {
     /// <summary>
     /// Creates an accessor for an internal, protected, or private property.

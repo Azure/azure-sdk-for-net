@@ -34,7 +34,7 @@ public class MockPipelineResponse : PipelineResponse
     }
 
     /// <summary>
-    /// TODO.
+    /// Gets a value indicating whether this mock response has been disposed.
     /// </summary>
     public bool IsDisposed
     {
@@ -137,9 +137,9 @@ public class MockPipelineResponse : PipelineResponse
     }
 
     /// <summary>
-    /// TODO.
+    /// Releases the unmanaged resources used by the <see cref="MockPipelineResponse"/> and optionally releases the managed resources.
     /// </summary>
-    /// <param name="disposing"></param>
+    /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
     protected void Dispose(bool disposing)
     {
         if (disposing && !_disposed)

@@ -1,25 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using System.Threading;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Collections.Concurrent;
+using System;
 using System.ClientModel;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework;
 
@@ -37,7 +28,6 @@ public abstract class TestEnvironment
     private static readonly object s_syncLock = new();
     private Exception? _bootstrappingException;
     private readonly Type _type;
-    // TODO - private readonly ClientDiagnostics _clientDiagnostics;
 
     /// <summary>
     /// Gets the root directory of the repository containing the test project.
@@ -83,7 +73,6 @@ public abstract class TestEnvironment
         }
 
         _type = GetType();
-        // TODO - _clientDiagnostics = new ClientDiagnostics(ClientOptions.Default);
 
         _environmentFile = ParseEnvironmentFile();
     }
@@ -338,7 +327,6 @@ public abstract class TestEnvironment
     {
         if (value == null)
         {
-            // TODO - string prefixedName = _prefix + name;
             string message = $"Unable to find environment variable {name} required by test." + Environment.NewLine +
                              "Make sure the test environment was initialized using the eng/common/TestResources/New-TestResources.ps1 script.";
             if (_bootstrappingException != null)
@@ -371,7 +359,7 @@ public abstract class TestEnvironment
             throw new InvalidOperationException("Recorded value should not be retrieved outside the test method invocation");
         }
 
-        return _recording.GetVariable(name, ""); // TODO - determine default value
+        return _recording.GetVariable(name, "");
     }
 
     /// <summary>

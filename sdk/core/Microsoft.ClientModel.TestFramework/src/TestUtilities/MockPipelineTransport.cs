@@ -105,8 +105,6 @@ public class MockPipelineTransport : PipelineTransport
             throw new InvalidOperationException("MockPipelineTransport can only process MockPipelineRequest messages.");
         }
 
-        // TODO - mockMessage.SetResponse(null);
-
         lock (_syncObj)
         {
             Requests.Add(mockRequest);

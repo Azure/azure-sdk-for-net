@@ -14,7 +14,8 @@ namespace Microsoft.ClientModel.TestFramework;
 public class LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
 {
     /// <summary>
-    /// TODO.
+    /// Initializes a new instance of the <see cref="LiveTestBase{TEnvironment}"/> class.
+    /// Creates a new test environment instance and sets it to Live mode.
     /// </summary>
     protected LiveTestBase()
     {
@@ -25,14 +26,15 @@ public class LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, ne
     }
 
     /// <summary>
-    /// TODO.
+    /// Gets the test environment instance configured for live testing.
     /// </summary>
     protected TEnvironment TestEnvironment { get; }
 
     /// <summary>
-    /// TODO.
+    /// Waits for the test environment to be ready for testing.
+    /// This method is called once before any tests in the class are executed.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation.</returns>
     [OneTimeSetUp]
     public async ValueTask WaitForEnvironment()
     {

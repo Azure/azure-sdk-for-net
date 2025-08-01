@@ -45,12 +45,12 @@ public class LiveOnlyAttribute : NUnitAttribute, IApplyToTest
 
         if (test.RunState != RunState.NotRunnable)
         {
-            //RecordedTestMode mode = TestEnvironment.GlobalTestMode;
-            //if (mode != RecordedTestMode.Live && !_alwaysRunLocally)
-            //{
-            //    test.RunState = RunState.Ignored;
-            //    test.Properties.Set("_SKIPREASON", $"Live tests will not run when AZURE_TEST_MODE is {mode}");
-            //}
+            RecordedTestMode mode = TestEnvironment.GlobalTestMode;
+            if (mode != RecordedTestMode.Live && !_alwaysRunLocally)
+            {
+                test.RunState = RunState.Ignored;
+                test.Properties.Set("_SKIPREASON", $"Live tests will not run when CLIENTMODEL_TEST_MODE is {mode}");
+            }
         }
     }
 }

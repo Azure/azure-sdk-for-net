@@ -2,17 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
-#if NET8_0_OR_GREATER
-using System.Runtime.Loader;
-#endif
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.TestProxy;
@@ -29,18 +23,18 @@ public class TestProxyProcess
     private static readonly string s_dotNetExe;
 
     /// <summary>
-    /// TODO.
+    /// The IP address used for the test proxy. Uses 127.0.0.1 instead of localhost to avoid SSL callback slowness.
     /// </summary>
     // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
     public const string IpAddress = "127.0.0.1";
 
     /// <summary>
-    /// TODO.
+    /// Gets the HTTP port used by the test proxy.
     /// </summary>
     public int? ProxyPortHttp => _proxyPortHttp;
 
     /// <summary>
-    /// TODO.
+    /// Gets the HTTPS port used by the test proxy.
     /// </summary>
     public int? ProxyPortHttps => _proxyPortHttps;
 
@@ -49,9 +43,13 @@ public class TestProxyProcess
     private readonly Process? _testProxyProcess;
 
     /// <summary>
-    /// TODO.
+    /// Gets the test framework client for interacting with the test proxy.
     /// </summary>
     internal TestFrameworkClient Client { get; }
+
+    /// <summary>
+    /// Gets the test proxy client for proxy-specific operations.
+    /// </summary>
     internal TestProxyClient ProxyClient { get; }
     private readonly StringBuilder _errorBuffer = new();
     private static readonly object _lock = new();
@@ -60,9 +58,10 @@ public class TestProxyProcess
     private static readonly bool s_enableDebugProxyLogging;
 
     /// <summary>
-    /// TODO.
+    /// Initializes static members of the <see cref="TestProxyProcess"/> class.
+    /// Locates the .NET executable and configures debug logging settings.
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="InvalidOperationException">Thrown when the .NET installation directory is not found.</exception>
     static TestProxyProcess()
     {
         string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
@@ -83,6 +82,11 @@ public class TestProxyProcess
         s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TestProxyProcess"/> class.
+    /// </summary>
+    /// <param name="proxyPath">The path to the test proxy executable.</param>
+    /// <param name="debugMode">If true, uses predefined ports 5000 and 5001 for debugging.</param>
     private TestProxyProcess(string? proxyPath, bool debugMode = false)
     {
         bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
@@ -215,6 +219,13 @@ public class TestProxyProcess
         }
     }
 
+    /// <summary>
+    /// Attempts to parse a port number from test proxy output for the specified scheme.
+    /// </summary>
+    /// <param name="output">The output line from the test proxy.</param>
+    /// <param name="scheme">The URI scheme (http or https) to parse.</param>
+    /// <param name="port">When this method returns, contains the parsed port number if successful; otherwise, null.</param>
+    /// <returns>true if the port was successfully parsed; otherwise, false.</returns>
     private static bool TryParsePort(string? output, string scheme, out int? port)
     {
         if (output == null)
@@ -239,9 +250,10 @@ public class TestProxyProcess
     }
 
     /// <summary>
-    /// TODO.
+    /// Checks the test proxy output for any logged information and errors.
+    /// If debug logging is enabled, outputs the collected logs and clears the buffer.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public async Task CheckProxyOutputAsync()
     {
         if (s_enableDebugProxyLogging)
@@ -260,6 +272,10 @@ public class TestProxyProcess
         CheckForErrors();
     }
 
+    /// <summary>
+    /// Checks for any errors in the error buffer and throws an exception if errors are found.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when errors are found in the test proxy.</exception>
     private void CheckForErrors()
     {
         if (_errorBuffer.Length > 0)

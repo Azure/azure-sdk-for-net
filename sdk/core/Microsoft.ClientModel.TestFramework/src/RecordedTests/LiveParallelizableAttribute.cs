@@ -14,16 +14,16 @@ namespace Microsoft.ClientModel.TestFramework;
 public class LiveParallelizableAttribute : ParallelizableAttribute
 {
     /// <summary>
-    /// TODO.
+    /// Initializes a new instance of the <see cref="LiveParallelizableAttribute"/> class.
+    /// The parallelization scope is applied only when tests are running in Live mode; otherwise, no parallelization is used.
     /// </summary>
-    /// <param name="scope"></param>
+    /// <param name="scope">The scope of parallelization to apply when in Live mode.</param>
     public LiveParallelizableAttribute(ParallelScope scope) : base(ApplyModeToParallelScope(scope))
     {
     }
 
     private static ParallelScope ApplyModeToParallelScope(ParallelScope scope)
     {
-        throw new NotImplementedException();
-        //return TestEnvironment.GlobalTestMode == RecordedTestMode.Live ? scope : ParallelScope.None;
+        return TestEnvironment.GlobalTestMode == RecordedTestMode.Live ? scope : ParallelScope.None;
     }
 }

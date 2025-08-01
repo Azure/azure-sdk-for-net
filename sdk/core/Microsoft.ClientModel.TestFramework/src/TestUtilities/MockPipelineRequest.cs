@@ -17,8 +17,6 @@ public class MockPipelineRequest : PipelineRequest
     private BinaryContent? _content;
     private readonly MockPipelineRequestHeaders _headers = new();
 
-    //private bool _disposed;
-
     /// <summary>
     /// Initializes a new instance of <see cref="MockPipelineRequest"/> with default values.
     /// </summary>
@@ -54,10 +52,10 @@ public class MockPipelineRequest : PipelineRequest
     }
 
     /// <summary>
-    /// TODO.
+    /// Releases all resources used by the <see cref="MockPipelineRequest"/>.
+    /// This is a no-op implementation since mock requests don't hold unmanaged resources.
     /// </summary>
     public sealed override void Dispose()
     {
-        //_disposed = true;
     }
 }

@@ -20,10 +20,10 @@ namespace Microsoft.ClientModel.TestFramework;
 public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
 {
     /// <summary>
-    /// TODO.
+    /// Wraps the test command to provide recorded test functionality, including automatic re-recording on playback failures.
     /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
+    /// <param name="command">The test command to wrap.</param>
+    /// <returns>A wrapped test command that handles recorded test execution, or the original command if not applicable.</returns>
     public TestCommand Wrap(TestCommand command)
     {
         ITest test = command.Test;
@@ -44,10 +44,22 @@ public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
     {
         private readonly RecordedTestMode _mode;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecordedTestAttributeCommand"/> class.
+        /// </summary>
+        /// <param name="innerCommand">The inner test command to delegate to.</param>
+        /// <param name="mode">The recorded test mode (Live, Record, or Playback).</param>
         public RecordedTestAttributeCommand(TestCommand innerCommand, RecordedTestMode mode) : base(innerCommand)
         {
             _mode = mode;
         }
+
+        /// <summary>
+        /// Executes the test command with recorded test functionality, including automatic re-recording on playback failures
+        /// and retry logic for timeout exceptions.
+        /// </summary>
+        /// <param name="context">The test execution context.</param>
+        /// <returns>The test result after execution and any necessary re-recording or retry attempts.</returns>
         public override TestResult Execute(TestExecutionContext context)
         {
             // Run the test
@@ -131,11 +143,21 @@ public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
             return context.CurrentResult;
         }
 
+        /// <summary>
+        /// Sets the recording mode for the specified recorded test fixture.
+        /// </summary>
+        /// <param name="fixture">The recorded test base fixture to modify.</param>
+        /// <param name="mode">The recording mode to set (Live, Record, or Playback).</param>
         private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
         {
             fixture.Mode = mode;
         }
 
+        /// <summary>
+        /// Determines whether a test has failed based on its execution result status.
+        /// </summary>
+        /// <param name="context">The test execution context containing the result.</param>
+        /// <returns><c>true</c> if the test failed; otherwise, <c>false</c>.</returns>
         private static bool IsTestFailed(TestExecutionContext context)
         {
             return context.CurrentResult.ResultState.Status switch

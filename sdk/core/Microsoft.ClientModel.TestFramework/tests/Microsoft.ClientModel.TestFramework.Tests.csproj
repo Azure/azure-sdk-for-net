@@ -14,4 +14,8 @@
   <ItemGroup>
 	  <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="RecordedTests\" />
+  </ItemGroup>
 </Project>

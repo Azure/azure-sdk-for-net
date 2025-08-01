@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// Extension methods for <see cref="IAsyncEnumerable{T}"/> to support testing scenarios.
+/// Provides utilities for converting async enumerables to synchronous collections for easier testing and validation.
 /// </summary>
 public static class TestAsyncEnumerableExtensions
 {
     /// <summary>
-    /// TODO.
+    /// Converts an <see cref="IAsyncEnumerable{T}"/> to a <see cref="List{T}"/> by asynchronously enumerating all items.
+    /// This method is useful in test scenarios where you need to convert async enumerable results to a synchronous collection for assertions.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="asyncEnumerable"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">The type of elements in the async enumerable.</typeparam>
+    /// <param name="asyncEnumerable">The async enumerable to convert to a list.</param>
+    /// <returns>A <see cref="Task{List}"/> containing all items from the async enumerable.</returns>
     public static async Task<List<T>> ToEnumerableAsync<T>(this IAsyncEnumerable<T> asyncEnumerable)
     {
         List<T> list = new List<T>();

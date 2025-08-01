@@ -14,17 +14,10 @@ using Castle.DynamicProxy;
 
 namespace Microsoft.ClientModel.TestFramework;
 
-/// <summary>
-/// TODO.
-/// </summary>
 internal class UseSyncMethodsInterceptor : IInterceptor
 {
     private readonly bool _forceSync;
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="forceSync"></param>
     public UseSyncMethodsInterceptor(bool forceSync)
     {
         _forceSync = forceSync;
@@ -38,11 +31,6 @@ internal class UseSyncMethodsInterceptor : IInterceptor
         .GetMethods(BindingFlags.Static | BindingFlags.Public)
         .Single(m => m.Name == "FromException" && m.IsGenericMethod);
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="invocation"></param>
-    /// <exception cref="InvalidOperationException"></exception>
     [DebuggerStepThrough]
     public void Intercept(IInvocation invocation)
     {
