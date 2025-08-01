@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -124,10 +125,15 @@ namespace Azure.Generator.Management.Providers
 
             // Build the method body using foreach and yield return pattern
             var pageType = new CSharpType(typeof(Page<>), _tType);
+            var asPagesInvocation = _sourceField.Invoke("AsPages", [continuationTokenParam, pageSizeHintParam]);
+            var pages = _isAsync
+                // we can't write ConfigureAwait for a non-async invoke, this is a workaround
+                ? asPagesInvocation.Invoke(nameof(TaskAsyncEnumerableExtensions.ConfigureAwait), [False], null, false, false, extensionType: typeof(TaskAsyncEnumerableExtensions))
+                : asPagesInvocation;
             var foreachStatement = new ForEachStatement(
                 pageType,
                 "page",
-                _sourceField.Invoke("AsPages", [continuationTokenParam, pageSizeHintParam]),
+                pages,
                 isAsync: _isAsync,
                 out var pageVar);
 

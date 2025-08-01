@@ -5,7 +5,7 @@ using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 
-namespace MgmtTypeSpec;
+namespace MgmtTypeSpec {
 
 @resource("zoos")
 model Zoo is TrackedResource<ZooProperties> {
@@ -22,7 +22,7 @@ model ZooProperties {
 
 @armResourceOperations
 interface Zoos {
-  createZoo is ArmResourceCreateOrUpdateAsync<Zoo>;
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<Zoo>;
 
   get is ArmResourceRead<Zoo>;
 
@@ -38,6 +38,25 @@ interface Zoos {
     Zoo, 
     void,
     ArmResponse<ZooRecommendation>>;
+
+  @get
+  @action("ZooAddressList")
+  zooAddressList is ArmResourceActionSync<
+    Zoo,
+    void,
+    ArmResponse<ZooAddressListListResult>,
+    Parameters = {
+      @query("$maxpagesize")
+      $maxpagesize?: int32;
+    }
+  >;
+}
+
+model ZooAddressListListResult is Azure.Core.Page<ZooAddress>;
+
+model ZooAddress {
+  @visibility(Lifecycle.Read)
+  id?: Azure.Core.armResourceIdentifier;
 }
 
 model ZooRecommendation {
@@ -49,3 +68,11 @@ model ZooRecommendation {
 }
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
+}
+
+// We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource via alternateType
+namespace Azure.ResourceManager.Models {
+  model SubResource { }
+}
+
+@@alternateType(MgmtTypeSpec.ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
