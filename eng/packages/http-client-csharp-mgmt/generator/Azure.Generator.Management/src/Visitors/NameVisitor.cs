@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -12,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -54,38 +54,50 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (TryTransformUrlToUri(model.Name, out var newName))
         {
+            UpdateConstructors(type, newName);
+            UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
-            UpdateSerialization(type, newName);
         }
 
         if (_knownModels.Contains(model.Name))
         {
-            var UpdatedName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
-            type.Update(name: UpdatedName);
-            UpdateSerialization(type, UpdatedName);
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            UpdateConstructors(type, newName);
+            UpdateSerialization(type, newName, type.Name);
+            type.Update(name: newName);
         }
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
         {
-            var newModelName = $"{enclosingResourceName}Patch";
+            newName = $"{enclosingResourceName}Patch";
+            UpdateSerialization(type, newName, type.Name);
+            type.Update(name: newName);
 
             _resourceUpdateModelTypes.Add(type.Type);
-
-            type.Update(name: newModelName);
-
             foreach (var serializationProvider in type.SerializationProviders)
             {
-                serializationProvider.Update(name: newModelName);
                 _resourceUpdateModelTypes.Add(serializationProvider.Type);
             }
         }
         return base.PreVisitModel(model, type);
     }
 
-    private static void UpdateSerialization(ModelProvider type, string newName)
+    private static void UpdateConstructors(ModelProvider type, string newName)
+    {
+        foreach (var constructor in type.Constructors)
+        {
+            // Update the constructor name to match the model name
+            constructor.Signature.Update(name: newName);
+        }
+    }
+
+    private static void UpdateSerialization(ModelProvider type, string newName, string originalName)
     {
         foreach (var serializationProvider in type.SerializationProviders)
         {
+            // Update the serialization provider name to match the model name
+            var deserializationMethod = serializationProvider.Methods.Single(m => m.Signature.Name.Equals($"Deserialize{originalName}"));
+            deserializationMethod.Signature.Update(name: $"Deserialize{newName}");
             serializationProvider.Update(name: newName);
         }
     }

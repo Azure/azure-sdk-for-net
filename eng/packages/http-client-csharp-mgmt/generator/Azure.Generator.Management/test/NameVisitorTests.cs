@@ -62,10 +62,14 @@ namespace Azure.Generator.Mgmt.Tests
             var type = plugin.Object.TypeFactory.CreateModel(model);
             var transformedModel = visitor.InvokeVisit(model, type);
             var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
-            Assert.AreEqual(transformedModel?.Name, $"{resourceProviderName}{skuModelName}");
+            var updatedSkuModelName = $"{resourceProviderName}{skuModelName}";
+            Assert.AreEqual(transformedModel?.Name, updatedSkuModelName);
+            Assert.AreEqual(transformedModel!.Constructors[0].Signature.Name, $"{resourceProviderName}{skuModelName}");
             var serializationProvider = transformedModel?.SerializationProviders.SingleOrDefault();
             Assert.NotNull(serializationProvider);
-            Assert.AreEqual(serializationProvider!.Name, $"{resourceProviderName}{skuModelName}");
+            Assert.AreEqual(serializationProvider!.Name, updatedSkuModelName);
+            var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.Equals($"Deserialize{updatedSkuModelName}"));
+            Assert.NotNull(deserializationMethod);
         }
 
         private class TestVisitor : NameVisitor
