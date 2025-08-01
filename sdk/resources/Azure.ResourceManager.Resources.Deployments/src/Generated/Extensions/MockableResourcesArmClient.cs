@@ -33,5 +33,17 @@ namespace Azure.ResourceManager.Resources.Mocking
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArmDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArmDeploymentResource"/> object. </returns>
+        public virtual ArmDeploymentResource GetArmDeploymentResource(ResourceIdentifier id)
+        {
+            ArmDeploymentResource.ValidateResourceId(id);
+            return new ArmDeploymentResource(Client, id);
+        }
     }
 }

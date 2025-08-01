@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Samples
             string scope = "providers/Microsoft.Management/managementGroups/my-management-group-id";
             string deploymentName = "my-deployment";
             ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetDeploymentResource(armDeploymentResourceId);
+            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
 
             // invoke the operation
             ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Samples
             string scope = "subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group";
             string deploymentName = "my-deployment";
             ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetDeploymentResource(armDeploymentResourceId);
+            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
 
             // invoke the operation
             ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Samples
             string scope = $"/";
             string deploymentName = "exampleDeploymentName";
             ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetDeploymentResource(armDeploymentResourceId);
+            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
 
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Resources.Samples
             string scope = $"/providers/Microsoft.Management/managementGroups/{groupId}";
             string deploymentName = "exampleDeploymentName";
             ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetDeploymentResource(armDeploymentResourceId);
+            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
 
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Resources.Samples
             string scope = $"/subscriptions/{subscriptionId}";
             string deploymentName = "my-deployment";
             ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetDeploymentResource(armDeploymentResourceId);
+            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
 
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources.Samples
             string scope = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}";
             string deploymentName = "my-deployment";
             ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetDeploymentResource(armDeploymentResourceId);
+            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
 
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)

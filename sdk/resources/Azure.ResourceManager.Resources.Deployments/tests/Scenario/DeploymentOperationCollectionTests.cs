@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            ArmDeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             int count = 0;
             await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperationsAsync())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            ArmDeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             await foreach (var tempDeploymentOperation in deployment.GetDeploymentOperationsAsync())
             {
                 var getDeploymentOperation = await deployment.GetDeploymentOperationAsync(tempDeploymentOperation.OperationId);
