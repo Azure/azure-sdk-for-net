@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Supported `FormattableString` in `BicepFunction.Interpolate` method.
+- Supported `FormattableString` in `BicepFunction.Interpolate` method. ([#47360](https://github.com/Azure/azure-sdk-for-net/issues/47360))
 
 ## 1.2.1 (2025-07-09)
 
