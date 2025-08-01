@@ -196,11 +196,6 @@
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.Inference'))">
-    <!-- Microsoft.Extensions.AI.Abstractions approved for Azure.AI.Inference; it has down-level support -->
-    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.5.0"/>
-  </ItemGroup>
-
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
     <PackageReference Update="OpenAI" Version="2.2.0" />
   </ItemGroup>
@@ -211,7 +206,7 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
+  <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent')) or $(MSBuildProjectName.StartsWith('Azure.AI.Inference'))">
     <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.7.0"/>
   </ItemGroup>
 
@@ -394,7 +389,7 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Update="Microsoft.Extensions.AI" Version="9.5.0" /> <!-- 9.x approved for test project use, as there is no 8.x version available. -->
+    <PackageReference Update="Microsoft.Extensions.AI" Version="9.7.0" /> <!-- 9.x approved for test project use, as there is no 8.x version available. -->
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
     <PackageReference Update="Microsoft.Extensions.Caching.Memory" Version="9.0.4" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
