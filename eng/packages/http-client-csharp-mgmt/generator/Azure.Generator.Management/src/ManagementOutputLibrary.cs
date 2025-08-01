@@ -181,6 +181,7 @@ namespace Azure.Generator.Management
         protected override TypeProvider[] BuildTypeProviders()
         {
             //var methodMap = BuildManagementMethodMap();
+            _ = ManagementClientGenerator.Instance.InputLibrary.NonResourceMethodMetadatas; // Ensure models are loaded
             var resources = BuildResources();
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
             var extensions = BuildExtensions(resources);

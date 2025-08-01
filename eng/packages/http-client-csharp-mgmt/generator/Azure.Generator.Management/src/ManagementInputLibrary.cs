@@ -15,6 +15,7 @@ namespace Azure.Generator.Management
     public class ManagementInputLibrary : InputLibrary
     {
         private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
+        private const string NonResourceMethodMetadata = "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
         private const string ResourceIdPattern = "resourceIdPattern";
         private const string ResourceType = "resourceType";
         private const string SingletonResourceName = "singletonResourceName";
@@ -56,6 +57,9 @@ namespace Azure.Generator.Management
 
         private IReadOnlyList<ResourceMetadata>? _resourceMetadatas;
         internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => _resourceMetadatas ??= DeserializeResourceMetadata();
+
+        private IReadOnlyList<NonResourceMethodMetadata>? _nonResourceMethodMetadatas;
+        internal IReadOnlyList<NonResourceMethodMetadata> NonResourceMethodMetadatas => _nonResourceMethodMetadatas ??= DeserializeNonResourceMetadata();
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
@@ -217,6 +221,43 @@ namespace Azure.Generator.Management
                     resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
                     methodToClientMap);
             }
+        }
+
+        private IReadOnlyList<NonResourceMethodMetadata> DeserializeNonResourceMetadata()
+        {
+            var nonResourceMethodMetadata = new List<NonResourceMethodMetadata>();
+            var rootClient = InputNamespace.RootClients.First();
+            var decorator = rootClient.Decorators.FirstOrDefault(d => d.Name == NonResourceMethodMetadata);
+            if (decorator is null)
+            {
+                return nonResourceMethodMetadata;
+            }
+            // deserialize the decorator arguments
+            var args = decorator.Arguments ?? throw new InvalidOperationException();
+            if (args.TryGetValue("nonResourceMethods", out var nonResourceMethods))
+            {
+                using var document = JsonDocument.Parse(nonResourceMethods);
+                foreach (var item in document.RootElement.EnumerateArray())
+                {
+                    var methodId = item.GetProperty("methodId").GetString() ?? throw new JsonException("methodId cannot be null");
+                    var operationScopeString = item.GetProperty("operationScope").GetString() ?? throw new JsonException("operationScope cannot be null");
+                    string? carrierResourceId = null;
+                    if (item.TryGetProperty("carrierResourceId", out var carrierResourceIdData))
+                    {
+                        carrierResourceId = carrierResourceIdData.GetString();
+                    }
+                    // find the method by its ID
+                    var method = GetMethodByCrossLanguageDefinitionId(methodId) ?? throw new JsonException($"cannot find the method with crossLanguageDefinitionId {methodId}");
+                    var operationScope = Enum.Parse<ResourceScope>(operationScopeString, true);
+                    // TODO -- find the corresponding ResourceMetadata if any
+                    nonResourceMethodMetadata.Add(new NonResourceMethodMetadata(
+                        method,
+                        operationScope,
+                        null));
+                }
+            }
+
+            return nonResourceMethodMetadata;
         }
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
