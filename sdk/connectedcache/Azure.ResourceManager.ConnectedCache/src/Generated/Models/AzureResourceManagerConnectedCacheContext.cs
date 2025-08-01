@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.ConnectedCache.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
@@ -13,6 +15,43 @@ namespace Azure.ResourceManager.ConnectedCache
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CacheNodeDriveConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ConnectedCachePatchContent))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseMccCacheNodeData))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseMccCacheNodeResource))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseMccCacheNodeResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseMccCustomerData))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseMccCustomerResource))]
+    [ModelReaderWriterBuildable(typeof(EnterpriseMccCustomerResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(IspCacheNodeData))]
+    [ModelReaderWriterBuildable(typeof(IspCacheNodeResource))]
+    [ModelReaderWriterBuildable(typeof(IspCacheNodeResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(IspCustomerData))]
+    [ModelReaderWriterBuildable(typeof(IspCustomerResource))]
+    [ModelReaderWriterBuildable(typeof(IspCustomerResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeAdditionalProperties))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeAutoUpdateHistoryData))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeAutoUpdateHistoryProperties))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeAutoUpdateInfo))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeBgpCidrDetails))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeBgpCidrsConfiguration))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeBgpConfiguration))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeEntity))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeInstallDetails))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeInstallProperties))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeIssue))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeIssueHistoryData))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeIssueHistoryProperties))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeProperty))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeProxyUriConfiguration))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeTlsCertificate))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeTlsCertificateHistoryData))]
+    [ModelReaderWriterBuildable(typeof(MccCacheNodeTlsCertificateProperties))]
+    [ModelReaderWriterBuildable(typeof(MccCustomerAdditionalProperties))]
+    [ModelReaderWriterBuildable(typeof(MccCustomerEntity))]
+    [ModelReaderWriterBuildable(typeof(MccCustomerProperty))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerConnectedCacheContext : ModelReaderWriterContext
     {
     }

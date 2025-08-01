@@ -6,7 +6,7 @@ extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using BaseBlobs::Azure.Storage.Blobs;
@@ -14,6 +14,7 @@ using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -282,6 +283,39 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceItemProperties properties = await resource.GetPropertiesAsync();
             Assert.IsNotNull(properties);
             Assert.AreEqual(blobResourceId, resource.ResourceId);
+        }
+
+        [Test]
+        public void GetStorageResourceReference_Encoding()
+        {
+            string[] prefixes = ["prefix", "pre=fix", "prefix with space"];
+            string[] tests =
+            [
+                "path=true@&#%",
+                "path%3Dtest%26",
+                "with space",
+                "sub=dir/path=true@&#%",
+                "sub%3Ddir/path=true@&#%",
+                "sub dir/path=true@&#%"
+            ];
+
+            string containerPath = "https://account.blob.core.windows.net/container";
+            BlobContainerClient containerClient = new(new Uri(containerPath));
+
+            foreach (string prefix in prefixes)
+            {
+                BlobStorageResourceContainer containerResource = new(containerClient, new()
+                {
+                    BlobPrefix = prefix,
+                });
+                foreach (string test in tests)
+                {
+                    StorageResourceItem resource = containerResource.GetStorageResourceReference(test, default);
+
+                    string combined = string.Join("/", containerPath, Uri.EscapeDataString(prefix), Uri.EscapeDataString(test).Replace("%2F", "/"));
+                    Assert.That(resource.Uri.AbsoluteUri, Is.EqualTo(combined));
+                }
+            }
         }
 
         [Test]

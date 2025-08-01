@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </summary>
+    /// <summary> Configure this property to support the search service using either the Default Compute or Azure Confidential Compute. </summary>
     public readonly partial struct SearchServiceComputeType : IEquatable<SearchServiceComputeType>
     {
         private readonly string _value;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Search.Models
         private const string DefaultValue = "default";
         private const string ConfidentialValue = "confidential";
 
-        /// <summary> Create the service with the default compute. </summary>
+        /// <summary> Create the service with the Default Compute. </summary>
         public static SearchServiceComputeType Default { get; } = new SearchServiceComputeType(DefaultValue);
         /// <summary> Create the service with Azure Confidential Compute. </summary>
         public static SearchServiceComputeType Confidential { get; } = new SearchServiceComputeType(ConfidentialValue);

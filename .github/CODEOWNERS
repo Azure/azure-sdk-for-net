@@ -231,10 +231,10 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @joseharriaga
+/sdk/documentintelligence/                                         @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @joseharriaga
+/sdk/formrecognizer/                                               @ctstone @vkurpad
 
 # ServiceLabel: %Cognitive - Form Recognizer
 # AzureSdkOwners:                                                  @jsquire
@@ -272,19 +272,19 @@
 # ServiceOwners:                                                   @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @joseharriaga @bidisha-c
+/sdk/textanalytics/                                                @quentinRobinson @bidisha-c
 
 # ServiceLabel: %Cognitive - Text Analytics
 # ServiceOwners:                                                   @quentinRobinson @bidisha-c
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz @joseharriaga @vikaspalaskar
+/sdk/translation/                                                  @mikeymcz @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Translator
 # ServiceOwners:                                                   @swmachan @mikeymcz @vikaspalaskar
 
 # ServiceLabel: %Cognitive - Speech
-# ServiceOwners:                                                   @robch
+# ServiceOwners:                                                   @cahann @kayousef
 
 # PRLabel: %Cognitive - LUIS
 /sdk/cognitiveservices/Language.LUIS*/                             @cahann @kayousef
@@ -563,11 +563,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @jorgerangel-msft @jsquire @christothes
+/sdk/keyvault/                                                     @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @jorgerangel-msft
-# ServiceOwners:                                                   @cheathamb36 @chen-karen
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @Azure/azure-sdk-write-keyvault
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
@@ -845,26 +844,29 @@
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @vicancy @JialinXin @Y-Sindo
 
+# PRLabel: %SQL
+/sdk/sqlmanagement/                                                @ericshape @jeremyfrosti
+
 # ServiceLabel: %SQL
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - VM
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Backup & Restore
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Data Security
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Elastic Jobs
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Managed Instance
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Replication & Failover
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
@@ -950,10 +952,10 @@
 # AzureSdkOwners:                                                  @ArthurMa1978
 
 # PRLabel: %API Center
-/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @azaslonov
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @ArthurMa1978
 
 # ServiceLabel: %API Center %Mgmt
-# ServiceOwners:                                                   @alexyaang @azaslonov
+# ServiceOwners:                                                   @alexyaang
 
 # PRLabel: %ARM
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
@@ -1103,10 +1105,10 @@
 # ServiceOwners:                                                   @aggarwalsw
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @thisisdevanshu
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978
 
 # ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @shaktichetan23 @thisisdevanshu
+# ServiceOwners:                                                   @shaktichetan23
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams

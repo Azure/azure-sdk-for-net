@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
@@ -47,6 +45,14 @@ namespace Azure.Generator.Tests.Visitors
                 .FirstOrDefault(t => t.Name.EndsWith("Converter"));
             Assert.IsNotNull(converterType, "Converter type should be added as nested type");
             Assert.AreEqual($"{serializationProvider.Name}Converter", converterType!.Name);
+
+            // Converter namespace should match the serialization provider's namespace
+            Assert.AreEqual(serializationProvider.Type.Namespace, converterType.Type.Namespace,
+                "Converter type should be in the same namespace as the serialization provider");
+
+            // Converter should have the correct declaring type
+            Assert.AreEqual(serializationProvider, converterType.DeclaringTypeProvider,
+                "Converter type should be declared in the serialization provider");
         }
 
         [Test]
@@ -209,6 +215,27 @@ namespace Azure.Generator.Tests.Visitors
             // Model without decorator should not have converter
             Assert.IsFalse(updatedModel3!.SerializationProviders[0].NestedTypes
                 .Any(t => t.Name.EndsWith("Converter")));
+        }
+
+        [Test]
+        public void ConverterModelE2E()
+        {
+            // Arrange
+            var decorator = new InputDecoratorInfo("Azure.ClientGenerator.Core.@useSystemTextJsonConverter", null);
+            var inputModel = InputFactory.Model("TestModel", decorators: [decorator]);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
+
+            // Act
+            var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            Assert.IsNotNull(modelProvider);
+
+            // Assert
+            var serializationProvider = modelProvider!.SerializationProviders[0];
+
+            var writer = new TypeProviderWriter(serializationProvider);
+            var file = writer.Write();
+
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
 
         private class TestSystemTextJsonConverterVisitor : SystemTextJsonConverterVisitor

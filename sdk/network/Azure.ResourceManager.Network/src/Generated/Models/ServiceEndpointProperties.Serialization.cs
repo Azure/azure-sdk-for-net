@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkIdentifier))
             {
                 writer.WritePropertyName("networkIdentifier"u8);
-                JsonSerializer.Serialize(writer, NetworkIdentifier);
+                ((IJsonModel<WritableSubResource>)NetworkIdentifier).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkIdentifier = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkIdentifier = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))

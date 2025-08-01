@@ -47,19 +47,11 @@ namespace MgmtTypeSpec
         public IList<string> StringArray { get; }
 
         /// <summary> enabled. </summary>
-        public bool? IsEnabled
+        public bool? PropertiesIsEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BarSettingsProperties();
-                }
-                Properties.IsEnabled = value;
             }
         }
     }

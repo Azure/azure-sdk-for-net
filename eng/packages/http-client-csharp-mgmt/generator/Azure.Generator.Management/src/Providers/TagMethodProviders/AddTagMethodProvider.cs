@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
@@ -13,10 +15,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     internal class AddTagMethodProvider : BaseTagMethodProvider
     {
         public AddTagMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
             MethodProvider updateMethodProvider,
+            RestClientInfo restClientInfo,
             bool isAsync)
-            : base(resourceClientProvider, updateMethodProvider, isAsync,
+            : base(resource, updateMethodProvider, restClientInfo, isAsync,
                    isAsync ? "AddTagAsync" : "AddTag",
                    "Add a tag to the current resource.")
         {
@@ -35,7 +38,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var valueParam = _valueParameter;
             var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "AddTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _clientDiagnosticsField, "AddTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();

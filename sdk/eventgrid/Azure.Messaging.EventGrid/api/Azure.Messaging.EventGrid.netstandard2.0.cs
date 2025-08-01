@@ -4,7 +4,6 @@ namespace Azure.Messaging.EventGrid
     {
         internal AzureMessagingEventGridContext() { }
         public static Azure.Messaging.EventGrid.AzureMessagingEventGridContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class EventGridEvent
     {

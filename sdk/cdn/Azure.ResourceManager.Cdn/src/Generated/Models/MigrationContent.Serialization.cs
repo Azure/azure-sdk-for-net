@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("classicResourceReference"u8);
-            JsonSerializer.Serialize(writer, ClassicResourceReference);
+            ((IJsonModel<WritableSubResource>)ClassicResourceReference).Write(writer, options);
             writer.WritePropertyName("profileName"u8);
             writer.WriteStringValue(ProfileName);
             if (Optional.IsCollectionDefined(MigrationWebApplicationFirewallMappings))
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    classicResourceReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (property.NameEquals("profileName"u8))

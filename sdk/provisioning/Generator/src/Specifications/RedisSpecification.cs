@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
-using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Redis;
 using Azure.ResourceManager.Redis.Models;
 
