@@ -23,20 +23,6 @@ namespace Microsoft.ClientModel.TestFramework
             return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFiles, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The StopPlaybackResponse. </summary>
-        /// <returns> A new <see cref="TestProxy.StopPlaybackResponse"/> instance for mocking. </returns>
-        public static StopPlaybackResponse StopPlaybackResponse()
-        {
-            return new StopPlaybackResponse(additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The StartRecordResponse. </summary>
-        /// <returns> A new <see cref="TestProxy.StartRecordResponse"/> instance for mocking. </returns>
-        public static StartRecordResponse StartRecordResponse()
-        {
-            return new StartRecordResponse(additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The ProxyOptions. </summary>
         /// <param name="transport"></param>
         /// <returns> A new <see cref="TestProxy.ProxyOptions"/> instance for mocking. </returns>

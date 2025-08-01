@@ -11,14 +11,22 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     internal static partial class MatcherTypeExtensions
     {
-        /// <param name="value"> The value to deserialize. </param>
-        public static MatcherType ToMatcherType(this int value)
+        /// <param name="value"> The value to serialize. </param>
+        public static string ToSerialString(this MatcherType value) => value switch
         {
-            if (value == 0)
+            MatcherType.BodilessMatcher => "BodilessMatcher",
+            MatcherType.CustomDefaultMatcher => "CustomDefaultMatcher",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MatcherType value.")
+        };
+
+        /// <param name="value"> The value to deserialize. </param>
+        public static MatcherType ToMatcherType(this string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodilessMatcher"))
             {
                 return MatcherType.BodilessMatcher;
             }
-            if (value == 1)
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomDefaultMatcher"))
             {
                 return MatcherType.CustomDefaultMatcher;
             }

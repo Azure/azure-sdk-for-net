@@ -11,12 +11,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
     internal enum SanitizerType
     {
         /// <summary> BodyKeySanitizer. </summary>
-        BodyKeySanitizer = 0,
+        BodyKeySanitizer,
         /// <summary> HeaderRegexSanitizer. </summary>
-        HeaderRegexSanitizer = 1,
+        HeaderRegexSanitizer,
         /// <summary> UriRegexSanitizer. </summary>
-        UriRegexSanitizer = 2,
+        UriRegexSanitizer,
         /// <summary> BodyRegexSanitizer. </summary>
-        BodyRegexSanitizer = 3
+        BodyRegexSanitizer
     }
 }

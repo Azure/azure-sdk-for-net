@@ -345,7 +345,7 @@ public abstract class RecordedTestBase : ClientTestBase
         // No need to set the transport if we are in Live mode
         if (Mode != RecordedTestMode.Live)
         {
-            clientOptions.Transport = recording?.CreateTransport(clientOptions.Transport ?? throw new ArgumentNullException(nameof(clientOptions.Transport)));
+            clientOptions.Transport = recording?.CreateTransport(clientOptions.Transport);
         }
 
         return clientOptions;
@@ -579,7 +579,7 @@ public abstract class RecordedTestBase : ClientTestBase
             {
                 throw new InvalidOperationException("proxy options cannot be set because the test proxy has not been started.");
             }
-            await _proxy.Client.SetRecordingTransportOptionsAsync(Recording?.RecordingId, options).ConfigureAwait(false);
+            await _proxy.ProxyClient.SetRecordingTransportOptionsAsync(Recording?.RecordingId, options).ConfigureAwait(false);
         }
     }
 

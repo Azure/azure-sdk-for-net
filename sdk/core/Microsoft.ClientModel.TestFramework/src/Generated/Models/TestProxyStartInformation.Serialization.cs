@@ -40,11 +40,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 throw new FormatException($"The model {nameof(TestProxyStartInformation)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("xRecordingFile"u8);
+            writer.WritePropertyName("x-recording-file"u8);
             writer.WriteStringValue(XRecordingFile);
             if (Optional.IsDefined(XRecordingAssetsFiles))
             {
-                writer.WritePropertyName("xRecordingAssetsFiles"u8);
+                writer.WritePropertyName("x-recording-assets-file"u8);
                 writer.WriteStringValue(XRecordingAssetsFiles);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -94,12 +94,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("xRecordingFile"u8))
+                if (prop.NameEquals("x-recording-file"u8))
                 {
                     xRecordingFile = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("xRecordingAssetsFiles"u8))
+                if (prop.NameEquals("x-recording-assets-file"u8))
                 {
                     xRecordingAssetsFiles = prop.Value.GetString();
                     continue;

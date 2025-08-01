@@ -11,8 +11,8 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
     internal enum MatcherType
     {
         /// <summary> BodilessMatcher. </summary>
-        BodilessMatcher = 0,
+        BodilessMatcher,
         /// <summary> CustomDefaultMatcher. </summary>
-        CustomDefaultMatcher = 1
+        CustomDefaultMatcher
     }
 }

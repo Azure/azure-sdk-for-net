@@ -26,5 +26,5 @@ public partial class UriRegexSanitizer
     /// the specified query parameter in URI strings.
     /// </returns>
     public static UriRegexSanitizer CreateWithQueryParameter(string queryParameter, string sanitizedValue) =>
-        new($@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)", sanitizedValue, "group");
+        new($@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)", sanitizedValue, "group", null);
 }

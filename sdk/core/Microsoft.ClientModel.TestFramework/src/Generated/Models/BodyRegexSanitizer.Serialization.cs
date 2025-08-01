@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -176,5 +177,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BodyRegexSanitizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="bodyRegexSanitizer"> The <see cref="BodyRegexSanitizer"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(BodyRegexSanitizer bodyRegexSanitizer)
+        {
+            if (bodyRegexSanitizer == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(bodyRegexSanitizer, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

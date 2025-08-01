@@ -10,42 +10,17 @@ using System.Threading.Tasks;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// Options for configuring how recorded test variables are handled during test recording and playback.
 /// </summary>
 public class RecordedVariableOptions
 {
-    private readonly Dictionary<string, string> _secretConnectionStringParameters = new Dictionary<string, string>();
     private string? _sanitizedValue;
 
     /// <summary>
-    /// TODO.
+    /// Marks the variable as a secret that should be sanitized during recording.
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="sanitizedValue"></param>
-    /// <returns></returns>
-    public RecordedVariableOptions HasSecretConnectionStringParameter(string name, SanitizedValue sanitizedValue = default)
-    {
-        _secretConnectionStringParameters[name] = GetStringValue(sanitizedValue);
-        return this;
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="sanitizedValue"></param>
-    /// <returns></returns>
-    public RecordedVariableOptions HasSecretConnectionStringParameter(string name, string sanitizedValue)
-    {
-        _secretConnectionStringParameters[name] = sanitizedValue;
-        return this;
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="sanitizedValue"></param>
-    /// <returns></returns>
+    /// <param name="sanitizedValue">The type of sanitized value to use.</param>
+    /// <returns>The current options instance for method chaining.</returns>
     public RecordedVariableOptions IsSecret(SanitizedValue sanitizedValue = default)
     {
         _sanitizedValue = GetStringValue(sanitizedValue);
@@ -53,10 +28,10 @@ public class RecordedVariableOptions
     }
 
     /// <summary>
-    /// TODO.
+    /// Marks the variable as a secret with a custom sanitized value.
     /// </summary>
-    /// <param name="sanitizedValue"></param>
-    /// <returns></returns>
+    /// <param name="sanitizedValue">The custom value to use when sanitizing.</param>
+    /// <returns>The current options instance for method chaining.</returns>
     public RecordedVariableOptions IsSecret(string sanitizedValue)
     {
         _sanitizedValue = sanitizedValue;
@@ -73,30 +48,17 @@ public class RecordedVariableOptions
     }
 
     /// <summary>
-    /// TODO.
+    /// Applies the configured options to the given value.
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
+    /// <param name="value">The original value to process.</param>
+    /// <returns>The processed value, sanitized if configured as a secret.</returns>
     public string Apply(string value)
     {
-        throw new NotImplementedException();
-        //if (_secretConnectionStringParameters.Any())
-        //{
-        //    var parsed = ConnectionString.Parse(value, allowEmptyValues: true);
+        if (_sanitizedValue != null)
+        {
+            value = _sanitizedValue;
+        }
 
-        //    foreach (var connectionStringParameter in _secretConnectionStringParameters)
-        //    {
-        //        parsed.Replace(connectionStringParameter.Key, connectionStringParameter.Value);
-        //    }
-
-        //    value = parsed.ToString();
-        //}
-
-        //if (_sanitizedValue != null)
-        //{
-        //    value = _sanitizedValue;
-        //}
-
-        //return value;
+        return value;
     }
 }

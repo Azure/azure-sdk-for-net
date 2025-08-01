@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -261,45 +262,61 @@ internal class UseSyncMethodsInterceptor : IInterceptor
     }
 
     /// <summary>
-    /// TODO
+    /// Wraps a synchronous <see cref="CollectionResult{T}"/> to provide an asynchronous
+    /// <see cref="AsyncCollectionResult{T}"/> interface for testing scenarios where
+    /// sync methods need to be called from async method signatures.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
     public class SyncPageableWrapper<T> : AsyncCollectionResult<T>
     {
-        private readonly CollectionResult<T>? _enumerable;
+        private readonly CollectionResult<T> _enumerable;
 
         /// <summary>
-        /// TODO.
+        /// Initializes a new instance of <see cref="SyncPageableWrapper{T}"/> for mocking scenarios.
         /// </summary>
         protected SyncPageableWrapper()
         {
+            _enumerable = default!;
         }
 
         /// <summary>
-        /// TODO.
+        /// Initializes a new instance of <see cref="SyncPageableWrapper{T}"/> that wraps
+        /// the specified synchronous collection result.
         /// </summary>
-        /// <param name="enumerable"></param>
+        /// <param name="enumerable">The synchronous collection result to wrap.</param>
         public SyncPageableWrapper(CollectionResult<T> enumerable)
         {
-            _enumerable = enumerable;
+            _enumerable = enumerable ?? throw new ArgumentNullException(nameof(enumerable));
         }
 
         /// <inheritdoc/>
-        protected override IAsyncEnumerable<T> GetValuesFromPageAsync(ClientResult page)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        protected override async IAsyncEnumerable<T> GetValuesFromPageAsync(ClientResult page)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            throw new NotImplementedException();
+            var items = NonPublic.FromMethod<CollectionResult<T>, ClientResult, IEnumerable<T>>("GetValuesFromPage")(_enumerable, page);
+            foreach (T item in items)
+            {
+                yield return item;
+            }
         }
 
         /// <inheritdoc/>
-        public override IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            throw new NotImplementedException();
+            foreach (ClientResult page in _enumerable.GetRawPages())
+            {
+                yield return page;
+            }
         }
 
         /// <inheritdoc/>
         public override ContinuationToken? GetContinuationToken(ClientResult page)
         {
-            throw new NotImplementedException();
+            // Delegate directly to the wrapped sync collection
+            return _enumerable.GetContinuationToken(page);
         }
     }
 }

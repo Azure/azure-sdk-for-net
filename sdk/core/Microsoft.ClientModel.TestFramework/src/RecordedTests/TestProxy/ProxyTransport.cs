@@ -3,7 +3,9 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework;
@@ -17,6 +19,9 @@ public class ProxyTransport : PipelineTransport
     private readonly TestProxyProcess _proxyProcess;
     private readonly TestRecording _recording;
     private readonly Func<EntryRecordModel> _getRecordingMode;
+    private const string DevCertIssuer = "CN=localhost";
+    private const string FiddlerCertIssuer = "CN=DO_NOT_TRUST_FiddlerRoot, O=DO_NOT_TRUST, OU=Created by http://www.fiddler2.com";
+    private readonly string _proxyHost;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ProxyTransport"/> class.
@@ -35,90 +40,139 @@ public class ProxyTransport : PipelineTransport
         _innerTransport = innerTransport ?? throw new ArgumentNullException(nameof(innerTransport));
         _recording = recording ?? throw new ArgumentNullException(nameof(recording));
         _getRecordingMode = getRecordingMode ?? throw new ArgumentNullException(nameof(getRecordingMode));
+        bool useFiddler = TestEnvironment.EnableFiddler;
+        string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
+        _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxyProcess.IpAddress;
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
+            AllowAutoRedirect = false
+        };
+        _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
     }
 
     /// <inheritdoc/>
     protected override PipelineMessage CreateMessageCore()
     {
-        return _innerTransport.CreateMessage();
+        if (_recording.MismatchException != null)
+        {
+            throw _recording.MismatchException;
+        }
+
+        var message = _innerTransport.CreateMessage();
+        _recording.HasRequests = true;
+        return message;
     }
 
     /// <inheritdoc/>
     protected override void ProcessCore(PipelineMessage message)
     {
-        ProcessCoreAsync(message).AsTask().EnsureCompleted();
+        ProcessAsyncInternalAsync(message, false).EnsureCompleted();
     }
 
     /// <inheritdoc/>
     protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        // Check if recording is disabled for this request
-        var recordingMode = _getRecordingMode();
-        if (recordingMode == EntryRecordModel.DoNotRecord)
-        {
-            await _innerTransport.ProcessAsync(message).ConfigureAwait(false);
-            return;
-        }
-
-        // Mark that we have requests (for validation purposes)
-        _recording.HasRequests = true;
-
-        // Route the request through the test proxy
-        await RouteRequestThroughProxyAsync(message, recordingMode).ConfigureAwait(false);
+        await ProcessAsyncInternalAsync(message, true).ConfigureAwait(false);
     }
 
-    private async ValueTask RouteRequestThroughProxyAsync(PipelineMessage message, EntryRecordModel recordingMode)
+    private async Task ProcessAsyncInternalAsync(PipelineMessage message, bool async)
     {
+        if (_recording.Mode == RecordedTestMode.Playback && _getRecordingMode() == EntryRecordModel.DoNotRecord)
+        {
+            throw new InvalidOperationException(
+                "Operations that are enclosed in a 'TestRecording.DisableRecordingScope' created with the 'DisableRecording' method should not be executed in Playback mode." +
+                "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
+        }
         try
         {
-            // Add recording headers
-            AddRecordingHeaders(message, recordingMode);
+            RedirectToTestProxy(message);
+            if (async)
+            {
+                await _innerTransport.ProcessAsync(message).ConfigureAwait(false);
+            }
+            else
+            {
+                _innerTransport.Process(message);
+            }
 
-            // Route request through proxy
-            var originalUri = message.Request.Uri;
-            //message.Request.Uri = RewriteUriForProxy(originalUri);
-
-            await _innerTransport.ProcessAsync(message).ConfigureAwait(false);
+            await ProcessResponseAsync(message, async).ConfigureAwait(false);
         }
-        catch (Exception ex)
+        finally
         {
-            // Handle proxy-specific errors
-            throw new InvalidOperationException($"Test proxy request failed: {ex.Message}", ex);
+            // revert the original URI - this is important for tests that rely on aspects of the URI in the pipeline
+            // e.g. KeyVault caches tokens based on URI
+            message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string? original);
+            if (original is not null)
+            {
+                var originalUriBuilder = new UriBuilder(original);
+                var requestUriBuilder = new UriBuilder(message.Request.Uri!);
+                requestUriBuilder.Scheme = originalUriBuilder.Uri.Scheme;
+                requestUriBuilder.Host = originalUriBuilder.Host;
+                requestUriBuilder.Port = originalUriBuilder.Port;
+                message.Request.Uri = requestUriBuilder.Uri;
+            }
         }
     }
 
-    private void AddRecordingHeaders(PipelineMessage message, EntryRecordModel recordingMode)
+    private async Task ProcessResponseAsync(PipelineMessage message, bool async)
     {
-        // Add the recording ID header so the proxy knows which session this request belongs to
-        //message.Request.Headers.Add("x-recording-id", _recording.RecordingId);
-
-        // Add mode-specific headers
-        switch (recordingMode)
+        if (message.Response is not null && message.Response.Headers.TryGetValue("x-request-mismatch", out var mismatch))
         {
-            case EntryRecordModel.RecordWithoutRequestBody:
-                message.Request.Headers.Add("x-recording-mode", "record-without-request-body");
-                break;
-            case EntryRecordModel.Record:
-                message.Request.Headers.Add("x-recording-mode", "record");
-                break;
-            case EntryRecordModel.DoNotRecord:
-                // This case is handled earlier
-                break;
+            var streamReader = new StreamReader(message.Response.ContentStream ?? throw new InvalidOperationException("Content steam is null when headers contain x-request-mismatch."));
+            string response;
+            if (async)
+            {
+                response = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                response = streamReader.ReadToEnd();
+            }
+            using var doc = JsonDocument.Parse(response);
+            throw new TestRecordingMismatchException(doc.RootElement.GetProperty("Message").GetString() ?? string.Empty);
         }
     }
 
-    private Uri RewriteUriForProxy(Uri originalUri)
+    // copied from https://github.com/Azure/azure-sdk-for-net/blob/main/common/Perf/Azure.Test.Perf/TestProxyPolicy.cs
+    private void RedirectToTestProxy(PipelineMessage message)
     {
-        throw new NotImplementedException();
-        //// Rewrite the URI to route through the test proxy
-        //var proxyUri = _proxyProcess.GetProxyUri();
+        if (_recording.Mode == RecordedTestMode.Record)
+        {
+            switch (_getRecordingMode())
+            {
+                case EntryRecordModel.Record:
+                    break;
+                case EntryRecordModel.RecordWithoutRequestBody:
+                    message.Request.Headers.Add("x-recording-skip", "request-body");
+                    break;
+                case EntryRecordModel.DoNotRecord:
+                    message.Request.Headers.Add("x-recording-skip", "request-response");
+                    break;
+            }
+        }
+        else if (_recording.Mode == RecordedTestMode.Playback)
+        {
+            if (_getRecordingMode() == EntryRecordModel.RecordWithoutRequestBody)
+            {
+                message.Request.Content = null;
+            }
+        }
 
-        //// For HTTP requests, route through the HTTP proxy port
-        //var scheme = originalUri.Scheme;
-        //var proxyPort = scheme == "https" ? proxyUri.httpsPort : proxyUri.httpPort;
+        var request = message.Request;
+        request.Headers.Set("x-recording-id", _recording.RecordingId ?? throw new InvalidOperationException("Recording Id cannot be null"));
+        request.Headers.Set("x-recording-mode", _recording.Mode.ToString().ToLower());
 
-        //// The proxy expects the original URI as the path
-        //var proxyUriBuilder = new UriBuilder(scheme, "localhost", proxyPort, originalUri.AbsoluteUri);
-        //return proxyUriBuilder.Uri;
+        // Intentionally reset the upstream URI in case the request URI changes between retries - e.g. when using GeoRedundant secondary Storage
+        Uri baseUri = new($"{request.Uri!.Scheme}://{request.Uri.Host}:{request.Uri.Port}");
+
+        request.Headers.Set("x-recording-upstream-base-uri", baseUri.AbsoluteUri);
+
+        var builder = new UriBuilder(request.Uri)
+        {
+            Host = _proxyHost,
+            Port = (request.Uri.Scheme == "https" ? _proxyProcess.ProxyPortHttps! : _proxyProcess.ProxyPortHttp!).Value
+        };
+        request.Uri = builder.Uri;
     }
 }

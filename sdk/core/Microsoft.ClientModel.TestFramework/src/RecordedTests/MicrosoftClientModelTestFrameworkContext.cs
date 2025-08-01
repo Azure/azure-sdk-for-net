@@ -6,11 +6,6 @@ using System.ClientModel.Primitives;
 
 namespace Microsoft.ClientModel.TestFramework;
 
-[ModelReaderWriterBuildable(typeof(AddBodyKeySanitizerRequest))]
-[ModelReaderWriterBuildable(typeof(AddBodyRegexSanitizerRequest))]
-[ModelReaderWriterBuildable(typeof(AddHeaderSanitizerRequest))]
-[ModelReaderWriterBuildable(typeof(AddHeaderTransformRequest))]
-[ModelReaderWriterBuildable(typeof(AddUriSanitizerRequest))]
 [ModelReaderWriterBuildable(typeof(BodyKeySanitizer))]
 [ModelReaderWriterBuildable(typeof(BodyRegexSanitizer))]
 [ModelReaderWriterBuildable(typeof(CustomDefaultMatcher))]
@@ -23,8 +18,6 @@ namespace Microsoft.ClientModel.TestFramework;
 [ModelReaderWriterBuildable(typeof(SanitizerCondition))]
 [ModelReaderWriterBuildable(typeof(SanitizersToRemove))]
 [ModelReaderWriterBuildable(typeof(TestProxyStartInformation))]
-[ModelReaderWriterBuildable(typeof(StartRecordResponse))]
-[ModelReaderWriterBuildable(typeof(StopPlaybackResponse))]
 [ModelReaderWriterBuildable(typeof(UriRegexSanitizer))]
 public partial class MicrosoftClientModelTestFrameworkContext
 {

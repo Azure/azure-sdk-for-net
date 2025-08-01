@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -41,10 +42,16 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             }
             writer.WritePropertyName("regex"u8);
             writer.WriteStringValue(Regex);
-            writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Value);
-            writer.WritePropertyName("groupForReplace"u8);
-            writer.WriteStringValue(GroupForReplace);
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(GroupForReplace))
+            {
+                writer.WritePropertyName("groupForReplace"u8);
+                writer.WriteStringValue(GroupForReplace);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,5 +162,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UriRegexSanitizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="uriRegexSanitizer"> The <see cref="UriRegexSanitizer"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(UriRegexSanitizer uriRegexSanitizer)
+        {
+            if (uriRegexSanitizer == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(uriRegexSanitizer, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

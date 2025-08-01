@@ -79,7 +79,7 @@ public class TestRecording : IAsyncDisposable
         switch (Mode)
         {
             case RecordedTestMode.Record:
-                ClientResult<StartRecordResponse> recordResponse = await _proxy.Client.StartRecordAsync(body: new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
+                ClientResult recordResponse = await _proxy.ProxyClient.StartRecordAsync(body: new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
                 var rawRecordResponse = recordResponse.GetRawResponse();
                 rawRecordResponse.Headers.TryGetValue("x-recording-id", out string? recordRecordingId);
                 RecordingId = recordRecordingId;
@@ -90,7 +90,7 @@ public class TestRecording : IAsyncDisposable
                 ClientResult<IReadOnlyDictionary<string, string>>? playbackResult;
                 try
                 {
-                    playbackResult = await _proxy.Client.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
+                    playbackResult = await _proxy.ProxyClient.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
                 }
                 catch (ClientResultException ex)
                     when (ex.Status == 404)
@@ -120,11 +120,11 @@ public class TestRecording : IAsyncDisposable
                     IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
                     CompareBodies = _recordedTestBase.CompareBodies
                 };
-                await _proxy.Client.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
+                await _proxy.ProxyClient.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
 
                 foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
                 {
-                    await _proxy.Client.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
+                    await _proxy.ProxyClient.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
                 }
                 break;
         }
@@ -139,17 +139,17 @@ public class TestRecording : IAsyncDisposable
 
         foreach (string header in _recordedTestBase.SanitizedHeaders)
         {
-            await _proxy.Client.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, new HeaderRegexSanitizer(header), RecordingId, cancellationToken).ConfigureAwait(false);
+            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, new HeaderRegexSanitizer(header), RecordingId, cancellationToken).ConfigureAwait(false);
         }
 
         foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
         {
-            await _proxy.Client.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, header, RecordingId, cancellationToken).ConfigureAwait(false);
+            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, header, RecordingId, cancellationToken).ConfigureAwait(false);
         }
 
         foreach (var (header, queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
         {
-            await _proxy.Client.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer,
+            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer,
                 HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
                 RecordingId,
                 cancellationToken).ConfigureAwait(false);
@@ -157,12 +157,12 @@ public class TestRecording : IAsyncDisposable
 
         foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
         {
-            await _proxy.Client.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer, sanitizer, RecordingId, cancellationToken).ConfigureAwait(false);
+            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer, sanitizer, RecordingId, cancellationToken).ConfigureAwait(false);
         }
 
         foreach (string queryParameter in _recordedTestBase.SanitizedQueryParameters)
         {
-            await _proxy.Client.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer,
+            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer,
                 UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
                 RecordingId,
                 cancellationToken).ConfigureAwait(false);
@@ -170,27 +170,27 @@ public class TestRecording : IAsyncDisposable
 
         foreach (string path in _recordedTestBase.JsonPathSanitizers)
         {
-            await _proxy.Client.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, new BodyKeySanitizer(path), RecordingId).ConfigureAwait(false);
+            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, new BodyKeySanitizer(path), RecordingId).ConfigureAwait(false);
         }
 
         foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
         {
-            await _proxy.Client.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, sanitizer, RecordingId).ConfigureAwait(false);
+            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, sanitizer, RecordingId).ConfigureAwait(false);
         }
 
         foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
         {
-            await _proxy.Client.AddBodyRegexSanitizerAsync(SanitizerType.BodyRegexSanitizer, sanitizer, RecordingId).ConfigureAwait(false);
+            await _proxy.ProxyClient.AddBodyRegexSanitizerAsync(SanitizerType.BodyRegexSanitizer, sanitizer, RecordingId).ConfigureAwait(false);
         }
 
         if (_recordedTestBase.SanitizersToRemove.Count > 0)
         {
-            var toRemove = new SanitizersToRemove();
+            var toRemove = new SanitizersToRemove(new List<string>());
             foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
             {
                 toRemove.Sanitizers.Add(sanitizer);
             }
-            await _proxy.Client.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
+            await _proxy.ProxyClient.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
         }
     }
 
@@ -297,11 +297,11 @@ public class TestRecording : IAsyncDisposable
         }
         if (Mode == RecordedTestMode.Record)
         {
-            await _proxy.Client.StopRecordAsync(RecordingId, save ? null : "request-response", Variables).ConfigureAwait(false);
+            await _proxy.ProxyClient.StopRecordAsync(RecordingId, Variables, save ? null : "request-response").ConfigureAwait(false);
         }
         else if (Mode == RecordedTestMode.Playback && HasRequests)
         {
-            await _proxy.Client.StopPlaybackAsync(RecordingId).ConfigureAwait(false);
+            await _proxy.ProxyClient.StopPlaybackAsync(RecordingId).ConfigureAwait(false);
         }
     }
 
@@ -317,7 +317,7 @@ public class TestRecording : IAsyncDisposable
     /// <param name="currentTransport">The existing transport to wrap or use directly in live mode.</param>
     /// <returns>A transport configured for the current recording mode.</returns>
     /// <exception cref="InvalidOperationException">Thrown when attempting to instrument already instrumented options.</exception>
-    public PipelineTransport CreateTransport(PipelineTransport currentTransport)
+    public PipelineTransport? CreateTransport(PipelineTransport? currentTransport)
     {
         if (Mode != RecordedTestMode.Live)
         {
@@ -327,6 +327,7 @@ public class TestRecording : IAsyncDisposable
                     "The supplied options have already been instrumented. Each test must pass a unique options instance to " +
                     "InstrumentClientOptions.");
             }
+            currentTransport ??= HttpClientPipelineTransport.Shared;
             return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
         }
 

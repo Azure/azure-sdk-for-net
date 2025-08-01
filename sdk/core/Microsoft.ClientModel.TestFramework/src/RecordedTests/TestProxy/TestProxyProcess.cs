@@ -52,6 +52,7 @@ public class TestProxyProcess
     /// TODO.
     /// </summary>
     internal TestFrameworkClient Client { get; }
+    internal TestProxyClient ProxyClient { get; }
     private readonly StringBuilder _errorBuffer = new();
     private static readonly object _lock = new();
     private static TestProxyProcess? _shared;
@@ -163,6 +164,7 @@ public class TestProxyProcess
 
         var options = new TestFrameworkClientOptions();
         Client = new TestFrameworkClient(new Uri($"http://{IpAddress}:{_proxyPortHttp}"), options);
+        ProxyClient = Client.GetTestProxyClient();
 
         _ = Task.Run(
             () =>

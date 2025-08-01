@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -162,5 +163,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HeaderTransform>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="headerTransform"> The <see cref="HeaderTransform"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(HeaderTransform headerTransform)
+        {
+            if (headerTransform == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(headerTransform, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

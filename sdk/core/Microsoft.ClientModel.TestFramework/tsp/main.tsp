@@ -31,7 +31,6 @@ namespace TestProxy {
     recordingId: string;
   ): {
     @statusCode statusCode: 200;
-    @body response: {};
   } | TestProxyErrorResponse;
 
   @doc("Start recording for a test.")
@@ -43,7 +42,6 @@ namespace TestProxy {
     ): {
     @statusCode statusCode: 200;
     @header("x-recording-id") recordingId: string;
-    @body response: {};
   } | TestProxyErrorResponse;
 
   @doc("Stop recording a test.")
@@ -55,12 +53,11 @@ namespace TestProxy {
     recordingId: string,
     @doc("Set to request-response to skip recording this session.")
     @header("x-recording-skip")
-    recordingSkip: string,
+    recordingSkip?: string,
     @doc("Variables for the recording.")
     @body variables: Record<string>
     ): {
     @statusCode statusCode: 200;
-    @body response: Record<string>;
   } | TestProxyErrorResponse;
 
   @doc("Set the proxy recording options.")
@@ -121,6 +118,7 @@ op addBodyKeySanitizer(
   @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
 
+  @body
   @doc("The body for a header regex sanitizer.")
   sanitizer: BodyKeySanitizer
 ): {
@@ -140,6 +138,7 @@ op addHeaderSanitizer(
   @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
   
+  @body
   @doc("The body for a header regex sanitizer.")
   sanitizer: HeaderRegexSanitizer
 ): {
@@ -158,7 +157,8 @@ op addUriSanitizer(
   @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
   
-  @doc("The body for a URI regex sanitizer.")
+  @body
+  @doc("The URI regex sanitizer configuration.")
   sanitizer: UriRegexSanitizer
 ): {
   @statusCode statusCode: 200;
@@ -177,6 +177,7 @@ op addBodyRegexSanitizer(
   @doc("The recording ID to apply the sanitizer to.")
   recordingId?: string,
   
+  @body
   @doc("The body for a body regex sanitizer.")
   sanitizer: BodyRegexSanitizer
 ): {
@@ -236,6 +237,7 @@ op addHeaderTransform(
   @doc("The recording ID to apply the transform to.")
   recordingId?: string,
   
+  @body
   @doc("The body for a header transform.")
   transform: HeaderTransform
 ): {

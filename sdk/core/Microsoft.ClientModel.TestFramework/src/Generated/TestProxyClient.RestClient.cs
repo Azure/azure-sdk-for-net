@@ -46,7 +46,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.AppendPath("/playback/stop", false);
             request.Uri = uri.ToUri();
             request.Headers.Set("x-recording-id", recordingId);
-            request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
@@ -62,13 +61,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.AppendPath("/record/start", false);
             request.Uri = uri.ToUri();
             request.Headers.Set("Content-Type", "application/json");
-            request.Headers.Set("Accept", "application/json");
             request.Content = content;
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateStopRecordRequest(string recordingId, string recordingSkip, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateStopRecordRequest(string recordingId, BinaryContent content, string recordingSkip, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -79,9 +77,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.AppendPath("/record/stop", false);
             request.Uri = uri.ToUri();
             request.Headers.Set("x-recording-id", recordingId);
-            request.Headers.Set("x-recording-skip", recordingSkip);
+            if (recordingSkip != null)
+            {
+                request.Headers.Set("x-recording-skip", recordingSkip);
+            }
             request.Headers.Set("Content-Type", "application/json");
-            request.Headers.Set("Accept", "application/json");
             request.Content = content;
             message.Apply(options);
             return message;
@@ -121,7 +121,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return message;
         }
 
-        internal PipelineMessage CreateAddSanitizerRequest(int sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
+        internal PipelineMessage CreateAddSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -131,7 +131,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", TypeFormatters.ConvertToString(sanitizerType, null));
+            request.Headers.Set("x-abstraction-identifier", sanitizerType);
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -142,7 +142,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return message;
         }
 
-        internal PipelineMessage CreateAddBodyKeySanitizerRequest(int sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
+        internal PipelineMessage CreateAddBodyKeySanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -152,7 +152,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", TypeFormatters.ConvertToString(sanitizerType, null));
+            request.Headers.Set("x-abstraction-identifier", sanitizerType);
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -163,7 +163,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return message;
         }
 
-        internal PipelineMessage CreateAddHeaderSanitizerRequest(int sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
+        internal PipelineMessage CreateAddHeaderSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -173,7 +173,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", TypeFormatters.ConvertToString(sanitizerType, null));
+            request.Headers.Set("x-abstraction-identifier", sanitizerType);
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -184,7 +184,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return message;
         }
 
-        internal PipelineMessage CreateAddUriSanitizerRequest(int sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
+        internal PipelineMessage CreateAddUriSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -194,7 +194,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", TypeFormatters.ConvertToString(sanitizerType, null));
+            request.Headers.Set("x-abstraction-identifier", sanitizerType);
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -205,7 +205,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return message;
         }
 
-        internal PipelineMessage CreateAddBodyRegexSanitizerRequest(int sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
+        internal PipelineMessage CreateAddBodyRegexSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -215,7 +215,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.Reset(_endpoint);
             uri.AppendPath("/admin/addsanitizer", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", TypeFormatters.ConvertToString(sanitizerType, null));
+            request.Headers.Set("x-abstraction-identifier", sanitizerType);
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -226,7 +226,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return message;
         }
 
-        internal PipelineMessage CreateSetMatcherRequest(int matcherType, BinaryContent content, string recordingId, RequestOptions options)
+        internal PipelineMessage CreateSetMatcherRequest(string matcherType, BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -236,7 +236,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             uri.Reset(_endpoint);
             uri.AppendPath("/admin/setmatcher", false);
             request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", TypeFormatters.ConvertToString(matcherType, null));
+            request.Headers.Set("x-abstraction-identifier", matcherType);
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);

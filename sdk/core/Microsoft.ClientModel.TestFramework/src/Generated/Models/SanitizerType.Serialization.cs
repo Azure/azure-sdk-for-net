@@ -11,22 +11,32 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     internal static partial class SanitizerTypeExtensions
     {
-        /// <param name="value"> The value to deserialize. </param>
-        public static SanitizerType ToSanitizerType(this int value)
+        /// <param name="value"> The value to serialize. </param>
+        public static string ToSerialString(this SanitizerType value) => value switch
         {
-            if (value == 0)
+            SanitizerType.BodyKeySanitizer => "BodyKeySanitizer",
+            SanitizerType.HeaderRegexSanitizer => "HeaderRegexSanitizer",
+            SanitizerType.UriRegexSanitizer => "UriRegexSanitizer",
+            SanitizerType.BodyRegexSanitizer => "BodyRegexSanitizer",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SanitizerType value.")
+        };
+
+        /// <param name="value"> The value to deserialize. </param>
+        public static SanitizerType ToSanitizerType(this string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyKeySanitizer"))
             {
                 return SanitizerType.BodyKeySanitizer;
             }
-            if (value == 1)
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HeaderRegexSanitizer"))
             {
                 return SanitizerType.HeaderRegexSanitizer;
             }
-            if (value == 2)
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UriRegexSanitizer"))
             {
                 return SanitizerType.UriRegexSanitizer;
             }
-            if (value == 3)
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyRegexSanitizer"))
             {
                 return SanitizerType.BodyRegexSanitizer;
             }

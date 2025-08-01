@@ -37,8 +37,8 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy {
     condition?: SanitizerCondition;
   }
   enum MatcherType {
-    bodilessMatcher: 0,
-    customDefaultMatcher: 1,
+    bodilessMatcher: "BodilessMatcher",
+    customDefaultMatcher: "CustomDefaultMatcher",
   }
   model ProxyOptions {
     transport: ProxyOptionsTransport;
@@ -56,18 +56,20 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy {
     sanitizers: Array<string>;
   }
   enum SanitizerType {
-    bodyKeySanitizer: 0,
-    headerRegexSanitizer: 1,
-    uriRegexSanitizer: 2,
-    BodyRegexSanitizer: 3,
+    bodyKeySanitizer: "BodyKeySanitizer",
+    headerRegexSanitizer: "HeaderRegexSanitizer",
+    uriRegexSanitizer: "UriRegexSanitizer",
+    bodyRegexSanitizer: "BodyRegexSanitizer",
   }
   model TestProxyStartInformation {
+    @encodedName("application/json", "x-recording-file")
     xRecordingFile: string;
+    @encodedName("application/json", "x-recording-assets-file")
     xRecordingAssetsFiles?: string;
   }
   model UriRegexSanitizer {
     regex: string;
-    value: string;
-    groupForReplace: string;
+    value?: string;
+    groupForReplace?: string;
   }
 }
