@@ -4785,6 +4785,19 @@
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
           "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@nonResourceMethodSchema",
+          "arguments": {
+            "nonResourceMethods": [
+              {
+                "methodId": "Azure.ResourceManager.Operations.list",
+                "operationPath": "/providers/MgmtTypeSpec/operations",
+                "operationScope": "Tenant",
+                "carrierResource": ""
+              }
+            ]
+          }
         }
       ],
       "crossLanguageDefinitionId": "MgmtTypeSpec",

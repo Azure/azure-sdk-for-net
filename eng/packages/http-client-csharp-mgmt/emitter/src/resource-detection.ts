@@ -9,7 +9,9 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
+  convertMethodMetadataToArguments,
   convertResourceMetadataToArguments,
+  MethodMetadata,
   ResourceMetadata,
   ResourceOperationKind,
   ResourceScope
@@ -32,6 +34,7 @@ import {
   armResourceListName,
   armResourceReadName,
   armResourceUpdateName,
+  nonResourceMethodMetadata,
   parentResourceName,
   resourceGroupResource,
   resourceMetadata,
@@ -72,6 +75,7 @@ export async function updateClients(
       } as ResourceMetadata
     ])
   );
+  const nonResourceMethods: Map<string, MethodMetadata> = new Map();
 
   // first we flatten all possible clients in the code model
   const clients = getAllClients(codeModel);
@@ -101,6 +105,15 @@ export async function updateClients(
           entry.resourceIdPattern = method.operation.path;
         }
       }
+      else {
+        // we add a methodMetadata decorator to this method
+        nonResourceMethods.set(method.crossLanguageDefinitionId, {
+          methodId: method.crossLanguageDefinitionId,
+          operationPath: method.operation.path,
+          operationScope: getOperationScope(method.operation.path),
+          carrierResource: undefined // this will be populated later if needed
+        });
+      }
     }
   }
 
@@ -112,6 +125,11 @@ export async function updateClients(
     }
   }
 
+  // after we have all the resource metadata, we can assign carrierResource to the non-resource methods
+  for (const [, methodMetadata] of nonResourceMethods) {
+    methodMetadata.carrierResource = getCarrierResource(methodMetadata.operationPath, Array.from(resourceModelToMetadataMap.values()));
+  }
+
   // the last step, add the decorator to the resource model
   for (const model of resourceModels) {
     const metadata = resourceModelToMetadataMap.get(model.crossLanguageDefinitionId);
@@ -119,6 +137,12 @@ export async function updateClients(
       addResourceMetadata(sdkContext, model, metadata);
     }
   }
+  // and add the methodMetadata decorator to the non-resource methods
+  addMethodMetadataDecorators(
+    sdkContext,
+    codeModel,
+    Array.from(nonResourceMethods.values())
+  );
 }
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
@@ -266,6 +290,46 @@ function getResourceScope(model: InputModelType): ResourceScope {
     return ResourceScope.ResourceGroup;
   }
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
+}
+
+// TODO -- this logic needs to refine in near future.
+function getOperationScope(path: string): ResourceScope {
+  if (path.startsWith("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/")) {
+    return ResourceScope.ResourceGroup;
+  }
+  else if (path.startsWith("/subscriptions/{subscriptionId}/")) {
+    return ResourceScope.Subscription;
+  }
+  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
+}
+
+function getCarrierResource(path: string, metadata: ResourceMetadata[]): string | undefined {
+  const candidates: string[] = [];
+  for (const resource of metadata) {
+    if (path.startsWith(resource.resourceIdPattern)) {
+      candidates.push(resource.resourceIdPattern);
+    }
+  }
+  // return the longest candidate as the carrier resource
+  if (candidates.length > 0) {
+    return candidates.reduce((a, b) => (a.length > b.length ? a : b));
+  }
+  return undefined;
+}
+
+function addMethodMetadataDecorators(
+  sdkContext: CSharpEmitterContext,
+  codeModel: CodeModel,
+  metadata: MethodMetadata[]
+) {
+  // TODO -- now in our code model, the InputServiceMethod does not have a decorators property
+  // therefore here we cannot put them on the InputServiceMethod
+  // as a workaround, we put them on the root client
+  codeModel.clients[0].decorators ??= [];
+  codeModel.clients[0].decorators.push({
+    name: nonResourceMethodMetadata,
+    arguments: convertMethodMetadataToArguments(metadata)
+  })
 }
 
 function addResourceMetadata(
