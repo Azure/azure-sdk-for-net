@@ -844,26 +844,29 @@
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @vicancy @JialinXin @Y-Sindo
 
+# PRLabel: %SQL
+/sdk/sqlmanagement/                                                @ericshape @jeremyfrosti
+
 # ServiceLabel: %SQL
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - VM
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Backup & Restore
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Data Security
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Elastic Jobs
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Managed Instance
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # ServiceLabel: %SQL - Replication & Failover
-# ServiceOwners:                                                   @azureSQLGitHub
+# ServiceOwners:                                                   @ericshape @jeremyfrosti
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
