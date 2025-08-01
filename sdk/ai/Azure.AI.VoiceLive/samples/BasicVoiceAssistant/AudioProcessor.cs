@@ -9,6 +9,15 @@ namespace Azure.AI.VoiceLive.Samples;
 /// <summary>
 /// Handles real-time audio capture and playback for the voice assistant.
 /// 
+/// This processor demonstrates some of the new VoiceLive SDK convenience methods:
+/// - Uses existing SendInputAudioAsync() method for audio streaming
+/// - Shows how convenience methods simplify audio operations
+/// 
+/// Additional convenience methods available in the SDK:
+/// - StartAudioTurnAsync() / AppendAudioToTurnAsync() / EndAudioTurnAsync() - Audio turn management
+/// - ClearStreamingAudioAsync() - Clear all streaming audio
+/// - ConnectAvatarAsync() - Avatar connection with SDP
+/// 
 /// Threading Architecture:
 /// - Main thread: Event loop and UI
 /// - Capture thread: NAudio input stream reading
@@ -68,6 +77,7 @@ public class AudioProcessor : IDisposable
         _audioPlaybackReader = _audioPlaybackChannel.Reader;
         
         _cancellationTokenSource = new CancellationTokenSource();
+        _playbackCancellationTokenSource = new CancellationTokenSource();
 
         _logger.LogInformation("AudioProcessor initialized with {SampleRate}Hz PCM16 mono audio", SampleRate);
     }
@@ -284,7 +294,9 @@ public class AudioProcessor : IDisposable
                     
                 try
                 {
-                    // Send audio data directly to the session
+                    // Send audio data directly to the session using the convenience method
+                    // This demonstrates the existing SendInputAudioAsync convenience method
+                    // Other available methods: StartAudioTurnAsync, AppendAudioToTurnAsync, EndAudioTurnAsync
                     await _session.SendInputAudioAsync(audioData, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)

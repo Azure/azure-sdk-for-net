@@ -2,6 +2,24 @@
 
 This sample demonstrates the fundamental capabilities of the Azure VoiceLive SDK by creating a basic voice assistant that can engage in natural conversation with proper interruption handling. This serves as the foundational example that showcases the core value proposition of unified speech-to-speech interaction.
 
+## New VoiceLive SDK Convenience Methods
+
+This sample now demonstrates some of the new convenience methods added to the VoiceLive SDK for better developer experience:
+
+**Used in this sample:**
+- `ClearStreamingAudioAsync()` - Clears all input audio currently being streamed
+- `ConfigureConversationSessionAsync()` - Configures conversation session options
+- `CancelResponseAsync()` - Cancels the current response generation
+- `SendInputAudioAsync()` - Sends audio data to the service
+
+**Additional convenience methods available:**
+- `StartAudioTurnAsync()` / `EndAudioTurnAsync()` / `CancelAudioTurnAsync()` - Audio turn management
+- `AppendAudioToTurnAsync()` - Append audio data to an ongoing turn  
+- `ConnectAvatarAsync()` - Connect avatar with SDP for media negotiation
+- `CommitInputAudioAsync()` / `ClearInputAudioAsync()` - Audio buffer operations
+
+These methods eliminate the need to manually construct and populate `ClientEvent` classes, providing a more developer-friendly API similar to the OpenAI SDK.
+
 ## Features
 
 - **Real-time voice conversation**: Seamless bidirectional audio streaming

@@ -142,6 +142,185 @@ namespace Azure.AI.VoiceLive
             CommitInputAudioAsync(cancellationToken).EnsureCompleted();
         }
 
+        /// <summary>
+        /// Clears all input audio currently being streamed.
+        /// </summary>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task ClearStreamingAudioAsync(CancellationToken cancellationToken = default)
+        {
+            ThrowIfDisposed();
+
+            ClientEventInputAudioClear clearCommand = new();
+            await SendCommandAsync(clearCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Clears all input audio currently being streamed.
+        /// </summary>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        public virtual void ClearStreamingAudio(CancellationToken cancellationToken = default)
+        {
+            ClearStreamingAudioAsync(cancellationToken).EnsureCompleted();
+        }
+
+        #endregion
+
+        #region Audio Turn Management
+
+        /// <summary>
+        /// Starts a new audio input turn.
+        /// </summary>
+        /// <param name="turnId">Unique identifier for the input audio turn.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task StartAudioTurnAsync(string turnId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(turnId, nameof(turnId));
+            ThrowIfDisposed();
+
+            ClientEventInputAudioTurnStart startCommand = new(turnId);
+            await SendCommandAsync(startCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts a new audio input turn.
+        /// </summary>
+        /// <param name="turnId">Unique identifier for the input audio turn.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        public virtual void StartAudioTurn(string turnId, CancellationToken cancellationToken = default)
+        {
+            StartAudioTurnAsync(turnId, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Appends audio data to an ongoing input turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the turn this audio is part of.</param>
+        /// <param name="audio">The audio data to append.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task AppendAudioToTurnAsync(string turnId, byte[] audio, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(turnId, nameof(turnId));
+            Argument.AssertNotNull(audio, nameof(audio));
+            ThrowIfDisposed();
+
+            string base64Audio = Convert.ToBase64String(audio);
+            ClientEventInputAudioTurnAppend appendCommand = new(turnId, base64Audio);
+            await SendCommandAsync(appendCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Appends audio data to an ongoing input turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the turn this audio is part of.</param>
+        /// <param name="audio">The audio data to append.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        public virtual void AppendAudioToTurn(string turnId, byte[] audio, CancellationToken cancellationToken = default)
+        {
+            AppendAudioToTurnAsync(turnId, audio, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Appends audio data to an ongoing input turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the turn this audio is part of.</param>
+        /// <param name="audio">The audio data to append.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task AppendAudioToTurnAsync(string turnId, BinaryData audio, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(turnId, nameof(turnId));
+            Argument.AssertNotNull(audio, nameof(audio));
+            ThrowIfDisposed();
+
+            string base64Audio = Convert.ToBase64String(audio.ToArray());
+            ClientEventInputAudioTurnAppend appendCommand = new(turnId, base64Audio);
+            await SendCommandAsync(appendCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Appends audio data to an ongoing input turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the turn this audio is part of.</param>
+        /// <param name="audio">The audio data to append.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> or <paramref name="audio"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        public virtual void AppendAudioToTurn(string turnId, BinaryData audio, CancellationToken cancellationToken = default)
+        {
+            AppendAudioToTurnAsync(turnId, audio, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Marks the end of an audio input turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the audio turn being ended.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task EndAudioTurnAsync(string turnId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(turnId, nameof(turnId));
+            ThrowIfDisposed();
+
+            ClientEventInputAudioTurnEnd endCommand = new(turnId);
+            await SendCommandAsync(endCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Marks the end of an audio input turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the audio turn being ended.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        public virtual void EndAudioTurn(string turnId, CancellationToken cancellationToken = default)
+        {
+            EndAudioTurnAsync(turnId, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Cancels an in-progress input audio turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the turn to cancel.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task CancelAudioTurnAsync(string turnId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(turnId, nameof(turnId));
+            ThrowIfDisposed();
+
+            ClientEventInputAudioTurnCancel cancelCommand = new(turnId);
+            await SendCommandAsync(cancelCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Cancels an in-progress input audio turn.
+        /// </summary>
+        /// <param name="turnId">The ID of the turn to cancel.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="turnId"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="turnId"/> is empty.</exception>
+        public virtual void CancelAudioTurn(string turnId, CancellationToken cancellationToken = default)
+        {
+            CancelAudioTurnAsync(turnId, cancellationToken).EnsureCompleted();
+        }
+
         #endregion
 
         #region Session Configuration
@@ -497,6 +676,39 @@ namespace Azure.AI.VoiceLive
         public virtual void CancelResponse(CancellationToken cancellationToken = default)
         {
             CancelResponseAsync(cancellationToken).EnsureCompleted();
+        }
+
+        #endregion
+
+        #region Avatar Management
+
+        /// <summary>
+        /// Connects and provides the client's SDP (Session Description Protocol) for avatar-related media negotiation.
+        /// </summary>
+        /// <param name="clientSdp">The client's SDP offer.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="clientSdp"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="clientSdp"/> is empty.</exception>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public virtual async Task ConnectAvatarAsync(string clientSdp, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientSdp, nameof(clientSdp));
+            ThrowIfDisposed();
+
+            ClientEventSessionAvatarConnect avatarConnectCommand = new(clientSdp);
+            await SendCommandAsync(avatarConnectCommand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Connects and provides the client's SDP (Session Description Protocol) for avatar-related media negotiation.
+        /// </summary>
+        /// <param name="clientSdp">The client's SDP offer.</param>
+        /// <param name="cancellationToken">An optional cancellation token.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="clientSdp"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="clientSdp"/> is empty.</exception>
+        public virtual void ConnectAvatar(string clientSdp, CancellationToken cancellationToken = default)
+        {
+            ConnectAvatarAsync(clientSdp, cancellationToken).EnsureCompleted();
         }
 
         #endregion

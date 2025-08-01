@@ -7,6 +7,19 @@ namespace Azure.AI.VoiceLive.Samples;
 
 /// <summary>
 /// Basic voice assistant implementing the VoiceLive SDK patterns.
+/// 
+/// This sample now demonstrates some of the new convenience methods added to the VoiceLive SDK:
+/// - ClearStreamingAudioAsync() - Clears all input audio currently being streamed
+/// - CancelResponseAsync() - Cancels the current response generation (existing method)
+/// - ConfigureConversationSessionAsync() - Configures session options (existing method)
+/// 
+/// Additional convenience methods available but not shown in this sample:
+/// - StartAudioTurnAsync() / EndAudioTurnAsync() / CancelAudioTurnAsync() - Audio turn management
+/// - AppendAudioToTurnAsync() - Append audio data to an ongoing turn
+/// - ConnectAvatarAsync() - Connect avatar with SDP for media negotiation
+/// 
+/// These methods provide a more developer-friendly API similar to the OpenAI SDK,
+/// eliminating the need to manually construct and populate ClientEvent classes.
 /// </summary>
 public class BasicVoiceAssistant : IDisposable
 {
@@ -19,7 +32,6 @@ public class BasicVoiceAssistant : IDisposable
 
     private VoiceLiveSession? _session;
     private AudioProcessor? _audioProcessor;
-    private bool _sessionReady;
     private bool _disposed;
 
     /// <summary>
@@ -176,8 +188,7 @@ public class BasicVoiceAssistant : IDisposable
 
             case ServerEventSessionUpdated sessionUpdated:
                 _logger.LogInformation("Session updated successfully");
-                _sessionReady = true;
-
+                
                 // Start audio capture once session is ready
                 if (_audioProcessor != null)
                 {
@@ -203,6 +214,17 @@ public class BasicVoiceAssistant : IDisposable
                 catch (Exception ex)
                 {
                     _logger.LogDebug(ex, "No response to cancel");
+                }
+
+                // Demonstrate the new ClearStreamingAudio convenience method
+                try
+                {
+                    await _session!.ClearStreamingAudioAsync(cancellationToken).ConfigureAwait(false);
+                    _logger.LogInformation("✨ Used ClearStreamingAudioAsync convenience method");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug(ex, "ClearStreamingAudio call failed (may not be supported in all scenarios)");
                 }
                 break;
 
@@ -258,8 +280,7 @@ public class BasicVoiceAssistant : IDisposable
     private async Task HandleSessionCreatedAsync(ServerEventSessionCreated sessionCreated, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Session ready: {SessionId}", sessionCreated.Session?.Id);
-        _sessionReady = true;
-
+        
         // Start audio capture once session is ready
         if (_audioProcessor != null)
         {

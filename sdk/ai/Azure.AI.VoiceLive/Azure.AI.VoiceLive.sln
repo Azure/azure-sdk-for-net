@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6 d17.14
+VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.VoiceLive", "src\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.VoiceLive.Tests", "tests\Azure.AI.VoiceLive.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicVoiceAssistant", "..\..\..\..\..\..\scratch\vl_sample\samples\BasicVoiceAssistant.csproj", "{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicVoiceAssistant", "samples\BasicVoiceAssistant\BasicVoiceAssistant.csproj", "{C4593C0B-D995-3C0E-2B84-AE24A0B02506}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +28,10 @@ Global
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4593C0B-D995-3C0E-2B84-AE24A0B02506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4593C0B-D995-3C0E-2B84-AE24A0B02506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4593C0B-D995-3C0E-2B84-AE24A0B02506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4593C0B-D995-3C0E-2B84-AE24A0B02506}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
