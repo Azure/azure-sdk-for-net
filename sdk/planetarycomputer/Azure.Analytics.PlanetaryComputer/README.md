@@ -80,7 +80,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/planetarycomputer/Azure.PlanetaryComputer/samples).
+You can familiarize yourself with different APIs from the samples folder.
 
 ## Troubleshooting
 
