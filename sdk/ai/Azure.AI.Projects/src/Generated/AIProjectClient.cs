@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.AI.Projects
 {
@@ -25,12 +26,36 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
-        private Connections _cachedConnections;
-        private Datasets _cachedDatasets;
-        private Indexes _cachedIndexes;
-        private Deployments _cachedDeployments;
+        private ConnectionsOperations _cachedConnectionsOperations;
+        private DatasetsOperations _cachedDatasetsOperations;
+        private IndexesOperations _cachedIndexesOperations;
+        private DeploymentsOperations _cachedDeploymentsOperations;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> Initializes a new instance of ConnectionsOperations. </summary>
+        public virtual ConnectionsOperations GetConnectionsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
+        }
+
+        /// <summary> Initializes a new instance of DatasetsOperations. </summary>
+        public virtual DatasetsOperations GetDatasetsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDatasetsOperations;
+        }
+
+        /// <summary> Initializes a new instance of IndexesOperations. </summary>
+        public virtual IndexesOperations GetIndexesOperationsClient()
+        {
+            return Volatile.Read(ref _cachedIndexesOperations) ?? Interlocked.CompareExchange(ref _cachedIndexesOperations, new IndexesOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedIndexesOperations;
+        }
+
+        /// <summary> Initializes a new instance of DeploymentsOperations. </summary>
+        public virtual DeploymentsOperations GetDeploymentsOperationsClient()
+        {
+            return Volatile.Read(ref _cachedDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedDeploymentsOperations, new DeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeploymentsOperations;
+        }
     }
 }
