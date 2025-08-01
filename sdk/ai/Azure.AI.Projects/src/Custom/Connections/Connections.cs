@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-    public partial class Connections
+    public partial class ConnectionsOperations
     {
         /// <summary>
         /// Get a connection by name.

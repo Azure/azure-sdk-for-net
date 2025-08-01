@@ -18,7 +18,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects
 {
-    public partial class Datasets
+    public partial class DatasetsOperations
     {
         private readonly TokenCredential _tokenCredential;
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"> API version. </param>
         /// <param name="tokenCredential"> Token credential for authentication. </param>
-        internal Datasets(ClientPipeline pipeline, Uri endpoint, string apiVersion, TokenCredential tokenCredential)
+        internal DatasetsOperations(ClientPipeline pipeline, Uri endpoint, string apiVersion, TokenCredential tokenCredential)
             : this(pipeline, endpoint, apiVersion)
         {
             _tokenCredential = tokenCredential;

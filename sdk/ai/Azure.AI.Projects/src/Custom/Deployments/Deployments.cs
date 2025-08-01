@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
 {
     // Data plane generated sub-client.
     /// <summary> The Deployments sub-client. </summary>
-    public partial class Deployments
+    public partial class DeploymentsOperations
     {
         public virtual ClientResult<ModelDeployment> GetModelDeployment(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
