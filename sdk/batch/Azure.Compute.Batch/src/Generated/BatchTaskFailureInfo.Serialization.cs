@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            ErrorCategory category = default;
+            BatchErrorSourceCategory category = default;
             string code = default;
             string message = default;
             IReadOnlyList<NameValuePair> details = default;
@@ -103,7 +103,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("category"u8))
                 {
-                    category = new ErrorCategory(property.Value.GetString());
+                    category = new BatchErrorSourceCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("code"u8))

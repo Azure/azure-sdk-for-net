@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -26,73 +25,5 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
-
-        private ServicePatterns _cachedServicePatterns;
-
-        /// <summary> Initializes a new instance of ServicePatterns. </summary>
-        public virtual ServicePatterns GetServicePatternsClient()
-        {
-            return Volatile.Read(ref _cachedServicePatterns) ?? Interlocked.CompareExchange(ref _cachedServicePatterns, new ServicePatterns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedServicePatterns;
-        }
-
-        /// <summary> Initializes a new instance of Connections. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Connections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of Evaluations. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Evaluations GetEvaluationsClient(string apiVersion = "2025-05-15-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Evaluations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of Datasets. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Datasets GetDatasetsClient(string apiVersion = "2025-05-15-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Datasets(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of Indexes. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Indexes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of Deployments. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Deployments GetDeploymentsClient(string apiVersion = "2025-05-15-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Deployments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of RedTeams. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new RedTeams(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
-        }
     }
 }

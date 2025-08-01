@@ -72,8 +72,6 @@ namespace Azure.ResourceManager.NetApp.Models
             DestinationReplications = destinationReplications;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public NetAppEndpointType? EndpointType { get; set; }
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>

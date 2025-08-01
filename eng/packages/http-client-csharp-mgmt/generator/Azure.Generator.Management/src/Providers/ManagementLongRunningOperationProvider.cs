@@ -127,20 +127,12 @@ namespace Azure.Generator.Management.Providers
         {
             var rehydrationTokenParaemter = new ParameterProvider("rehydrationToken", $"The token to rehydrate a long-running operation", new CSharpType(typeof(RehydrationToken), true));
             var signature = new MethodSignature(GetOperationIdName, null, MethodSignatureModifiers.Private, typeof(string), null, [rehydrationTokenParaemter]);
-            var body = new MethodBodyStatement[]
-            {
-                new IfStatement(rehydrationTokenParaemter.Is(Null))
-                {
-                    Return(Null)
-                },
-                Declare("lroDetails", typeof(Dictionary<string, string>), Static(typeof(ModelReaderWriter)).Invoke("Write", [rehydrationTokenParaemter, Static(typeof(ModelReaderWriterOptions)).Property("Json")]).Invoke("ToObjectFromJson", [], new List<CSharpType>{ typeof(Dictionary<string, string>) }, false), out var lroDetailsVariable),
-                Return(new IndexerExpression(lroDetailsVariable, Literal("id")))
-            };
+            var body = Return(rehydrationTokenParaemter.NullConditional().Property(nameof(RehydrationToken.Id)));
             return new MethodProvider(signature, body, this);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildRehydrationConstructor(), BuildInitializationConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildRehydrationConstructor(), BuildInitializationConstructor()];
 
         private ConstructorProvider BuildInitializationConstructor()
         {

@@ -4,11 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.ManagementGroups.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -112,45 +109,12 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().GetAsync(null));
         }
 
-#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
-        [TestCase]
-        [RecordedTest]
-        public async Task TestManagedIdentity()
-        {
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
-            string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignmentData input = new PolicyAssignmentData
-            {
-                DisplayName = $"Test ${policyAssignmentName}",
-                PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-                Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned),
-                Location = AzureLocation.WestUS
-            };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, input.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, input.ManagedIdentity.ManagedServiceIdentityType);
-            ArmOperation<PolicyAssignmentResource> lro = await rg.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
-            PolicyAssignmentResource policyAssignment = lro.Value;
-            Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
-            Assert.AreEqual(policyAssignment.Data.Identity.PrincipalId, policyAssignment.Data.ManagedIdentity.PrincipalId);
-            Assert.AreEqual(policyAssignment.Data.Identity.TenantId, policyAssignment.Data.ManagedIdentity.TenantId);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, policyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, policyAssignment.Data.Identity.SystemAssignedServiceIdentityType);
-            policyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.None;
-            lro = await policyAssignment.UpdateAsync(WaitUntil.Completed, policyAssignment.Data);
-            PolicyAssignmentResource updatedPolicyAssignment = lro.Value;
-            Assert.AreEqual(ManagedServiceIdentityType.None, updatedPolicyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, updatedPolicyAssignment.Data.Identity.SystemAssignedServiceIdentityType);
-        }
-
         private void AssertValidPolicyAssignment(PolicyAssignmentResource model, PolicyAssignmentResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Location, getResult.Data.Location);
-            Assert.AreEqual(model.Data.Identity, getResult.Data.Identity);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.PolicyDefinitionId, getResult.Data.PolicyDefinitionId);
             Assert.AreEqual(model.Data.Scope, getResult.Data.Scope);
@@ -181,6 +145,5 @@ namespace Azure.ResourceManager.Tests
                 }
             }
         }
-#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
     }
 }

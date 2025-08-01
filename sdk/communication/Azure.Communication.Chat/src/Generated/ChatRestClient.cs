@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateChatThreadRequest(string topic, IEnumerable<ChatParticipantInternal> participants, IDictionary<string, string> metadata, ChatRetentionPolicy retentionPolicy)
+        internal HttpMessage CreateCreateChatThreadRequest(string topic, IEnumerable<ChatParticipantInternal> participants, IDictionary<string, string> metadata, ChatRetentionPolicyInternal retentionPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -83,7 +83,7 @@ namespace Azure.Communication.Chat
         /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, ChatRetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, ChatRetentionPolicyInternal retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.Communication.Chat
         /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, ChatRetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
+        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, ChatRetentionPolicyInternal retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (topic == null)
             {

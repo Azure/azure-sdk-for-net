@@ -932,7 +932,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
 
             var options = new UpdateChatThreadPropertiesOptions();
-            options.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+            options.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
@@ -968,7 +968,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             options.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
             options.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
-            options.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+            options.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
 
             var response = await chatThreadClient.UpdatePropertiesAsync(options);
 
@@ -1360,7 +1360,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //act
             var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
-            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = new ThreadCreationDateRetentionPolicy(40) });
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40) });
 
             //assert
             var chatThread = createChatThreadResult.ChatThread;
@@ -1380,7 +1380,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //act
             var chatClient = CreateMockChatClient(201, CreateChatThreadNoneRetentionSuccessApiResponsePayload);
             var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
-            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = new NoneRetentionPolicy() });
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = ChatRetentionPolicy.None() });
 
             //assert
             var chatThread = createChatThreadResult.ChatThread;

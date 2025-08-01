@@ -55,7 +55,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                     Console.WriteLine($"    State: {selectionMark.State}");
 
                     Console.Write("    Bounding polygon, with points ordered clockwise:");
-                    for (int j = 0; j < selectionMark.Polygon.Count; j++)
+                    for (int j = 0; j < selectionMark.Polygon.Count; j += 2)
                     {
                         Console.Write($" ({selectionMark.Polygon[j]}, {selectionMark.Polygon[j + 1]})");
                     }

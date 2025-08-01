@@ -29,17 +29,11 @@ namespace Azure.Generator.Providers
         private readonly CSharpType _responseType;
         private readonly bool _isAsync;
         private readonly InputPagingServiceMetadata _paging;
-        private readonly IReadOnlyList<FieldProvider> _requestFields;
         private readonly string _scopeName;
         private readonly string _itemsPropertyName;
         private readonly string? _nextPagePropertyName;
         private readonly InputResponseLocation? _nextPageLocation;
         private readonly string _getNextResponseMethodName;
-        private readonly int? _nextTokenParameterIndex;
-        private readonly string _createRequestMethodName;
-
-        private readonly IReadOnlyList<ParameterProvider> _createRequestParameters;
-        private readonly FieldProvider? _contextField;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -49,6 +43,7 @@ namespace Azure.Generator.Providers
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
 
         private readonly bool _isProtocol;
+        private readonly PropertyProvider? _nextPageProperty;
 
         public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
@@ -69,31 +64,6 @@ namespace Azure.Generator.Providers
             _isProtocol = itemModelType == null;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _isAsync = isAsync;
-
-            var createRequestMethodSignature = _client.RestClient.GetCreateRequestMethod(_operation).Signature;
-            _createRequestMethodName = createRequestMethodSignature.Name;
-            _createRequestParameters = createRequestMethodSignature.Parameters;
-            var fields = new List<FieldProvider>();
-            for (int paramIndex = 0; paramIndex < _createRequestParameters.Count; paramIndex++)
-            {
-                var parameter = _createRequestParameters[paramIndex];
-                if (parameter.Name == _paging.ContinuationToken?.Parameter.Name)
-                {
-                    _nextTokenParameterIndex = paramIndex;
-                }
-                var field = new FieldProvider(
-                    FieldModifiers.Private | FieldModifiers.ReadOnly,
-                    parameter.Type,
-                    $"_{parameter.Name}",
-                    this);
-                fields.Add(field);
-                if (field.Name == "_context")
-                {
-                    _contextField = field;
-                }
-            }
-
-            _requestFields = fields;
             _scopeName = _client.GetScopeName(_operation);
 
             // We only need to consider the first layer in Azure
@@ -116,9 +86,9 @@ namespace Azure.Generator.Providers
             // Use the canonical view in case the property was customized.
             if (_nextPageLocation == InputResponseLocation.Body)
             {
-                _nextPagePropertyName =
-                    responseModel.CanonicalView.Properties.FirstOrDefault(
-                        p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name;
+                _nextPageProperty = responseModel.CanonicalView.Properties.FirstOrDefault(
+                    p => p.WireInfo?.SerializedName == nextPagePropertyName);
+                _nextPagePropertyName = _nextPageProperty?.Name;
             }
             else if (_nextPageLocation == InputResponseLocation.Header)
             {
@@ -126,7 +96,13 @@ namespace Azure.Generator.Providers
             }
         }
 
-        protected override FieldProvider[] BuildFields() => [_clientField, .. _requestFields];
+        private IReadOnlyList<ParameterProvider> CreateRequestParameters
+            => _client.RestClient.GetCreateRequestMethod(_operation).Signature.Parameters;
+
+        private string CreateRequestMethodName
+            => _client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
+
+        protected override FieldProvider[] BuildFields() => [_clientField, .. BuildRequestFields()];
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -141,9 +117,13 @@ namespace Azure.Generator.Providers
                 ? [new CSharpType(typeof(AsyncPageable<>), _itemModelType)]
                 : [new CSharpType(typeof(Pageable<>), _itemModelType)];
 
-        protected override MethodProvider[] BuildMethods() => [BuildAsPagesMethod(), BuildGetNextResponseMethod()];
+        protected override MethodProvider[] BuildMethods()
+        {
+            var requestFields = BuildRequestFields();
+            return [BuildAsPagesMethod(requestFields), BuildGetNextResponseMethod(requestFields)];
+        }
 
-        private MethodProvider BuildAsPagesMethod()
+        private MethodProvider BuildAsPagesMethod(IReadOnlyList<FieldProvider> requestFields)
         {
             var signature = new MethodSignature(
                 "AsPages",
@@ -160,25 +140,25 @@ namespace Azure.Generator.Providers
             return
                 new MethodProvider(
                     signature,
-                    BuildAsPagesMethodBody(),
+                    BuildAsPagesMethodBody(requestFields),
                     this);
         }
 
-        private MethodBodyStatement[] BuildAsPagesMethodBody()
+        private MethodBodyStatement[] BuildAsPagesMethodBody(IReadOnlyList<FieldProvider> requestFields)
         {
             if (_paging.NextLink == null && _paging.ContinuationToken == null)
             {
                 return BuildAsPagesSinglePageMethodBody();
             }
-
+            var nextTokenParameterIndex = ParseNextTokenParameterIndex();
             var statements = new List<MethodBodyStatement>();
             CSharpType nextPageType = _paging.NextLink != null
                 ? new CSharpType(typeof(Uri))
-                : _requestFields[_nextTokenParameterIndex!.Value].Type;
+                : requestFields[nextTokenParameterIndex!.Value].Type;
 
             statements.Add(Declare("nextPage", nextPageType, _paging.NextLink != null ?
                 new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter), Null) :
-                ContinuationTokenParameter.NullCoalesce(_requestFields[_nextTokenParameterIndex!.Value]), out var nextPageVariable));
+                ContinuationTokenParameter.NullCoalesce(requestFields[nextTokenParameterIndex!.Value]), out var nextPageVariable));
 
             var doWhileStatement = _paging.NextLink != null ?
                 new DoWhileStatement(nextPageVariable.NotEqual(Null)) :
@@ -202,7 +182,7 @@ namespace Azure.Generator.Providers
                 doWhileStatement.Add(ConvertItemsToListOfBinaryData(responseWithTypeVariable, out var itemsVariable));
 
                 // Extract next page
-                doWhileStatement.Add(nextPageVariable.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+                doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, nextPageExpression, responseVariable])));
@@ -210,7 +190,7 @@ namespace Azure.Generator.Providers
             else
             {
                 // Extract next page
-                doWhileStatement.Add(nextPageVariable.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+                doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
@@ -263,22 +243,46 @@ namespace Azure.Generator.Providers
                 return Null;
             }
 
-            switch (_nextPageLocation)
+            return _nextPageLocation switch
             {
-                case InputResponseLocation.Body:
-                    return responseWithTypeVariable.Property(_nextPagePropertyName);
-                case InputResponseLocation.Header:
-                    return new TernaryConditionalExpression(
-                        responseVariable.Property("Headers").Invoke("TryGetValue", Literal(_nextPagePropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)).As<bool>(),
-                        nextLinkHeader,
-                        Null);
-                default:
-                    // Invalid location is logged by the emitter.
-                    return Null;
+                InputResponseLocation.Body => NeedsConversionToUri() ?
+                    new TernaryConditionalExpression(
+                        responseWithTypeVariable.Property(_nextPagePropertyName).NotEqual(Null),
+                        New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)),
+                            Null)
+                    : responseWithTypeVariable.Property(_nextPagePropertyName),
+                InputResponseLocation.Header => new TernaryConditionalExpression(
+                    responseVariable.Property("Headers")
+                        .Invoke("TryGetValue", Literal(_nextPagePropertyName),
+                            new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true))
+                        .As<bool>(),
+                     NeedsConversionToUri() ? New.Instance<Uri>(nextLinkHeader) : nextLinkHeader,
+                    Null),
+                _ => Null
+            };
+
+            bool NeedsConversionToUri()
+            {
+                if (_paging.NextLink == null)
+                {
+                    return false;
+                }
+                if (_nextPageLocation == InputResponseLocation.Body &&
+                    _nextPageProperty?.Type.Equals(typeof(string)) == true)
+                {
+                    return true;
+                }
+
+                if (_nextPageLocation == InputResponseLocation.Header)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
-        private MethodProvider BuildGetNextResponseMethod()
+        private MethodProvider BuildGetNextResponseMethod(IReadOnlyList<FieldProvider> requestFields)
         {
             var nextPageParameter = _paging.NextLink != null
                 ? NextLinkParameter
@@ -304,25 +308,25 @@ namespace Azure.Generator.Providers
             {
                 if (_paging.NextLink is not null)
                 {
-                    return InvokeCreateRequestForNextLink(nextPageParameter);
+                    return InvokeCreateRequestForNextLink(nextPageParameter, requestFields);
                 }
                 else if (_paging.ContinuationToken is not null)
                 {
-                    return InvokeCreateRequestForContinuationToken(nextPageParameter);
+                    return InvokeCreateRequestForContinuationToken(nextPageParameter, requestFields);
                 }
                 else
                 {
-                    return InvokeCreateRequestForSingle();
+                    return InvokeCreateRequestForSingle(requestFields);
                 }
             }
 
             TryExpression BuildTryExpression()
-                => new TryExpression(Return(_clientField.Property("Pipeline").Invoke(_isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, _contextField!.AsValueExpression], _isAsync)));
+                => new TryExpression(Return(_clientField.Property("Pipeline").Invoke(_isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, ParseContextField()!.AsValueExpression], _isAsync)));
 
             return new MethodProvider(signature, body, this);
         }
 
-        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri, IReadOnlyList<FieldProvider> requestFields)
         {
             var createNextLinkRequestMethodName =
                 _client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature.Name;
@@ -330,27 +334,28 @@ namespace Azure.Generator.Providers
                 nextPageUri.NotEqual(Null),
                 _clientField.Invoke(
                     createNextLinkRequestMethodName,
-                    [nextPageUri, .. _requestFields.Select(f => f.AsValueExpression)]),
+                    [nextPageUri, .. requestFields.Select(f => f.AsValueExpression)]),
                 _clientField.Invoke(
-                    _createRequestMethodName,
-                    [.. _requestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
+                    CreateRequestMethodName,
+                    [.. requestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
         }
 
-        private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken, IReadOnlyList<FieldProvider> requestFields)
         {
-            ValueExpression[] arguments = _requestFields.Select(f => f.AsValueExpression).ToArray();
+            ValueExpression[] arguments = requestFields.Select(f => f.AsValueExpression).ToArray();
 
             // Replace the nextToken field with the nextToken variable
-            arguments[_nextTokenParameterIndex!.Value] = continuationToken;
+            var nextTokenParameterIndex = ParseNextTokenParameterIndex();
+            arguments[nextTokenParameterIndex!.Value] = continuationToken;
 
-            return _clientField.Invoke(_createRequestMethodName, arguments).As<HttpMessage>();
+            return _clientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }
 
-        private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
+        private ScopedApi<HttpMessage> InvokeCreateRequestForSingle(IReadOnlyList<FieldProvider> requestFields)
         {
-            ValueExpression[] arguments = [.. _requestFields.Select(f => f.AsValueExpression)];
+            ValueExpression[] arguments = [.. requestFields.Select(f => f.AsValueExpression)];
 
-            return _clientField.Invoke(_createRequestMethodName, arguments).As<HttpMessage>();
+            return _clientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -368,12 +373,12 @@ namespace Azure.Generator.Providers
                         MethodSignatureModifiers.Public,
                         [
                             clientParameter,
-                            .. _createRequestParameters
+                            .. CreateRequestParameters
                         ],
                         Initializer: new ConstructorInitializer(
                             true,
                             // Pass the request context cancellation token to the base Pageable constructor
-                            [_createRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)])),
+                            [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)])),
                     BuildConstructorBody(clientParameter),
                     this)
             ];
@@ -381,16 +386,61 @@ namespace Azure.Generator.Providers
 
         private MethodBodyStatement[] BuildConstructorBody(ParameterProvider clientParameter)
         {
-            var statements = new List<MethodBodyStatement>(_createRequestParameters.Count + 1);
+            var requestFields = BuildRequestFields();
+            var statements = new List<MethodBodyStatement>(CreateRequestParameters.Count + 1);
             statements.Add(_clientField.Assign(clientParameter).Terminate());
 
-            for (int parameterNumber = 0; parameterNumber < _createRequestParameters.Count; parameterNumber++)
+            for (int parameterNumber = 0; parameterNumber < CreateRequestParameters.Count; parameterNumber++)
             {
-                var parameter = _createRequestParameters[parameterNumber];
-                var field = _requestFields[parameterNumber];
+                var parameter = CreateRequestParameters[parameterNumber];
+                var field = requestFields[parameterNumber];
                 statements.Add(field.Assign(parameter).Terminate());
             }
             return statements.ToArray();
+        }
+
+        private FieldProvider? ParseContextField()
+        {
+            foreach (var field in Fields)
+            {
+                if (field.Name == "_context")
+                {
+                    return field;
+                }
+            }
+
+            return null;
+        }
+
+        private int? ParseNextTokenParameterIndex()
+        {
+            for (int paramIndex = 0; paramIndex < CreateRequestParameters.Count; paramIndex++)
+            {
+                var parameter = CreateRequestParameters[paramIndex];
+                if (parameter.Name == _paging.ContinuationToken?.Parameter.Name)
+                {
+                    return paramIndex;
+                }
+            }
+
+            return null;
+        }
+
+        private IReadOnlyList<FieldProvider> BuildRequestFields()
+        {
+            var fields = new List<FieldProvider>();
+            for (int paramIndex = 0; paramIndex < CreateRequestParameters.Count; paramIndex++)
+            {
+                var parameter = CreateRequestParameters[paramIndex];
+                var field = new FieldProvider(
+                    FieldModifiers.Private | FieldModifiers.ReadOnly,
+                    parameter.Type,
+                    $"_{parameter.Name.ToVariableName()}",
+                    this);
+                fields.Add(field);
+            }
+
+            return fields;
         }
     }
 }

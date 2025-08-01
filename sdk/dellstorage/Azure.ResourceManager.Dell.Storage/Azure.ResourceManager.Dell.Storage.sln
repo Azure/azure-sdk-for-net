@@ -7,8 +7,6 @@ Project("{2FF2E267-F3D1-41F3-A98C-F29A2EEEA743}") = "Azure.ResourceManager.Dell.
 EndProject
 Project("{2FF2E267-F3D1-41F3-A98C-F29A2EEEA743}") = "Azure.ResourceManager.Dell.Storage.Tests", "tests\Azure.ResourceManager.Dell.Storage.Tests.csproj", "{9CBD54DC-76C2-4CA0-AD8B-7840C00112B0}"
 EndProject
-Project("{2FF2E267-F3D1-41F3-A98C-F29A2EEEA743}") = "Azure.ResourceManager.Dell.Storage.Samples", "samples\Azure.ResourceManager.Dell.Storage.Samples.csproj", "{31C7027E-4549-48C2-8489-D1F6CD35C5B4}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

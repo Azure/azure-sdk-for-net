@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
 
-        /// <summary> enabled. </summary>
+        /// <summary> Enable apply network policies on private link service in the subnet. </summary>
         public static ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState Enabled { get; } = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(EnabledValue);
-        /// <summary> disabled. </summary>
+        /// <summary> Disable apply network policies on private link service in the subnet. </summary>
         public static ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState Disabled { get; } = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(DisabledValue);
         /// <summary> Determines if two <see cref="ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState left, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState right) => left.Equals(right);

@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -13,10 +12,13 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceDeploymentNameVectorizationSource : IJsonModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>
     {
-        internal InternalAzureChatDataSourceDeploymentNameVectorizationSource()
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceDeploymentNameVectorizationSource"/> for deserialization. </summary>
+        internal InternalAzureChatDataSourceDeploymentNameVectorizationSource() : this(InternalAzureChatDataSourceVectorizationSourceType.DeploymentName, null, null, default)
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -24,6 +26,8 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -44,8 +48,12 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceDeploymentNameVectorizationSource IJsonModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceDeploymentNameVectorizationSource)JsonModelCreateCore(ref reader, options);
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceVectorizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -57,13 +65,15 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeInternalAzureChatDataSourceDeploymentNameVectorizationSource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAzureChatDataSourceDeploymentNameVectorizationSource DeserializeInternalAzureChatDataSourceDeploymentNameVectorizationSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "deployment_name";
+            InternalAzureChatDataSourceVectorizationSourceType kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string deploymentName = default;
             int? dimensions = default;
@@ -71,7 +81,7 @@ namespace Azure.AI.OpenAI.Chat
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = new InternalAzureChatDataSourceVectorizationSourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deployment_name"u8))
@@ -93,25 +103,31 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalAzureChatDataSourceDeploymentNameVectorizationSource(@type, additionalBinaryDataProperties, deploymentName, dimensions);
+            return new InternalAzureChatDataSourceDeploymentNameVectorizationSource(kind, additionalBinaryDataProperties, deploymentName, dimensions);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InternalAzureChatDataSourceDeploymentNameVectorizationSource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceDeploymentNameVectorizationSource IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceDeploymentNameVectorizationSource)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceVectorizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,22 +143,7 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAzureChatDataSourceDeploymentNameVectorizationSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        public static implicit operator BinaryContent(InternalAzureChatDataSourceDeploymentNameVectorizationSource internalAzureChatDataSourceDeploymentNameVectorizationSource)
-        {
-            if (internalAzureChatDataSourceDeploymentNameVectorizationSource == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(internalAzureChatDataSourceDeploymentNameVectorizationSource, ModelSerializationExtensions.WireOptions);
-        }
-
-        public static explicit operator InternalAzureChatDataSourceDeploymentNameVectorizationSource(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalAzureChatDataSourceDeploymentNameVectorizationSource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

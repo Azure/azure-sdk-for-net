@@ -7,8 +7,6 @@ Project("{82B8DC48-7C93-404F-8691-AA423630F213}") = "Azure.ResourceManager.Lambd
 EndProject
 Project("{82B8DC48-7C93-404F-8691-AA423630F213}") = "Azure.ResourceManager.LambdaTestHyperExecute.Tests", "tests\Azure.ResourceManager.LambdaTestHyperExecute.Tests.csproj", "{1F60100B-40EA-4804-9C83-7616DAD87D90}"
 EndProject
-Project("{82B8DC48-7C93-404F-8691-AA423630F213}") = "Azure.ResourceManager.LambdaTestHyperExecute.Samples", "samples\Azure.ResourceManager.LambdaTestHyperExecute.Samples.csproj", "{5A7A0CCC-1F54-4B3E-AE79-83DA2A163945}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
