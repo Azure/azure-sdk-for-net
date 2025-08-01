@@ -46,11 +46,11 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+```C# Snippet:CreateStacApiClientForSpecificApiVersion
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
-var client = new <YourService>Client(endpoint, credential, options);
+StacApiClientOptions options = new StacApiClientOptions(StacApiClientOptions.ServiceVersion.<API Version>)
+var client = new StacApiClient(endpoint, credential, options);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
