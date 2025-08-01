@@ -26,26 +26,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly double _inverseAdaptationTimeNanos;
         private readonly double _targetTracesPerNanosecondLimit;
         private State _state;
-        private readonly bool _roundToNearest;
-        private readonly Func<long> _nanoTimeSupplier;
+        //private readonly Func<long> _nanoTimeSupplier;
         private const double AdaptationTimeSeconds = 0.1;
         private static readonly double NanoTimeFactor = 1_000_000_000.0 / Stopwatch.Frequency;
 
         public RateLimitedSamplingPercentage(double targetTracesPerSecondLimit)
-            : this(targetTracesPerSecondLimit, GetNanoTime, true)
-        {
-        }
-
-        internal RateLimitedSamplingPercentage(double targetTracesPerSecondLimit, Func<long> nanoTimeSupplier, bool roundToNearest)
         {
             if (targetTracesPerSecondLimit < 0.0)
                 throw new ArgumentOutOfRangeException(nameof(targetTracesPerSecondLimit), "Limit for sampled Traces per second must be nonnegative!");
 
-            _nanoTimeSupplier = nanoTimeSupplier ?? throw new ArgumentNullException(nameof(nanoTimeSupplier));
+            //_nanoTimeSupplier = nanoTimeSupplier ?? throw new ArgumentNullException(nameof(nanoTimeSupplier));
             _inverseAdaptationTimeNanos = 1e-9 / AdaptationTimeSeconds;
             _targetTracesPerNanosecondLimit = 1e-9 * targetTracesPerSecondLimit;
-            _state = new State(0, 0, _nanoTimeSupplier());
-            _roundToNearest = roundToNearest;
+            _state = new State(0, 0, GetNanoTime());
         }
 
         private State UpdateState(State oldState, long currentNanoTime)
@@ -66,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public double Get()
         {
-            long currentNanoTime = _nanoTimeSupplier();
+            long currentNanoTime = GetNanoTime();
 
             // trying to replicate the atomic update behavior of Java's AtomicReference
             // using Interlocked.CompareExchange to ensure thread safety
@@ -85,10 +78,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             double samplingPercentage = 100 * Math.Min(samplingProbability, 1);
 
-            if (_roundToNearest)
-            {
-                samplingPercentage = RoundDownToNearest(samplingPercentage);
-            }
+            samplingPercentage = RoundDownToNearest(samplingPercentage);
+
             return samplingPercentage;
         }
 

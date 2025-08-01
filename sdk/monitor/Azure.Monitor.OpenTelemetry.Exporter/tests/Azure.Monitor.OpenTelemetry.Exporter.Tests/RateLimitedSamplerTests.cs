@@ -39,22 +39,18 @@ public class RateLimitedSamplerTests
             }
         }
 
-        Console.WriteLine($"Exported {exportedItems.Count} activities.");
         Assert.NotEmpty(exportedItems);
         Assert.Equal(101, exportedItems.Count);
 
         var exportedParentActivity = exportedItems[100];
         Assert.Equal("ParentActivity", exportedParentActivity.DisplayName);
         var parentSampleRate = exportedParentActivity.GetTagItem("microsoft.sample_rate");
-        Console.WriteLine($"Parent Sample Rate: {parentSampleRate}");
-        Console.WriteLine($"Exported Parent Activity: {exportedParentActivity.DisplayName} {exportedParentActivity.TraceId}, {exportedParentActivity.SpanId}");
 
         for (int i = 1; i < exportedItems.Count; i++) // looking at child activities
         {
             var exportedActivity = exportedItems[i - 1];
             var sampleRate = exportedActivity.GetTagItem("microsoft.sample_rate");
             Assert.Equal(parentSampleRate, sampleRate);
-            Console.WriteLine($"Exported: {exportedActivity.DisplayName} {exportedActivity.TraceId}, {exportedActivity.SpanId}");
         }
     }
 
@@ -176,8 +172,6 @@ public class RateLimitedSamplerTests
         // We would expect 50 to be sampled in, but there may be some variance based on sleep scheduling/elapsed time.
         DateTime end = DateTime.UtcNow;
         TimeSpan elapsed = end - start;
-        Console.WriteLine($"Elapsed: {elapsed.TotalSeconds} s");
-        Console.WriteLine($"Sampled in {sampledin} spans out of 100 attempts.");
         if (elapsed.TotalSeconds < 1)
         {
             Assert.True(sampledin <= 50, $"Expected at most 50 spans to be sampled in, but got {sampledin}.");
@@ -211,7 +205,6 @@ public class RateLimitedSamplerTests
         }
 
         // We would expect all spans to be sampled in.
-        Console.WriteLine($"Sampled in {sampledin} spans out of 1000 attempts.");
         Assert.True(sampledin == 50, $"Expected 50 spans to be sampled in, but got {sampledin}.");
     }
 }
