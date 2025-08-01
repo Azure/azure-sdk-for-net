@@ -119,6 +119,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = new TransferOperation(
                 id: transferId,
                 status: InProgressStatus);
+            transfer.TransferManager = new TransferManager();
 
             // Act
             Task pauseTask = transfer.PauseAsync();
@@ -168,6 +169,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOperation transfer = new TransferOperation(
                 id: transferId,
                 status: InProgressStatus);
+            transfer.TransferManager = new TransferManager();
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
             try
