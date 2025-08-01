@@ -8,41 +8,58 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents the GeoJSON feature collection type for STAC item collections. </summary>
     public readonly partial struct ItemCollectionType : IEquatable<ItemCollectionType>
     {
         private readonly string _value;
+        /// <summary> Standard GeoJSON FeatureCollection type. </summary>
+        private const string FeatureCollectionValue = "FeatureCollection";
 
         /// <summary> Initializes a new instance of <see cref="ItemCollectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ItemCollectionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FeatureCollectionValue = "FeatureCollection";
+            _value = value;
+        }
 
         /// <summary> Standard GeoJSON FeatureCollection type. </summary>
         public static ItemCollectionType FeatureCollection { get; } = new ItemCollectionType(FeatureCollectionValue);
+
         /// <summary> Determines if two <see cref="ItemCollectionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ItemCollectionType left, ItemCollectionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ItemCollectionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ItemCollectionType left, ItemCollectionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ItemCollectionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ItemCollectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ItemCollectionType(string value) => new ItemCollectionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ItemCollectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ItemCollectionType?(string value) => value == null ? null : new ItemCollectionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ItemCollectionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ItemCollectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

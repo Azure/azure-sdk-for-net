@@ -9,72 +9,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-    ///
+    /// 
     /// Represents the OGC API conformance declaration.
     /// </summary>
     public partial class ConformanceClasses
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConformanceClasses"/>. </summary>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conformsTo"/> is null. </exception>
         internal ConformanceClasses(IEnumerable<Uri> conformsTo)
         {
-            Argument.AssertNotNull(conformsTo, nameof(conformsTo));
-
             ConformsTo = conformsTo.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConformanceClasses"/>. </summary>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConformanceClasses(IReadOnlyList<Uri> conformsTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConformanceClasses(IList<Uri> conformsTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConformsTo = conformsTo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConformanceClasses"/> for deserialization. </summary>
-        internal ConformanceClasses()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of OGC API conformance classes implemented by this API. </summary>
-        public IReadOnlyList<Uri> ConformsTo { get; }
+        public IList<Uri> ConformsTo { get; }
     }
 }

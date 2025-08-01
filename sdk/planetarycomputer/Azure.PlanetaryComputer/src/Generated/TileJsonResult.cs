@@ -9,54 +9,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// TileJSON model.
-    ///
+    /// 
     /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0TileJSON metadata describing a tile set according to the TileJSON specification
     /// </summary>
     public partial class TileJsonResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TileJsonResult"/>. </summary>
         /// <param name="tiles"> Array of tile URL templates. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tiles"/> is null. </exception>
         internal TileJsonResult(IEnumerable<string> tiles)
         {
-            Argument.AssertNotNull(tiles, nameof(tiles));
-
             Tiles = tiles.ToList();
             Grids = new ChangeTrackingList<string>();
             Data = new ChangeTrackingList<string>();
@@ -80,8 +48,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="maxzoom"> Maximum zoom level available in the tile set. </param>
         /// <param name="bounds"> Bounds. </param>
         /// <param name="center"> Default center point [longitude, latitude, zoom] for the tile set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TileJsonResult(string tilejson, string name, string description, string version, string attribution, string template, string legend, TileJsonScheme? scheme, IReadOnlyList<string> tiles, IReadOnlyList<string> grids, IReadOnlyList<string> data, int? minzoom, int? maxzoom, IReadOnlyList<float> bounds, IReadOnlyList<float> center, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TileJsonResult(string tilejson, string name, string description, string version, string attribution, string template, string legend, TileJsonScheme? scheme, IList<string> tiles, IList<string> grids, IList<string> data, int? minzoom, int? maxzoom, IList<float> bounds, IList<float> center, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tilejson = tilejson;
             Name = name;
@@ -98,43 +66,52 @@ namespace Azure.PlanetaryComputer
             Maxzoom = maxzoom;
             Bounds = bounds;
             Center = center;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TileJsonResult"/> for deserialization. </summary>
-        internal TileJsonResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Tilejson. </summary>
         public string Tilejson { get; }
+
         /// <summary> Human-readable name of the tile set. </summary>
         public string Name { get; }
+
         /// <summary> Human-readable description of the tile set. </summary>
         public string Description { get; }
+
         /// <summary> Version. </summary>
         public string Version { get; }
+
         /// <summary> Attribution text for the data sources. </summary>
         public string Attribution { get; }
+
         /// <summary> URL template for feature info queries. </summary>
         public string Template { get; }
+
         /// <summary> URL to legend content for the tile set. </summary>
         public string Legend { get; }
+
         /// <summary> Tile addressing scheme (xyz or tms). </summary>
         public TileJsonScheme? Scheme { get; }
+
         /// <summary> Array of tile URL templates. </summary>
-        public IReadOnlyList<string> Tiles { get; }
+        public IList<string> Tiles { get; }
+
         /// <summary> Array of UTFGrid URL templates. </summary>
-        public IReadOnlyList<string> Grids { get; }
+        public IList<string> Grids { get; }
+
         /// <summary> Array of data file URL templates. </summary>
-        public IReadOnlyList<string> Data { get; }
+        public IList<string> Data { get; }
+
         /// <summary> Minimum zoom level available in the tile set. </summary>
         public int? Minzoom { get; }
+
         /// <summary> Maximum zoom level available in the tile set. </summary>
         public int? Maxzoom { get; }
+
         /// <summary> Bounds. </summary>
-        public IReadOnlyList<float> Bounds { get; }
+        public IList<float> Bounds { get; }
+
         /// <summary> Default center point [longitude, latitude, zoom] for the tile set. </summary>
-        public IReadOnlyList<float> Center { get; }
+        public IList<float> Center { get; }
     }
 }

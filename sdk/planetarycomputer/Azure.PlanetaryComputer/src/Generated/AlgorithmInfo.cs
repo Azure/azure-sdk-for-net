@@ -8,53 +8,78 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Supported algorithms for terrain and index-based analysis. </summary>
     public readonly partial struct AlgorithmInfo : IEquatable<AlgorithmInfo>
     {
         private readonly string _value;
+        /// <summary> Creates hillshade visualization from elevation data. </summary>
+        private const string HillshadeValue = "hillshade";
+        /// <summary> Generates elevation contour lines. </summary>
+        private const string ContoursValue = "contours";
+        /// <summary> Calculates normalized difference index between bands. </summary>
+        private const string NormalizedIndexValue = "normalizedIndex";
+        /// <summary> Encodes elevation data in Mapbox Terrarium RGB format. </summary>
+        private const string TerrariumValue = "terrarium";
+        /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
+        private const string TerrainrgbValue = "terrainrgb";
 
         /// <summary> Initializes a new instance of <see cref="AlgorithmInfo"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AlgorithmInfo(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HillshadeValue = "hillshade";
-        private const string ContoursValue = "contours";
-        private const string NormalizedIndexValue = "normalizedIndex";
-        private const string TerrariumValue = "terrarium";
-        private const string TerrainrgbValue = "terrainrgb";
+            _value = value;
+        }
 
         /// <summary> Creates hillshade visualization from elevation data. </summary>
         public static AlgorithmInfo Hillshade { get; } = new AlgorithmInfo(HillshadeValue);
+
         /// <summary> Generates elevation contour lines. </summary>
         public static AlgorithmInfo Contours { get; } = new AlgorithmInfo(ContoursValue);
+
         /// <summary> Calculates normalized difference index between bands. </summary>
         public static AlgorithmInfo NormalizedIndex { get; } = new AlgorithmInfo(NormalizedIndexValue);
+
         /// <summary> Encodes elevation data in Mapbox Terrarium RGB format. </summary>
         public static AlgorithmInfo Terrarium { get; } = new AlgorithmInfo(TerrariumValue);
+
         /// <summary> Encodes elevation data in Mapbox TerrainRGB format. </summary>
         public static AlgorithmInfo Terrainrgb { get; } = new AlgorithmInfo(TerrainrgbValue);
+
         /// <summary> Determines if two <see cref="AlgorithmInfo"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlgorithmInfo left, AlgorithmInfo right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlgorithmInfo"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlgorithmInfo left, AlgorithmInfo right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AlgorithmInfo"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlgorithmInfo"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlgorithmInfo(string value) => new AlgorithmInfo(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AlgorithmInfo"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AlgorithmInfo?(string value) => value == null ? null : new AlgorithmInfo(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlgorithmInfo other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlgorithmInfo other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

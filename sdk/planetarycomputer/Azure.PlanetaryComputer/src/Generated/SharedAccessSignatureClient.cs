@@ -8,26 +8,21 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The SharedAccessSignature service client. </summary>
+    /// <summary> The SharedAccessSignatureClient. </summary>
     public partial class SharedAccessSignatureClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of SharedAccessSignatureClient for mocking. </summary>
         protected SharedAccessSignatureClient()
@@ -35,211 +30,167 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SharedAccessSignatureClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public SharedAccessSignatureClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SharedAccessSignatureClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public SharedAccessSignatureClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public SharedAccessSignatureClient(Uri endpoint, TokenCredential credential, SharedAccessSignatureClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new SharedAccessSignatureClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> generate a SAS Token for the given Azure Blob storage account and container. </summary>
-        /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
-        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
-        /// for the given storage account and container. The storage account and container
-        /// must be associated with a Planetary Computer dataset indexed by the STAC API.
-        /// </remarks>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetTokenAsync(string,long?,CancellationToken)']/*" />
-        public virtual async Task<Response<SasToken>> GetTokenAsync(string collectionId, long? duration = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTokenAsync(collectionId, duration, context).ConfigureAwait(false);
-            return Response.FromValue(SasToken.FromResponse(response), response);
-        }
-
-        /// <summary> generate a SAS Token for the given Azure Blob storage account and container. </summary>
-        /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
-        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
-        /// for the given storage account and container. The storage account and container
-        /// must be associated with a Planetary Computer dataset indexed by the STAC API.
-        /// </remarks>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetToken(string,long?,CancellationToken)']/*" />
-        public virtual Response<SasToken> GetToken(string collectionId, long? duration = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetToken(collectionId, duration, context);
-            return Response.FromValue(SasToken.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] generate a SAS Token for the given Azure Blob storage account and container.
+        /// [Protocol Method] Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for the given storage account and container. The storage account and container
+        /// must be associated with a Planetary Computer dataset indexed by the STAC API.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTokenAsync(string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
         /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetTokenAsync(string,long?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTokenAsync(string collectionId, long? duration, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetToken");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTokenRequest(collectionId, duration, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] generate a SAS Token for the given Azure Blob storage account and container.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetToken(string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
-        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetToken(string,long?,RequestContext)']/*" />
         public virtual Response GetToken(string collectionId, long? duration, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetToken");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetTokenRequest(collectionId, duration, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for the given storage account and container. The storage account and container
+        /// must be associated with a Planetary Computer dataset indexed by the STAC API.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTokenAsync(string collectionId, long? duration, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetToken");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetTokenRequest(collectionId, duration, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for the given storage account and container. The storage account and container
+        /// must be associated with a Planetary Computer dataset indexed by the STAC API.
+        /// </summary>
+        /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<SasToken> GetToken(string collectionId, long? duration = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetToken");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTokenRequest(collectionId, duration, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetToken(collectionId, duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((SasToken)result, result);
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] revoke a SAS Token for the given Azure Blob storage account
+        /// Generate a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for the given storage account and container. The storage account and container
+        /// must be associated with a Planetary Computer dataset indexed by the STAC API.
+        /// </summary>
+        /// <param name="collectionId"> The name of the Collection that the SAS token will be issued for. </param>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<SasToken>> GetTokenAsync(string collectionId, long? duration = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetTokenAsync(collectionId, duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((SasToken)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for managed storage account of this GeoCatalog.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='RevokeTokenAsync(long?,RequestContext)']/*" />
-        public virtual async Task<Response> RevokeTokenAsync(long? duration = null, RequestContext context = null)
+        public virtual Response RevokeToken(long? duration, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.RevokeToken");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRevokeTokenRequest(duration, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] revoke a SAS Token for the given Azure Blob storage account
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='RevokeToken(long?,RequestContext)']/*" />
-        public virtual Response RevokeToken(long? duration = null, RequestContext context = null)
-        {
-            using var scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.RevokeToken");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.RevokeToken");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRevokeTokenRequest(duration, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -248,76 +199,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> sign an HREF in the format of a URL and returns a SingedLink. </summary>
-        /// <param name="href"> HREF (URL) to sign. </param>
-        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
-        /// <remarks>
-        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
-        /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
-        /// </remarks>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetSignAsync(string,long?,CancellationToken)']/*" />
-        public virtual async Task<Response<UnsignedLink>> GetSignAsync(string href, long? duration = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(href, nameof(href));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSignAsync(href, duration, context).ConfigureAwait(false);
-            return Response.FromValue(UnsignedLink.FromResponse(response), response);
-        }
-
-        /// <summary> sign an HREF in the format of a URL and returns a SingedLink. </summary>
-        /// <param name="href"> HREF (URL) to sign. </param>
-        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
-        /// <remarks>
-        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
-        /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
-        /// </remarks>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetSign(string,long?,CancellationToken)']/*" />
-        public virtual Response<UnsignedLink> GetSign(string href, long? duration = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(href, nameof(href));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSign(href, duration, context);
-            return Response.FromValue(UnsignedLink.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] sign an HREF in the format of a URL and returns a SingedLink
+        /// [Protocol Method] Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for managed storage account of this GeoCatalog.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSignAsync(string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="href"> HREF (URL) to sign. </param>
         /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetSignAsync(string,long?,RequestContext)']/*" />
-        public virtual async Task<Response> GetSignAsync(string href, long? duration, RequestContext context)
+        public virtual async Task<Response> RevokeTokenAsync(long? duration, RequestContext context)
         {
-            Argument.AssertNotNull(href, nameof(href));
-
-            using var scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetSign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.RevokeToken");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSignRequest(href, duration, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRevokeTokenRequest(duration, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -327,37 +229,55 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] sign an HREF in the format of a URL and returns a SingedLink
+        /// Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for managed storage account of this GeoCatalog.
+        /// </summary>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response RevokeToken(long? duration = default, CancellationToken cancellationToken = default)
+        {
+            return RevokeToken(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// Revoke a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works)
+        /// for managed storage account of this GeoCatalog.
+        /// </summary>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> RevokeTokenAsync(long? duration = default, CancellationToken cancellationToken = default)
+        {
+            return await RevokeTokenAsync(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSign(string,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="href"> HREF (URL) to sign. </param>
         /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SharedAccessSignatureClient.xml" path="doc/members/member[@name='GetSign(string,long?,RequestContext)']/*" />
         public virtual Response GetSign(string href, long? duration, RequestContext context)
         {
-            Argument.AssertNotNull(href, nameof(href));
-
-            using var scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetSign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetSign");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(href, nameof(href));
+
                 using HttpMessage message = CreateGetSignRequest(href, duration, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -366,74 +286,74 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        internal HttpMessage CreateGetTokenRequest(string collectionId, long? duration, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="href"> HREF (URL) to sign. </param>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSignAsync(string href, long? duration, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/sas/token/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (duration != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SharedAccessSignatureClient.GetSign");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("duration", duration.Value, true);
+                Argument.AssertNotNullOrEmpty(href, nameof(href));
+
+                using HttpMessage message = CreateGetSignRequest(href, duration, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateRevokeTokenRequest(long? duration, RequestContext context)
+        /// <summary>
+        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
+        /// </summary>
+        /// <param name="href"> HREF (URL) to sign. </param>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<UnsignedLink> GetSign(string href, long? duration = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/sas/token/revoke", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Argument.AssertNotNullOrEmpty(href, nameof(href));
+
+            Response result = GetSign(href, duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((UnsignedLink)result, result);
         }
 
-        internal HttpMessage CreateGetSignRequest(string href, long? duration, RequestContext context)
+        /// <summary>
+        /// Signs a HREF (a link URL) by appending a [SAS Token](https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview#how-a-shared-access-signature-works).
+        /// If the HREF is not a Azure Blob Storage HREF, then pass back the HREF unsigned.
+        /// </summary>
+        /// <param name="href"> HREF (URL) to sign. </param>
+        /// <param name="duration"> The duration, in minutes, that the SAS token will be valid. Only valid for approved users. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="href"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<UnsignedLink>> GetSignAsync(string href, long? duration = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/sas/sign", false);
-            uri.AppendQuery("href", href, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Argument.AssertNotNullOrEmpty(href, nameof(href));
+
+            Response result = await GetSignAsync(href, duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((UnsignedLink)result, result);
         }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

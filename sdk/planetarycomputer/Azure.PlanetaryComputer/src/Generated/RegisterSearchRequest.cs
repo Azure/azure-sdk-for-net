@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> The RegisterSearchRequest. </summary>
     internal partial class RegisterSearchRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegisterSearchRequest"/>. </summary>
         internal RegisterSearchRequest()
@@ -57,19 +28,15 @@ namespace Azure.PlanetaryComputer
         /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
         /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
         /// <param name="bbox"> Geographic bounding box to filter items [west, south, east, north]. </param>
-        /// <param name="intersects">
-        /// GeoJSON geometry to spatially filter items by intersection
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
+        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
         /// <param name="query"> Query. </param>
         /// <param name="filter"> Filter. </param>
         /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
         /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
         /// <param name="filterLang"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegisterSearchRequest(IReadOnlyList<string> collections, IReadOnlyList<string> ids, double? bbox, GeoJsonGeometry intersects, StacQuery query, string filter, string datetime, IReadOnlyList<SortExtension> sortBy, FilterLang? filterLang, MosaicMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RegisterSearchRequest(IList<string> collections, IList<string> ids, double? bbox, GeoJsonGeometry intersects, StacQuery query, string filter, string datetime, IList<SortExtension> sortBy, FilterLang? filterLang, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -81,31 +48,36 @@ namespace Azure.PlanetaryComputer
             SortBy = sortBy;
             FilterLang = filterLang;
             Metadata = metadata;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of STAC collection IDs to include in the mosaic. </summary>
-        public IReadOnlyList<string> Collections { get; }
+        public IList<string> Collections { get; }
+
         /// <summary> List of specific STAC item IDs to include in the mosaic. </summary>
-        public IReadOnlyList<string> Ids { get; }
+        public IList<string> Ids { get; }
+
         /// <summary> Geographic bounding box to filter items [west, south, east, north]. </summary>
         public double? Bbox { get; }
-        /// <summary>
-        /// GeoJSON geometry to spatially filter items by intersection
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </summary>
+
+        /// <summary> GeoJSON geometry to spatially filter items by intersection. </summary>
         public GeoJsonGeometry Intersects { get; }
+
         /// <summary> Query. </summary>
         public StacQuery Query { get; }
+
         /// <summary> Filter. </summary>
         public string Filter { get; }
+
         /// <summary> Temporal filter in RFC 3339 format or interval. </summary>
         public string Datetime { get; }
+
         /// <summary> Criteria for ordering items in the mosaic. </summary>
-        public IReadOnlyList<SortExtension> SortBy { get; }
+        public IList<SortExtension> SortBy { get; }
+
         /// <summary> Query language format used in the filter parameter. </summary>
         public FilterLang? FilterLang { get; }
+
         /// <summary> Additional metadata to associate with the mosaic. </summary>
         public MosaicMetadata Metadata { get; }
     }

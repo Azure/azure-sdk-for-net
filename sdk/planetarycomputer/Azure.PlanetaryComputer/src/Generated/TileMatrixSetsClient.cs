@@ -7,29 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The TileMatrixSets service client. </summary>
+    /// <summary> The TileMatrixSetsClient. </summary>
     public partial class TileMatrixSetsClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of TileMatrixSetsClient for mocking. </summary>
         protected TileMatrixSetsClient()
@@ -37,131 +31,57 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of TileMatrixSetsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TileMatrixSetsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public TileMatrixSetsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new TileMatrixSetsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of TileMatrixSetsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TileMatrixSetsClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public TileMatrixSetsClient(Uri endpoint, TokenCredential credential, TileMatrixSetsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new TileMatrixSetsClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Matrix List. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Return Matrix List. </remarks>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixListAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<string>>> GetTileMatrixListAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileMatrixListAsync(context).ConfigureAwait(false);
-            IReadOnlyList<string> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<string> array = new List<string>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(item.GetString());
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        /// <summary> Matrix List. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Return Matrix List. </remarks>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixList(CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<string>> GetTileMatrixList(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTileMatrixList(context);
-            IReadOnlyList<string> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<string> array = new List<string>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(item.GetString());
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Matrix List
+        /// [Protocol Method] Return Matrix List
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileMatrixListAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixListAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetTileMatrixListAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixList");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileMatrixListRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Matrix List
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileMatrixList(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixList(RequestContext)']/*" />
         public virtual Response GetTileMatrixList(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixList");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixList");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetTileMatrixListRequest(context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -170,161 +90,141 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Matrix Definition. </summary>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return Matrix Definition. </remarks>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixDefinitionsAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TileMatrixSet>> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Return Matrix List
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileMatrixListAsync(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileMatrixDefinitionsAsync(tileMatrixSetId, context).ConfigureAwait(false);
-            return Response.FromValue(TileMatrixSet.FromResponse(response), response);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixList");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTileMatrixListRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Matrix Definition. </summary>
+        /// <summary> Return Matrix List. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<string>> GetTileMatrixList(CancellationToken cancellationToken = default)
+        {
+            Response result = GetTileMatrixList(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
+        }
+
+        /// <summary> Return Matrix List. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<string>>> GetTileMatrixListAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetTileMatrixListAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return Matrix Definition
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return Matrix Definition. </remarks>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixDefinitions(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileMatrixDefinitions(string tileMatrixSetId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixDefinitions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return Matrix Definition
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixDefinitions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return Matrix Definition. </summary>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<TileMatrixSet> GetTileMatrixDefinitions(string tileMatrixSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTileMatrixDefinitions(tileMatrixSetId, context);
-            return Response.FromValue(TileMatrixSet.FromResponse(response), response);
+            Response result = GetTileMatrixDefinitions(tileMatrixSetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((TileMatrixSet)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Matrix Definition
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileMatrixDefinitionsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Return Matrix Definition. </summary>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixDefinitionsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, RequestContext context)
+        public virtual async Task<Response<TileMatrixSet>> GetTileMatrixDefinitionsAsync(string tileMatrixSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            using var scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixDefinitions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetTileMatrixDefinitionsAsync(tileMatrixSetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((TileMatrixSet)result, result);
         }
-
-        /// <summary>
-        /// [Protocol Method] Matrix Definition
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileMatrixDefinitions(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TileMatrixSetsClient.xml" path="doc/members/member[@name='GetTileMatrixDefinitions(string,RequestContext)']/*" />
-        public virtual Response GetTileMatrixDefinitions(string tileMatrixSetId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            using var scope = ClientDiagnostics.CreateScope("TileMatrixSetsClient.GetTileMatrixDefinitions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileMatrixDefinitionsRequest(tileMatrixSetId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateGetTileMatrixListRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/tile-matrix-sets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTileMatrixDefinitionsRequest(string tileMatrixSetId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/tile-matrix-sets/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200204;
-        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

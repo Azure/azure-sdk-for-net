@@ -8,71 +8,38 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Defines a condition for enabling a render option. </summary>
     public partial class RenderOptionCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RenderOptionCondition"/>. </summary>
         /// <param name="property"> Property name to check in the active CQL filter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
-        public RenderOptionCondition(string property)
+        public RenderOptionCondition(string @property)
         {
-            Argument.AssertNotNull(property, nameof(property));
+            Argument.AssertNotNull(@property, nameof(@property));
 
-            Property = property;
+            Property = @property;
         }
 
         /// <summary> Initializes a new instance of <see cref="RenderOptionCondition"/>. </summary>
         /// <param name="property"> Property name to check in the active CQL filter. </param>
         /// <param name="value"> Value that the property must equal. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionCondition(string property, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RenderOptionCondition(string @property, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Property = property;
+            Property = @property;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RenderOptionCondition"/> for deserialization. </summary>
-        internal RenderOptionCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Property name to check in the active CQL filter. </summary>
         public string Property { get; set; }
+
         /// <summary> Value that the property must equal. </summary>
         public string Value { get; set; }
     }

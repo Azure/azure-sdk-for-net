@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.Ingestions.IngestionRuns
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion run operation. </summary>
     public partial class IngestionRunInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngestionRunInfo"/>. </summary>
         /// <param name="id"> Operation id. </param>
@@ -55,11 +27,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="totalPendingItems"> The number of items pending to be processed. </param>
         /// <param name="totalSuccessfulItems"> The number of items successfully processed. </param>
         /// <param name="totalFailedItems"> The number of items that have failed to be processed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statusHistory"/> is null. </exception>
         internal IngestionRunInfo(Guid id, OperationStatus status, DateTimeOffset creationTime, IEnumerable<OperationStatusHistoryItem> statusHistory, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems)
         {
-            Argument.AssertNotNull(statusHistory, nameof(statusHistory));
-
             Id = id;
             Status = status;
             CreationTime = creationTime;
@@ -81,8 +50,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="totalPendingItems"> The number of items pending to be processed. </param>
         /// <param name="totalSuccessfulItems"> The number of items successfully processed. </param>
         /// <param name="totalFailedItems"> The number of items that have failed to be processed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRunInfo(Guid id, OperationStatus status, DateTimeOffset creationTime, IReadOnlyList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionRunInfo(Guid id, OperationStatus status, DateTimeOffset creationTime, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, int totalItems, int totalPendingItems, int totalSuccessfulItems, int totalFailedItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -94,32 +63,36 @@ namespace Azure.PlanetaryComputer
             TotalPendingItems = totalPendingItems;
             TotalSuccessfulItems = totalSuccessfulItems;
             TotalFailedItems = totalFailedItems;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IngestionRunInfo"/> for deserialization. </summary>
-        internal IngestionRunInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operation id. </summary>
         public Guid Id { get; }
+
         /// <summary> Operation status. </summary>
         public OperationStatus Status { get; }
+
         /// <summary> The UTC time at which the operation was created. </summary>
         public DateTimeOffset CreationTime { get; }
+
         /// <summary> The history of the operation status in time. </summary>
-        public IReadOnlyList<OperationStatusHistoryItem> StatusHistory { get; }
+        public IList<OperationStatusHistoryItem> StatusHistory { get; }
+
         /// <summary> The UTC time at which the operation was started. </summary>
         public DateTimeOffset? StartTime { get; }
+
         /// <summary> The UTC time at which the operation finished its execution. </summary>
         public DateTimeOffset? FinishTime { get; }
+
         /// <summary> The number of total items to be processed. </summary>
         public int TotalItems { get; }
+
         /// <summary> The number of items pending to be processed. </summary>
         public int TotalPendingItems { get; }
+
         /// <summary> The number of items successfully processed. </summary>
         public int TotalSuccessfulItems { get; }
+
         /// <summary> The number of items that have failed to be processed. </summary>
         public int TotalFailedItems { get; }
     }

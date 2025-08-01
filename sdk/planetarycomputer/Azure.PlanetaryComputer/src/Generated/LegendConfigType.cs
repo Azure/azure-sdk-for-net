@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Legend type to make, one of: `continuous`, `classmap`, `interval` or `none`
@@ -17,44 +17,67 @@ namespace Azure.PlanetaryComputer
     public readonly partial struct LegendConfigType : IEquatable<LegendConfigType>
     {
         private readonly string _value;
+        /// <summary> Continuous color ramp legend. </summary>
+        private const string ContinuousValue = "continuous";
+        /// <summary> Classified map with discrete colors for classes. </summary>
+        private const string ClassmapValue = "classmap";
+        /// <summary> Interval-based legend with discrete ranges. </summary>
+        private const string IntervalValue = "interval";
+        /// <summary> No legend. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="LegendConfigType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LegendConfigType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ContinuousValue = "continuous";
-        private const string ClassmapValue = "classmap";
-        private const string IntervalValue = "interval";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> Continuous color ramp legend. </summary>
         public static LegendConfigType Continuous { get; } = new LegendConfigType(ContinuousValue);
+
         /// <summary> Classified map with discrete colors for classes. </summary>
         public static LegendConfigType Classmap { get; } = new LegendConfigType(ClassmapValue);
+
         /// <summary> Interval-based legend with discrete ranges. </summary>
         public static LegendConfigType Interval { get; } = new LegendConfigType(IntervalValue);
+
         /// <summary> No legend. </summary>
         public static LegendConfigType None { get; } = new LegendConfigType(NoneValue);
+
         /// <summary> Determines if two <see cref="LegendConfigType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LegendConfigType left, LegendConfigType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LegendConfigType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LegendConfigType left, LegendConfigType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LegendConfigType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LegendConfigType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LegendConfigType(string value) => new LegendConfigType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LegendConfigType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LegendConfigType?(string value) => value == null ? null : new LegendConfigType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LegendConfigType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LegendConfigType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

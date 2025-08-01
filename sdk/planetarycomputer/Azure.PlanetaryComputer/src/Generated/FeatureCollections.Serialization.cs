@@ -9,14 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class FeatureCollections : IUtf8JsonSerializable, IJsonModel<FeatureCollections>
+    /// <summary>
+    /// http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#_feature_collections_rootcollections
+    /// 
+    /// Represents a collection of STAC collections with links.
+    /// </summary>
+    public partial class FeatureCollections : IJsonModel<FeatureCollections>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureCollections>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FeatureCollections"/> for deserialization. </summary>
+        internal FeatureCollections()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FeatureCollections>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,35 +38,34 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureCollections)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("links"u8);
             writer.WriteStartArray();
-            foreach (var item in Links)
+            foreach (StacLink item in Links)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("collections"u8);
             writer.WriteStartArray();
-            foreach (var item in Collections)
+            foreach (StacCollectionModel item in Collections)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,46 +74,50 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        FeatureCollections IJsonModel<FeatureCollections>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FeatureCollections IJsonModel<FeatureCollections>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FeatureCollections JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FeatureCollections)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFeatureCollections(document.RootElement, options);
         }
 
-        internal static FeatureCollections DeserializeFeatureCollections(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FeatureCollections DeserializeFeatureCollections(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<StacLink> links = default;
-            IReadOnlyList<StacCollectionModel> collections = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<StacLink> links = default;
+            IList<StacCollectionModel> collections = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("links"u8))
+                if (prop.NameEquals("links"u8))
                 {
                     List<StacLink> array = new List<StacLink>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StacLink.DeserializeStacLink(item, options));
                     }
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("collections"u8))
+                if (prop.NameEquals("collections"u8))
                 {
                     List<StacCollectionModel> array = new List<StacCollectionModel>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StacCollectionModel.DeserializeStacCollectionModel(item, options));
                     }
@@ -113,35 +126,42 @@ namespace Azure.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FeatureCollections(links, collections, serializedAdditionalRawData);
+            return new FeatureCollections(links, collections, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FeatureCollections>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FeatureCollections>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FeatureCollections)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FeatureCollections IPersistableModel<FeatureCollections>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FeatureCollections IPersistableModel<FeatureCollections>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FeatureCollections PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureCollections>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFeatureCollections(document.RootElement, options);
                     }
                 default:
@@ -149,22 +169,15 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FeatureCollections>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FeatureCollections FromResponse(Response response)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FeatureCollections"/> from. </param>
+        public static explicit operator FeatureCollections(Response result)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFeatureCollections(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeFeatureCollections(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

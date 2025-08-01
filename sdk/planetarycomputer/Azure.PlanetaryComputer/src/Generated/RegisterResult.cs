@@ -8,50 +8,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Response from a successful mosaic registration with search ID and related links. </summary>
     public partial class RegisterResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegisterResult"/>. </summary>
         /// <param name="searchId"> Unique identifier for the registered search. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         internal RegisterResult(string searchId)
         {
-            Argument.AssertNotNull(searchId, nameof(searchId));
-
             SearchId = searchId;
             Links = new ChangeTrackingList<StacLink>();
         }
@@ -59,22 +27,18 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="RegisterResult"/>. </summary>
         /// <param name="searchId"> Unique identifier for the registered search. </param>
         /// <param name="links"> Related links for the registered mosaic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegisterResult(string searchId, IReadOnlyList<StacLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RegisterResult(string searchId, IList<StacLink> links, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchId = searchId;
             Links = links;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegisterResult"/> for deserialization. </summary>
-        internal RegisterResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the registered search. </summary>
         public string SearchId { get; }
+
         /// <summary> Related links for the registered mosaic. </summary>
-        public IReadOnlyList<StacLink> Links { get; }
+        public IList<StacLink> Links { get; }
     }
 }

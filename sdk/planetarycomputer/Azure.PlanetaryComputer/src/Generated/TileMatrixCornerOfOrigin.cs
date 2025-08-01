@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// The corner of the tile matrix (_topLeft_ or _bottomLeft_) used as the origin
@@ -18,38 +18,57 @@ namespace Azure.PlanetaryComputer
     public readonly partial struct TileMatrixCornerOfOrigin : IEquatable<TileMatrixCornerOfOrigin>
     {
         private readonly string _value;
+        /// <summary> Origin at the top-left corner (Y increases downward). </summary>
+        private const string TopLeftValue = "topLeft";
+        /// <summary> Origin at the bottom-left corner (Y increases upward). </summary>
+        private const string BottomLeftValue = "bottomLeft";
 
         /// <summary> Initializes a new instance of <see cref="TileMatrixCornerOfOrigin"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TileMatrixCornerOfOrigin(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TopLeftValue = "topLeft";
-        private const string BottomLeftValue = "bottomLeft";
+            _value = value;
+        }
 
         /// <summary> Origin at the top-left corner (Y increases downward). </summary>
         public static TileMatrixCornerOfOrigin TopLeft { get; } = new TileMatrixCornerOfOrigin(TopLeftValue);
+
         /// <summary> Origin at the bottom-left corner (Y increases upward). </summary>
         public static TileMatrixCornerOfOrigin BottomLeft { get; } = new TileMatrixCornerOfOrigin(BottomLeftValue);
+
         /// <summary> Determines if two <see cref="TileMatrixCornerOfOrigin"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TileMatrixCornerOfOrigin left, TileMatrixCornerOfOrigin right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TileMatrixCornerOfOrigin"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TileMatrixCornerOfOrigin left, TileMatrixCornerOfOrigin right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TileMatrixCornerOfOrigin"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TileMatrixCornerOfOrigin"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TileMatrixCornerOfOrigin(string value) => new TileMatrixCornerOfOrigin(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TileMatrixCornerOfOrigin"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TileMatrixCornerOfOrigin?(string value) => value == null ? null : new TileMatrixCornerOfOrigin(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TileMatrixCornerOfOrigin other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TileMatrixCornerOfOrigin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

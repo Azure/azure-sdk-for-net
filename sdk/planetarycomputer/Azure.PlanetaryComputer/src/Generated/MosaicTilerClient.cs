@@ -11,26 +11,21 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The MosaicTiler service client. </summary>
+    /// <summary> The MosaicTilerClient. </summary>
     public partial class MosaicTilerClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of MosaicTilerClient for mocking. </summary>
         protected MosaicTilerClient()
@@ -38,32 +33,46 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of MosaicTilerClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MosaicTilerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public MosaicTilerClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MosaicTilerClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of MosaicTilerClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MosaicTilerClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public MosaicTilerClient(Uri endpoint, TokenCredential credential, MosaicTilerClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new MosaicTilerClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Tile. </summary>
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="z">
         /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
@@ -79,7 +88,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -113,23 +121,38 @@ namespace Azure.PlanetaryComputer
         /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create map tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileAsync(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,TileMatrixSetId?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetTileAsync(string searchId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, TileMatrixSetId? tileMatrixSetId = null, string buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTile(string searchId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string tileMatrixSetId, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileAsync(searchId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
+                using HttpMessage message = CreateGetTileRequest(searchId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, tileMatrixSetId, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Tile. </summary>
+        /// <summary>
+        /// [Protocol Method] Create map tile.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="z">
         /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
@@ -145,7 +168,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -179,37 +201,31 @@ namespace Azure.PlanetaryComputer
         /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create map tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTile(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,TileMatrixSetId?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetTile(string searchId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, TileMatrixSetId? tileMatrixSetId = null, string buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileAsync(string searchId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string tileMatrixSetId, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTile(searchId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, context);
-            return Response.FromValue(response.Content, response);
+                using HttpMessage message = CreateGetTileRequest(searchId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, tileMatrixSetId, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// [Protocol Method] Tile
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileAsync(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,TileMatrixSetId?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create map tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="z">
         /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
@@ -225,7 +241,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -240,11 +255,11 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
+        /// <param name="algorithm"> Algorithm name. </param>
         /// <param name="algorithmParams"> Algorithm parameter. </param>
         /// <param name="tileMatrixSetId">
         /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad"
+        /// 'WebMercatorQuad')
         /// </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
@@ -253,53 +268,26 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
         /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
         /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
+        /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileAsync(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTileAsync(string searchId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string tileMatrixSetId, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        public virtual Response<BinaryData> GetTile(string searchId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileRequest(searchId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, tileMatrixSetId, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetTile(searchId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Tile
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTile(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,TileMatrixSetId?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create map tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="z">
         /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
@@ -315,7 +303,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -330,11 +317,11 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
+        /// <param name="algorithm"> Algorithm name. </param>
         /// <param name="algorithmParams"> Algorithm parameter. </param>
         /// <param name="tileMatrixSetId">
         /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad"
+        /// 'WebMercatorQuad')
         /// </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
@@ -343,39 +330,33 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
         /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
         /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
+        /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTile(string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
-        public virtual Response GetTile(string searchId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string tileMatrixSetId, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response<BinaryData>> GetTileAsync(string searchId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, TileMatrixSetId? tileMatrixSetId = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileRequest(searchId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, tileMatrixSetId, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetTileAsync(searchId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, tileMatrixSetId?.ToString(), buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
         }
 
-        /// <summary> Tile Tilematrixsetid As Path. </summary>
+        /// <summary>
+        /// [Protocol Method] Create map tile.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="z">
@@ -392,7 +373,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -422,24 +402,39 @@ namespace Azure.PlanetaryComputer
         /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create map tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileWithMatrixSetAsync(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, string buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileWithMatrixSetAsync(searchId, tileMatrixSetId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
+                using HttpMessage message = CreateGetTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Tile Tilematrixsetid As Path. </summary>
+        /// <summary>
+        /// [Protocol Method] Create map tile.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="z">
@@ -456,7 +451,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -486,38 +480,32 @@ namespace Azure.PlanetaryComputer
         /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create map tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileWithMatrixSet(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, string buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTileWithMatrixSet(searchId, tileMatrixSetId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, context);
-            return Response.FromValue(response.Content, response);
+                using HttpMessage message = CreateGetTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// [Protocol Method] Tile Tilematrixsetid As Path
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileWithMatrixSetAsync(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create map tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="z">
@@ -534,7 +522,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -549,7 +536,7 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
+        /// <param name="algorithm"> Algorithm name. </param>
         /// <param name="algorithmParams"> Algorithm parameter. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
@@ -558,54 +545,27 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
         /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
         /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
+        /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileWithMatrixSetAsync(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        public virtual Response<BinaryData> GetTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileWithMatrixSet");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetTileWithMatrixSet(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Tile Tilematrixsetid As Path
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileWithMatrixSet(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create map tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="z">
@@ -622,7 +582,6 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles (default: "1"). </param>
         /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp) (default: "png"). </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -637,7 +596,7 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
+        /// <param name="algorithm"> Algorithm name. </param>
         /// <param name="algorithmParams"> Algorithm parameter. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
@@ -646,40 +605,34 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
         /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
         /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
+        /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/>, <paramref name="format"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileWithMatrixSet(string,string,float,float,float,float,string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
-        public virtual Response GetTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response<BinaryData>> GetTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(accept, nameof(accept));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileWithMatrixSet");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scale, format, accept, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetTileWithMatrixSetAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
         }
 
-        /// <summary> Tilejson. </summary>
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a searchId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
@@ -718,219 +671,21 @@ namespace Azure.PlanetaryComputer
         /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return TileJSON document for a searchId. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJsonAsync(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,TileMatrixSetId?,ImageType?,int?,int?,int?,double?,string,string,ResamplingMethod?,PixelSelection?,AlgorithmInfo?,string,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<TileJsonResult>> GetTileJsonAsync(string searchId, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, TileMatrixSetId? tileMatrixSetId = null, ImageType? tileFormat = null, int? tileScale = null, int? minzoom = null, int? maxzoom = null, double? buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileJsonAsync(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), algorithm?.ToString(), algorithmParams, rescale, colormapName?.ToString(), colormap, returnMask, context).ConfigureAwait(false);
-            return Response.FromValue(TileJsonResult.FromResponse(response), response);
-        }
-
-        /// <summary> Tilejson. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="nodata"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return TileJSON document for a searchId. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJson(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,TileMatrixSetId?,ImageType?,int?,int?,int?,double?,string,string,ResamplingMethod?,PixelSelection?,AlgorithmInfo?,string,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual Response<TileJsonResult> GetTileJson(string searchId, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, TileMatrixSetId? tileMatrixSetId = null, ImageType? tileFormat = null, int? tileScale = null, int? minzoom = null, int? maxzoom = null, double? buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTileJson(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), algorithm?.ToString(), algorithmParams, rescale, colormapName?.ToString(), colormap, returnMask, context);
-            return Response.FromValue(TileJsonResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Tilejson
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileJsonAsync(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,TileMatrixSetId?,ImageType?,int?,int?,int?,double?,string,string,ResamplingMethod?,PixelSelection?,AlgorithmInfo?,string,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="nodata"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad". </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg). Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw"
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJsonAsync(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,int?,double?,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTileJsonAsync(string searchId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, double? buffer, string colorFormula, string collection, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJson");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileJsonRequest(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling, pixelSelection, algorithm, algorithmParams, rescale, colormapName, colormap, returnMask, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Tilejson
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileJson(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,TileMatrixSetId?,ImageType?,int?,int?,int?,double?,string,string,ResamplingMethod?,PixelSelection?,AlgorithmInfo?,string,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="nodata"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad". </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg). Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw"
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJson(string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,int?,double?,string,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
         public virtual Response GetTileJson(string searchId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, double? buffer, string colorFormula, string collection, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJson");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
                 using HttpMessage message = CreateGetTileJsonRequest(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling, pixelSelection, algorithm, algorithmParams, rescale, colormapName, colormap, returnMask, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -939,131 +694,15 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Tilejson Tilematrixsetid As Path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="nodata"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return TileJSON document for a searchId. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJsonWithMatrixSetAsync(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,int?,int?,ImageType?,int?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<TileJsonResult>> GetTileJsonWithMatrixSetAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, int? minzoom = null, int? maxzoom = null, ImageType? tileFormat = null, int? tileScale = null, string buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileJsonWithMatrixSetAsync(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, minzoom, maxzoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, context).ConfigureAwait(false);
-            return Response.FromValue(TileJsonResult.FromResponse(response), response);
-        }
-
-        /// <summary> Tilejson Tilematrixsetid As Path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="nodata"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Algorithm name. </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. </param>
-        /// <param name="colormap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return TileJSON document for a searchId. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJsonWithMatrixSet(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,int?,int?,ImageType?,int?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)']/*" />
-        public virtual Response<TileJsonResult> GetTileJsonWithMatrixSet(string searchId, string tileMatrixSetId, IEnumerable<string> assets = null, string expression = null, IEnumerable<string> assetBidx = null, bool? assetAsBand = null, float? nodata = null, bool? unscale = null, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, AlgorithmInfo? algorithm = null, string algorithmParams = null, int? minzoom = null, int? maxzoom = null, ImageType? tileFormat = null, int? tileScale = null, string buffer = null, string colorFormula = null, string collection = null, ResamplingMethod? resampling = null, PixelSelection? pixelSelection = null, IEnumerable<string> rescale = null, ColorMapNames? colormapName = null, string colormap = null, bool? returnMask = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTileJsonWithMatrixSet(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, minzoom, maxzoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, context);
-            return Response.FromValue(TileJsonResult.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Tilejson Tilematrixsetid As Path
+        /// [Protocol Method] Return TileJSON document for a searchId.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileJsonWithMatrixSetAsync(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,int?,int?,ImageType?,int?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="assets"> Asset's names. </param>
         /// <param name="expression"> Band math expression between assets. </param>
         /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
@@ -1078,15 +717,14 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
-        /// <param name="algorithmParams"> Algorithm parameter. </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
         /// <param name="tileFormat">
         /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg). Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw"
+        /// not (jpeg).
         /// </param>
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
         /// <param name="buffer">
         /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
         /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
@@ -1094,29 +732,29 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
         /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
         /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
+        /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJsonWithMatrixSetAsync(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,string,int?,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTileJsonWithMatrixSetAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, int? minzoom, int? maxzoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetTileJsonAsync(string searchId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, double? buffer, string colorFormula, string collection, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJsonWithMatrixSet");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJson");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileJsonWithMatrixSetRequest(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, minzoom, maxzoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetTileJsonRequest(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling, pixelSelection, algorithm, algorithmParams, rescale, colormapName, colormap, returnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1125,18 +763,113 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <summary> Return TileJSON document for a searchId. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="nodata"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
+        /// <param name="tileFormat">
+        /// Default will be automatically defined if the output image needs a mask (png) or
+        /// not (jpeg).
+        /// </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colormapName"> Colormap name. </param>
+        /// <param name="colormap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonResult> GetTileJson(string searchId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, TileMatrixSetId? tileMatrixSetId = default, ImageType? tileFormat = default, int? tileScale = default, int? minzoom = default, int? maxzoom = default, double? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = GetTileJson(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), algorithm?.ToString(), algorithmParams, rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((TileJsonResult)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a searchId. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="nodata"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported (default: 'WebMercatorQuad'). </param>
+        /// <param name="tileFormat">
+        /// Default will be automatically defined if the output image needs a mask (png) or
+        /// not (jpeg).
+        /// </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colormapName"> Colormap name. </param>
+        /// <param name="colormap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonResult>> GetTileJsonAsync(string searchId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, TileMatrixSetId? tileMatrixSetId = default, ImageType? tileFormat = default, int? tileScale = default, int? minzoom = default, int? maxzoom = default, double? buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = await GetTileJsonAsync(searchId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), algorithm?.ToString(), algorithmParams, rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((TileJsonResult)result, result);
+        }
+
         /// <summary>
-        /// [Protocol Method] Tilejson Tilematrixsetid As Path
+        /// [Protocol Method] Return TileJSON document for a searchId.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileJsonWithMatrixSet(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,AlgorithmInfo?,string,int?,int?,ImageType?,int?,string,string,string,ResamplingMethod?,PixelSelection?,IEnumerable{string},ColorMapNames?,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1156,13 +889,13 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="algorithm"> Algorithm name. Allowed values: "hillshade" | "contours" | "normalizedIndex" | "terrarium" | "terrainrgb". </param>
+        /// <param name="algorithm"> Algorithm name. </param>
         /// <param name="algorithmParams"> Algorithm parameter. </param>
         /// <param name="minzoom"> Overwrite default minzoom. </param>
         /// <param name="maxzoom"> Overwrite default maxzoom. </param>
         /// <param name="tileFormat">
         /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg). Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw"
+        /// not (jpeg).
         /// </param>
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="buffer">
@@ -1172,38 +905,218 @@ namespace Azure.PlanetaryComputer
         /// </param>
         /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
         /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. Allowed values: "nearest" | "bilinear" | "cubic" | "cubic_spline" | "lanczos" | "average" | "mode" | "gauss" | "rms". </param>
-        /// <param name="pixelSelection"> Pixel selection method. Allowed values: "first" | "highest" | "lowest" | "mean" | "median" | "stdev" | "lastbandlow" | "lastbandhight". </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
         /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colormapName"> Colormap name. Allowed values: "accent" | "accent_r" | "afmhot" | "afmhot_r" | "ai4g-lulc" | "alos-fnf" | "alos-palsar-mask" | "autumn" | "autumn_r" | "binary" | "binary_r" | "blues" | "blues_r" | "bone" | "bone_r" | "brbg" | "brbg_r" | "brg" | "brg_r" | "bugn" | "bugn_r" | "bupu" | "bupu_r" | "bwr" | "bwr_r" | "c-cap" | "cfastie" | "chesapeake-lc-13" | "chesapeake-lc-7" | "chesapeake-lu" | "chloris-biomass" | "cividis" | "cividis_r" | "cmrmap" | "cmrmap_r" | "cool" | "cool_r" | "coolwarm" | "coolwarm_r" | "copper" | "copper_r" | "cubehelix" | "cubehelix_r" | "dark2" | "dark2_r" | "drcog-lulc" | "esa-cci-lc" | "esa-worldcover" | "flag" | "flag_r" | "gap-lulc" | "gist_earth" | "gist_earth_r" | "gist_gray" | "gist_gray_r" | "gist_heat" | "gist_heat_r" | "gist_ncar" | "gist_ncar_r" | "gist_rainbow" | "gist_rainbow_r" | "gist_stern" | "gist_stern_r" | "gist_yarg" | "gist_yarg_r" | "gnbu" | "gnbu_r" | "gnuplot" | "gnuplot2" | "gnuplot2_r" | "gnuplot_r" | "gray" | "gray_r" | "greens" | "greens_r" | "greys" | "greys_r" | "hot" | "hot_r" | "hsv" | "hsv_r" | "inferno" | "inferno_r" | "io-bii" | "io-lulc" | "io-lulc-9-class" | "jet" | "jet_r" | "jrc-change" | "jrc-extent" | "jrc-occurrence" | "jrc-recurrence" | "jrc-seasonality" | "jrc-transitions" | "lidar-classification" | "lidar-hag" | "lidar-hag-alternative" | "lidar-intensity" | "lidar-returns" | "magma" | "magma_r" | "modis-10A1" | "modis-10A2" | "modis-13A1|Q1" | "modis-14A1|A2" | "modis-15A2H|A3H" | "modis-16A3GF-ET" | "modis-16A3GF-PET" | "modis-17A2H|A2HGF" | "modis-17A3HGF" | "modis-64A1" | "mtbs-severity" | "nipy_spectral" | "nipy_spectral_r" | "nrcan-lulc" | "ocean" | "ocean_r" | "oranges" | "oranges_r" | "orrd" | "orrd_r" | "paired" | "paired_r" | "pastel1" | "pastel1_r" | "pastel2" | "pastel2_r" | "pink" | "pink_r" | "piyg" | "piyg_r" | "plasma" | "plasma_r" | "prgn" | "prgn_r" | "prism" | "prism_r" | "pubu" | "pubu_r" | "pubugn" | "pubugn_r" | "puor" | "puor_r" | "purd" | "purd_r" | "purples" | "purples_r" | "qpe" | "rainbow" | "rainbow_r" | "rdbu" | "rdbu_r" | "rdgy" | "rdgy_r" | "rdpu" | "rdpu_r" | "rdylbu" | "rdylbu_r" | "rdylgn" | "rdylgn_r" | "reds" | "reds_r" | "rplumbo" | "schwarzwald" | "seismic" | "seismic_r" | "set1" | "set1_r" | "set2" | "set2_r" | "set3" | "set3_r" | "spectral" | "spectral_r" | "spring" | "spring_r" | "summer" | "summer_r" | "tab10" | "tab10_r" | "tab20" | "tab20_r" | "tab20b" | "tab20b_r" | "tab20c" | "tab20c_r" | "terrain" | "terrain_r" | "twilight" | "twilight_r" | "twilight_shifted" | "twilight_shifted_r" | "usda-cdl" | "usda-cdl-corn" | "usda-cdl-cotton" | "usda-cdl-soybeans" | "usda-cdl-wheat" | "usgs-lcmap" | "viirs-10a1" | "viirs-13a1" | "viirs-14a1" | "viirs-15a2H" | "viridis" | "viridis_r" | "winter" | "winter_r" | "wistia" | "wistia_r" | "ylgn" | "ylgn_r" | "ylgnbu" | "ylgnbu_r" | "ylorbr" | "ylorbr_r" | "ylorrd" | "ylorrd_r". </param>
+        /// <param name="colormapName"> Colormap name. </param>
         /// <param name="colormap"> JSON encoded custom Colormap. </param>
         /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetTileJsonWithMatrixSet(string,string,IEnumerable{string},string,IEnumerable{string},bool?,float?,bool?,int?,int?,int?,bool?,bool?,string,string,int?,int?,string,int?,string,string,string,string,string,IEnumerable{string},string,string,bool?,RequestContext)']/*" />
         public virtual Response GetTileJsonWithMatrixSet(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, int? minzoom, int? maxzoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJsonWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetTileJsonWithMatrixSetRequest(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, minzoom, maxzoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a searchId.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="nodata"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="tileFormat">
+        /// Default will be automatically defined if the output image needs a mask (png) or
+        /// not (jpeg).
+        /// </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colormapName"> Colormap name. </param>
+        /// <param name="colormap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileJsonWithMatrixSetAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, int? minzoom, int? maxzoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJsonWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetTileJsonWithMatrixSetRequest(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, minzoom, maxzoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return TileJSON document for a searchId. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="nodata"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="tileFormat">
+        /// Default will be automatically defined if the output image needs a mask (png) or
+        /// not (jpeg).
+        /// </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colormapName"> Colormap name. </param>
+        /// <param name="colormap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonResult> GetTileJsonWithMatrixSet(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, int? minzoom = default, int? maxzoom = default, ImageType? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetTileJsonWithMatrixSet");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTileJsonWithMatrixSetRequest(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm, algorithmParams, minzoom, maxzoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colormapName, colormap, returnMask, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetTileJsonWithMatrixSet(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, minzoom, maxzoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((TileJsonResult)result, result);
         }
 
-        /// <summary> Wmts. </summary>
+        /// <summary> Return TileJSON document for a searchId. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="assets"> Asset's names. </param>
+        /// <param name="expression"> Band math expression between assets. </param>
+        /// <param name="assetBidx"> Per asset band indexes (coma separated indexes). </param>
+        /// <param name="assetAsBand"> Asset as Band. </param>
+        /// <param name="nodata"> Overwrite internal Nodata value. </param>
+        /// <param name="unscale"> Apply internal Scale or Offset. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="algorithm"> Algorithm name. </param>
+        /// <param name="algorithmParams"> Algorithm parameter. </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="tileFormat">
+        /// Default will be automatically defined if the output image needs a mask (png) or
+        /// not (jpeg).
+        /// </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="buffer">
+        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
+        /// **tilesize** will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
+        /// 1.0 = 258x258).
+        /// </param>
+        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
+        /// <param name="collection"> STAC Collection ID. </param>
+        /// <param name="resampling"> Resampling method. </param>
+        /// <param name="pixelSelection"> Pixel selection method. </param>
+        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
+        /// <param name="colormapName"> Colormap name. </param>
+        /// <param name="colormap"> JSON encoded custom Colormap. </param>
+        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonResult>> GetTileJsonWithMatrixSetAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, IEnumerable<string> assetBidx = default, bool? assetAsBand = default, float? nodata = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, AlgorithmInfo? algorithm = default, string algorithmParams = default, int? minzoom = default, int? maxzoom = default, ImageType? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colormapName = default, string colormap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+            Response result = await GetTileJsonWithMatrixSetAsync(searchId, tileMatrixSetId, assets, expression, assetBidx, assetAsBand, nodata, unscale, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, algorithm?.ToString(), algorithmParams, minzoom, maxzoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colormapName?.ToString(), colormap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((TileJsonResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId">
         /// Identifier selecting one of the TileMatrixSetId supported (default:
@@ -1213,132 +1126,21 @@ namespace Azure.PlanetaryComputer
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="minzoom"> Overwrite default minzoom. </param>
         /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> OGC WMTS endpoint. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilitiesAsync(string,TileMatrixSetId?,ImageType?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<string>> GetWmtsCapabilitiesAsync(string searchId, TileMatrixSetId? tileMatrixSetId = null, ImageType? tileFormat = null, int? tileScale = null, int? minzoom = null, int? maxzoom = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetWmtsCapabilitiesAsync(searchId, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary> Wmts. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad')
-        /// </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> OGC WMTS endpoint. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilities(string,TileMatrixSetId?,ImageType?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<string> GetWmtsCapabilities(string searchId, TileMatrixSetId? tileMatrixSetId = null, ImageType? tileFormat = null, int? tileScale = null, int? minzoom = null, int? maxzoom = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetWmtsCapabilities(searchId, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, context);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Wmts
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetWmtsCapabilitiesAsync(string,TileMatrixSetId?,ImageType?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad"
-        /// </param>
-        /// <param name="tileFormat"> Output image type. Default is png. Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw". </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilitiesAsync(string,string,string,int?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetWmtsCapabilitiesRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Wmts
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetWmtsCapabilities(string,TileMatrixSetId?,ImageType?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad"
-        /// </param>
-        /// <param name="tileFormat"> Output image type. Default is png. Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw". </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilities(string,string,string,int?,int?,int?,RequestContext)']/*" />
         public virtual Response GetWmtsCapabilities(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilities");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
                 using HttpMessage message = CreateGetWmtsCapabilitiesRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1347,88 +1149,38 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Wmts Tilematrixsetid As Path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> OGC WMTS endpoint. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilitiesWithMatrixSetAsync(string,string,ImageType?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<string>> GetWmtsCapabilitiesWithMatrixSetAsync(string searchId, string tileMatrixSetId, ImageType? tileFormat = null, int? tileScale = null, int? minzoom = null, int? maxzoom = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetWmtsCapabilitiesWithMatrixSetAsync(searchId, tileMatrixSetId, tileFormat?.ToString(), tileScale, minzoom, maxzoom, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
-        /// <summary> Wmts Tilematrixsetid As Path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minzoom"> Overwrite default minzoom. </param>
-        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> OGC WMTS endpoint. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilitiesWithMatrixSet(string,string,ImageType?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<string> GetWmtsCapabilitiesWithMatrixSet(string searchId, string tileMatrixSetId, ImageType? tileFormat = null, int? tileScale = null, int? minzoom = null, int? maxzoom = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetWmtsCapabilitiesWithMatrixSet(searchId, tileMatrixSetId, tileFormat?.ToString(), tileScale, minzoom, maxzoom, context);
-            return Response.FromValue(response.Content.ToObjectFromJson<string>(), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Wmts Tilematrixsetid As Path
+        /// [Protocol Method] OGC WMTS endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetWmtsCapabilitiesWithMatrixSetAsync(string,string,ImageType?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw". </param>
+        /// <param name="tileMatrixSetId">
+        /// Identifier selecting one of the TileMatrixSetId supported (default:
+        /// 'WebMercatorQuad')
+        /// </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="minzoom"> Overwrite default minzoom. </param>
         /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilitiesWithMatrixSetAsync(string,string,string,int?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetWmtsCapabilitiesWithMatrixSetAsync(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
+        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilitiesWithMatrixSet");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilities");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetWmtsCapabilitiesWithMatrixSetRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetWmtsCapabilitiesRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1437,309 +1189,390 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <summary> OGC WMTS endpoint. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId">
+        /// Identifier selecting one of the TileMatrixSetId supported (default:
+        /// 'WebMercatorQuad')
+        /// </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<string> GetWmtsCapabilities(string searchId, TileMatrixSetId? tileMatrixSetId = default, ImageType? tileFormat = default, int? tileScale = default, int? minzoom = default, int? maxzoom = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = GetWmtsCapabilities(searchId, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
+        }
+
+        /// <summary> OGC WMTS endpoint. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId">
+        /// Identifier selecting one of the TileMatrixSetId supported (default:
+        /// 'WebMercatorQuad')
+        /// </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<string>> GetWmtsCapabilitiesAsync(string searchId, TileMatrixSetId? tileMatrixSetId = default, ImageType? tileFormat = default, int? tileScale = default, int? minzoom = default, int? maxzoom = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = await GetWmtsCapabilitiesAsync(searchId, tileMatrixSetId?.ToString(), tileFormat?.ToString(), tileScale, minzoom, maxzoom, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
+        }
+
         /// <summary>
-        /// [Protocol Method] Wmts Tilematrixsetid As Path
+        /// [Protocol Method] OGC WMTS endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetWmtsCapabilitiesWithMatrixSet(string,string,ImageType?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. Allowed values: "png" | "npy" | "tif" | "jpeg" | "jpg" | "jp2" | "webp" | "pngraw". </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
         /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
         /// <param name="minzoom"> Overwrite default minzoom. </param>
         /// <param name="maxzoom"> Overwrite default maxzoom. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetWmtsCapabilitiesWithMatrixSet(string,string,string,int?,int?,int?,RequestContext)']/*" />
         public virtual Response GetWmtsCapabilitiesWithMatrixSet(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilitiesWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetWmtsCapabilitiesWithMatrixSetRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetWmtsCapabilitiesWithMatrixSetAsync(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilitiesWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetWmtsCapabilitiesWithMatrixSetRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> OGC WMTS endpoint. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<string> GetWmtsCapabilitiesWithMatrixSet(string searchId, string tileMatrixSetId, ImageType? tileFormat = default, int? tileScale = default, int? minzoom = default, int? maxzoom = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetWmtsCapabilitiesWithMatrixSet");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetWmtsCapabilitiesWithMatrixSetRequest(searchId, tileMatrixSetId, tileFormat, tileScale, minzoom, maxzoom, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetWmtsCapabilitiesWithMatrixSet(searchId, tileMatrixSetId, tileFormat?.ToString(), tileScale, minzoom, maxzoom, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
         }
 
-        /// <summary> Register Search. </summary>
-        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
-        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
-        /// <param name="bbox"> Geographic bounding box to filter items [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
-        /// <param name="query"> Query. </param>
-        /// <param name="filter"> Filter. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
-        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
-        /// <param name="filterLang"> Query language format used in the filter parameter. </param>
-        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Register a Search query. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='RegisterSearchAsync(IEnumerable{string},IEnumerable{string},double?,GeoJsonGeometry,StacQuery,string,string,IEnumerable{SortExtension},FilterLang?,MosaicMetadata,CancellationToken)']/*" />
-        public virtual async Task<Response<RegisterResult>> RegisterSearchAsync(IEnumerable<string> collections = null, IEnumerable<string> ids = null, double? bbox = null, GeoJsonGeometry intersects = null, StacQuery query = null, string filter = null, string datetime = null, IEnumerable<SortExtension> sortBy = null, FilterLang? filterLang = null, MosaicMetadata metadata = null, CancellationToken cancellationToken = default)
-        {
-            RegisterSearchRequest registerSearchRequest = new RegisterSearchRequest(
-                collections?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
-                ids?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
-                bbox,
-                intersects,
-                query,
-                filter,
-                datetime,
-                sortBy?.ToList() as IReadOnlyList<SortExtension> ?? new ChangeTrackingList<SortExtension>(),
-                filterLang,
-                metadata,
-                null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RegisterSearchAsync(registerSearchRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(RegisterResult.FromResponse(response), response);
-        }
-
-        /// <summary> Register Search. </summary>
-        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
-        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
-        /// <param name="bbox"> Geographic bounding box to filter items [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
-        /// <param name="query"> Query. </param>
-        /// <param name="filter"> Filter. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
-        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
-        /// <param name="filterLang"> Query language format used in the filter parameter. </param>
-        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Register a Search query. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='RegisterSearch(IEnumerable{string},IEnumerable{string},double?,GeoJsonGeometry,StacQuery,string,string,IEnumerable{SortExtension},FilterLang?,MosaicMetadata,CancellationToken)']/*" />
-        public virtual Response<RegisterResult> RegisterSearch(IEnumerable<string> collections = null, IEnumerable<string> ids = null, double? bbox = null, GeoJsonGeometry intersects = null, StacQuery query = null, string filter = null, string datetime = null, IEnumerable<SortExtension> sortBy = null, FilterLang? filterLang = null, MosaicMetadata metadata = null, CancellationToken cancellationToken = default)
-        {
-            RegisterSearchRequest registerSearchRequest = new RegisterSearchRequest(
-                collections?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
-                ids?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
-                bbox,
-                intersects,
-                query,
-                filter,
-                datetime,
-                sortBy?.ToList() as IReadOnlyList<SortExtension> ?? new ChangeTrackingList<SortExtension>(),
-                filterLang,
-                metadata,
-                null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RegisterSearch(registerSearchRequest.ToRequestContent(), context);
-            return Response.FromValue(RegisterResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Register Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RegisterSearchAsync(IEnumerable{string},IEnumerable{string},double?,GeoJsonGeometry,StacQuery,string,string,IEnumerable{SortExtension},FilterLang?,MosaicMetadata,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='RegisterSearchAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> RegisterSearchAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.RegisterSearch");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRegisterSearchRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Register Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RegisterSearch(IEnumerable{string},IEnumerable{string},double?,GeoJsonGeometry,StacQuery,string,string,IEnumerable{SortExtension},FilterLang?,MosaicMetadata,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='RegisterSearch(RequestContent,RequestContext)']/*" />
-        public virtual Response RegisterSearch(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.RegisterSearch");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRegisterSearchRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Info Search. </summary>
+        /// <summary> OGC WMTS endpoint. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get Search query metadata. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetSearchInfoAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TitilerPgstacModelInfo>> GetSearchInfoAsync(string searchId, CancellationToken cancellationToken = default)
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="tileFormat"> Output image type. Default is png. </param>
+        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
+        /// <param name="minzoom"> Overwrite default minzoom. </param>
+        /// <param name="maxzoom"> Overwrite default maxzoom. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<string>> GetWmtsCapabilitiesWithMatrixSetAsync(string searchId, string tileMatrixSetId, ImageType? tileFormat = default, int? tileScale = default, int? minzoom = default, int? maxzoom = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSearchInfoAsync(searchId, context).ConfigureAwait(false);
-            return Response.FromValue(TitilerPgstacModelInfo.FromResponse(response), response);
+            Response result = await GetWmtsCapabilitiesWithMatrixSetAsync(searchId, tileMatrixSetId, tileFormat?.ToString(), tileScale, minzoom, maxzoom, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
         }
 
-        /// <summary> Info Search. </summary>
+        /// <summary>
+        /// [Protocol Method] Register a Search query
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response RegisterSearch(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.RegisterSearch");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRegisterSearchRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Register a Search query
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RegisterSearchAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.RegisterSearch");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRegisterSearchRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Register a Search query. </summary>
+        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
+        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
+        /// <param name="bbox"> Geographic bounding box to filter items [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
+        /// <param name="query"> Query. </param>
+        /// <param name="filter"> Filter. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
+        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
+        /// <param name="filterLang"> Query language format used in the filter parameter. </param>
+        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<RegisterResult> RegisterSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, double? bbox = default, GeoJsonGeometry intersects = default, StacQuery query = default, string filter = default, string datetime = default, IEnumerable<SortExtension> sortBy = default, FilterLang? filterLang = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        {
+            RegisterSearchRequest spreadModel = new RegisterSearchRequest(
+                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                bbox,
+                intersects,
+                query,
+                filter,
+                datetime,
+                sortBy?.ToList() as IList<SortExtension> ?? new ChangeTrackingList<SortExtension>(),
+                filterLang,
+                metadata,
+                null);
+            Response result = RegisterSearch(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RegisterResult)result, result);
+        }
+
+        /// <summary> Register a Search query. </summary>
+        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
+        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
+        /// <param name="bbox"> Geographic bounding box to filter items [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
+        /// <param name="query"> Query. </param>
+        /// <param name="filter"> Filter. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
+        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
+        /// <param name="filterLang"> Query language format used in the filter parameter. </param>
+        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<RegisterResult>> RegisterSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, double? bbox = default, GeoJsonGeometry intersects = default, StacQuery query = default, string filter = default, string datetime = default, IEnumerable<SortExtension> sortBy = default, FilterLang? filterLang = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
+        {
+            RegisterSearchRequest spreadModel = new RegisterSearchRequest(
+                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
+                bbox,
+                intersects,
+                query,
+                filter,
+                datetime,
+                sortBy?.ToList() as IList<SortExtension> ?? new ChangeTrackingList<SortExtension>(),
+                filterLang,
+                metadata,
+                null);
+            Response result = await RegisterSearchAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RegisterResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Search query metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get Search query metadata. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetSearchInfo(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchInfo(string searchId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetSearchInfo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetSearchInfoRequest(searchId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Search query metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchInfoAsync(string searchId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetSearchInfo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetSearchInfoRequest(searchId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Search query metadata. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<TitilerPgstacModelInfo> GetSearchInfo(string searchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSearchInfo(searchId, context);
-            return Response.FromValue(TitilerPgstacModelInfo.FromResponse(response), response);
+            Response result = GetSearchInfo(searchId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((TitilerPgstacModelInfo)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Info Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSearchInfoAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get Search query metadata. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetSearchInfoAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSearchInfoAsync(string searchId, RequestContext context)
+        public virtual async Task<Response<TitilerPgstacModelInfo>> GetSearchInfoAsync(string searchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetSearchInfo");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSearchInfoRequest(searchId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetSearchInfoAsync(searchId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((TitilerPgstacModelInfo)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Info Search
+        /// [Protocol Method] Return a list of assets which overlap a given tile
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSearchInfo(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetSearchInfo(string,RequestContext)']/*" />
-        public virtual Response GetSearchInfo(string searchId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetSearchInfo");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSearchInfoRequest(searchId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Assets For Tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
         /// <param name="z">
         /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
@@ -1765,210 +1598,21 @@ namespace Azure.PlanetaryComputer
         /// Identifier selecting one of the TileMatrixSetId supported (default:
         /// 'WebMercatorQuad')
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return a list of assets which overlap a given tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTileAsync(string,float,float,float,int?,int?,int?,bool?,bool?,TileMatrixSetId?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetAssetsForTileAsync(string searchId, float z, float x, float y, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, TileMatrixSetId? tileMatrixSetId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAssetsForTileAsync(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), context).ConfigureAwait(false);
-            IReadOnlyList<BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<BinaryData> array = new List<BinaryData>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    array.Add(BinaryData.FromString(item.GetRawText()));
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Assets For Tile. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad')
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return a list of assets which overlap a given tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTile(string,float,float,float,int?,int?,int?,bool?,bool?,TileMatrixSetId?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<BinaryData>> GetAssetsForTile(string searchId, float z, float x, float y, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, TileMatrixSetId? tileMatrixSetId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAssetsForTile(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), context);
-            IReadOnlyList<BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<BinaryData> array = new List<BinaryData>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    array.Add(BinaryData.FromString(item.GetRawText()));
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Assets For Tile
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAssetsForTileAsync(string,float,float,float,int?,int?,int?,bool?,bool?,TileMatrixSetId?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad"
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTileAsync(string,float,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAssetsForTileAsync(string searchId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAssetsForTileRequest(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Assets For Tile
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAssetsForTile(string,float,float,float,int?,int?,int?,bool?,bool?,TileMatrixSetId?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="tileMatrixSetId">
-        /// Identifier selecting one of the TileMatrixSetId supported (default:
-        /// 'WebMercatorQuad'). Allowed values: "CanadianNAD83_LCC" | "EuropeanETRS89_LAEAQuad" | "LINZAntarticaMapTilegrid" | "NZTM2000Quad" | "UPSAntarcticWGS84Quad" | "UPSArcticWGS84Quad" | "UTM31WGS84Quad" | "WGS1984Quad" | "WebMercatorQuad" | "WorldCRS84Quad" | "WorldMercatorWGS84Quad"
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTile(string,float,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)']/*" />
         public virtual Response GetAssetsForTile(string searchId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTile");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
                 using HttpMessage message = CreateGetAssetsForTileRequest(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1977,129 +1621,15 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Assets For Tile Tilematrixsetid As Path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return a list of assets which overlap a given tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTileWithMatrixSetAsync(string,string,float,float,float,int?,int?,int?,bool?,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetAssetsForTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAssetsForTileWithMatrixSetAsync(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, context).ConfigureAwait(false);
-            IReadOnlyList<BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<BinaryData> array = new List<BinaryData>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    array.Add(BinaryData.FromString(item.GetRawText()));
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Assets For Tile Tilematrixsetid As Path. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return a list of assets which overlap a given tile. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTileWithMatrixSet(string,string,float,float,float,int?,int?,int?,bool?,bool?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<BinaryData>> GetAssetsForTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAssetsForTileWithMatrixSet(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, context);
-            IReadOnlyList<BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<BinaryData> array = new List<BinaryData>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    array.Add(BinaryData.FromString(item.GetRawText()));
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Assets For Tile Tilematrixsetid As Path
+        /// [Protocol Method] Return a list of assets which overlap a given tile
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAssetsForTileWithMatrixSetAsync(string,string,float,float,float,int?,int?,int?,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
         /// <param name="z">
         /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
         /// representing the scaleDenominator the tile.
@@ -2120,23 +1650,25 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="tileMatrixSetId">
+        /// Identifier selecting one of the TileMatrixSetId supported (default:
+        /// 'WebMercatorQuad')
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTileWithMatrixSetAsync(string,string,float,float,float,int?,int?,int?,bool?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAssetsForTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, RequestContext context)
+        public virtual async Task<Response> GetAssetsForTileAsync(string searchId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTileWithMatrixSet");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAssetsForTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetAssetsForTileRequest(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2145,18 +1677,113 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <summary> Return a list of assets which overlap a given tile. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="z">
+        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
+        /// representing the scaleDenominator the tile.
+        /// </param>
+        /// <param name="x">
+        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixHeight-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="y">
+        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixWidth-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="tileMatrixSetId">
+        /// Identifier selecting one of the TileMatrixSetId supported (default:
+        /// 'WebMercatorQuad')
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetAssetsForTile(string searchId, float z, float x, float y, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, TileMatrixSetId? tileMatrixSetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = GetAssetsForTile(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<BinaryData> value = new List<BinaryData>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary> Return a list of assets which overlap a given tile. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="z">
+        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
+        /// representing the scaleDenominator the tile.
+        /// </param>
+        /// <param name="x">
+        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixHeight-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="y">
+        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixWidth-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="tileMatrixSetId">
+        /// Identifier selecting one of the TileMatrixSetId supported (default:
+        /// 'WebMercatorQuad')
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetAssetsForTileAsync(string searchId, float z, float x, float y, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, TileMatrixSetId? tileMatrixSetId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = await GetAssetsForTileAsync(searchId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, tileMatrixSetId?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<BinaryData> value = new List<BinaryData>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
         /// <summary>
-        /// [Protocol Method] Assets For Tile Tilematrixsetid As Path
+        /// [Protocol Method] Return a list of assets which overlap a given tile
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAssetsForTileWithMatrixSet(string,string,float,float,float,int?,int?,int?,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2182,35 +1809,148 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForTileWithMatrixSet(string,string,float,float,float,int?,int?,int?,bool?,bool?,RequestContext)']/*" />
         public virtual Response GetAssetsForTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTileWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetAssetsForTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given tile
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="z">
+        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
+        /// representing the scaleDenominator the tile.
+        /// </param>
+        /// <param name="x">
+        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixHeight-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="y">
+        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixWidth-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAssetsForTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTileWithMatrixSet");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+
+                using HttpMessage message = CreateGetAssetsForTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets which overlap a given tile. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="z">
+        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
+        /// representing the scaleDenominator the tile.
+        /// </param>
+        /// <param name="x">
+        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixHeight-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="y">
+        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixWidth-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetAssetsForTileWithMatrixSet(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForTileWithMatrixSet");
-            scope.Start();
-            try
+            Response result = GetAssetsForTileWithMatrixSet(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<BinaryData> value = new List<BinaryData>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
+            foreach (var item in document.RootElement.EnumerateArray())
             {
-                using HttpMessage message = CreateGetAssetsForTileWithMatrixSetRequest(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, context);
-                return _pipeline.ProcessMessage(message, context);
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
         }
 
-        /// <summary> Assets For Point. </summary>
+        /// <summary> Return a list of assets which overlap a given tile. </summary>
         /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="lon"> Longitude. </param>
-        /// <param name="lat"> Latitude. </param>
+        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
+        /// <param name="z">
+        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
+        /// representing the scaleDenominator the tile.
+        /// </param>
+        /// <param name="x">
+        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixHeight-1 for the selected TileMatrix.
+        /// </param>
+        /// <param name="y">
+        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
+        /// MatrixWidth-1 for the selected TileMatrix.
+        /// </param>
         /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
         /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
         /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
@@ -2219,90 +1959,37 @@ namespace Azure.PlanetaryComputer
         /// Skip any items that would show up completely under the previous items (defaults
         /// to True in PgSTAC).
         /// </param>
-        /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return a list of assets for a given point. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForPointAsync(string,float,float,int?,int?,int?,bool?,bool?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetAssetsForPointAsync(string searchId, float lon, float lat, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, string coordCrs = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetAssetsForTileWithMatrixSetAsync(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAssetsForPointAsync(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, context).ConfigureAwait(false);
-            IReadOnlyList<BinaryData> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<BinaryData> array = new List<BinaryData>();
+            Response result = await GetAssetsForTileWithMatrixSetAsync(searchId, tileMatrixSetId, z, x, y, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<BinaryData> value = new List<BinaryData>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
             foreach (var item in document.RootElement.EnumerateArray())
             {
                 if (item.ValueKind == JsonValueKind.Null)
                 {
-                    array.Add(null);
+                    value.Add(null);
                 }
                 else
                 {
-                    array.Add(BinaryData.FromString(item.GetRawText()));
+                    value.Add(BinaryData.FromString(item.GetRawText()));
                 }
             }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Assets For Point. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="lon"> Longitude. </param>
-        /// <param name="lat"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Return a list of assets for a given point. </remarks>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForPoint(string,float,float,int?,int?,int?,bool?,bool?,string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<BinaryData>> GetAssetsForPoint(string searchId, float lon, float lat, int? scanLimit = null, int? itemsLimit = null, int? timeLimit = null, bool? exitwhenfull = null, bool? skipcovered = null, string coordCrs = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAssetsForPoint(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, context);
-            IReadOnlyList<BinaryData> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<BinaryData> array = new List<BinaryData>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    array.Add(BinaryData.FromString(item.GetRawText()));
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Assets For Point
+        /// [Protocol Method] Return a list of assets for a given point.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAssetsForPointAsync(string,float,float,int?,int?,int?,bool?,bool?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2318,73 +2005,21 @@ namespace Azure.PlanetaryComputer
         /// to True in PgSTAC).
         /// </param>
         /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForPointAsync(string,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAssetsForPointAsync(string searchId, float lon, float lat, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string coordCrs, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForPoint");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAssetsForPointRequest(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Assets For Point
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAssetsForPoint(string,float,float,int?,int?,int?,bool?,bool?,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="lon"> Longitude. </param>
-        /// <param name="lat"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipcovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MosaicTilerClient.xml" path="doc/members/member[@name='GetAssetsForPoint(string,float,float,int?,int?,int?,bool?,bool?,string,RequestContext)']/*" />
         public virtual Response GetAssetsForPoint(string searchId, float lon, float lat, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string coordCrs, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            using var scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForPoint");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForPoint");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
                 using HttpMessage message = CreateGetAssetsForPointRequest(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2393,758 +2028,123 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        internal HttpMessage CreateGetTileRequest(string searchId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string tileMatrixSetId, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Return a list of assets for a given point.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="lon"> Longitude. </param>
+        /// <param name="lat"> Latitude. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAssetsForPointAsync(string searchId, float lon, float lat, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string coordCrs, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/tiles/", false);
-            uri.AppendPath(z, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(x, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(y, true);
-            uri.AppendPath("@", false);
-            uri.AppendPath(scale, true);
-            uri.AppendPath("x.", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MosaicTilerClient.GetAssetsForPoint");
+            scope.Start();
+            try
             {
-                foreach (var param in assets)
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetAssetsForPointRequest(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets for a given point. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="lon"> Longitude. </param>
+        /// <param name="lat"> Latitude. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetAssetsForPoint(string searchId, float lon, float lat, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, string coordCrs = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = GetAssetsForPoint(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<BinaryData> value = new List<BinaryData>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
                 {
-                    uri.AppendQuery("assets", param, true);
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
                 }
             }
-            if (expression != null)
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary> Return a list of assets for a given point. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="lon"> Longitude. </param>
+        /// <param name="lat"> Latitude. </param>
+        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
+        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
+        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
+        /// <param name="exitwhenfull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
+        /// <param name="skipcovered">
+        /// Skip any items that would show up completely under the previous items (defaults
+        /// to True in PgSTAC).
+        /// </param>
+        /// <param name="coordCrs"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetAssetsForPointAsync(string searchId, float lon, float lat, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitwhenfull = default, bool? skipcovered = default, string coordCrs = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = await GetAssetsForPointAsync(searchId, lon, lat, scanLimit, itemsLimit, timeLimit, exitwhenfull, skipcovered, coordCrs, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<BinaryData> value = new List<BinaryData>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
+            foreach (var item in document.RootElement.EnumerateArray())
             {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBidx != null && !(assetBidx is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("asset_bidx", assetBidx, ",", true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", assetAsBand.Value, true);
-            }
-            if (nodata != null)
-            {
-                uri.AppendQuery("nodata", nodata.Value, true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", unscale.Value, true);
-            }
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (tileMatrixSetId != null)
-            {
-                uri.AppendQuery("tileMatrixSetId", tileMatrixSetId, true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (collection != null)
-            {
-                uri.AppendQuery("collection", collection, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (pixelSelection != null)
-            {
-                uri.AppendQuery("pixel_selection", pixelSelection, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in rescale)
+                if (item.ValueKind == JsonValueKind.Null)
                 {
-                    uri.AppendQuery("rescale", param, true);
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
                 }
             }
-            if (colormapName != null)
-            {
-                uri.AppendQuery("colormap_name", colormapName, true);
-            }
-            if (colormap != null)
-            {
-                uri.AppendQuery("colormap", colormap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", returnMask.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            return message;
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
         }
-
-        internal HttpMessage CreateGetTileWithMatrixSetRequest(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, string accept, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/tiles/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(z, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(x, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(y, true);
-            uri.AppendPath("@", false);
-            uri.AppendPath(scale, true);
-            uri.AppendPath("x.", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in assets)
-                {
-                    uri.AppendQuery("assets", param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBidx != null && !(assetBidx is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("asset_bidx", assetBidx, ",", true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", assetAsBand.Value, true);
-            }
-            if (nodata != null)
-            {
-                uri.AppendQuery("nodata", nodata.Value, true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", unscale.Value, true);
-            }
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (collection != null)
-            {
-                uri.AppendQuery("collection", collection, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (pixelSelection != null)
-            {
-                uri.AppendQuery("pixel_selection", pixelSelection, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in rescale)
-                {
-                    uri.AppendQuery("rescale", param, true);
-                }
-            }
-            if (colormapName != null)
-            {
-                uri.AppendQuery("colormap_name", colormapName, true);
-            }
-            if (colormap != null)
-            {
-                uri.AppendQuery("colormap", colormap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", returnMask.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            return message;
-        }
-
-        internal HttpMessage CreateGetTileJsonRequest(string searchId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, double? buffer, string colorFormula, string collection, string resampling, string pixelSelection, string algorithm, string algorithmParams, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/tilejson.json", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in assets)
-                {
-                    uri.AppendQuery("assets", param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBidx != null && !(assetBidx is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("asset_bidx", assetBidx, ",", true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", assetAsBand.Value, true);
-            }
-            if (nodata != null)
-            {
-                uri.AppendQuery("nodata", nodata.Value, true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", unscale.Value, true);
-            }
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            if (tileMatrixSetId != null)
-            {
-                uri.AppendQuery("tileMatrixSetId", tileMatrixSetId, true);
-            }
-            if (tileFormat != null)
-            {
-                uri.AppendQuery("tile_format", tileFormat, true);
-            }
-            if (tileScale != null)
-            {
-                uri.AppendQuery("tile_scale", tileScale.Value, true);
-            }
-            if (minzoom != null)
-            {
-                uri.AppendQuery("minzoom", minzoom.Value, true);
-            }
-            if (maxzoom != null)
-            {
-                uri.AppendQuery("maxzoom", maxzoom.Value, true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer.Value, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (collection != null)
-            {
-                uri.AppendQuery("collection", collection, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (pixelSelection != null)
-            {
-                uri.AppendQuery("pixel_selection", pixelSelection, true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in rescale)
-                {
-                    uri.AppendQuery("rescale", param, true);
-                }
-            }
-            if (colormapName != null)
-            {
-                uri.AppendQuery("colormap_name", colormapName, true);
-            }
-            if (colormap != null)
-            {
-                uri.AppendQuery("colormap", colormap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", returnMask.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTileJsonWithMatrixSetRequest(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, IEnumerable<string> assetBidx, bool? assetAsBand, float? nodata, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string algorithm, string algorithmParams, int? minzoom, int? maxzoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colormapName, string colormap, bool? returnMask, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/tilejson.json", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (assets != null && !(assets is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in assets)
-                {
-                    uri.AppendQuery("assets", param, true);
-                }
-            }
-            if (expression != null)
-            {
-                uri.AppendQuery("expression", expression, true);
-            }
-            if (assetBidx != null && !(assetBidx is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("asset_bidx", assetBidx, ",", true);
-            }
-            if (assetAsBand != null)
-            {
-                uri.AppendQuery("asset_as_band", assetAsBand.Value, true);
-            }
-            if (nodata != null)
-            {
-                uri.AppendQuery("nodata", nodata.Value, true);
-            }
-            if (unscale != null)
-            {
-                uri.AppendQuery("unscale", unscale.Value, true);
-            }
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            if (algorithm != null)
-            {
-                uri.AppendQuery("algorithm", algorithm, true);
-            }
-            if (algorithmParams != null)
-            {
-                uri.AppendQuery("algorithm_params", algorithmParams, true);
-            }
-            if (minzoom != null)
-            {
-                uri.AppendQuery("minzoom", minzoom.Value, true);
-            }
-            if (maxzoom != null)
-            {
-                uri.AppendQuery("maxzoom", maxzoom.Value, true);
-            }
-            if (tileFormat != null)
-            {
-                uri.AppendQuery("tile_format", tileFormat, true);
-            }
-            if (tileScale != null)
-            {
-                uri.AppendQuery("tile_scale", tileScale.Value, true);
-            }
-            if (buffer != null)
-            {
-                uri.AppendQuery("buffer", buffer, true);
-            }
-            if (colorFormula != null)
-            {
-                uri.AppendQuery("color_formula", colorFormula, true);
-            }
-            if (collection != null)
-            {
-                uri.AppendQuery("collection", collection, true);
-            }
-            if (resampling != null)
-            {
-                uri.AppendQuery("resampling", resampling, true);
-            }
-            if (pixelSelection != null)
-            {
-                uri.AppendQuery("pixel_selection", pixelSelection, true);
-            }
-            if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in rescale)
-                {
-                    uri.AppendQuery("rescale", param, true);
-                }
-            }
-            if (colormapName != null)
-            {
-                uri.AppendQuery("colormap_name", colormapName, true);
-            }
-            if (colormap != null)
-            {
-                uri.AppendQuery("colormap", colormap, true);
-            }
-            if (returnMask != null)
-            {
-                uri.AppendQuery("return_mask", returnMask.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWmtsCapabilitiesRequest(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/WMTSCapabilities.xml", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (tileMatrixSetId != null)
-            {
-                uri.AppendQuery("tileMatrixSetId", tileMatrixSetId, true);
-            }
-            if (tileFormat != null)
-            {
-                uri.AppendQuery("tile_format", tileFormat, true);
-            }
-            if (tileScale != null)
-            {
-                uri.AppendQuery("tile_scale", tileScale.Value, true);
-            }
-            if (minzoom != null)
-            {
-                uri.AppendQuery("minzoom", minzoom.Value, true);
-            }
-            if (maxzoom != null)
-            {
-                uri.AppendQuery("maxzoom", maxzoom.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWmtsCapabilitiesWithMatrixSetRequest(string searchId, string tileMatrixSetId, string tileFormat, int? tileScale, int? minzoom, int? maxzoom, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/WMTSCapabilities.xml", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (tileFormat != null)
-            {
-                uri.AppendQuery("tile_format", tileFormat, true);
-            }
-            if (tileScale != null)
-            {
-                uri.AppendQuery("tile_scale", tileScale.Value, true);
-            }
-            if (minzoom != null)
-            {
-                uri.AppendQuery("minzoom", minzoom.Value, true);
-            }
-            if (maxzoom != null)
-            {
-                uri.AppendQuery("maxzoom", maxzoom.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        internal HttpMessage CreateRegisterSearchRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/register", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetSearchInfoRequest(string searchId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAssetsForTileRequest(string searchId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string tileMatrixSetId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/tiles/", false);
-            uri.AppendPath(z, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(x, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(y, true);
-            uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            if (tileMatrixSetId != null)
-            {
-                uri.AppendQuery("tileMatrixSetId", tileMatrixSetId, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAssetsForTileWithMatrixSetRequest(string searchId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/tiles/", false);
-            uri.AppendPath(tileMatrixSetId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(z, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(x, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(y, true);
-            uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAssetsForPointRequest(string searchId, float lon, float lat, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitwhenfull, bool? skipcovered, string coordCrs, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/mosaic/", false);
-            uri.AppendPath(searchId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(lon, true);
-            uri.AppendPath(",", false);
-            uri.AppendPath(lat, true);
-            uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (scanLimit != null)
-            {
-                uri.AppendQuery("scan_limit", scanLimit.Value, true);
-            }
-            if (itemsLimit != null)
-            {
-                uri.AppendQuery("items_limit", itemsLimit.Value, true);
-            }
-            if (timeLimit != null)
-            {
-                uri.AppendQuery("time_limit", timeLimit.Value, true);
-            }
-            if (exitwhenfull != null)
-            {
-                uri.AppendQuery("exitwhenfull", exitwhenfull.Value, true);
-            }
-            if (skipcovered != null)
-            {
-                uri.AppendQuery("skipcovered", skipcovered.Value, true);
-            }
-            if (coordCrs != null)
-            {
-                uri.AppendQuery("coord-crs", coordCrs, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200204;
-        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

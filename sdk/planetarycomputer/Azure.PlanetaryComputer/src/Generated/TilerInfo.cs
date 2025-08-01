@@ -8,53 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    /// <summary> Dataset Info. </summary>
+    /// <summary> TilerInfo. </summary>
     public partial class TilerInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TilerInfo"/>. </summary>
         /// <param name="bounds"> Bounds. </param>
         /// <param name="dtype"> Data type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bounds"/> or <paramref name="dtype"/> is null. </exception>
         internal TilerInfo(IEnumerable<double> bounds, string dtype)
         {
-            Argument.AssertNotNull(bounds, nameof(bounds));
-            Argument.AssertNotNull(dtype, nameof(dtype));
-
             Bounds = bounds.ToList();
             BandMetadata = new ChangeTrackingList<IList<BinaryData>>();
             BandDescriptions = new ChangeTrackingList<IList<string>>();
@@ -83,8 +51,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="colormap"> Colormap. </param>
         /// <param name="minzoom"> Minzoom. </param>
         /// <param name="maxzoom"> Maxzoom. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfo(IReadOnlyList<double> bounds, IReadOnlyList<IList<BinaryData>> bandMetadata, IReadOnlyList<IList<string>> bandDescriptions, string dtype, NoDataType? nodataType, IReadOnlyList<string> colorinterp, string driver, int? count, int? width, int? height, IReadOnlyList<string> overviews, IReadOnlyList<long> scales, IReadOnlyList<long> offsets, IReadOnlyDictionary<string, IList<string>> colormap, long? minzoom, long? maxzoom, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TilerInfo(IList<double> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? nodataType, IList<string> colorinterp, string driver, int? count, int? width, int? height, IList<string> overviews, IList<long> scales, IList<long> offsets, IDictionary<string, IList<string>> colormap, long? minzoom, long? maxzoom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             BandMetadata = bandMetadata;
@@ -102,84 +70,92 @@ namespace Azure.PlanetaryComputer
             Colormap = colormap;
             Minzoom = minzoom;
             Maxzoom = maxzoom;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TilerInfo"/> for deserialization. </summary>
-        internal TilerInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Bounds. </summary>
-        public IReadOnlyList<double> Bounds { get; }
+        public IList<double> Bounds { get; }
+
         /// <summary>
         /// Band Metadata
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description><see cref="string"/></description>
+        /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description><see cref="IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <see cref="string"/></description>
+        /// <description> <see cref="IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
+        /// </para>
+        /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyList<IList<BinaryData>> BandMetadata { get; }
+        public IList<IList<BinaryData>> BandMetadata { get; }
+
         /// <summary> Band Descriptions. </summary>
-        public IReadOnlyList<IList<string>> BandDescriptions { get; }
+        public IList<IList<string>> BandDescriptions { get; }
+
         /// <summary> Data type. </summary>
         public string Dtype { get; }
+
         /// <summary> NoData Type. </summary>
         public NoDataType? NodataType { get; }
+
         /// <summary> Color interpretation. </summary>
-        public IReadOnlyList<string> Colorinterp { get; }
+        public IList<string> Colorinterp { get; }
+
         /// <summary> Driver. </summary>
         public string Driver { get; }
+
         /// <summary> Count. </summary>
         public int? Count { get; }
+
         /// <summary> Width. </summary>
         public int? Width { get; }
+
         /// <summary> Height. </summary>
         public int? Height { get; }
+
         /// <summary> Overviews. </summary>
-        public IReadOnlyList<string> Overviews { get; }
+        public IList<string> Overviews { get; }
+
         /// <summary> Scales. </summary>
-        public IReadOnlyList<long> Scales { get; }
+        public IList<long> Scales { get; }
+
         /// <summary> Offsets. </summary>
-        public IReadOnlyList<long> Offsets { get; }
+        public IList<long> Offsets { get; }
+
         /// <summary> Colormap. </summary>
-        public IReadOnlyDictionary<string, IList<string>> Colormap { get; }
+        public IDictionary<string, IList<string>> Colormap { get; }
+
         /// <summary> Minzoom. </summary>
         public long? Minzoom { get; }
+
         /// <summary> Maxzoom. </summary>
         public long? Maxzoom { get; }
     }

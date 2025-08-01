@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Configuration for generating a data legend. </summary>
     public partial class RenderOptionLegend
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RenderOptionLegend"/>. </summary>
         public RenderOptionLegend()
@@ -71,15 +42,15 @@ namespace Azure.PlanetaryComputer
         /// colormap definitions map to unscaled values, effectively showing legend labels
         /// as scaled values.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionLegend(LegendConfigType? type, IList<string> labels, int? trimStart, int? trimEnd, float? scaleFactor, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RenderOptionLegend(LegendConfigType? @type, IList<string> labels, int? trimStart, int? trimEnd, float? scaleFactor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Labels = labels;
             TrimStart = trimStart;
             TrimEnd = trimEnd;
             ScaleFactor = scaleFactor;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -90,16 +61,20 @@ namespace Azure.PlanetaryComputer
         /// (note, `none` is a string literal).
         /// </summary>
         public LegendConfigType? Type { get; set; }
+
         /// <summary> Text labels to display on the legend. </summary>
         public IList<string> Labels { get; }
+
         /// <summary>
         /// The number of items to trim from the start of the legend definition. Used if
         /// there are values important for rendering (e.g. nodata) that aren't desirable in
         /// the legend.
         /// </summary>
         public int? TrimStart { get; set; }
+
         /// <summary> Number of items to trim from the end of the legend. </summary>
         public int? TrimEnd { get; set; }
+
         /// <summary>
         /// A factor to multiply interval legend labels by. Useful for scaled rasters whose
         /// colormap definitions map to unscaled values, effectively showing legend labels

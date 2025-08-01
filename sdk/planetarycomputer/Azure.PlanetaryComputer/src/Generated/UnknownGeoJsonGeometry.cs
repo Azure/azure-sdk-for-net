@@ -8,21 +8,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    /// <summary> Unknown version of GeoJsonGeometry. </summary>
     internal partial class UnknownGeoJsonGeometry : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGeoJsonGeometry"/>. </summary>
         /// <param name="type"> The type of the geometry. </param>
         /// <param name="bbox"> Optional bounding box of the geometry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownGeoJsonGeometry(GeometryType type, IList<double> bbox, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, bbox, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownGeoJsonGeometry"/> for deserialization. </summary>
-        internal UnknownGeoJsonGeometry()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownGeoJsonGeometry(GeometryType @type, IList<double> bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", bbox, additionalBinaryDataProperties)
         {
         }
     }

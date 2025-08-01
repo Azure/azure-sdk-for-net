@@ -11,12 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class SearchPostContent : IUtf8JsonSerializable, IJsonModel<SearchPostContent>
+    /// <summary>
+    /// Search model.
+    /// 
+    /// Overrides the validation for datetime from the base request model.
+    /// 
+    /// Defines parameters for a STAC search POST request.
+    /// </summary>
+    public partial class SearchPostContent : IJsonModel<SearchPostContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchPostContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchPostContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +35,22 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchPostContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Collections))
             {
                 writer.WritePropertyName("collections"u8);
                 writer.WriteStartArray();
-                foreach (var item in Collections)
+                foreach (string item in Collections)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -48,8 +59,13 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
-                foreach (var item in Ids)
+                foreach (string item in Ids)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -58,7 +74,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (var item in Bbox)
+                foreach (double item in Bbox)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -92,9 +108,9 @@ namespace Azure.PlanetaryComputer
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,7 +137,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("sortby"u8);
                 writer.WriteStartArray();
-                foreach (var item in SortBy)
+                foreach (SortExtension item in SortBy)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,7 +147,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
-                foreach (var item in Fields)
+                foreach (SearchPostRequestFields item in Fields)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,15 +173,15 @@ namespace Azure.PlanetaryComputer
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -174,22 +190,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        SearchPostContent IJsonModel<SearchPostContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchPostContent IJsonModel<SearchPostContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchPostContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchPostContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchPostContent(document.RootElement, options);
         }
 
-        internal static SearchPostContent DeserializeSearchPostContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SearchPostContent DeserializeSearchPostContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -204,187 +225,199 @@ namespace Azure.PlanetaryComputer
             SignType? sign = default;
             int? duration = default;
             StacQuery query = default;
-            IList<SortExtension> sortby = default;
+            IList<SortExtension> sortBy = default;
             IList<SearchPostRequestFields> fields = default;
             string filter = default;
             string filterCrs = default;
             FilterLang? filterLang = default;
             string token = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("collections"u8))
+                if (prop.NameEquals("collections"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     collections = array;
                     continue;
                 }
-                if (property.NameEquals("ids"u8))
+                if (prop.NameEquals("ids"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     ids = array;
                     continue;
                 }
-                if (property.NameEquals("bbox"u8))
+                if (prop.NameEquals("bbox"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetDouble());
                     }
                     bbox = array;
                     continue;
                 }
-                if (property.NameEquals("intersects"u8))
+                if (prop.NameEquals("intersects"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    intersects = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value, options);
+                    intersects = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("datetime"u8))
+                if (prop.NameEquals("datetime"u8))
                 {
-                    datetime = property.Value.GetString();
+                    datetime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("limit"u8))
+                if (prop.NameEquals("limit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    limit = property.Value.GetInt32();
+                    limit = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("conf"u8))
+                if (prop.NameEquals("conf"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     conf = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sign"u8))
+                if (prop.NameEquals("sign"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sign = new SignType(property.Value.GetString());
+                    sign = new SignType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("duration"u8))
+                if (prop.NameEquals("duration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    duration = property.Value.GetInt32();
+                    duration = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("query"u8))
+                if (prop.NameEquals("query"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    query = StacQuery.DeserializeStacQuery(property.Value, options);
+                    query = StacQuery.DeserializeStacQuery(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sortby"u8))
+                if (prop.NameEquals("sortby"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SortExtension> array = new List<SortExtension>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SortExtension.DeserializeSortExtension(item, options));
                     }
-                    sortby = array;
+                    sortBy = array;
                     continue;
                 }
-                if (property.NameEquals("fields"u8))
+                if (prop.NameEquals("fields"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchPostRequestFields> array = new List<SearchPostRequestFields>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SearchPostRequestFields.DeserializeSearchPostRequestFields(item, options));
                     }
                     fields = array;
                     continue;
                 }
-                if (property.NameEquals("filter"u8))
+                if (prop.NameEquals("filter"u8))
                 {
-                    filter = property.Value.GetString();
+                    filter = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter-crs"u8))
+                if (prop.NameEquals("filter-crs"u8))
                 {
-                    filterCrs = property.Value.GetString();
+                    filterCrs = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter-lang"u8))
+                if (prop.NameEquals("filter-lang"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filterLang = new FilterLang(property.Value.GetString());
+                    filterLang = new FilterLang(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("token"u8))
+                if (prop.NameEquals("token"u8))
                 {
-                    token = property.Value.GetString();
+                    token = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SearchPostContent(
                 collections ?? new ChangeTrackingList<string>(),
                 ids ?? new ChangeTrackingList<string>(),
@@ -396,37 +429,45 @@ namespace Azure.PlanetaryComputer
                 sign,
                 duration,
                 query,
-                sortby ?? new ChangeTrackingList<SortExtension>(),
+                sortBy ?? new ChangeTrackingList<SortExtension>(),
                 fields ?? new ChangeTrackingList<SearchPostRequestFields>(),
                 filter,
                 filterCrs,
                 filterLang,
                 token,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<SearchPostContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SearchPostContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SearchPostContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SearchPostContent IPersistableModel<SearchPostContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchPostContent IPersistableModel<SearchPostContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SearchPostContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchPostContent(document.RootElement, options);
                     }
                 default:
@@ -434,21 +475,18 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SearchPostContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SearchPostContent FromResponse(Response response)
+        /// <param name="searchPostContent"> The <see cref="SearchPostContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SearchPostContent searchPostContent)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchPostContent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (searchPostContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(searchPostContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

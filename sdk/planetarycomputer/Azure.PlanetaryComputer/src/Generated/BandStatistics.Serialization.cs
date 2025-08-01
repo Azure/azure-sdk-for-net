@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class BandStatistics : IUtf8JsonSerializable, IJsonModel<BandStatistics>
+    /// <summary> Statistical information about a data band. </summary>
+    public partial class BandStatistics : IJsonModel<BandStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BandStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BandStatistics"/> for deserialization. </summary>
+        internal BandStatistics()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BandStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BandStatistics)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("min"u8);
             writer.WriteNumberValue(Min);
             writer.WritePropertyName("max"u8);
@@ -56,7 +60,7 @@ namespace Azure.PlanetaryComputer
             writer.WriteNumberValue(Unique);
             writer.WritePropertyName("histogram"u8);
             writer.WriteStartArray();
-            foreach (var item in Histogram)
+            foreach (IList<float> item in Histogram)
             {
                 if (item == null)
                 {
@@ -64,7 +68,7 @@ namespace Azure.PlanetaryComputer
                     continue;
                 }
                 writer.WriteStartArray();
-                foreach (var item0 in item)
+                foreach (float item0 in item)
                 {
                     writer.WriteNumberValue(item0);
                 }
@@ -81,15 +85,15 @@ namespace Azure.PlanetaryComputer
             writer.WriteNumberValue(Percentile2);
             writer.WritePropertyName("percentile_98"u8);
             writer.WriteNumberValue(Percentile98);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,22 +102,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        BandStatistics IJsonModel<BandStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BandStatistics IJsonModel<BandStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BandStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BandStatistics)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBandStatistics(document.RootElement, options);
         }
 
-        internal static BandStatistics DeserializeBandStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BandStatistics DeserializeBandStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -128,70 +137,69 @@ namespace Azure.PlanetaryComputer
             float majority = default;
             float minority = default;
             float unique = default;
-            IReadOnlyList<IList<float>> histogram = default;
+            IList<IList<float>> histogram = default;
             float validPercent = default;
             float maskedPixels = default;
             float validPixels = default;
             float percentile2 = default;
             float percentile98 = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("min"u8))
+                if (prop.NameEquals("min"u8))
                 {
-                    min = property.Value.GetSingle();
+                    min = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("max"u8))
+                if (prop.NameEquals("max"u8))
                 {
-                    max = property.Value.GetSingle();
+                    max = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("mean"u8))
+                if (prop.NameEquals("mean"u8))
                 {
-                    mean = property.Value.GetSingle();
+                    mean = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    count = property.Value.GetSingle();
+                    count = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("sum"u8))
+                if (prop.NameEquals("sum"u8))
                 {
-                    sum = property.Value.GetSingle();
+                    sum = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("std"u8))
+                if (prop.NameEquals("std"u8))
                 {
-                    std = property.Value.GetSingle();
+                    std = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("median"u8))
+                if (prop.NameEquals("median"u8))
                 {
-                    median = property.Value.GetSingle();
+                    median = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("majority"u8))
+                if (prop.NameEquals("majority"u8))
                 {
-                    majority = property.Value.GetSingle();
+                    majority = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("minority"u8))
+                if (prop.NameEquals("minority"u8))
                 {
-                    minority = property.Value.GetSingle();
+                    minority = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("unique"u8))
+                if (prop.NameEquals("unique"u8))
                 {
-                    unique = property.Value.GetSingle();
+                    unique = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("histogram"u8))
+                if (prop.NameEquals("histogram"u8))
                 {
                     List<IList<float>> array = new List<IList<float>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -210,37 +218,36 @@ namespace Azure.PlanetaryComputer
                     histogram = array;
                     continue;
                 }
-                if (property.NameEquals("valid_percent"u8))
+                if (prop.NameEquals("valid_percent"u8))
                 {
-                    validPercent = property.Value.GetSingle();
+                    validPercent = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("masked_pixels"u8))
+                if (prop.NameEquals("masked_pixels"u8))
                 {
-                    maskedPixels = property.Value.GetSingle();
+                    maskedPixels = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("valid_pixels"u8))
+                if (prop.NameEquals("valid_pixels"u8))
                 {
-                    validPixels = property.Value.GetSingle();
+                    validPixels = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("percentile_2"u8))
+                if (prop.NameEquals("percentile_2"u8))
                 {
-                    percentile2 = property.Value.GetSingle();
+                    percentile2 = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("percentile_98"u8))
+                if (prop.NameEquals("percentile_98"u8))
                 {
-                    percentile98 = property.Value.GetSingle();
+                    percentile98 = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BandStatistics(
                 min,
                 max,
@@ -258,31 +265,39 @@ namespace Azure.PlanetaryComputer
                 validPixels,
                 percentile2,
                 percentile98,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BandStatistics>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BandStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BandStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BandStatistics IPersistableModel<BandStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BandStatistics IPersistableModel<BandStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BandStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BandStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBandStatistics(document.RootElement, options);
                     }
                 default:
@@ -290,22 +305,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BandStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BandStatistics FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBandStatistics(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

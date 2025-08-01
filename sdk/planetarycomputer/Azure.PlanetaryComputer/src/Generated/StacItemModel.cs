@@ -9,23 +9,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents a STAC Item, which is a GeoJSON Feature with additional metadata. </summary>
     public partial class StacItemModel : StacItemOrItemCollection
     {
         /// <summary> Initializes a new instance of <see cref="StacItemModel"/>. </summary>
-        /// <param name="geometry">
-        /// Geometry object defining the feature's shape
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="bbox"> Bounding box coordinates for the feature. </param>
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="properties"> Attributes associated with the feature. </param>
         /// <param name="assets"> Assets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/>, <paramref name="bbox"/>, <paramref name="id"/>, <paramref name="properties"/> or <paramref name="assets"/> is null. </exception>
-        public StacItemModel(GeoJsonGeometry geometry, IEnumerable<double> bbox, string id, ItemProperties properties, IDictionary<string, StacAsset> assets)
+        public StacItemModel(GeoJsonGeometry geometry, IEnumerable<double> bbox, string id, ItemProperties properties, IDictionary<string, StacAsset> assets) : base(StacModelType.Feature)
         {
             Argument.AssertNotNull(geometry, nameof(geometry));
             Argument.AssertNotNull(bbox, nameof(bbox));
@@ -33,7 +29,6 @@ namespace Azure.PlanetaryComputer
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(assets, nameof(assets));
 
-            Type = StacModelType.Feature;
             Geometry = geometry;
             Bbox = bbox.ToList();
             Id = id;
@@ -49,12 +44,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="msftUpdated"> MSFT Updated. </param>
         /// <param name="msftShortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="geometry">
-        /// Geometry object defining the feature's shape
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="bbox"> Bounding box coordinates for the feature. </param>
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="collection"> ID of the STAC collection this item belongs to. </param>
@@ -62,7 +53,7 @@ namespace Azure.PlanetaryComputer
         /// <param name="assets"> Assets. </param>
         /// <param name="msftTimestamp"> MSFT Timestamp. </param>
         /// <param name="msftEtag"> MSFT ETag. </param>
-        internal StacItemModel(StacModelType type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData, GeoJsonGeometry geometry, IList<double> bbox, string id, string collection, ItemProperties properties, IDictionary<string, StacAsset> assets, string msftTimestamp, string msftEtag) : base(type, stacVersion, links, msftCreated, msftUpdated, msftShortDescription, stacExtensions, serializedAdditionalRawData)
+        internal StacItemModel(StacModelType @type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, GeoJsonGeometry geometry, IList<double> bbox, string id, string collection, ItemProperties properties, IDictionary<string, StacAsset> assets, string msftTimestamp, string msftEtag) : base(@type, stacVersion, links, msftCreated, msftUpdated, msftShortDescription, stacExtensions, additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Bbox = bbox;
@@ -74,29 +65,27 @@ namespace Azure.PlanetaryComputer
             MsftEtag = msftEtag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemModel"/> for deserialization. </summary>
-        internal StacItemModel()
-        {
-        }
-
-        /// <summary>
-        /// Geometry object defining the feature's shape
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </summary>
+        /// <summary> Geometry object defining the feature's shape. </summary>
         public GeoJsonGeometry Geometry { get; set; }
+
         /// <summary> Bounding box coordinates for the feature. </summary>
         public IList<double> Bbox { get; }
+
         /// <summary> Unique identifier for the feature. </summary>
         public string Id { get; set; }
+
         /// <summary> ID of the STAC collection this item belongs to. </summary>
         public string Collection { get; set; }
+
         /// <summary> Attributes associated with the feature. </summary>
         public ItemProperties Properties { get; set; }
+
         /// <summary> Assets. </summary>
         public IDictionary<string, StacAsset> Assets { get; }
+
         /// <summary> MSFT Timestamp. </summary>
         public string MsftTimestamp { get; set; }
+
         /// <summary> MSFT ETag. </summary>
         public string MsftEtag { get; set; }
     }

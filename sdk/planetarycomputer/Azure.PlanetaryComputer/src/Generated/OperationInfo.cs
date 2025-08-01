@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog operation. </summary>
     public partial class OperationInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationInfo"/>. </summary>
         /// <param name="id"> Operation id. </param>
@@ -52,15 +24,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="type"> Operation type. </param>
         /// <param name="creationTime"> The UTC time at which the operation was created. </param>
         /// <param name="statusHistory"> The history of the operation status in time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="statusHistory"/> is null. </exception>
-        internal OperationInfo(Guid id, OperationStatus status, string type, DateTimeOffset creationTime, IEnumerable<OperationStatusHistoryItem> statusHistory)
+        internal OperationInfo(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, IEnumerable<OperationStatusHistoryItem> statusHistory)
         {
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(statusHistory, nameof(statusHistory));
-
             Id = id;
             Status = status;
-            Type = type;
+            Type = @type;
             CreationTime = creationTime;
             StatusHistory = statusHistory.ToList();
             AdditionalInformation = new ChangeTrackingDictionary<string, string>();
@@ -77,12 +45,12 @@ namespace Azure.PlanetaryComputer
         /// <param name="finishTime"> The UTC time at which the operation finished its execution. </param>
         /// <param name="additionalInformation"> Additional information elements about the particular operation type. </param>
         /// <param name="error"> Error information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationInfo(Guid id, OperationStatus status, string type, DateTimeOffset creationTime, string collectionId, IReadOnlyList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, IReadOnlyDictionary<string, string> additionalInformation, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationInfo(Guid id, OperationStatus status, string @type, DateTimeOffset creationTime, string collectionId, IList<OperationStatusHistoryItem> statusHistory, DateTimeOffset? startTime, DateTimeOffset? finishTime, IDictionary<string, string> additionalInformation, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
-            Type = type;
+            Type = @type;
             CreationTime = creationTime;
             CollectionId = collectionId;
             StatusHistory = statusHistory;
@@ -90,32 +58,36 @@ namespace Azure.PlanetaryComputer
             FinishTime = finishTime;
             AdditionalInformation = additionalInformation;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationInfo"/> for deserialization. </summary>
-        internal OperationInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operation id. </summary>
         public Guid Id { get; }
+
         /// <summary> Operation status. </summary>
         public OperationStatus Status { get; }
+
         /// <summary> Operation type. </summary>
         public string Type { get; }
+
         /// <summary> The UTC time at which the operation was created. </summary>
         public DateTimeOffset CreationTime { get; }
+
         /// <summary> Collection ID. </summary>
         public string CollectionId { get; }
+
         /// <summary> The history of the operation status in time. </summary>
-        public IReadOnlyList<OperationStatusHistoryItem> StatusHistory { get; }
+        public IList<OperationStatusHistoryItem> StatusHistory { get; }
+
         /// <summary> The UTC time at which the operation was started. </summary>
         public DateTimeOffset? StartTime { get; }
+
         /// <summary> The UTC time at which the operation finished its execution. </summary>
         public DateTimeOffset? FinishTime { get; }
+
         /// <summary> Additional information elements about the particular operation type. </summary>
-        public IReadOnlyDictionary<string, string> AdditionalInformation { get; }
+        public IDictionary<string, string> AdditionalInformation { get; }
+
         /// <summary> Error information. </summary>
         public ResponseError Error { get; }
     }

@@ -8,26 +8,21 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The ImageExports service client. </summary>
+    /// <summary> The ImageExportsClient. </summary>
     public partial class ImageExportsClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ImageExportsClient for mocking. </summary>
         protected ImageExportsClient()
@@ -35,109 +30,64 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of ImageExportsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageExportsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public ImageExportsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ImageExportsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ImageExportsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageExportsClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public ImageExportsClient(Uri endpoint, TokenCredential credential, ImageExportsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new ImageExportsClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Create Static Image. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="body"> Image request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="accept"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create a new image export. </remarks>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='CreateStaticImageAsync(string,string,ImageContent,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> CreateStaticImageAsync(string collectionId, string accept, ImageContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(body, nameof(body));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateStaticImageAsync(collectionId, accept, content, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Create Static Image. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="body"> Image request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="accept"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create a new image export. </remarks>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='CreateStaticImage(string,string,ImageContent,CancellationToken)']/*" />
-        public virtual Response<BinaryData> CreateStaticImage(string collectionId, string accept, ImageContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateStaticImage(collectionId, accept, content, context);
-            return Response.FromValue(response.Content, response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Create Static Image
+        /// [Protocol Method] Create a new image export.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateStaticImageAsync(string,string,ImageContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='CreateStaticImageAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateStaticImageAsync(string collectionId, string accept, RequestContent content, RequestContext context = null)
+        public virtual Response CreateStaticImage(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageExportsClient.CreateStaticImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageExportsClient.CreateStaticImage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, accept, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -147,41 +97,31 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Create Static Image
+        /// [Protocol Method] Create a new image export.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateStaticImage(string,string,ImageContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='CreateStaticImage(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateStaticImage(string collectionId, string accept, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateStaticImageAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageExportsClient.CreateStaticImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageExportsClient.CreateStaticImage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, accept, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -190,175 +130,136 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Static Image. </summary>
+        /// <summary> Create a new image export. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="id"> Image export ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Fetch an existing image export by ID. </remarks>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='GetStaticImageAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetStaticImageAsync(string collectionId, string id, CancellationToken cancellationToken = default)
+        /// <param name="body"> Image request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<BinaryData> CreateStaticImage(string collectionId, ImageContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetStaticImageAsync(collectionId, id, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
+            Response result = CreateStaticImage(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
         }
 
-        /// <summary> Get Static Image. </summary>
+        /// <summary> Create a new image export. </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="body"> Image request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<BinaryData>> CreateStaticImageAsync(string collectionId, ImageContent body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateStaticImageAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Fetch an existing image export by ID
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="id"> Image export ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Fetch an existing image export by ID. </remarks>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='GetStaticImage(string,string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetStaticImage(string collectionId, string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageExportsClient.GetStaticImage");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Fetch an existing image export by ID
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="id"> Image export ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetStaticImageAsync(string collectionId, string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ImageExportsClient.GetStaticImage");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Fetch an existing image export by ID. </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="id"> Image export ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<BinaryData> GetStaticImage(string collectionId, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetStaticImage(collectionId, id, context);
-            return Response.FromValue(response.Content, response);
+            Response result = GetStaticImage(collectionId, id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get Static Image
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStaticImageAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Fetch an existing image export by ID. </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="id"> Image export ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='GetStaticImageAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStaticImageAsync(string collectionId, string id, RequestContext context)
+        public virtual async Task<Response<BinaryData>> GetStaticImageAsync(string collectionId, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = ClientDiagnostics.CreateScope("ImageExportsClient.GetStaticImage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetStaticImageAsync(collectionId, id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
         }
-
-        /// <summary>
-        /// [Protocol Method] Get Static Image
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStaticImage(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="id"> Image export ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ImageExportsClient.xml" path="doc/members/member[@name='GetStaticImage(string,string,RequestContext)']/*" />
-        public virtual Response GetStaticImage(string collectionId, string id, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = ClientDiagnostics.CreateScope("ImageExportsClient.GetStaticImage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateCreateStaticImageRequest(string collectionId, string accept, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/image/static", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetStaticImageRequest(string collectionId, string id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/image/static/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "image/png");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier200204;
-        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
     }
 }

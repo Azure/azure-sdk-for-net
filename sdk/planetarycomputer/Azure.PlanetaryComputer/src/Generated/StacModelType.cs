@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Enum discriminator for STAC item and collection types. </summary>
     internal readonly partial struct StacModelType : IEquatable<StacModelType>
     {
         private readonly string _value;
+        /// <summary> GeoJSON Feature type. </summary>
+        private const string FeatureValue = "Feature";
+        /// <summary> GeoJSON FeatureCollection type. </summary>
+        private const string FeatureCollectionValue = "FeatureCollection";
 
         /// <summary> Initializes a new instance of <see cref="StacModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StacModelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FeatureValue = "Feature";
-        private const string FeatureCollectionValue = "FeatureCollection";
+            _value = value;
+        }
 
         /// <summary> GeoJSON Feature type. </summary>
         public static StacModelType Feature { get; } = new StacModelType(FeatureValue);
+
         /// <summary> GeoJSON FeatureCollection type. </summary>
         public static StacModelType FeatureCollection { get; } = new StacModelType(FeatureCollectionValue);
+
         /// <summary> Determines if two <see cref="StacModelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StacModelType left, StacModelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StacModelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StacModelType left, StacModelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StacModelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StacModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StacModelType(string value) => new StacModelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StacModelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StacModelType?(string value) => value == null ? null : new StacModelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StacModelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StacModelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

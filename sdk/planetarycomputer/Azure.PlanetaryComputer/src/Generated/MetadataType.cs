@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Type of metadata resource in the system. </summary>
     public readonly partial struct MetadataType : IEquatable<MetadataType>
     {
         private readonly string _value;
+        /// <summary> Metadata for a mosaic of multiple raster assets. </summary>
+        private const string MosaicValue = "mosaic";
+        /// <summary> Metadata for a search query result. </summary>
+        private const string SearchValue = "search";
 
         /// <summary> Initializes a new instance of <see cref="MetadataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetadataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MosaicValue = "mosaic";
-        private const string SearchValue = "search";
+            _value = value;
+        }
 
         /// <summary> Metadata for a mosaic of multiple raster assets. </summary>
         public static MetadataType Mosaic { get; } = new MetadataType(MosaicValue);
+
         /// <summary> Metadata for a search query result. </summary>
         public static MetadataType Search { get; } = new MetadataType(SearchValue);
+
         /// <summary> Determines if two <see cref="MetadataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetadataType left, MetadataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetadataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetadataType left, MetadataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetadataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetadataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetadataType(string value) => new MetadataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetadataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetadataType?(string value) => value == null ? null : new MetadataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetadataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetadataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

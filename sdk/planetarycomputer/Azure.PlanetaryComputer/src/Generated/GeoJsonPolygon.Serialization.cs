@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class GeoJsonPolygon : IUtf8JsonSerializable, IJsonModel<GeoJsonPolygon>
+    /// <summary> Represents a Polygon. </summary>
+    public partial class GeoJsonPolygon : IJsonModel<GeoJsonPolygon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonPolygon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/> for deserialization. </summary>
+        internal GeoJsonPolygon()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GeoJsonPolygon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,16 +33,15 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
-            foreach (var item in Coordinates)
+            foreach (IList<IList<double>> item in Coordinates)
             {
                 if (item == null)
                 {
@@ -45,7 +49,7 @@ namespace Azure.PlanetaryComputer
                     continue;
                 }
                 writer.WriteStartArray();
-                foreach (var item0 in item)
+                foreach (IList<double> item0 in item)
                 {
                     if (item0 == null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.PlanetaryComputer
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item1 in item0)
+                    foreach (double item1 in item0)
                     {
                         writer.WriteNumberValue(item1);
                     }
@@ -64,37 +68,60 @@ namespace Azure.PlanetaryComputer
             writer.WriteEndArray();
         }
 
-        GeoJsonPolygon IJsonModel<GeoJsonPolygon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoJsonPolygon IJsonModel<GeoJsonPolygon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GeoJsonPolygon)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GeoJsonGeometry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGeoJsonPolygon(document.RootElement, options);
         }
 
-        internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IList<IList<double>>> coordinates = default;
-            GeometryType type = default;
+            GeometryType @type = default;
             IList<double> bbox = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<IList<IList<double>>> coordinates = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"u8))
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new GeometryType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("bbox"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
+                    continue;
+                }
+                if (prop.NameEquals("coordinates"u8))
                 {
                     List<IList<IList<double>>> array = new List<IList<IList<double>>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -125,56 +152,44 @@ namespace Azure.PlanetaryComputer
                     coordinates = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new GeometryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("bbox"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetDouble());
-                    }
-                    bbox = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GeoJsonPolygon(type, bbox ?? new ChangeTrackingList<double>(), serializedAdditionalRawData, coordinates);
+            return new GeoJsonPolygon(@type, bbox ?? new ChangeTrackingList<double>(), additionalBinaryDataProperties, coordinates);
         }
 
-        BinaryData IPersistableModel<GeoJsonPolygon>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GeoJsonPolygon>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GeoJsonPolygon)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GeoJsonPolygon IPersistableModel<GeoJsonPolygon>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoJsonPolygon IPersistableModel<GeoJsonPolygon>.Create(BinaryData data, ModelReaderWriterOptions options) => (GeoJsonPolygon)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonPolygon>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGeoJsonPolygon(document.RootElement, options);
                     }
                 default:
@@ -182,22 +197,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GeoJsonPolygon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new GeoJsonPolygon FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGeoJsonPolygon(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

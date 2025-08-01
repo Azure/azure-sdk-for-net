@@ -9,42 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Defines a named mosaic with filtering criteria. </summary>
     public partial class StacMosaic
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StacMosaic"/>. </summary>
         /// <param name="id"> Unique identifier for the mosaic. </param>
@@ -67,27 +38,25 @@ namespace Azure.PlanetaryComputer
         /// <param name="name"> Short descriptive name for the mosaic. </param>
         /// <param name="description"> Detailed description of the mosaic. </param>
         /// <param name="cql"> A list of valid CQL2-JSON expressions used to filter the collection to moasic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StacMosaic(string id, string name, string description, IList<CqlFilter> cql, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StacMosaic(string id, string name, string description, IList<CqlFilter> cql, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Description = description;
             Cql = cql;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StacMosaic"/> for deserialization. </summary>
-        internal StacMosaic()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the mosaic. </summary>
         public string Id { get; set; }
+
         /// <summary> Short descriptive name for the mosaic. </summary>
         public string Name { get; set; }
+
         /// <summary> Detailed description of the mosaic. </summary>
         public string Description { get; set; }
+
         /// <summary> A list of valid CQL2-JSON expressions used to filter the collection to moasic. </summary>
         public IList<CqlFilter> Cql { get; }
     }

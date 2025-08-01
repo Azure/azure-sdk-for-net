@@ -10,26 +10,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The StacApi service client. </summary>
+    /// <summary> The StacApiClient. </summary>
     public partial class StacApiClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of StacApiClient for mocking. </summary>
         protected StacApiClient()
@@ -37,115 +32,57 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of StacApiClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public StacApiClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public StacApiClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new StacApiClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of StacApiClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public StacApiClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public StacApiClient(Uri endpoint, TokenCredential credential, StacApiClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new StacApiClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Landing Page. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetStacLandingPageAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<LandingPage>> GetStacLandingPageAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetStacLandingPageAsync(context).ConfigureAwait(false);
-            return Response.FromValue(LandingPage.FromResponse(response), response);
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        /// <summary> Landing Page. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetStacLandingPage(CancellationToken)']/*" />
-        public virtual Response<LandingPage> GetStacLandingPage(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetStacLandingPage(context);
-            return Response.FromValue(LandingPage.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Landing Page
+        /// [Protocol Method] Endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStacLandingPageAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetStacLandingPageAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetStacLandingPageAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetStacLandingPage");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetStacLandingPageRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Landing Page
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStacLandingPage(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetStacLandingPage(RequestContext)']/*" />
         public virtual Response GetStacLandingPage(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetStacLandingPage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetStacLandingPage");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetStacLandingPageRequest(context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -154,61 +91,25 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Collections. </summary>
-        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllCollectionsAsync(SignType?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<FeatureCollections>> GetAllCollectionsAsync(SignType? sign = null, int? duration = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAllCollectionsAsync(sign?.ToString(), duration, context).ConfigureAwait(false);
-            return Response.FromValue(FeatureCollections.FromResponse(response), response);
-        }
-
-        /// <summary> Get Collections. </summary>
-        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllCollections(SignType?,int?,CancellationToken)']/*" />
-        public virtual Response<FeatureCollections> GetAllCollections(SignType? sign = null, int? duration = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAllCollections(sign?.ToString(), duration, context);
-            return Response.FromValue(FeatureCollections.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get Collections
+        /// [Protocol Method] Endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllCollectionsAsync(SignType?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sign"> Whether to sign asset URLs in the response. Allowed values: "true" | "false". </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllCollectionsAsync(string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAllCollectionsAsync(string sign, int? duration, RequestContext context)
+        public virtual async Task<Response> GetStacLandingPageAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllCollections");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetStacLandingPage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllCollectionsRequest(sign, duration, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetStacLandingPageRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -217,35 +118,45 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <summary> Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<LandingPage> GetStacLandingPage(CancellationToken cancellationToken = default)
+        {
+            Response result = GetStacLandingPage(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((LandingPage)result, result);
+        }
+
+        /// <summary> Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<LandingPage>> GetStacLandingPageAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetStacLandingPageAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((LandingPage)result, result);
+        }
+
         /// <summary>
-        /// [Protocol Method] Get Collections
+        /// [Protocol Method] Endpoint.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllCollections(SignType?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sign"> Whether to sign asset URLs in the response. Allowed values: "true" | "false". </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
         /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllCollections(string,int?,RequestContext)']/*" />
         public virtual Response GetAllCollections(string sign, int? duration, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllCollections");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllCollections");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetAllCollectionsRequest(sign, duration, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -254,1235 +165,73 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Collection. </summary>
-        /// <param name="collectionId"> Unique identifier for the collection. </param>
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="sign"> Whether to sign asset URLs in the response. </param>
         /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a collection in the GeoCatalog instance. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetCollectionAsync(string,SignType?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<StacCollectionModel>> GetCollectionAsync(string collectionId, SignType? sign = null, int? duration = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAllCollectionsAsync(string sign, int? duration, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCollectionAsync(collectionId, sign?.ToString(), duration, context).ConfigureAwait(false);
-            return Response.FromValue(StacCollectionModel.FromResponse(response), response);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllCollections");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAllCollectionsRequest(sign, duration, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get Collection. </summary>
-        /// <param name="collectionId"> Unique identifier for the collection. </param>
+        /// <summary> Endpoint. </summary>
         /// <param name="sign"> Whether to sign asset URLs in the response. </param>
         /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a collection in the GeoCatalog instance. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetCollection(string,SignType?,int?,CancellationToken)']/*" />
-        public virtual Response<StacCollectionModel> GetCollection(string collectionId, SignType? sign = null, int? duration = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<FeatureCollections> GetAllCollections(SignType? sign = default, int? duration = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCollection(collectionId, sign?.ToString(), duration, context);
-            return Response.FromValue(StacCollectionModel.FromResponse(response), response);
+            Response result = GetAllCollections(sign?.ToString(), duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((FeatureCollections)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCollectionAsync(string,SignType?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the collection. </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. Allowed values: "true" | "false". </param>
+        /// <summary> Endpoint. </summary>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
         /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetCollectionAsync(string,string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetCollectionAsync(string collectionId, string sign, int? duration, RequestContext context)
+        public virtual async Task<Response<FeatureCollections>> GetAllCollectionsAsync(SignType? sign = default, int? duration = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCollectionRequest(collectionId, sign, duration, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetAllCollectionsAsync(sign?.ToString(), duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((FeatureCollections)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCollection(string,SignType?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the collection. </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. Allowed values: "true" | "false". </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetCollection(string,string,int?,RequestContext)']/*" />
-        public virtual Response GetCollection(string collectionId, string sign, int? duration, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCollectionRequest(collectionId, sign, duration, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetch features of the feature collection with id `collectionId`.
-        ///
-        /// Every feature in a dataset belongs to a collection. A dataset may
-        /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="limit">
-        /// The optional limit parameter recommends the number of items that should be present in the response document.
-        ///
-        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
-        /// maximum possible number of items, rather than responding with an error.
-        ///
-        /// Only items are counted that are on the first level of the collection in the response document.
-        /// Nested objects contained within the explicitly requested items must not be counted.
-        ///
-        /// Minimum = 1. Maximum = 10000. Default = 10.
-        /// </param>
-        /// <param name="bbox">
-        /// Only features that have a geometry that intersects the bounding box are selected.
-        /// The bounding box is provided as four or six numbers, depending on whether the
-        /// coordinate reference system includes a vertical axis (height or depth):
-        ///
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        ///
-        /// The coordinate reference system of the values is WGS 84 longitude/latitude
-        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        ///
-        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
-        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
-        /// However, in cases where the box spans the antimeridian the first value
-        /// (west-most box edge) is larger than the third value (east-most box edge).
-        ///
-        /// If the vertical axis is included, the third and the sixth number are
-        /// the bottom and the top of the 3-dimensional bounding box.
-        ///
-        /// If a feature has multiple spatial geometry properties, it is the decision of the
-        /// server whether only a single spatial geometry property is used to determine
-        /// the extent or all relevant geometries.
-        /// </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        ///
-        /// Examples:
-        ///
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        ///
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        ///
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItemsAsFeaturesAsync(string,long?,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual async Task<Response<ItemCollectionModel>> GetItemsAsFeaturesAsync(string collectionId, long? limit = null, IEnumerable<string> bbox = null, string datetime = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetItemsAsFeaturesAsync(collectionId, limit, bbox, datetime, context).ConfigureAwait(false);
-            return Response.FromValue(ItemCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// Fetch features of the feature collection with id `collectionId`.
-        ///
-        /// Every feature in a dataset belongs to a collection. A dataset may
-        /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="limit">
-        /// The optional limit parameter recommends the number of items that should be present in the response document.
-        ///
-        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
-        /// maximum possible number of items, rather than responding with an error.
-        ///
-        /// Only items are counted that are on the first level of the collection in the response document.
-        /// Nested objects contained within the explicitly requested items must not be counted.
-        ///
-        /// Minimum = 1. Maximum = 10000. Default = 10.
-        /// </param>
-        /// <param name="bbox">
-        /// Only features that have a geometry that intersects the bounding box are selected.
-        /// The bounding box is provided as four or six numbers, depending on whether the
-        /// coordinate reference system includes a vertical axis (height or depth):
-        ///
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        ///
-        /// The coordinate reference system of the values is WGS 84 longitude/latitude
-        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        ///
-        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
-        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
-        /// However, in cases where the box spans the antimeridian the first value
-        /// (west-most box edge) is larger than the third value (east-most box edge).
-        ///
-        /// If the vertical axis is included, the third and the sixth number are
-        /// the bottom and the top of the 3-dimensional bounding box.
-        ///
-        /// If a feature has multiple spatial geometry properties, it is the decision of the
-        /// server whether only a single spatial geometry property is used to determine
-        /// the extent or all relevant geometries.
-        /// </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        ///
-        /// Examples:
-        ///
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        ///
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        ///
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItemsAsFeatures(string,long?,IEnumerable{string},string,CancellationToken)']/*" />
-        public virtual Response<ItemCollectionModel> GetItemsAsFeatures(string collectionId, long? limit = null, IEnumerable<string> bbox = null, string datetime = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetItemsAsFeatures(collectionId, limit, bbox, datetime, context);
-            return Response.FromValue(ItemCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Fetch features of the feature collection with id `collectionId`.
-        ///
-        /// Every feature in a dataset belongs to a collection. A dataset may
-        /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetItemsAsFeaturesAsync(string,long?,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="limit">
-        /// The optional limit parameter recommends the number of items that should be present in the response document.
-        ///
-        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
-        /// maximum possible number of items, rather than responding with an error.
-        ///
-        /// Only items are counted that are on the first level of the collection in the response document.
-        /// Nested objects contained within the explicitly requested items must not be counted.
-        ///
-        /// Minimum = 1. Maximum = 10000. Default = 10.
-        /// </param>
-        /// <param name="bbox">
-        /// Only features that have a geometry that intersects the bounding box are selected.
-        /// The bounding box is provided as four or six numbers, depending on whether the
-        /// coordinate reference system includes a vertical axis (height or depth):
-        ///
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        ///
-        /// The coordinate reference system of the values is WGS 84 longitude/latitude
-        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        ///
-        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
-        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
-        /// However, in cases where the box spans the antimeridian the first value
-        /// (west-most box edge) is larger than the third value (east-most box edge).
-        ///
-        /// If the vertical axis is included, the third and the sixth number are
-        /// the bottom and the top of the 3-dimensional bounding box.
-        ///
-        /// If a feature has multiple spatial geometry properties, it is the decision of the
-        /// server whether only a single spatial geometry property is used to determine
-        /// the extent or all relevant geometries.
-        /// </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        ///
-        /// Examples:
-        ///
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        ///
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        ///
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItemsAsFeaturesAsync(string,long?,IEnumerable{string},string,RequestContext)']/*" />
-        public virtual async Task<Response> GetItemsAsFeaturesAsync(string collectionId, long? limit, IEnumerable<string> bbox, string datetime, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetItemsAsFeatures");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetItemsAsFeaturesRequest(collectionId, limit, bbox, datetime, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Fetch features of the feature collection with id `collectionId`.
-        ///
-        /// Every feature in a dataset belongs to a collection. A dataset may
-        /// consist of multiple feature collections. A feature collection is often a
-        /// collection of features of a similar type, based on a common schema.")
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetItemsAsFeatures(string,long?,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="limit">
-        /// The optional limit parameter recommends the number of items that should be present in the response document.
-        ///
-        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
-        /// maximum possible number of items, rather than responding with an error.
-        ///
-        /// Only items are counted that are on the first level of the collection in the response document.
-        /// Nested objects contained within the explicitly requested items must not be counted.
-        ///
-        /// Minimum = 1. Maximum = 10000. Default = 10.
-        /// </param>
-        /// <param name="bbox">
-        /// Only features that have a geometry that intersects the bounding box are selected.
-        /// The bounding box is provided as four or six numbers, depending on whether the
-        /// coordinate reference system includes a vertical axis (height or depth):
-        ///
-        /// - Lower left corner, coordinate axis 1
-        /// - Lower left corner, coordinate axis 2
-        /// - Minimum value, coordinate axis 3 (optional)
-        /// - Upper right corner, coordinate axis 1
-        /// - Upper right corner, coordinate axis 2
-        /// - Maximum value, coordinate axis 3 (optional)
-        ///
-        /// The coordinate reference system of the values is WGS 84 longitude/latitude
-        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-        ///
-        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
-        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
-        /// However, in cases where the box spans the antimeridian the first value
-        /// (west-most box edge) is larger than the third value (east-most box edge).
-        ///
-        /// If the vertical axis is included, the third and the sixth number are
-        /// the bottom and the top of the 3-dimensional bounding box.
-        ///
-        /// If a feature has multiple spatial geometry properties, it is the decision of the
-        /// server whether only a single spatial geometry property is used to determine
-        /// the extent or all relevant geometries.
-        /// </param>
-        /// <param name="datetime">
-        /// Either a date-time or an interval, open or closed. Date and time expressions
-        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
-        ///
-        /// Examples:
-        ///
-        /// - A date-time: "2018-02-12T23:20:50Z"
-        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
-        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
-        ///
-        /// Only features that have a temporal property that intersects the value of
-        /// `datetime` are selected.
-        ///
-        /// If a feature has multiple temporal properties, it is the decision of the
-        /// server whether only a single temporal property is used to determine
-        /// the extent or all relevant temporal properties.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItemsAsFeatures(string,long?,IEnumerable{string},string,RequestContext)']/*" />
-        public virtual Response GetItemsAsFeatures(string collectionId, long? limit, IEnumerable<string> bbox, string datetime, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetItemsAsFeatures");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetItemsAsFeaturesRequest(collectionId, limit, bbox, datetime, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Fetch a single STAC Item. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItemAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<StacItemModel>> GetItemAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetItemAsync(collectionId, itemId, context).ConfigureAwait(false);
-            return Response.FromValue(StacItemModel.FromResponse(response), response);
-        }
-
-        /// <summary> Fetch a single STAC Item. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItem(string,string,CancellationToken)']/*" />
-        public virtual Response<StacItemModel> GetItem(string collectionId, string itemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetItem(collectionId, itemId, context);
-            return Response.FromValue(StacItemModel.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Fetch a single STAC Item
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetItemAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItemAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetItemAsync(string collectionId, string itemId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Fetch a single STAC Item
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetItem(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetItem(string,string,RequestContext)']/*" />
-        public virtual Response GetItem(string collectionId, string itemId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Queryables. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryablesAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<JsonSchema>> GetAllQueryablesAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAllQueryablesAsync(context).ConfigureAwait(false);
-            return Response.FromValue(JsonSchema.FromResponse(response), response);
-        }
-
-        /// <summary> Queryables. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryables(CancellationToken)']/*" />
-        public virtual Response<JsonSchema> GetAllQueryables(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAllQueryables(context);
-            return Response.FromValue(JsonSchema.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllQueryablesAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryablesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetAllQueryablesAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryables");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAllQueryablesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllQueryables(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryables(RequestContext)']/*" />
-        public virtual Response GetAllQueryables(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryables");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAllQueryablesRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Collection Queryables. </summary>
-        /// <param name="collectionId"> Collection ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryablesByCollectionAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<JsonSchema>> GetAllQueryablesByCollectionAsync(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAllQueryablesByCollectionAsync(collectionId, context).ConfigureAwait(false);
-            return Response.FromValue(JsonSchema.FromResponse(response), response);
-        }
-
-        /// <summary> Collection Queryables. </summary>
-        /// <param name="collectionId"> Collection ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryablesByCollection(string,CancellationToken)']/*" />
-        public virtual Response<JsonSchema> GetAllQueryablesByCollection(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAllQueryablesByCollection(collectionId, context);
-            return Response.FromValue(JsonSchema.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Collection Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllQueryablesByCollectionAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Collection ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryablesByCollectionAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAllQueryablesByCollectionAsync(string collectionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryablesByCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAllQueryablesByCollectionRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Collection Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllQueryablesByCollection(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Collection ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetAllQueryablesByCollection(string,RequestContext)']/*" />
-        public virtual Response GetAllQueryablesByCollection(string collectionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryablesByCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAllQueryablesByCollectionRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Set Collection Queryables. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="body"> Request queryable definition body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Set queryables for a collection given a list of queryable definitions. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateQueryablesAsync(string,IEnumerable{QueryableProperty},CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<QueryableProperty>>> CreateQueryablesAsync(string collectionId, IEnumerable<QueryableProperty> body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateQueryablesAsync(collectionId, content, context).ConfigureAwait(false);
-            IReadOnlyList<QueryableProperty> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<QueryableProperty> array = new List<QueryableProperty>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(QueryableProperty.DeserializeQueryableProperty(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Set Collection Queryables. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="body"> Request queryable definition body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Set queryables for a collection given a list of queryable definitions. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateQueryables(string,IEnumerable{QueryableProperty},CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<QueryableProperty>> CreateQueryables(string collectionId, IEnumerable<QueryableProperty> body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = RequestContentHelper.FromEnumerable(body);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateQueryables(collectionId, content, context);
-            IReadOnlyList<QueryableProperty> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<QueryableProperty> array = new List<QueryableProperty>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(QueryableProperty.DeserializeQueryableProperty(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Set Collection Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateQueryablesAsync(string,IEnumerable{QueryableProperty},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <summary> Create a new collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateQueryablesAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateQueryablesAsync(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateQueryables");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateQueryablesRequest(collectionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Set Collection Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateQueryables(string,IEnumerable{QueryableProperty},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateQueryables(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateQueryables(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateQueryables");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateQueryablesRequest(collectionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Conformance Classes. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetConformanceClassAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<ConformanceClasses>> GetConformanceClassAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetConformanceClassAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ConformanceClasses.FromResponse(response), response);
-        }
-
-        /// <summary> Conformance Classes. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetConformanceClass(CancellationToken)']/*" />
-        public virtual Response<ConformanceClasses> GetConformanceClass(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetConformanceClass(context);
-            return Response.FromValue(ConformanceClasses.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Conformance Classes
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetConformanceClassAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetConformanceClassAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetConformanceClassAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetConformanceClass");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetConformanceClassRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Conformance Classes
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetConformanceClass(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetConformanceClass(RequestContext)']/*" />
-        public virtual Response GetConformanceClass(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetConformanceClass");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetConformanceClassRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Search. </summary>
-        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
-        /// <param name="ids"> Array of Item IDs to return specific items. </param>
-        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
-        /// <param name="limit"> Maximum number of results to return. </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
-        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
-        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
-        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
-        /// <param name="token"> Pagination token for fetching the next set of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetSearchOperationsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{double},string,string,int?,SignType?,int?,string,string,string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<ItemCollectionModel>> GetSearchOperationsAsync(IEnumerable<string> collections = null, IEnumerable<string> ids = null, IEnumerable<double> bbox = null, string intersects = null, string datetime = null, int? limit = null, SignType? sign = null, int? duration = null, string query = null, string sortBy = null, string fields = null, string filter = null, string token = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSearchOperationsAsync(collections, ids, bbox, intersects, datetime, limit, sign?.ToString(), duration, query, sortBy, fields, filter, token, context).ConfigureAwait(false);
-            return Response.FromValue(ItemCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary> Search. </summary>
-        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
-        /// <param name="ids"> Array of Item IDs to return specific items. </param>
-        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
-        /// <param name="limit"> Maximum number of results to return. </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
-        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
-        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
-        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
-        /// <param name="token"> Pagination token for fetching the next set of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetSearchOperations(IEnumerable{string},IEnumerable{string},IEnumerable{double},string,string,int?,SignType?,int?,string,string,string,string,string,CancellationToken)']/*" />
-        public virtual Response<ItemCollectionModel> GetSearchOperations(IEnumerable<string> collections = null, IEnumerable<string> ids = null, IEnumerable<double> bbox = null, string intersects = null, string datetime = null, int? limit = null, SignType? sign = null, int? duration = null, string query = null, string sortBy = null, string fields = null, string filter = null, string token = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSearchOperations(collections, ids, bbox, intersects, datetime, limit, sign?.ToString(), duration, query, sortBy, fields, filter, token, context);
-            return Response.FromValue(ItemCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSearchOperationsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{double},string,string,int?,SignType?,int?,string,string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
-        /// <param name="ids"> Array of Item IDs to return specific items. </param>
-        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
-        /// <param name="limit"> Maximum number of results to return. </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. Allowed values: "true" | "false". </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
-        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
-        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
-        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
-        /// <param name="token"> Pagination token for fetching the next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetSearchOperationsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{double},string,string,int?,string,int?,string,string,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSearchOperationsAsync(IEnumerable<string> collections, IEnumerable<string> ids, IEnumerable<double> bbox, string intersects, string datetime, int? limit, string sign, int? duration, string query, string sortBy, string fields, string filter, string token, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetSearchOperations");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSearchOperationsRequest(collections, ids, bbox, intersects, datetime, limit, sign, duration, query, sortBy, fields, filter, token, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSearchOperations(IEnumerable{string},IEnumerable{string},IEnumerable{double},string,string,int?,SignType?,int?,string,string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
-        /// <param name="ids"> Array of Item IDs to return specific items. </param>
-        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
-        /// <param name="limit"> Maximum number of results to return. </param>
-        /// <param name="sign"> Whether to sign asset URLs in the response. Allowed values: "true" | "false". </param>
-        /// <param name="duration"> URL signature duration in seconds. </param>
-        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
-        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
-        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
-        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
-        /// <param name="token"> Pagination token for fetching the next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='GetSearchOperations(IEnumerable{string},IEnumerable{string},IEnumerable{double},string,string,int?,string,int?,string,string,string,string,string,RequestContext)']/*" />
-        public virtual Response GetSearchOperations(IEnumerable<string> collections, IEnumerable<string> ids, IEnumerable<double> bbox, string intersects, string datetime, int? limit, string sign, int? duration, string query, string sortBy, string fields, string filter, string token, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.GetSearchOperations");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSearchOperationsRequest(collections, ids, bbox, intersects, datetime, limit, sign, duration, query, sortBy, fields, filter, token, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Search. </summary>
-        /// <param name="body"> Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateSearchOperationsAsync(SearchPostContent,CancellationToken)']/*" />
-        public virtual async Task<Response<ItemCollectionModel>> CreateSearchOperationsAsync(SearchPostContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateSearchOperationsAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(ItemCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary> Search. </summary>
-        /// <param name="body"> Request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Endpoint. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateSearchOperations(SearchPostContent,CancellationToken)']/*" />
-        public virtual Response<ItemCollectionModel> CreateSearchOperations(SearchPostContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateSearchOperations(content, context);
-            return Response.FromValue(ItemCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateSearchOperationsAsync(SearchPostContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateSearchOperationsAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateSearchOperationsAsync(RequestContent content, RequestContext context = null)
+        public virtual Operation CreateCollection(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateSearchOperations");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSearchOperationsRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCollectionRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateCollection", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1491,37 +240,22 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Search
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateSearchOperations(SearchPostContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a new collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateSearchOperations(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateSearchOperations(RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> CreateCollectionAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateSearchOperations");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSearchOperationsRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCollectionRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateCollectionAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1530,345 +264,674 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Create Collection. </summary>
+        /// <summary> Create a new collection in the GeoCatalog instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> Request collection body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Create a new collection in the GeoCatalog instance. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateCollectionAsync(WaitUntil,StacCollectionModel,CancellationToken)']/*" />
-        public virtual async Task<Operation> CreateCollectionAsync(WaitUntil waitUntil, StacCollectionModel body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CreateCollectionAsync(waitUntil, content, context).ConfigureAwait(false);
-        }
-
-        /// <summary> Create Collection. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Request collection body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Create a new collection in the GeoCatalog instance. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateCollection(WaitUntil,StacCollectionModel,CancellationToken)']/*" />
         public virtual Operation CreateCollection(WaitUntil waitUntil, StacCollectionModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CreateCollection(waitUntil, content, context);
+            return CreateCollection(waitUntil, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCollectionAsync(WaitUntil,StacCollectionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a new collection in the GeoCatalog instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateCollectionAsync(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation> CreateCollectionAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCollectionRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateCollection", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCollection(WaitUntil,StacCollectionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateCollection(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual Operation CreateCollection(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCollectionRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateCollection", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or update Collection. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body"> Request collection body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create or replace a collection in the GeoCatalog instance. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceCollectionAsync(WaitUntil,string,StacCollectionModel,CancellationToken)']/*" />
-        public virtual async Task<Operation> CreateOrReplaceCollectionAsync(WaitUntil waitUntil, string collectionId, StacCollectionModel body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Operation> CreateCollectionAsync(WaitUntil waitUntil, StacCollectionModel body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CreateOrReplaceCollectionAsync(waitUntil, collectionId, content, context).ConfigureAwait(false);
+            return await CreateCollectionAsync(waitUntil, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
-        /// <summary> Create or update Collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Get a collection in the GeoCatalog instance
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the collection. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollection(string collectionId, string sign, int? duration, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionRequest(collectionId, sign, duration, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get a collection in the GeoCatalog instance
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the collection. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionAsync(string collectionId, string sign, int? duration, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionRequest(collectionId, sign, duration, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a collection in the GeoCatalog instance. </summary>
+        /// <param name="collectionId"> Unique identifier for the collection. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<StacCollectionModel> GetCollection(string collectionId, SignType? sign = default, int? duration = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetCollection(collectionId, sign?.ToString(), duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((StacCollectionModel)result, result);
+        }
+
+        /// <summary> Get a collection in the GeoCatalog instance. </summary>
+        /// <param name="collectionId"> Unique identifier for the collection. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<StacCollectionModel>> GetCollectionAsync(string collectionId, SignType? sign = default, int? duration = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetCollectionAsync(collectionId, sign?.ToString(), duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((StacCollectionModel)result, result);
+        }
+
+        /// <summary> Create or replace a collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation CreateOrReplaceCollection(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceCollectionRequest(collectionId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceCollection", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or replace a collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> CreateOrReplaceCollectionAsync(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceCollectionRequest(collectionId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceCollectionAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or replace a collection in the GeoCatalog instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body"> Request collection body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Create or replace a collection in the GeoCatalog instance. </remarks>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceCollection(WaitUntil,string,StacCollectionModel,CancellationToken)']/*" />
         public virtual Operation CreateOrReplaceCollection(WaitUntil waitUntil, string collectionId, StacCollectionModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CreateOrReplaceCollection(waitUntil, collectionId, content, context);
+            return CreateOrReplaceCollection(waitUntil, collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create or update Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceCollectionAsync(WaitUntil,string,StacCollectionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create or replace a collection in the GeoCatalog instance. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceCollectionAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation> CreateOrReplaceCollectionAsync(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceCollectionRequest(collectionId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceCollection", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create or update Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceCollection(WaitUntil,string,StacCollectionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceCollection(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual Operation CreateOrReplaceCollection(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceCollectionRequest(collectionId, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceCollection", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='DeleteCollectionAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteCollectionAsync(WaitUntil waitUntil, string collectionId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteCollectionRequest(collectionId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.DeleteCollection", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete Collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='DeleteCollection(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation DeleteCollection(WaitUntil waitUntil, string collectionId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteCollection");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteCollectionRequest(collectionId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.DeleteCollection", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a new STAC item or a set of items in a collection. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="body">
-        /// STAC Item or ItemCollection
-        ///
-        /// Represents a STAC Item or ItemCollectionModel as defined by the STAC 1.0.0 standard.
-        ///
-        /// **Item**: A GeoJSON Feature that represents a single spatiotemporal asset.
-        /// It includes metadata such as geometry, datetime, and links to related assets.
-        /// Example: A satellite image with its metadata.
-        ///
-        /// **ItemCollectionModel**: A GeoJSON FeatureCollection that contains multiple Items.
-        /// It is used to group multiple related Items together, such as a collection of satellite images.
-        ///
-        /// This union allows the request body to accept either a single Item or a collection of Items.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="body"> Request collection body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateItemAsync(WaitUntil,string,StacItemOrItemCollection,CancellationToken)']/*" />
-        public virtual async Task<Operation> CreateItemAsync(WaitUntil waitUntil, string collectionId, StacItemOrItemCollection body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> CreateOrReplaceCollectionAsync(WaitUntil waitUntil, string collectionId, StacCollectionModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CreateItemAsync(waitUntil, collectionId, content, context).ConfigureAwait(false);
+            return await CreateOrReplaceCollectionAsync(waitUntil, collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary> Delete a collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation DeleteCollection(WaitUntil waitUntil, string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateDeleteCollectionRequest(collectionId, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.DeleteCollection", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> DeleteCollectionAsync(WaitUntil waitUntil, string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateDeleteCollectionRequest(collectionId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.DeleteCollectionAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation DeleteCollection(WaitUntil waitUntil, string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            return DeleteCollection(waitUntil, collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Delete a collection in the GeoCatalog instance. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> DeleteCollectionAsync(WaitUntil waitUntil, string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            return await DeleteCollectionAsync(waitUntil, collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Fetch features of the feature collection with id `collectionId`.
+        /// 
+        /// Every feature in a dataset belongs to a collection. A dataset may
+        /// consist of multiple feature collections. A feature collection is often a
+        /// collection of features of a similar type, based on a common schema.")
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="limit">
+        /// The optional limit parameter recommends the number of items that should be present in the response document.
+        /// 
+        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
+        /// maximum possible number of items, rather than responding with an error.
+        /// 
+        /// Only items are counted that are on the first level of the collection in the response document.
+        /// Nested objects contained within the explicitly requested items must not be counted.
+        /// 
+        /// Minimum = 1. Maximum = 10000. Default = 10.
+        /// </param>
+        /// <param name="bbox">
+        /// Only features that have a geometry that intersects the bounding box are selected.
+        /// The bounding box is provided as four or six numbers, depending on whether the
+        /// coordinate reference system includes a vertical axis (height or depth):
+        /// 
+        /// - Lower left corner, coordinate axis 1
+        /// - Lower left corner, coordinate axis 2
+        /// - Minimum value, coordinate axis 3 (optional)
+        /// - Upper right corner, coordinate axis 1
+        /// - Upper right corner, coordinate axis 2
+        /// - Maximum value, coordinate axis 3 (optional)
+        /// 
+        /// The coordinate reference system of the values is WGS 84 longitude/latitude
+        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
+        /// 
+        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
+        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
+        /// However, in cases where the box spans the antimeridian the first value
+        /// (west-most box edge) is larger than the third value (east-most box edge).
+        /// 
+        /// If the vertical axis is included, the third and the sixth number are
+        /// the bottom and the top of the 3-dimensional bounding box.
+        /// 
+        /// If a feature has multiple spatial geometry properties, it is the decision of the
+        /// server whether only a single spatial geometry property is used to determine
+        /// the extent or all relevant geometries.
+        /// </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// 
+        /// Examples:
+        /// 
+        /// - A date-time: "2018-02-12T23:20:50Z"
+        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
+        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
+        /// 
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// 
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemsAsFeatures(string collectionId, long? limit, IEnumerable<string> bbox, string datetime, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetItemsAsFeatures");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetItemsAsFeaturesRequest(collectionId, limit, bbox, datetime, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Fetch features of the feature collection with id `collectionId`.
+        /// 
+        /// Every feature in a dataset belongs to a collection. A dataset may
+        /// consist of multiple feature collections. A feature collection is often a
+        /// collection of features of a similar type, based on a common schema.")
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="limit">
+        /// The optional limit parameter recommends the number of items that should be present in the response document.
+        /// 
+        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
+        /// maximum possible number of items, rather than responding with an error.
+        /// 
+        /// Only items are counted that are on the first level of the collection in the response document.
+        /// Nested objects contained within the explicitly requested items must not be counted.
+        /// 
+        /// Minimum = 1. Maximum = 10000. Default = 10.
+        /// </param>
+        /// <param name="bbox">
+        /// Only features that have a geometry that intersects the bounding box are selected.
+        /// The bounding box is provided as four or six numbers, depending on whether the
+        /// coordinate reference system includes a vertical axis (height or depth):
+        /// 
+        /// - Lower left corner, coordinate axis 1
+        /// - Lower left corner, coordinate axis 2
+        /// - Minimum value, coordinate axis 3 (optional)
+        /// - Upper right corner, coordinate axis 1
+        /// - Upper right corner, coordinate axis 2
+        /// - Maximum value, coordinate axis 3 (optional)
+        /// 
+        /// The coordinate reference system of the values is WGS 84 longitude/latitude
+        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
+        /// 
+        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
+        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
+        /// However, in cases where the box spans the antimeridian the first value
+        /// (west-most box edge) is larger than the third value (east-most box edge).
+        /// 
+        /// If the vertical axis is included, the third and the sixth number are
+        /// the bottom and the top of the 3-dimensional bounding box.
+        /// 
+        /// If a feature has multiple spatial geometry properties, it is the decision of the
+        /// server whether only a single spatial geometry property is used to determine
+        /// the extent or all relevant geometries.
+        /// </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// 
+        /// Examples:
+        /// 
+        /// - A date-time: "2018-02-12T23:20:50Z"
+        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
+        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
+        /// 
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// 
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemsAsFeaturesAsync(string collectionId, long? limit, IEnumerable<string> bbox, string datetime, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetItemsAsFeatures");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetItemsAsFeaturesRequest(collectionId, limit, bbox, datetime, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetch features of the feature collection with id `collectionId`.
+        /// 
+        /// Every feature in a dataset belongs to a collection. A dataset may
+        /// consist of multiple feature collections. A feature collection is often a
+        /// collection of features of a similar type, based on a common schema.")
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="limit">
+        /// The optional limit parameter recommends the number of items that should be present in the response document.
+        /// 
+        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
+        /// maximum possible number of items, rather than responding with an error.
+        /// 
+        /// Only items are counted that are on the first level of the collection in the response document.
+        /// Nested objects contained within the explicitly requested items must not be counted.
+        /// 
+        /// Minimum = 1. Maximum = 10000. Default = 10.
+        /// </param>
+        /// <param name="bbox">
+        /// Only features that have a geometry that intersects the bounding box are selected.
+        /// The bounding box is provided as four or six numbers, depending on whether the
+        /// coordinate reference system includes a vertical axis (height or depth):
+        /// 
+        /// - Lower left corner, coordinate axis 1
+        /// - Lower left corner, coordinate axis 2
+        /// - Minimum value, coordinate axis 3 (optional)
+        /// - Upper right corner, coordinate axis 1
+        /// - Upper right corner, coordinate axis 2
+        /// - Maximum value, coordinate axis 3 (optional)
+        /// 
+        /// The coordinate reference system of the values is WGS 84 longitude/latitude
+        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
+        /// 
+        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
+        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
+        /// However, in cases where the box spans the antimeridian the first value
+        /// (west-most box edge) is larger than the third value (east-most box edge).
+        /// 
+        /// If the vertical axis is included, the third and the sixth number are
+        /// the bottom and the top of the 3-dimensional bounding box.
+        /// 
+        /// If a feature has multiple spatial geometry properties, it is the decision of the
+        /// server whether only a single spatial geometry property is used to determine
+        /// the extent or all relevant geometries.
+        /// </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// 
+        /// Examples:
+        /// 
+        /// - A date-time: "2018-02-12T23:20:50Z"
+        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
+        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
+        /// 
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// 
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ItemCollectionModel> GetItemsAsFeatures(string collectionId, long? limit = default, IEnumerable<string> bbox = default, string datetime = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetItemsAsFeatures(collectionId, limit, bbox, datetime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ItemCollectionModel)result, result);
+        }
+
+        /// <summary>
+        /// Fetch features of the feature collection with id `collectionId`.
+        /// 
+        /// Every feature in a dataset belongs to a collection. A dataset may
+        /// consist of multiple feature collections. A feature collection is often a
+        /// collection of features of a similar type, based on a common schema.")
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="limit">
+        /// The optional limit parameter recommends the number of items that should be present in the response document.
+        /// 
+        /// If the limit parameter value is greater than advertised limit maximum, the server must return the
+        /// maximum possible number of items, rather than responding with an error.
+        /// 
+        /// Only items are counted that are on the first level of the collection in the response document.
+        /// Nested objects contained within the explicitly requested items must not be counted.
+        /// 
+        /// Minimum = 1. Maximum = 10000. Default = 10.
+        /// </param>
+        /// <param name="bbox">
+        /// Only features that have a geometry that intersects the bounding box are selected.
+        /// The bounding box is provided as four or six numbers, depending on whether the
+        /// coordinate reference system includes a vertical axis (height or depth):
+        /// 
+        /// - Lower left corner, coordinate axis 1
+        /// - Lower left corner, coordinate axis 2
+        /// - Minimum value, coordinate axis 3 (optional)
+        /// - Upper right corner, coordinate axis 1
+        /// - Upper right corner, coordinate axis 2
+        /// - Maximum value, coordinate axis 3 (optional)
+        /// 
+        /// The coordinate reference system of the values is WGS 84 longitude/latitude
+        /// (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
+        /// 
+        /// For WGS 84 longitude/latitude the values are in most cases the sequence of
+        /// minimum longitude, minimum latitude, maximum longitude and maximum latitude.
+        /// However, in cases where the box spans the antimeridian the first value
+        /// (west-most box edge) is larger than the third value (east-most box edge).
+        /// 
+        /// If the vertical axis is included, the third and the sixth number are
+        /// the bottom and the top of the 3-dimensional bounding box.
+        /// 
+        /// If a feature has multiple spatial geometry properties, it is the decision of the
+        /// server whether only a single spatial geometry property is used to determine
+        /// the extent or all relevant geometries.
+        /// </param>
+        /// <param name="datetime">
+        /// Either a date-time or an interval, open or closed. Date and time expressions
+        /// adhere to RFC 3339. Open intervals are expressed using double-dots.
+        /// 
+        /// Examples:
+        /// 
+        /// - A date-time: "2018-02-12T23:20:50Z"
+        /// - A closed interval: "2018-02-12T00:00:00Z/2018-03-18T12:31:12Z"
+        /// - Open intervals: "2018-02-12T00:00:00Z/.." or "../2018-03-18T12:31:12Z"
+        /// 
+        /// Only features that have a temporal property that intersects the value of
+        /// `datetime` are selected.
+        /// 
+        /// If a feature has multiple temporal properties, it is the decision of the
+        /// server whether only a single temporal property is used to determine
+        /// the extent or all relevant temporal properties.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ItemCollectionModel>> GetItemsAsFeaturesAsync(string collectionId, long? limit = default, IEnumerable<string> bbox = default, string datetime = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetItemsAsFeaturesAsync(collectionId, limit, bbox, datetime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ItemCollectionModel)result, result);
+        }
+
+        /// <summary> Create a new STAC item or a set of items in a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation CreateItem(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateItemRequest(collectionId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateItem", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a new STAC item or a set of items in a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> CreateItemAsync(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateItemRequest(collectionId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a new STAC item or a set of items in a collection. </summary>
@@ -1876,136 +939,213 @@ namespace Azure.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="body">
         /// STAC Item or ItemCollection
-        ///
+        /// 
         /// Represents a STAC Item or ItemCollectionModel as defined by the STAC 1.0.0 standard.
-        ///
+        /// 
         /// **Item**: A GeoJSON Feature that represents a single spatiotemporal asset.
         /// It includes metadata such as geometry, datetime, and links to related assets.
         /// Example: A satellite image with its metadata.
-        ///
+        /// 
         /// **ItemCollectionModel**: A GeoJSON FeatureCollection that contains multiple Items.
         /// It is used to group multiple related Items together, such as a collection of satellite images.
-        ///
+        /// 
         /// This union allows the request body to accept either a single Item or a collection of Items.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateItem(WaitUntil,string,StacItemOrItemCollection,CancellationToken)']/*" />
         public virtual Operation CreateItem(WaitUntil waitUntil, string collectionId, StacItemOrItemCollection body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CreateItem(waitUntil, collectionId, content, context);
+            return CreateItem(waitUntil, collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Create a new STAC item or a set of items in a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="body">
+        /// STAC Item or ItemCollection
+        /// 
+        /// Represents a STAC Item or ItemCollectionModel as defined by the STAC 1.0.0 standard.
+        /// 
+        /// **Item**: A GeoJSON Feature that represents a single spatiotemporal asset.
+        /// It includes metadata such as geometry, datetime, and links to related assets.
+        /// Example: A satellite image with its metadata.
+        /// 
+        /// **ItemCollectionModel**: A GeoJSON FeatureCollection that contains multiple Items.
+        /// It is used to group multiple related Items together, such as a collection of satellite images.
+        /// 
+        /// This union allows the request body to accept either a single Item or a collection of Items.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> CreateItemAsync(WaitUntil waitUntil, string collectionId, StacItemOrItemCollection body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await CreateItemAsync(waitUntil, collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new STAC item or a set of items in a collection
+        /// [Protocol Method] Fetch a single STAC Item
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateItemAsync(WaitUntil,string,StacItemOrItemCollection,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateItemAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation> CreateItemAsync(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateItemRequest(collectionId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new STAC item or a set of items in a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateItem(WaitUntil,string,StacItemOrItemCollection,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateItem(WaitUntil,string,RequestContent,RequestContext)']/*" />
-        public virtual Operation CreateItem(WaitUntil waitUntil, string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateItemRequest(collectionId, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateItem", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create or replace a STAC item in a collection. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="body"> STAC Item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceItemAsync(WaitUntil,string,string,StacItemModel,CancellationToken)']/*" />
-        public virtual async Task<Operation> CreateOrReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, StacItemModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItem(string collectionId, string itemId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Fetch a single STAC Item
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemAsync(string collectionId, string itemId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using HttpMessage message = CreateGetItemRequest(collectionId, itemId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Fetch a single STAC Item. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<StacItemModel> GetItem(string collectionId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CreateOrReplaceItemAsync(waitUntil, collectionId, itemId, content, context).ConfigureAwait(false);
+            Response result = GetItem(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((StacItemModel)result, result);
+        }
+
+        /// <summary> Fetch a single STAC Item. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<StacItemModel>> GetItemAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+            Response result = await GetItemAsync(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((StacItemModel)result, result);
+        }
+
+        /// <summary> Create or replace a STAC item in a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation CreateOrReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceItem", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create or replace a STAC item in a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> CreateOrReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create or replace a STAC item in a collection. </summary>
@@ -2013,183 +1153,56 @@ namespace Azure.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
         /// <param name="body"> STAC Item. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceItem(WaitUntil,string,string,StacItemModel,CancellationToken)']/*" />
         public virtual Operation CreateOrReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, StacItemModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CreateOrReplaceItem(waitUntil, collectionId, itemId, content, context);
+            return CreateOrReplaceItem(waitUntil, collectionId, itemId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create or replace a STAC item in a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceItemAsync(WaitUntil,string,string,StacItemModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create or replace a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body"> STAC Item. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceItemAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation> CreateOrReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> CreateOrReplaceItemAsync(WaitUntil waitUntil, string collectionId, string itemId, StacItemModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await CreateOrReplaceItemAsync(waitUntil, collectionId, itemId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create or replace a STAC item in a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceItem(WaitUntil,string,string,StacItemModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='CreateOrReplaceItem(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
-        public virtual Operation CreateOrReplaceItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.CreateOrReplaceItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.CreateOrReplaceItem", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update a STAC item in a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='UpdateItemAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation> UpdateItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.UpdateItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateItemRequest(collectionId, itemId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.UpdateItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update a STAC item in a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='UpdateItem(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        /// <returns> The response returned from the service. </returns>
         public virtual Operation UpdateItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.UpdateItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.UpdateItem");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUpdateItemRequest(collectionId, itemId, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.UpdateItem", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.UpdateItem", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2198,76 +1211,138 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete a STAC item from a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a STAC item in a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> UpdateItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.UpdateItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateItemRequest(collectionId, itemId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.UpdateItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a STAC item from a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='DeleteItemAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation DeleteItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using HttpMessage message = CreateDeleteItemRequest(collectionId, itemId, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StacApiClient.DeleteItem", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a STAC item from a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> DeleteItemAsync(WaitUntil waitUntil, string collectionId, string itemId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteItem");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
+
+                using HttpMessage message = CreateDeleteItemRequest(collectionId, itemId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacApiClient.DeleteItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete a STAC item from a collection. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="itemId"> STAC Item id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation DeleteItem(WaitUntil waitUntil, string collectionId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteItem");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteItemRequest(collectionId, itemId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "StacApiClient.DeleteItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return DeleteItem(waitUntil, collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete a STAC item from a collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a STAC item from a collection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="itemId"> STAC Item id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/StacApiClient.xml" path="doc/members/member[@name='DeleteItem(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation DeleteItem(WaitUntil waitUntil, string collectionId, string itemId, RequestContext context = null)
+        public virtual async Task<Operation> DeleteItemAsync(WaitUntil waitUntil, string collectionId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            using var scope = ClientDiagnostics.CreateScope("StacApiClient.DeleteItem");
+            return await DeleteItemAsync(waitUntil, collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAllQueryables(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryables");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteItemRequest(collectionId, itemId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "StacApiClient.DeleteItem", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateGetAllQueryablesRequest(context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2276,394 +1351,539 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        internal HttpMessage CreateGetStacLandingPageRequest(RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAllQueryablesAsync(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryables");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAllQueryablesRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetAllCollectionsRequest(string sign, int? duration, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<JsonSchema> GetAllQueryables(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/collections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (sign != null)
-            {
-                uri.AppendQuery("sign", sign, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Response result = GetAllQueryables(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((JsonSchema)result, result);
         }
 
-        internal HttpMessage CreateCreateCollectionRequest(RequestContent content, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<JsonSchema>> GetAllQueryablesAsync(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/collections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Response result = await GetAllQueryablesAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((JsonSchema)result, result);
         }
 
-        internal HttpMessage CreateGetCollectionRequest(string collectionId, string sign, int? duration, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Collection ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAllQueryablesByCollection(string collectionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (sign != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryablesByCollection");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("sign", sign, true);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetAllQueryablesByCollectionRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-            if (duration != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("duration", duration.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceCollectionRequest(string collectionId, RequestContent content, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Collection ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAllQueryablesByCollectionAsync(string collectionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetAllQueryablesByCollection");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetAllQueryablesByCollectionRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateDeleteCollectionRequest(string collectionId, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="collectionId"> Collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<JsonSchema> GetAllQueryablesByCollection(string collectionId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetAllQueryablesByCollection(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((JsonSchema)result, result);
         }
 
-        internal HttpMessage CreateGetItemsAsFeaturesRequest(string collectionId, long? limit, IEnumerable<string> bbox, string datetime, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="collectionId"> Collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<JsonSchema>> GetAllQueryablesByCollectionAsync(string collectionId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (bbox != null && !(bbox is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in bbox)
-                {
-                    uri.AppendQuery("bbox", param, true);
-                }
-            }
-            if (datetime != null)
-            {
-                uri.AppendQuery("datetime", datetime, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetAllQueryablesByCollectionAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((JsonSchema)result, result);
         }
 
-        internal HttpMessage CreateCreateItemRequest(string collectionId, RequestContent content, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Set queryables for a collection given a list of queryable definitions
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateQueryables(string collectionId, RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateQueryables");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateQueryablesRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetItemRequest(string collectionId, string itemId, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Set queryables for a collection given a list of queryable definitions
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateQueryablesAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateQueryables");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateQueryablesRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateCreateOrReplaceItemRequest(string collectionId, string itemId, RequestContent content, RequestContext context)
+        /// <summary> Set queryables for a collection given a list of queryable definitions. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="body"> Request queryable definition body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<QueryableProperty>> CreateQueryables(string collectionId, IEnumerable<QueryableProperty> body, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = CreateQueryables(collectionId, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<QueryableProperty> value = new List<QueryableProperty>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(QueryableProperty.DeserializeQueryableProperty(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<QueryableProperty>)value, result);
         }
 
-        internal HttpMessage CreateUpdateItemRequest(string collectionId, string itemId, RequestContent content, RequestContext context)
+        /// <summary> Set queryables for a collection given a list of queryable definitions. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="body"> Request queryable definition body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<QueryableProperty>>> CreateQueryablesAsync(string collectionId, IEnumerable<QueryableProperty> body, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
+            Response result = await CreateQueryablesAsync(collectionId, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<QueryableProperty> value = new List<QueryableProperty>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(QueryableProperty.DeserializeQueryableProperty(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<QueryableProperty>)value, result);
         }
 
-        internal HttpMessage CreateDeleteItemRequest(string collectionId, string itemId, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetConformanceClass(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(itemId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetConformanceClass");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetConformanceClassRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetAllQueryablesRequest(RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetConformanceClassAsync(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/queryables", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetConformanceClass");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetConformanceClassRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetAllQueryablesByCollectionRequest(string collectionId, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ConformanceClasses> GetConformanceClass(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/queryables", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Response result = GetConformanceClass(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ConformanceClasses)result, result);
         }
 
-        internal HttpMessage CreateCreateQueryablesRequest(string collectionId, RequestContent content, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ConformanceClasses>> GetConformanceClassAsync(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/queryables", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Response result = await GetConformanceClassAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ConformanceClasses)result, result);
         }
 
-        internal HttpMessage CreateGetConformanceClassRequest(RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
+        /// <param name="ids"> Array of Item IDs to return specific items. </param>
+        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="limit"> Maximum number of results to return. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
+        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
+        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
+        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchOperations(IEnumerable<string> collections, IEnumerable<string> ids, IEnumerable<double> bbox, string intersects, string datetime, int? limit, string sign, int? duration, string query, string sortBy, string fields, string filter, string token, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/conformance", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetSearchOperations");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchOperationsRequest(collections, ids, bbox, intersects, datetime, limit, sign, duration, query, sortBy, fields, filter, token, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetSearchOperationsRequest(IEnumerable<string> collections, IEnumerable<string> ids, IEnumerable<double> bbox, string intersects, string datetime, int? limit, string sign, int? duration, string query, string sortBy, string fields, string filter, string token, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
+        /// <param name="ids"> Array of Item IDs to return specific items. </param>
+        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="limit"> Maximum number of results to return. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
+        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
+        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
+        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchOperationsAsync(IEnumerable<string> collections, IEnumerable<string> ids, IEnumerable<double> bbox, string intersects, string datetime, int? limit, string sign, int? duration, string query, string sortBy, string fields, string filter, string token, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/search", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (collections != null && !(collections is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.GetSearchOperations");
+            scope.Start();
+            try
             {
-                uri.AppendQueryDelimited("collections", collections, ",", true);
+                using HttpMessage message = CreateGetSearchOperationsRequest(collections, ids, bbox, intersects, datetime, limit, sign, duration, query, sortBy, fields, filter, token, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            catch (Exception e)
             {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
+                scope.Failed(e);
+                throw;
             }
-            if (bbox != null && !(bbox is ChangeTrackingList<double> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                uri.AppendQueryDelimited("bbox", bbox, ",", true);
-            }
-            if (intersects != null)
-            {
-                uri.AppendQuery("intersects", intersects, true);
-            }
-            if (datetime != null)
-            {
-                uri.AppendQuery("datetime", datetime, true);
-            }
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (sign != null)
-            {
-                uri.AppendQuery("sign", sign, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (query != null)
-            {
-                uri.AppendQuery("query", query, true);
-            }
-            if (sortBy != null)
-            {
-                uri.AppendQuery("sortby", sortBy, true);
-            }
-            if (fields != null)
-            {
-                uri.AppendQuery("fields", fields, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (token != null)
-            {
-                uri.AppendQuery("token", token, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateCreateSearchOperationsRequest(RequestContent content, RequestContext context)
+        /// <summary> Endpoint. </summary>
+        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
+        /// <param name="ids"> Array of Item IDs to return specific items. </param>
+        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="limit"> Maximum number of results to return. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
+        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
+        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
+        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ItemCollectionModel> GetSearchOperations(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<double> bbox = default, string intersects = default, string datetime = default, int? limit = default, SignType? sign = default, int? duration = default, string query = default, string sortBy = default, string fields = default, string filter = default, string token = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/search", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Response result = GetSearchOperations(collections, ids, bbox, intersects, datetime, limit, sign?.ToString(), duration, query, sortBy, fields, filter, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ItemCollectionModel)result, result);
         }
 
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        /// <summary> Endpoint. </summary>
+        /// <param name="collections"> List of Collection IDs to include in the search. Only items in these collections will be searched. </param>
+        /// <param name="ids"> Array of Item IDs to return specific items. </param>
+        /// <param name="bbox"> Bounding box for spatial filtering in format [west, south, east, north]. </param>
+        /// <param name="intersects"> GeoJSON geometry for spatial filtering. </param>
+        /// <param name="datetime"> Temporal filter in RFC 3339 format, can be a single time or range. </param>
+        /// <param name="limit"> Maximum number of results to return. </param>
+        /// <param name="sign"> Whether to sign asset URLs in the response. </param>
+        /// <param name="duration"> URL signature duration in seconds. </param>
+        /// <param name="query"> Property-based filtering expressed as a JSON object. </param>
+        /// <param name="sortBy"> Sort order for items. Format is property name prefixed with "+" for ascending or "-" for descending. </param>
+        /// <param name="fields"> Determines which fields to include in the response. Format is comma-separated field names with "-" prefix to exclude fields. </param>
+        /// <param name="filter"> CQL filter expression for advanced filtering of items. </param>
+        /// <param name="token"> Pagination token for fetching the next set of results. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ItemCollectionModel>> GetSearchOperationsAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<double> bbox = default, string intersects = default, string datetime = default, int? limit = default, SignType? sign = default, int? duration = default, string query = default, string sortBy = default, string fields = default, string filter = default, string token = default, CancellationToken cancellationToken = default)
         {
-            if (!cancellationToken.CanBeCanceled)
+            Response result = await GetSearchOperationsAsync(collections, ids, bbox, intersects, datetime, limit, sign?.ToString(), duration, query, sortBy, fields, filter, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ItemCollectionModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateSearchOperations(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateSearchOperations");
+            scope.Start();
+            try
             {
-                return DefaultRequestContext;
-            }
+                Argument.AssertNotNull(content, nameof(content));
 
-            return new RequestContext() { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateCreateSearchOperationsRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier200204;
-        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
-        private static ResponseClassifier _responseClassifier201204;
-        private static ResponseClassifier ResponseClassifier201204 => _responseClassifier201204 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 204 });
+        /// <summary>
+        /// [Protocol Method] Endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateSearchOperationsAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacApiClient.CreateSearchOperations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateSearchOperationsRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Endpoint. </summary>
+        /// <param name="body"> Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ItemCollectionModel> CreateSearchOperations(SearchPostContent body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = CreateSearchOperations(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ItemCollectionModel)result, result);
+        }
+
+        /// <summary> Endpoint. </summary>
+        /// <param name="body"> Request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ItemCollectionModel>> CreateSearchOperationsAsync(SearchPostContent body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateSearchOperationsAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ItemCollectionModel)result, result);
+        }
     }
 }

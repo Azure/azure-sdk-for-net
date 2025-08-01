@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.Ingestions
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion creation model. </summary>
     public partial class IngestionConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngestionConfiguration"/>. </summary>
         /// <param name="importType"> Ingestion type. </param>
@@ -61,8 +32,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
         /// <param name="creationTime"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionConfiguration(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionConfiguration(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ImportType = importType;
@@ -72,28 +43,30 @@ namespace Azure.PlanetaryComputer
             KeepOriginalAssets = keepOriginalAssets;
             CreationTime = creationTime;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IngestionConfiguration"/> for deserialization. </summary>
-        internal IngestionConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Ingestion id. </summary>
         public Guid Id { get; }
+
         /// <summary> Ingestion type. </summary>
         public IngestionType ImportType { get; set; }
+
         /// <summary> Ingestion name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Source catalog URL. Required for StaticCatalog ingestion type. </summary>
         public Uri SourceCatalogUrl { get; set; }
+
         /// <summary> Skip processing existing items in the catalog. </summary>
         public bool? SkipExistingItems { get; set; }
+
         /// <summary> Keep original source assets. </summary>
         public bool? KeepOriginalAssets { get; set; }
+
         /// <summary> Ingestion creation time. </summary>
         public DateTimeOffset CreationTime { get; }
+
         /// <summary> Ingestion status. </summary>
         public IngestionStatus Status { get; }
     }

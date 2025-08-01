@@ -11,12 +11,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class ImageContent : IUtf8JsonSerializable, IJsonModel<ImageContent>
+    /// <summary> Parameters for requesting a rendered image from a collection. </summary>
+    public partial class ImageContent : IJsonModel<ImageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ImageContent"/> for deserialization. </summary>
+        internal ImageContent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("cql"u8);
             writer.WriteObjectValue(Cql, options);
             if (Optional.IsDefined(Geometry))
@@ -62,15 +67,15 @@ namespace Azure.PlanetaryComputer
                 writer.WritePropertyName("mask"u8);
                 writer.WriteBooleanValue(Mask.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,22 +84,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        ImageContent IJsonModel<ImageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageContent IJsonModel<ImageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ImageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImageContent(document.RootElement, options);
         }
 
-        internal static ImageContent DeserializeImageContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ImageContent DeserializeImageContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,72 +117,70 @@ namespace Azure.PlanetaryComputer
             ImageRequestFormat? format = default;
             bool? showBranding = default;
             bool? mask = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cql"u8))
+                if (prop.NameEquals("cql"u8))
                 {
-                    cql = CqlFilter.DeserializeCqlFilter(property.Value, options);
+                    cql = CqlFilter.DeserializeCqlFilter(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("geometry"u8))
+                if (prop.NameEquals("geometry"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value, options);
+                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("render_params"u8))
+                if (prop.NameEquals("render_params"u8))
                 {
-                    renderParams = property.Value.GetString();
+                    renderParams = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cols"u8))
+                if (prop.NameEquals("cols"u8))
                 {
-                    cols = property.Value.GetInt32();
+                    cols = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rows"u8))
+                if (prop.NameEquals("rows"u8))
                 {
-                    rows = property.Value.GetInt32();
+                    rows = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("format"u8))
+                if (prop.NameEquals("format"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    format = new ImageRequestFormat(property.Value.GetString());
+                    format = new ImageRequestFormat(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("showBranding"u8))
+                if (prop.NameEquals("showBranding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    showBranding = property.Value.GetBoolean();
+                    showBranding = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("mask"u8))
+                if (prop.NameEquals("mask"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mask = property.Value.GetBoolean();
+                    mask = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ImageContent(
                 cql,
                 geometry,
@@ -182,31 +190,39 @@ namespace Azure.PlanetaryComputer
                 format,
                 showBranding,
                 mask,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ImageContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ImageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImageContent IPersistableModel<ImageContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageContent IPersistableModel<ImageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ImageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeImageContent(document.RootElement, options);
                     }
                 default:
@@ -214,21 +230,18 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ImageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageContent FromResponse(Response response)
+        /// <param name="imageContent"> The <see cref="ImageContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ImageContent imageContent)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeImageContent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (imageContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(imageContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

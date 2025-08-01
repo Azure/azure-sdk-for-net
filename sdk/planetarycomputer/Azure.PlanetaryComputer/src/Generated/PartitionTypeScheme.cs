@@ -8,47 +8,68 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Defines partitioning schemes for temporal data organization. </summary>
     public readonly partial struct PartitionTypeScheme : IEquatable<PartitionTypeScheme>
     {
         private readonly string _value;
+        /// <summary> Partition data by year. </summary>
+        private const string YearValue = "year";
+        /// <summary> Partition data by month. </summary>
+        private const string MonthValue = "month";
+        /// <summary> No partitioning. </summary>
+        private const string NoneValue = "none";
 
         /// <summary> Initializes a new instance of <see cref="PartitionTypeScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartitionTypeScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string YearValue = "year";
-        private const string MonthValue = "month";
-        private const string NoneValue = "none";
+            _value = value;
+        }
 
         /// <summary> Partition data by year. </summary>
         public static PartitionTypeScheme Year { get; } = new PartitionTypeScheme(YearValue);
+
         /// <summary> Partition data by month. </summary>
         public static PartitionTypeScheme Month { get; } = new PartitionTypeScheme(MonthValue);
+
         /// <summary> No partitioning. </summary>
         public static PartitionTypeScheme None { get; } = new PartitionTypeScheme(NoneValue);
+
         /// <summary> Determines if two <see cref="PartitionTypeScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartitionTypeScheme left, PartitionTypeScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartitionTypeScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartitionTypeScheme left, PartitionTypeScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartitionTypeScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartitionTypeScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartitionTypeScheme(string value) => new PartitionTypeScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartitionTypeScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartitionTypeScheme?(string value) => value == null ? null : new PartitionTypeScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartitionTypeScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartitionTypeScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

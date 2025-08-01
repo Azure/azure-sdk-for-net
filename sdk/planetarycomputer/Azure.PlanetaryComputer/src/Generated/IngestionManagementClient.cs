@@ -8,26 +8,23 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
+using Microsoft.PlanetaryComputer.Ingestions;
+using Microsoft.PlanetaryComputer.Ingestions.IngestionRuns;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The IngestionManagement service client. </summary>
+    /// <summary> The IngestionManagementClient. </summary>
     public partial class IngestionManagementClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of IngestionManagementClient for mocking. </summary>
         protected IngestionManagementClient()
@@ -35,141 +32,198 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of IngestionManagementClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public IngestionManagementClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public IngestionManagementClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new IngestionManagementClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of IngestionManagementClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public IngestionManagementClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public IngestionManagementClient(Uri endpoint, TokenCredential credential, IngestionManagementClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new IngestionManagementClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Get ingestions of a catalog. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionsAsync(string,long?,long?,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionDefinitionsPagedResult>> GetIngestionsAsync(string collectionId, long? top = null, long? skip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionsAsync(collectionId, top, skip, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionDefinitionsPagedResult.FromResponse(response), response);
-        }
-
-        /// <summary> Get ingestions of a catalog. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestions(string,long?,long?,CancellationToken)']/*" />
-        public virtual Response<IngestionDefinitionsPagedResult> GetIngestions(string collectionId, long? top = null, long? skip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestions(collectionId, top, skip, context);
-            return Response.FromValue(IngestionDefinitionsPagedResult.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Get ingestions of a catalog
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionsAsync(string,long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionsAsync(string,long?,long?,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionsAsync(string collectionId, long? top, long? skip, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionsRequest(collectionId, top, skip, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get ingestions of a catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestions(string,long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestions(string,long?,long?,RequestContext)']/*" />
         public virtual Response GetIngestions(string collectionId, long? top, long? skip, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestions");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestions");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
                 using HttpMessage message = CreateGetIngestionsRequest(collectionId, top, skip, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get ingestions of a catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetIngestionsAsync(string collectionId, long? top, long? skip, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetIngestionsRequest(collectionId, top, skip, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get ingestions of a catalog. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IngestionDefinitionsPagedResult> GetIngestions(string collectionId, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetIngestions(collectionId, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionDefinitionsPagedResult)result, result);
+        }
+
+        /// <summary> Get ingestions of a catalog. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionDefinitionsPagedResult>> GetIngestionsAsync(string collectionId, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetIngestionsAsync(collectionId, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionDefinitionsPagedResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new ingestion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateIngestion(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateIngestionRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new ingestion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateIngestionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateIngestionRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -181,73 +235,61 @@ namespace Azure.PlanetaryComputer
         /// <summary> Create a new ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="definition"> Definition of the ingestion. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestionAsync(string,IngestionConfiguration,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionConfiguration>> CreateIngestionAsync(string collectionId, IngestionConfiguration definition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(definition, nameof(definition));
-
-            using RequestContent content = definition.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateIngestionAsync(collectionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionConfiguration.FromResponse(response), response);
-        }
-
-        /// <summary> Create a new ingestion. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="definition"> Definition of the ingestion. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="definition"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestion(string,IngestionConfiguration,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionConfiguration> CreateIngestion(string collectionId, IngestionConfiguration definition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            using RequestContent content = definition.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateIngestion(collectionId, content, context);
-            return Response.FromValue(IngestionConfiguration.FromResponse(response), response);
+            Response result = CreateIngestion(collectionId, definition, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionConfiguration)result, result);
+        }
+
+        /// <summary> Create a new ingestion. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="definition"> Definition of the ingestion. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="definition"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionConfiguration>> CreateIngestionAsync(string collectionId, IngestionConfiguration definition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(definition, nameof(definition));
+
+            Response result = await CreateIngestionAsync(collectionId, definition, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionConfiguration)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new ingestion
+        /// [Protocol Method] Get the definition of an ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateIngestionAsync(string,IngestionConfiguration,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestionAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateIngestionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual Response GetIngestion(string collectionId, string ingestionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestion");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateIngestionRequest(collectionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateGetIngestionRequest(collectionId, ingestionId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -257,39 +299,31 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new ingestion
+        /// [Protocol Method] Get the definition of an ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateIngestion(string,IngestionConfiguration,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestion(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateIngestion(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetIngestionAsync(string collectionId, string ingestionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestion");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateIngestionRequest(collectionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateGetIngestionRequest(collectionId, ingestionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -301,191 +335,63 @@ namespace Azure.PlanetaryComputer
         /// <summary> Get the definition of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionConfiguration>> GetIngestionAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionAsync(collectionId, ingestionId, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionConfiguration.FromResponse(response), response);
-        }
-
-        /// <summary> Get the definition of an ingestion. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestion(string,string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionConfiguration> GetIngestion(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestion(collectionId, ingestionId, context);
-            return Response.FromValue(IngestionConfiguration.FromResponse(response), response);
+            Response result = GetIngestion(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionConfiguration)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the definition of an ingestion
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the definition of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionAsync(string collectionId, string ingestionId, RequestContext context)
+        public virtual async Task<Response<IngestionConfiguration>> GetIngestionAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionRequest(collectionId, ingestionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the definition of an ingestion
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestion(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestion(string,string,RequestContext)']/*" />
-        public virtual Response GetIngestion(string collectionId, string ingestionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionRequest(collectionId, ingestionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetIngestionAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionConfiguration)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Update an existing ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="ingestionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='UpdateIngestionAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateIngestionAsync(string collectionId, string ingestionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.UpdateIngestion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateUpdateIngestionRequest(collectionId, ingestionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update an existing ingestion
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="ingestionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='UpdateIngestion(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateIngestion(string collectionId, string ingestionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.UpdateIngestion");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.UpdateIngestion");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateUpdateIngestionRequest(collectionId, ingestionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -494,80 +400,34 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get the runs of an ingestion. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRunsAsync(string,string,long?,long?,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionRunsPagedResult>> GetIngestionRunsAsync(string collectionId, string ingestionId, long? top = null, long? skip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionRunsAsync(collectionId, ingestionId, top, skip, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionRunsPagedResult.FromResponse(response), response);
-        }
-
-        /// <summary> Get the runs of an ingestion. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRuns(string,string,long?,long?,CancellationToken)']/*" />
-        public virtual Response<IngestionRunsPagedResult> GetIngestionRuns(string collectionId, string ingestionId, long? top = null, long? skip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestionRuns(collectionId, ingestionId, top, skip, context);
-            return Response.FromValue(IngestionRunsPagedResult.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get the runs of an ingestion
+        /// [Protocol Method] Update an existing ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionRunsAsync(string,string,long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="ingestionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRunsAsync(string,string,long?,long?,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionRunsAsync(string collectionId, string ingestionId, long? top, long? skip, RequestContext context)
+        public virtual async Task<Response> UpdateIngestionAsync(string collectionId, string ingestionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRuns");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.UpdateIngestion");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetIngestionRunsRequest(collectionId, ingestionId, top, skip, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateIngestionRequest(collectionId, ingestionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -576,18 +436,95 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <summary> Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation DeleteIngestion(WaitUntil waitUntil, string collectionId, string ingestionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateDeleteIngestionRequest(collectionId, ingestionId, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "IngestionManagementClient.DeleteIngestion", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation> DeleteIngestionAsync(WaitUntil waitUntil, string collectionId, string ingestionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateDeleteIngestionRequest(collectionId, ingestionId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "IngestionManagementClient.DeleteIngestionAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation DeleteIngestion(WaitUntil waitUntil, string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+            return DeleteIngestion(waitUntil, collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation> DeleteIngestionAsync(WaitUntil waitUntil, string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+            return await DeleteIngestionAsync(waitUntil, collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// [Protocol Method] Get the runs of an ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionRuns(string,string,long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -595,23 +532,162 @@ namespace Azure.PlanetaryComputer
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRuns(string,string,long?,long?,RequestContext)']/*" />
         public virtual Response GetIngestionRuns(string collectionId, string ingestionId, long? top, long? skip, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRuns");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRuns");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
                 using HttpMessage message = CreateGetIngestionRunsRequest(collectionId, ingestionId, top, skip, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the runs of an ingestion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetIngestionRunsAsync(string collectionId, string ingestionId, long? top, long? skip, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRuns");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateGetIngestionRunsRequest(collectionId, ingestionId, top, skip, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the runs of an ingestion. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IngestionRunsPagedResult> GetIngestionRuns(string collectionId, string ingestionId, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+            Response result = GetIngestionRuns(collectionId, ingestionId, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionRunsPagedResult)result, result);
+        }
+
+        /// <summary> Get the runs of an ingestion. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionRunsPagedResult>> GetIngestionRunsAsync(string collectionId, string ingestionId, long? top = default, long? skip = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+            Response result = await GetIngestionRunsAsync(collectionId, ingestionId, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionRunsPagedResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new run of an ingestion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateIngestionRun(string collectionId, string ingestionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestionRun");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateCreateIngestionRunRequest(collectionId, ingestionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new run of an ingestion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateIngestionRunAsync(string collectionId, string ingestionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestionRun");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateCreateIngestionRunRequest(collectionId, ingestionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -623,71 +699,62 @@ namespace Azure.PlanetaryComputer
         /// <summary> Create a new run of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestionRunAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionRun>> CreateIngestionRunAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateIngestionRunAsync(collectionId, ingestionId, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionRun.FromResponse(response), response);
-        }
-
-        /// <summary> Create a new run of an ingestion. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestionRun(string,string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionRun> CreateIngestionRun(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateIngestionRun(collectionId, ingestionId, context);
-            return Response.FromValue(IngestionRun.FromResponse(response), response);
+            Response result = CreateIngestionRun(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionRun)result, result);
+        }
+
+        /// <summary> Create a new run of an ingestion. </summary>
+        /// <param name="collectionId"> Catalog collection id. </param>
+        /// <param name="ingestionId"> Ingestion id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionRun>> CreateIngestionRunAsync(string collectionId, string ingestionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+            Response result = await CreateIngestionRunAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionRun)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new run of an ingestion
+        /// [Protocol Method] Get a run of an ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateIngestionRunAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="runId"> Run id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestionRunAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> CreateIngestionRunAsync(string collectionId, string ingestionId, RequestContext context)
+        public virtual Response GetIngestionRun(string collectionId, string ingestionId, Guid runId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestionRun");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateIngestionRunRequest(collectionId, ingestionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateGetIngestionRunRequest(collectionId, ingestionId, runId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -697,39 +764,32 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new run of an ingestion
+        /// [Protocol Method] Get a run of an ingestion
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateIngestionRun(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="runId"> Run id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='CreateIngestionRun(string,string,RequestContext)']/*" />
-        public virtual Response CreateIngestionRun(string collectionId, string ingestionId, RequestContext context)
+        public virtual async Task<Response> GetIngestionRunAsync(string collectionId, string ingestionId, Guid runId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.CreateIngestionRun");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateIngestionRunRequest(collectionId, ingestionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
+
+                using HttpMessage message = CreateGetIngestionRunRequest(collectionId, ingestionId, runId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -742,222 +802,59 @@ namespace Azure.PlanetaryComputer
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="runId"> Run id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRunAsync(string,string,Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionRun>> GetIngestionRunAsync(string collectionId, string ingestionId, Guid runId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionRunAsync(collectionId, ingestionId, runId, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionRun.FromResponse(response), response);
-        }
-
-        /// <summary> Get a run of an ingestion. </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="runId"> Run id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRun(string,string,Guid,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionRun> GetIngestionRun(string collectionId, string ingestionId, Guid runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestionRun(collectionId, ingestionId, runId, context);
-            return Response.FromValue(IngestionRun.FromResponse(response), response);
+            Response result = GetIngestionRun(collectionId, ingestionId, runId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionRun)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get a run of an ingestion
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionRunAsync(string,string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a run of an ingestion. </summary>
         /// <param name="collectionId"> Catalog collection id. </param>
         /// <param name="ingestionId"> Ingestion id. </param>
         /// <param name="runId"> Run id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRunAsync(string,string,Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionRunAsync(string collectionId, string ingestionId, Guid runId, RequestContext context)
+        public virtual async Task<Response<IngestionRun>> GetIngestionRunAsync(string collectionId, string ingestionId, Guid runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
 
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionRunRequest(collectionId, ingestionId, runId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a run of an ingestion
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionRun(string,string,Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="runId"> Run id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionRun(string,string,Guid,RequestContext)']/*" />
-        public virtual Response GetIngestionRun(string collectionId, string ingestionId, Guid runId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionRun");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionRunRequest(collectionId, ingestionId, runId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get operations of a geo-catalog collection. </summary>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="collectionId"> Operation id used to filter the results. </param>
-        /// <param name="status"> Operation status used to filter the results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperationsAsync(long?,long?,string,OperationStatus?,CancellationToken)']/*" />
-        public virtual async Task<Response<OperationsPagedResult>> GetIngestionOperationsAsync(long? top = null, long? skip = null, string collectionId = null, OperationStatus? status = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionOperationsAsync(top, skip, collectionId, status?.ToString(), context).ConfigureAwait(false);
-            return Response.FromValue(OperationsPagedResult.FromResponse(response), response);
-        }
-
-        /// <summary> Get operations of a geo-catalog collection. </summary>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="collectionId"> Operation id used to filter the results. </param>
-        /// <param name="status"> Operation status used to filter the results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperations(long?,long?,string,OperationStatus?,CancellationToken)']/*" />
-        public virtual Response<OperationsPagedResult> GetIngestionOperations(long? top = null, long? skip = null, string collectionId = null, OperationStatus? status = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestionOperations(top, skip, collectionId, status?.ToString(), context);
-            return Response.FromValue(OperationsPagedResult.FromResponse(response), response);
+            Response result = await GetIngestionRunAsync(collectionId, ingestionId, runId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionRun)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Get operations of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionOperationsAsync(long?,long?,string,OperationStatus?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="collectionId"> Operation id used to filter the results. </param>
-        /// <param name="status"> Operation status used to filter the results. Allowed values: "Pending" | "Running" | "Succeeded" | "Canceled" | "Canceling" | "Failed". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="status"> Operation status used to filter the results. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperationsAsync(long?,long?,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionOperationsAsync(long? top, long? skip, string collectionId, string status, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperations");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionOperationsRequest(top, skip, collectionId, status, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get operations of a geo-catalog collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionOperations(long?,long?,string,OperationStatus?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="collectionId"> Operation id used to filter the results. </param>
-        /// <param name="status"> Operation status used to filter the results. Allowed values: "Pending" | "Running" | "Succeeded" | "Canceled" | "Canceling" | "Failed". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperations(long?,long?,string,string,RequestContext)']/*" />
         public virtual Response GetIngestionOperations(long? top, long? skip, string collectionId, string status, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperations");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperations");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetIngestionOperationsRequest(top, skip, collectionId, status, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -966,29 +863,82 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Get operations of a geo-catalog collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="collectionId"> Operation id used to filter the results. </param>
+        /// <param name="status"> Operation status used to filter the results. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetIngestionOperationsAsync(long? top, long? skip, string collectionId, string status, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperations");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetIngestionOperationsRequest(top, skip, collectionId, status, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get operations of a geo-catalog collection. </summary>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="collectionId"> Operation id used to filter the results. </param>
+        /// <param name="status"> Operation status used to filter the results. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<OperationsPagedResult> GetIngestionOperations(long? top = default, long? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GetIngestionOperations(top, skip, collectionId, status?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((OperationsPagedResult)result, result);
+        }
+
+        /// <summary> Get operations of a geo-catalog collection. </summary>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="collectionId"> Operation id used to filter the results. </param>
+        /// <param name="status"> Operation status used to filter the results. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<OperationsPagedResult>> GetIngestionOperationsAsync(long? top = default, long? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetIngestionOperationsAsync(top, skip, collectionId, status?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((OperationsPagedResult)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Cancel all running operations of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='DeleteAllIngestionOperationsAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAllIngestionOperationsAsync(RequestContext context = null)
+        public virtual Response DeleteAllIngestionOperations(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteAllIngestionOperations");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteAllIngestionOperations");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteAllIngestionOperationsRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -997,29 +947,25 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Cancel all running operations of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='DeleteAllIngestionOperations(RequestContext)']/*" />
-        public virtual Response DeleteAllIngestionOperations(RequestContext context = null)
+        public virtual async Task<Response> DeleteAllIngestionOperationsAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteAllIngestionOperations");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteAllIngestionOperations");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteAllIngestionOperationsRequest(context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1028,92 +974,42 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get an operation of a geo-catalog collection. </summary>
-        /// <param name="operationId"> Operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperationAsync(Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<OperationInfo>> GetIngestionOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteAllIngestionOperations(CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionOperationAsync(operationId, context).ConfigureAwait(false);
-            return Response.FromValue(OperationInfo.FromResponse(response), response);
+            return DeleteAllIngestionOperations(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Get an operation of a geo-catalog collection. </summary>
-        /// <param name="operationId"> Operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperation(Guid,CancellationToken)']/*" />
-        public virtual Response<OperationInfo> GetIngestionOperation(Guid operationId, CancellationToken cancellationToken = default)
+        /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAllIngestionOperationsAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestionOperation(operationId, context);
-            return Response.FromValue(OperationInfo.FromResponse(response), response);
+            return await DeleteAllIngestionOperationsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
         /// [Protocol Method] Get an operation of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionOperationAsync(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> Operation id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperationAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionOperationAsync(Guid operationId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionOperationRequest(operationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get an operation of a geo-catalog collection
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionOperation(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='GetIngestionOperation(Guid,RequestContext)']/*" />
         public virtual Response GetIngestionOperation(Guid operationId, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetIngestionOperationRequest(operationId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1122,30 +1018,26 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Cancel a running operation of a geo-catalog collection
+        /// [Protocol Method] Get an operation of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> Operation id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='DeleteIngestionOperationAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteIngestionOperationAsync(Guid operationId, RequestContext context = null)
+        public virtual async Task<Response> GetIngestionOperationAsync(Guid operationId, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestionOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.GetIngestionOperation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteIngestionOperationRequest(operationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetIngestionOperationRequest(operationId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1154,30 +1046,46 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary> Get an operation of a geo-catalog collection. </summary>
+        /// <param name="operationId"> Operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<OperationInfo> GetIngestionOperation(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            Response result = GetIngestionOperation(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((OperationInfo)result, result);
+        }
+
+        /// <summary> Get an operation of a geo-catalog collection. </summary>
+        /// <param name="operationId"> Operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<OperationInfo>> GetIngestionOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetIngestionOperationAsync(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((OperationInfo)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Cancel a running operation of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> Operation id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='DeleteIngestionOperation(Guid,RequestContext)']/*" />
-        public virtual Response DeleteIngestionOperation(Guid operationId, RequestContext context = null)
+        public virtual Response DeleteIngestionOperation(Guid operationId, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestionOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestionOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteIngestionOperationRequest(operationId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1186,37 +1094,26 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued.
+        /// [Protocol Method] Cancel a running operation of a geo-catalog collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="operationId"> Operation id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='DeleteIngestionAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteIngestionAsync(WaitUntil waitUntil, string collectionId, string ingestionId, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteIngestionOperationAsync(Guid operationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestion");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestionOperation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteIngestionRequest(collectionId, ingestionId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "IngestionManagementClient.DeleteIngestion", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteIngestionOperationRequest(operationId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1225,291 +1122,22 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="collectionId"> Catalog collection id. </param>
-        /// <param name="ingestionId"> Ingestion id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="ingestionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <summary> Cancel a running operation of a geo-catalog collection. </summary>
+        /// <param name="operationId"> Operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/IngestionManagementClient.xml" path="doc/members/member[@name='DeleteIngestion(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation DeleteIngestion(WaitUntil waitUntil, string collectionId, string ingestionId, RequestContext context = null)
+        public virtual Response DeleteIngestionOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(ingestionId, nameof(ingestionId));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionManagementClient.DeleteIngestion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteIngestionRequest(collectionId, ingestionId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "IngestionManagementClient.DeleteIngestion", OperationFinalStateVia.Location, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return DeleteIngestionOperation(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        internal HttpMessage CreateGetIngestionsRequest(string collectionId, long? top, long? skip, RequestContext context)
+        /// <summary> Cancel a running operation of a geo-catalog collection. </summary>
+        /// <param name="operationId"> Operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteIngestionOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            return await DeleteIngestionOperationAsync(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
-
-        internal HttpMessage CreateCreateIngestionRequest(string collectionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetIngestionRequest(string collectionId, string ingestionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(ingestionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateIngestionRequest(string collectionId, string ingestionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(ingestionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteIngestionRequest(string collectionId, string ingestionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(ingestionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetIngestionRunsRequest(string collectionId, string ingestionId, long? top, long? skip, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(ingestionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateIngestionRunRequest(string collectionId, string ingestionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(ingestionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetIngestionRunRequest(string collectionId, string ingestionId, Guid runId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(ingestionId, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(runId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetIngestionOperationsRequest(long? top, long? skip, string collectionId, string status, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip.Value, true);
-            }
-            if (collectionId != null)
-            {
-                uri.AppendQuery("collectionId", collectionId, true);
-            }
-            if (status != null)
-            {
-                uri.AppendQuery("status", status, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteAllIngestionOperationsRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetIngestionOperationRequest(Guid operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteIngestionOperationRequest(Guid operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier201;
-        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

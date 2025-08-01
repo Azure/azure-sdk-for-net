@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class MultiLineString : IUtf8JsonSerializable, IJsonModel<MultiLineString>
+    /// <summary> Represents a MultiLineString. </summary>
+    public partial class MultiLineString : IJsonModel<MultiLineString>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiLineString>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MultiLineString"/> for deserialization. </summary>
+        internal MultiLineString()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MultiLineString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,16 +33,15 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MultiLineString)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
-            foreach (var item in Coordinates)
+            foreach (IList<double> item in Coordinates)
             {
                 if (item == null)
                 {
@@ -45,7 +49,7 @@ namespace Azure.PlanetaryComputer
                     continue;
                 }
                 writer.WriteStartArray();
-                foreach (var item0 in item)
+                foreach (double item0 in item)
                 {
                     writer.WriteNumberValue(item0);
                 }
@@ -54,37 +58,60 @@ namespace Azure.PlanetaryComputer
             writer.WriteEndArray();
         }
 
-        MultiLineString IJsonModel<MultiLineString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MultiLineString IJsonModel<MultiLineString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MultiLineString)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GeoJsonGeometry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MultiLineString)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMultiLineString(document.RootElement, options);
         }
 
-        internal static MultiLineString DeserializeMultiLineString(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MultiLineString DeserializeMultiLineString(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IList<double>> coordinates = default;
-            GeometryType type = default;
+            GeometryType @type = default;
             IList<double> bbox = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<IList<double>> coordinates = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("coordinates"u8))
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new GeometryType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("bbox"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<double> array = new List<double>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
+                    continue;
+                }
+                if (prop.NameEquals("coordinates"u8))
                 {
                     List<IList<double>> array = new List<IList<double>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -103,56 +130,44 @@ namespace Azure.PlanetaryComputer
                     coordinates = array;
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new GeometryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("bbox"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetDouble());
-                    }
-                    bbox = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MultiLineString(type, bbox ?? new ChangeTrackingList<double>(), serializedAdditionalRawData, coordinates);
+            return new MultiLineString(@type, bbox ?? new ChangeTrackingList<double>(), additionalBinaryDataProperties, coordinates);
         }
 
-        BinaryData IPersistableModel<MultiLineString>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MultiLineString>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MultiLineString)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MultiLineString IPersistableModel<MultiLineString>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MultiLineString IPersistableModel<MultiLineString>.Create(BinaryData data, ModelReaderWriterOptions options) => (MultiLineString)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MultiLineString>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMultiLineString(document.RootElement, options);
                     }
                 default:
@@ -160,22 +175,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MultiLineString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new MultiLineString FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMultiLineString(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

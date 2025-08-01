@@ -9,60 +9,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-    ///
+    /// 
     /// Represents the STAC API landing page with links to available resources.
     /// </summary>
     public partial class LandingPage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LandingPage"/>. </summary>
         /// <param name="id"> Unique identifier for the STAC catalog. </param>
         /// <param name="description"> Detailed description of the STAC catalog. </param>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="description"/>, <paramref name="conformsTo"/> or <paramref name="links"/> is null. </exception>
         internal LandingPage(string id, string description, IEnumerable<Uri> conformsTo, IEnumerable<StacLink> links)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(conformsTo, nameof(conformsTo));
-            Argument.AssertNotNull(links, nameof(links));
-
             StacExtensions = new ChangeTrackingList<string>();
             Id = id;
             Description = description;
@@ -82,8 +47,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="type"> Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LandingPage(string msftCreated, string msftUpdated, string msftShortDescription, IReadOnlyList<string> stacExtensions, string id, string description, string title, string stacVersion, IReadOnlyList<Uri> conformsTo, IReadOnlyList<StacLink> links, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LandingPage(string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, string id, string description, string title, string stacVersion, IList<Uri> conformsTo, IList<StacLink> links, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MsftCreated = msftCreated;
             MsftUpdated = msftUpdated;
@@ -95,35 +60,40 @@ namespace Azure.PlanetaryComputer
             StacVersion = stacVersion;
             ConformsTo = conformsTo;
             Links = links;
-            Type = type;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LandingPage"/> for deserialization. </summary>
-        internal LandingPage()
-        {
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MSFT Created. </summary>
         public string MsftCreated { get; }
+
         /// <summary> MSFT Updated. </summary>
         public string MsftUpdated { get; }
+
         /// <summary> MSFT Short Description. </summary>
         public string MsftShortDescription { get; }
+
         /// <summary> URLs to STAC extensions implemented by this STAC resource. </summary>
-        public IReadOnlyList<string> StacExtensions { get; }
+        public IList<string> StacExtensions { get; }
+
         /// <summary> Unique identifier for the STAC catalog. </summary>
         public string Id { get; }
+
         /// <summary> Detailed description of the STAC catalog. </summary>
         public string Description { get; }
+
         /// <summary> Human-readable title for the STAC catalog. </summary>
         public string Title { get; }
+
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; }
+
         /// <summary> List of OGC API conformance classes implemented by this API. </summary>
-        public IReadOnlyList<Uri> ConformsTo { get; }
+        public IList<Uri> ConformsTo { get; }
+
         /// <summary> Links to related resources and endpoints. </summary>
-        public IReadOnlyList<StacLink> Links { get; }
+        public IList<StacLink> Links { get; }
+
         /// <summary> Type. </summary>
         public string Type { get; }
     }

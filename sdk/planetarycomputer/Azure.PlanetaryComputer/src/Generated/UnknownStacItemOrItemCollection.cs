@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    /// <summary> Unknown version of StacItemOrItemCollection. </summary>
     internal partial class UnknownStacItemOrItemCollection : StacItemOrItemCollection
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStacItemOrItemCollection"/>. </summary>
@@ -21,13 +20,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="msftUpdated"> MSFT Updated. </param>
         /// <param name="msftShortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStacItemOrItemCollection(StacModelType type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, stacVersion, links, msftCreated, msftUpdated, msftShortDescription, stacExtensions, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownStacItemOrItemCollection"/> for deserialization. </summary>
-        internal UnknownStacItemOrItemCollection()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownStacItemOrItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", stacVersion, links, msftCreated, msftUpdated, msftShortDescription, stacExtensions, additionalBinaryDataProperties)
         {
         }
     }

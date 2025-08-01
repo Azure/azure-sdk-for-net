@@ -8,46 +8,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification
-    ///
+    /// 
     /// Context information for a search response including pagination details.
     /// </summary>
     public partial class ContextExtension
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContextExtension"/>. </summary>
         /// <param name="returned"> Number of items returned in the response. </param>
@@ -60,24 +31,21 @@ namespace Azure.PlanetaryComputer
         /// <param name="returned"> Number of items returned in the response. </param>
         /// <param name="limit"> Maximum number of items requested. </param>
         /// <param name="matched"> Total number of items matching the query. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContextExtension(int returned, int? limit, int? matched, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContextExtension(int returned, int? limit, int? matched, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Returned = returned;
             Limit = limit;
             Matched = matched;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContextExtension"/> for deserialization. </summary>
-        internal ContextExtension()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of items returned in the response. </summary>
         public int Returned { get; set; }
+
         /// <summary> Maximum number of items requested. </summary>
         public int? Limit { get; set; }
+
         /// <summary> Total number of items matching the query. </summary>
         public int? Matched { get; set; }
     }

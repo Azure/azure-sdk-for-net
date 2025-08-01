@@ -8,52 +8,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> User-specific collection settings for visualization. </summary>
     public partial class UserCollectionSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserCollectionSettings"/>. </summary>
         /// <param name="tileSettings"> Settings for map tile visualization. </param>
         /// <param name="mosaicInfo"> Settings for data mosaic visualization. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tileSettings"/> or <paramref name="mosaicInfo"/> is null. </exception>
         internal UserCollectionSettings(TileSettings tileSettings, MosaicInfo mosaicInfo)
         {
-            Argument.AssertNotNull(tileSettings, nameof(tileSettings));
-            Argument.AssertNotNull(mosaicInfo, nameof(mosaicInfo));
-
             TileSettings = tileSettings;
             MosaicInfo = mosaicInfo;
         }
@@ -61,21 +28,17 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="UserCollectionSettings"/>. </summary>
         /// <param name="tileSettings"> Settings for map tile visualization. </param>
         /// <param name="mosaicInfo"> Settings for data mosaic visualization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserCollectionSettings(TileSettings tileSettings, MosaicInfo mosaicInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserCollectionSettings(TileSettings tileSettings, MosaicInfo mosaicInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TileSettings = tileSettings;
             MosaicInfo = mosaicInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserCollectionSettings"/> for deserialization. </summary>
-        internal UserCollectionSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings for map tile visualization. </summary>
         public TileSettings TileSettings { get; }
+
         /// <summary> Settings for data mosaic visualization. </summary>
         public MosaicInfo MosaicInfo { get; }
     }

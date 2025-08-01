@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.IngestionSources
 {
     /// <summary> Managed Identity ingestion source. </summary>
     public partial class ManagedIdentityIngestionSource : IngestionSource
@@ -17,11 +18,10 @@ namespace Azure.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
-        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id)
+        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id, IngestionSourceType.BlobManagedIdentity)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
 
-            Kind = IngestionSourceType.BlobManagedIdentity;
             ConnectionInfo = connectionInfo;
         }
 
@@ -29,16 +29,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
-        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedIdentityConnection connectionInfo) : base(id, created, kind, serializedAdditionalRawData)
+        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityIngestionSource"/> for deserialization. </summary>
-        internal ManagedIdentityIngestionSource()
-        {
         }
 
         /// <summary> Managed identity connection information. </summary>

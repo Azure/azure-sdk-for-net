@@ -8,54 +8,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Microsoft Authentication Library (MSAL) configuration for frontend authentication. </summary>
     public partial class AuthConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuthConfig"/>. </summary>
         /// <param name="authnAppId"> Application ID for authentication. </param>
         /// <param name="tenantId"> Azure Active Directory tenant ID. </param>
         /// <param name="instance"> Azure AD instance URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authnAppId"/>, <paramref name="tenantId"/> or <paramref name="instance"/> is null. </exception>
         internal AuthConfig(string authnAppId, string tenantId, Uri instance)
         {
-            Argument.AssertNotNull(authnAppId, nameof(authnAppId));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(instance, nameof(instance));
-
             AuthnAppId = authnAppId;
             TenantId = tenantId;
             Instance = instance;
@@ -66,27 +32,25 @@ namespace Azure.PlanetaryComputer
         /// <param name="tenantId"> Azure Active Directory tenant ID. </param>
         /// <param name="instance"> Azure AD instance URL. </param>
         /// <param name="redirectUri"> Redirect URI after authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthConfig(string authnAppId, string tenantId, Uri instance, Uri redirectUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuthConfig(string authnAppId, string tenantId, Uri instance, Uri redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthnAppId = authnAppId;
             TenantId = tenantId;
             Instance = instance;
             RedirectUri = redirectUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AuthConfig"/> for deserialization. </summary>
-        internal AuthConfig()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Application ID for authentication. </summary>
         public string AuthnAppId { get; }
+
         /// <summary> Azure Active Directory tenant ID. </summary>
         public string TenantId { get; }
+
         /// <summary> Azure AD instance URL. </summary>
         public Uri Instance { get; }
+
         /// <summary> Redirect URI after authentication. </summary>
         public Uri RedirectUri { get; }
     }

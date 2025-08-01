@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents a GeoJSON Point geometry. </summary>
     public partial class GeoJsonPoint : GeoJsonGeometry
@@ -16,27 +16,21 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="GeoJsonPoint"/>. </summary>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public GeoJsonPoint(string coordinates)
+        public GeoJsonPoint(string coordinates) : base(GeometryType.Point)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            Type = GeometryType.Point;
             Coordinates = coordinates;
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonPoint"/>. </summary>
         /// <param name="type"> The type of the geometry. </param>
         /// <param name="bbox"> Optional bounding box of the geometry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
-        internal GeoJsonPoint(GeometryType type, IList<double> bbox, IDictionary<string, BinaryData> serializedAdditionalRawData, string coordinates) : base(type, bbox, serializedAdditionalRawData)
+        internal GeoJsonPoint(GeometryType @type, IList<double> bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties, string coordinates) : base(@type, bbox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GeoJsonPoint"/> for deserialization. </summary>
-        internal GeoJsonPoint()
-        {
         }
 
         /// <summary> The coordinates of the point as [longitude, latitude]. </summary>

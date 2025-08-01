@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents a Polygon. </summary>
     public partial class GeoJsonPolygon : GeoJsonGeometry
@@ -17,27 +17,21 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates)
+        public GeoJsonPolygon(IEnumerable<IList<IList<double>>> coordinates) : base(GeometryType.Polygon)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            Type = GeometryType.Polygon;
             Coordinates = coordinates.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
         /// <param name="type"> The type of the geometry. </param>
         /// <param name="bbox"> Optional bounding box of the geometry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the polygon. </param>
-        internal GeoJsonPolygon(GeometryType type, IList<double> bbox, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<IList<double>>> coordinates) : base(type, bbox, serializedAdditionalRawData)
+        internal GeoJsonPolygon(GeometryType @type, IList<double> bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<double>>> coordinates) : base(@type, bbox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/> for deserialization. </summary>
-        internal GeoJsonPolygon()
-        {
         }
 
         /// <summary> The coordinates of the polygon. </summary>

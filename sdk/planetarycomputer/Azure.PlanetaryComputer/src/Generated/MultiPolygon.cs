@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents a MultiPolygon. </summary>
     public partial class MultiPolygon : GeoJsonGeometry
@@ -17,27 +17,21 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="MultiPolygon"/>. </summary>
         /// <param name="coordinates"> The coordinates of the multipolygon. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiPolygon(IEnumerable<IList<IList<double>>> coordinates)
+        public MultiPolygon(IEnumerable<IList<IList<double>>> coordinates) : base(GeometryType.MultiPolygon)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            Type = GeometryType.MultiPolygon;
             Coordinates = coordinates.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiPolygon"/>. </summary>
         /// <param name="type"> The type of the geometry. </param>
         /// <param name="bbox"> Optional bounding box of the geometry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the multipolygon. </param>
-        internal MultiPolygon(GeometryType type, IList<double> bbox, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<IList<double>>> coordinates) : base(type, bbox, serializedAdditionalRawData)
+        internal MultiPolygon(GeometryType @type, IList<double> bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<double>>> coordinates) : base(@type, bbox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MultiPolygon"/> for deserialization. </summary>
-        internal MultiPolygon()
-        {
         }
 
         /// <summary> The coordinates of the multipolygon. </summary>

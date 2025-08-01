@@ -9,52 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.mdCollection of STAC items with statistical information. </summary>
     public partial class GeoJsonStatisticsItemCollectionResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonStatisticsItemCollectionResult"/>. </summary>
         /// <param name="type"> GeoJSON type identifier for ItemCollection. </param>
         /// <param name="features"> Array of STAC items with statistics. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        internal GeoJsonStatisticsItemCollectionResult(ItemCollectionType type, IEnumerable<GeoJsonStatisticsItemResult> features)
+        internal GeoJsonStatisticsItemCollectionResult(ItemCollectionType @type, IEnumerable<GeoJsonStatisticsItemResult> features)
         {
-            Argument.AssertNotNull(features, nameof(features));
-
-            Type = type;
+            Type = @type;
             Features = features.ToList();
             Bbox = new ChangeTrackingList<double>();
             StacExtensions = new ChangeTrackingList<Uri>();
@@ -73,13 +41,13 @@ namespace Azure.PlanetaryComputer
         /// <param name="links"> Related links for the item collection. </param>
         /// <param name="context">
         /// Pagination context for the response
-        ///
+        /// 
         /// See the [STAC Context Extension](https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification)
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonStatisticsItemCollectionResult(ItemCollectionType type, IReadOnlyList<GeoJsonStatisticsItemResult> features, IReadOnlyList<double> bbox, string stacVersion, string msftCreated, string msftUpdated, string msftShortDescription, IReadOnlyList<Uri> stacExtensions, IReadOnlyList<StacLink> links, ContextExtension context, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonStatisticsItemCollectionResult(ItemCollectionType @type, IList<GeoJsonStatisticsItemResult> features, IList<double> bbox, string stacVersion, string msftCreated, string msftUpdated, string msftShortDescription, IList<Uri> stacExtensions, IList<StacLink> links, ContextExtension context, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Features = features;
             Bbox = bbox;
             StacVersion = stacVersion;
@@ -89,35 +57,39 @@ namespace Azure.PlanetaryComputer
             StacExtensions = stacExtensions;
             Links = links;
             Context = context;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GeoJsonStatisticsItemCollectionResult"/> for deserialization. </summary>
-        internal GeoJsonStatisticsItemCollectionResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> GeoJSON type identifier for ItemCollection. </summary>
         public ItemCollectionType Type { get; }
+
         /// <summary> Array of STAC items with statistics. </summary>
-        public IReadOnlyList<GeoJsonStatisticsItemResult> Features { get; }
+        public IList<GeoJsonStatisticsItemResult> Features { get; }
+
         /// <summary> Bounding box coordinates [west, south, east, north]. </summary>
-        public IReadOnlyList<double> Bbox { get; }
+        public IList<double> Bbox { get; }
+
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; }
+
         /// <summary> MSFT Created. </summary>
         public string MsftCreated { get; }
+
         /// <summary> MSFT Updated. </summary>
         public string MsftUpdated { get; }
+
         /// <summary> MSFT Short Description. </summary>
         public string MsftShortDescription { get; }
+
         /// <summary> List of STAC extension URLs used by this item collection. </summary>
-        public IReadOnlyList<Uri> StacExtensions { get; }
+        public IList<Uri> StacExtensions { get; }
+
         /// <summary> Related links for the item collection. </summary>
-        public IReadOnlyList<StacLink> Links { get; }
+        public IList<StacLink> Links { get; }
+
         /// <summary>
         /// Pagination context for the response
-        ///
+        /// 
         /// See the [STAC Context Extension](https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification)
         /// </summary>
         public ContextExtension Context { get; }

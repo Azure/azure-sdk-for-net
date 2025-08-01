@@ -8,57 +8,78 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Choices for filter-lang value in a POST request.
-    ///
+    /// 
     /// Based on
     /// https://github.com/stac-api-extensions/filter#queryables
-    ///
+    /// 
     /// Note the addition of cql2-json, which is used by the pgstac backend,
     /// but is not included in the spec above.
-    ///
+    /// 
     /// Defines the supported filter languages for STAC API queries.
     /// </summary>
     public readonly partial struct FilterLang : IEquatable<FilterLang>
     {
         private readonly string _value;
+        /// <summary> Common Query Language in JSON format. </summary>
+        private const string CqlJsonValue = "cql-json";
+        /// <summary> Common Query Language 2 in JSON format. </summary>
+        private const string Cql2JsonValue = "cql2-json";
+        /// <summary> Common Query Language 2 in text format. </summary>
+        private const string Cql2TextValue = "cql2-text";
 
         /// <summary> Initializes a new instance of <see cref="FilterLang"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FilterLang(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CqlJsonValue = "cql-json";
-        private const string Cql2JsonValue = "cql2-json";
-        private const string Cql2TextValue = "cql2-text";
+            _value = value;
+        }
 
         /// <summary> Common Query Language in JSON format. </summary>
         public static FilterLang CqlJson { get; } = new FilterLang(CqlJsonValue);
+
         /// <summary> Common Query Language 2 in JSON format. </summary>
         public static FilterLang Cql2Json { get; } = new FilterLang(Cql2JsonValue);
+
         /// <summary> Common Query Language 2 in text format. </summary>
         public static FilterLang Cql2Text { get; } = new FilterLang(Cql2TextValue);
+
         /// <summary> Determines if two <see cref="FilterLang"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FilterLang left, FilterLang right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FilterLang"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FilterLang left, FilterLang right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FilterLang"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FilterLang"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FilterLang(string value) => new FilterLang(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FilterLang"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FilterLang?(string value) => value == null ? null : new FilterLang(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FilterLang other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FilterLang other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

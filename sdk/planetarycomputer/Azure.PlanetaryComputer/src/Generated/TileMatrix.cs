@@ -9,52 +9,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Tile Matrix Definition
-    ///
+    /// 
     /// A tile matrix, usually corresponding to a particular zoom level of a
     /// TileMatrixSet.
-    ///
+    /// 
     /// ref:
     /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrix.json
-    ///
+    /// 
     /// Definition of a tile matrix at a specific zoom level within a tile matrix set
     /// </summary>
     public partial class TileMatrix
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TileMatrix"/>. </summary>
         /// <param name="id"> Unique identifier for this tile matrix level, often the zoom level. </param>
@@ -70,12 +41,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="tileHeight"> Pixel height of each tile at this level. </param>
         /// <param name="matrixWidth"> Number of tiles horizontally at this matrix level. </param>
         /// <param name="matrixHeight"> Number of tiles vertically at this matrix level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="pointOfOrigin"/> is null. </exception>
         internal TileMatrix(string id, float scaleDenominator, float cellSize, IEnumerable<double> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(pointOfOrigin, nameof(pointOfOrigin));
-
             Keywords = new ChangeTrackingList<string>();
             Id = id;
             ScaleDenominator = scaleDenominator;
@@ -115,11 +82,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="matrixHeight"> Number of tiles vertically at this matrix level. </param>
         /// <param name="variableMatrixWidths">
         /// Describes the rows that has variable matrix width
-        ///
+        /// 
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TileMatrix(string title, string description, IReadOnlyList<string> keywords, string id, float scaleDenominator, float cellSize, TileMatrixCornerOfOrigin? cornerOfOrigin, IReadOnlyList<double> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight, IReadOnlyList<VariableMatrixWidth> variableMatrixWidths, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TileMatrix(string title, string description, IList<string> keywords, string id, float scaleDenominator, float cellSize, TileMatrixCornerOfOrigin? cornerOfOrigin, IList<double> pointOfOrigin, int tileWidth, int tileHeight, int matrixWidth, int matrixHeight, IList<VariableMatrixWidth> variableMatrixWidths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -134,55 +101,62 @@ namespace Azure.PlanetaryComputer
             MatrixWidth = matrixWidth;
             MatrixHeight = matrixHeight;
             VariableMatrixWidths = variableMatrixWidths;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TileMatrix"/> for deserialization. </summary>
-        internal TileMatrix()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Human-readable title of the tile matrix level. </summary>
         public string Title { get; }
+
         /// <summary> Human-readable description of this tile matrix level. </summary>
         public string Description { get; }
+
         /// <summary>
         /// Unordered list of one or more commonly used or formalized word(s) or phrase(s)
         /// used to describe this dataset
         /// </summary>
-        public IReadOnlyList<string> Keywords { get; }
+        public IList<string> Keywords { get; }
+
         /// <summary> Unique identifier for this tile matrix level, often the zoom level. </summary>
         public string Id { get; }
+
         /// <summary> Scale denominator representing the scale of this tile matrix level. </summary>
         public float ScaleDenominator { get; }
+
         /// <summary> Size of a pixel in map units at this tile matrix level. </summary>
         public float CellSize { get; }
+
         /// <summary>
         /// The corner of the tile matrix (_topLeft_ or _bottomLeft_) used as the origin
         /// for numbering tile rows and columns. This corner is also a corner of the (0, 0)
         /// tile.
         /// </summary>
         public TileMatrixCornerOfOrigin? CornerOfOrigin { get; }
+
         /// <summary>
         /// Precise position in CRS coordinates of the corner of origin (e.g. the top-left
         /// corner) for this tile matrix. This position is also a corner of the (0, 0)
         /// tile. In previous version, this was 'topLeftCorner' and 'cornerOfOrigin' did
         /// not exist.
         /// </summary>
-        public IReadOnlyList<double> PointOfOrigin { get; }
+        public IList<double> PointOfOrigin { get; }
+
         /// <summary> Pixel width of each tile at this level. </summary>
         public int TileWidth { get; }
+
         /// <summary> Pixel height of each tile at this level. </summary>
         public int TileHeight { get; }
+
         /// <summary> Number of tiles horizontally at this matrix level. </summary>
         public int MatrixWidth { get; }
+
         /// <summary> Number of tiles vertically at this matrix level. </summary>
         public int MatrixHeight { get; }
+
         /// <summary>
         /// Describes the rows that has variable matrix width
-        ///
+        /// 
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </summary>
-        public IReadOnlyList<VariableMatrixWidth> VariableMatrixWidths { get; }
+        public IList<VariableMatrixWidth> VariableMatrixWidths { get; }
     }
 }

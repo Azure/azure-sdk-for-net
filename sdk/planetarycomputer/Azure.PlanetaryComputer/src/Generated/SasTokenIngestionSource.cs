@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.IngestionSources
 {
     /// <summary> SAS Token ingestion source. </summary>
     public partial class SasTokenIngestionSource : IngestionSource
@@ -17,11 +18,10 @@ namespace Azure.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="connectionInfo"> SAS token connection information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
-        public SasTokenIngestionSource(Guid id, SasTokenConnection connectionInfo) : base(id)
+        public SasTokenIngestionSource(Guid id, SasTokenConnection connectionInfo) : base(id, IngestionSourceType.SasToken)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
 
-            Kind = IngestionSourceType.SasToken;
             ConnectionInfo = connectionInfo;
         }
 
@@ -29,16 +29,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionInfo"> SAS token connection information. </param>
-        internal SasTokenIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, SasTokenConnection connectionInfo) : base(id, created, kind, serializedAdditionalRawData)
+        internal SasTokenIngestionSource(Guid id, DateTimeOffset created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SasTokenConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SasTokenIngestionSource"/> for deserialization. </summary>
-        internal SasTokenIngestionSource()
-        {
         }
 
         /// <summary> SAS token connection information. </summary>

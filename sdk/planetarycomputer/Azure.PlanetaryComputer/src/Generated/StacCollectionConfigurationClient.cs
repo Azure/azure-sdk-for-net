@@ -10,26 +10,21 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The StacCollectionConfiguration service client. </summary>
+    /// <summary> The StacCollectionConfigurationClient. </summary>
     public partial class StacCollectionConfigurationClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of StacCollectionConfigurationClient for mocking. </summary>
         protected StacCollectionConfigurationClient()
@@ -37,173 +32,76 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of StacCollectionConfigurationClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public StacCollectionConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public StacCollectionConfigurationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new StacCollectionConfigurationClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of StacCollectionConfigurationClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public StacCollectionConfigurationClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public StacCollectionConfigurationClient(Uri endpoint, TokenCredential credential, StacCollectionConfigurationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new StacCollectionConfigurationClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Create Collection Asset. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="body"> Multi-part form data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Create a new asset in the Collection metadata and write the associated
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Create a new asset in the Collection metadata and write the associated
         /// file to managed storage.
-        ///
+        /// 
         /// Args:
         /// request: The incoming request.
         /// asset: The Asset object to write, without a valid href to the asset.
         /// file: The file to write.
         /// collection_id: The ID of the collection to write the asset to.
         /// content_type: The content type of the request.
-        ///
+        /// 
         /// Returns:
         /// A Response object containing the newly created asset.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateCollectionAssetAsync(string,FormContent,CancellationToken)']/*" />
-        public virtual async Task<Response<StacCollectionModel>> CreateCollectionAssetAsync(string collectionId, FormContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateCollectionAssetAsync(collectionId, content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(StacCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary> Create Collection Asset. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="body"> Multi-part form data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Create a new asset in the Collection metadata and write the associated
-        /// file to managed storage.
-        ///
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to write, without a valid href to the asset.
-        /// file: The file to write.
-        /// collection_id: The ID of the collection to write the asset to.
-        /// content_type: The content type of the request.
-        ///
-        /// Returns:
-        /// A Response object containing the newly created asset.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateCollectionAsset(string,FormContent,CancellationToken)']/*" />
-        public virtual Response<StacCollectionModel> CreateCollectionAsset(string collectionId, FormContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateCollectionAsset(collectionId, content, content.ContentType, context);
-            return Response.FromValue(StacCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create Collection Asset
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCollectionAssetAsync(string,FormContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Content type of the multipart form data request. Allowed values: "multipart/form-data". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateCollectionAssetAsync(string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> CreateCollectionAssetAsync(string collectionId, RequestContent content, string contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateCollectionAsset");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCollectionAssetRequest(collectionId, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create Collection Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCollectionAsset(string,FormContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Content type of the multipart form data request. Allowed values: "multipart/form-data". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateCollectionAsset(string,RequestContent,string,RequestContext)']/*" />
         public virtual Response CreateCollectionAsset(string collectionId, RequestContent content, string contentType, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateCollectionAsset");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateCollectionAsset");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateCollectionAssetRequest(collectionId, content, contentType, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -212,111 +110,44 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Update Collection Asset. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="assetId"> STAC Asset ID. </param>
-        /// <param name="body"> Multi-part form data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Update an existing asset in a given collection.
-        ///
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to update.
-        /// file: The file to update (optional).
-        /// collection_id: The ID of the collection to update the asset in.
-        /// asset_id: The ID of the asset to update.
-        /// content_type: The content type of the request.
-        ///
-        /// Returns:
-        /// A Response object containing the updated asset.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceCollectionAssetAsync(string,string,FormContent,CancellationToken)']/*" />
-        public virtual async Task<Response<StacCollectionModel>> CreateOrReplaceCollectionAssetAsync(string collectionId, string assetId, FormContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceCollectionAssetAsync(collectionId, assetId, content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(StacCollectionModel.FromResponse(response), response);
-        }
-
-        /// <summary> Update Collection Asset. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="assetId"> STAC Asset ID. </param>
-        /// <param name="body"> Multi-part form data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Update an existing asset in a given collection.
-        ///
-        /// Args:
-        /// request: The incoming request.
-        /// asset: The Asset object to update.
-        /// file: The file to update (optional).
-        /// collection_id: The ID of the collection to update the asset in.
-        /// asset_id: The ID of the asset to update.
-        /// content_type: The content type of the request.
-        ///
-        /// Returns:
-        /// A Response object containing the updated asset.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceCollectionAsset(string,string,FormContent,CancellationToken)']/*" />
-        public virtual Response<StacCollectionModel> CreateOrReplaceCollectionAsset(string collectionId, string assetId, FormContent body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceCollectionAsset(collectionId, assetId, content, content.ContentType, context);
-            return Response.FromValue(StacCollectionModel.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Update Collection Asset
+        /// [Protocol Method] Create a new asset in the Collection metadata and write the associated
+        /// file to managed storage.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// asset: The Asset object to write, without a valid href to the asset.
+        /// file: The file to write.
+        /// collection_id: The ID of the collection to write the asset to.
+        /// content_type: The content type of the request.
+        /// 
+        /// Returns:
+        /// A Response object containing the newly created asset.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceCollectionAssetAsync(string,string,FormContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="assetId"> STAC Asset ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Content type of the multipart form data request. Allowed values: "multipart/form-data". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceCollectionAssetAsync(string,string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrReplaceCollectionAssetAsync(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<Response> CreateCollectionAssetAsync(string collectionId, RequestContent content, string contentType, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceCollectionAsset");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateCollectionAsset");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrReplaceCollectionAssetRequest(collectionId, assetId, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateCollectionAssetRequest(collectionId, content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -326,42 +157,45 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Update Collection Asset
+        /// [Protocol Method] Update an existing asset in a given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// asset: The Asset object to update.
+        /// file: The file to update (optional).
+        /// collection_id: The ID of the collection to update the asset in.
+        /// asset_id: The ID of the asset to update.
+        /// content_type: The content type of the request.
+        /// 
+        /// Returns:
+        /// A Response object containing the updated asset.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceCollectionAsset(string,string,FormContent,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="assetId"> STAC Asset ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Content type of the multipart form data request. Allowed values: "multipart/form-data". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceCollectionAsset(string,string,RequestContent,string,RequestContext)']/*" />
         public virtual Response CreateOrReplaceCollectionAsset(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceCollectionAsset");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceCollectionAsset");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateOrReplaceCollectionAssetRequest(collectionId, assetId, content, contentType, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -370,36 +204,46 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete Collection Asset
+        /// [Protocol Method] Update an existing asset in a given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// asset: The Asset object to update.
+        /// file: The file to update (optional).
+        /// collection_id: The ID of the collection to update the asset in.
+        /// asset_id: The ID of the asset to update.
+        /// content_type: The content type of the request.
+        /// 
+        /// Returns:
+        /// A Response object containing the updated asset.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="assetId"> STAC Asset ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteCollectionAssetAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteCollectionAssetAsync(string collectionId, string assetId, RequestContext context = null)
+        public virtual async Task<Response> CreateOrReplaceCollectionAssetAsync(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteCollectionAsset");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceCollectionAsset");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteCollectionAssetRequest(collectionId, assetId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceCollectionAssetRequest(collectionId, assetId, content, contentType, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -408,36 +252,40 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete Collection Asset
+        /// [Protocol Method] Delete an asset from a given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to delete the asset from.
+        /// asset_id: The ID of the asset to delete.
+        /// 
+        /// Returns:
+        /// A Response object indicating the success of the deletion.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
         /// <param name="assetId"> STAC Asset ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteCollectionAsset(string,string,RequestContext)']/*" />
-        public virtual Response DeleteCollectionAsset(string collectionId, string assetId, RequestContext context = null)
+        public virtual Response DeleteCollectionAsset(string collectionId, string assetId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteCollectionAsset");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteCollectionAsset");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+
                 using HttpMessage message = CreateDeleteCollectionAssetRequest(collectionId, assetId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -446,70 +294,214 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Config. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the complete user configuration for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionConfigAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<UserCollectionSettings>> GetCollectionConfigAsync(string collectionId, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Delete an asset from a given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to delete the asset from.
+        /// asset_id: The ID of the asset to delete.
+        /// 
+        /// Returns:
+        /// A Response object indicating the success of the deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="assetId"> STAC Asset ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteCollectionAssetAsync(string collectionId, string assetId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteCollectionAsset");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCollectionConfigAsync(collectionId, context).ConfigureAwait(false);
-            return Response.FromValue(UserCollectionSettings.FromResponse(response), response);
+                using HttpMessage message = CreateDeleteCollectionAssetRequest(collectionId, assetId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get Config. </summary>
+        /// <summary>
+        /// Delete an asset from a given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to delete the asset from.
+        /// asset_id: The ID of the asset to delete.
+        /// 
+        /// Returns:
+        /// A Response object indicating the success of the deletion.
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="assetId"> STAC Asset ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteCollectionAsset(string collectionId, string assetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+
+            return DeleteCollectionAsset(collectionId, assetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// Delete an asset from a given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to delete the asset from.
+        /// asset_id: The ID of the asset to delete.
+        /// 
+        /// Returns:
+        /// A Response object indicating the success of the deletion.
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="assetId"> STAC Asset ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteCollectionAssetAsync(string collectionId, string assetId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+
+            return await DeleteCollectionAssetAsync(collectionId, assetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the complete user configuration for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the complete user configuration for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionConfig(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionConfig(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionConfig");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionConfigRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the complete user configuration for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionConfigAsync(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionConfig");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionConfigRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the complete user configuration for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<UserCollectionSettings> GetCollectionConfig(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCollectionConfig(collectionId, context);
-            return Response.FromValue(UserCollectionSettings.FromResponse(response), response);
+            Response result = GetCollectionConfig(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((UserCollectionSettings)result, result);
+        }
+
+        /// <summary> Get the complete user configuration for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<UserCollectionSettings>> GetCollectionConfigAsync(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetCollectionConfigAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((UserCollectionSettings)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Config
+        /// [Protocol Method] Get the mosaic definitions for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCollectionConfigAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionConfigAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCollectionConfigAsync(string collectionId, RequestContext context)
+        public virtual Response GetAllMosaics(string collectionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllMosaics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionConfigRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetAllMosaicsRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -519,37 +511,29 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Config
+        /// [Protocol Method] Get the mosaic definitions for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCollectionConfig(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionConfig(string,RequestContext)']/*" />
-        public virtual Response GetCollectionConfig(string collectionId, RequestContext context)
+        public virtual async Task<Response> GetAllMosaicsAsync(string collectionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllMosaics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionConfigRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetAllMosaicsRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -558,86 +542,72 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Collection Mosaics. </summary>
+        /// <summary> Get the mosaic definitions for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the mosaic definitions for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllMosaicsAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<StacMosaic>>> GetAllMosaicsAsync(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAllMosaicsAsync(collectionId, context).ConfigureAwait(false);
-            IReadOnlyList<StacMosaic> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<StacMosaic> array = new List<StacMosaic>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(StacMosaic.DeserializeStacMosaic(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Get Collection Mosaics. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the mosaic definitions for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllMosaics(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IReadOnlyList<StacMosaic>> GetAllMosaics(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAllMosaics(collectionId, context);
-            IReadOnlyList<StacMosaic> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<StacMosaic> array = new List<StacMosaic>();
+            Response result = GetAllMosaics(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<StacMosaic> value = new List<StacMosaic>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(StacMosaic.DeserializeStacMosaic(item));
+                value.Add(StacMosaic.DeserializeStacMosaic(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<StacMosaic>)value, result);
+        }
+
+        /// <summary> Get the mosaic definitions for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<StacMosaic>>> GetAllMosaicsAsync(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetAllMosaicsAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<StacMosaic> value = new List<StacMosaic>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(StacMosaic.DeserializeStacMosaic(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<StacMosaic>)value, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Mosaics
+        /// [Protocol Method] Add a mosaic definition to a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllMosaicsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllMosaicsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAllMosaicsAsync(string collectionId, RequestContext context)
+        public virtual Response AddMosaic(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllMosaics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.AddMosaic");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllMosaicsRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAddMosaicRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -647,37 +617,31 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Mosaics
+        /// [Protocol Method] Add a mosaic definition to a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllMosaics(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllMosaics(string,RequestContext)']/*" />
-        public virtual Response GetAllMosaics(string collectionId, RequestContext context)
+        public virtual async Task<Response> AddMosaicAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllMosaics");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.AddMosaic");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllMosaicsRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateAddMosaicRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -686,78 +650,64 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Add Collection Mosaic. </summary>
+        /// <summary> Add a mosaic definition to a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="body"> Mosaic definition to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Add a mosaic definition to a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='AddMosaicAsync(string,StacMosaic,CancellationToken)']/*" />
-        public virtual async Task<Response<StacMosaic>> AddMosaicAsync(string collectionId, StacMosaic body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddMosaicAsync(collectionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(StacMosaic.FromResponse(response), response);
-        }
-
-        /// <summary> Add Collection Mosaic. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="body"> Mosaic definition to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Add a mosaic definition to a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='AddMosaic(string,StacMosaic,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacMosaic> AddMosaic(string collectionId, StacMosaic body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddMosaic(collectionId, content, context);
-            return Response.FromValue(StacMosaic.FromResponse(response), response);
+            Response result = AddMosaic(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((StacMosaic)result, result);
+        }
+
+        /// <summary> Add a mosaic definition to a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="body"> Mosaic definition to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<StacMosaic>> AddMosaicAsync(string collectionId, StacMosaic body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await AddMosaicAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((StacMosaic)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Add Collection Mosaic
+        /// [Protocol Method] Get a mosaic definition from a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AddMosaicAsync(string,StacMosaic,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='AddMosaicAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> AddMosaicAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual Response GetMosaic(string collectionId, string mosaicId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.AddMosaic");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetMosaic");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddMosaicRequest(collectionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+
+                using HttpMessage message = CreateGetMosaicRequest(collectionId, mosaicId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -767,39 +717,31 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Add Collection Mosaic
+        /// [Protocol Method] Get a mosaic definition from a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AddMosaic(string,StacMosaic,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='AddMosaic(string,RequestContent,RequestContext)']/*" />
-        public virtual Response AddMosaic(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetMosaicAsync(string collectionId, string mosaicId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.AddMosaic");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetMosaic");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddMosaicRequest(collectionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+
+                using HttpMessage message = CreateGetMosaicRequest(collectionId, mosaicId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -808,76 +750,66 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Collection Mosaic. </summary>
+        /// <summary> Get a mosaic definition from a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a mosaic definition from a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetMosaicAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<StacMosaic>> GetMosaicAsync(string collectionId, string mosaicId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetMosaicAsync(collectionId, mosaicId, context).ConfigureAwait(false);
-            return Response.FromValue(StacMosaic.FromResponse(response), response);
-        }
-
-        /// <summary> Get Collection Mosaic. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a mosaic definition from a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetMosaic(string,string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacMosaic> GetMosaic(string collectionId, string mosaicId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetMosaic(collectionId, mosaicId, context);
-            return Response.FromValue(StacMosaic.FromResponse(response), response);
+            Response result = GetMosaic(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((StacMosaic)result, result);
+        }
+
+        /// <summary> Get a mosaic definition from a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<StacMosaic>> GetMosaicAsync(string collectionId, string mosaicId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+
+            Response result = await GetMosaicAsync(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((StacMosaic)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Mosaic
+        /// [Protocol Method] Update a mosaic definition from a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetMosaicAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetMosaicAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetMosaicAsync(string collectionId, string mosaicId, RequestContext context)
+        public virtual Response CreateOrReplaceMosaic(string collectionId, string mosaicId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetMosaic");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceMosaic");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMosaicRequest(collectionId, mosaicId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceMosaicRequest(collectionId, mosaicId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -887,39 +819,33 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Mosaic
+        /// [Protocol Method] Update a mosaic definition from a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetMosaic(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetMosaic(string,string,RequestContext)']/*" />
-        public virtual Response GetMosaic(string collectionId, string mosaicId, RequestContext context)
+        public virtual async Task<Response> CreateOrReplaceMosaicAsync(string collectionId, string mosaicId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetMosaic");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceMosaic");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMosaicRequest(collectionId, mosaicId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceMosaicRequest(collectionId, mosaicId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -928,166 +854,68 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Update Collection Mosaic. </summary>
+        /// <summary> Update a mosaic definition from a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
         /// <param name="body"> Mosaic definition to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Update a mosaic definition from a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceMosaicAsync(string,string,StacMosaic,CancellationToken)']/*" />
-        public virtual async Task<Response<StacMosaic>> CreateOrReplaceMosaicAsync(string collectionId, string mosaicId, StacMosaic body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceMosaicAsync(collectionId, mosaicId, content, context).ConfigureAwait(false);
-            return Response.FromValue(StacMosaic.FromResponse(response), response);
-        }
-
-        /// <summary> Update Collection Mosaic. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="body"> Mosaic definition to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Update a mosaic definition from a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceMosaic(string,string,StacMosaic,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacMosaic> CreateOrReplaceMosaic(string collectionId, string mosaicId, StacMosaic body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceMosaic(collectionId, mosaicId, content, context);
-            return Response.FromValue(StacMosaic.FromResponse(response), response);
+            Response result = CreateOrReplaceMosaic(collectionId, mosaicId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((StacMosaic)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update Collection Mosaic
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceMosaicAsync(string,string,StacMosaic,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a mosaic definition from a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body"> Mosaic definition to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceMosaicAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrReplaceMosaicAsync(string collectionId, string mosaicId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<StacMosaic>> CreateOrReplaceMosaicAsync(string collectionId, string mosaicId, StacMosaic body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceMosaic");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceMosaicRequest(collectionId, mosaicId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await CreateOrReplaceMosaicAsync(collectionId, mosaicId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((StacMosaic)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Update Collection Mosaic
+        /// [Protocol Method] Delete a mosaic definition from a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceMosaic(string,string,StacMosaic,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="mosaicId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceMosaic(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrReplaceMosaic(string collectionId, string mosaicId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceMosaic");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceMosaicRequest(collectionId, mosaicId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete Collection Mosaic
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteMosaicAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteMosaicAsync(string collectionId, string mosaicId, RequestContext context = null)
+        public virtual Response DeleteMosaic(string collectionId, string mosaicId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteMosaic");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteMosaic");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+
                 using HttpMessage message = CreateDeleteMosaicRequest(collectionId, mosaicId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1096,36 +924,32 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete Collection Mosaic
+        /// [Protocol Method] Delete a mosaic definition from a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteMosaic(string,string,RequestContext)']/*" />
-        public virtual Response DeleteMosaic(string collectionId, string mosaicId, RequestContext context = null)
+        public virtual async Task<Response> DeleteMosaicAsync(string collectionId, string mosaicId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteMosaic");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteMosaic");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+
                 using HttpMessage message = CreateDeleteMosaicRequest(collectionId, mosaicId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1134,86 +958,195 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Partitiontype. </summary>
+        /// <summary> Delete a mosaic definition from a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Get the partitiontype for a GeoCatalog Collection.
-        ///
-        /// Args:
-        /// collection_id: the collection id to get the partitiontype for.
-        ///
-        /// Returns:
-        /// The partitiontype for the collection.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetPartitionTypeAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<PartitionType>> GetPartitionTypeAsync(string collectionId, CancellationToken cancellationToken = default)
+        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteMosaic(string collectionId, string mosaicId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetPartitionTypeAsync(collectionId, context).ConfigureAwait(false);
-            return Response.FromValue(PartitionType.FromResponse(response), response);
+            return DeleteMosaic(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Get Partitiontype. </summary>
+        /// <summary> Delete a mosaic definition from a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Get the partitiontype for a GeoCatalog Collection.
-        ///
+        /// <param name="mosaicId"> Unique identifier for the mosaic configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="mosaicId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteMosaicAsync(string collectionId, string mosaicId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
+
+            return await DeleteMosaicAsync(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the partitiontype for a GeoCatalog Collection.
+        /// 
         /// Args:
         /// collection_id: the collection id to get the partitiontype for.
-        ///
+        /// 
         /// Returns:
         /// The partitiontype for the collection.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetPartitionType(string,CancellationToken)']/*" />
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetPartitionType(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetPartitionType");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetPartitionTypeRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the partitiontype for a GeoCatalog Collection.
+        /// 
+        /// Args:
+        /// collection_id: the collection id to get the partitiontype for.
+        /// 
+        /// Returns:
+        /// The partitiontype for the collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetPartitionTypeAsync(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetPartitionType");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetPartitionTypeRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the partitiontype for a GeoCatalog Collection.
+        /// 
+        /// Args:
+        /// collection_id: the collection id to get the partitiontype for.
+        /// 
+        /// Returns:
+        /// The partitiontype for the collection.
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PartitionType> GetPartitionType(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetPartitionType(collectionId, context);
-            return Response.FromValue(PartitionType.FromResponse(response), response);
+            Response result = GetPartitionType(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((PartitionType)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Partitiontype
+        /// Get the partitiontype for a GeoCatalog Collection.
+        /// 
+        /// Args:
+        /// collection_id: the collection id to get the partitiontype for.
+        /// 
+        /// Returns:
+        /// The partitiontype for the collection.
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<PartitionType>> GetPartitionTypeAsync(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetPartitionTypeAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((PartitionType)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates partition type for a GeoCatalog Collection. This will
+        /// determine the partitioning scheme for items within the database,
+        /// and can only be set before any items are loaded.
+        /// 
+        /// Ideal partitioning schemes result in partitions of roughly 100k items each.
+        /// 
+        /// The default partitioning scheme is "none" which does not partition items.
+        /// 
+        /// Args:
+        /// collection_id: the collection id to add the partitiontype to.
+        /// partitiontype: the partitiontype to add.
+        /// 
+        /// Returns:
+        /// None
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetPartitionTypeAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetPartitionTypeAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetPartitionTypeAsync(string collectionId, RequestContext context)
+        public virtual Response ReplacePartitionType(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetPartitionType");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplacePartitionType");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPartitionTypeRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateReplacePartitionTypeRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1223,37 +1156,44 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Partitiontype
+        /// [Protocol Method] Updates partition type for a GeoCatalog Collection. This will
+        /// determine the partitioning scheme for items within the database,
+        /// and can only be set before any items are loaded.
+        /// 
+        /// Ideal partitioning schemes result in partitions of roughly 100k items each.
+        /// 
+        /// The default partitioning scheme is "none" which does not partition items.
+        /// 
+        /// Args:
+        /// collection_id: the collection id to add the partitiontype to.
+        /// partitiontype: the partitiontype to add.
+        /// 
+        /// Returns:
+        /// None
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetPartitionType(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetPartitionType(string,RequestContext)']/*" />
-        public virtual Response GetPartitionType(string collectionId, RequestContext context)
+        public virtual async Task<Response> ReplacePartitionTypeAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetPartitionType");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplacePartitionType");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPartitionTypeRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateReplacePartitionTypeRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1262,358 +1202,298 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Create Partitiontype. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="body"> Partition type configuration determining how items are partitioned in storage. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
+        /// <summary>
         /// Updates partition type for a GeoCatalog Collection. This will
         /// determine the partitioning scheme for items within the database,
         /// and can only be set before any items are loaded.
-        ///
+        /// 
         /// Ideal partitioning schemes result in partitions of roughly 100k items each.
-        ///
+        /// 
         /// The default partitioning scheme is "none" which does not partition items.
-        ///
+        /// 
         /// Args:
         /// collection_id: the collection id to add the partitiontype to.
         /// partitiontype: the partitiontype to add.
-        ///
+        /// 
         /// Returns:
         /// None
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplacePartitionTypeAsync(string,PartitionType,CancellationToken)']/*" />
-        public virtual async Task<Response<PartitionType>> ReplacePartitionTypeAsync(string collectionId, PartitionType body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplacePartitionTypeAsync(collectionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(PartitionType.FromResponse(response), response);
-        }
-
-        /// <summary> Create Partitiontype. </summary>
+        /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="body"> Partition type configuration determining how items are partitioned in storage. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Updates partition type for a GeoCatalog Collection. This will
-        /// determine the partitioning scheme for items within the database,
-        /// and can only be set before any items are loaded.
-        ///
-        /// Ideal partitioning schemes result in partitions of roughly 100k items each.
-        ///
-        /// The default partitioning scheme is "none" which does not partition items.
-        ///
-        /// Args:
-        /// collection_id: the collection id to add the partitiontype to.
-        /// partitiontype: the partitiontype to add.
-        ///
-        /// Returns:
-        /// None
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplacePartitionType(string,PartitionType,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<PartitionType> ReplacePartitionType(string collectionId, PartitionType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplacePartitionType(collectionId, content, context);
-            return Response.FromValue(PartitionType.FromResponse(response), response);
+            Response result = ReplacePartitionType(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((PartitionType)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Create Partitiontype
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReplacePartitionTypeAsync(string,PartitionType,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
+        /// Updates partition type for a GeoCatalog Collection. This will
+        /// determine the partitioning scheme for items within the database,
+        /// and can only be set before any items are loaded.
+        /// 
+        /// Ideal partitioning schemes result in partitions of roughly 100k items each.
+        /// 
+        /// The default partitioning scheme is "none" which does not partition items.
+        /// 
+        /// Args:
+        /// collection_id: the collection id to add the partitiontype to.
+        /// partitiontype: the partitiontype to add.
+        /// 
+        /// Returns:
+        /// None
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplacePartitionTypeAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ReplacePartitionTypeAsync(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplacePartitionType");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReplacePartitionTypeRequest(collectionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create Partitiontype
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReplacePartitionType(string,PartitionType,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplacePartitionType(string,RequestContent,RequestContext)']/*" />
-        public virtual Response ReplacePartitionType(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplacePartitionType");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReplacePartitionTypeRequest(collectionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Collection Render Options. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get all render options for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllRenderOptionsAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<RenderOptionModel>>> GetAllRenderOptionsAsync(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAllRenderOptionsAsync(collectionId, context).ConfigureAwait(false);
-            IReadOnlyList<RenderOptionModel> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<RenderOptionModel> array = new List<RenderOptionModel>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(RenderOptionModel.DeserializeRenderOptionModel(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Get Collection Render Options. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get all render options for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllRenderOptions(string,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<RenderOptionModel>> GetAllRenderOptions(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAllRenderOptions(collectionId, context);
-            IReadOnlyList<RenderOptionModel> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<RenderOptionModel> array = new List<RenderOptionModel>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(RenderOptionModel.DeserializeRenderOptionModel(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Collection Render Options
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllRenderOptionsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllRenderOptionsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAllRenderOptionsAsync(string collectionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllRenderOptions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAllRenderOptionsRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Collection Render Options
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAllRenderOptions(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetAllRenderOptions(string,RequestContext)']/*" />
-        public virtual Response GetAllRenderOptions(string collectionId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllRenderOptions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAllRenderOptionsRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add Collection Render Option. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="body"> Render option configuration to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="body"> Partition type configuration determining how items are partitioned in storage. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Add a render option for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateRenderOptionAsync(string,RenderOptionModel,CancellationToken)']/*" />
-        public virtual async Task<Response<RenderOptionModel>> CreateRenderOptionAsync(string collectionId, RenderOptionModel body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<PartitionType>> ReplacePartitionTypeAsync(string collectionId, PartitionType body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateRenderOptionAsync(collectionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(RenderOptionModel.FromResponse(response), response);
+            Response result = await ReplacePartitionTypeAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((PartitionType)result, result);
         }
 
-        /// <summary> Add Collection Render Option. </summary>
+        /// <summary>
+        /// [Protocol Method] Get all render options for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAllRenderOptions(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllRenderOptions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetAllRenderOptionsRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all render options for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAllRenderOptionsAsync(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetAllRenderOptions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetAllRenderOptionsRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all render options for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<RenderOptionModel>> GetAllRenderOptions(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetAllRenderOptions(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<RenderOptionModel> value = new List<RenderOptionModel>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(RenderOptionModel.DeserializeRenderOptionModel(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<RenderOptionModel>)value, result);
+        }
+
+        /// <summary> Get all render options for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<RenderOptionModel>>> GetAllRenderOptionsAsync(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetAllRenderOptionsAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<RenderOptionModel> value = new List<RenderOptionModel>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(RenderOptionModel.DeserializeRenderOptionModel(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<RenderOptionModel>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add a render option for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateRenderOption(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateRenderOption");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateRenderOptionRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add a render option for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateRenderOptionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateRenderOption");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateRenderOptionRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a render option for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="body"> Render option configuration to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Add a render option for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateRenderOption(string,RenderOptionModel,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<RenderOptionModel> CreateRenderOption(string collectionId, RenderOptionModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateRenderOption(collectionId, content, context);
-            return Response.FromValue(RenderOptionModel.FromResponse(response), response);
+            Response result = CreateRenderOption(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RenderOptionModel)result, result);
+        }
+
+        /// <summary> Add a render option for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="body"> Render option configuration to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<RenderOptionModel>> CreateRenderOptionAsync(string collectionId, RenderOptionModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await CreateRenderOptionAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RenderOptionModel)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Add Collection Render Option
+        /// [Protocol Method] Get a render option for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateRenderOptionAsync(string,RenderOptionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateRenderOptionAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateRenderOptionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual Response GetRenderOption(string collectionId, string renderOptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateRenderOption");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetRenderOption");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRenderOptionRequest(collectionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+
+                using HttpMessage message = CreateGetRenderOptionRequest(collectionId, renderOptionId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1623,39 +1503,31 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Add Collection Render Option
+        /// [Protocol Method] Get a render option for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateRenderOption(string,RenderOptionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateRenderOption(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateRenderOption(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetRenderOptionAsync(string collectionId, string renderOptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateRenderOption");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetRenderOption");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRenderOptionRequest(collectionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+
+                using HttpMessage message = CreateGetRenderOptionRequest(collectionId, renderOptionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1664,92 +1536,78 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Collection Render Option. </summary>
+        /// <summary> Get a render option for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a render option for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetRenderOptionAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<RenderOptionModel>>> GetRenderOptionAsync(string collectionId, string renderOptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRenderOptionAsync(collectionId, renderOptionId, context).ConfigureAwait(false);
-            IReadOnlyList<RenderOptionModel> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<RenderOptionModel> array = new List<RenderOptionModel>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                array.Add(RenderOptionModel.DeserializeRenderOptionModel(item));
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Get Collection Render Option. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get a render option for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetRenderOption(string,string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IReadOnlyList<RenderOptionModel>> GetRenderOption(string collectionId, string renderOptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRenderOption(collectionId, renderOptionId, context);
-            IReadOnlyList<RenderOptionModel> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<RenderOptionModel> array = new List<RenderOptionModel>();
+            Response result = GetRenderOption(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            IList<RenderOptionModel> value = new List<RenderOptionModel>();
+            using JsonDocument document = JsonDocument.Parse(result.ContentStream);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(RenderOptionModel.DeserializeRenderOptionModel(item));
+                value.Add(RenderOptionModel.DeserializeRenderOptionModel(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<RenderOptionModel>)value, result);
+        }
+
+        /// <summary> Get a render option for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<RenderOptionModel>>> GetRenderOptionAsync(string collectionId, string renderOptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+
+            Response result = await GetRenderOptionAsync(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            IList<RenderOptionModel> value = new List<RenderOptionModel>();
+            using JsonDocument document = await JsonDocument.ParseAsync(result.ContentStream, default, default).ConfigureAwait(false);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(RenderOptionModel.DeserializeRenderOptionModel(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<RenderOptionModel>)value, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Render Option
+        /// [Protocol Method] Update a render option for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRenderOptionAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetRenderOptionAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRenderOptionAsync(string collectionId, string renderOptionId, RequestContext context)
+        public virtual Response CreateOrReplaceRenderOption(string collectionId, string renderOptionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetRenderOption");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceRenderOption");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRenderOptionRequest(collectionId, renderOptionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceRenderOptionRequest(collectionId, renderOptionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1759,39 +1617,33 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Render Option
+        /// [Protocol Method] Update a render option for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRenderOption(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetRenderOption(string,string,RequestContext)']/*" />
-        public virtual Response GetRenderOption(string collectionId, string renderOptionId, RequestContext context)
+        public virtual async Task<Response> CreateOrReplaceRenderOptionAsync(string collectionId, string renderOptionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetRenderOption");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceRenderOption");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRenderOptionRequest(collectionId, renderOptionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceRenderOptionRequest(collectionId, renderOptionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1800,166 +1652,68 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Update Collection Render Option. </summary>
+        /// <summary> Update a render option for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
         /// <param name="body"> Render option configuration to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Update a render option for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceRenderOptionAsync(string,string,RenderOptionModel,CancellationToken)']/*" />
-        public virtual async Task<Response<RenderOptionModel>> CreateOrReplaceRenderOptionAsync(string collectionId, string renderOptionId, RenderOptionModel body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceRenderOptionAsync(collectionId, renderOptionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(RenderOptionModel.FromResponse(response), response);
-        }
-
-        /// <summary> Update Collection Render Option. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="body"> Render option configuration to be created or updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Update a render option for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceRenderOption(string,string,RenderOptionModel,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<RenderOptionModel> CreateOrReplaceRenderOption(string collectionId, string renderOptionId, RenderOptionModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceRenderOption(collectionId, renderOptionId, content, context);
-            return Response.FromValue(RenderOptionModel.FromResponse(response), response);
+            Response result = CreateOrReplaceRenderOption(collectionId, renderOptionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RenderOptionModel)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update Collection Render Option
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceRenderOptionAsync(string,string,RenderOptionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a render option for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body"> Render option configuration to be created or updated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceRenderOptionAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrReplaceRenderOptionAsync(string collectionId, string renderOptionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<RenderOptionModel>> CreateOrReplaceRenderOptionAsync(string collectionId, string renderOptionId, RenderOptionModel body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceRenderOption");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceRenderOptionRequest(collectionId, renderOptionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await CreateOrReplaceRenderOptionAsync(collectionId, renderOptionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RenderOptionModel)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Update Collection Render Option
+        /// [Protocol Method] Delete a render option for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceRenderOption(string,string,RenderOptionModel,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="renderOptionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceRenderOption(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrReplaceRenderOption(string collectionId, string renderOptionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceRenderOption");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceRenderOptionRequest(collectionId, renderOptionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete Collection Render Option
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteRenderOptionAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteRenderOptionAsync(string collectionId, string renderOptionId, RequestContext context = null)
+        public virtual Response DeleteRenderOption(string collectionId, string renderOptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteRenderOption");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteRenderOption");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+
                 using HttpMessage message = CreateDeleteRenderOptionRequest(collectionId, renderOptionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1968,36 +1722,32 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete Collection Render Option
+        /// [Protocol Method] Delete a render option for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="renderOptionId"> Unique identifier for the render option. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteRenderOption(string,string,RequestContext)']/*" />
-        public virtual Response DeleteRenderOption(string collectionId, string renderOptionId, RequestContext context = null)
+        public virtual async Task<Response> DeleteRenderOptionAsync(string collectionId, string renderOptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteRenderOption");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteRenderOption");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+
                 using HttpMessage message = CreateDeleteRenderOptionRequest(collectionId, renderOptionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2006,70 +1756,154 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get Collection Tile Settings. </summary>
+        /// <summary> Delete a render option for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the tile settings for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetTileSettingsAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TileSettings>> GetTileSettingsAsync(string collectionId, CancellationToken cancellationToken = default)
+        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteRenderOption(string collectionId, string renderOptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTileSettingsAsync(collectionId, context).ConfigureAwait(false);
-            return Response.FromValue(TileSettings.FromResponse(response), response);
+            return DeleteRenderOption(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Get Collection Tile Settings. </summary>
+        /// <summary> Delete a render option for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="renderOptionId"> Unique identifier for the render option. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="renderOptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteRenderOptionAsync(string collectionId, string renderOptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
+
+            return await DeleteRenderOptionAsync(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the tile settings for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Get the tile settings for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetTileSettings(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileSettings(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetTileSettings");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetTileSettingsRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the tile settings for a given collection
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileSettingsAsync(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetTileSettings");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetTileSettingsRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the tile settings for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<TileSettings> GetTileSettings(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTileSettings(collectionId, context);
-            return Response.FromValue(TileSettings.FromResponse(response), response);
+            Response result = GetTileSettings(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((TileSettings)result, result);
+        }
+
+        /// <summary> Get the tile settings for a given collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileSettings>> GetTileSettingsAsync(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetTileSettingsAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((TileSettings)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Tile Settings
+        /// [Protocol Method] Update the tile settings for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileSettingsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetTileSettingsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTileSettingsAsync(string collectionId, RequestContext context)
+        public virtual Response ReplaceTileSettings(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetTileSettings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplaceTileSettings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileSettingsRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateReplaceTileSettingsRequest(collectionId, content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2079,37 +1913,31 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Tile Settings
+        /// [Protocol Method] Update the tile settings for a given collection
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTileSettings(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetTileSettings(string,RequestContext)']/*" />
-        public virtual Response GetTileSettings(string collectionId, RequestContext context)
+        public virtual async Task<Response> ReplaceTileSettingsAsync(string collectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetTileSettings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplaceTileSettings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTileSettingsRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateReplaceTileSettingsRequest(collectionId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2118,294 +1946,180 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Update Collection Tile Settings. </summary>
+        /// <summary> Update the tile settings for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="body"> Tile settings configuration to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Update the tile settings for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplaceTileSettingsAsync(string,TileSettings,CancellationToken)']/*" />
-        public virtual async Task<Response<TileSettings>> ReplaceTileSettingsAsync(string collectionId, TileSettings body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReplaceTileSettingsAsync(collectionId, content, context).ConfigureAwait(false);
-            return Response.FromValue(TileSettings.FromResponse(response), response);
-        }
-
-        /// <summary> Update Collection Tile Settings. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="body"> Tile settings configuration to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Update the tile settings for a given collection. </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplaceTileSettings(string,TileSettings,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<TileSettings> ReplaceTileSettings(string collectionId, TileSettings body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReplaceTileSettings(collectionId, content, context);
-            return Response.FromValue(TileSettings.FromResponse(response), response);
+            Response result = ReplaceTileSettings(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((TileSettings)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update Collection Tile Settings
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReplaceTileSettingsAsync(string,TileSettings,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update the tile settings for a given collection. </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body"> Tile settings configuration to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplaceTileSettingsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ReplaceTileSettingsAsync(string collectionId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<TileSettings>> ReplaceTileSettingsAsync(string collectionId, TileSettings body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplaceTileSettings");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReplaceTileSettingsRequest(collectionId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update Collection Tile Settings
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReplaceTileSettings(string,TileSettings,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='ReplaceTileSettings(string,RequestContent,RequestContext)']/*" />
-        public virtual Response ReplaceTileSettings(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.ReplaceTileSettings");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReplaceTileSettingsRequest(collectionId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update Collection Queryables. </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="queryableName"> Name of the queryable property to operate on. </param>
-        /// <param name="body"> Request queryable definition body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Updates a queryable given a queryable definition and
-        /// corresponding collection id.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceQueryableAsync(string,string,QueryableProperty,CancellationToken)']/*" />
-        public virtual async Task<Response<QueryableProperty>> CreateOrReplaceQueryableAsync(string collectionId, string queryableName, QueryableProperty body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceQueryableAsync(collectionId, queryableName, content, context).ConfigureAwait(false);
-            return Response.FromValue(QueryableProperty.FromResponse(response), response);
+            Response result = await ReplaceTileSettingsAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((TileSettings)result, result);
         }
 
-        /// <summary> Update Collection Queryables. </summary>
+        /// <summary>
+        /// [Protocol Method] Updates a queryable given a queryable definition and
+        /// corresponding collection id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="queryableName"> Name of the queryable property to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateOrReplaceQueryable(string collectionId, string queryableName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceQueryable");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceQueryableRequest(collectionId, queryableName, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a queryable given a queryable definition and
+        /// corresponding collection id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="queryableName"> Name of the queryable property to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateOrReplaceQueryableAsync(string collectionId, string queryableName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceQueryable");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceQueryableRequest(collectionId, queryableName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a queryable given a queryable definition and
+        /// corresponding collection id.
+        /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="queryableName"> Name of the queryable property to operate on. </param>
         /// <param name="body"> Request queryable definition body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Updates a queryable given a queryable definition and
-        /// corresponding collection id.
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceQueryable(string,string,QueryableProperty,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<QueryableProperty> CreateOrReplaceQueryable(string collectionId, string queryableName, QueryableProperty body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceQueryable(collectionId, queryableName, content, context);
-            return Response.FromValue(QueryableProperty.FromResponse(response), response);
+            Response result = CreateOrReplaceQueryable(collectionId, queryableName, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((QueryableProperty)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Update Collection Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceQueryableAsync(string,string,QueryableProperty,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
+        /// Updates a queryable given a queryable definition and
+        /// corresponding collection id.
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="queryableName"> Name of the queryable property to operate on. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="body"> Request queryable definition body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceQueryableAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrReplaceQueryableAsync(string collectionId, string queryableName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<QueryableProperty>> CreateOrReplaceQueryableAsync(string collectionId, string queryableName, QueryableProperty body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceQueryable");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceQueryableRequest(collectionId, queryableName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await CreateOrReplaceQueryableAsync(collectionId, queryableName, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((QueryableProperty)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Update Collection Queryables
+        /// [Protocol Method] Delete queryables by name for specified collection.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceQueryable(string,string,QueryableProperty,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="queryableName"> Name of the queryable property to operate on. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="queryableName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='CreateOrReplaceQueryable(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrReplaceQueryable(string collectionId, string queryableName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.CreateOrReplaceQueryable");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceQueryableRequest(collectionId, queryableName, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Delete Queryables
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
-        /// <param name="queryableName"> Name of the queryable property to operate on. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteQueryableAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteQueryableAsync(string collectionId, string queryableName, RequestContext context = null)
+        public virtual Response DeleteQueryable(string collectionId, string queryableName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteQueryable");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteQueryable");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
+
                 using HttpMessage message = CreateDeleteQueryableRequest(collectionId, queryableName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2414,132 +2128,101 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete Queryables
+        /// [Protocol Method] Delete queryables by name for specified collection.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
         /// <param name="queryableName"> Name of the queryable property to operate on. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='DeleteQueryable(string,string,RequestContext)']/*" />
-        public virtual Response DeleteQueryable(string collectionId, string queryableName, RequestContext context = null)
+        public virtual async Task<Response> DeleteQueryableAsync(string collectionId, string queryableName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteQueryable");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+                Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
+
+                using HttpMessage message = CreateDeleteQueryableRequest(collectionId, queryableName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete queryables by name for specified collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="queryableName"> Name of the queryable property to operate on. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteQueryable(string collectionId, string queryableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
 
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.DeleteQueryable");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteQueryableRequest(collectionId, queryableName, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return DeleteQueryable(collectionId, queryableName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Get Collection Thumbnail. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Get thumbnail for given collection.
-        ///
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to retrieve assets for.
-        ///
-        /// Returns:
-        /// thumbnail image
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionThumbnailAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetCollectionThumbnailAsync(string collectionId, string accept, CancellationToken cancellationToken = default)
+        /// <summary> Delete queryables by name for specified collection. </summary>
+        /// <param name="collectionId"> Unique identifier for the STAC collection. </param>
+        /// <param name="queryableName"> Name of the queryable property to operate on. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="queryableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteQueryableAsync(string collectionId, string queryableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
+            Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCollectionThumbnailAsync(collectionId, accept, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Get Collection Thumbnail. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Get thumbnail for given collection.
-        ///
-        /// Args:
-        /// request: The incoming request.
-        /// collection_id: The ID of the collection to retrieve assets for.
-        ///
-        /// Returns:
-        /// thumbnail image
-        /// </remarks>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionThumbnail(string,string,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetCollectionThumbnail(string collectionId, string accept, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCollectionThumbnail(collectionId, accept, context);
-            return Response.FromValue(response.Content, response);
+            return await DeleteQueryableAsync(collectionId, queryableName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Thumbnail
+        /// [Protocol Method] Get thumbnail for given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to retrieve assets for.
+        /// 
+        /// Returns:
+        /// thumbnail image
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCollectionThumbnailAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionThumbnailAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCollectionThumbnailAsync(string collectionId, string accept, RequestContext context)
+        public virtual Response GetCollectionThumbnail(string collectionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionThumbnail");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionThumbnail");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionThumbnailRequest(collectionId, accept, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionThumbnailRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2549,39 +2232,36 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Get Collection Thumbnail
+        /// [Protocol Method] Get thumbnail for given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to retrieve assets for.
+        /// 
+        /// Returns:
+        /// thumbnail image
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCollectionThumbnail(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="accept"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/StacCollectionConfigurationClient.xml" path="doc/members/member[@name='GetCollectionThumbnail(string,string,RequestContext)']/*" />
-        public virtual Response GetCollectionThumbnail(string collectionId, string accept, RequestContext context)
+        public virtual async Task<Response> GetCollectionThumbnailAsync(string collectionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            using var scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionThumbnail");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StacCollectionConfigurationClient.GetCollectionThumbnail");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCollectionThumbnailRequest(collectionId, accept, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionThumbnailRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2590,386 +2270,50 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        internal HttpMessage CreateCreateCollectionAssetRequest(string collectionId, RequestContent content, string contentType, RequestContext context)
+        /// <summary>
+        /// Get thumbnail for given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to retrieve assets for.
+        /// 
+        /// Returns:
+        /// thumbnail image
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<BinaryData> GetCollectionThumbnail(string collectionId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/assets", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", contentType);
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetCollectionThumbnail(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
         }
 
-        internal HttpMessage CreateCreateOrReplaceCollectionAssetRequest(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context)
+        /// <summary>
+        /// Get thumbnail for given collection.
+        /// 
+        /// Args:
+        /// request: The incoming request.
+        /// collection_id: The ID of the collection to retrieve assets for.
+        /// 
+        /// Returns:
+        /// thumbnail image
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<BinaryData>> GetCollectionThumbnailAsync(string collectionId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/assets/", false);
-            uri.AppendPath(assetId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", contentType);
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetCollectionThumbnailAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
         }
-
-        internal HttpMessage CreateDeleteCollectionAssetRequest(string collectionId, string assetId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/assets/", false);
-            uri.AppendPath(assetId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCollectionConfigRequest(string collectionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllMosaicsRequest(string collectionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/mosaics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateAddMosaicRequest(string collectionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/mosaics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetMosaicRequest(string collectionId, string mosaicId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/mosaics/", false);
-            uri.AppendPath(mosaicId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrReplaceMosaicRequest(string collectionId, string mosaicId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/mosaics/", false);
-            uri.AppendPath(mosaicId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteMosaicRequest(string collectionId, string mosaicId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/mosaics/", false);
-            uri.AppendPath(mosaicId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPartitionTypeRequest(string collectionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/partition-type", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateReplacePartitionTypeRequest(string collectionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/partition-type", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllRenderOptionsRequest(string collectionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/render-options", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateRenderOptionRequest(string collectionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/render-options", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetRenderOptionRequest(string collectionId, string renderOptionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/render-options/", false);
-            uri.AppendPath(renderOptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrReplaceRenderOptionRequest(string collectionId, string renderOptionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/render-options/", false);
-            uri.AppendPath(renderOptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRenderOptionRequest(string collectionId, string renderOptionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/render-options/", false);
-            uri.AppendPath(renderOptionId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTileSettingsRequest(string collectionId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/tile-settings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateReplaceTileSettingsRequest(string collectionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/configurations/tile-settings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrReplaceQueryableRequest(string collectionId, string queryableName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/queryables/", false);
-            uri.AppendPath(queryableName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteQueryableRequest(string collectionId, string queryableName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/queryables/", false);
-            uri.AppendPath(queryableName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCollectionThumbnailRequest(string collectionId, string accept, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/stac/collections/", false);
-            uri.AppendPath(collectionId, true);
-            uri.AppendPath("/thumbnail", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200201;
-        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-        private static ResponseClassifier _responseClassifier200204;
-        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

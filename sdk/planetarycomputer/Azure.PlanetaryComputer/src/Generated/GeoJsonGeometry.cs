@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Represents a GeoJSON geometry object as defined by RFC 7946.
-    ///
+    /// 
     /// Supported geometry types include:
     /// - **Point**: A single geographic coordinate.
     /// - **LineString**: A sequence of geographic coordinates forming a line.
@@ -20,64 +20,37 @@ namespace Azure.PlanetaryComputer
     /// - **MultiPoint**: A collection of Points.
     /// - **MultiLineString**: A collection of LineStrings.
     /// - **MultiPolygon**: A collection of Polygons.
-    ///
+    /// 
     /// Used for spatial filtering in STAC.
-    /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
     /// </summary>
     public abstract partial class GeoJsonGeometry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/>. </summary>
-        protected GeoJsonGeometry()
+        /// <param name="type"> The type of the geometry. </param>
+        private protected GeoJsonGeometry(GeometryType @type)
         {
+            Type = @type;
             Bbox = new ChangeTrackingList<double>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/>. </summary>
         /// <param name="type"> The type of the geometry. </param>
         /// <param name="bbox"> Optional bounding box of the geometry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonGeometry(GeometryType type, IList<double> bbox, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonGeometry(GeometryType @type, IList<double> bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Bbox = bbox;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the geometry. </summary>
         internal GeometryType Type { get; set; }
+
         /// <summary> Optional bounding box of the geometry. </summary>
         public IList<double> Bbox { get; }
     }

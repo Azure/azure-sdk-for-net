@@ -9,46 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md
-    ///
+    /// 
     /// Represents a STAC collection.
     /// </summary>
     public partial class StacCollectionModel
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StacCollectionModel"/>. </summary>
         /// <param name="id"> Unique identifier for the collection. </param>
@@ -94,11 +65,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="providers"> Organizations or individuals who provide the collection data. </param>
         /// <param name="summaries">
         /// Summaries
-        ///
+        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StacCollectionModel(string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string type, IDictionary<string, StacAsset> assets, string license, StacExtent extent, IList<string> keywords, IList<StacProvider> providers, StacCollectionSummaries summaries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StacCollectionModel(string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, string license, StacExtent extent, IList<string> keywords, IList<StacProvider> providers, StacCollectionSummaries summaries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MsftCreated = msftCreated;
             MsftUpdated = msftUpdated;
@@ -109,54 +80,64 @@ namespace Azure.PlanetaryComputer
             StacVersion = stacVersion;
             Links = links;
             Title = title;
-            Type = type;
+            Type = @type;
             Assets = assets;
             License = license;
             Extent = extent;
             Keywords = keywords;
             Providers = providers;
             Summaries = summaries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StacCollectionModel"/> for deserialization. </summary>
-        internal StacCollectionModel()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MSFT Created. </summary>
         public string MsftCreated { get; set; }
+
         /// <summary> MSFT Updated. </summary>
         public string MsftUpdated { get; set; }
+
         /// <summary> MSFT Short Description. </summary>
         public string MsftShortDescription { get; set; }
+
         /// <summary> URLs to STAC extensions implemented by this STAC resource. </summary>
         public IList<string> StacExtensions { get; }
+
         /// <summary> Unique identifier for the collection. </summary>
         public string Id { get; set; }
+
         /// <summary> Detailed description of the collection. </summary>
         public string Description { get; set; }
+
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; set; }
+
         /// <summary> Links to related resources and endpoints. </summary>
         public IList<StacLink> Links { get; }
+
         /// <summary> Human-readable title for the collection. </summary>
         public string Title { get; set; }
+
         /// <summary> Type. </summary>
         public string Type { get; set; }
+
         /// <summary> Assets. </summary>
         public IDictionary<string, StacAsset> Assets { get; }
+
         /// <summary> License identifier for the collection data. </summary>
         public string License { get; set; }
+
         /// <summary> Spatial and temporal extent of the collection. </summary>
         public StacExtent Extent { get; set; }
+
         /// <summary> Keywords describing the collection. </summary>
         public IList<string> Keywords { get; }
+
         /// <summary> Organizations or individuals who provide the collection data. </summary>
         public IList<StacProvider> Providers { get; }
+
         /// <summary>
         /// Summaries
-        ///
+        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </summary>
         public StacCollectionSummaries Summaries { get; set; }

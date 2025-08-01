@@ -8,50 +8,22 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Base type for STAC items and collections with discriminator.
-    /// Please note <see cref="StacItemOrItemCollection"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="StacItemModel"/> and <see cref="ItemCollectionModel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemCollectionModel"/> and <see cref="StacItemModel"/>.
     /// </summary>
     public abstract partial class StacItemOrItemCollection
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StacItemOrItemCollection"/>. </summary>
-        protected StacItemOrItemCollection()
+        /// <param name="type"> The type discriminator for STAC resources. </param>
+        private protected StacItemOrItemCollection(StacModelType @type)
         {
+            Type = @type;
             Links = new ChangeTrackingList<StacLink>();
             StacExtensions = new ChangeTrackingList<string>();
         }
@@ -64,31 +36,37 @@ namespace Azure.PlanetaryComputer
         /// <param name="msftUpdated"> MSFT Updated. </param>
         /// <param name="msftShortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemOrItemCollection(StacModelType type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StacItemOrItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             StacVersion = stacVersion;
             Links = links;
             MsftCreated = msftCreated;
             MsftUpdated = msftUpdated;
             MsftShortDescription = msftShortDescription;
             StacExtensions = stacExtensions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type discriminator for STAC resources. </summary>
         internal StacModelType Type { get; set; }
+
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; set; }
+
         /// <summary> Links to related resources and endpoints. </summary>
         public IList<StacLink> Links { get; }
+
         /// <summary> MSFT Created. </summary>
         public string MsftCreated { get; set; }
+
         /// <summary> MSFT Updated. </summary>
         public string MsftUpdated { get; set; }
+
         /// <summary> MSFT Short Description. </summary>
         public string MsftShortDescription { get; set; }
+
         /// <summary> URLs to STAC extensions implemented by this STAC resource. </summary>
         public IList<string> StacExtensions { get; }
     }

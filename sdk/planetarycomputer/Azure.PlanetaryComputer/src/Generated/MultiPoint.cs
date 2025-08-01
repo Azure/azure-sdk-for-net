@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents a MultiPoint. </summary>
     public partial class MultiPoint : GeoJsonGeometry
@@ -17,27 +17,21 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiPoint(IEnumerable<double> coordinates)
+        public MultiPoint(IEnumerable<double> coordinates) : base(GeometryType.MultiPoint)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            Type = GeometryType.MultiPoint;
             Coordinates = coordinates.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiPoint"/>. </summary>
         /// <param name="type"> The type of the geometry. </param>
         /// <param name="bbox"> Optional bounding box of the geometry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
-        internal MultiPoint(GeometryType type, IList<double> bbox, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<double> coordinates) : base(type, bbox, serializedAdditionalRawData)
+        internal MultiPoint(GeometryType @type, IList<double> bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<double> coordinates) : base(@type, bbox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MultiPoint"/> for deserialization. </summary>
-        internal MultiPoint()
-        {
         }
 
         /// <summary> The coordinates of the multipoint. </summary>

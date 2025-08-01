@@ -8,100 +8,54 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> GeoJSON Feature object containing rio-tiler model information. </summary>
     public partial class TilerInfoGeoJsonFeature
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TilerInfoGeoJsonFeature"/>. </summary>
         /// <param name="type"> GeoJSON type identifier. </param>
-        /// <param name="geometry">
-        /// Geometry object defining the feature's shape
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="properties"> Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> or <paramref name="properties"/> is null. </exception>
-        internal TilerInfoGeoJsonFeature(FeatureType type, GeoJsonGeometry geometry, IReadOnlyDictionary<string, TilerInfo> properties)
+        internal TilerInfoGeoJsonFeature(FeatureType @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties)
         {
-            Argument.AssertNotNull(geometry, nameof(geometry));
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Type = type;
+            Type = @type;
             Geometry = geometry;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="TilerInfoGeoJsonFeature"/>. </summary>
         /// <param name="type"> GeoJSON type identifier. </param>
-        /// <param name="geometry">
-        /// Geometry object defining the feature's shape
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </param>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="properties"> Properties. </param>
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="bbox"> Bounding box coordinates for the feature. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfoGeoJsonFeature(FeatureType type, GeoJsonGeometry geometry, IReadOnlyDictionary<string, TilerInfo> properties, string id, double? bbox, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TilerInfoGeoJsonFeature(FeatureType @type, GeoJsonGeometry geometry, IDictionary<string, TilerInfo> properties, string id, double? bbox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Geometry = geometry;
             Properties = properties;
             Id = id;
             Bbox = bbox;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TilerInfoGeoJsonFeature"/> for deserialization. </summary>
-        internal TilerInfoGeoJsonFeature()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> GeoJSON type identifier. </summary>
         public FeatureType Type { get; }
-        /// <summary>
-        /// Geometry object defining the feature's shape
-        /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LineString"/>, <see cref="MultiLineString"/>, <see cref="MultiPoint"/>, <see cref="MultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
-        /// </summary>
+
+        /// <summary> Geometry object defining the feature's shape. </summary>
         public GeoJsonGeometry Geometry { get; }
+
         /// <summary> Properties. </summary>
-        public IReadOnlyDictionary<string, TilerInfo> Properties { get; }
+        public IDictionary<string, TilerInfo> Properties { get; }
+
         /// <summary> Unique identifier for the feature. </summary>
         public string Id { get; }
+
         /// <summary> Bounding box coordinates for the feature. </summary>
         public double? Bbox { get; }
     }

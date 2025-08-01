@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Scheme for tile addressing in TileJSON specification. </summary>
     public readonly partial struct TileJsonScheme : IEquatable<TileJsonScheme>
     {
         private readonly string _value;
+        /// <summary> XYZ tile addressing scheme with origin at top-left. </summary>
+        private const string XyzValue = "xyz";
+        /// <summary> TMS tile addressing scheme with origin at bottom-left. </summary>
+        private const string TmsValue = "tms";
 
         /// <summary> Initializes a new instance of <see cref="TileJsonScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TileJsonScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string XyzValue = "xyz";
-        private const string TmsValue = "tms";
+            _value = value;
+        }
 
         /// <summary> XYZ tile addressing scheme with origin at top-left. </summary>
         public static TileJsonScheme Xyz { get; } = new TileJsonScheme(XyzValue);
+
         /// <summary> TMS tile addressing scheme with origin at bottom-left. </summary>
         public static TileJsonScheme Tms { get; } = new TileJsonScheme(TmsValue);
+
         /// <summary> Determines if two <see cref="TileJsonScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TileJsonScheme left, TileJsonScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TileJsonScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TileJsonScheme left, TileJsonScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TileJsonScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TileJsonScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TileJsonScheme(string value) => new TileJsonScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TileJsonScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TileJsonScheme?(string value) => value == null ? null : new TileJsonScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TileJsonScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TileJsonScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

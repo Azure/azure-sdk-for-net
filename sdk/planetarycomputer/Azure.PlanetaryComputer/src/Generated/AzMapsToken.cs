@@ -8,51 +8,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represents an Azure Maps token for map visualization. </summary>
     public partial class AzMapsToken
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzMapsToken"/>. </summary>
         /// <param name="token"> The authentication token for Azure Maps. </param>
         /// <param name="expiresOn"> Expiration timestamp of the token in Unix time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal AzMapsToken(string token, int expiresOn)
         {
-            Argument.AssertNotNull(token, nameof(token));
-
             Token = token;
             ExpiresOn = expiresOn;
         }
@@ -60,21 +28,17 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="AzMapsToken"/>. </summary>
         /// <param name="token"> The authentication token for Azure Maps. </param>
         /// <param name="expiresOn"> Expiration timestamp of the token in Unix time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzMapsToken(string token, int expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzMapsToken(string token, int expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             ExpiresOn = expiresOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzMapsToken"/> for deserialization. </summary>
-        internal AzMapsToken()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The authentication token for Azure Maps. </summary>
         public string Token { get; }
+
         /// <summary> Expiration timestamp of the token in Unix time. </summary>
         public int ExpiresOn { get; }
     }

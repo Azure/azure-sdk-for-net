@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Metadata information for mosaic or search results. </summary>
     public partial class MosaicMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MosaicMetadata"/>. </summary>
         public MosaicMetadata()
@@ -60,31 +31,37 @@ namespace Azure.PlanetaryComputer
         /// <param name="name"> Human-readable name for the resource. </param>
         /// <param name="assets"> List of asset identifiers included in the resource. </param>
         /// <param name="defaults"> Defaults. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MosaicMetadata(MetadataType? type, string bounds, int? minzoom, int? maxzoom, string name, IList<string> assets, IDictionary<string, string> defaults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MosaicMetadata(MetadataType? @type, string bounds, int? minzoom, int? maxzoom, string name, IList<string> assets, IDictionary<string, string> defaults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Bounds = bounds;
             Minzoom = minzoom;
             Maxzoom = maxzoom;
             Name = name;
             Assets = assets;
             Defaults = defaults;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of metadata resource. </summary>
         public MetadataType? Type { get; set; }
+
         /// <summary> Geographic bounding box in [west, south, east, north] format. </summary>
         public string Bounds { get; set; }
+
         /// <summary> Minimum zoom level supported. </summary>
         public int? Minzoom { get; set; }
+
         /// <summary> Maximum zoom level supported. </summary>
         public int? Maxzoom { get; set; }
+
         /// <summary> Human-readable name for the resource. </summary>
         public string Name { get; set; }
+
         /// <summary> List of asset identifiers included in the resource. </summary>
         public IList<string> Assets { get; }
+
         /// <summary> Defaults. </summary>
         public IDictionary<string, string> Defaults { get; }
     }

@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Format specification for image request outputs. </summary>
     public readonly partial struct ImageRequestFormat : IEquatable<ImageRequestFormat>
     {
         private readonly string _value;
+        /// <summary> Portable Network Graphics format. </summary>
+        private const string PngValue = "png";
+        /// <summary> Cloud Optimized GeoTIFF format. </summary>
+        private const string CogValue = "cog";
 
         /// <summary> Initializes a new instance of <see cref="ImageRequestFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImageRequestFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PngValue = "png";
-        private const string CogValue = "cog";
+            _value = value;
+        }
 
         /// <summary> Portable Network Graphics format. </summary>
         public static ImageRequestFormat Png { get; } = new ImageRequestFormat(PngValue);
+
         /// <summary> Cloud Optimized GeoTIFF format. </summary>
         public static ImageRequestFormat Cog { get; } = new ImageRequestFormat(CogValue);
+
         /// <summary> Determines if two <see cref="ImageRequestFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageRequestFormat left, ImageRequestFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImageRequestFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageRequestFormat left, ImageRequestFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageRequestFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImageRequestFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImageRequestFormat(string value) => new ImageRequestFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImageRequestFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImageRequestFormat?(string value) => value == null ? null : new ImageRequestFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImageRequestFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImageRequestFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

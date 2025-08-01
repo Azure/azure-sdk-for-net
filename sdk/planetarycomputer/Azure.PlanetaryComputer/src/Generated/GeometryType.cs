@@ -8,56 +8,83 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    /// <summary> The GeometryType. </summary>
+    /// <summary></summary>
     internal readonly partial struct GeometryType : IEquatable<GeometryType>
     {
         private readonly string _value;
+        /// <summary> Represents a Point geometry. </summary>
+        private const string PointValue = "Point";
+        /// <summary> Represents a LineString geometry. </summary>
+        private const string LineStringValue = "LineString";
+        /// <summary> Represents a Polygon geometry. </summary>
+        private const string PolygonValue = "Polygon";
+        /// <summary> Represents a MultiPoint geometry. </summary>
+        private const string MultiPointValue = "MultiPoint";
+        /// <summary> Represents a MultiLineString geometry. </summary>
+        private const string MultiLineStringValue = "MultiLineString";
+        /// <summary> Represents a MultiPolygon geometry. </summary>
+        private const string MultiPolygonValue = "MultiPolygon";
 
         /// <summary> Initializes a new instance of <see cref="GeometryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GeometryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PointValue = "Point";
-        private const string LineStringValue = "LineString";
-        private const string PolygonValue = "Polygon";
-        private const string MultiPointValue = "MultiPoint";
-        private const string MultiLineStringValue = "MultiLineString";
-        private const string MultiPolygonValue = "MultiPolygon";
+            _value = value;
+        }
 
         /// <summary> Represents a Point geometry. </summary>
         public static GeometryType Point { get; } = new GeometryType(PointValue);
+
         /// <summary> Represents a LineString geometry. </summary>
         public static GeometryType LineString { get; } = new GeometryType(LineStringValue);
+
         /// <summary> Represents a Polygon geometry. </summary>
         public static GeometryType Polygon { get; } = new GeometryType(PolygonValue);
+
         /// <summary> Represents a MultiPoint geometry. </summary>
         public static GeometryType MultiPoint { get; } = new GeometryType(MultiPointValue);
+
         /// <summary> Represents a MultiLineString geometry. </summary>
         public static GeometryType MultiLineString { get; } = new GeometryType(MultiLineStringValue);
+
         /// <summary> Represents a MultiPolygon geometry. </summary>
         public static GeometryType MultiPolygon { get; } = new GeometryType(MultiPolygonValue);
+
         /// <summary> Determines if two <see cref="GeometryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GeometryType left, GeometryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GeometryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GeometryType left, GeometryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GeometryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GeometryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GeometryType(string value) => new GeometryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GeometryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GeometryType?(string value) => value == null ? null : new GeometryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GeometryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GeometryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

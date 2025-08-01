@@ -8,51 +8,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.IngestionSources
 {
     /// <summary> Managed Identity metadata. </summary>
     public partial class ManagedIdentityMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadata"/>. </summary>
         /// <param name="objectId"> Object id of the managed identity. </param>
         /// <param name="resourceId"> ARM path or resource id of the managed identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         internal ManagedIdentityMetadata(Guid objectId, string resourceId)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
             ObjectId = objectId;
             ResourceId = resourceId;
         }
@@ -60,21 +28,17 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadata"/>. </summary>
         /// <param name="objectId"> Object id of the managed identity. </param>
         /// <param name="resourceId"> ARM path or resource id of the managed identity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedIdentityMetadata(Guid objectId, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedIdentityMetadata(Guid objectId, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             ResourceId = resourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadata"/> for deserialization. </summary>
-        internal ManagedIdentityMetadata()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Object id of the managed identity. </summary>
         public Guid ObjectId { get; }
+
         /// <summary> ARM path or resource id of the managed identity. </summary>
         public string ResourceId { get; }
     }

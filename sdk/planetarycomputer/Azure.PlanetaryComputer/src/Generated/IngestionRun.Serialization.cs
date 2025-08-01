@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.Ingestions.IngestionRuns
 {
-    public partial class IngestionRun : IUtf8JsonSerializable, IJsonModel<IngestionRun>
+    /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion run. </summary>
+    public partial class IngestionRun : IJsonModel<IngestionRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IngestionRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IngestionRun"/> for deserialization. </summary>
+        internal IngestionRun()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IngestionRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IngestionRun)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(ParentRunId))
@@ -60,15 +66,15 @@ namespace Azure.PlanetaryComputer
                 writer.WritePropertyName("keepOriginalAssets"u8);
                 writer.WriteBooleanValue(KeepOriginalAssets.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,22 +83,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        IngestionRun IJsonModel<IngestionRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IngestionRun IJsonModel<IngestionRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IngestionRun JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IngestionRun)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIngestionRun(document.RootElement, options);
         }
 
-        internal static IngestionRun DeserializeIngestionRun(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IngestionRun DeserializeIngestionRun(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,67 +115,65 @@ namespace Azure.PlanetaryComputer
             Uri sourceCatalogUrl = default;
             bool? skipExistingItems = default;
             bool? keepOriginalAssets = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetGuid();
+                    id = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parentRunId"u8))
+                if (prop.NameEquals("parentRunId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parentRunId = property.Value.GetGuid();
+                    parentRunId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operation"u8))
+                if (prop.NameEquals("operation"u8))
                 {
-                    operation = IngestionRunInfo.DeserializeIngestionRunInfo(property.Value, options);
+                    operation = IngestionRunInfo.DeserializeIngestionRunInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("creationTime"u8))
+                if (prop.NameEquals("creationTime"u8))
                 {
-                    creationTime = property.Value.GetDateTimeOffset("O");
+                    creationTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceCatalogUrl"u8))
+                if (prop.NameEquals("sourceCatalogUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceCatalogUrl = new Uri(property.Value.GetString());
+                    sourceCatalogUrl = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("skipExistingItems"u8))
+                if (prop.NameEquals("skipExistingItems"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    skipExistingItems = property.Value.GetBoolean();
+                    skipExistingItems = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("keepOriginalAssets"u8))
+                if (prop.NameEquals("keepOriginalAssets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keepOriginalAssets = property.Value.GetBoolean();
+                    keepOriginalAssets = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IngestionRun(
                 id,
                 parentRunId,
@@ -173,31 +182,39 @@ namespace Azure.PlanetaryComputer
                 sourceCatalogUrl,
                 skipExistingItems,
                 keepOriginalAssets,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<IngestionRun>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IngestionRun>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IngestionRun)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IngestionRun IPersistableModel<IngestionRun>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IngestionRun IPersistableModel<IngestionRun>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IngestionRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionRun>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIngestionRun(document.RootElement, options);
                     }
                 default:
@@ -205,22 +222,15 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IngestionRun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static IngestionRun FromResponse(Response response)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="IngestionRun"/> from. </param>
+        public static explicit operator IngestionRun(Response result)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIngestionRun(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeIngestionRun(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

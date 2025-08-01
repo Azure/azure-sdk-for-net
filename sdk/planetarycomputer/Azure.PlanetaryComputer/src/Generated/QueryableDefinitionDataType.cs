@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Queryable data types for the queryables extension.
@@ -17,62 +17,102 @@ namespace Azure.PlanetaryComputer
     public readonly partial struct QueryableDefinitionDataType : IEquatable<QueryableDefinitionDataType>
     {
         private readonly string _value;
+        /// <summary>
+        /// Character strings.
+        /// Example: 'This is a literal string.'
+        /// </summary>
+        private const string StringValue = "string";
+        /// <summary>
+        /// Numbers including integers and floating point values.
+        /// Examples: -100, 3.14159
+        /// </summary>
+        private const string NumberValue = "number";
+        /// <summary>
+        /// Booleans.
+        /// Examples: true, false
+        /// </summary>
+        private const string BooleanValue = "boolean";
+        /// <summary>
+        /// An instant with a granularity of a second or smaller.
+        /// Example (JSON): { "timestamp": "1969-07-20T20:17:40Z" }
+        /// </summary>
+        private const string TimestampValue = "timestamp";
+        /// <summary>
+        /// An instant with a granularity of a day.
+        /// Example (JSON): { "date": "1969-07-20" }
+        /// </summary>
+        private const string DateValue = "date";
 
         /// <summary> Initializes a new instance of <see cref="QueryableDefinitionDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QueryableDefinitionDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "string";
-        private const string NumberValue = "number";
-        private const string BooleanValue = "boolean";
-        private const string TimestampValue = "timestamp";
-        private const string DateValue = "date";
+            _value = value;
+        }
 
         /// <summary>
         /// Character strings.
         /// Example: 'This is a literal string.'
         /// </summary>
         public static QueryableDefinitionDataType String { get; } = new QueryableDefinitionDataType(StringValue);
+
         /// <summary>
         /// Numbers including integers and floating point values.
         /// Examples: -100, 3.14159
         /// </summary>
         public static QueryableDefinitionDataType Number { get; } = new QueryableDefinitionDataType(NumberValue);
+
         /// <summary>
         /// Booleans.
         /// Examples: true, false
         /// </summary>
         public static QueryableDefinitionDataType Boolean { get; } = new QueryableDefinitionDataType(BooleanValue);
+
         /// <summary>
         /// An instant with a granularity of a second or smaller.
         /// Example (JSON): { "timestamp": "1969-07-20T20:17:40Z" }
         /// </summary>
         public static QueryableDefinitionDataType Timestamp { get; } = new QueryableDefinitionDataType(TimestampValue);
+
         /// <summary>
         /// An instant with a granularity of a day.
         /// Example (JSON): { "date": "1969-07-20" }
         /// </summary>
         public static QueryableDefinitionDataType Date { get; } = new QueryableDefinitionDataType(DateValue);
+
         /// <summary> Determines if two <see cref="QueryableDefinitionDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryableDefinitionDataType left, QueryableDefinitionDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryableDefinitionDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryableDefinitionDataType left, QueryableDefinitionDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryableDefinitionDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryableDefinitionDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryableDefinitionDataType(string value) => new QueryableDefinitionDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryableDefinitionDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryableDefinitionDataType?(string value) => value == null ? null : new QueryableDefinitionDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryableDefinitionDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryableDefinitionDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -9,14 +9,29 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class TileMatrix : IUtf8JsonSerializable, IJsonModel<TileMatrix>
+    /// <summary>
+    /// Tile Matrix Definition
+    /// 
+    /// A tile matrix, usually corresponding to a particular zoom level of a
+    /// TileMatrixSet.
+    /// 
+    /// ref:
+    /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrix.json
+    /// 
+    /// Definition of a tile matrix at a specific zoom level within a tile matrix set
+    /// </summary>
+    public partial class TileMatrix : IJsonModel<TileMatrix>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TileMatrix>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TileMatrix"/> for deserialization. </summary>
+        internal TileMatrix()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TileMatrix>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +43,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TileMatrix)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
@@ -48,8 +62,13 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
-                foreach (var item in Keywords)
+                foreach (string item in Keywords)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -67,7 +86,7 @@ namespace Azure.PlanetaryComputer
             }
             writer.WritePropertyName("pointOfOrigin"u8);
             writer.WriteStartArray();
-            foreach (var item in PointOfOrigin)
+            foreach (double item in PointOfOrigin)
             {
                 writer.WriteNumberValue(item);
             }
@@ -84,21 +103,21 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("variableMatrixWidths"u8);
                 writer.WriteStartArray();
-                foreach (var item in VariableMatrixWidths)
+                foreach (VariableMatrixWidth item in VariableMatrixWidths)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -107,129 +126,140 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        TileMatrix IJsonModel<TileMatrix>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TileMatrix IJsonModel<TileMatrix>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TileMatrix JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TileMatrix)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTileMatrix(document.RootElement, options);
         }
 
-        internal static TileMatrix DeserializeTileMatrix(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TileMatrix DeserializeTileMatrix(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string title = default;
             string description = default;
-            IReadOnlyList<string> keywords = default;
+            IList<string> keywords = default;
             string id = default;
             float scaleDenominator = default;
             float cellSize = default;
             TileMatrixCornerOfOrigin? cornerOfOrigin = default;
-            IReadOnlyList<double> pointOfOrigin = default;
+            IList<double> pointOfOrigin = default;
             int tileWidth = default;
             int tileHeight = default;
             int matrixWidth = default;
             int matrixHeight = default;
-            IReadOnlyList<VariableMatrixWidth> variableMatrixWidths = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<VariableMatrixWidth> variableMatrixWidths = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("title"u8))
+                if (prop.NameEquals("title"u8))
                 {
-                    title = property.Value.GetString();
+                    title = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keywords"u8))
+                if (prop.NameEquals("keywords"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     keywords = array;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scaleDenominator"u8))
+                if (prop.NameEquals("scaleDenominator"u8))
                 {
-                    scaleDenominator = property.Value.GetSingle();
+                    scaleDenominator = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("cellSize"u8))
+                if (prop.NameEquals("cellSize"u8))
                 {
-                    cellSize = property.Value.GetSingle();
+                    cellSize = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("cornerOfOrigin"u8))
+                if (prop.NameEquals("cornerOfOrigin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cornerOfOrigin = new TileMatrixCornerOfOrigin(property.Value.GetString());
+                    cornerOfOrigin = new TileMatrixCornerOfOrigin(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("pointOfOrigin"u8))
+                if (prop.NameEquals("pointOfOrigin"u8))
                 {
                     List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetDouble());
                     }
                     pointOfOrigin = array;
                     continue;
                 }
-                if (property.NameEquals("tileWidth"u8))
+                if (prop.NameEquals("tileWidth"u8))
                 {
-                    tileWidth = property.Value.GetInt32();
+                    tileWidth = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("tileHeight"u8))
+                if (prop.NameEquals("tileHeight"u8))
                 {
-                    tileHeight = property.Value.GetInt32();
+                    tileHeight = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("matrixWidth"u8))
+                if (prop.NameEquals("matrixWidth"u8))
                 {
-                    matrixWidth = property.Value.GetInt32();
+                    matrixWidth = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("matrixHeight"u8))
+                if (prop.NameEquals("matrixHeight"u8))
                 {
-                    matrixHeight = property.Value.GetInt32();
+                    matrixHeight = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("variableMatrixWidths"u8))
+                if (prop.NameEquals("variableMatrixWidths"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VariableMatrixWidth> array = new List<VariableMatrixWidth>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VariableMatrixWidth.DeserializeVariableMatrixWidth(item, options));
                     }
@@ -238,10 +268,9 @@ namespace Azure.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TileMatrix(
                 title,
                 description,
@@ -256,31 +285,39 @@ namespace Azure.PlanetaryComputer
                 matrixWidth,
                 matrixHeight,
                 variableMatrixWidths ?? new ChangeTrackingList<VariableMatrixWidth>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TileMatrix>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TileMatrix>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TileMatrix)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TileMatrix IPersistableModel<TileMatrix>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TileMatrix IPersistableModel<TileMatrix>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TileMatrix PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TileMatrix>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTileMatrix(document.RootElement, options);
                     }
                 default:
@@ -288,22 +325,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TileMatrix>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TileMatrix FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTileMatrix(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

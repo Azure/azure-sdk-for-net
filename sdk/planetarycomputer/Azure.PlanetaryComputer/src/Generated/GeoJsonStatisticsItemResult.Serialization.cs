@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class GeoJsonStatisticsItemResult : IUtf8JsonSerializable, IJsonModel<GeoJsonStatisticsItemResult>
+    /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
+    public partial class GeoJsonStatisticsItemResult : IJsonModel<GeoJsonStatisticsItemResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonStatisticsItemResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GeoJsonStatisticsItemResult"/> for deserialization. </summary>
+        internal GeoJsonStatisticsItemResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GeoJsonStatisticsItemResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +33,16 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GeoJsonStatisticsItemResult)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry, options);
             writer.WritePropertyName("bbox"u8);
             writer.WriteStartArray();
-            foreach (var item in Bbox)
+            foreach (double item in Bbox)
             {
                 writer.WriteNumberValue(item);
             }
@@ -88,7 +92,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("stac_extensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in StacExtensions)
+                foreach (Uri item in StacExtensions)
                 {
                     if (item == null)
                     {
@@ -99,15 +103,15 @@ namespace Azure.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,116 +120,120 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        GeoJsonStatisticsItemResult IJsonModel<GeoJsonStatisticsItemResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoJsonStatisticsItemResult IJsonModel<GeoJsonStatisticsItemResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GeoJsonStatisticsItemResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GeoJsonStatisticsItemResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGeoJsonStatisticsItemResult(document.RootElement, options);
         }
 
-        internal static GeoJsonStatisticsItemResult DeserializeGeoJsonStatisticsItemResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GeoJsonStatisticsItemResult DeserializeGeoJsonStatisticsItemResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            IReadOnlyList<double> bbox = default;
+            IList<double> bbox = default;
             string id = default;
-            FeatureType type = default;
+            FeatureType @type = default;
             string msftCreated = default;
             string msftUpdated = default;
             string msftShortDescription = default;
             string stacVersion = default;
             string collection = default;
             ItemProperties properties = default;
-            string msftTs = default;
+            string msftTimestamp = default;
             string msftEtag = default;
-            IReadOnlyList<Uri> stacExtensions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<Uri> stacExtensions = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("geometry"u8))
+                if (prop.NameEquals("geometry"u8))
                 {
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value, options);
+                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("bbox"u8))
+                if (prop.NameEquals("bbox"u8))
                 {
                     List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetDouble());
                     }
                     bbox = array;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new FeatureType(property.Value.GetString());
+                    @type = new FeatureType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msft:_created"u8))
+                if (prop.NameEquals("msft:_created"u8))
                 {
-                    msftCreated = property.Value.GetString();
+                    msftCreated = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("msft:_updated"u8))
+                if (prop.NameEquals("msft:_updated"u8))
                 {
-                    msftUpdated = property.Value.GetString();
+                    msftUpdated = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("msft:short_description"u8))
+                if (prop.NameEquals("msft:short_description"u8))
                 {
-                    msftShortDescription = property.Value.GetString();
+                    msftShortDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stac_version"u8))
+                if (prop.NameEquals("stac_version"u8))
                 {
-                    stacVersion = property.Value.GetString();
+                    stacVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collection"u8))
+                if (prop.NameEquals("collection"u8))
                 {
-                    collection = property.Value.GetString();
+                    collection = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    properties = ItemProperties.DeserializeItemProperties(property.Value, options);
+                    properties = ItemProperties.DeserializeItemProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("_msft:ts"u8))
+                if (prop.NameEquals("_msft:ts"u8))
                 {
-                    msftTs = property.Value.GetString();
+                    msftTimestamp = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("_msft:etag"u8))
+                if (prop.NameEquals("_msft:etag"u8))
                 {
-                    msftEtag = property.Value.GetString();
+                    msftEtag = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stac_extensions"u8))
+                if (prop.NameEquals("stac_extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<Uri> array = new List<Uri>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -241,49 +249,56 @@ namespace Azure.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GeoJsonStatisticsItemResult(
                 geometry,
                 bbox,
                 id,
-                type,
+                @type,
                 msftCreated,
                 msftUpdated,
                 msftShortDescription,
                 stacVersion,
                 collection,
                 properties,
-                msftTs,
+                msftTimestamp,
                 msftEtag,
                 stacExtensions ?? new ChangeTrackingList<Uri>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<GeoJsonStatisticsItemResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GeoJsonStatisticsItemResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GeoJsonStatisticsItemResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GeoJsonStatisticsItemResult IPersistableModel<GeoJsonStatisticsItemResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoJsonStatisticsItemResult IPersistableModel<GeoJsonStatisticsItemResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GeoJsonStatisticsItemResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonStatisticsItemResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGeoJsonStatisticsItemResult(document.RootElement, options);
                     }
                 default:
@@ -291,22 +306,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GeoJsonStatisticsItemResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static GeoJsonStatisticsItemResult FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGeoJsonStatisticsItemResult(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

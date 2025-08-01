@@ -9,14 +9,23 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class ItemProperties : IUtf8JsonSerializable, IJsonModel<ItemProperties>
+    /// <summary>
+    /// Properties of a STAC Item containing metadata about the asset.
+    /// 
+    /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#properties-object
+    /// </summary>
+    public partial class ItemProperties : IJsonModel<ItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ItemProperties"/> for deserialization. </summary>
+        internal ItemProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ItemProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
@@ -43,8 +51,13 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("instruments"u8);
                 writer.WriteStartArray();
-                foreach (var item in Instruments)
+                foreach (string item in Instruments)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -63,7 +76,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
-                foreach (var item in Providers)
+                foreach (StacProvider item in Providers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,9 +123,9 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -120,22 +133,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        ItemProperties IJsonModel<ItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemProperties IJsonModel<ItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ItemProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ItemProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeItemProperties(document.RootElement, options);
         }
 
-        internal static ItemProperties DeserializeItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ItemProperties DeserializeItemProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -153,116 +171,121 @@ namespace Azure.PlanetaryComputer
             string datetime = default;
             DateTimeOffset? startDatetime = default;
             DateTimeOffset? endDatetime = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("platform"u8))
+                if (prop.NameEquals("platform"u8))
                 {
-                    platform = property.Value.GetString();
+                    platform = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instruments"u8))
+                if (prop.NameEquals("instruments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     instruments = array;
                     continue;
                 }
-                if (property.NameEquals("constellation"u8))
+                if (prop.NameEquals("constellation"u8))
                 {
-                    constellation = property.Value.GetString();
+                    constellation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mission"u8))
+                if (prop.NameEquals("mission"u8))
                 {
-                    mission = property.Value.GetString();
+                    mission = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providers"u8))
+                if (prop.NameEquals("providers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StacProvider> array = new List<StacProvider>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StacProvider.DeserializeStacProvider(item, options));
                     }
                     providers = array;
                     continue;
                 }
-                if (property.NameEquals("gsd"u8))
+                if (prop.NameEquals("gsd"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gsd = property.Value.GetSingle();
+                    gsd = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("created"u8))
+                if (prop.NameEquals("created"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("O");
+                    created = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updated"u8))
+                if (prop.NameEquals("updated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    updated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("title"u8))
+                if (prop.NameEquals("title"u8))
                 {
-                    title = property.Value.GetString();
+                    title = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datetime"u8))
+                if (prop.NameEquals("datetime"u8))
                 {
-                    datetime = property.Value.GetString();
+                    datetime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("start_datetime"u8))
+                if (prop.NameEquals("start_datetime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDatetime = property.Value.GetDateTimeOffset("O");
+                    startDatetime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("end_datetime"u8))
+                if (prop.NameEquals("end_datetime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endDatetime = property.Value.GetDateTimeOffset("O");
+                    endDatetime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new ItemProperties(
                 platform,
                 instruments ?? new ChangeTrackingList<string>(),
@@ -280,28 +303,36 @@ namespace Azure.PlanetaryComputer
                 additionalProperties);
         }
 
-        BinaryData IPersistableModel<ItemProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ItemProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ItemProperties IPersistableModel<ItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemProperties IPersistableModel<ItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ItemProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeItemProperties(document.RootElement, options);
                     }
                 default:
@@ -309,22 +340,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ItemProperties FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeItemProperties(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

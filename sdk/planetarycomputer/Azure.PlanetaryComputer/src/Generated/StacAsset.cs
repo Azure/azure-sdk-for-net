@@ -8,15 +8,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#asset-object
-    ///
+    /// 
     /// Represents a STAC asset, which is a file or resource associated with a STAC item.
     /// </summary>
     public partial class StacAsset
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="StacAsset"/>. </summary>
         /// <param name="href"> URL to the asset file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="href"/> is null. </exception>
@@ -28,7 +31,7 @@ namespace Azure.PlanetaryComputer
             Providers = new ChangeTrackingList<StacProvider>();
             Href = href;
             Roles = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StacAsset"/>. </summary>
@@ -45,8 +48,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="href"> URL to the asset file. </param>
         /// <param name="type"> Media type of the asset. </param>
         /// <param name="roles"> Roles of the asset within the item. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StacAsset(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string href, string type, IList<string> roles, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal StacAsset(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string href, string @type, IList<string> roles, IDictionary<string, BinaryData> additionalProperties)
         {
             Platform = platform;
             Instruments = instruments;
@@ -59,72 +62,51 @@ namespace Azure.PlanetaryComputer
             Title = title;
             Description = description;
             Href = href;
-            Type = type;
+            Type = @type;
             Roles = roles;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StacAsset"/> for deserialization. </summary>
-        internal StacAsset()
-        {
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Platform that acquired the data. </summary>
         public string Platform { get; set; }
+
         /// <summary> Instruments that acquired the data. </summary>
         public IList<string> Instruments { get; }
+
         /// <summary> Constellation of satellites that acquired the data. </summary>
         public string Constellation { get; set; }
+
         /// <summary> Mission associated with the data. </summary>
         public string Mission { get; set; }
+
         /// <summary> Organizations or individuals who provide the data. </summary>
         public IList<StacProvider> Providers { get; }
+
         /// <summary> Ground sample distance in meters. </summary>
         public float? Gsd { get; set; }
+
         /// <summary> Creation timestamp of the data. </summary>
         public DateTimeOffset? Created { get; set; }
+
         /// <summary> Last update timestamp of the data. </summary>
         public DateTimeOffset? Updated { get; set; }
+
         /// <summary> Human-readable title for the asset. </summary>
         public string Title { get; set; }
+
         /// <summary> Detailed description of the asset. </summary>
         public string Description { get; set; }
+
         /// <summary> URL to the asset file. </summary>
         public string Href { get; set; }
+
         /// <summary> Media type of the asset. </summary>
         public string Type { get; set; }
+
         /// <summary> Roles of the asset within the item. </summary>
         public IList<string> Roles { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

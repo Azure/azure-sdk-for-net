@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class TilerInfo : IUtf8JsonSerializable, IJsonModel<TilerInfo>
+    /// <summary> TilerInfo. </summary>
+    public partial class TilerInfo : IJsonModel<TilerInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TilerInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TilerInfo"/> for deserialization. </summary>
+        internal TilerInfo()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TilerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +33,14 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TilerInfo)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("bounds"u8);
             writer.WriteStartArray();
-            foreach (var item in Bounds)
+            foreach (double item in Bounds)
             {
                 writer.WriteNumberValue(item);
             }
@@ -45,7 +49,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("band_metadata"u8);
                 writer.WriteStartArray();
-                foreach (var item in BandMetadata)
+                foreach (IList<BinaryData> item in BandMetadata)
                 {
                     if (item == null)
                     {
@@ -53,7 +57,7 @@ namespace Azure.PlanetaryComputer
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item)
+                    foreach (BinaryData item0 in item)
                     {
                         if (item0 == null)
                         {
@@ -61,9 +65,9 @@ namespace Azure.PlanetaryComputer
                             continue;
                         }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item0);
+                        writer.WriteRawValue(item0);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0, ModelSerializationExtensions.JsonDocumentOptions))
+                        using (JsonDocument document = JsonDocument.Parse(item0))
                         {
                             JsonSerializer.Serialize(writer, document.RootElement);
                         }
@@ -77,7 +81,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("band_descriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in BandDescriptions)
+                foreach (IList<string> item in BandDescriptions)
                 {
                     if (item == null)
                     {
@@ -85,8 +89,13 @@ namespace Azure.PlanetaryComputer
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item)
+                    foreach (string item0 in item)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0);
                     }
                     writer.WriteEndArray();
@@ -104,8 +113,13 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("colorinterp"u8);
                 writer.WriteStartArray();
-                foreach (var item in Colorinterp)
+                foreach (string item in Colorinterp)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -134,8 +148,13 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("overviews"u8);
                 writer.WriteStartArray();
-                foreach (var item in Overviews)
+                foreach (string item in Overviews)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -144,7 +163,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("scales"u8);
                 writer.WriteStartArray();
-                foreach (var item in Scales)
+                foreach (long item in Scales)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -154,7 +173,7 @@ namespace Azure.PlanetaryComputer
             {
                 writer.WritePropertyName("offsets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Offsets)
+                foreach (long item in Offsets)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -173,8 +192,13 @@ namespace Azure.PlanetaryComputer
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
+                    foreach (string item0 in item.Value)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0);
                     }
                     writer.WriteEndArray();
@@ -191,15 +215,15 @@ namespace Azure.PlanetaryComputer
                 writer.WritePropertyName("maxzoom"u8);
                 writer.WriteNumberValue(Maxzoom.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -208,64 +232,68 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        TilerInfo IJsonModel<TilerInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TilerInfo IJsonModel<TilerInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TilerInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TilerInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTilerInfo(document.RootElement, options);
         }
 
-        internal static TilerInfo DeserializeTilerInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TilerInfo DeserializeTilerInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<double> bounds = default;
-            IReadOnlyList<IList<BinaryData>> bandMetadata = default;
-            IReadOnlyList<IList<string>> bandDescriptions = default;
+            IList<double> bounds = default;
+            IList<IList<BinaryData>> bandMetadata = default;
+            IList<IList<string>> bandDescriptions = default;
             string dtype = default;
             NoDataType? nodataType = default;
-            IReadOnlyList<string> colorinterp = default;
+            IList<string> colorinterp = default;
             string driver = default;
             int? count = default;
             int? width = default;
             int? height = default;
-            IReadOnlyList<string> overviews = default;
-            IReadOnlyList<long> scales = default;
-            IReadOnlyList<long> offsets = default;
-            IReadOnlyDictionary<string, IList<string>> colormap = default;
+            IList<string> overviews = default;
+            IList<long> scales = default;
+            IList<long> offsets = default;
+            IDictionary<string, IList<string>> colormap = default;
             long? minzoom = default;
             long? maxzoom = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("bounds"u8))
+                if (prop.NameEquals("bounds"u8))
                 {
                     List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetDouble());
                     }
                     bounds = array;
                     continue;
                 }
-                if (property.NameEquals("band_metadata"u8))
+                if (prop.NameEquals("band_metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IList<BinaryData>> array = new List<IList<BinaryData>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -291,14 +319,14 @@ namespace Azure.PlanetaryComputer
                     bandMetadata = array;
                     continue;
                 }
-                if (property.NameEquals("band_descriptions"u8))
+                if (prop.NameEquals("band_descriptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IList<string>> array = new List<IList<string>>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -309,7 +337,14 @@ namespace Azure.PlanetaryComputer
                             List<string> array0 = new List<string>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(item0.GetString());
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    array0.Add(item0.GetString());
+                                }
                             }
                             array.Add(array0);
                         }
@@ -317,158 +352,178 @@ namespace Azure.PlanetaryComputer
                     bandDescriptions = array;
                     continue;
                 }
-                if (property.NameEquals("dtype"u8))
+                if (prop.NameEquals("dtype"u8))
                 {
-                    dtype = property.Value.GetString();
+                    dtype = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodata_type"u8))
+                if (prop.NameEquals("nodata_type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodataType = new NoDataType(property.Value.GetString());
+                    nodataType = new NoDataType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("colorinterp"u8))
+                if (prop.NameEquals("colorinterp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     colorinterp = array;
                     continue;
                 }
-                if (property.NameEquals("driver"u8))
+                if (prop.NameEquals("driver"u8))
                 {
-                    driver = property.Value.GetString();
+                    driver = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt32();
+                    count = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("width"u8))
+                if (prop.NameEquals("width"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    width = property.Value.GetInt32();
+                    width = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("height"u8))
+                if (prop.NameEquals("height"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    height = property.Value.GetInt32();
+                    height = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("overviews"u8))
+                if (prop.NameEquals("overviews"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     overviews = array;
                     continue;
                 }
-                if (property.NameEquals("scales"u8))
+                if (prop.NameEquals("scales"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<long> array = new List<long>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt64());
                     }
                     scales = array;
                     continue;
                 }
-                if (property.NameEquals("offsets"u8))
+                if (prop.NameEquals("offsets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<long> array = new List<long>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt64());
                     }
                     offsets = array;
                     continue;
                 }
-                if (property.NameEquals("colormap"u8))
+                if (prop.NameEquals("colormap"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetString());
+                                }
                             }
-                            dictionary.Add(property0.Name, array);
+                            dictionary.Add(prop0.Name, array);
                         }
                     }
                     colormap = dictionary;
                     continue;
                 }
-                if (property.NameEquals("minzoom"u8))
+                if (prop.NameEquals("minzoom"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minzoom = property.Value.GetInt64();
+                    minzoom = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxzoom"u8))
+                if (prop.NameEquals("maxzoom"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxzoom = property.Value.GetInt64();
+                    maxzoom = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TilerInfo(
                 bounds,
                 bandMetadata ?? new ChangeTrackingList<IList<BinaryData>>(),
@@ -486,31 +541,39 @@ namespace Azure.PlanetaryComputer
                 colormap ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 minzoom,
                 maxzoom,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TilerInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TilerInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TilerInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TilerInfo IPersistableModel<TilerInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TilerInfo IPersistableModel<TilerInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TilerInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TilerInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTilerInfo(document.RootElement, options);
                     }
                 default:
@@ -518,22 +581,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TilerInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TilerInfo FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTilerInfo(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

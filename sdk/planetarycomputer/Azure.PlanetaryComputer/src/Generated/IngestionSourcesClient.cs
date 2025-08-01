@@ -8,26 +8,22 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
+using Microsoft.PlanetaryComputer.IngestionSources;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The IngestionSources service client. </summary>
+    /// <summary> The IngestionSourcesClient. </summary>
     public partial class IngestionSourcesClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of IngestionSourcesClient for mocking. </summary>
         protected IngestionSourcesClient()
@@ -35,121 +31,172 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of IngestionSourcesClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public IngestionSourcesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public IngestionSourcesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new IngestionSourcesClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of IngestionSourcesClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public IngestionSourcesClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public IngestionSourcesClient(Uri endpoint, TokenCredential credential, IngestionSourcesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new IngestionSourcesClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Get ingestion sources in a geo-catalog. </summary>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSourcesAsync(long?,long?,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionSourcesPagedResult>> GetIngestionSourcesAsync(long? top = null, long? skip = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionSourcesAsync(top, skip, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionSourcesPagedResult.FromResponse(response), response);
-        }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        /// <summary> Get ingestion sources in a geo-catalog. </summary>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSources(long?,long?,CancellationToken)']/*" />
-        public virtual Response<IngestionSourcesPagedResult> GetIngestionSources(long? top = null, long? skip = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestionSources(top, skip, context);
-            return Response.FromValue(IngestionSourcesPagedResult.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Get ingestion sources in a geo-catalog
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionSourcesAsync(long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSourcesAsync(long?,long?,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionSourcesAsync(long? top, long? skip, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSources");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionSourcesRequest(top, skip, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get ingestion sources in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionSources(long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The number of items to return. </param>
-        /// <param name="skip"> The number of items to skip. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSources(long?,long?,RequestContext)']/*" />
         public virtual Response GetIngestionSources(long? top, long? skip, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSources");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetIngestionSourcesRequest(top, skip, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get ingestion sources in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetIngestionSourcesAsync(long? top, long? skip, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSources");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetIngestionSourcesRequest(top, skip, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get ingestion sources in a geo-catalog. </summary>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IngestionSourcesPagedResult> GetIngestionSources(long? top = default, long? skip = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GetIngestionSources(top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionSourcesPagedResult)result, result);
+        }
+
+        /// <summary> Get ingestion sources in a geo-catalog. </summary>
+        /// <param name="top"> The number of items to return. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionSourcesPagedResult>> GetIngestionSourcesAsync(long? top = default, long? skip = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetIngestionSourcesAsync(top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionSourcesPagedResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new ingestion source in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateIngestionSource(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateIngestionSource");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateIngestionSourceRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new ingestion source in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateIngestionSourceAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateIngestionSource");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateIngestionSourceRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -160,354 +207,230 @@ namespace Azure.PlanetaryComputer
 
         /// <summary> Create a new ingestion source in a geo-catalog. </summary>
         /// <param name="ingestionSource"> Definition of the ingestion source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ingestionSource"/> is null. </exception>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateIngestionSourceAsync(IngestionSource,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionSource>> CreateIngestionSourceAsync(IngestionSource ingestionSource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ingestionSource, nameof(ingestionSource));
-
-            using RequestContent content = ingestionSource.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateIngestionSourceAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionSource.FromResponse(response), response);
-        }
-
-        /// <summary> Create a new ingestion source in a geo-catalog. </summary>
-        /// <param name="ingestionSource"> Definition of the ingestion source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSource"/> is null. </exception>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateIngestionSource(IngestionSource,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionSource> CreateIngestionSource(IngestionSource ingestionSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ingestionSource, nameof(ingestionSource));
 
-            using RequestContent content = ingestionSource.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateIngestionSource(content, context);
-            return Response.FromValue(IngestionSource.FromResponse(response), response);
+            Response result = CreateIngestionSource(ingestionSource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionSource)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create a new ingestion source in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateIngestionSourceAsync(IngestionSource,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateIngestionSourceAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateIngestionSourceAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateIngestionSource");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateIngestionSourceRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new ingestion source in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateIngestionSource(IngestionSource,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateIngestionSource(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateIngestionSource(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateIngestionSource");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateIngestionSourceRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get an ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSourceAsync(Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionSource>> GetIngestionSourceAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIngestionSourceAsync(id, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionSource.FromResponse(response), response);
-        }
-
-        /// <summary> Get an ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSource(Guid,CancellationToken)']/*" />
-        public virtual Response<IngestionSource> GetIngestionSource(Guid id, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIngestionSource(id, context);
-            return Response.FromValue(IngestionSource.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get an ingestion source in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionSourceAsync(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSourceAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetIngestionSourceAsync(Guid id, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSource");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionSourceRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get an ingestion source in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIngestionSource(Guid,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetIngestionSource(Guid,RequestContext)']/*" />
-        public virtual Response GetIngestionSource(Guid id, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSource");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIngestionSourceRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <summary> Create a new ingestion source in a geo-catalog. </summary>
         /// <param name="ingestionSource"> Definition of the ingestion source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ingestionSource"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateOrReplaceIngestionSourceAsync(string,IngestionSource,CancellationToken)']/*" />
-        public virtual async Task<Response<IngestionSource>> CreateOrReplaceIngestionSourceAsync(string id, IngestionSource ingestionSource, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ingestionSource"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionSource>> CreateIngestionSourceAsync(IngestionSource ingestionSource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(ingestionSource, nameof(ingestionSource));
 
-            using RequestContent content = ingestionSource.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateOrReplaceIngestionSourceAsync(id, content, context).ConfigureAwait(false);
-            return Response.FromValue(IngestionSource.FromResponse(response), response);
+            Response result = await CreateIngestionSourceAsync(ingestionSource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionSource)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get an ingestion source in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetIngestionSource(Guid id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSource");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetIngestionSourceRequest(id, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get an ingestion source in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetIngestionSourceAsync(Guid id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetIngestionSource");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetIngestionSourceRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get an ingestion source in a geo-catalog. </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IngestionSource> GetIngestionSource(Guid id, CancellationToken cancellationToken = default)
+        {
+            Response result = GetIngestionSource(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionSource)result, result);
+        }
+
+        /// <summary> Get an ingestion source in a geo-catalog. </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IngestionSource>> GetIngestionSourceAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetIngestionSourceAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionSource)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update an existing ingestion source in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateOrReplaceIngestionSource(string id, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateOrReplaceIngestionSource");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceIngestionSourceRequest(id, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update an existing ingestion source in a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateOrReplaceIngestionSourceAsync(string id, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateOrReplaceIngestionSource");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateCreateOrReplaceIngestionSourceRequest(id, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="ingestionSource"> Definition of the ingestion source. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ingestionSource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateOrReplaceIngestionSource(string,IngestionSource,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionSource> CreateOrReplaceIngestionSource(string id, IngestionSource ingestionSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(ingestionSource, nameof(ingestionSource));
 
-            using RequestContent content = ingestionSource.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateOrReplaceIngestionSource(id, content, context);
-            return Response.FromValue(IngestionSource.FromResponse(response), response);
+            Response result = CreateOrReplaceIngestionSource(id, ingestionSource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((IngestionSource)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update an existing ingestion source in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceIngestionSourceAsync(string,IngestionSource,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
         /// <param name="id"> Ingestion source id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="ingestionSource"> Definition of the ingestion source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ingestionSource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateOrReplaceIngestionSourceAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrReplaceIngestionSourceAsync(string id, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response<IngestionSource>> CreateOrReplaceIngestionSourceAsync(string id, IngestionSource ingestionSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(ingestionSource, nameof(ingestionSource));
 
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateOrReplaceIngestionSource");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceIngestionSourceRequest(id, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await CreateOrReplaceIngestionSourceAsync(id, ingestionSource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((IngestionSource)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Update an existing ingestion source in a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateOrReplaceIngestionSource(string,IngestionSource,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='CreateOrReplaceIngestionSource(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrReplaceIngestionSource(string id, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.CreateOrReplaceIngestionSource");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrReplaceIngestionSourceRequest(id, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete an ingestion source from a geo-catalog
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Ingestion source id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='DeleteIngestionSourceAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteIngestionSourceAsync(string id, RequestContext context = null)
+        public virtual Response DeleteIngestionSource(string id, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.DeleteIngestionSource");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.DeleteIngestionSource");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+
                 using HttpMessage message = CreateDeleteIngestionSourceRequest(id, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -516,34 +439,30 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete an ingestion source from a geo-catalog
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Ingestion source id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='DeleteIngestionSource(string,RequestContext)']/*" />
-        public virtual Response DeleteIngestionSource(string id, RequestContext context = null)
+        public virtual async Task<Response> DeleteIngestionSourceAsync(string id, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.DeleteIngestionSource");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.DeleteIngestionSource");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(id, nameof(id));
+
                 using HttpMessage message = CreateDeleteIngestionSourceRequest(id, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -552,88 +471,51 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetManagedIdentitiesAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<ManagedIdentitiesPagedResult>> GetManagedIdentitiesAsync(CancellationToken cancellationToken = default)
+        /// <summary> Delete an ingestion source from a geo-catalog. </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteIngestionSource(string id, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetManagedIdentitiesAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ManagedIdentitiesPagedResult.FromResponse(response), response);
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return DeleteIngestionSource(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetManagedIdentities(CancellationToken)']/*" />
-        public virtual Response<ManagedIdentitiesPagedResult> GetManagedIdentities(CancellationToken cancellationToken = default)
+        /// <summary> Delete an ingestion source from a geo-catalog. </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteIngestionSourceAsync(string id, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetManagedIdentities(context);
-            return Response.FromValue(ManagedIdentitiesPagedResult.FromResponse(response), response);
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return await DeleteIngestionSourceAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
         /// [Protocol Method] Get all managed identities with access to storage accounts configured for a geo-catalog
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetManagedIdentitiesAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetManagedIdentitiesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetManagedIdentitiesAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetManagedIdentities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetManagedIdentitiesRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get all managed identities with access to storage accounts configured for a geo-catalog
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetManagedIdentities(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/IngestionSourcesClient.xml" path="doc/members/member[@name='GetManagedIdentities(RequestContext)']/*" />
         public virtual Response GetManagedIdentities(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetManagedIdentities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetManagedIdentities");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetManagedIdentitiesRequest(context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -642,123 +524,49 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        internal HttpMessage CreateGetIngestionSourcesRequest(long? top, long? skip, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Get all managed identities with access to storage accounts configured for a geo-catalog
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetManagedIdentitiesAsync(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionSourcesClient.GetManagedIdentities");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("$top", top.Value, true);
+                using HttpMessage message = CreateGetManagedIdentitiesRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (skip != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("$skip", skip.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateCreateIngestionSourceRequest(RequestContent content, RequestContext context)
+        /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ManagedIdentitiesPagedResult> GetManagedIdentities(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            Response result = GetManagedIdentities(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ManagedIdentitiesPagedResult)result, result);
         }
 
-        internal HttpMessage CreateGetIngestionSourceRequest(Guid id, RequestContext context)
+        /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ManagedIdentitiesPagedResult>> GetManagedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Response result = await GetManagedIdentitiesAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ManagedIdentitiesPagedResult)result, result);
         }
-
-        internal HttpMessage CreateCreateOrReplaceIngestionSourceRequest(string id, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteIngestionSourceRequest(string id, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetManagedIdentitiesRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/managed-identities", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier201;
-        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
-        private static ResponseClassifier _responseClassifier200201;
-        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

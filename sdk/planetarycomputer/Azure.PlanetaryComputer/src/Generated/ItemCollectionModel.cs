@@ -9,11 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.md
-    ///
+    /// 
     /// Represents a collection of STAC Items as a GeoJSON FeatureCollection.
     /// </summary>
     public partial class ItemCollectionModel : StacItemOrItemCollection
@@ -21,11 +21,10 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="ItemCollectionModel"/>. </summary>
         /// <param name="features"> Array of STAC Items in the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        public ItemCollectionModel(IEnumerable<StacItemModel> features)
+        public ItemCollectionModel(IEnumerable<StacItemModel> features) : base(StacModelType.FeatureCollection)
         {
             Argument.AssertNotNull(features, nameof(features));
 
-            Type = StacModelType.FeatureCollection;
             Features = features.ToList();
             Bbox = new ChangeTrackingList<double>();
         }
@@ -38,26 +37,23 @@ namespace Azure.PlanetaryComputer
         /// <param name="msftUpdated"> MSFT Updated. </param>
         /// <param name="msftShortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="features"> Array of STAC Items in the collection. </param>
         /// <param name="bbox"> Bounding box of all items in format [west, south, east, north]. </param>
         /// <param name="context"> Context information for the search response. </param>
-        internal ItemCollectionModel(StacModelType type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<StacItemModel> features, IList<double> bbox, ContextExtension context) : base(type, stacVersion, links, msftCreated, msftUpdated, msftShortDescription, stacExtensions, serializedAdditionalRawData)
+        internal ItemCollectionModel(StacModelType @type, string stacVersion, IList<StacLink> links, string msftCreated, string msftUpdated, string msftShortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<StacItemModel> features, IList<double> bbox, ContextExtension context) : base(@type, stacVersion, links, msftCreated, msftUpdated, msftShortDescription, stacExtensions, additionalBinaryDataProperties)
         {
             Features = features;
             Bbox = bbox;
             Context = context;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ItemCollectionModel"/> for deserialization. </summary>
-        internal ItemCollectionModel()
-        {
-        }
-
         /// <summary> Array of STAC Items in the collection. </summary>
         public IList<StacItemModel> Features { get; }
+
         /// <summary> Bounding box of all items in format [west, south, east, north]. </summary>
         public IList<double> Bbox { get; }
+
         /// <summary> Context information for the search response. </summary>
         public ContextExtension Context { get; set; }
     }

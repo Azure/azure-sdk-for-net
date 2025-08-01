@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.Ingestions
 {
     /// <summary> Ingestion status. </summary>
     public readonly partial struct IngestionStatus : IEquatable<IngestionStatus>
     {
         private readonly string _value;
+        /// <summary> Ingestion accepted and ready to be run. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Ingestion is being deleting in the background. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="IngestionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IngestionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadyValue = "Ready";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Ingestion accepted and ready to be run. </summary>
         public static IngestionStatus Ready { get; } = new IngestionStatus(ReadyValue);
+
         /// <summary> Ingestion is being deleting in the background. </summary>
         public static IngestionStatus Deleting { get; } = new IngestionStatus(DeletingValue);
+
         /// <summary> Determines if two <see cref="IngestionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IngestionStatus left, IngestionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IngestionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IngestionStatus left, IngestionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IngestionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IngestionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IngestionStatus(string value) => new IngestionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IngestionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IngestionStatus?(string value) => value == null ? null : new IngestionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IngestionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IngestionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

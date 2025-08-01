@@ -9,11 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrixSet.json
-    ///
+    /// 
     /// A definition of a tile matrix set following the Tile Matrix Set standard.
     /// For tileset metadata, such a description (in `tileMatrixSet` property) is only
     /// required for offline use,
@@ -22,47 +22,14 @@ namespace Azure.PlanetaryComputer
     /// </summary>
     public partial class TileMatrixSet
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TileMatrixSet"/>. </summary>
         /// <param name="crs"> Coordinate reference system identifier. </param>
         /// <param name="tileMatrices"> Array of tile matrices at different zoom levels. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="crs"/> or <paramref name="tileMatrices"/> is null. </exception>
         internal TileMatrixSet(string crs, IEnumerable<TileMatrix> tileMatrices)
         {
-            Argument.AssertNotNull(crs, nameof(crs));
-            Argument.AssertNotNull(tileMatrices, nameof(tileMatrices));
-
             Keywords = new ChangeTrackingList<string>();
             OrderedAxes = new ChangeTrackingList<string>();
             Crs = crs;
@@ -86,8 +53,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="wellKnownScaleSet"> URL reference to a standardized scale set. </param>
         /// <param name="boundingBox"> Geographic extent of the tile matrix set. </param>
         /// <param name="tileMatrices"> Array of tile matrices at different zoom levels. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TileMatrixSet(string title, string description, IReadOnlyList<string> keywords, string id, string uri, IReadOnlyList<string> orderedAxes, string crs, Uri wellKnownScaleSet, TileMatrixSetBoundingBox boundingBox, IReadOnlyList<TileMatrix> tileMatrices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TileMatrixSet(string title, string description, IList<string> keywords, string id, string uri, IList<string> orderedAxes, string crs, Uri wellKnownScaleSet, TileMatrixSetBoundingBox boundingBox, IList<TileMatrix> tileMatrices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
@@ -99,39 +66,43 @@ namespace Azure.PlanetaryComputer
             WellKnownScaleSet = wellKnownScaleSet;
             BoundingBox = boundingBox;
             TileMatrices = tileMatrices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TileMatrixSet"/> for deserialization. </summary>
-        internal TileMatrixSet()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Human-readable title of the tile matrix set. </summary>
         public string Title { get; }
+
         /// <summary>
         /// Brief narrative description of this tile matrix set, normally available for
         /// display to a human
         /// </summary>
         public string Description { get; }
+
         /// <summary>
         /// Unordered list of one or more commonly used or formalized word(s) or phrase(s)
         /// used to describe this tile matrix set
         /// </summary>
-        public IReadOnlyList<string> Keywords { get; }
+        public IList<string> Keywords { get; }
+
         /// <summary> Unique identifier for the tile matrix set. </summary>
         public string Id { get; }
+
         /// <summary> URI reference to the official definition. </summary>
         public string Uri { get; }
+
         /// <summary> Names of the coordinate axes in order. </summary>
-        public IReadOnlyList<string> OrderedAxes { get; }
+        public IList<string> OrderedAxes { get; }
+
         /// <summary> Coordinate reference system identifier. </summary>
         public string Crs { get; }
+
         /// <summary> URL reference to a standardized scale set. </summary>
         public Uri WellKnownScaleSet { get; }
+
         /// <summary> Geographic extent of the tile matrix set. </summary>
         public TileMatrixSetBoundingBox BoundingBox { get; }
+
         /// <summary> Array of tile matrices at different zoom levels. </summary>
-        public IReadOnlyList<TileMatrix> TileMatrices { get; }
+        public IList<TileMatrix> TileMatrices { get; }
     }
 }

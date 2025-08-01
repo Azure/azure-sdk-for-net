@@ -8,15 +8,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// Properties of a STAC Item containing metadata about the asset.
-    ///
+    /// 
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#properties-object
     /// </summary>
     public partial class ItemProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemProperties"/>. </summary>
         /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
@@ -27,7 +30,7 @@ namespace Azure.PlanetaryComputer
             Instruments = new ChangeTrackingList<string>();
             Providers = new ChangeTrackingList<StacProvider>();
             Datetime = datetime;
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ItemProperties"/>. </summary>
@@ -44,7 +47,7 @@ namespace Azure.PlanetaryComputer
         /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
         /// <param name="startDatetime"> Start time of the item observation period. </param>
         /// <param name="endDatetime"> End time of the item observation period. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal ItemProperties(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string datetime, DateTimeOffset? startDatetime, DateTimeOffset? endDatetime, IDictionary<string, BinaryData> additionalProperties)
         {
             Platform = platform;
@@ -60,70 +63,49 @@ namespace Azure.PlanetaryComputer
             Datetime = datetime;
             StartDatetime = startDatetime;
             EndDatetime = endDatetime;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ItemProperties"/> for deserialization. </summary>
-        internal ItemProperties()
-        {
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Platform that acquired the data. </summary>
         public string Platform { get; set; }
+
         /// <summary> Instruments that acquired the data. </summary>
         public IList<string> Instruments { get; }
+
         /// <summary> Constellation of satellites that acquired the data. </summary>
         public string Constellation { get; set; }
+
         /// <summary> Mission associated with the data. </summary>
         public string Mission { get; set; }
+
         /// <summary> Organizations or individuals who provide the data. </summary>
         public IList<StacProvider> Providers { get; }
+
         /// <summary> Ground sample distance in meters. </summary>
         public float? Gsd { get; set; }
+
         /// <summary> Creation timestamp of the data. </summary>
         public DateTimeOffset? Created { get; set; }
+
         /// <summary> Last update timestamp of the data. </summary>
         public DateTimeOffset? Updated { get; set; }
+
         /// <summary> Human-readable title for the item. </summary>
         public string Title { get; set; }
+
         /// <summary> Detailed description of the item. </summary>
         public string Description { get; set; }
+
         /// <summary> Datetime the asset represents in RFC 3339 format. </summary>
         public string Datetime { get; set; }
+
         /// <summary> Start time of the item observation period. </summary>
         public DateTimeOffset? StartDatetime { get; set; }
+
         /// <summary> End time of the item observation period. </summary>
         public DateTimeOffset? EndDatetime { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

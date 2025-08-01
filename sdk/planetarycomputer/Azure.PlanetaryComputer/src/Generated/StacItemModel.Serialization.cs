@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    public partial class StacItemModel : IUtf8JsonSerializable, IJsonModel<StacItemModel>
+    /// <summary> Represents a STAC Item, which is a GeoJSON Feature with additional metadata. </summary>
+    public partial class StacItemModel : IJsonModel<StacItemModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StacItemModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="StacItemModel"/> for deserialization. </summary>
+        internal StacItemModel()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StacItemModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +35,17 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StacItemModel)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry, options);
             writer.WritePropertyName("bbox"u8);
             writer.WriteStartArray();
-            foreach (var item in Bbox)
+            foreach (double item in Bbox)
             {
                 writer.WriteNumberValue(item);
             }
@@ -73,195 +79,213 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        StacItemModel IJsonModel<StacItemModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacItemModel IJsonModel<StacItemModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StacItemModel)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StacItemOrItemCollection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StacItemModel)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStacItemModel(document.RootElement, options);
         }
 
-        internal static StacItemModel DeserializeStacItemModel(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StacItemModel DeserializeStacItemModel(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            GeoJsonGeometry geometry = default;
-            IList<double> bbox = default;
-            string id = default;
-            string collection = default;
-            ItemProperties properties = default;
-            IDictionary<string, StacAsset> assets = default;
-            string msftTs = default;
-            string msftEtag = default;
-            StacModelType type = default;
+            StacModelType @type = default;
             string stacVersion = default;
             IList<StacLink> links = default;
             string msftCreated = default;
             string msftUpdated = default;
             string msftShortDescription = default;
             IList<string> stacExtensions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            GeoJsonGeometry geometry = default;
+            IList<double> bbox = default;
+            string id = default;
+            string collection = default;
+            ItemProperties properties = default;
+            IDictionary<string, StacAsset> assets = default;
+            string msftTimestamp = default;
+            string msftEtag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("geometry"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value, options);
+                    @type = new StacModelType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bbox"u8))
+                if (prop.NameEquals("stac_version"u8))
                 {
-                    List<double> array = new List<double>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetDouble());
-                    }
-                    bbox = array;
+                    stacVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("links"u8))
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("collection"u8))
-                {
-                    collection = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    properties = ItemProperties.DeserializeItemProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("assets"u8))
-                {
-                    Dictionary<string, StacAsset> dictionary = new Dictionary<string, StacAsset>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, StacAsset.DeserializeStacAsset(property0.Value, options));
-                    }
-                    assets = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("_msft:ts"u8))
-                {
-                    msftTs = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("_msft:etag"u8))
-                {
-                    msftEtag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new StacModelType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("stac_version"u8))
-                {
-                    stacVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("links"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StacLink> array = new List<StacLink>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StacLink.DeserializeStacLink(item, options));
                     }
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("msft:_created"u8))
+                if (prop.NameEquals("msft:_created"u8))
                 {
-                    msftCreated = property.Value.GetString();
+                    msftCreated = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("msft:_updated"u8))
+                if (prop.NameEquals("msft:_updated"u8))
                 {
-                    msftUpdated = property.Value.GetString();
+                    msftUpdated = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("msft:short_description"u8))
+                if (prop.NameEquals("msft:short_description"u8))
                 {
-                    msftShortDescription = property.Value.GetString();
+                    msftShortDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stac_extensions"u8))
+                if (prop.NameEquals("stac_extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     stacExtensions = array;
                     continue;
                 }
+                if (prop.NameEquals("geometry"u8))
+                {
+                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("bbox"u8))
+                {
+                    List<double> array = new List<double>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetDouble());
+                    }
+                    bbox = array;
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("collection"u8))
+                {
+                    collection = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = ItemProperties.DeserializeItemProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("assets"u8))
+                {
+                    Dictionary<string, StacAsset> dictionary = new Dictionary<string, StacAsset>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, StacAsset.DeserializeStacAsset(prop0.Value, options));
+                    }
+                    assets = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("_msft:ts"u8))
+                {
+                    msftTimestamp = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("_msft:etag"u8))
+                {
+                    msftEtag = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StacItemModel(
-                type,
+                @type,
                 stacVersion,
                 links ?? new ChangeTrackingList<StacLink>(),
                 msftCreated,
                 msftUpdated,
                 msftShortDescription,
                 stacExtensions ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 geometry,
                 bbox,
                 id,
                 collection,
                 properties,
                 assets,
-                msftTs,
+                msftTimestamp,
                 msftEtag);
         }
 
-        BinaryData IPersistableModel<StacItemModel>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StacItemModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StacItemModel)} does not support writing '{options.Format}' format.");
             }
         }
 
-        StacItemModel IPersistableModel<StacItemModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StacItemModel IPersistableModel<StacItemModel>.Create(BinaryData data, ModelReaderWriterOptions options) => (StacItemModel)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StacItemOrItemCollection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StacItemModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStacItemModel(document.RootElement, options);
                     }
                 default:
@@ -269,22 +293,27 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StacItemModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new StacItemModel FromResponse(Response response)
+        /// <param name="stacItemModel"> The <see cref="StacItemModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StacItemModel stacItemModel)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStacItemModel(document.RootElement);
+            if (stacItemModel == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stacItemModel, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="StacItemModel"/> from. </param>
+        public static explicit operator StacItemModel(Response result)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeStacItemModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -9,52 +9,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Configuration for data mosaic visualization. </summary>
     public partial class MosaicInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MosaicInfo"/>. </summary>
         /// <param name="mosaics"> Predefined data mosaics available for this collection. </param>
         /// <param name="renderOptions"> Available render options for visualizing the data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mosaics"/> or <paramref name="renderOptions"/> is null. </exception>
         internal MosaicInfo(IEnumerable<StacMosaic> mosaics, IEnumerable<RenderOptionModel> renderOptions)
         {
-            Argument.AssertNotNull(mosaics, nameof(mosaics));
-            Argument.AssertNotNull(renderOptions, nameof(renderOptions));
-
             Mosaics = mosaics.ToList();
             RenderOptions = renderOptions.ToList();
         }
@@ -64,27 +31,25 @@ namespace Azure.PlanetaryComputer
         /// <param name="renderOptions"> Available render options for visualizing the data. </param>
         /// <param name="defaultLocation"> Default map location when displaying this collection. </param>
         /// <param name="defaultCustomQuery"> A list of CQL-JSON expressions to use as the default for  this collection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MosaicInfo(IReadOnlyList<StacMosaic> mosaics, IReadOnlyList<RenderOptionModel> renderOptions, DefaultLocation defaultLocation, CqlFilter defaultCustomQuery, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MosaicInfo(IList<StacMosaic> mosaics, IList<RenderOptionModel> renderOptions, DefaultLocation defaultLocation, CqlFilter defaultCustomQuery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mosaics = mosaics;
             RenderOptions = renderOptions;
             DefaultLocation = defaultLocation;
             DefaultCustomQuery = defaultCustomQuery;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MosaicInfo"/> for deserialization. </summary>
-        internal MosaicInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Predefined data mosaics available for this collection. </summary>
-        public IReadOnlyList<StacMosaic> Mosaics { get; }
+        public IList<StacMosaic> Mosaics { get; }
+
         /// <summary> Available render options for visualizing the data. </summary>
-        public IReadOnlyList<RenderOptionModel> RenderOptions { get; }
+        public IList<RenderOptionModel> RenderOptions { get; }
+
         /// <summary> Default map location when displaying this collection. </summary>
         public DefaultLocation DefaultLocation { get; }
+
         /// <summary> A list of CQL-JSON expressions to use as the default for  this collection. </summary>
         public CqlFilter DefaultCustomQuery { get; }
     }

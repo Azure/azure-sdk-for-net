@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Represent the signature type for asset URLs. </summary>
     public readonly partial struct SignType : IEquatable<SignType>
     {
         private readonly string _value;
+        /// <summary> Sign asset URLs in the response. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Do not sign asset URLs in the response. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="SignType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SignType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
+            _value = value;
+        }
 
         /// <summary> Sign asset URLs in the response. </summary>
         public static SignType True { get; } = new SignType(TrueValue);
+
         /// <summary> Do not sign asset URLs in the response. </summary>
         public static SignType False { get; } = new SignType(FalseValue);
+
         /// <summary> Determines if two <see cref="SignType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignType left, SignType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignType left, SignType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignType(string value) => new SignType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignType?(string value) => value == null ? null : new SignType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

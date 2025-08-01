@@ -9,42 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Statistical information about a data band. </summary>
     public partial class BandStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BandStatistics"/>. </summary>
         /// <param name="min"> Minimum value in the band. </param>
@@ -69,11 +40,8 @@ namespace Azure.PlanetaryComputer
         /// Percentile 98
         /// The 98th percentile value.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="histogram"/> is null. </exception>
         internal BandStatistics(float min, float max, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IEnumerable<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98)
         {
-            Argument.AssertNotNull(histogram, nameof(histogram));
-
             Min = min;
             Max = max;
             Mean = mean;
@@ -115,8 +83,8 @@ namespace Azure.PlanetaryComputer
         /// Percentile 98
         /// The 98th percentile value.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BandStatistics(float min, float max, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IReadOnlyList<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BandStatistics(float min, float max, float mean, float count, float sum, float std, float median, float majority, float minority, float unique, IList<IList<float>> histogram, float validPercent, float maskedPixels, float validPixels, float percentile2, float percentile98, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Min = min;
             Max = max;
@@ -134,47 +102,57 @@ namespace Azure.PlanetaryComputer
             ValidPixels = validPixels;
             Percentile2 = percentile2;
             Percentile98 = percentile98;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BandStatistics"/> for deserialization. </summary>
-        internal BandStatistics()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Minimum value in the band. </summary>
         public float Min { get; }
+
         /// <summary> Maximum value in the band. </summary>
         public float Max { get; }
+
         /// <summary> Mean value of the band. </summary>
         public float Mean { get; }
+
         /// <summary> Count of pixels in the band. </summary>
         public float Count { get; }
+
         /// <summary> Sum of all pixel values in the band. </summary>
         public float Sum { get; }
+
         /// <summary> Standard deviation of pixel values in the band. </summary>
         public float Std { get; }
+
         /// <summary> Median value of the band. </summary>
         public float Median { get; }
+
         /// <summary> Most common value in the band. </summary>
         public float Majority { get; }
+
         /// <summary> Least common value in the band. </summary>
         public float Minority { get; }
+
         /// <summary> Count of unique values in the band. </summary>
         public float Unique { get; }
+
         /// <summary> Histogram of pixel values in the band. </summary>
-        public IReadOnlyList<IList<float>> Histogram { get; }
+        public IList<IList<float>> Histogram { get; }
+
         /// <summary> Percentage of valid (non-masked) pixels. </summary>
         public float ValidPercent { get; }
+
         /// <summary> Count of masked pixels in the band. </summary>
         public float MaskedPixels { get; }
+
         /// <summary> Count of valid (non-masked) pixels in the band. </summary>
         public float ValidPixels { get; }
+
         /// <summary>
         /// Percentile 2
         /// The 2nd percentile value.
         /// </summary>
         public float Percentile2 { get; }
+
         /// <summary>
         /// Percentile 98
         /// The 98th percentile value.

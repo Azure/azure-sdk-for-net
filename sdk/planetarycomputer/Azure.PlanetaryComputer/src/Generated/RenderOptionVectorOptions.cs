@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Defines parameters for vector tile rendering. </summary>
     public partial class RenderOptionVectorOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RenderOptionVectorOptions"/>. </summary>
         /// <param name="tilejsonKey"> Asset key containing the TileJSON URL. </param>
@@ -66,8 +37,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="strokeColor"> Stroke color for line features. </param>
         /// <param name="strokeWidth"> Width of line strokes in pixels. </param>
         /// <param name="filter"> MapBox GL filter expression to filter features. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RenderOptionVectorOptions(string tilejsonKey, string sourceLayer, string fillColor, string strokeColor, int? strokeWidth, IList<string> filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RenderOptionVectorOptions(string tilejsonKey, string sourceLayer, string fillColor, string strokeColor, int? strokeWidth, IList<string> filter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TilejsonKey = tilejsonKey;
             SourceLayer = sourceLayer;
@@ -75,24 +46,24 @@ namespace Azure.PlanetaryComputer
             StrokeColor = strokeColor;
             StrokeWidth = strokeWidth;
             Filter = filter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RenderOptionVectorOptions"/> for deserialization. </summary>
-        internal RenderOptionVectorOptions()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Asset key containing the TileJSON URL. </summary>
         public string TilejsonKey { get; set; }
+
         /// <summary> Name of the source layer in the vector tiles. </summary>
         public string SourceLayer { get; set; }
+
         /// <summary> Fill color for polygon features. </summary>
         public string FillColor { get; set; }
+
         /// <summary> Stroke color for line features. </summary>
         public string StrokeColor { get; set; }
+
         /// <summary> Width of line strokes in pixels. </summary>
         public int? StrokeWidth { get; set; }
+
         /// <summary> MapBox GL filter expression to filter features. </summary>
         public IList<string> Filter { get; }
     }

@@ -9,56 +9,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary>
     /// http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#_feature_collections_rootcollections
-    ///
+    /// 
     /// Represents a collection of STAC collections with links.
     /// </summary>
     public partial class FeatureCollections
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FeatureCollections"/>. </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="collections"> Array of STAC collections available in the catalog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="links"/> or <paramref name="collections"/> is null. </exception>
         internal FeatureCollections(IEnumerable<StacLink> links, IEnumerable<StacCollectionModel> collections)
         {
-            Argument.AssertNotNull(links, nameof(links));
-            Argument.AssertNotNull(collections, nameof(collections));
-
             Links = links.ToList();
             Collections = collections.ToList();
         }
@@ -66,22 +33,18 @@ namespace Azure.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="FeatureCollections"/>. </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="collections"> Array of STAC collections available in the catalog. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureCollections(IReadOnlyList<StacLink> links, IReadOnlyList<StacCollectionModel> collections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureCollections(IList<StacLink> links, IList<StacCollectionModel> collections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Links = links;
             Collections = collections;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FeatureCollections"/> for deserialization. </summary>
-        internal FeatureCollections()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Links to related resources and endpoints. </summary>
-        public IReadOnlyList<StacLink> Links { get; }
+        public IList<StacLink> Links { get; }
+
         /// <summary> Array of STAC collections available in the catalog. </summary>
-        public IReadOnlyList<StacCollectionModel> Collections { get; }
+        public IList<StacCollectionModel> Collections { get; }
     }
 }

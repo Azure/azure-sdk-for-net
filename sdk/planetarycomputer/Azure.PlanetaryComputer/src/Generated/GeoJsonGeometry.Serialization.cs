@@ -10,13 +10,32 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
+    /// <summary>
+    /// Represents a GeoJSON geometry object as defined by RFC 7946.
+    /// 
+    /// Supported geometry types include:
+    /// - **Point**: A single geographic coordinate.
+    /// - **LineString**: A sequence of geographic coordinates forming a line.
+    /// - **Polygon**: A closed shape defined by linear rings.
+    /// - **MultiPoint**: A collection of Points.
+    /// - **MultiLineString**: A collection of LineStrings.
+    /// - **MultiPolygon**: A collection of Polygons.
+    /// 
+    /// Used for spatial filtering in STAC.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownGeoJsonGeometry))]
-    public partial class GeoJsonGeometry : IUtf8JsonSerializable, IJsonModel<GeoJsonGeometry>
+    public abstract partial class GeoJsonGeometry : IJsonModel<GeoJsonGeometry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonGeometry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GeoJsonGeometry"/> for deserialization. </summary>
+        internal GeoJsonGeometry()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GeoJsonGeometry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,33 +47,32 @@ namespace Azure.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsCollectionDefined(Bbox))
             {
                 writer.WritePropertyName("bbox"u8);
                 writer.WriteStartArray();
-                foreach (var item in Bbox)
+                foreach (double item in Bbox)
                 {
                     writer.WriteNumberValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,63 +81,82 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        GeoJsonGeometry IJsonModel<GeoJsonGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoJsonGeometry IJsonModel<GeoJsonGeometry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GeoJsonGeometry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGeoJsonGeometry(document.RootElement, options);
         }
 
-        internal static GeoJsonGeometry DeserializeGeoJsonGeometry(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GeoJsonGeometry DeserializeGeoJsonGeometry(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "LineString": return LineString.DeserializeLineString(element, options);
-                    case "MultiLineString": return MultiLineString.DeserializeMultiLineString(element, options);
-                    case "MultiPoint": return MultiPoint.DeserializeMultiPoint(element, options);
-                    case "MultiPolygon": return MultiPolygon.DeserializeMultiPolygon(element, options);
-                    case "Point": return GeoJsonPoint.DeserializeGeoJsonPoint(element, options);
-                    case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element, options);
+                    case "Point":
+                        return GeoJsonPoint.DeserializeGeoJsonPoint(element, options);
+                    case "Polygon":
+                        return GeoJsonPolygon.DeserializeGeoJsonPolygon(element, options);
+                    case "MultiPolygon":
+                        return MultiPolygon.DeserializeMultiPolygon(element, options);
+                    case "MultiLineString":
+                        return MultiLineString.DeserializeMultiLineString(element, options);
+                    case "LineString":
+                        return LineString.DeserializeLineString(element, options);
+                    case "MultiPoint":
+                        return MultiPoint.DeserializeMultiPoint(element, options);
                 }
             }
             return UnknownGeoJsonGeometry.DeserializeUnknownGeoJsonGeometry(element, options);
         }
 
-        BinaryData IPersistableModel<GeoJsonGeometry>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GeoJsonGeometry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzurePlanetaryComputerContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GeoJsonGeometry)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GeoJsonGeometry IPersistableModel<GeoJsonGeometry>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoJsonGeometry IPersistableModel<GeoJsonGeometry>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GeoJsonGeometry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GeoJsonGeometry>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGeoJsonGeometry(document.RootElement, options);
                     }
                 default:
@@ -127,21 +164,18 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GeoJsonGeometry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static GeoJsonGeometry FromResponse(Response response)
+        /// <param name="geoJsonGeometry"> The <see cref="GeoJsonGeometry"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(GeoJsonGeometry geoJsonGeometry)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGeoJsonGeometry(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            if (geoJsonGeometry == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(geoJsonGeometry, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -6,28 +6,28 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
-    internal class MultipartFormDataRequestContent : RequestContent
+    internal partial class MultiPartFormDataBinaryContent : BinaryContent
     {
-        private readonly System.Net.Http.MultipartFormDataContent _multipartContent;
+        private readonly MultipartFormDataContent _multipartContent;
         private static readonly Random _random = new Random();
         private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-        public MultipartFormDataRequestContent()
+        public MultiPartFormDataBinaryContent()
         {
-            _multipartContent = new System.Net.Http.MultipartFormDataContent(CreateBoundary());
+            _multipartContent = new MultipartFormDataContent(CreateBoundary());
         }
 
+        /// <summary> Gets the ContentType. </summary>
         public string ContentType
         {
             get
@@ -36,6 +36,7 @@ namespace Azure.PlanetaryComputer
             }
         }
 
+        /// <summary> Gets the HttpContent. </summary>
         internal HttpContent HttpContent => _multipartContent;
 
         private static string CreateBoundary()
@@ -44,14 +45,19 @@ namespace Azure.PlanetaryComputer
             byte[] random = new byte[70];
             _random.NextBytes(random);
             int mask = 255 >> 2;
-            for (int i = 0; i < 70; i++)
+            int i = 0;
+            for (; i < 70; i++)
             {
                 chars[i] = _boundaryValues[random[i] & mask];
             }
             return chars.ToString();
         }
 
-        public void Add(string content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(string content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -59,7 +65,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(content), name, filename, contentType);
         }
 
-        public void Add(int content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(int content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -68,7 +78,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(value), name, filename, contentType);
         }
 
-        public void Add(long content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(long content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -77,7 +91,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(value), name, filename, contentType);
         }
 
-        public void Add(float content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(float content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -86,7 +104,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(value), name, filename, contentType);
         }
 
-        public void Add(double content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(double content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -95,7 +117,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(value), name, filename, contentType);
         }
 
-        public void Add(decimal content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(decimal content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -104,7 +130,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(value), name, filename, contentType);
         }
 
-        public void Add(bool content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(bool content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -113,7 +143,11 @@ namespace Azure.PlanetaryComputer
             Add(new StringContent(value), name, filename, contentType);
         }
 
-        public void Add(Stream content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(Stream content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -121,7 +155,11 @@ namespace Azure.PlanetaryComputer
             Add(new StreamContent(content), name, filename, contentType);
         }
 
-        public void Add(byte[] content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(byte[] content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -129,7 +167,11 @@ namespace Azure.PlanetaryComputer
             Add(new ByteArrayContent(content), name, filename, contentType);
         }
 
-        public void Add(BinaryData content, string name, string filename = null, string contentType = null)
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
+        public void Add(BinaryData content, string name, string filename = default, string contentType = default)
         {
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -137,33 +179,37 @@ namespace Azure.PlanetaryComputer
             Add(new ByteArrayContent(content.ToArray()), name, filename, contentType);
         }
 
+        /// <param name="content"></param>
+        /// <param name="name"></param>
+        /// <param name="filename"></param>
+        /// <param name="contentType"></param>
         private void Add(HttpContent content, string name, string filename, string contentType)
         {
-            if (filename != null)
-            {
-                Argument.AssertNotNullOrEmpty(filename, nameof(filename));
-                AddFilenameHeader(content, name, filename);
-            }
             if (contentType != null)
             {
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
                 AddContentTypeHeader(content, contentType);
             }
-            _multipartContent.Add(content, name);
+            if (filename != null)
+            {
+                Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+                _multipartContent.Add(content, name, filename);
+            }
+            else
+            {
+                _multipartContent.Add(content, name);
+            }
         }
 
-        public static void AddFilenameHeader(HttpContent content, string name, string filename)
-        {
-            ContentDispositionHeaderValue header = new ContentDispositionHeaderValue("form-data") { Name = name, FileName = filename };
-            content.Headers.ContentDisposition = header;
-        }
-
+        /// <param name="content"></param>
+        /// <param name="contentType"></param>
         public static void AddContentTypeHeader(HttpContent content, string contentType)
         {
             MediaTypeHeaderValue header = new MediaTypeHeaderValue(contentType);
             content.Headers.ContentType = header;
         }
 
+        /// <param name="length"></param>
         public override bool TryComputeLength(out long length)
         {
             if (_multipartContent.Headers.ContentLength is long contentLength)
@@ -175,21 +221,23 @@ namespace Azure.PlanetaryComputer
             return false;
         }
 
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
         {
 #if NET6_0_OR_GREATER
-				_multipartContent.CopyTo(stream, default, cancellationToken);
+            _multipartContent.CopyTo(stream, default, cancellationToken);
 #else
-#pragma warning disable AZC0107
-            _multipartContent.CopyToAsync(stream).EnsureCompleted();
-#pragma warning restore AZC0107
+            _multipartContent.CopyToAsync(stream).GetAwaiter().GetResult();
 #endif
         }
 
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
         {
 #if NET6_0_OR_GREATER
-				await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+            await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
 #else
             await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
 #endif

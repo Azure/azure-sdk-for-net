@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Defines the sorting directions for query results in STAC API. </summary>
     public readonly partial struct SortDirections : IEquatable<SortDirections>
     {
         private readonly string _value;
+        /// <summary> Sort results in ascending order. </summary>
+        private const string AscValue = "asc";
+        /// <summary> Sort results in descending order. </summary>
+        private const string DescValue = "desc";
 
         /// <summary> Initializes a new instance of <see cref="SortDirections"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SortDirections(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AscValue = "asc";
-        private const string DescValue = "desc";
+            _value = value;
+        }
 
         /// <summary> Sort results in ascending order. </summary>
         public static SortDirections Asc { get; } = new SortDirections(AscValue);
+
         /// <summary> Sort results in descending order. </summary>
         public static SortDirections Desc { get; } = new SortDirections(DescValue);
+
         /// <summary> Determines if two <see cref="SortDirections"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SortDirections left, SortDirections right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SortDirections"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SortDirections left, SortDirections right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SortDirections"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SortDirections"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SortDirections(string value) => new SortDirections(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SortDirections"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SortDirections?(string value) => value == null ? null : new SortDirections(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SortDirections other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SortDirections other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

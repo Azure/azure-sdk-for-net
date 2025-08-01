@@ -8,77 +8,118 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> MIME types for links. </summary>
     public readonly partial struct LinkType : IEquatable<LinkType>
     {
         private readonly string _value;
+        /// <summary> Represents an image/tiff with application=geotiff. </summary>
+        private const string ImageTiffApplicationGeotiffValue = "image/tiff; application=geotiff";
+        /// <summary> Represents an image/jp2. </summary>
+        private const string ImageJp2Value = "image/jp2";
+        /// <summary> Represents an image/png. </summary>
+        private const string ImagePngValue = "image/png";
+        /// <summary> Represents an image/jpeg. </summary>
+        private const string ImageJpegValue = "image/jpeg";
+        /// <summary> Represents an image/jpg. </summary>
+        private const string ImageJpgValue = "image/jpg";
+        /// <summary> Represents an image/webp. </summary>
+        private const string ImageWebpValue = "image/webp";
+        /// <summary> Represents an application/x-binary. </summary>
+        private const string ApplicationXBinaryValue = "application/x-binary";
+        /// <summary> Represents an application/xml. </summary>
+        private const string ApplicationXmlValue = "application/xml";
+        /// <summary> Represents an application/json. </summary>
+        private const string ApplicationJsonValue = "application/json";
+        /// <summary> Represents an application/geo+json. </summary>
+        private const string ApplicationGeoJsonValue = "application/geo+json";
+        /// <summary> Represents a text/html. </summary>
+        private const string TextHtmlValue = "text/html";
+        /// <summary> Represents a text/plain. </summary>
+        private const string TextPlainValue = "text/plain";
+        /// <summary> Represents an application/x-protobuf. </summary>
+        private const string ApplicationXProtobufValue = "application/x-protobuf";
 
         /// <summary> Initializes a new instance of <see cref="LinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LinkType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImageTiffApplicationGeotiffValue = "image/tiff; application=geotiff";
-        private const string ImageJp2Value = "image/jp2";
-        private const string ImagePngValue = "image/png";
-        private const string ImageJpegValue = "image/jpeg";
-        private const string ImageJpgValue = "image/jpg";
-        private const string ImageWebpValue = "image/webp";
-        private const string ApplicationXBinaryValue = "application/x-binary";
-        private const string ApplicationXmlValue = "application/xml";
-        private const string ApplicationJsonValue = "application/json";
-        private const string ApplicationGeoJsonValue = "application/geo+json";
-        private const string TextHtmlValue = "text/html";
-        private const string TextPlainValue = "text/plain";
-        private const string ApplicationXProtobufValue = "application/x-protobuf";
+            _value = value;
+        }
 
         /// <summary> Represents an image/tiff with application=geotiff. </summary>
         public static LinkType ImageTiffApplicationGeotiff { get; } = new LinkType(ImageTiffApplicationGeotiffValue);
+
         /// <summary> Represents an image/jp2. </summary>
         public static LinkType ImageJp2 { get; } = new LinkType(ImageJp2Value);
+
         /// <summary> Represents an image/png. </summary>
         public static LinkType ImagePng { get; } = new LinkType(ImagePngValue);
+
         /// <summary> Represents an image/jpeg. </summary>
         public static LinkType ImageJpeg { get; } = new LinkType(ImageJpegValue);
+
         /// <summary> Represents an image/jpg. </summary>
         public static LinkType ImageJpg { get; } = new LinkType(ImageJpgValue);
+
         /// <summary> Represents an image/webp. </summary>
         public static LinkType ImageWebp { get; } = new LinkType(ImageWebpValue);
+
         /// <summary> Represents an application/x-binary. </summary>
         public static LinkType ApplicationXBinary { get; } = new LinkType(ApplicationXBinaryValue);
+
         /// <summary> Represents an application/xml. </summary>
         public static LinkType ApplicationXml { get; } = new LinkType(ApplicationXmlValue);
+
         /// <summary> Represents an application/json. </summary>
         public static LinkType ApplicationJson { get; } = new LinkType(ApplicationJsonValue);
+
         /// <summary> Represents an application/geo+json. </summary>
         public static LinkType ApplicationGeoJson { get; } = new LinkType(ApplicationGeoJsonValue);
+
         /// <summary> Represents a text/html. </summary>
         public static LinkType TextHtml { get; } = new LinkType(TextHtmlValue);
+
         /// <summary> Represents a text/plain. </summary>
         public static LinkType TextPlain { get; } = new LinkType(TextPlainValue);
+
         /// <summary> Represents an application/x-protobuf. </summary>
         public static LinkType ApplicationXProtobuf { get; } = new LinkType(ApplicationXProtobufValue);
+
         /// <summary> Determines if two <see cref="LinkType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkType left, LinkType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinkType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkType left, LinkType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinkType(string value) => new LinkType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinkType?(string value) => value == null ? null : new LinkType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinkType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

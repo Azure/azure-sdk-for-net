@@ -8,47 +8,68 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer
 {
     /// <summary> Specifies the types of render options for map visualization. </summary>
     public readonly partial struct RenderOptionType : IEquatable<RenderOptionType>
     {
         private readonly string _value;
+        /// <summary> Raster tile rendering type. </summary>
+        private const string RasterTileValue = "raster-tile";
+        /// <summary> Vector tile polygon rendering type. </summary>
+        private const string VtPolygonValue = "vt-polygon";
+        /// <summary> Vector tile line rendering type. </summary>
+        private const string VtLineValue = "vt-line";
 
         /// <summary> Initializes a new instance of <see cref="RenderOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RenderOptionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RasterTileValue = "raster-tile";
-        private const string VtPolygonValue = "vt-polygon";
-        private const string VtLineValue = "vt-line";
+            _value = value;
+        }
 
         /// <summary> Raster tile rendering type. </summary>
         public static RenderOptionType RasterTile { get; } = new RenderOptionType(RasterTileValue);
+
         /// <summary> Vector tile polygon rendering type. </summary>
         public static RenderOptionType VtPolygon { get; } = new RenderOptionType(VtPolygonValue);
+
         /// <summary> Vector tile line rendering type. </summary>
         public static RenderOptionType VtLine { get; } = new RenderOptionType(VtLineValue);
+
         /// <summary> Determines if two <see cref="RenderOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RenderOptionType left, RenderOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RenderOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RenderOptionType left, RenderOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RenderOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RenderOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RenderOptionType(string value) => new RenderOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RenderOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RenderOptionType?(string value) => value == null ? null : new RenderOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RenderOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RenderOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

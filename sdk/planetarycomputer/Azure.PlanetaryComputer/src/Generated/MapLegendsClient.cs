@@ -7,29 +7,23 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.PlanetaryComputer;
 
-namespace Azure.PlanetaryComputer
+namespace Customizations
 {
-    // Data plane generated client.
-    /// <summary> The MapLegends service client. </summary>
+    /// <summary> The MapLegendsClient. </summary>
     public partial class MapLegendsClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of MapLegendsClient for mocking. </summary>
         protected MapLegendsClient()
@@ -37,181 +31,169 @@ namespace Azure.PlanetaryComputer
         }
 
         /// <summary> Initializes a new instance of MapLegendsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MapLegendsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzurePlanetaryComputerClientOptions())
+        public MapLegendsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MapLegendsClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of MapLegendsClient. </summary>
-        /// <param name="endpoint"> Service host. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MapLegendsClient(Uri endpoint, TokenCredential credential, AzurePlanetaryComputerClientOptions options)
+        public MapLegendsClient(Uri endpoint, TokenCredential credential, MapLegendsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzurePlanetaryComputerClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            options ??= new MapLegendsClientOptions();
+
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Get Classmap Legend. </summary>
-        /// <param name="classmapName"> classmap name. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate values and color swatches mapping for a given classmap.
-        ///
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim
-        /// from the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </remarks>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetClassmapLegendAsync(string,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<ClassmapLegendResult>> GetClassmapLegendAsync(string classmapName, int? trimStart = null, int? trimEnd = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetClassmapLegendAsync(classmapName, trimStart, trimEnd, context).ConfigureAwait(false);
-            return Response.FromValue(ClassmapLegendResult.FromResponse(response), response);
-        }
-
-        /// <summary> Get Classmap Legend. </summary>
-        /// <param name="classmapName"> classmap name. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate values and color swatches mapping for a given classmap.
-        ///
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim
-        /// from the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </remarks>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetClassmapLegend(string,int?,int?,CancellationToken)']/*" />
-        public virtual Response<ClassmapLegendResult> GetClassmapLegend(string classmapName, int? trimStart = null, int? trimEnd = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetClassmapLegend(classmapName, trimStart, trimEnd, context);
-            return Response.FromValue(ClassmapLegendResult.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Get Classmap Legend
+        /// [Protocol Method] Generate values and color swatches mapping for a given classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim
+        /// from the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetClassmapLegendAsync(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetClassmapLegendAsync(string,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassmapLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
-
-            using var scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetClassmapLegend");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetClassmapLegendRequest(classmapName, trimStart, trimEnd, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Classmap Legend
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetClassmapLegend(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="classmapName"> classmap name. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetClassmapLegend(string,int?,int?,RequestContext)']/*" />
         public virtual Response GetClassmapLegend(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetClassmapLegend");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
+                using HttpMessage message = CreateGetClassmapLegendRequest(classmapName, trimStart, trimEnd, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate values and color swatches mapping for a given classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim
+        /// from the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="classmapName"> classmap name. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetClassmapLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetClassmapLegend");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
+                using HttpMessage message = CreateGetClassmapLegendRequest(classmapName, trimStart, trimEnd, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate values and color swatches mapping for a given classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim
+        /// from the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// </summary>
+        /// <param name="classmapName"> classmap name. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ClassmapLegendResult> GetClassmapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            using var scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetClassmapLegend");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetClassmapLegendRequest(classmapName, trimStart, trimEnd, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetClassmapLegend(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ClassmapLegendResult)result, result);
         }
 
-        /// <summary> Get Legend. </summary>
-        /// <param name="cmapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
+        /// <summary>
+        /// Generate values and color swatches mapping for a given classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim
+        /// from the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// </summary>
+        /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate a legend image for a given colormap.
-        ///
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ClassmapLegendResult>> GetClassmapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
+            Response result = await GetClassmapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ClassmapLegendResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate a legend image for a given colormap.
+        /// 
         /// If the colormap has non-contiguous values at the beginning or end,
         /// which aren't desired in the output image, they can be trimmed by specifying
         /// the number of values to trim.
-        ///
+        /// 
         /// Args:
         /// cmap_name (string): The name of the registered colormap to generate
         /// a legend for
@@ -220,70 +202,12 @@ namespace Azure.PlanetaryComputer
         /// trim_start (int, optional): Number of items to trim from
         /// the start of the cmap
         /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        ///
+        /// 
         /// Returns:
         /// HTTP response with jpeg encoded image data
-        /// </remarks>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetLegendAsync(string,double?,double?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetLegendAsync(string cmapName, double? height = null, double? width = null, int? trimStart = null, int? trimEnd = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLegendAsync(cmapName, height, width, trimStart, trimEnd, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Get Legend. </summary>
-        /// <param name="cmapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate a legend image for a given colormap.
-        ///
-        /// If the colormap has non-contiguous values at the beginning or end,
-        /// which aren't desired in the output image, they can be trimmed by specifying
-        /// the number of values to trim.
-        ///
-        /// Args:
-        /// cmap_name (string): The name of the registered colormap to generate
-        /// a legend for
-        /// height (float, optional): The output height of the legend image
-        /// width (float, optional): The output width of the legend image
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        ///
-        /// Returns:
-        /// HTTP response with jpeg encoded image data
-        /// </remarks>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetLegend(string,double?,double?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetLegend(string cmapName, double? height = null, double? width = null, int? trimStart = null, int? trimEnd = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLegend(cmapName, height, width, trimStart, trimEnd, context);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Legend
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLegendAsync(string,double?,double?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,254 +216,184 @@ namespace Azure.PlanetaryComputer
         /// <param name="width"> The output width of the legend image. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetLegendAsync(string,double?,double?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetLegendAsync(string cmapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
-
-            using var scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetLegend");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLegendRequest(cmapName, height, width, trimStart, trimEnd, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Legend
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetLegend(string,double?,double?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cmapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetLegend(string,double?,double?,int?,int?,RequestContext)']/*" />
         public virtual Response GetLegend(string cmapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
         {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetLegend");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
+
+                using HttpMessage message = CreateGetLegendRequest(cmapName, height, width, trimStart, trimEnd, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate a legend image for a given colormap.
+        /// 
+        /// If the colormap has non-contiguous values at the beginning or end,
+        /// which aren't desired in the output image, they can be trimmed by specifying
+        /// the number of values to trim.
+        /// 
+        /// Args:
+        /// cmap_name (string): The name of the registered colormap to generate
+        /// a legend for
+        /// height (float, optional): The output height of the legend image
+        /// width (float, optional): The output width of the legend image
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// 
+        /// Returns:
+        /// HTTP response with jpeg encoded image data
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cmapName"> The name of the registered colormap to generate a legend for. </param>
+        /// <param name="height"> The output height of the legend image. </param>
+        /// <param name="width"> The output width of the legend image. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetLegendAsync(string cmapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetLegend");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
+
+                using HttpMessage message = CreateGetLegendRequest(cmapName, height, width, trimStart, trimEnd, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate a legend image for a given colormap.
+        /// 
+        /// If the colormap has non-contiguous values at the beginning or end,
+        /// which aren't desired in the output image, they can be trimmed by specifying
+        /// the number of values to trim.
+        /// 
+        /// Args:
+        /// cmap_name (string): The name of the registered colormap to generate
+        /// a legend for
+        /// height (float, optional): The output height of the legend image
+        /// width (float, optional): The output width of the legend image
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// 
+        /// Returns:
+        /// HTTP response with jpeg encoded image data
+        /// </summary>
+        /// <param name="cmapName"> The name of the registered colormap to generate a legend for. </param>
+        /// <param name="height"> The output height of the legend image. </param>
+        /// <param name="width"> The output width of the legend image. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<BinaryData> GetLegend(string cmapName, double? height = default, double? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        {
             Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
 
-            using var scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetLegend");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetLegendRequest(cmapName, height, width, trimStart, trimEnd, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Interval Legend. </summary>
-        /// <param name="classmapName"> classmap name. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate values and color swatches mapping for a given interval classmap.
-        ///
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </remarks>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetIntervalLegendAsync(string,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<IList<BinaryData>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = null, int? trimEnd = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, context).ConfigureAwait(false);
-            IReadOnlyList<IList<BinaryData>> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<IList<BinaryData>> array = new List<IList<BinaryData>>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    List<BinaryData> array0 = new List<BinaryData>();
-                    foreach (var item0 in item.EnumerateArray())
-                    {
-                        if (item0.ValueKind == JsonValueKind.Null)
-                        {
-                            array0.Add(null);
-                        }
-                        else
-                        {
-                            array0.Add(BinaryData.FromString(item0.GetRawText()));
-                        }
-                    }
-                    array.Add(array0);
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
-        }
-
-        /// <summary> Get Interval Legend. </summary>
-        /// <param name="classmapName"> classmap name. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Generate values and color swatches mapping for a given interval classmap.
-        ///
-        /// Args:
-        /// trim_start (int, optional): Number of items to trim from
-        /// the start of the cmap
-        /// trim_end (int, optional): Number of items to trim from the end of the cmap
-        /// </remarks>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetIntervalLegend(string,int?,int?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<IList<BinaryData>>> GetIntervalLegend(string classmapName, int? trimStart = null, int? trimEnd = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetIntervalLegend(classmapName, trimStart, trimEnd, context);
-            IReadOnlyList<IList<BinaryData>> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<IList<BinaryData>> array = new List<IList<BinaryData>>();
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Null)
-                {
-                    array.Add(null);
-                }
-                else
-                {
-                    List<BinaryData> array0 = new List<BinaryData>();
-                    foreach (var item0 in item.EnumerateArray())
-                    {
-                        if (item0.ValueKind == JsonValueKind.Null)
-                        {
-                            array0.Add(null);
-                        }
-                        else
-                        {
-                            array0.Add(BinaryData.FromString(item0.GetRawText()));
-                        }
-                    }
-                    array.Add(array0);
-                }
-            }
-            value = array;
-            return Response.FromValue(value, response);
+            Response result = GetLegend(cmapName, height, width, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Interval Legend
+        /// Generate a legend image for a given colormap.
+        /// 
+        /// If the colormap has non-contiguous values at the beginning or end,
+        /// which aren't desired in the output image, they can be trimmed by specifying
+        /// the number of values to trim.
+        /// 
+        /// Args:
+        /// cmap_name (string): The name of the registered colormap to generate
+        /// a legend for
+        /// height (float, optional): The output height of the legend image
+        /// width (float, optional): The output width of the legend image
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// 
+        /// Returns:
+        /// HTTP response with jpeg encoded image data
+        /// </summary>
+        /// <param name="cmapName"> The name of the registered colormap to generate a legend for. </param>
+        /// <param name="height"> The output height of the legend image. </param>
+        /// <param name="width"> The output width of the legend image. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<BinaryData>> GetLegendAsync(string cmapName, double? height = default, double? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cmapName, nameof(cmapName));
+
+            Response result = await GetLegendAsync(cmapName, height, width, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIntervalLegendAsync(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetIntervalLegendAsync(string,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetIntervalLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
-
-            using var scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetIntervalLegend");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Interval Legend
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetIntervalLegend(string,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="classmapName"> classmap name. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/MapLegendsClient.xml" path="doc/members/member[@name='GetIntervalLegend(string,int?,int?,RequestContext)']/*" />
         public virtual Response GetIntervalLegend(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
-
-            using var scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetIntervalLegend");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetIntervalLegend");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
                 using HttpMessage message = CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -548,95 +402,89 @@ namespace Azure.PlanetaryComputer
             }
         }
 
-        internal HttpMessage CreateGetClassmapLegendRequest(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="classmapName"> classmap name. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetIntervalLegendAsync(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/legend/classmap/", false);
-            uri.AppendPath(classmapName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (trimStart != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("MapLegendsClient.GetIntervalLegend");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("trim_start", trimStart.Value, true);
+                Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
+                using HttpMessage message = CreateGetIntervalLegendRequest(classmapName, trimStart, trimEnd, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (trimEnd != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("trim_end", trimEnd.Value, true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateGetLegendRequest(string cmapName, double? height, double? width, int? trimStart, int? trimEnd, RequestContext context)
+        /// <summary>
+        /// Generate values and color swatches mapping for a given interval classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// </summary>
+        /// <param name="classmapName"> classmap name. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<IList<BinaryData>>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/legend/colormap/", false);
-            uri.AppendPath(cmapName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (height != null)
-            {
-                uri.AppendQuery("height", height.Value, true);
-            }
-            if (width != null)
-            {
-                uri.AppendQuery("width", width.Value, true);
-            }
-            if (trimStart != null)
-            {
-                uri.AppendQuery("trim_start", trimStart.Value, true);
-            }
-            if (trimEnd != null)
-            {
-                uri.AppendQuery("trim_end", trimEnd.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "image/png");
-            return message;
+            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
+            Response result = GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
         }
 
-        internal HttpMessage CreateGetIntervalLegendRequest(string classmapName, int? trimStart, int? trimEnd, RequestContext context)
+        /// <summary>
+        /// Generate values and color swatches mapping for a given interval classmap.
+        /// 
+        /// Args:
+        /// trim_start (int, optional): Number of items to trim from
+        /// the start of the cmap
+        /// trim_end (int, optional): Number of items to trim from the end of the cmap
+        /// </summary>
+        /// <param name="classmapName"> classmap name. </param>
+        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
+        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<IList<BinaryData>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/data/legend/interval/", false);
-            uri.AppendPath(classmapName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (trimStart != null)
-            {
-                uri.AppendQuery("trim_start", trimStart.Value, true);
-            }
-            if (trimEnd != null)
-            {
-                uri.AppendQuery("trim_end", trimEnd.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
+
+            Response result = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
         }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200204;
-        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
     }
 }

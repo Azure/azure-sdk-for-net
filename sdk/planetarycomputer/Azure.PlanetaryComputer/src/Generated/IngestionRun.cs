@@ -8,52 +8,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.PlanetaryComputer
+namespace Microsoft.PlanetaryComputer.Ingestions.IngestionRuns
 {
     /// <summary> Microsoft Planetary Computer Pro geo-catalog ingestion run. </summary>
     public partial class IngestionRun
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngestionRun"/>. </summary>
         /// <param name="id"> Run id. </param>
         /// <param name="operation"> Operation. </param>
         /// <param name="creationTime"> Creation time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
         internal IngestionRun(Guid id, IngestionRunInfo operation, DateTimeOffset creationTime)
         {
-            Argument.AssertNotNull(operation, nameof(operation));
-
             Id = id;
             Operation = operation;
             CreationTime = creationTime;
@@ -67,8 +35,8 @@ namespace Azure.PlanetaryComputer
         /// <param name="sourceCatalogUrl"> URL of the source catalog. </param>
         /// <param name="skipExistingItems"> Skip any item that already exist in the GeoCatalog. </param>
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRun(Guid id, Guid? parentRunId, IngestionRunInfo operation, DateTimeOffset creationTime, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionRun(Guid id, Guid? parentRunId, IngestionRunInfo operation, DateTimeOffset creationTime, Uri sourceCatalogUrl, bool? skipExistingItems, bool? keepOriginalAssets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParentRunId = parentRunId;
@@ -77,26 +45,27 @@ namespace Azure.PlanetaryComputer
             SourceCatalogUrl = sourceCatalogUrl;
             SkipExistingItems = skipExistingItems;
             KeepOriginalAssets = keepOriginalAssets;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IngestionRun"/> for deserialization. </summary>
-        internal IngestionRun()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Run id. </summary>
         public Guid Id { get; }
+
         /// <summary> Run id which this run is associated to because it has been retried or rerun. </summary>
         public Guid? ParentRunId { get; }
+
         /// <summary> Operation. </summary>
         public IngestionRunInfo Operation { get; }
+
         /// <summary> Creation time. </summary>
         public DateTimeOffset CreationTime { get; }
+
         /// <summary> URL of the source catalog. </summary>
         public Uri SourceCatalogUrl { get; }
+
         /// <summary> Skip any item that already exist in the GeoCatalog. </summary>
         public bool? SkipExistingItems { get; }
+
         /// <summary> Keep original source assets. </summary>
         public bool? KeepOriginalAssets { get; }
     }
