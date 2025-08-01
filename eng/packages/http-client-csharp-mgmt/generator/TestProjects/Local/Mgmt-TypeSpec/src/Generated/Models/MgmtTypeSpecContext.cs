@@ -18,7 +18,7 @@ namespace MgmtTypeSpec
     /// </summary>
     [ModelReaderWriterBuildable(typeof(PrivateLinkListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateLink))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(MgmtTypeSpecPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooProperties))]
