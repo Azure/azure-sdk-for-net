@@ -102,7 +102,7 @@ namespace Azure.Generator.Management
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                return value.CastTo(new CSharpType(typeof(IJsonModel<>, valueType)).Invoke(nameof(IJsonModel<object>.Write)).Terminate();
+                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [ModelSerializationExtensionsSnippets.Wire]).Terminate();
             }
 
             if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
@@ -133,10 +133,10 @@ namespace Azure.Generator.Management
                     ModelSerializationExtensionsSnippets.Wire
                 ];
 
-                return Static<ModelReaderWriter>(
+                return Static(typeof(ModelReaderWriter)).Invoke(
                     nameof(ModelReaderWriter.Read),
-                    [.. readBody, ModelReaderWriterContextExpression.Default],
-                    TypeArguments: [valueType]);
+                    [.. readBody, ModelReaderWriterContextSnippets.Default],
+                    typeArgs: [valueType]);
             }
 
             if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
