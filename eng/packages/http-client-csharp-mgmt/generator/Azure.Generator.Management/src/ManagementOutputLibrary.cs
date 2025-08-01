@@ -107,11 +107,14 @@ namespace Azure.Generator.Management
             var resources = new List<ResourceClientProvider>();
             foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
-                var resource = BuildResource(model);
-                if (resource is not null)
+                // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
+                var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
+                if (resourceMetadata is null)
                 {
-                    resources.Add(resource);
+                    continue; // skip models that are not resource models
                 }
+                var resource = ResourceClientProvider.Create(model, resourceMetadata);
+                resources.Add(resource);
             }
             return resources;
         }
@@ -166,19 +169,15 @@ namespace Azure.Generator.Management
             return [.. mockableResources, extensionProvider];
         }
 
-        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one model corresponds to one resource.
-        private static ResourceClientProvider? BuildResource(InputModelType model)
+        private static ManagementMethodMap BuildManagementMethodMap()
         {
-            // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
-            return resourceMetadata is not null ?
-                ResourceClientProvider.Create(model, resourceMetadata) :
-                null;
+
         }
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
+            var methodMap = BuildManagementMethodMap();
             var resources = BuildResources();
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
             var extensions = BuildExtensions(resources);
