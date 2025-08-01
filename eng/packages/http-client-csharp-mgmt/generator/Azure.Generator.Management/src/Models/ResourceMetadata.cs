@@ -9,6 +9,7 @@ namespace Azure.Generator.Management.Models
     internal record ResourceMetadata(
         string ResourceIdPattern,
         string ResourceType,
+        InputModelType ResourceModel,
         ResourceScope ResourceScope,
         IReadOnlyList<ResourceMethod> Methods,
         string? SingletonResourceName,

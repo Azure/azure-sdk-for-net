@@ -35,13 +35,13 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal sealed class ResourceClientProvider : TypeProvider
     {
-        internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
+        internal static ResourceClientProvider Create(ResourceMetadata resourceMetadata)
         {
             // Create a resource that supports multiple clients, using ResourceName from metadata
-            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, model, resourceMetadata);
+            var resource = new ResourceClientProvider(resourceMetadata.ResourceName, resourceMetadata.ResourceModel, resourceMetadata);
             if (!resource.IsSingleton)
             {
-                var collection = new ResourceCollectionClientProvider(resource, model, resourceMetadata);
+                var collection = new ResourceCollectionClientProvider(resource, resourceMetadata.ResourceModel, resourceMetadata);
                 resource.ResourceCollection = collection;
             }
 

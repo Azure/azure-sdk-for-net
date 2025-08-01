@@ -105,15 +105,9 @@ namespace Azure.Generator.Management
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var resources = new List<ResourceClientProvider>();
-            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            foreach (var resourceMetadata in ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas)
             {
-                // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-                var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
-                if (resourceMetadata is null)
-                {
-                    continue; // skip models that are not resource models
-                }
-                var resource = ResourceClientProvider.Create(model, resourceMetadata);
+                var resource = ResourceClientProvider.Create(resourceMetadata);
                 resources.Add(resource);
             }
             return resources;
@@ -169,15 +163,24 @@ namespace Azure.Generator.Management
             return [.. mockableResources, extensionProvider];
         }
 
-        private static ManagementMethodMap BuildManagementMethodMap()
-        {
+        //private static ManagementMethodMap BuildManagementMethodMap()
+        //{
+        //    // find all the resources
+        //    var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
+        //    // iterate over all clients to gather all the methods
+        //    var methods = new List<InputServiceMethod>();
+        //    foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+        //    {
+        //        methods.AddRange(client.Methods);
+        //    }
 
-        }
+        //    throw new NotImplementedException("ManagementMethodMap is not implemented yet. This should be implemented in the future to support non-resource operations on management clients.");
+        //}
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var methodMap = BuildManagementMethodMap();
+            //var methodMap = BuildManagementMethodMap();
             var resources = BuildResources();
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
             var extensions = BuildExtensions(resources);

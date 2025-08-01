@@ -23,7 +23,6 @@ namespace Azure.Generator.Management
         private const string ParentResourceId = "parentResourceId";
         private const string ResourceName = "resourceName";
 
-        private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
@@ -55,7 +54,8 @@ namespace Azure.Generator.Management
 
         private HashSet<InputModelType> ResourceModels => _resourceModels ??= [.. InputNamespace.Models.Where(m => m.Decorators.Any(d => d.Name.Equals(ResourceMetadataDecoratorName)))];
 
-        private IReadOnlyDictionary<InputModelType, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
+        private IReadOnlyList<ResourceMetadata>? _resourceMetadatas;
+        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => _resourceMetadatas ??= DeserializeResourceMetadata();
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
@@ -67,16 +67,16 @@ namespace Azure.Generator.Management
         {
             Dictionary<InputModelType, string> map = new();
 
-            foreach (var (resourceModel, metadata) in ResourceMetadata)
+            foreach (var metadata in ResourceMetadatas)
             {
                 var id = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update).FirstOrDefault()?.Id;
                 if (id != null && InputMethodsByCrossLanguageDefinitionId.GetValueOrDefault(id) is { Operation.HttpMethod: "PATCH" } method)
                 {
                     foreach (var parameter in method.Parameters)
                     {
-                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != resourceModel)
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
                         {
-                            map[updateModel] = resourceModel.Name;
+                            map[updateModel] = metadata.ResourceModel.Name;
                             break;
                         }
                     }
@@ -105,21 +105,18 @@ namespace Azure.Generator.Management
         internal InputClient? GetClientByMethod(InputServiceMethod method)
             => IntMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
-        internal ResourceMetadata? GetResourceMetadata(InputModelType model)
-            => ResourceMetadata.TryGetValue(model, out var metadata) ? metadata : null;
-
         internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
-        private IReadOnlyDictionary<InputModelType, ResourceMetadata> DeserializeResourceMetadata()
+        private IReadOnlyList<ResourceMetadata> DeserializeResourceMetadata()
         {
-            var resourceMetadata = new Dictionary<InputModelType, ResourceMetadata>();
+            var resourceMetadata = new List<ResourceMetadata>();
             foreach (var model in InputNamespace.Models)
             {
                 var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator != null)
                 {
                     var metadata = BuildResourceMetadata(decorator, model);
-                    resourceMetadata.Add(model, metadata);
+                    resourceMetadata.Add(metadata);
                 }
             }
             return resourceMetadata;
@@ -212,6 +209,7 @@ namespace Azure.Generator.Management
                 return new(
                     resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
                     resourceType ?? throw new InvalidOperationException("resourceType cannot be null"),
+                    inputModel,
                     resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),
                     methods,
                     singletonResourceName,

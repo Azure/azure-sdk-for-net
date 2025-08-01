@@ -211,35 +211,26 @@ export function getAllSdkClients(
 ): SdkClientType<SdkServiceOperation>[] {
   const clients: SdkClientType<SdkServiceOperation>[] = [];
   for (const client of sdkContext.sdkPackage.clients) {
-    traverseClient(client);
+    traverseClient(client, clients);
   }
 
   return clients;
-
-  function traverseClient(client: SdkClientType<SdkServiceOperation>) {
-    clients.push(client);
-    if (client.children) {
-      for (const child of client.children) {
-        traverseClient(child);
-      }
-    }
-  }
 }
 
 export function getAllClients(codeModel: CodeModel): InputClient[] {
   const clients: InputClient[] = [];
   for (const client of codeModel.clients) {
-    traverseClient(client);
+    traverseClient(client, clients);
   }
 
   return clients;
+}
 
-  function traverseClient(client: InputClient) {
-    clients.push(client);
-    if (client.children) {
-      for (const child of client.children) {
-        traverseClient(child);
-      }
+function traverseClient<T extends { children?: T[] }>(client: T, clients: T[]) {
+  clients.push(client);
+  if (client.children) {
+    for (const child of client.children) {
+      traverseClient(child, clients);
     }
   }
 }
