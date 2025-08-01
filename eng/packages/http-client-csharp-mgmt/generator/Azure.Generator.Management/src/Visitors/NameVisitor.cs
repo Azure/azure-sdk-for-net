@@ -5,13 +5,13 @@ using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -43,6 +43,7 @@ internal class NameVisitor : ScmLibraryVisitor
         };
 
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
+    private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
@@ -70,6 +71,7 @@ internal class NameVisitor : ScmLibraryVisitor
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
         {
             newName = $"{enclosingResourceName}Patch";
+            UpdateConstructors(type, newName);
             UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
 
@@ -93,14 +95,13 @@ internal class NameVisitor : ScmLibraryVisitor
     }
 
     // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    private static void UpdateSerialization(ModelProvider type, string newName, string originalName)
+    private void UpdateSerialization(ModelProvider type, string newName, string originalName)
     {
-        foreach (var serializationProvider in type.SerializationProviders)
+        foreach (MrwSerializationTypeDefinition serializationProvider in type.SerializationProviders)
         {
             // Update the serialization provider name to match the model name
-            var deserializationMethod = serializationProvider.Methods.Single(m => m.Signature.Name.Equals($"Deserialize{originalName}"));
-            deserializationMethod.Signature.Update(name: $"Deserialize{newName}");
             serializationProvider.Update(name: newName);
+            _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
         }
     }
 
@@ -158,6 +159,13 @@ internal class NameVisitor : ScmLibraryVisitor
             // This is required as a workaround to update documentation for the method signature
             method.Update(signature: method.Signature);
         }
+
+        // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
+        {
+            method.Signature.Update(name: newName);
+        }
+
         return base.VisitMethod(method);
     }
 
