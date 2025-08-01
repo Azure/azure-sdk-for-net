@@ -82,6 +82,7 @@ internal class NameVisitor : ScmLibraryVisitor
         return base.PreVisitModel(model, type);
     }
 
+    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
     private static void UpdateConstructors(ModelProvider type, string newName)
     {
         foreach (var constructor in type.Constructors)
@@ -91,6 +92,7 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
+    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
     private static void UpdateSerialization(ModelProvider type, string newName, string originalName)
     {
         foreach (var serializationProvider in type.SerializationProviders)
