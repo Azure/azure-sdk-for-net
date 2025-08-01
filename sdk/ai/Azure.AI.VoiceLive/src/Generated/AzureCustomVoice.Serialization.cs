@@ -45,10 +45,10 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(CustomLexiconUrl))
+            if (Optional.IsDefined(CustomLexiconUri))
             {
                 writer.WritePropertyName("custom_lexicon_url"u8);
-                writer.WriteStringValue(CustomLexiconUrl);
+                writer.WriteStringValue(CustomLexiconUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(PreferLocales))
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.VoiceLive
             string endpointId = default;
             AzureCustomVoiceType type = default;
             float? temperature = default;
-            string customLexiconUrl = default;
+            Uri customLexiconUrl = default;
             IList<string> preferLocales = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -133,7 +133,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (property.NameEquals("custom_lexicon_url"u8))
                 {
-                    customLexiconUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customLexiconUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("prefer_locales"u8))

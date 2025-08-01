@@ -2831,6 +2831,7 @@
       "name": "ClientEventSessionUpdate",
       "namespace": "Azure.AI.VoiceLive",
       "crossLanguageDefinitionId": "VoiceLive.ClientEventSessionUpdate",
+      "access": "public",
       "usage": "Input,Json",
       "doc": "Send this event to update the session’s default configuration.\nThe client may send this event at any time to update any field,\nexcept for `voice`. However, note that once a session has been\ninitialized with a particular `model`, it can’t be changed to\nanother model using `session.update`.\n\nWhen the server receives a `session.update`, it will respond\nwith a `session.updated` event showing the full, effective configuration.\nOnly the fields that are present are updated. To clear a field like\n`instructions`, pass an empty string.",
       "discriminatorValue": "session.update",
@@ -3549,7 +3550,7 @@
                       "type": {
                         "$id": "292",
                         "kind": "array",
-                        "name": "Array1",
+                        "name": "Array2",
                         "valueType": {
                           "$id": "293",
                           "kind": "model",
@@ -4543,7 +4544,7 @@
                                       "type": {
                                         "$id": "367",
                                         "kind": "array",
-                                        "name": "Array2",
+                                        "name": "Array3",
                                         "valueType": {
                                           "$id": "368",
                                           "kind": "union",
@@ -5080,14 +5081,14 @@
                               {
                                 "$id": "408",
                                 "kind": "property",
-                                "name": "custom_lexicon_url",
+                                "name": "CustomLexiconUri",
                                 "serializedName": "custom_lexicon_url",
                                 "doc": "Optional custom lexicon URL.",
                                 "type": {
                                   "$id": "409",
-                                  "kind": "string",
-                                  "name": "string",
-                                  "crossLanguageDefinitionId": "TypeSpec.string",
+                                  "kind": "url",
+                                  "name": "url",
+                                  "crossLanguageDefinitionId": "TypeSpec.url",
                                   "decorators": []
                                 },
                                 "optional": true,
@@ -6528,11 +6529,22 @@
                             {
                               "$id": "513",
                               "kind": "property",
-                              "name": "urls",
+                              "name": "Uris",
                               "serializedName": "urls",
                               "doc": "List of ICE server URLs (e.g., TURN or STUN endpoints).",
                               "type": {
-                                "$ref": "411"
+                                "$id": "514",
+                                "kind": "array",
+                                "name": "Array1",
+                                "valueType": {
+                                  "$id": "515",
+                                  "kind": "url",
+                                  "name": "url",
+                                  "crossLanguageDefinitionId": "TypeSpec.url",
+                                  "decorators": []
+                                },
+                                "crossLanguageDefinitionId": "TypeSpec.Array",
+                                "decorators": []
                               },
                               "optional": false,
                               "readOnly": false,
@@ -6547,13 +6559,13 @@
                               }
                             },
                             {
-                              "$id": "514",
+                              "$id": "516",
                               "kind": "property",
                               "name": "username",
                               "serializedName": "username",
                               "doc": "Optional username used for authentication with the ICE server.",
                               "type": {
-                                "$id": "515",
+                                "$id": "517",
                                 "kind": "string",
                                 "name": "string",
                                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6572,13 +6584,13 @@
                               }
                             },
                             {
-                              "$id": "516",
+                              "$id": "518",
                               "kind": "property",
                               "name": "credential",
                               "serializedName": "credential",
                               "doc": "Optional credential (e.g., password or token) used for authentication.",
                               "type": {
-                                "$id": "517",
+                                "$id": "519",
                                 "kind": "string",
                                 "name": "string",
                                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6614,13 +6626,13 @@
                       }
                     },
                     {
-                      "$id": "518",
+                      "$id": "520",
                       "kind": "property",
                       "name": "character",
                       "serializedName": "character",
                       "doc": "The character name or ID used for the avatar.",
                       "type": {
-                        "$id": "519",
+                        "$id": "521",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6639,13 +6651,13 @@
                       }
                     },
                     {
-                      "$id": "520",
+                      "$id": "522",
                       "kind": "property",
                       "name": "style",
                       "serializedName": "style",
                       "doc": "Optional avatar style, such as emotional tone or speaking style.",
                       "type": {
-                        "$id": "521",
+                        "$id": "523",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -6664,13 +6676,13 @@
                       }
                     },
                     {
-                      "$id": "522",
+                      "$id": "524",
                       "kind": "property",
                       "name": "customized",
                       "serializedName": "customized",
                       "doc": "Indicates whether the avatar is customized or not.",
                       "type": {
-                        "$id": "523",
+                        "$id": "525",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -6689,13 +6701,13 @@
                       }
                     },
                     {
-                      "$id": "524",
+                      "$id": "526",
                       "kind": "property",
                       "name": "video",
                       "serializedName": "video",
                       "doc": "Optional video configuration including resolution, bitrate, and codec.",
                       "type": {
-                        "$id": "525",
+                        "$id": "527",
                         "kind": "model",
                         "name": "VideoParams",
                         "namespace": "Azure.AI.VoiceLive",
@@ -6705,13 +6717,13 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "526",
+                            "$id": "528",
                             "kind": "property",
                             "name": "bitrate",
                             "serializedName": "bitrate",
                             "doc": "Bitrate in bits per second (e.g., 2000000 for 2 Mbps).",
                             "type": {
-                              "$id": "527",
+                              "$id": "529",
                               "kind": "int32",
                               "name": "int32",
                               "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6730,7 +6742,7 @@
                             }
                           },
                           {
-                            "$id": "528",
+                            "$id": "530",
                             "kind": "property",
                             "name": "codec",
                             "serializedName": "codec",
@@ -6751,13 +6763,13 @@
                             }
                           },
                           {
-                            "$id": "529",
+                            "$id": "531",
                             "kind": "property",
                             "name": "crop",
                             "serializedName": "crop",
                             "doc": "Optional cropping settings for the video stream.",
                             "type": {
-                              "$id": "530",
+                              "$id": "532",
                               "kind": "model",
                               "name": "VideoCrop",
                               "namespace": "Azure.AI.VoiceLive",
@@ -6767,28 +6779,29 @@
                               "decorators": [],
                               "properties": [
                                 {
-                                  "$id": "531",
+                                  "$id": "533",
                                   "kind": "property",
-                                  "name": "top_left",
+                                  "name": "TopLeftInternal",
                                   "serializedName": "top_left",
                                   "doc": "Top-left corner of the crop region.",
                                   "type": {
-                                    "$id": "532",
+                                    "$id": "534",
                                     "kind": "model",
                                     "name": "Point2D",
                                     "namespace": "Azure.AI.VoiceLive",
                                     "crossLanguageDefinitionId": "VoiceLive.Point2D",
+                                    "access": "internal",
                                     "usage": "Input,Output,Json",
                                     "doc": "A 2D point with x and y coordinates.",
                                     "decorators": [],
                                     "properties": [
                                       {
-                                        "$id": "533",
+                                        "$id": "535",
                                         "kind": "property",
                                         "name": "x",
                                         "serializedName": "x",
                                         "type": {
-                                          "$id": "534",
+                                          "$id": "536",
                                           "kind": "int32",
                                           "name": "int32",
                                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6807,12 +6820,12 @@
                                         }
                                       },
                                       {
-                                        "$id": "535",
+                                        "$id": "537",
                                         "kind": "property",
                                         "name": "y",
                                         "serializedName": "y",
                                         "type": {
-                                          "$id": "536",
+                                          "$id": "538",
                                           "kind": "int32",
                                           "name": "int32",
                                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6845,13 +6858,13 @@
                                   }
                                 },
                                 {
-                                  "$id": "537",
+                                  "$id": "539",
                                   "kind": "property",
-                                  "name": "bottom_right",
+                                  "name": "BottomRightInternal",
                                   "serializedName": "bottom_right",
                                   "doc": "Bottom-right corner of the crop region.",
                                   "type": {
-                                    "$ref": "532"
+                                    "$ref": "534"
                                   },
                                   "optional": false,
                                   "readOnly": false,
@@ -6880,13 +6893,13 @@
                             }
                           },
                           {
-                            "$id": "538",
+                            "$id": "540",
                             "kind": "property",
                             "name": "resolution",
                             "serializedName": "resolution",
                             "doc": "Optional resolution settings for the video stream.",
                             "type": {
-                              "$id": "539",
+                              "$id": "541",
                               "kind": "model",
                               "name": "VideoResolution",
                               "namespace": "Azure.AI.VoiceLive",
@@ -6896,13 +6909,13 @@
                               "decorators": [],
                               "properties": [
                                 {
-                                  "$id": "540",
+                                  "$id": "542",
                                   "kind": "property",
                                   "name": "width",
                                   "serializedName": "width",
                                   "doc": "Width of the video in pixels. Must be greater than 0.",
                                   "type": {
-                                    "$id": "541",
+                                    "$id": "543",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6921,13 +6934,13 @@
                                   }
                                 },
                                 {
-                                  "$id": "542",
+                                  "$id": "544",
                                   "kind": "property",
                                   "name": "height",
                                   "serializedName": "height",
                                   "doc": "Height of the video in pixels. Must be greater than 0.",
                                   "type": {
-                                    "$id": "543",
+                                    "$id": "545",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -6988,12 +7001,12 @@
                 }
               },
               {
-                "$id": "544",
+                "$id": "546",
                 "kind": "property",
                 "name": "input_audio_transcription",
                 "serializedName": "input_audio_transcription",
                 "type": {
-                  "$id": "545",
+                  "$id": "547",
                   "kind": "model",
                   "name": "AudioInputTranscriptionSettings",
                   "namespace": "Azure.AI.VoiceLive",
@@ -7003,7 +7016,7 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "546",
+                      "$id": "548",
                       "kind": "property",
                       "name": "model",
                       "serializedName": "model",
@@ -7024,13 +7037,13 @@
                       }
                     },
                     {
-                      "$id": "547",
+                      "$id": "549",
                       "kind": "property",
                       "name": "language",
                       "serializedName": "language",
                       "doc": "The language code to use for transcription, if specified.",
                       "type": {
-                        "$id": "548",
+                        "$id": "550",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7049,13 +7062,13 @@
                       }
                     },
                     {
-                      "$id": "549",
+                      "$id": "551",
                       "kind": "property",
                       "name": "enabled",
                       "serializedName": "enabled",
                       "doc": "Whether transcription is enabled.",
                       "type": {
-                        "$id": "550",
+                        "$id": "552",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -7074,13 +7087,13 @@
                       }
                     },
                     {
-                      "$id": "551",
+                      "$id": "553",
                       "kind": "property",
                       "name": "custom_model",
                       "serializedName": "custom_model",
                       "doc": "Whether a custom model is being used.",
                       "type": {
-                        "$id": "552",
+                        "$id": "554",
                         "kind": "boolean",
                         "name": "boolean",
                         "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -7113,12 +7126,12 @@
                 }
               },
               {
-                "$id": "553",
+                "$id": "555",
                 "kind": "property",
                 "name": "output_audio_timestamp_types",
                 "serializedName": "output_audio_timestamp_types",
                 "type": {
-                  "$id": "554",
+                  "$id": "556",
                   "kind": "array",
                   "name": "ArrayAudioTimestampType",
                   "valueType": {
@@ -7140,7 +7153,7 @@
                 }
               },
               {
-                "$id": "555",
+                "$id": "557",
                 "kind": "property",
                 "name": "tools",
                 "serializedName": "tools",
@@ -7160,12 +7173,12 @@
                 }
               },
               {
-                "$id": "556",
+                "$id": "558",
                 "kind": "property",
                 "name": "tool_choice",
                 "serializedName": "tool_choice",
                 "type": {
-                  "$id": "557",
+                  "$id": "559",
                   "kind": "union",
                   "name": "ToolChoice",
                   "variantTypes": [
@@ -7173,7 +7186,7 @@
                       "$ref": "81"
                     },
                     {
-                      "$id": "558",
+                      "$id": "560",
                       "kind": "model",
                       "name": "ToolChoiceObject",
                       "namespace": "Azure.AI.VoiceLive",
@@ -7182,7 +7195,7 @@
                       "doc": "A base representation for a voicelive tool_choice selecting a named tool.",
                       "decorators": [],
                       "discriminatorProperty": {
-                        "$id": "559",
+                        "$id": "561",
                         "kind": "property",
                         "name": "type",
                         "serializedName": "type",
@@ -7203,12 +7216,12 @@
                       },
                       "properties": [
                         {
-                          "$ref": "559"
+                          "$ref": "561"
                         }
                       ],
                       "discriminatedSubtypes": {
                         "function": {
-                          "$id": "560",
+                          "$id": "562",
                           "kind": "model",
                           "name": "ToolChoiceFunctionObject",
                           "namespace": "Azure.AI.VoiceLive",
@@ -7218,11 +7231,11 @@
                           "discriminatorValue": "function",
                           "decorators": [],
                           "baseModel": {
-                            "$ref": "558"
+                            "$ref": "560"
                           },
                           "properties": [
                             {
-                              "$id": "561",
+                              "$id": "563",
                               "kind": "property",
                               "name": "type",
                               "serializedName": "type",
@@ -7242,12 +7255,12 @@
                               }
                             },
                             {
-                              "$id": "562",
+                              "$id": "564",
                               "kind": "property",
                               "name": "function",
                               "serializedName": "function",
                               "type": {
-                                "$id": "563",
+                                "$id": "565",
                                 "kind": "model",
                                 "name": "ToolChoiceFunctionObjectFunction",
                                 "namespace": "Azure.AI.VoiceLive",
@@ -7256,12 +7269,12 @@
                                 "decorators": [],
                                 "properties": [
                                   {
-                                    "$id": "564",
+                                    "$id": "566",
                                     "kind": "property",
                                     "name": "name",
                                     "serializedName": "name",
                                     "type": {
-                                      "$id": "565",
+                                      "$id": "567",
                                       "kind": "string",
                                       "name": "string",
                                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7314,12 +7327,12 @@
                 }
               },
               {
-                "$id": "566",
+                "$id": "568",
                 "kind": "property",
                 "name": "temperature",
                 "serializedName": "temperature",
                 "type": {
-                  "$id": "567",
+                  "$id": "569",
                   "kind": "float32",
                   "name": "float32",
                   "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -7338,17 +7351,17 @@
                 }
               },
               {
-                "$id": "568",
+                "$id": "570",
                 "kind": "property",
                 "name": "max_response_output_tokens",
                 "serializedName": "max_response_output_tokens",
                 "type": {
-                  "$id": "569",
+                  "$id": "571",
                   "kind": "union",
                   "name": "RequestSessionMaxResponseOutputTokens",
                   "variantTypes": [
                     {
-                      "$id": "570",
+                      "$id": "572",
                       "kind": "int32",
                       "name": "int32",
                       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -7432,19 +7445,19 @@
       "$ref": "512"
     },
     {
-      "$ref": "525"
-    },
-    {
-      "$ref": "530"
+      "$ref": "527"
     },
     {
       "$ref": "532"
     },
     {
-      "$ref": "539"
+      "$ref": "534"
     },
     {
-      "$ref": "545"
+      "$ref": "541"
+    },
+    {
+      "$ref": "547"
     },
     {
       "$ref": "421"
@@ -7453,13 +7466,13 @@
       "$ref": "423"
     },
     {
-      "$ref": "558"
-    },
-    {
       "$ref": "560"
     },
     {
-      "$ref": "563"
+      "$ref": "562"
+    },
+    {
+      "$ref": "565"
     },
     {
       "$ref": "241"
@@ -7555,7 +7568,7 @@
       "$ref": "444"
     },
     {
-      "$id": "571",
+      "$id": "573",
       "kind": "model",
       "name": "ForceModelsRequest",
       "namespace": "Azure.AI.VoiceLive",
@@ -7564,7 +7577,7 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "572",
+          "$id": "574",
           "kind": "property",
           "name": "session",
           "serializedName": "session",
@@ -7586,7 +7599,7 @@
       ]
     },
     {
-      "$id": "573",
+      "$id": "575",
       "kind": "model",
       "name": "ServerEventSessionUpdated",
       "namespace": "Azure.AI.VoiceLive",
@@ -7596,7 +7609,7 @@
       "discriminatorValue": "session.updated",
       "decorators": [],
       "baseModel": {
-        "$id": "574",
+        "$id": "576",
         "kind": "model",
         "name": "ServerEvent",
         "namespace": "Azure.AI.VoiceLive",
@@ -7606,7 +7619,7 @@
         "doc": "A voicelive server event.",
         "decorators": [],
         "discriminatorProperty": {
-          "$id": "575",
+          "$id": "577",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
@@ -7628,15 +7641,15 @@
         },
         "properties": [
           {
-            "$ref": "575"
+            "$ref": "577"
           },
           {
-            "$id": "576",
+            "$id": "578",
             "kind": "property",
             "name": "event_id",
             "serializedName": "event_id",
             "type": {
-              "$id": "577",
+              "$id": "579",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7657,10 +7670,10 @@
         ],
         "discriminatedSubtypes": {
           "session.updated": {
-            "$ref": "573"
+            "$ref": "575"
           },
           "session.created": {
-            "$id": "578",
+            "$id": "580",
             "kind": "model",
             "name": "ServerEventSessionCreated",
             "namespace": "Azure.AI.VoiceLive",
@@ -7670,11 +7683,11 @@
             "discriminatorValue": "session.created",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "579",
+                "$id": "581",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -7695,12 +7708,12 @@
                 }
               },
               {
-                "$id": "580",
+                "$id": "582",
                 "kind": "property",
                 "name": "session",
                 "serializedName": "session",
                 "type": {
-                  "$id": "581",
+                  "$id": "583",
                   "kind": "model",
                   "name": "ResponseSession",
                   "namespace": "Azure.AI.VoiceLive",
@@ -7709,12 +7722,12 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "582",
+                      "$id": "584",
                       "kind": "property",
                       "name": "id",
                       "serializedName": "id",
                       "type": {
-                        "$id": "583",
+                        "$id": "585",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7733,12 +7746,12 @@
                       }
                     },
                     {
-                      "$id": "584",
+                      "$id": "586",
                       "kind": "property",
                       "name": "model",
                       "serializedName": "model",
                       "type": {
-                        "$id": "585",
+                        "$id": "587",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7757,7 +7770,7 @@
                       }
                     },
                     {
-                      "$id": "586",
+                      "$id": "588",
                       "kind": "property",
                       "name": "modalities",
                       "serializedName": "modalities",
@@ -7777,12 +7790,12 @@
                       }
                     },
                     {
-                      "$id": "587",
+                      "$id": "589",
                       "kind": "property",
                       "name": "instructions",
                       "serializedName": "instructions",
                       "type": {
-                        "$id": "588",
+                        "$id": "590",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -7801,7 +7814,7 @@
                       }
                     },
                     {
-                      "$id": "589",
+                      "$id": "591",
                       "kind": "property",
                       "name": "animation",
                       "serializedName": "animation",
@@ -7821,7 +7834,7 @@
                       }
                     },
                     {
-                      "$id": "590",
+                      "$id": "592",
                       "kind": "property",
                       "name": "voice",
                       "serializedName": "voice",
@@ -7841,7 +7854,7 @@
                       }
                     },
                     {
-                      "$id": "591",
+                      "$id": "593",
                       "kind": "property",
                       "name": "input_audio",
                       "serializedName": "input_audio",
@@ -7861,7 +7874,7 @@
                       }
                     },
                     {
-                      "$id": "592",
+                      "$id": "594",
                       "kind": "property",
                       "name": "input_audio_format",
                       "serializedName": "input_audio_format",
@@ -7881,7 +7894,7 @@
                       }
                     },
                     {
-                      "$id": "593",
+                      "$id": "595",
                       "kind": "property",
                       "name": "output_audio_format",
                       "serializedName": "output_audio_format",
@@ -7901,12 +7914,12 @@
                       }
                     },
                     {
-                      "$id": "594",
+                      "$id": "596",
                       "kind": "property",
                       "name": "input_audio_sampling_rate",
                       "serializedName": "input_audio_sampling_rate",
                       "type": {
-                        "$id": "595",
+                        "$id": "597",
                         "kind": "int32",
                         "name": "int32",
                         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -7925,7 +7938,7 @@
                       }
                     },
                     {
-                      "$id": "596",
+                      "$id": "598",
                       "kind": "property",
                       "name": "turn_detection",
                       "serializedName": "turn_detection",
@@ -7945,7 +7958,7 @@
                       }
                     },
                     {
-                      "$id": "597",
+                      "$id": "599",
                       "kind": "property",
                       "name": "input_audio_noise_reduction",
                       "serializedName": "input_audio_noise_reduction",
@@ -7965,7 +7978,7 @@
                       }
                     },
                     {
-                      "$id": "598",
+                      "$id": "600",
                       "kind": "property",
                       "name": "input_audio_echo_cancellation",
                       "serializedName": "input_audio_echo_cancellation",
@@ -7985,7 +7998,7 @@
                       }
                     },
                     {
-                      "$id": "599",
+                      "$id": "601",
                       "kind": "property",
                       "name": "avatar",
                       "serializedName": "avatar",
@@ -8005,15 +8018,15 @@
                       }
                     },
                     {
-                      "$id": "600",
+                      "$id": "602",
                       "kind": "property",
                       "name": "input_audio_transcription",
                       "serializedName": "input_audio_transcription",
                       "type": {
-                        "$id": "601",
+                        "$id": "603",
                         "kind": "nullable",
                         "type": {
-                          "$ref": "545"
+                          "$ref": "547"
                         },
                         "namespace": ""
                       },
@@ -8030,12 +8043,12 @@
                       }
                     },
                     {
-                      "$id": "602",
+                      "$id": "604",
                       "kind": "property",
                       "name": "output_audio_timestamp_types",
                       "serializedName": "output_audio_timestamp_types",
                       "type": {
-                        "$ref": "554"
+                        "$ref": "556"
                       },
                       "optional": true,
                       "readOnly": false,
@@ -8050,7 +8063,7 @@
                       }
                     },
                     {
-                      "$id": "603",
+                      "$id": "605",
                       "kind": "property",
                       "name": "tools",
                       "serializedName": "tools",
@@ -8070,12 +8083,12 @@
                       }
                     },
                     {
-                      "$id": "604",
+                      "$id": "606",
                       "kind": "property",
                       "name": "tool_choice",
                       "serializedName": "tool_choice",
                       "type": {
-                        "$ref": "557"
+                        "$ref": "559"
                       },
                       "optional": true,
                       "readOnly": false,
@@ -8090,12 +8103,12 @@
                       }
                     },
                     {
-                      "$id": "605",
+                      "$id": "607",
                       "kind": "property",
                       "name": "temperature",
                       "serializedName": "temperature",
                       "type": {
-                        "$id": "606",
+                        "$id": "608",
                         "kind": "float32",
                         "name": "float32",
                         "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -8114,20 +8127,20 @@
                       }
                     },
                     {
-                      "$id": "607",
+                      "$id": "609",
                       "kind": "property",
                       "name": "max_response_output_tokens",
                       "serializedName": "max_response_output_tokens",
                       "type": {
-                        "$id": "608",
+                        "$id": "610",
                         "kind": "nullable",
                         "type": {
-                          "$id": "609",
+                          "$id": "611",
                           "kind": "union",
                           "name": "ResponseSessionMaxResponseOutputTokens",
                           "variantTypes": [
                             {
-                              "$id": "610",
+                              "$id": "612",
                               "kind": "int32",
                               "name": "int32",
                               "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8155,12 +8168,12 @@
                       }
                     },
                     {
-                      "$id": "611",
+                      "$id": "613",
                       "kind": "property",
                       "name": "agent",
                       "serializedName": "agent",
                       "type": {
-                        "$id": "612",
+                        "$id": "614",
                         "kind": "model",
                         "name": "AgentConfig",
                         "namespace": "Azure.AI.VoiceLive",
@@ -8169,7 +8182,7 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "613",
+                            "$id": "615",
                             "kind": "property",
                             "name": "type",
                             "serializedName": "type",
@@ -8189,12 +8202,12 @@
                             }
                           },
                           {
-                            "$id": "614",
+                            "$id": "616",
                             "kind": "property",
                             "name": "name",
                             "serializedName": "name",
                             "type": {
-                              "$id": "615",
+                              "$id": "617",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8213,12 +8226,12 @@
                             }
                           },
                           {
-                            "$id": "616",
+                            "$id": "618",
                             "kind": "property",
                             "name": "description",
                             "serializedName": "description",
                             "type": {
-                              "$id": "617",
+                              "$id": "619",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8237,12 +8250,12 @@
                             }
                           },
                           {
-                            "$id": "618",
+                            "$id": "620",
                             "kind": "property",
                             "name": "agent_id",
                             "serializedName": "agent_id",
                             "type": {
-                              "$id": "619",
+                              "$id": "621",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8261,12 +8274,12 @@
                             }
                           },
                           {
-                            "$id": "620",
+                            "$id": "622",
                             "kind": "property",
                             "name": "thread_id",
                             "serializedName": "thread_id",
                             "type": {
-                              "$id": "621",
+                              "$id": "623",
                               "kind": "string",
                               "name": "string",
                               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8315,7 +8328,7 @@
             ]
           },
           "error": {
-            "$id": "622",
+            "$id": "624",
             "kind": "model",
             "name": "ServerEventError",
             "namespace": "Azure.AI.VoiceLive",
@@ -8325,11 +8338,11 @@
             "discriminatorValue": "error",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "623",
+                "$id": "625",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -8350,13 +8363,13 @@
                 }
               },
               {
-                "$id": "624",
+                "$id": "626",
                 "kind": "property",
                 "name": "error",
                 "serializedName": "error",
                 "doc": "Details of the error.",
                 "type": {
-                  "$id": "625",
+                  "$id": "627",
                   "kind": "model",
                   "name": "ServerEventErrorError",
                   "namespace": "Azure.AI.VoiceLive",
@@ -8365,13 +8378,13 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "626",
+                      "$id": "628",
                       "kind": "property",
                       "name": "type",
                       "serializedName": "type",
                       "doc": "The type of error (e.g., \"invalid_request_error\", \"server_error\").",
                       "type": {
-                        "$id": "627",
+                        "$id": "629",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8390,16 +8403,16 @@
                       }
                     },
                     {
-                      "$id": "628",
+                      "$id": "630",
                       "kind": "property",
                       "name": "code",
                       "serializedName": "code",
                       "doc": "Error code, if any.",
                       "type": {
-                        "$id": "629",
+                        "$id": "631",
                         "kind": "nullable",
                         "type": {
-                          "$id": "630",
+                          "$id": "632",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8420,13 +8433,13 @@
                       }
                     },
                     {
-                      "$id": "631",
+                      "$id": "633",
                       "kind": "property",
                       "name": "message",
                       "serializedName": "message",
                       "doc": "A human-readable error message.",
                       "type": {
-                        "$id": "632",
+                        "$id": "634",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8445,16 +8458,16 @@
                       }
                     },
                     {
-                      "$id": "633",
+                      "$id": "635",
                       "kind": "property",
                       "name": "param",
                       "serializedName": "param",
                       "doc": "Parameter related to the error, if any.",
                       "type": {
-                        "$id": "634",
+                        "$id": "636",
                         "kind": "nullable",
                         "type": {
-                          "$id": "635",
+                          "$id": "637",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8475,16 +8488,16 @@
                       }
                     },
                     {
-                      "$id": "636",
+                      "$id": "638",
                       "kind": "property",
                       "name": "event_id",
                       "serializedName": "event_id",
                       "doc": "The event_id of the client event that caused the error, if applicable.",
                       "type": {
-                        "$id": "637",
+                        "$id": "639",
                         "kind": "nullable",
                         "type": {
-                          "$id": "638",
+                          "$id": "640",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8521,7 +8534,7 @@
             ]
           },
           "response.text.delta": {
-            "$id": "639",
+            "$id": "641",
             "kind": "model",
             "name": "ServerEventResponseTextDelta",
             "namespace": "Azure.AI.VoiceLive",
@@ -8531,11 +8544,11 @@
             "discriminatorValue": "response.text.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "640",
+                "$id": "642",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -8556,13 +8569,13 @@
                 }
               },
               {
-                "$id": "641",
+                "$id": "643",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "642",
+                  "$id": "644",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8581,13 +8594,13 @@
                 }
               },
               {
-                "$id": "643",
+                "$id": "645",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "644",
+                  "$id": "646",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8606,13 +8619,13 @@
                 }
               },
               {
-                "$id": "645",
+                "$id": "647",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "646",
+                  "$id": "648",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8631,13 +8644,13 @@
                 }
               },
               {
-                "$id": "647",
+                "$id": "649",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "648",
+                  "$id": "650",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8656,13 +8669,13 @@
                 }
               },
               {
-                "$id": "649",
+                "$id": "651",
                 "kind": "property",
                 "name": "delta",
                 "serializedName": "delta",
                 "doc": "The text delta.",
                 "type": {
-                  "$id": "650",
+                  "$id": "652",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8683,7 +8696,7 @@
             ]
           },
           "response.audio.delta": {
-            "$id": "651",
+            "$id": "653",
             "kind": "model",
             "name": "ServerEventResponseAudioDelta",
             "namespace": "Azure.AI.VoiceLive",
@@ -8693,11 +8706,11 @@
             "discriminatorValue": "response.audio.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "652",
+                "$id": "654",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -8718,13 +8731,13 @@
                 }
               },
               {
-                "$id": "653",
+                "$id": "655",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "654",
+                  "$id": "656",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8743,13 +8756,13 @@
                 }
               },
               {
-                "$id": "655",
+                "$id": "657",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "656",
+                  "$id": "658",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8768,13 +8781,13 @@
                 }
               },
               {
-                "$id": "657",
+                "$id": "659",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "658",
+                  "$id": "660",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8793,13 +8806,13 @@
                 }
               },
               {
-                "$id": "659",
+                "$id": "661",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "660",
+                  "$id": "662",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -8818,13 +8831,13 @@
                 }
               },
               {
-                "$id": "661",
+                "$id": "663",
                 "kind": "property",
                 "name": "delta",
                 "serializedName": "delta",
                 "doc": "Base64-encoded audio data delta.",
                 "type": {
-                  "$id": "662",
+                  "$id": "664",
                   "kind": "bytes",
                   "name": "bytes",
                   "encode": "base64",
@@ -8844,12 +8857,12 @@
                 }
               },
               {
-                "$id": "663",
+                "$id": "665",
                 "kind": "property",
                 "name": "event_id",
                 "serializedName": "event_id",
                 "type": {
-                  "$id": "664",
+                  "$id": "666",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8870,7 +8883,7 @@
             ]
           },
           "conversation.item.created": {
-            "$id": "665",
+            "$id": "667",
             "kind": "model",
             "name": "ServerEventConversationItemCreated",
             "namespace": "Azure.AI.VoiceLive",
@@ -8880,11 +8893,11 @@
             "discriminatorValue": "conversation.item.created",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "666",
+                "$id": "668",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -8905,13 +8918,13 @@
                 }
               },
               {
-                "$id": "667",
+                "$id": "669",
                 "kind": "property",
                 "name": "previous_item_id",
                 "serializedName": "previous_item_id",
                 "doc": "The ID of the preceding item in the Conversation context, allows the\nclient to understand the order of the conversation.",
                 "type": {
-                  "$id": "668",
+                  "$id": "670",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -8930,7 +8943,7 @@
                 }
               },
               {
-                "$id": "669",
+                "$id": "671",
                 "kind": "property",
                 "name": "item",
                 "serializedName": "item",
@@ -8952,7 +8965,7 @@
             ]
           },
           "conversation.item.deleted": {
-            "$id": "670",
+            "$id": "672",
             "kind": "model",
             "name": "ServerEventConversationItemDeleted",
             "namespace": "Azure.AI.VoiceLive",
@@ -8962,11 +8975,11 @@
             "discriminatorValue": "conversation.item.deleted",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "671",
+                "$id": "673",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -8987,13 +9000,13 @@
                 }
               },
               {
-                "$id": "672",
+                "$id": "674",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item that was deleted.",
                 "type": {
-                  "$id": "673",
+                  "$id": "675",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9012,12 +9025,12 @@
                 }
               },
               {
-                "$id": "674",
+                "$id": "676",
                 "kind": "property",
                 "name": "event_id",
                 "serializedName": "event_id",
                 "type": {
-                  "$id": "675",
+                  "$id": "677",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9038,7 +9051,7 @@
             ]
           },
           "conversation.item.retrieved": {
-            "$id": "676",
+            "$id": "678",
             "kind": "model",
             "name": "ServerEventConversationItemRetrieved",
             "namespace": "Azure.AI.VoiceLive",
@@ -9048,11 +9061,11 @@
             "discriminatorValue": "conversation.item.retrieved",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "677",
+                "$id": "679",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9073,12 +9086,12 @@
                 }
               },
               {
-                "$id": "678",
+                "$id": "680",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "679",
+                  "$id": "681",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9097,12 +9110,12 @@
                 }
               },
               {
-                "$id": "680",
+                "$id": "682",
                 "kind": "property",
                 "name": "event_id",
                 "serializedName": "event_id",
                 "type": {
-                  "$id": "681",
+                  "$id": "683",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9123,7 +9136,7 @@
             ]
           },
           "conversation.item.truncated": {
-            "$id": "682",
+            "$id": "684",
             "kind": "model",
             "name": "ServerEventConversationItemTruncated",
             "namespace": "Azure.AI.VoiceLive",
@@ -9133,11 +9146,11 @@
             "discriminatorValue": "conversation.item.truncated",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "683",
+                "$id": "685",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9158,13 +9171,13 @@
                 }
               },
               {
-                "$id": "684",
+                "$id": "686",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the assistant message item that was truncated.",
                 "type": {
-                  "$id": "685",
+                  "$id": "687",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9183,13 +9196,13 @@
                 }
               },
               {
-                "$id": "686",
+                "$id": "688",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part that was truncated.",
                 "type": {
-                  "$id": "687",
+                  "$id": "689",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9208,13 +9221,13 @@
                 }
               },
               {
-                "$id": "688",
+                "$id": "690",
                 "kind": "property",
                 "name": "audio_end_ms",
                 "serializedName": "audio_end_ms",
                 "doc": "The duration up to which the audio was truncated, in milliseconds.",
                 "type": {
-                  "$id": "689",
+                  "$id": "691",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9233,12 +9246,12 @@
                 }
               },
               {
-                "$id": "690",
+                "$id": "692",
                 "kind": "property",
                 "name": "event_id",
                 "serializedName": "event_id",
                 "type": {
-                  "$id": "691",
+                  "$id": "693",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9259,7 +9272,7 @@
             ]
           },
           "conversation.item.input_audio_transcription.completed": {
-            "$id": "692",
+            "$id": "694",
             "kind": "model",
             "name": "ServerEventConversationItemInputAudioTranscriptionCompleted",
             "namespace": "Azure.AI.VoiceLive",
@@ -9269,11 +9282,11 @@
             "discriminatorValue": "conversation.item.input_audio_transcription.completed",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "693",
+                "$id": "695",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9294,13 +9307,13 @@
                 }
               },
               {
-                "$id": "694",
+                "$id": "696",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the user message item containing the audio.",
                 "type": {
-                  "$id": "695",
+                  "$id": "697",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9319,13 +9332,13 @@
                 }
               },
               {
-                "$id": "696",
+                "$id": "698",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part containing the audio.",
                 "type": {
-                  "$id": "697",
+                  "$id": "699",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9344,13 +9357,13 @@
                 }
               },
               {
-                "$id": "698",
+                "$id": "700",
                 "kind": "property",
                 "name": "transcript",
                 "serializedName": "transcript",
                 "doc": "The transcribed text.",
                 "type": {
-                  "$id": "699",
+                  "$id": "701",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9371,7 +9384,7 @@
             ]
           },
           "conversation.item.input_audio_transcription.delta": {
-            "$id": "700",
+            "$id": "702",
             "kind": "model",
             "name": "ServerEventConversationItemInputAudioTranscriptionDelta",
             "namespace": "Azure.AI.VoiceLive",
@@ -9381,11 +9394,11 @@
             "discriminatorValue": "conversation.item.input_audio_transcription.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "701",
+                "$id": "703",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9406,13 +9419,13 @@
                 }
               },
               {
-                "$id": "702",
+                "$id": "704",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "703",
+                  "$id": "705",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9431,13 +9444,13 @@
                 }
               },
               {
-                "$id": "704",
+                "$id": "706",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "705",
+                  "$id": "707",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9456,13 +9469,13 @@
                 }
               },
               {
-                "$id": "706",
+                "$id": "708",
                 "kind": "property",
                 "name": "delta",
                 "serializedName": "delta",
                 "doc": "The text delta.",
                 "type": {
-                  "$id": "707",
+                  "$id": "709",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9481,20 +9494,20 @@
                 }
               },
               {
-                "$id": "708",
+                "$id": "710",
                 "kind": "property",
                 "name": "logprobs",
                 "serializedName": "logprobs",
                 "doc": "The log probabilities of the transcription.",
                 "type": {
-                  "$id": "709",
+                  "$id": "711",
                   "kind": "nullable",
                   "type": {
-                    "$id": "710",
+                    "$id": "712",
                     "kind": "array",
                     "name": "ArrayLogProbProperties",
                     "valueType": {
-                      "$id": "711",
+                      "$id": "713",
                       "kind": "model",
                       "name": "LogProbProperties",
                       "namespace": "Azure.AI.VoiceLive",
@@ -9504,13 +9517,13 @@
                       "decorators": [],
                       "properties": [
                         {
-                          "$id": "712",
+                          "$id": "714",
                           "kind": "property",
                           "name": "token",
                           "serializedName": "token",
                           "doc": "The token that was used to generate the log probability.",
                           "type": {
-                            "$id": "713",
+                            "$id": "715",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9529,13 +9542,13 @@
                           }
                         },
                         {
-                          "$id": "714",
+                          "$id": "716",
                           "kind": "property",
                           "name": "logprob",
                           "serializedName": "logprob",
                           "doc": "The log probability of the token.",
                           "type": {
-                            "$id": "715",
+                            "$id": "717",
                             "kind": "float32",
                             "name": "float32",
                             "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -9554,17 +9567,17 @@
                           }
                         },
                         {
-                          "$id": "716",
+                          "$id": "718",
                           "kind": "property",
                           "name": "bytes",
                           "serializedName": "bytes",
                           "doc": "The bytes that were used to generate the log probability.",
                           "type": {
-                            "$id": "717",
+                            "$id": "719",
                             "kind": "array",
-                            "name": "Array3",
+                            "name": "Array4",
                             "valueType": {
-                              "$id": "718",
+                              "$id": "720",
                               "kind": "int32",
                               "name": "int32",
                               "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9607,7 +9620,7 @@
             ]
           },
           "conversation.item.input_audio_transcription.failed": {
-            "$id": "719",
+            "$id": "721",
             "kind": "model",
             "name": "ServerEventConversationItemInputAudioTranscriptionFailed",
             "namespace": "Azure.AI.VoiceLive",
@@ -9617,11 +9630,11 @@
             "discriminatorValue": "conversation.item.input_audio_transcription.failed",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "720",
+                "$id": "722",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9642,13 +9655,13 @@
                 }
               },
               {
-                "$id": "721",
+                "$id": "723",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the user message item.",
                 "type": {
-                  "$id": "722",
+                  "$id": "724",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9667,13 +9680,13 @@
                 }
               },
               {
-                "$id": "723",
+                "$id": "725",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part containing the audio.",
                 "type": {
-                  "$id": "724",
+                  "$id": "726",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -9692,13 +9705,13 @@
                 }
               },
               {
-                "$id": "725",
+                "$id": "727",
                 "kind": "property",
                 "name": "error",
                 "serializedName": "error",
                 "doc": "Details of the transcription error.",
                 "type": {
-                  "$id": "726",
+                  "$id": "728",
                   "kind": "model",
                   "name": "ErrorDetails",
                   "namespace": "Azure.AI.VoiceLive",
@@ -9708,13 +9721,13 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "727",
+                      "$id": "729",
                       "kind": "property",
                       "name": "code",
                       "serializedName": "code",
                       "doc": "Error code, or null if unspecified.",
                       "type": {
-                        "$id": "728",
+                        "$id": "730",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9733,13 +9746,13 @@
                       }
                     },
                     {
-                      "$id": "729",
+                      "$id": "731",
                       "kind": "property",
                       "name": "message",
                       "serializedName": "message",
                       "doc": "Human-readable error message.",
                       "type": {
-                        "$id": "730",
+                        "$id": "732",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9758,13 +9771,13 @@
                       }
                     },
                     {
-                      "$id": "731",
+                      "$id": "733",
                       "kind": "property",
                       "name": "param",
                       "serializedName": "param",
                       "doc": "Parameter name related to the error, if applicable.",
                       "type": {
-                        "$id": "732",
+                        "$id": "734",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9783,13 +9796,13 @@
                       }
                     },
                     {
-                      "$id": "733",
+                      "$id": "735",
                       "kind": "property",
                       "name": "type",
                       "serializedName": "type",
                       "doc": "Type or category of the error.",
                       "type": {
-                        "$id": "734",
+                        "$id": "736",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9808,13 +9821,13 @@
                       }
                     },
                     {
-                      "$id": "735",
+                      "$id": "737",
                       "kind": "property",
                       "name": "event_id",
                       "serializedName": "event_id",
                       "doc": "Event id of the error.",
                       "type": {
-                        "$id": "736",
+                        "$id": "738",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9849,7 +9862,7 @@
             ]
           },
           "input_audio_buffer.committed": {
-            "$id": "737",
+            "$id": "739",
             "kind": "model",
             "name": "ServerEventInputAudioBufferCommitted",
             "namespace": "Azure.AI.VoiceLive",
@@ -9859,11 +9872,11 @@
             "discriminatorValue": "input_audio_buffer.committed",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "738",
+                "$id": "740",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9884,13 +9897,13 @@
                 }
               },
               {
-                "$id": "739",
+                "$id": "741",
                 "kind": "property",
                 "name": "previous_item_id",
                 "serializedName": "previous_item_id",
                 "doc": "The ID of the preceding item after which the new item will be inserted.",
                 "type": {
-                  "$id": "740",
+                  "$id": "742",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9909,13 +9922,13 @@
                 }
               },
               {
-                "$id": "741",
+                "$id": "743",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the user message item that will be created.",
                 "type": {
-                  "$id": "742",
+                  "$id": "744",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -9936,7 +9949,7 @@
             ]
           },
           "input_audio_buffer.cleared": {
-            "$id": "743",
+            "$id": "745",
             "kind": "model",
             "name": "ServerEventInputAudioBufferCleared",
             "namespace": "Azure.AI.VoiceLive",
@@ -9946,11 +9959,11 @@
             "discriminatorValue": "input_audio_buffer.cleared",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "744",
+                "$id": "746",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -9973,7 +9986,7 @@
             ]
           },
           "input_audio_buffer.speech_started": {
-            "$id": "745",
+            "$id": "747",
             "kind": "model",
             "name": "ServerEventInputAudioBufferSpeechStarted",
             "namespace": "Azure.AI.VoiceLive",
@@ -9983,11 +9996,11 @@
             "discriminatorValue": "input_audio_buffer.speech_started",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "746",
+                "$id": "748",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -10008,13 +10021,13 @@
                 }
               },
               {
-                "$id": "747",
+                "$id": "749",
                 "kind": "property",
                 "name": "audio_start_ms",
                 "serializedName": "audio_start_ms",
                 "doc": "Milliseconds from the start of all audio written to the buffer during the\nsession when speech was first detected. This will correspond to the\nbeginning of audio sent to the model, and thus includes the\n`prefix_padding_ms` configured in the Session.",
                 "type": {
-                  "$id": "748",
+                  "$id": "750",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10033,13 +10046,13 @@
                 }
               },
               {
-                "$id": "749",
+                "$id": "751",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the user message item that will be created when speech stops.",
                 "type": {
-                  "$id": "750",
+                  "$id": "752",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10060,7 +10073,7 @@
             ]
           },
           "input_audio_buffer.speech_stopped": {
-            "$id": "751",
+            "$id": "753",
             "kind": "model",
             "name": "ServerEventInputAudioBufferSpeechStopped",
             "namespace": "Azure.AI.VoiceLive",
@@ -10070,11 +10083,11 @@
             "discriminatorValue": "input_audio_buffer.speech_stopped",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "752",
+                "$id": "754",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -10095,13 +10108,13 @@
                 }
               },
               {
-                "$id": "753",
+                "$id": "755",
                 "kind": "property",
                 "name": "audio_end_ms",
                 "serializedName": "audio_end_ms",
                 "doc": "Milliseconds since the session started when speech stopped. This will\ncorrespond to the end of audio sent to the model, and thus includes the\n`min_silence_duration_ms` configured in the Session.",
                 "type": {
-                  "$id": "754",
+                  "$id": "756",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10120,13 +10133,13 @@
                 }
               },
               {
-                "$id": "755",
+                "$id": "757",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the user message item that will be created.",
                 "type": {
-                  "$id": "756",
+                  "$id": "758",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10147,7 +10160,7 @@
             ]
           },
           "response.created": {
-            "$id": "757",
+            "$id": "759",
             "kind": "model",
             "name": "ServerEventResponseCreated",
             "namespace": "Azure.AI.VoiceLive",
@@ -10157,11 +10170,11 @@
             "discriminatorValue": "response.created",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "758",
+                "$id": "760",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -10182,12 +10195,12 @@
                 }
               },
               {
-                "$id": "759",
+                "$id": "761",
                 "kind": "property",
                 "name": "response",
                 "serializedName": "response",
                 "type": {
-                  "$id": "760",
+                  "$id": "762",
                   "kind": "model",
                   "name": "Response",
                   "namespace": "Azure.AI.VoiceLive",
@@ -10197,13 +10210,13 @@
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "761",
+                      "$id": "763",
                       "kind": "property",
                       "name": "id",
                       "serializedName": "id",
                       "doc": "The unique ID of the response.",
                       "type": {
-                        "$id": "762",
+                        "$id": "764",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10222,7 +10235,7 @@
                       }
                     },
                     {
-                      "$id": "763",
+                      "$id": "765",
                       "kind": "property",
                       "name": "object",
                       "serializedName": "object",
@@ -10243,7 +10256,7 @@
                       }
                     },
                     {
-                      "$id": "764",
+                      "$id": "766",
                       "kind": "property",
                       "name": "status",
                       "serializedName": "status",
@@ -10264,13 +10277,13 @@
                       }
                     },
                     {
-                      "$id": "765",
+                      "$id": "767",
                       "kind": "property",
                       "name": "status_details",
                       "serializedName": "status_details",
                       "doc": "Additional details about the status.",
                       "type": {
-                        "$id": "766",
+                        "$id": "768",
                         "kind": "model",
                         "name": "ResponseStatusDetails",
                         "namespace": "Azure.AI.VoiceLive",
@@ -10279,7 +10292,7 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "767",
+                            "$id": "769",
                             "kind": "property",
                             "name": "type",
                             "serializedName": "type",
@@ -10300,7 +10313,7 @@
                             }
                           },
                           {
-                            "$id": "768",
+                            "$id": "770",
                             "kind": "property",
                             "name": "reason",
                             "serializedName": "reason",
@@ -10321,13 +10334,13 @@
                             }
                           },
                           {
-                            "$id": "769",
+                            "$id": "771",
                             "kind": "property",
                             "name": "error",
                             "serializedName": "error",
                             "doc": "A description of the error that caused the response to fail,\npopulated when the `status` is `failed`.",
                             "type": {
-                              "$id": "770",
+                              "$id": "772",
                               "kind": "model",
                               "name": "ResponseStatusDetailsError",
                               "namespace": "Azure.AI.VoiceLive",
@@ -10336,13 +10349,13 @@
                               "decorators": [],
                               "properties": [
                                 {
-                                  "$id": "771",
+                                  "$id": "773",
                                   "kind": "property",
                                   "name": "type",
                                   "serializedName": "type",
                                   "doc": "The type of error.",
                                   "type": {
-                                    "$id": "772",
+                                    "$id": "774",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10361,13 +10374,13 @@
                                   }
                                 },
                                 {
-                                  "$id": "773",
+                                  "$id": "775",
                                   "kind": "property",
                                   "name": "code",
                                   "serializedName": "code",
                                   "doc": "Error code, if any.",
                                   "type": {
-                                    "$id": "774",
+                                    "$id": "776",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10414,17 +10427,17 @@
                       }
                     },
                     {
-                      "$id": "775",
+                      "$id": "777",
                       "kind": "property",
                       "name": "output",
                       "serializedName": "output",
                       "doc": "The list of output items generated by the response.",
                       "type": {
-                        "$id": "776",
+                        "$id": "778",
                         "kind": "array",
                         "name": "ArrayConversationResponseItem",
                         "valueType": {
-                          "$id": "777",
+                          "$id": "779",
                           "kind": "model",
                           "name": "ConversationResponseItem",
                           "namespace": "Azure.AI.VoiceLive",
@@ -10432,7 +10445,7 @@
                           "usage": "Output,Json",
                           "decorators": [],
                           "discriminatorProperty": {
-                            "$id": "778",
+                            "$id": "780",
                             "kind": "property",
                             "name": "type",
                             "serializedName": "type",
@@ -10453,7 +10466,7 @@
                           },
                           "properties": [
                             {
-                              "$id": "779",
+                              "$id": "781",
                               "kind": "property",
                               "name": "object",
                               "serializedName": "object",
@@ -10473,15 +10486,15 @@
                               }
                             },
                             {
-                              "$ref": "778"
+                              "$ref": "780"
                             },
                             {
-                              "$id": "780",
+                              "$id": "782",
                               "kind": "property",
                               "name": "id",
                               "serializedName": "id",
                               "type": {
-                                "$id": "781",
+                                "$id": "783",
                                 "kind": "string",
                                 "name": "string",
                                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10502,7 +10515,7 @@
                           ],
                           "discriminatedSubtypes": {
                             "message": {
-                              "$id": "782",
+                              "$id": "784",
                               "kind": "model",
                               "name": "ResponseMessageItem",
                               "namespace": "Azure.AI.VoiceLive",
@@ -10511,11 +10524,11 @@
                               "discriminatorValue": "message",
                               "decorators": [],
                               "baseModel": {
-                                "$ref": "777"
+                                "$ref": "779"
                               },
                               "properties": [
                                 {
-                                  "$id": "783",
+                                  "$id": "785",
                                   "kind": "property",
                                   "name": "type",
                                   "serializedName": "type",
@@ -10535,7 +10548,7 @@
                                   }
                                 },
                                 {
-                                  "$id": "784",
+                                  "$id": "786",
                                   "kind": "property",
                                   "name": "role",
                                   "serializedName": "role",
@@ -10555,12 +10568,12 @@
                                   }
                                 },
                                 {
-                                  "$id": "785",
+                                  "$id": "787",
                                   "kind": "property",
                                   "name": "content",
                                   "serializedName": "content",
                                   "type": {
-                                    "$id": "786",
+                                    "$id": "788",
                                     "kind": "array",
                                     "name": "ArrayContentPart",
                                     "valueType": {
@@ -10582,7 +10595,7 @@
                                   }
                                 },
                                 {
-                                  "$id": "787",
+                                  "$id": "789",
                                   "kind": "property",
                                   "name": "status",
                                   "serializedName": "status",
@@ -10604,7 +10617,7 @@
                               ]
                             },
                             "function_call": {
-                              "$id": "788",
+                              "$id": "790",
                               "kind": "model",
                               "name": "ResponseFunctionCallItem",
                               "namespace": "Azure.AI.VoiceLive",
@@ -10613,11 +10626,11 @@
                               "discriminatorValue": "function_call",
                               "decorators": [],
                               "baseModel": {
-                                "$ref": "777"
+                                "$ref": "779"
                               },
                               "properties": [
                                 {
-                                  "$id": "789",
+                                  "$id": "791",
                                   "kind": "property",
                                   "name": "type",
                                   "serializedName": "type",
@@ -10637,12 +10650,12 @@
                                   }
                                 },
                                 {
-                                  "$id": "790",
+                                  "$id": "792",
                                   "kind": "property",
                                   "name": "name",
                                   "serializedName": "name",
                                   "type": {
-                                    "$id": "791",
+                                    "$id": "793",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10661,12 +10674,12 @@
                                   }
                                 },
                                 {
-                                  "$id": "792",
+                                  "$id": "794",
                                   "kind": "property",
                                   "name": "call_id",
                                   "serializedName": "call_id",
                                   "type": {
-                                    "$id": "793",
+                                    "$id": "795",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10685,12 +10698,12 @@
                                   }
                                 },
                                 {
-                                  "$id": "794",
+                                  "$id": "796",
                                   "kind": "property",
                                   "name": "arguments",
                                   "serializedName": "arguments",
                                   "type": {
-                                    "$id": "795",
+                                    "$id": "797",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10709,7 +10722,7 @@
                                   }
                                 },
                                 {
-                                  "$id": "796",
+                                  "$id": "798",
                                   "kind": "property",
                                   "name": "status",
                                   "serializedName": "status",
@@ -10731,7 +10744,7 @@
                               ]
                             },
                             "function_call_output": {
-                              "$id": "797",
+                              "$id": "799",
                               "kind": "model",
                               "name": "ResponseFunctionCallOutputItem",
                               "namespace": "Azure.AI.VoiceLive",
@@ -10740,11 +10753,11 @@
                               "discriminatorValue": "function_call_output",
                               "decorators": [],
                               "baseModel": {
-                                "$ref": "777"
+                                "$ref": "779"
                               },
                               "properties": [
                                 {
-                                  "$id": "798",
+                                  "$id": "800",
                                   "kind": "property",
                                   "name": "type",
                                   "serializedName": "type",
@@ -10764,12 +10777,12 @@
                                   }
                                 },
                                 {
-                                  "$id": "799",
+                                  "$id": "801",
                                   "kind": "property",
                                   "name": "call_id",
                                   "serializedName": "call_id",
                                   "type": {
-                                    "$id": "800",
+                                    "$id": "802",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10788,12 +10801,12 @@
                                   }
                                 },
                                 {
-                                  "$id": "801",
+                                  "$id": "803",
                                   "kind": "property",
                                   "name": "output",
                                   "serializedName": "output",
                                   "type": {
-                                    "$id": "802",
+                                    "$id": "804",
                                     "kind": "string",
                                     "name": "string",
                                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10831,13 +10844,13 @@
                       }
                     },
                     {
-                      "$id": "803",
+                      "$id": "805",
                       "kind": "property",
                       "name": "usage",
                       "serializedName": "usage",
                       "doc": "Usage statistics for the Response, this will correspond to billing. A\nVoiceLive API session will maintain a conversation context and append new\nItems to the Conversation, thus output from previous turns (text and\naudio tokens) will become the input for later turns.",
                       "type": {
-                        "$id": "804",
+                        "$id": "806",
                         "kind": "model",
                         "name": "ResponseUsage",
                         "namespace": "Azure.AI.VoiceLive",
@@ -10846,13 +10859,13 @@
                         "decorators": [],
                         "properties": [
                           {
-                            "$id": "805",
+                            "$id": "807",
                             "kind": "property",
                             "name": "total_tokens",
                             "serializedName": "total_tokens",
                             "doc": "The total number of tokens in the Response including input and output\ntext and audio tokens.",
                             "type": {
-                              "$id": "806",
+                              "$id": "808",
                               "kind": "int32",
                               "name": "int32",
                               "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10871,13 +10884,13 @@
                             }
                           },
                           {
-                            "$id": "807",
+                            "$id": "809",
                             "kind": "property",
                             "name": "input_tokens",
                             "serializedName": "input_tokens",
                             "doc": "The number of input tokens used in the Response, including text and\naudio tokens.",
                             "type": {
-                              "$id": "808",
+                              "$id": "810",
                               "kind": "int32",
                               "name": "int32",
                               "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10896,13 +10909,13 @@
                             }
                           },
                           {
-                            "$id": "809",
+                            "$id": "811",
                             "kind": "property",
                             "name": "output_tokens",
                             "serializedName": "output_tokens",
                             "doc": "The number of output tokens sent in the Response, including text and\naudio tokens.",
                             "type": {
-                              "$id": "810",
+                              "$id": "812",
                               "kind": "int32",
                               "name": "int32",
                               "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10921,13 +10934,13 @@
                             }
                           },
                           {
-                            "$id": "811",
+                            "$id": "813",
                             "kind": "property",
                             "name": "input_token_details",
                             "serializedName": "input_token_details",
                             "doc": "Details about the input tokens used in the Response.",
                             "type": {
-                              "$id": "812",
+                              "$id": "814",
                               "kind": "model",
                               "name": "ResponseUsageInputTokenDetails",
                               "namespace": "Azure.AI.VoiceLive",
@@ -10936,13 +10949,13 @@
                               "decorators": [],
                               "properties": [
                                 {
-                                  "$id": "813",
+                                  "$id": "815",
                                   "kind": "property",
                                   "name": "cached_tokens",
                                   "serializedName": "cached_tokens",
                                   "doc": "The number of cached tokens used in the Response.",
                                   "type": {
-                                    "$id": "814",
+                                    "$id": "816",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10961,13 +10974,13 @@
                                   }
                                 },
                                 {
-                                  "$id": "815",
+                                  "$id": "817",
                                   "kind": "property",
                                   "name": "text_tokens",
                                   "serializedName": "text_tokens",
                                   "doc": "The number of text tokens used in the Response.",
                                   "type": {
-                                    "$id": "816",
+                                    "$id": "818",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -10986,13 +10999,13 @@
                                   }
                                 },
                                 {
-                                  "$id": "817",
+                                  "$id": "819",
                                   "kind": "property",
                                   "name": "audio_tokens",
                                   "serializedName": "audio_tokens",
                                   "doc": "The number of audio tokens used in the Response.",
                                   "type": {
-                                    "$id": "818",
+                                    "$id": "820",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11025,13 +11038,13 @@
                             }
                           },
                           {
-                            "$id": "819",
+                            "$id": "821",
                             "kind": "property",
                             "name": "output_token_details",
                             "serializedName": "output_token_details",
                             "doc": "Details about the output tokens used in the Response.",
                             "type": {
-                              "$id": "820",
+                              "$id": "822",
                               "kind": "model",
                               "name": "ResponseUsageOutputTokenDetails",
                               "namespace": "Azure.AI.VoiceLive",
@@ -11040,13 +11053,13 @@
                               "decorators": [],
                               "properties": [
                                 {
-                                  "$id": "821",
+                                  "$id": "823",
                                   "kind": "property",
                                   "name": "text_tokens",
                                   "serializedName": "text_tokens",
                                   "doc": "The number of text tokens used in the Response.",
                                   "type": {
-                                    "$id": "822",
+                                    "$id": "824",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11065,13 +11078,13 @@
                                   }
                                 },
                                 {
-                                  "$id": "823",
+                                  "$id": "825",
                                   "kind": "property",
                                   "name": "audio_tokens",
                                   "serializedName": "audio_tokens",
                                   "doc": "The number of audio tokens used in the Response.",
                                   "type": {
-                                    "$id": "824",
+                                    "$id": "826",
                                     "kind": "int32",
                                     "name": "int32",
                                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11118,13 +11131,13 @@
                       }
                     },
                     {
-                      "$id": "825",
+                      "$id": "827",
                       "kind": "property",
                       "name": "conversation_id",
                       "serializedName": "conversation_id",
                       "doc": "Which conversation the response is added to, determined by the `conversation`\nfield in the `response.create` event. If `auto`, the response will be added to\nthe default conversation and the value of `conversation_id` will be an id like\n`conv_1234`. If `none`, the response will not be added to any conversation and\nthe value of `conversation_id` will be `null`. If responses are being triggered\nby server VAD, the response will be added to the default conversation, thus\nthe `conversation_id` will be an id like `conv_1234`.",
                       "type": {
-                        "$id": "826",
+                        "$id": "828",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11143,7 +11156,7 @@
                       }
                     },
                     {
-                      "$id": "827",
+                      "$id": "829",
                       "kind": "property",
                       "name": "voice",
                       "serializedName": "voice",
@@ -11164,15 +11177,15 @@
                       }
                     },
                     {
-                      "$id": "828",
+                      "$id": "830",
                       "kind": "property",
                       "name": "modalities",
                       "serializedName": "modalities",
                       "doc": "The set of modalities the model used to respond. If there are multiple modalities,\nthe model will pick one, for example if `modalities` is `[\"text\", \"audio\"]`, the model\ncould be responding in either text or audio.",
                       "type": {
-                        "$id": "829",
+                        "$id": "831",
                         "kind": "array",
-                        "name": "Array4",
+                        "name": "Array5",
                         "valueType": {
                           "$ref": "182"
                         },
@@ -11192,7 +11205,7 @@
                       }
                     },
                     {
-                      "$id": "830",
+                      "$id": "832",
                       "kind": "property",
                       "name": "output_audio_format",
                       "serializedName": "output_audio_format",
@@ -11213,13 +11226,13 @@
                       }
                     },
                     {
-                      "$id": "831",
+                      "$id": "833",
                       "kind": "property",
                       "name": "temperature",
                       "serializedName": "temperature",
                       "doc": "Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8.",
                       "type": {
-                        "$id": "832",
+                        "$id": "834",
                         "kind": "float32",
                         "name": "float32",
                         "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -11238,18 +11251,18 @@
                       }
                     },
                     {
-                      "$id": "833",
+                      "$id": "835",
                       "kind": "property",
                       "name": "max_output_tokens",
                       "serializedName": "max_output_tokens",
                       "doc": "Maximum number of output tokens for a single assistant response,\ninclusive of tool calls, that was used in this response.",
                       "type": {
-                        "$id": "834",
+                        "$id": "836",
                         "kind": "union",
                         "name": "ResponseMaxOutputTokens",
                         "variantTypes": [
                           {
-                            "$id": "835",
+                            "$id": "837",
                             "kind": "int32",
                             "name": "int32",
                             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11291,7 +11304,7 @@
             ]
           },
           "response.done": {
-            "$id": "836",
+            "$id": "838",
             "kind": "model",
             "name": "ServerEventResponseDone",
             "namespace": "Azure.AI.VoiceLive",
@@ -11301,11 +11314,11 @@
             "discriminatorValue": "response.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "837",
+                "$id": "839",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -11326,12 +11339,12 @@
                 }
               },
               {
-                "$id": "838",
+                "$id": "840",
                 "kind": "property",
                 "name": "response",
                 "serializedName": "response",
                 "type": {
-                  "$ref": "760"
+                  "$ref": "762"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -11348,7 +11361,7 @@
             ]
           },
           "response.output_item.added": {
-            "$id": "839",
+            "$id": "841",
             "kind": "model",
             "name": "ServerEventResponseOutputItemAdded",
             "namespace": "Azure.AI.VoiceLive",
@@ -11358,11 +11371,11 @@
             "discriminatorValue": "response.output_item.added",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "840",
+                "$id": "842",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -11383,13 +11396,13 @@
                 }
               },
               {
-                "$id": "841",
+                "$id": "843",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the Response to which the item belongs.",
                 "type": {
-                  "$id": "842",
+                  "$id": "844",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11408,13 +11421,13 @@
                 }
               },
               {
-                "$id": "843",
+                "$id": "845",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the Response.",
                 "type": {
-                  "$id": "844",
+                  "$id": "846",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11433,7 +11446,7 @@
                 }
               },
               {
-                "$id": "845",
+                "$id": "847",
                 "kind": "property",
                 "name": "item",
                 "serializedName": "item",
@@ -11455,7 +11468,7 @@
             ]
           },
           "response.output_item.done": {
-            "$id": "846",
+            "$id": "848",
             "kind": "model",
             "name": "ServerEventResponseOutputItemDone",
             "namespace": "Azure.AI.VoiceLive",
@@ -11465,11 +11478,11 @@
             "discriminatorValue": "response.output_item.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "847",
+                "$id": "849",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -11490,13 +11503,13 @@
                 }
               },
               {
-                "$id": "848",
+                "$id": "850",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the Response to which the item belongs.",
                 "type": {
-                  "$id": "849",
+                  "$id": "851",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11515,13 +11528,13 @@
                 }
               },
               {
-                "$id": "850",
+                "$id": "852",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the Response.",
                 "type": {
-                  "$id": "851",
+                  "$id": "853",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11540,12 +11553,12 @@
                 }
               },
               {
-                "$id": "852",
+                "$id": "854",
                 "kind": "property",
                 "name": "item",
                 "serializedName": "item",
                 "type": {
-                  "$ref": "777"
+                  "$ref": "779"
                 },
                 "optional": true,
                 "readOnly": false,
@@ -11562,7 +11575,7 @@
             ]
           },
           "response.content_part.added": {
-            "$id": "853",
+            "$id": "855",
             "kind": "model",
             "name": "ServerEventResponseContentPartAdded",
             "namespace": "Azure.AI.VoiceLive",
@@ -11572,11 +11585,11 @@
             "discriminatorValue": "response.content_part.added",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "854",
+                "$id": "856",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -11597,13 +11610,13 @@
                 }
               },
               {
-                "$id": "855",
+                "$id": "857",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "856",
+                  "$id": "858",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11622,13 +11635,13 @@
                 }
               },
               {
-                "$id": "857",
+                "$id": "859",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item to which the content part was added.",
                 "type": {
-                  "$id": "858",
+                  "$id": "860",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11647,13 +11660,13 @@
                 }
               },
               {
-                "$id": "859",
+                "$id": "861",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "860",
+                  "$id": "862",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11672,13 +11685,13 @@
                 }
               },
               {
-                "$id": "861",
+                "$id": "863",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "862",
+                  "$id": "864",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11697,7 +11710,7 @@
                 }
               },
               {
-                "$id": "863",
+                "$id": "865",
                 "kind": "property",
                 "name": "part",
                 "serializedName": "part",
@@ -11720,7 +11733,7 @@
             ]
           },
           "response.content_part.done": {
-            "$id": "864",
+            "$id": "866",
             "kind": "model",
             "name": "ServerEventResponseContentPartDone",
             "namespace": "Azure.AI.VoiceLive",
@@ -11730,11 +11743,11 @@
             "discriminatorValue": "response.content_part.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "865",
+                "$id": "867",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -11755,13 +11768,13 @@
                 }
               },
               {
-                "$id": "866",
+                "$id": "868",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "867",
+                  "$id": "869",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11780,13 +11793,13 @@
                 }
               },
               {
-                "$id": "868",
+                "$id": "870",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "869",
+                  "$id": "871",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11805,13 +11818,13 @@
                 }
               },
               {
-                "$id": "870",
+                "$id": "872",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "871",
+                  "$id": "873",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11830,13 +11843,13 @@
                 }
               },
               {
-                "$id": "872",
+                "$id": "874",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "873",
+                  "$id": "875",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11855,7 +11868,7 @@
                 }
               },
               {
-                "$id": "874",
+                "$id": "876",
                 "kind": "property",
                 "name": "part",
                 "serializedName": "part",
@@ -11878,7 +11891,7 @@
             ]
           },
           "response.text.done": {
-            "$id": "875",
+            "$id": "877",
             "kind": "model",
             "name": "ServerEventResponseTextDone",
             "namespace": "Azure.AI.VoiceLive",
@@ -11888,11 +11901,11 @@
             "discriminatorValue": "response.text.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "876",
+                "$id": "878",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -11913,13 +11926,13 @@
                 }
               },
               {
-                "$id": "877",
+                "$id": "879",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "878",
+                  "$id": "880",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11938,13 +11951,13 @@
                 }
               },
               {
-                "$id": "879",
+                "$id": "881",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "880",
+                  "$id": "882",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11963,13 +11976,13 @@
                 }
               },
               {
-                "$id": "881",
+                "$id": "883",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "882",
+                  "$id": "884",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -11988,13 +12001,13 @@
                 }
               },
               {
-                "$id": "883",
+                "$id": "885",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "884",
+                  "$id": "886",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12013,13 +12026,13 @@
                 }
               },
               {
-                "$id": "885",
+                "$id": "887",
                 "kind": "property",
                 "name": "text",
                 "serializedName": "text",
                 "doc": "The final text content.",
                 "type": {
-                  "$id": "886",
+                  "$id": "888",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12040,7 +12053,7 @@
             ]
           },
           "response.audio_transcript.delta": {
-            "$id": "887",
+            "$id": "889",
             "kind": "model",
             "name": "ServerEventResponseAudioTranscriptDelta",
             "namespace": "Azure.AI.VoiceLive",
@@ -12050,11 +12063,11 @@
             "discriminatorValue": "response.audio_transcript.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "888",
+                "$id": "890",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12075,13 +12088,13 @@
                 }
               },
               {
-                "$id": "889",
+                "$id": "891",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "890",
+                  "$id": "892",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12100,13 +12113,13 @@
                 }
               },
               {
-                "$id": "891",
+                "$id": "893",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "892",
+                  "$id": "894",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12125,13 +12138,13 @@
                 }
               },
               {
-                "$id": "893",
+                "$id": "895",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "894",
+                  "$id": "896",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12150,13 +12163,13 @@
                 }
               },
               {
-                "$id": "895",
+                "$id": "897",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "896",
+                  "$id": "898",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12175,13 +12188,13 @@
                 }
               },
               {
-                "$id": "897",
+                "$id": "899",
                 "kind": "property",
                 "name": "delta",
                 "serializedName": "delta",
                 "doc": "The transcript delta.",
                 "type": {
-                  "$id": "898",
+                  "$id": "900",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12202,7 +12215,7 @@
             ]
           },
           "response.audio_transcript.done": {
-            "$id": "899",
+            "$id": "901",
             "kind": "model",
             "name": "ServerEventResponseAudioTranscriptDone",
             "namespace": "Azure.AI.VoiceLive",
@@ -12212,11 +12225,11 @@
             "discriminatorValue": "response.audio_transcript.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "900",
+                "$id": "902",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12237,13 +12250,13 @@
                 }
               },
               {
-                "$id": "901",
+                "$id": "903",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "902",
+                  "$id": "904",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12262,13 +12275,13 @@
                 }
               },
               {
-                "$id": "903",
+                "$id": "905",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "904",
+                  "$id": "906",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12287,13 +12300,13 @@
                 }
               },
               {
-                "$id": "905",
+                "$id": "907",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "906",
+                  "$id": "908",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12312,13 +12325,13 @@
                 }
               },
               {
-                "$id": "907",
+                "$id": "909",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "908",
+                  "$id": "910",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12337,13 +12350,13 @@
                 }
               },
               {
-                "$id": "909",
+                "$id": "911",
                 "kind": "property",
                 "name": "transcript",
                 "serializedName": "transcript",
                 "doc": "The final transcript of the audio.",
                 "type": {
-                  "$id": "910",
+                  "$id": "912",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12364,7 +12377,7 @@
             ]
           },
           "response.audio.done": {
-            "$id": "911",
+            "$id": "913",
             "kind": "model",
             "name": "ServerEventResponseAudioDone",
             "namespace": "Azure.AI.VoiceLive",
@@ -12374,11 +12387,11 @@
             "discriminatorValue": "response.audio.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "912",
+                "$id": "914",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12399,13 +12412,13 @@
                 }
               },
               {
-                "$id": "913",
+                "$id": "915",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "doc": "The ID of the response.",
                 "type": {
-                  "$id": "914",
+                  "$id": "916",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12424,13 +12437,13 @@
                 }
               },
               {
-                "$id": "915",
+                "$id": "917",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "doc": "The ID of the item.",
                 "type": {
-                  "$id": "916",
+                  "$id": "918",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12449,13 +12462,13 @@
                 }
               },
               {
-                "$id": "917",
+                "$id": "919",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "doc": "The index of the output item in the response.",
                 "type": {
-                  "$id": "918",
+                  "$id": "920",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12474,13 +12487,13 @@
                 }
               },
               {
-                "$id": "919",
+                "$id": "921",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "doc": "The index of the content part in the item's content array.",
                 "type": {
-                  "$id": "920",
+                  "$id": "922",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12501,7 +12514,7 @@
             ]
           },
           "session.avatar.connecting": {
-            "$id": "921",
+            "$id": "923",
             "kind": "model",
             "name": "ServerEventSessionAvatarConnecting",
             "namespace": "Azure.AI.VoiceLive",
@@ -12511,11 +12524,11 @@
             "discriminatorValue": "session.avatar.connecting",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "922",
+                "$id": "924",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12532,13 +12545,13 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "923",
+                "$id": "925",
                 "kind": "property",
                 "name": "server_sdp",
                 "serializedName": "server_sdp",
                 "doc": "The server's SDP answer for the avatar connection.",
                 "type": {
-                  "$id": "924",
+                  "$id": "926",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12555,7 +12568,7 @@
             ]
           },
           "response.animation_blendshapes.delta": {
-            "$id": "925",
+            "$id": "927",
             "kind": "model",
             "name": "ResponseAnimationBlendshapeDeltaEvent",
             "namespace": "Azure.AI.VoiceLive",
@@ -12565,11 +12578,11 @@
             "discriminatorValue": "response.animation_blendshapes.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "926",
+                "$id": "928",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12585,12 +12598,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "927",
+                "$id": "929",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "928",
+                  "$id": "930",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12605,12 +12618,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "929",
+                "$id": "931",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "930",
+                  "$id": "932",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12625,12 +12638,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "931",
+                "$id": "933",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "type": {
-                  "$id": "932",
+                  "$id": "934",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12645,12 +12658,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "933",
+                "$id": "935",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "type": {
-                  "$id": "934",
+                  "$id": "936",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12665,25 +12678,25 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "935",
+                "$id": "937",
                 "kind": "property",
                 "name": "frames",
                 "serializedName": "frames",
                 "type": {
-                  "$id": "936",
+                  "$id": "938",
                   "kind": "union",
                   "name": "ResponseAnimationBlendshapeDeltaEventFrames",
                   "variantTypes": [
                     {
-                      "$id": "937",
+                      "$id": "939",
                       "kind": "array",
                       "name": "ArrayArray",
                       "valueType": {
-                        "$id": "938",
+                        "$id": "940",
                         "kind": "array",
-                        "name": "Array5",
+                        "name": "Array6",
                         "valueType": {
-                          "$id": "939",
+                          "$id": "941",
                           "kind": "float32",
                           "name": "float32",
                           "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -12696,7 +12709,7 @@
                       "decorators": []
                     },
                     {
-                      "$id": "940",
+                      "$id": "942",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12715,12 +12728,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "941",
+                "$id": "943",
                 "kind": "property",
                 "name": "frame_index",
                 "serializedName": "frame_index",
                 "type": {
-                  "$id": "942",
+                  "$id": "944",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12737,7 +12750,7 @@
             ]
           },
           "response.animation_blendshapes.done": {
-            "$id": "943",
+            "$id": "945",
             "kind": "model",
             "name": "ResponseAnimationBlendshapeDoneEvent",
             "namespace": "Azure.AI.VoiceLive",
@@ -12747,11 +12760,11 @@
             "discriminatorValue": "response.animation_blendshapes.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "944",
+                "$id": "946",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12767,12 +12780,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "945",
+                "$id": "947",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "946",
+                  "$id": "948",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12787,12 +12800,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "947",
+                "$id": "949",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "948",
+                  "$id": "950",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12807,12 +12820,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "949",
+                "$id": "951",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "type": {
-                  "$id": "950",
+                  "$id": "952",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12829,7 +12842,7 @@
             ]
           },
           "response.emotion_hypothesis": {
-            "$id": "951",
+            "$id": "953",
             "kind": "model",
             "name": "ResponseEmotionHypothesis",
             "namespace": "Azure.AI.VoiceLive",
@@ -12839,11 +12852,11 @@
             "discriminatorValue": "response.emotion_hypothesis",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "952",
+                "$id": "954",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -12859,12 +12872,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "953",
+                "$id": "955",
                 "kind": "property",
                 "name": "emotion",
                 "serializedName": "emotion",
                 "type": {
-                  "$id": "954",
+                  "$id": "956",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12879,16 +12892,16 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "955",
+                "$id": "957",
                 "kind": "property",
                 "name": "candidates",
                 "serializedName": "candidates",
                 "type": {
-                  "$id": "956",
+                  "$id": "958",
                   "kind": "array",
                   "name": "ArrayEmotionCandidate",
                   "valueType": {
-                    "$id": "957",
+                    "$id": "959",
                     "kind": "model",
                     "name": "EmotionCandidate",
                     "namespace": "Azure.AI.VoiceLive",
@@ -12897,12 +12910,12 @@
                     "decorators": [],
                     "properties": [
                       {
-                        "$id": "958",
+                        "$id": "960",
                         "kind": "property",
                         "name": "emotion",
                         "serializedName": "emotion",
                         "type": {
-                          "$id": "959",
+                          "$id": "961",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -12917,12 +12930,12 @@
                         "serializationOptions": {}
                       },
                       {
-                        "$id": "960",
+                        "$id": "962",
                         "kind": "property",
                         "name": "confidence",
                         "serializedName": "confidence",
                         "type": {
-                          "$id": "961",
+                          "$id": "963",
                           "kind": "float32",
                           "name": "float32",
                           "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -12950,12 +12963,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "962",
+                "$id": "964",
                 "kind": "property",
                 "name": "audio_offset_ms",
                 "serializedName": "audio_offset_ms",
                 "type": {
-                  "$id": "963",
+                  "$id": "965",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12970,12 +12983,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "964",
+                "$id": "966",
                 "kind": "property",
                 "name": "audio_duration_ms",
                 "serializedName": "audio_duration_ms",
                 "type": {
-                  "$id": "965",
+                  "$id": "967",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -12990,12 +13003,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "966",
+                "$id": "968",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "967",
+                  "$id": "969",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13010,12 +13023,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "968",
+                "$id": "970",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "969",
+                  "$id": "971",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13032,7 +13045,7 @@
             ]
           },
           "response.audio_timestamp.delta": {
-            "$id": "970",
+            "$id": "972",
             "kind": "model",
             "name": "ResponseAudioTimestampDeltaEvent",
             "namespace": "Azure.AI.VoiceLive",
@@ -13042,11 +13055,11 @@
             "discriminatorValue": "response.audio_timestamp.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "971",
+                "$id": "973",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -13062,12 +13075,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "972",
+                "$id": "974",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "973",
+                  "$id": "975",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13082,12 +13095,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "974",
+                "$id": "976",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "975",
+                  "$id": "977",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13102,12 +13115,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "976",
+                "$id": "978",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "type": {
-                  "$id": "977",
+                  "$id": "979",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13122,12 +13135,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "978",
+                "$id": "980",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "type": {
-                  "$id": "979",
+                  "$id": "981",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13142,12 +13155,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "980",
+                "$id": "982",
                 "kind": "property",
                 "name": "audio_offset_ms",
                 "serializedName": "audio_offset_ms",
                 "type": {
-                  "$id": "981",
+                  "$id": "983",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13162,12 +13175,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "982",
+                "$id": "984",
                 "kind": "property",
                 "name": "audio_duration_ms",
                 "serializedName": "audio_duration_ms",
                 "type": {
-                  "$id": "983",
+                  "$id": "985",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13182,12 +13195,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "984",
+                "$id": "986",
                 "kind": "property",
                 "name": "text",
                 "serializedName": "text",
                 "type": {
-                  "$id": "985",
+                  "$id": "987",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13202,7 +13215,7 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "986",
+                "$id": "988",
                 "kind": "property",
                 "name": "timestamp_type",
                 "serializedName": "timestamp_type",
@@ -13220,7 +13233,7 @@
             ]
           },
           "response.audio_timestamp.done": {
-            "$id": "987",
+            "$id": "989",
             "kind": "model",
             "name": "ResponseAudioTimestampDoneEvent",
             "namespace": "Azure.AI.VoiceLive",
@@ -13230,11 +13243,11 @@
             "discriminatorValue": "response.audio_timestamp.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "988",
+                "$id": "990",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -13250,12 +13263,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "989",
+                "$id": "991",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "990",
+                  "$id": "992",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13270,12 +13283,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "991",
+                "$id": "993",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "992",
+                  "$id": "994",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13290,12 +13303,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "993",
+                "$id": "995",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "type": {
-                  "$id": "994",
+                  "$id": "996",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13310,12 +13323,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "995",
+                "$id": "997",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "type": {
-                  "$id": "996",
+                  "$id": "998",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13332,7 +13345,7 @@
             ]
           },
           "response.animation_viseme.delta": {
-            "$id": "997",
+            "$id": "999",
             "kind": "model",
             "name": "ResponseAnimationVisemeDeltaEvent",
             "namespace": "Azure.AI.VoiceLive",
@@ -13342,11 +13355,11 @@
             "discriminatorValue": "response.animation_viseme.delta",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "998",
+                "$id": "1000",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -13362,12 +13375,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "999",
+                "$id": "1001",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "1000",
+                  "$id": "1002",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13382,12 +13395,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1001",
+                "$id": "1003",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "1002",
+                  "$id": "1004",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13402,12 +13415,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1003",
+                "$id": "1005",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "type": {
-                  "$id": "1004",
+                  "$id": "1006",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13422,12 +13435,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1005",
+                "$id": "1007",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "type": {
-                  "$id": "1006",
+                  "$id": "1008",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13442,12 +13455,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1007",
+                "$id": "1009",
                 "kind": "property",
                 "name": "audio_offset_ms",
                 "serializedName": "audio_offset_ms",
                 "type": {
-                  "$id": "1008",
+                  "$id": "1010",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13462,12 +13475,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1009",
+                "$id": "1011",
                 "kind": "property",
                 "name": "viseme_id",
                 "serializedName": "viseme_id",
                 "type": {
-                  "$id": "1010",
+                  "$id": "1012",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13484,7 +13497,7 @@
             ]
           },
           "response.animation_viseme.done": {
-            "$id": "1011",
+            "$id": "1013",
             "kind": "model",
             "name": "ResponseAnimationVisemeDoneEvent",
             "namespace": "Azure.AI.VoiceLive",
@@ -13494,11 +13507,11 @@
             "discriminatorValue": "response.animation_viseme.done",
             "decorators": [],
             "baseModel": {
-              "$ref": "574"
+              "$ref": "576"
             },
             "properties": [
               {
-                "$id": "1012",
+                "$id": "1014",
                 "kind": "property",
                 "name": "type",
                 "serializedName": "type",
@@ -13514,12 +13527,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1013",
+                "$id": "1015",
                 "kind": "property",
                 "name": "response_id",
                 "serializedName": "response_id",
                 "type": {
-                  "$id": "1014",
+                  "$id": "1016",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13534,12 +13547,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1015",
+                "$id": "1017",
                 "kind": "property",
                 "name": "item_id",
                 "serializedName": "item_id",
                 "type": {
-                  "$id": "1016",
+                  "$id": "1018",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13554,12 +13567,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1017",
+                "$id": "1019",
                 "kind": "property",
                 "name": "output_index",
                 "serializedName": "output_index",
                 "type": {
-                  "$id": "1018",
+                  "$id": "1020",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13574,12 +13587,12 @@
                 "serializationOptions": {}
               },
               {
-                "$id": "1019",
+                "$id": "1021",
                 "kind": "property",
                 "name": "content_index",
                 "serializedName": "content_index",
                 "type": {
-                  "$id": "1020",
+                  "$id": "1022",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -13599,13 +13612,13 @@
       },
       "properties": [
         {
-          "$id": "1021",
+          "$id": "1023",
           "kind": "property",
           "name": "type",
           "serializedName": "type",
           "doc": "The event type, must be `session.updated`.",
           "type": {
-            "$id": "1022",
+            "$id": "1024",
             "kind": "enumvalue",
             "name": "session_updated",
             "value": "session.updated",
@@ -13630,12 +13643,12 @@
           }
         },
         {
-          "$id": "1023",
+          "$id": "1025",
           "kind": "property",
           "name": "session",
           "serializedName": "session",
           "type": {
-            "$ref": "581"
+            "$ref": "583"
           },
           "optional": false,
           "readOnly": false,
@@ -13652,165 +13665,165 @@
       ]
     },
     {
-      "$ref": "581"
+      "$ref": "583"
     },
     {
-      "$ref": "612"
+      "$ref": "614"
     },
     {
-      "$ref": "574"
+      "$ref": "576"
     },
     {
-      "$ref": "578"
+      "$ref": "580"
     },
     {
-      "$ref": "622"
+      "$ref": "624"
     },
     {
-      "$ref": "625"
+      "$ref": "627"
     },
     {
-      "$ref": "639"
+      "$ref": "641"
     },
     {
-      "$ref": "651"
+      "$ref": "653"
     },
     {
-      "$ref": "665"
+      "$ref": "667"
     },
     {
-      "$ref": "670"
+      "$ref": "672"
     },
     {
-      "$ref": "676"
+      "$ref": "678"
     },
     {
-      "$ref": "682"
+      "$ref": "684"
     },
     {
-      "$ref": "692"
+      "$ref": "694"
     },
     {
-      "$ref": "700"
+      "$ref": "702"
     },
     {
-      "$ref": "711"
+      "$ref": "713"
     },
     {
-      "$ref": "719"
+      "$ref": "721"
     },
     {
-      "$ref": "726"
+      "$ref": "728"
     },
     {
-      "$ref": "737"
-    },
-    {
-      "$ref": "743"
+      "$ref": "739"
     },
     {
       "$ref": "745"
     },
     {
-      "$ref": "751"
+      "$ref": "747"
     },
     {
-      "$ref": "757"
+      "$ref": "753"
     },
     {
-      "$ref": "760"
+      "$ref": "759"
     },
     {
-      "$ref": "766"
+      "$ref": "762"
     },
     {
-      "$ref": "770"
+      "$ref": "768"
     },
     {
-      "$ref": "777"
+      "$ref": "772"
     },
     {
-      "$ref": "782"
+      "$ref": "779"
     },
     {
-      "$ref": "788"
+      "$ref": "784"
     },
     {
-      "$ref": "797"
+      "$ref": "790"
     },
     {
-      "$ref": "804"
+      "$ref": "799"
     },
     {
-      "$ref": "812"
+      "$ref": "806"
     },
     {
-      "$ref": "820"
+      "$ref": "814"
     },
     {
-      "$ref": "836"
+      "$ref": "822"
     },
     {
-      "$ref": "839"
+      "$ref": "838"
     },
     {
-      "$ref": "846"
+      "$ref": "841"
     },
     {
-      "$ref": "853"
+      "$ref": "848"
     },
     {
-      "$ref": "864"
+      "$ref": "855"
     },
     {
-      "$ref": "875"
+      "$ref": "866"
     },
     {
-      "$ref": "887"
+      "$ref": "877"
     },
     {
-      "$ref": "899"
+      "$ref": "889"
     },
     {
-      "$ref": "911"
+      "$ref": "901"
     },
     {
-      "$ref": "921"
+      "$ref": "913"
     },
     {
-      "$ref": "925"
+      "$ref": "923"
     },
     {
-      "$ref": "943"
+      "$ref": "927"
     },
     {
-      "$ref": "951"
+      "$ref": "945"
     },
     {
-      "$ref": "957"
+      "$ref": "953"
     },
     {
-      "$ref": "970"
+      "$ref": "959"
     },
     {
-      "$ref": "987"
+      "$ref": "972"
     },
     {
-      "$ref": "997"
+      "$ref": "989"
     },
     {
-      "$ref": "1011"
+      "$ref": "999"
+    },
+    {
+      "$ref": "1013"
     }
   ],
   "clients": [
     {
-      "$id": "1024",
+      "$id": "1026",
       "kind": "client",
       "name": "VoiceLiveClient",
       "namespace": "Azure.AI.VoiceLive",
       "methods": [
         {
-          "$id": "1025",
+          "$id": "1027",
           "kind": "basic",
           "name": "force_models",
           "accessibility": "internal",
@@ -13818,13 +13831,13 @@
             "2025-05-01-preview"
           ],
           "operation": {
-            "$id": "1026",
+            "$id": "1028",
             "name": "force_models",
             "resourceName": "VoiceLive",
             "accessibility": "internal",
             "parameters": [
               {
-                "$id": "1027",
+                "$id": "1029",
                 "name": "contentType",
                 "nameInRequest": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
@@ -13842,11 +13855,11 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "1028",
+                "$id": "1030",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
-                  "$id": "1029",
+                  "$id": "1031",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -13863,11 +13876,11 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "1030",
+                "$id": "1032",
                 "name": "forceModelsRequest",
                 "nameInRequest": "forceModelsRequest",
                 "type": {
-                  "$ref": "571"
+                  "$ref": "573"
                 },
                 "location": "Body",
                 "isApiVersion": false,
@@ -13886,7 +13899,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "911"
+                  "$ref": "913"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -13934,7 +13947,7 @@
           },
           "parameters": [
             {
-              "$id": "1031",
+              "$id": "1033",
               "name": "session",
               "nameInRequest": "session",
               "type": {
@@ -13951,7 +13964,7 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "1032",
+              "$id": "1034",
               "name": "contentType",
               "nameInRequest": "contentType",
               "doc": "Body parameter's content type. Known values are application/json",
@@ -13969,11 +13982,11 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "1033",
+              "$id": "1035",
               "name": "accept",
               "nameInRequest": "accept",
               "type": {
-                "$ref": "1029"
+                "$ref": "1031"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -13988,7 +14001,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "911"
+              "$ref": "913"
             }
           },
           "isOverride": false,
@@ -13999,12 +14012,12 @@
       ],
       "parameters": [
         {
-          "$id": "1034",
+          "$id": "1036",
           "name": "endpoint",
           "nameInRequest": "endpoint",
           "doc": "Azure AI VoiceLive endpoint.",
           "type": {
-            "$id": "1035",
+            "$id": "1037",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"

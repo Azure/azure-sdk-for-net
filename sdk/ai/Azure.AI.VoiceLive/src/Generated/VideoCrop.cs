@@ -46,26 +46,13 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
-        /// <param name="topLeft"> Top-left corner of the crop region. </param>
-        /// <param name="bottomRight"> Bottom-right corner of the crop region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topLeft"/> or <paramref name="bottomRight"/> is null. </exception>
-        public VideoCrop(Point2D topLeft, Point2D bottomRight)
-        {
-            Argument.AssertNotNull(topLeft, nameof(topLeft));
-            Argument.AssertNotNull(bottomRight, nameof(bottomRight));
-
-            TopLeft = topLeft;
-            BottomRight = bottomRight;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
-        /// <param name="topLeft"> Top-left corner of the crop region. </param>
-        /// <param name="bottomRight"> Bottom-right corner of the crop region. </param>
+        /// <param name="topLeftInternal"> Top-left corner of the crop region. </param>
+        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VideoCrop(Point2D topLeft, Point2D bottomRight, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VideoCrop(Point2D topLeftInternal, Point2D bottomRightInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TopLeft = topLeft;
-            BottomRight = bottomRight;
+            TopLeftInternal = topLeftInternal;
+            BottomRightInternal = bottomRightInternal;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,10 +60,5 @@ namespace Azure.AI.VoiceLive
         internal VideoCrop()
         {
         }
-
-        /// <summary> Top-left corner of the crop region. </summary>
-        public Point2D TopLeft { get; set; }
-        /// <summary> Bottom-right corner of the crop region. </summary>
-        public Point2D BottomRight { get; set; }
     }
 }

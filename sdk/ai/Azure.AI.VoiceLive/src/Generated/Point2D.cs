@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A 2D point with x and y coordinates. </summary>
-    public partial class Point2D
+    internal partial class Point2D
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

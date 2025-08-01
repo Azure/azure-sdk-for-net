@@ -35,9 +35,9 @@ namespace Azure.AI.VoiceLive
             }
 
             writer.WritePropertyName("top_left"u8);
-            writer.WriteObjectValue(TopLeft, options);
+            writer.WriteObjectValue<Point2D>(TopLeftInternal, options);
             writer.WritePropertyName("bottom_right"u8);
-            writer.WriteObjectValue(BottomRight, options);
+            writer.WriteObjectValue<Point2D>(BottomRightInternal, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

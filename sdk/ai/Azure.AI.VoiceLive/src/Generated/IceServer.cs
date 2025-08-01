@@ -47,23 +47,23 @@ namespace Azure.AI.VoiceLive
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IceServer"/>. </summary>
-        /// <param name="urls"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="urls"/> is null. </exception>
-        public IceServer(IEnumerable<string> urls)
+        /// <param name="uris"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uris"/> is null. </exception>
+        public IceServer(IEnumerable<Uri> uris)
         {
-            Argument.AssertNotNull(urls, nameof(urls));
+            Argument.AssertNotNull(uris, nameof(uris));
 
-            Urls = urls.ToList();
+            Uris = uris.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IceServer"/>. </summary>
-        /// <param name="urls"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
+        /// <param name="uris"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
         /// <param name="username"> Optional username used for authentication with the ICE server. </param>
         /// <param name="credential"> Optional credential (e.g., password or token) used for authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IceServer(IList<string> urls, string username, string credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IceServer(IList<Uri> uris, string username, string credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Urls = urls;
+            Uris = uris;
             Username = username;
             Credential = credential;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -75,7 +75,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> List of ICE server URLs (e.g., TURN or STUN endpoints). </summary>
-        public IList<string> Urls { get; }
+        public IList<Uri> Uris { get; }
         /// <summary> Optional username used for authentication with the ICE server. </summary>
         public string Username { get; set; }
         /// <summary> Optional credential (e.g., password or token) used for authentication. </summary>

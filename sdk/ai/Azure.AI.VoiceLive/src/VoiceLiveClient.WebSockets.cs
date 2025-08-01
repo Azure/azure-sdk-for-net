@@ -13,16 +13,6 @@ namespace Azure.AI.VoiceLive
     public partial class VoiceLiveClient
     {
         /// <summary>
-        /// Occurs when a command is being sent to the service via WebSocket.
-        /// </summary>
-        public event EventHandler<BinaryData> SendingCommand;
-
-        /// <summary>
-        /// Occurs when a message is received from the service via WebSocket.
-        /// </summary>
-        public event EventHandler<BinaryData> ReceivingMessage;
-
-        /// <summary>
         /// Starts a new <see cref="VoiceLiveSession"/> for real-time voice communication.
         /// </summary>
         /// <remarks>
@@ -97,26 +87,6 @@ namespace Azure.AI.VoiceLive
             CancellationToken cancellationToken = default)
         {
             return StartSessionAsync(sessionConfig, cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// Raises the <see cref="SendingCommand"/> event.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="command">The command being sent.</param>
-        protected internal virtual void OnSendingCommand(object sender, BinaryData command)
-        {
-            SendingCommand?.Invoke(sender, command);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="ReceivingMessage"/> event.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="message">The message being received.</param>
-        protected internal virtual void OnReceivingMessage(object sender, BinaryData message)
-        {
-            ReceivingMessage?.Invoke(sender, message);
         }
 
         /// <summary>

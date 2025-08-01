@@ -66,16 +66,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="endpointId"> Custom endpoint ID. </param>
         /// <param name="type"> Voice type identifier. </param>
         /// <param name="temperature"> Optional temperature for generation. </param>
-        /// <param name="customLexiconUrl"> Optional custom lexicon URL. </param>
+        /// <param name="customLexiconUri"> Optional custom lexicon URL. </param>
         /// <param name="preferLocales"> Preferred locale list for voice rendering. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureCustomVoice(string name, string endpointId, AzureCustomVoiceType type, float? temperature, string customLexiconUrl, IList<string> preferLocales, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureCustomVoice(string name, string endpointId, AzureCustomVoiceType type, float? temperature, Uri customLexiconUri, IList<string> preferLocales, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EndpointId = endpointId;
             Type = type;
             Temperature = temperature;
-            CustomLexiconUrl = customLexiconUrl;
+            CustomLexiconUri = customLexiconUri;
             PreferLocales = preferLocales;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -94,7 +94,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Optional temperature for generation. </summary>
         public float? Temperature { get; set; }
         /// <summary> Optional custom lexicon URL. </summary>
-        public string CustomLexiconUrl { get; set; }
+        public Uri CustomLexiconUri { get; set; }
         /// <summary> Preferred locale list for voice rendering. </summary>
         public IList<string> PreferLocales { get; }
     }

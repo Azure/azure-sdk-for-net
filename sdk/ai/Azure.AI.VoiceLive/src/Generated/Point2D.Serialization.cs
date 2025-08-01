@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class Point2D : IUtf8JsonSerializable, IJsonModel<Point2D>
+    internal partial class Point2D : IUtf8JsonSerializable, IJsonModel<Point2D>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Point2D>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

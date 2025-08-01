@@ -36,9 +36,14 @@ namespace Azure.AI.VoiceLive
 
             writer.WritePropertyName("urls"u8);
             writer.WriteStartArray();
-            foreach (var item in Urls)
+            foreach (var item in Uris)
             {
-                writer.WriteStringValue(item);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item.AbsoluteUri);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Username))
@@ -88,7 +93,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            IList<string> urls = default;
+            IList<Uri> urls = default;
             string username = default;
             string credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -97,10 +102,17 @@ namespace Azure.AI.VoiceLive
             {
                 if (property.NameEquals("urls"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new Uri(item.GetString()));
+                        }
                     }
                     urls = array;
                     continue;
