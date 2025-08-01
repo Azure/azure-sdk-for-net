@@ -55,6 +55,8 @@ There are certain differences in the telemetry data sent to Application Insights
   Additional data within the `traces` Kusto table:
     * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
 
+#### TrackException methods
+
 * **void TrackException(Exception? exception, IDictionary<string, string> properties = null!)**
 
   Additional data within the `exceptions` Kusto table:
@@ -63,10 +65,14 @@ There are certain differences in the telemetry data sent to Application Insights
     * The `customDimension` column contains an `OriginalFormat` entry with the exception message value
     * The `customDimension` column contains the entry `{"CategoryName":"ApplicationInsightsLogger"}`
 
+#### TrackRequest methods
+
 * **TrackRequest(string name, DateTimeOffset startTime, TimeSpan duration, string responseCode, bool success)**
 
   Additional data within the `requests` Kusto table:
     * The `customDimension` column contains the entry `"_MS.ProcessedByMetricExtractors": "(Name: X,Ver:'1.1')"`
+
+#### TrackDependency methods
 
 * **TrackDependency(string? dependencyTypeName, string target, string dependencyName, string data, DateTimeOffset startTime, TimeSpan duration, string resultCode, bool success)**
   and **void TrackDependency(string? dependencyTypeName, string dependencyName, string data, DateTimeOffset startTime, TimeSpan duration, bool success)**
@@ -82,16 +88,6 @@ There are certain differences in the telemetry data sent to Application Insights
     * If the dependency type is not `SQL` or `HTTP` (case insensitive)
       * Only the `data` and `target` method arguments are sent to Application Insights.
     * The `customDimension` column contains the entry `"_MS.ProcessedByMetricExtractors": "(Name: X,Ver:'1.1')"`
-
-#### TrackException methods
-
-#### TrackEvent methods
-
-#### TrackRequest methods
-
-#### TrackDependency methods
-
-#### TrackMetric methods
 
 
 #### Nightly builds
