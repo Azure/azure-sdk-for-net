@@ -14,7 +14,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class TransferJobInternal : IAsyncDisposable
+    internal class TransferJobInternal
     {
         internal delegate Task<JobPartInternal> CreateJobPartAsync(
             TransferJobInternal job,
@@ -196,16 +196,6 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (JobPartStatusEvents != default)
-            {
-                JobPartStatusEvents -= JobPartStatusEventAsync;
-            }
-            // This will block until all pending progress reports have gone out
-            await _progressTracker.TryCompleteAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -534,11 +524,16 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferOperation._state.SetTransferState(state))
             {
-                // If we are in a final state, dispose the JobPartEvent handlers
+                // If we are in a final state, dispose the JobPartEvent handlers and complete the progress tracker.
                 if (state == TransferState.Completed ||
                     state == TransferState.Paused)
                 {
-                    await DisposeAsync().ConfigureAwait(false);
+                    if (JobPartStatusEvents != default)
+                    {
+                        JobPartStatusEvents -= JobPartStatusEventAsync;
+                    }
+                    // This will block until all pending progress reports have gone out
+                    await _progressTracker.TryCompleteAsync().ConfigureAwait(false);
                 }
 
                 await OnJobPartStatusChangedAsync().ConfigureAwait(false);

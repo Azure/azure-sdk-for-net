@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange - Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
-            await using var downloadChunkHandler = new DownloadChunkHandler(
+            var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: blockSize,
                 new DownloadChunkHandler.Behaviors
@@ -199,7 +199,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange - Set up tasks
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
             long expectedLength = blockSize * 2;
-            await using var downloadChunkHandler = new DownloadChunkHandler(
+            var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: expectedLength,
                 behaviors: new DownloadChunkHandler.Behaviors
@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement.Tests
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
             long expectedLength = blockSize * 2;
 
-            await using var downloadChunkHandler = new DownloadChunkHandler(
+            var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: expectedLength,
                 behaviors: new DownloadChunkHandler.Behaviors
@@ -307,7 +307,7 @@ namespace Azure.Storage.DataMovement.Tests
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
             long expectedLength = blockSize * taskSize;
 
-            await using var downloadChunkHandler = new DownloadChunkHandler(
+            var downloadChunkHandler = new DownloadChunkHandler(
                 currentTransferred: 0,
                 expectedLength: expectedLength,
                 behaviors: new DownloadChunkHandler.Behaviors
@@ -423,7 +423,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task DisposedEventHandler()
+        public async Task TryCompleteAsync()
         {
             // Arrange - Create DownloadChunkHandler then Dispose it so the event handler is disposed
             MockDownloadChunkBehaviors mockBehaviors = GetMockDownloadChunkBehaviors();
@@ -443,7 +443,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: CancellationToken.None);
 
             // Act
-            await downloadChunkHandler.DisposeAsync();
+            await downloadChunkHandler.TryCompleteAsync();
 
             Assert.ThrowsAsync<ChannelClosedException>(async () =>
                 await downloadChunkHandler.QueueChunkAsync(default));

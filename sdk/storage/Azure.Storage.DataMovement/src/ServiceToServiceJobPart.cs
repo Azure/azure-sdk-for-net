@@ -11,7 +11,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class ServiceToServiceJobPart : JobPartInternal, IAsyncDisposable
+    internal class ServiceToServiceJobPart : JobPartInternal
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -87,11 +87,6 @@ namespace Azure.Storage.DataMovement
                   jobPartStatus: jobPartStatus,
                   length: default)
         {
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            await DisposeHandlersAsync().ConfigureAwait(false);
         }
 
         /// <summary>
