@@ -270,4 +270,14 @@ directive:
       if ($["description"] && $["description"].includes("PolicySet")) {
         $["description"] = "The name of the policy set";
       }
+  # Fix policySetName parameter specifically
+  - from: swagger-document
+    where: $.paths[*][*].parameters[?(@.name == "policySetName")]
+    transform: >
+      $["description"] = "The name of the policy set";
+  # Fix specific policy name parameter
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}"][*].parameters[?(@.name == "name")]
+    transform: >
+      $["description"] = "The name of the policy";
 ```

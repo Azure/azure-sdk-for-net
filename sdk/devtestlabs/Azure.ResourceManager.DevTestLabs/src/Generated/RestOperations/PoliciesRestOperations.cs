@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -232,8 +232,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
@@ -350,8 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="data"> A Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -386,8 +386,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="data"> A Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
@@ -468,8 +468,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="patch"> A Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
@@ -503,8 +503,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="patch"> A Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
@@ -580,8 +580,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -609,8 +609,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labName"> labs. </param>
-        /// <param name="policySetName"> policysets. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>

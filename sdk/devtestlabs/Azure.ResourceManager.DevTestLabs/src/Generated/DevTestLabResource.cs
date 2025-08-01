@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> Gets a collection of DevTestLabPolicyResources in the DevTestLab. </summary>
-        /// <param name="policySetName"> policysets. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of DevTestLabPolicyResources and their operations over a DevTestLabPolicyResource. </returns>
@@ -558,8 +558,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
@@ -591,8 +591,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policySetName"> policysets. </param>
-        /// <param name="name"> The name of the schedule. </param>
+        /// <param name="policySetName"> The name of the policy set. </param>
+        /// <param name="name"> The name of the policy. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
