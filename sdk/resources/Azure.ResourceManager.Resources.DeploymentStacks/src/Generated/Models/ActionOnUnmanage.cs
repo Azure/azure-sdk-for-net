@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Defines the behavior of resources that are no longer managed after the stack is updated or deleted. </summary>
     public partial class ActionOnUnmanage

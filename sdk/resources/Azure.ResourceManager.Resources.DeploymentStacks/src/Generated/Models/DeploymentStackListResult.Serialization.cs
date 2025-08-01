@@ -13,7 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class DeploymentStackListResult : IUtf8JsonSerializable, IJsonModel<DeploymentStackListResult>
     {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

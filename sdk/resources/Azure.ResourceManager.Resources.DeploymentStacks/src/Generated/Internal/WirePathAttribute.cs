@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     [AttributeUsage(AttributeTargets.Property)]
     internal class WirePathAttribute : Attribute

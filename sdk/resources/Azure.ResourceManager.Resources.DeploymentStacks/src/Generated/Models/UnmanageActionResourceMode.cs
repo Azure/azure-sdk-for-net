@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The UnmanageActionResourceMode. </summary>
     public readonly partial struct UnmanageActionResourceMode : IEquatable<UnmanageActionResourceMode>

@@ -12,9 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class DeploymentStackValidateProperties : IUtf8JsonSerializable, IJsonModel<DeploymentStackValidateProperties>
     {
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidatedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
                     }
                     validatedResources = array;
                     continue;
@@ -408,7 +407,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

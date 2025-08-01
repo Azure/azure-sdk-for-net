@@ -7,36 +7,36 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class DeploymentStacksArmOperation<T> : ArmOperation<T>
+    internal class ResourcesArmOperation : ArmOperation
 #pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternal<T> _operation;
+        private readonly OperationInternal _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of DeploymentStacksArmOperation for mocking. </summary>
-        protected DeploymentStacksArmOperation()
+        /// <summary> Initializes a new instance of ResourcesArmOperation for mocking. </summary>
+        protected ResourcesArmOperation()
         {
         }
 
-        internal DeploymentStacksArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
+        internal ResourcesArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _operation = OperationInternal.Succeeded(response);
             _completeRehydrationToken = rehydrationToken;
             _operationId = GetOperationId(rehydrationToken);
         }
 
-        internal DeploymentStacksArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
                 _operationId = GetOperationId(_completeRehydrationToken);
             }
-            _operation = new OperationInternal<T>(NextLinkOperationImplementation.Create(source, nextLinkOperation), clientDiagnostics, response, "DeploymentStacksArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ResourcesArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         private string GetOperationId(RehydrationToken? rehydrationToken)
@@ -58,20 +58,16 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesDeploymentStacksContext.Default).ToObjectFromJson<Dictionary<string, string>>();
-            return lroDetails["id"];
+            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
+            using var document = JsonDocument.Parse(data);
+            var lroDetails = document.RootElement;
+            return lroDetails.GetProperty("id").GetString();
         }
         /// <inheritdoc />
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
 
         /// <inheritdoc />
         public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
-
-        /// <inheritdoc />
-        public override T Value => _operation.Value;
-
-        /// <inheritdoc />
-        public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -86,15 +82,15 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
 
         /// <inheritdoc />
-        public override Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

@@ -9,16 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the DeploymentStack data model.
     /// Deployment stack object.
     /// </summary>
-    public partial class DeploymentStackData : TrackedResourceData
+    public partial class DeploymentStackData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,9 +52,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public DeploymentStackData(AzureLocation location) : base(location)
+        public DeploymentStackData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
             Parameters = new ChangeTrackingDictionary<string, DeploymentParameter>();
             DetachedResources = new ChangeTrackingList<SubResource>();
             DeletedResources = new ChangeTrackingList<SubResource>();
@@ -68,8 +67,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location of the Deployment stack. It cannot be changed after creation. It must be one of the supported Azure locations. </param>
+        /// <param name="tags"> Deployment stack resource tags. </param>
         /// <param name="error"> The error detail. </param>
         /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
@@ -91,8 +90,10 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
         /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResponseError error, BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, DeploymentStacksDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DeploymentStackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, ResponseError error, BinaryData template, DeploymentStacksTemplateLink templateLink, IDictionary<string, DeploymentParameter> parameters, DeploymentStacksParametersLink parametersLink, ActionOnUnmanage actionOnUnmanage, DeploymentStacksDebugSetting debugSetting, bool? bypassStackOutOfSyncError, string deploymentScope, string description, DenySettings denySettings, DeploymentStackProvisioningState? provisioningState, string correlationId, IReadOnlyList<SubResource> detachedResources, IReadOnlyList<SubResource> deletedResources, IReadOnlyList<ResourceReferenceExtended> failedResources, IReadOnlyList<ManagedResourceReference> resources, string deploymentId, BinaryData outputs, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Location = location;
+            Tags = tags;
             Error = error;
             Template = template;
             TemplateLink = templateLink;
@@ -116,11 +117,12 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStackData"/> for deserialization. </summary>
-        internal DeploymentStackData()
-        {
-        }
-
+        /// <summary> The location of the Deployment stack. It cannot be changed after creation. It must be one of the supported Azure locations. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
+        /// <summary> Deployment stack resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The error detail. </summary>
         [WirePath("properties.error")]
         public ResponseError Error { get; set; }

@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     public partial class KeyVaultParameterReference : IUtf8JsonSerializable, IJsonModel<KeyVaultParameterReference>
     {
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             }
 
             writer.WritePropertyName("keyVault"u8);
-            JsonSerializer.Serialize(writer, KeyVault);
+            ((IJsonModel<WritableSubResource>)KeyVault).Write(writer, options);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    keyVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

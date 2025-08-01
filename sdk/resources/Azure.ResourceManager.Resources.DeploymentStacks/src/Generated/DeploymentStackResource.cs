@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources.DeploymentStacks.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a DeploymentStack along with the instance operations that can be performed on it.
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeploymentStackResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentStackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", ResourceType.Namespace, Diagnostics);
+            _deploymentStackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string deploymentStackApiVersion);
             _deploymentStackRestClient = new DeploymentStacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion);
 #if DEBUG
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = await _deploymentStackRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentStacksArmOperation(_deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = _deploymentStackRestClient.DeleteAtScope(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError, cancellationToken);
-                var operation = new DeploymentStacksArmOperation(_deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation(_deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = await _deploymentStackRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentStacksArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = _deploymentStackRestClient.CreateOrUpdateAtScope(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new DeploymentStacksArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = await _deploymentStackRestClient.ValidateStackAtScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentStacksArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = _deploymentStackRestClient.ValidateStackAtScope(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new DeploymentStacksArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

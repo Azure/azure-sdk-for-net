@@ -10,12 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ArmResourcesDeploymentStacksModelFactory
+    public static partial class ArmResourcesModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentStackTemplateDefinition"/>. </summary>
         /// <param name="template"> The template content. Use this element to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
@@ -26,13 +25,13 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
             return new DeploymentStackTemplateDefinition(template, templateLink, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStacks.DeploymentStackData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.DeploymentStackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The location of the Deployment stack. It cannot be changed after creation. It must be one of the supported Azure locations. </param>
+        /// <param name="tags"> Deployment stack resource tags. </param>
         /// <param name="error"> The error detail. </param>
         /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
         /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
@@ -53,8 +52,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="deploymentId"> The resourceId of the deployment resource created by the deployment stack. </param>
         /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
         /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
-        /// <returns> A new <see cref="DeploymentStacks.DeploymentStackData"/> instance for mocking. </returns>
-        public static DeploymentStackData DeploymentStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResponseError error = null, BinaryData template = null, DeploymentStacksTemplateLink templateLink = null, IDictionary<string, DeploymentParameter> parameters = null, DeploymentStacksParametersLink parametersLink = null, ActionOnUnmanage actionOnUnmanage = null, string debugSettingDetailLevel = null, bool? bypassStackOutOfSyncError = null, string deploymentScope = null, string description = null, DenySettings denySettings = null, DeploymentStackProvisioningState? provisioningState = null, string correlationId = null, IEnumerable<SubResource> detachedResources = null, IEnumerable<SubResource> deletedResources = null, IEnumerable<ResourceReferenceExtended> failedResources = null, IEnumerable<ManagedResourceReference> resources = null, string deploymentId = null, BinaryData outputs = null, TimeSpan? duration = null)
+        /// <returns> A new <see cref="Resources.DeploymentStackData"/> instance for mocking. </returns>
+        public static DeploymentStackData DeploymentStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ResponseError error = null, BinaryData template = null, DeploymentStacksTemplateLink templateLink = null, IDictionary<string, DeploymentParameter> parameters = null, DeploymentStacksParametersLink parametersLink = null, ActionOnUnmanage actionOnUnmanage = null, string debugSettingDetailLevel = null, bool? bypassStackOutOfSyncError = null, string deploymentScope = null, string description = null, DenySettings denySettings = null, DeploymentStackProvisioningState? provisioningState = null, string correlationId = null, IEnumerable<SubResource> detachedResources = null, IEnumerable<SubResource> deletedResources = null, IEnumerable<ResourceReferenceExtended> failedResources = null, IEnumerable<ManagedResourceReference> resources = null, string deploymentId = null, BinaryData outputs = null, TimeSpan? duration = null)
         {
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, DeploymentParameter>();
@@ -68,8 +67,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
                 location,
+                tags,
                 error,
                 template,
                 templateLink,
@@ -93,12 +92,12 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceReferenceAutoGenerated"/>. </summary>
         /// <param name="id"> The resourceId of a resource managed by the deployment stack. </param>
-        /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
-        public static ResourceReference ResourceReference(string id = null)
+        /// <returns> A new <see cref="Models.ResourceReferenceAutoGenerated"/> instance for mocking. </returns>
+        public static ResourceReferenceAutoGenerated ResourceReferenceAutoGenerated(string id = null)
         {
-            return new ResourceReference(id, serializedAdditionalRawData: null);
+            return new ResourceReferenceAutoGenerated(id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceReferenceExtended"/>. </summary>

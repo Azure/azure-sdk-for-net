@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     public partial class DeploymentStackResource : IJsonModel<DeploymentStackData>
     {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
 
         DeploymentStackData IJsonModel<DeploymentStackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeploymentStackData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeploymentStackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeploymentStackData>(Data, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+        BinaryData IPersistableModel<DeploymentStackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeploymentStackData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        DeploymentStackData IPersistableModel<DeploymentStackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeploymentStackData>(data, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+        DeploymentStackData IPersistableModel<DeploymentStackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeploymentStackData>(data, options, AzureResourceManagerResourcesContext.Default);
 
         string IPersistableModel<DeploymentStackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeploymentStackData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }

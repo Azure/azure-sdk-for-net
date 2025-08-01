@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Resources.DeploymentStacks.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests

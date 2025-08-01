@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The Deployment stack validation result details. </summary>
     public partial class DeploymentStackValidateProperties

@@ -13,10 +13,9 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     public partial class DeploymentStackData : IUtf8JsonSerializable, IJsonModel<DeploymentStackData>
     {
@@ -40,12 +39,28 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Template))
             {
@@ -126,7 +141,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 writer.WriteStartArray();
                 foreach (var item in DetachedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +151,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 writer.WriteStartArray();
                 foreach (var item in DeletedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -205,8 +220,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             {
                 return null;
             }
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -235,6 +250,15 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -247,11 +271,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -275,7 +294,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -293,7 +312,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -406,7 +425,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
                             }
                             detachedResources = array;
                             continue;
@@ -420,7 +439,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
                             }
                             deletedResources = array;
                             continue;
@@ -490,8 +509,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 error,
                 template,
                 templateLink,
@@ -557,8 +576,11 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
             else
             {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
@@ -1022,7 +1044,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

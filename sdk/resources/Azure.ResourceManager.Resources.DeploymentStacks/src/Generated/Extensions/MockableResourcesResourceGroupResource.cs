@@ -10,20 +10,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Mocking
+namespace Azure.ResourceManager.Resources.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class MockableResourcesDeploymentStacksSubscriptionResource : ArmResource
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    public partial class MockableResourcesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentStacksSubscriptionResource"/> class for mocking. </summary>
-        protected MockableResourcesDeploymentStacksSubscriptionResource()
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class for mocking. </summary>
+        protected MockableResourcesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesDeploymentStacksSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesDeploymentStacksSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentStackResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of DeploymentStackResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
         public virtual DeploymentStackCollection GetDeploymentStacks()
         {

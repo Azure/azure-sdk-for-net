@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     internal static class BicepSerializationHelpers
     {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             int length = stringBuilder.Length;
             bool inMultilineString = false;
 
-            BinaryData data = ModelReaderWriter.Write(childObject, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+            BinaryData data = ModelReaderWriter.Write(childObject, options, AzureResourceManagerResourcesContext.Default);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; i++)
             {

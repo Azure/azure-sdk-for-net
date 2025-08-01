@@ -15,7 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeploymentStackResource"/> and their operations.
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeploymentStackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentStackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", DeploymentStackResource.ResourceType.Namespace, Diagnostics);
+            _deploymentStackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentStackResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeploymentStackResource.ResourceType, out string deploymentStackApiVersion);
             _deploymentStackRestClient = new DeploymentStacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion);
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = await _deploymentStackRestClient.CreateOrUpdateAtScopeAsync(Id, deploymentStackName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentStacksArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             try
             {
                 var response = _deploymentStackRestClient.CreateOrUpdateAtScope(Id, deploymentStackName, data, cancellationToken);
-                var operation = new DeploymentStacksArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id, deploymentStackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

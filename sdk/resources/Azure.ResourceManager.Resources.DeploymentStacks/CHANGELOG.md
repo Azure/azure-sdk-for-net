@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.1 (Unreleased)
 
-
+This is first release of ARM deployment stacks library.
 
 ### Features Added
 

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> denyAssignment settings applied to the resource. </summary>
     public readonly partial struct DenyStatusMode : IEquatable<DenyStatusMode>
