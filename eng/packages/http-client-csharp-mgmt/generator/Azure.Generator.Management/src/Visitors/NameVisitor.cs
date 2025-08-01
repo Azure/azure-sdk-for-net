@@ -60,8 +60,7 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (_knownModels.Contains(model.Name))
         {
-            string prefix = TypeNameUtilities.GetResourceProviderName();
-            var UpdatedName = $"{prefix}{model.Name}";
+            var UpdatedName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
             type.Update(name: UpdatedName);
             UpdateSerialization(type, UpdatedName);
         }
