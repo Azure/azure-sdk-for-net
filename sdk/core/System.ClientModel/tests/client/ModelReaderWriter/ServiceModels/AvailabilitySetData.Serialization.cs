@@ -90,18 +90,18 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 }
                 else if (OptionalProperty.IsCollectionDefined(VirtualMachines))
                 {
-                    if (flattenedJson.EntriesStartsWith("$.virtualMachines[-"u8.ToArray()).Any())
+                    if (flattenedJson.EntriesStartsWith("$.virtualMachines"u8.ToArray()).Any())
                     {
                         for (int i = 0; i < VirtualMachines.Count; i++)
                         {
-                            if (flattenedJson.IsRemoved(Encoding.UTF8.GetBytes($"$.virtualMachines[-{i}]")))
+                            if (flattenedJson.IsRemoved(Encoding.UTF8.GetBytes($"$.virtualMachines[{i}]")))
                             {
                                 continue;
                             }
 
-                            var indexInPatch = flattenedJson.GetArrayLength("$.virtualMachines[-"u8);
+                            var indexInPatch = flattenedJson.GetArrayLength("$.virtualMachines"u8);
                             var index = indexInPatch.HasValue ? indexInPatch.Value + i : i;
-                            var jsonPath = "$.virtualMachines[-"u8;
+                            var jsonPath = "$.virtualMachines["u8;
                             Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
                             jsonPath.CopyTo(buffer);
                             Utf8Formatter.TryFormat(index, buffer.Slice(jsonPath.Length), out var bytesWritten);

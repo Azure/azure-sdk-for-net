@@ -35,11 +35,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = GetInitialModel();
             model.Patch.SetNull("$.foobar"u8);
 
-            AssertJsonException(() => model.Patch.GetInt32("$.foobar"u8));
+            Assert.Throws<FormatException>(() => model.Patch.GetInt32("$.foobar"u8));
             var data = WriteModifiedModel(model, "foobar", "null");
 
             var model2 = GetRoundTripModel(data);
-            AssertJsonException(() => model2.Patch.GetInt32("$.foobar"u8));
+            Assert.AreEqual(null, model2.Patch.GetNullableInt32("$.foobar"u8));
+            Assert.Throws<FormatException>(() => model2.Patch.GetInt32("$.foobar"u8));
 
             AssertCommon(model, model2);
         }
@@ -271,25 +272,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<AvailabilitySetData>(BinaryData.FromString(JsonPayload));
             Assert.IsNotNull(model);
             return model!;
-        }
-
-        private static void AssertJsonException(Action lambda)
-        {
-            bool exceptionThrown = false;
-            try
-            {
-                lambda();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.AreEqual("JsonException", ex.GetType().Name);
-                Assert.IsTrue(ex.Message.StartsWith("The JSON value could not be converted to"));
-            }
-            finally
-            {
-                Assert.IsTrue(exceptionThrown, "Expected GetInt32 to throw when the value is null");
-            }
         }
 
         private static BinaryData WriteModifiedModel(AvailabilitySetData model, string? propertyName = null, string? expectedJsonValue = null)

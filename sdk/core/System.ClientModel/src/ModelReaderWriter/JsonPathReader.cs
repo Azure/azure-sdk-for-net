@@ -83,6 +83,42 @@ internal ref struct JsonPathReader
         }
     }
 
+    public ReadOnlySpan<byte> GetFirstProperty()
+    {
+        if (!Read())
+            return ReadOnlySpan<byte>.Empty;
+
+        if (Current.TokenType != JsonPathTokenType.Root)
+            return ReadOnlySpan<byte>.Empty;
+
+        if (!Read())
+            return ReadOnlySpan<byte>.Empty;
+
+        if (Current.TokenType != JsonPathTokenType.PropertySeparator && Current.TokenType != JsonPathTokenType.ArrayStart)
+            return ReadOnlySpan<byte>.Empty;
+
+        if (!Read())
+            return ReadOnlySpan<byte>.Empty;
+
+        switch (Current.TokenType)
+        {
+            case JsonPathTokenType.Property:
+                return _jsonPath.Slice(0, _consumed);
+
+            case JsonPathTokenType.ArrayStart:
+                if (!Read())
+                    return ReadOnlySpan<byte>.Empty;
+
+                if (Current.TokenType != JsonPathTokenType.QuotedString)
+                    return ReadOnlySpan<byte>.Empty;
+
+                return _jsonPath.Slice(0, _consumed);
+
+            default:
+                return ReadOnlySpan<byte>.Empty;
+        }
+    }
+
     private JsonPathToken ReadQuotedString()
     {
         byte quote = _jsonPath[_consumed];

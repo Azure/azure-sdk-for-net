@@ -10,6 +10,23 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void AddItemToDictionary()
         {
+            var model = GetInitialModel();
+
+            model.Patch.Set("$.newDictionary['key1']"u8, "{\"x\":\"value1\"}"u8);
+
+            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
+
+            var data = WriteModifiedModel(model, "newDictionary", "{\"key1\":{\"x\":\"value1\"}}");
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
+
+            AssertCommon(model, model2);
+        }
+
+        [Test]
+        public void AddItemToDictionaryClr()
+        {
             Assert.Fail("Not implemented");
         }
 
