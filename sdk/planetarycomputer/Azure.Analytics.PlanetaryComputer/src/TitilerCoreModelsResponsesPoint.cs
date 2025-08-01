@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
@@ -14,5 +18,40 @@ namespace Azure.Analytics.PlanetaryComputer
     /// </summary>
     public partial class TitilerCoreModelsResponsesPoint
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="TitilerCoreModelsResponsesPoint"/>. </summary>
+        /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
+        /// <param name="values"> Array of pixel values at the queried point for each band. </param>
+        /// <param name="bandNames"> Names of each band in the raster data. </param>
+        internal TitilerCoreModelsResponsesPoint(IEnumerable<float> coordinates, IEnumerable<float> values, IEnumerable<string> bandNames)
+        {
+            Coordinates = coordinates.ToList();
+            Values = values.ToList();
+            BandNames = bandNames.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TitilerCoreModelsResponsesPoint"/>. </summary>
+        /// <param name="coordinates"> Geographic coordinates [longitude, latitude] of the queried point. </param>
+        /// <param name="values"> Array of pixel values at the queried point for each band. </param>
+        /// <param name="bandNames"> Names of each band in the raster data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TitilerCoreModelsResponsesPoint(IList<float> coordinates, IList<float> values, IList<string> bandNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Coordinates = coordinates;
+            Values = values;
+            BandNames = bandNames;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Geographic coordinates [longitude, latitude] of the queried point. </summary>
+        public IList<float> Coordinates { get; }
+
+        /// <summary> Array of pixel values at the queried point for each band. </summary>
+        public IList<float> Values { get; }
+
+        /// <summary> Names of each band in the raster data. </summary>
+        public IList<string> BandNames { get; }
     }
 }
