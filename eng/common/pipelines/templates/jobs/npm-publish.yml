@@ -99,6 +99,7 @@ jobs:
                 $packageTags = npm view $packageJson.name "dist-tags" -json -silent | ConvertFrom-Json
                 if ($LASTEXITCODE -ne 0 -or !$packageTags) {
                   Write-Warning "Failed to retrieve dist-tags for $packageJson.name. It is possible the package hasn't been indexed yet so ignoring."
+                  $global:LASTEXITCODE = 0
                   continue
                 }
 

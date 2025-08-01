@@ -79,7 +79,7 @@ namespace MgmtTypeSpec.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateLinkResourceProperties properties = default;
+            MgmtTypeSpecPrivateLinkResourceProperties properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,7 +121,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    properties = PrivateLinkResourceProperties.DeserializePrivateLinkResourceProperties(prop.Value, options);
+                    properties = MgmtTypeSpecPrivateLinkResourceProperties.DeserializeMgmtTypeSpecPrivateLinkResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

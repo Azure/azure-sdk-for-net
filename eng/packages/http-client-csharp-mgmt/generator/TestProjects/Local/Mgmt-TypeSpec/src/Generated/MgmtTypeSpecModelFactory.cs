@@ -100,10 +100,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isEnabled"> enabled. </param>
+        /// <param name="propertiesIsEnabled"> enabled. </param>
         /// <param name="stringArray"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsData"/> instance for mocking. </returns>
-        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default)
+        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? propertiesIsEnabled = default, IEnumerable<string> stringArray = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -113,8 +113,8 @@ namespace MgmtTypeSpec.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
-                stringArray?.ToList());
+                propertiesIsEnabled is null ? default : new BarSettingsProperties(propertiesIsEnabled, new Dictionary<string, BinaryData>()),
+                stringArray.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -123,10 +123,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="something"> something. </param>
+        /// <param name="propertiesSomething"> something. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.ZooData"/> instance for mocking. </returns>
-        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string something = default, ExtendedLocation extendedLocation = default)
+        public static ZooData ZooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, string propertiesSomething = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -138,18 +138,18 @@ namespace MgmtTypeSpec.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                something is null ? default : new ZooProperties(something, new Dictionary<string, BinaryData>()),
+                propertiesSomething is null ? default : new ZooProperties(propertiesSomething, new Dictionary<string, BinaryData>()),
                 extendedLocation);
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="something"> something. </param>
+        /// <param name="propertiesSomething"> something. </param>
         /// <returns> A new <see cref="Models.ZooPatch"/> instance for mocking. </returns>
-        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, string something = default)
+        public static ZooPatch ZooPatch(IDictionary<string, string> tags = default, string propertiesSomething = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ZooPatch(tags, something is null ? default : new ZooUpdateProperties(something, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+            return new ZooPatch(tags, propertiesSomething is null ? default : new ZooUpdateProperties(propertiesSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

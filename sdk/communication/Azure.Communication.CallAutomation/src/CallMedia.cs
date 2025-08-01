@@ -240,7 +240,7 @@ namespace Azure.Communication.CallAutomation
         {
             PlayRequestInternal request = new PlayRequestInternal(options.PlaySources.Select(t => TranslatePlaySourceToInternal(t)).ToList());
 
-            request.PlayTo = options.PlayTo.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList();
+            request.PlayTo = options.PlayTo.Select(t => CommunicationIdentifierSerializer_2025_06_30.Serialize(t)).ToList();
 
             if (options != null)
             {
@@ -512,7 +512,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new HoldRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                    CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource),
@@ -541,7 +541,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new HoldRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                    CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -566,7 +566,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new HoldRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                    CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant))
                 {
                     PlaySourceInfo = TranslatePlaySourceToInternal(playSource),
                 };
@@ -593,7 +593,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new HoldRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                    CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource),
@@ -622,7 +622,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new HoldRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                    CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
             }
@@ -647,7 +647,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new HoldRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                    CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant))
                 {
                     PlaySourceInfo = TranslatePlaySourceToInternal(playSource),
                 };
@@ -673,7 +673,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                     OperationContext = options.OperationContext
@@ -700,7 +700,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -723,7 +723,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                     OperationContext = options.OperationContext
@@ -750,7 +750,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
             }
@@ -775,7 +775,7 @@ namespace Azure.Communication.CallAutomation
                     StopTones = recognizeDtmfOptions.StopTones.ToList<DtmfTone>()
                 };
 
-                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeDtmfOptions.TargetParticipant))
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(recognizeDtmfOptions.TargetParticipant))
                 {
                     DtmfOptions = dtmfConfigurations,
                     InterruptPrompt = recognizeDtmfOptions.InterruptPrompt,
@@ -795,7 +795,7 @@ namespace Azure.Communication.CallAutomation
             }
             else if (recognizeOptions is CallMediaRecognizeChoiceOptions recognizeChoiceOptions)
             {
-                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
                     InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
@@ -832,7 +832,7 @@ namespace Azure.Communication.CallAutomation
                     EndSilenceTimeoutInMs = (long)recognizeSpeechOptions.EndSilenceTimeout.TotalMilliseconds
                 };
 
-                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOptions.TargetParticipant))
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(recognizeSpeechOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeSpeechOptions.InterruptPrompt,
                     InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOptions.InitialSilenceTimeout.TotalSeconds,
@@ -874,7 +874,7 @@ namespace Azure.Communication.CallAutomation
                     StopTones = recognizeSpeechOrDtmfOptions.StopTones.ToList()
                 };
 
-                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
+                RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(recognizeSpeechOrDtmfOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeSpeechOrDtmfOptions.InterruptPrompt,
                     InitialSilenceTimeoutInSeconds = (int)recognizeSpeechOrDtmfOptions.InitialSilenceTimeout.TotalSeconds,
@@ -955,7 +955,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
@@ -982,7 +982,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return CallMediaRestClient.StartContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
             }
@@ -1005,7 +1005,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
@@ -1031,7 +1031,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return await CallMediaRestClient.StartContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1053,7 +1053,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
@@ -1080,7 +1080,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return CallMediaRestClient.StopContinuousDtmfRecognition(CallConnectionId, request, cancellationToken);
             }
@@ -1103,7 +1103,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
@@ -1129,7 +1129,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                ContinuousDtmfRecognitionRequestInternal request = new(CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 return await CallMediaRestClient.StopContinuousDtmfRecognitionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1152,7 +1152,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfTonesRequestInternal request = new(options.Tones, CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                SendDtmfTonesRequestInternal request = new(options.Tones, CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
@@ -1186,7 +1186,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -1214,7 +1214,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfTonesRequestInternal request = new(options.Tones, CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                SendDtmfTonesRequestInternal request = new(options.Tones, CommunicationIdentifierSerializer_2025_06_30.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
@@ -1248,7 +1248,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
+                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer_2025_06_30.Serialize(targetParticipant));
 
                 var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, cancellationToken);
 
