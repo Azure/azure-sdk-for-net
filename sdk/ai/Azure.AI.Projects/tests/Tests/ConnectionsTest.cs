@@ -1,0 +1,116 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+using System.ClientModel.Primitives;
+using System.Diagnostics;
+using System.Collections.Generic;
+using Azure.Identity;
+using NUnit.Framework.Internal;
+
+namespace Azure.AI.Projects.Tests
+{
+    public class ConnectionsTest : RecordedTestBase<AIProjectsTestEnvironment>
+    {
+        public ConnectionsTest(bool isAsync) : base(isAsync)
+        {
+            TestDiagnostics = false;
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void ConnectionsTestSync()
+        {
+            var endpoint = TestEnvironment.PROJECTENDPOINT;
+            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionType = TestEnvironment.CONNECTIONTYPE;
+
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+            Console.WriteLine("List the properties of all connections:");
+            bool isEmpty = true;
+            foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
+            {
+                isEmpty = false;
+                TestBase.ValidateConnection(connection, false);
+            }
+            Assert.IsFalse(isEmpty, "Expected at least one connection to be returned.");
+
+            Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
+            isEmpty = true;
+            foreach (ConnectionProperties connection in projectClient.Connections.GetConnections(connectionType: connectionType))
+            {
+                isEmpty = false;
+                TestBase.ValidateConnection(connection, false, expectedConnectionType: connectionType);
+            }
+            Assert.IsFalse(isEmpty, "Expected at least one connection of type to be returned.");
+
+            Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
+            ConnectionProperties specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
+            TestBase.ValidateConnection(specificConnection, false, expectedConnectionName: connectionName);
+
+            Console.WriteLine("Get the properties of a connection with credentials:");
+            ConnectionProperties specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
+            TestBase.ValidateConnection(specificConnectionCredentials, true, expectedConnectionName: connectionName);
+
+            Console.WriteLine($"Get the properties of the default connection:");
+            ConnectionProperties defaultConnection = projectClient.Connections.GetDefault(connectionType: connectionType, includeCredentials: false);
+            TestBase.ValidateConnection(defaultConnection, false);
+
+            Console.WriteLine($"Get the properties of the default connection with credentials:");
+            ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefault(connectionType: connectionType, includeCredentials: true);
+            TestBase.ValidateConnection(defaultConnectionCredentials, true);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task ConnectionsTestAsync()
+        {
+            var endpoint = TestEnvironment.PROJECTENDPOINT;
+            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionType = TestEnvironment.CONNECTIONTYPE;
+
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+            Console.WriteLine("List the properties of all connections:");
+            bool isEmpty = true;
+            await foreach (ConnectionProperties connection in projectClient.Connections.GetConnectionsAsync())
+            {
+                isEmpty = false;
+                TestBase.ValidateConnection(connection, false);
+                Console.WriteLine(connection);
+            }
+            Assert.IsFalse(isEmpty, "Expected at least one connection to be returned.");
+
+            Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
+            isEmpty = true;
+            await foreach (ConnectionProperties connection in projectClient.Connections.GetConnectionsAsync(connectionType: connectionType))
+            {
+                isEmpty = false;
+                TestBase.ValidateConnection(connection, false, expectedConnectionType: connectionType);
+            }
+            Assert.IsFalse(isEmpty, "Expected at least one connection of type to be returned.");
+
+            Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
+            ConnectionProperties specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
+            TestBase.ValidateConnection(specificConnection, false, expectedConnectionName: connectionName);
+
+            Console.WriteLine("Get the properties of a connection with credentials:");
+            ConnectionProperties specificConnectionCredentials = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: true);
+            TestBase.ValidateConnection(specificConnectionCredentials, true, expectedConnectionName: connectionName);
+
+            Console.WriteLine($"Get the properties of the default connection:");
+            ConnectionProperties defaultConnection = await projectClient.Connections.GetDefaultAsync(connectionType: connectionType, includeCredentials: false);
+            TestBase.ValidateConnection(defaultConnection, false);
+
+            Console.WriteLine($"Get the properties of the default connection with credentials:");
+            ConnectionProperties defaultConnectionCredentials = await projectClient.Connections.GetDefaultAsync(connectionType: connectionType, includeCredentials: true);
+            TestBase.ValidateConnection(defaultConnectionCredentials, true);
+        }
+    }
+}
