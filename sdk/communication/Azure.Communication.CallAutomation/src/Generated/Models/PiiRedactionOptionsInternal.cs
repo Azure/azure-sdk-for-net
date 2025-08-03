@@ -10,23 +10,5 @@ namespace Azure.Communication.CallAutomation
     /// <summary> PII redaction configuration options. </summary>
     internal partial class PiiRedactionOptionsInternal
     {
-        /// <summary> Initializes a new instance of <see cref="PiiRedactionOptionsInternal"/>. </summary>
-        public PiiRedactionOptionsInternal()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PiiRedactionOptionsInternal"/>. </summary>
-        /// <param name="enable"> Gets or sets a value indicating whether PII redaction is enabled. </param>
-        /// <param name="redactionType"> Gets or sets the type of PII redaction to be used. </param>
-        internal PiiRedactionOptionsInternal(bool? enable, RedactionType? redactionType)
-        {
-            Enable = enable;
-            RedactionType = redactionType;
-        }
-
-        /// <summary> Gets or sets a value indicating whether PII redaction is enabled. </summary>
-        public bool? Enable { get; set; }
-        /// <summary> Gets or sets the type of PII redaction to be used. </summary>
-        public RedactionType? RedactionType { get; set; }
     }
 }

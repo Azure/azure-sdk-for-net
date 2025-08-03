@@ -1454,7 +1454,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class SentimentAnalysisResult
     {
-        internal SentimentAnalysisResult() { }
+        public SentimentAnalysisResult() { }
         public string Sentiment { get { throw null; } }
     }
     public partial class ServerCallLocator : Azure.Communication.CallAutomation.CallLocator
@@ -1682,6 +1682,7 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get { throw null; } }
         public bool? EnableSentimentAnalysis { get { throw null; } }
         public string Locale { get { throw null; } }
+        public System.Collections.Generic.IList<string> Locales { get { throw null; } }
         public Azure.Communication.CallAutomation.PiiRedactionOptions PiiRedactionOptions { get { throw null; } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } }
         public string TranscriptionSubscriptionId { get { throw null; } }

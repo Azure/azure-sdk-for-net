@@ -11,11 +11,6 @@ namespace Azure.Communication.CallAutomation
     public partial class SentimentAnalysisResult
     {
         /// <summary> Initializes a new instance of <see cref="SentimentAnalysisResult"/>. </summary>
-        internal SentimentAnalysisResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisResult"/>. </summary>
         /// <param name="sentiment"> Gets or sets the value of the sentiment detected (positive, negative, neutral, mixed). </param>
         internal SentimentAnalysisResult(string sentiment)
         {

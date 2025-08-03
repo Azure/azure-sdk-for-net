@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -22,6 +23,10 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         [JsonPropertyName("locale")]
         public string Locale { get; set; }
+
+        /// <summary> List of languages for Language Identification. </summary>
+        [JsonPropertyName("locales")]
+        public IList<string> Locales { get; set; }
 
         /// <summary>
         /// call connection Id.
@@ -51,6 +56,6 @@ namespace Azure.Communication.CallAutomation
         /// Gets or sets Options for Pii redaction
         /// </summary>
         [JsonPropertyName("piiRedactionOptions")]
-        public PiiRedactionOptions PiiRedactionOptions { get; set; }
+        public PiiRedactionOptionsInternal PiiRedactionOptions { get; set; }
     }
 }

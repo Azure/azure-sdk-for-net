@@ -76,9 +76,13 @@ namespace Azure.Communication.CallAutomation
                     return new TranscriptionMetadata(transcriptionMetadataInternal);
 
                 case "TranscriptionData":
-                    TranscriptionDataInternal transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(
-                   streamingData.GetProperty("transcriptionData").ToString()
-                   );
+                    var transcriptionDataElement = streamingData.GetProperty("transcriptionData");
+                    var transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(transcriptionDataElement.GetRawText());
+                    // Ensure SentimentAnalysisResult is deserialized if present
+                    if (transcriptionDataElement.TryGetProperty("sentimentAnalysisResult", out var sentimentElement))
+                    {
+                        transcriptionDataInternal.SentimentAnalysisResult = SentimentAnalysisResult.DeserializeSentimentAnalysisResult(sentimentElement);
+                    }
                     return new TranscriptionData(transcriptionDataInternal);
 
                 #endregion
