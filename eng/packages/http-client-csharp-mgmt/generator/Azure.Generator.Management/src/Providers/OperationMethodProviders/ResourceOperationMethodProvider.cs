@@ -39,7 +39,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
 
         private readonly string _methodName;
-        private readonly CSharpType? _responseGenericType;
+        private readonly CSharpType? _originalReturnType;
+        private protected readonly CSharpType _returnType;
+        // TODO -- should be removed
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
         private readonly bool _isFakeLongRunningOperation;
@@ -71,10 +73,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
             _methodName = methodName ?? convenienceMethod.Signature.Name;
-            _responseGenericType = _serviceMethod.GetResponseBodyType();
-            _isGeneric = _responseGenericType != null;
+            _originalReturnType = _serviceMethod.GetResponseBodyType();
+            _isGeneric = _originalReturnType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
+            _returnType = GetReturnType();
             _clientDiagnosticsField = restClientInfo.DiagnosticsField;
             _restClientField = restClientInfo.RestClientField;
             _signature = CreateSignature();
@@ -122,7 +125,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
-                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
+                _returnType,
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
@@ -130,6 +133,24 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
+        }
+
+        private CSharpType GetReturnType()
+        {
+            // we need to determine the inner return type and then wrap it again
+            if (_originalReturnType == null)
+            {
+                return _originalReturnType.WrapResponse(_isLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
+            }
+
+            var originalReturnType = _originalReturnType;
+            // see if this could be wrapped by a resource
+            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(originalReturnType, out var resource))
+            {
+                originalReturnType = resource.Type;
+            }
+
+            return originalReturnType.WrapResponse(_isLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         private TryExpression BuildTryExpression()
@@ -173,7 +194,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
-                    _responseGenericType!,
+                    _originalReturnType!,
                     _isAsync,
                     out responseVariable);
             }
@@ -195,7 +216,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var statements = new List<MethodBodyStatement>();
 
             var armOperationType = _isGeneric
-                ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
+                ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
                     .MakeGenericType([_resource.Type])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
@@ -224,6 +245,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return statements;
         }
 
+        // TODO -- need to distinguish if the return type could be wrapped by a resource.
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
             VariableExpression responseVariable,
@@ -234,7 +256,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
 
             var armOperationType = _isGeneric
-                ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
+                ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
                     .MakeGenericType([_resource.Type])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 

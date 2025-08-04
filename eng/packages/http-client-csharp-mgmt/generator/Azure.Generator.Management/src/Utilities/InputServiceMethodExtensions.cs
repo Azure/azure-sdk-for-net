@@ -15,6 +15,7 @@ namespace Azure.Generator.Management.Utilities
             return method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod;
         }
 
+        // TODO -- need fix: this is incorrect. We only have Fake LROs for the Create and Delete operations of a Resource.
         public static bool IsFakeLongRunningOperation(this InputServiceMethod method)
         {
             var operation = method.Operation;
@@ -43,6 +44,7 @@ namespace Azure.Generator.Management.Utilities
             return responseBodyType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(responseBodyType);
         }
 
+        // TODO -- should be removed.
         public static CSharpType GetOperationMethodReturnType(this InputServiceMethod method, bool isAsync, CSharpType? resourceClientCSharpType, CSharpType? resourceDataType)
         {
             bool isLongRunningOperation = method.IsLongRunningOperation() || method.IsFakeLongRunningOperation();

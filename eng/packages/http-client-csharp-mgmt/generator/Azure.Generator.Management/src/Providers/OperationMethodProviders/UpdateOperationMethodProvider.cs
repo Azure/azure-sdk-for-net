@@ -22,7 +22,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _isAsync ? "UpdateAsync" : "Update",
                 $"Update a {_resource.ResourceName}",
                 _convenienceMethod.Signature.Modifiers,
-                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
+                _returnType,
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,

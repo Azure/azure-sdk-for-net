@@ -5,12 +5,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -48,7 +46,7 @@ namespace Azure.Generator.Management.Providers
         {
             return Path.Combine("src", "Generated", "LongRunningOperation", GetFileName());
 
-            string GetFileName() => _isGeneric ? $"{_serviceName}ArmOperationOfT.cs" : $"{Name}.cs";
+            string GetFileName() => _isGeneric ? $"{Name}OfT.cs" : $"{Name}.cs";
         }
 
         protected override CSharpType[] BuildImplements() => [_isGeneric ? new CSharpType(typeof(ArmOperation<>), _t) : typeof(ArmOperation)];
