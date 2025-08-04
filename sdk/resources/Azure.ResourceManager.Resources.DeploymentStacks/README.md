@@ -1,6 +1,6 @@
 # Microsoft Azure DeploymentStacks management client library for .NET
 
-**[Describe the service briefly first.]**
+An Azure deployment stack is a resource that enables you to manage a group of Azure resources as a single, cohesive unit. When you submit a Bicep file or an Azure Resource Manager JSON template (ARM JSON template) to a deployment stack, you define the resources that the stack manages. If you remove a resource from the template, it can be detached or deleted based on the specified actionOnUnmanage behavior of the deployment stack. You can restrict access to the deployment stack using Azure role-based access control (Azure RBAC), similar to other Azure resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
