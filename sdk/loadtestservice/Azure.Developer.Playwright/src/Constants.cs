@@ -155,6 +155,7 @@ internal class Constants
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
     internal static readonly string s_playwright_Version_not_supported_error_message = "The Playwright version you are using does not support playwright workspaces. Please update to Playwright version 1.50.0 or higher.";
     internal static readonly string s_playwright_Invalid_version = "The Playwright version you are using is not supported. See the list of supported versions at https://aka.ms/mpt/supported-versions.";
+    internal static readonly string s_playwright_service_create_test_run_error = "Failed to create the test run in the Playwright service.";
 
     // Internal environment variables
     internal static readonly string s_playwright_service_use_cloud_hosted_browsers_environment_variable = "_MPT_USE_CLOUD_HOSTED_BROWSERS";
@@ -176,4 +177,35 @@ internal class CIConstants
     internal static readonly string s_gITHUB_ACTIONS = "GITHUB";
     internal static readonly string s_aZURE_DEVOPS = "ADO";
     internal static readonly string s_dEFAULT = "DEFAULT";
+}
+
+internal class TimeoutConstants
+{
+    internal const int Http_call_timeout_ms = 10000;
+}
+
+internal class SDKLanguageConstants
+{
+    internal static readonly string s_jAVASCRIPT = "JAVASCRIPT";
+    internal static readonly string s_tYPESCRIPT = "TYPESCRIPT";
+    internal static readonly string s_cSHARP = "CSHARP";
+}
+
+internal class RunConfigConstants
+{
+    internal static readonly string s_tEST_FRAMEWORK_NAME = "PLAYWRIGHT";
+    internal static readonly string s_tEST_SDK_LANGUAGE = SDKLanguageConstants.s_cSHARP;
+    internal static readonly string s_tEST_FRAMEWORK_RUNNERNAME = "PLAYWRIGHT";
+}
+
+internal class ServiceClientConstants
+{
+    internal static readonly int s_mAX_RETRIES = 3;
+    internal static readonly int s_iNITIAL_DELAY_MS = 1000;
+    internal static readonly int s_mAX_DELAY_MS = 64000;
+}
+
+internal class ApiVersionConstants
+{
+    internal static readonly string s_latestApiVersion = "2025-07-01-preview";
 }

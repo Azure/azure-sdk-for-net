@@ -12,5 +12,6 @@ namespace Azure.Developer.Playwright.Interface
     internal interface IPlaywrightVersion
     {
         void ValidatePlaywrightVersion();
+        string GetPlaywrightVersion();
     }
 }
