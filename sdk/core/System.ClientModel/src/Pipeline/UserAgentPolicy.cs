@@ -86,39 +86,7 @@ public class UserAgentPolicy : PipelinePolicy
     /// <returns>A formatted user agent string.</returns>
     public static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId = null)
     {
-        AssemblyInformationalVersionAttribute? versionAttribute = callerAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-        if (versionAttribute == null)
-        {
-            throw new InvalidOperationException(
-                $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{callerAssembly.FullName}'.");
-        }
-
-        string version = versionAttribute.InformationalVersion;
-
-        string assemblyName = callerAssembly.GetName().Name!;
-
-        int hashSeparator = version.IndexOf('+');
-        if (hashSeparator != -1)
-        {
-            version = version.Substring(0, hashSeparator);
-        }
-
-        // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
-        // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
-        // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
-        // This was added to support operating systems with non-ascii characters in their release names.
-        string osDescription;
-#if NET8_0_OR_GREATER
-        osDescription = System.Text.Ascii.IsValid(RuntimeInformation.OSDescription) ? RuntimeInformation.OSDescription : WebUtility.UrlEncode(RuntimeInformation.OSDescription);
-#else
-        osDescription = ContainsNonAscii(RuntimeInformation.OSDescription) ? WebUtility.UrlEncode(RuntimeInformation.OSDescription) : RuntimeInformation.OSDescription;
-#endif
-
-        var platformInformation = EscapeProductInformation($"({RuntimeInformation.FrameworkDescription}; {osDescription})");
-
-        return applicationId != null
-            ? $"{applicationId} {assemblyName}/{version} {platformInformation}"
-            : $"{assemblyName}/{version} {platformInformation}";
+        return GenerateUserAgentString(callerAssembly, applicationId, new Internal.RuntimeInformationWrapper());
     }
 
     /// <summary>
