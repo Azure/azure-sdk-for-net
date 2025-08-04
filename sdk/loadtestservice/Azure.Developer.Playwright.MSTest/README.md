@@ -7,7 +7,6 @@ Ready to get started? Jump into our [quickstart guide](https://github.com/Azure/
 ## Useful links
 
 -   [Quickstart: Run end-to-end tests at scale](https://aka.ms/pww/docs/quickstart)
--   [View Azure Playwright service demo](https://youtu.be/GenC1jAeTZE)
 -   [Documentation](https://aka.ms/pww/docs)
 -   [Pricing](https://aka.ms/pww/docs/pricing)
 -   [Share feedback](https://aka.ms/pww/docs/feedback)
