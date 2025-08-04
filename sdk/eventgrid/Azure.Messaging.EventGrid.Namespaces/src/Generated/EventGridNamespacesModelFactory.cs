@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         {
             details ??= new ChangeTrackingList<ReceiveDetails>();
 
-            return new ReceiveResult(details?.ToList(), additionalBinaryDataProperties: null);
+            return new ReceiveResult(details.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Receive operation details per Cloud Event. </summary>
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
             succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new AcknowledgeResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
+            return new AcknowledgeResult(failedLockTokens.ToList(), succeededLockTokens.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Failed LockToken information. </summary>
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
             succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new ReleaseResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
+            return new ReleaseResult(failedLockTokens.ToList(), succeededLockTokens.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of the Reject operation. </summary>
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
             succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new RejectResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
+            return new RejectResult(failedLockTokens.ToList(), succeededLockTokens.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of the RenewLock operation. </summary>
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
             succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new RenewLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
+            return new RenewLocksResult(failedLockTokens.ToList(), succeededLockTokens.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

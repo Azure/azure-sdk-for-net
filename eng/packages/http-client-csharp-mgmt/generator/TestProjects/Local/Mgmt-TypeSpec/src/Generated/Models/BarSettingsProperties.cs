@@ -31,6 +31,6 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled { get; }
     }
 }

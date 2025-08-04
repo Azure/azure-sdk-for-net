@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="backupBlobShare"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/>, <paramref name="selectedDatabases"/> or <paramref name="backupBlobShare"/> is null. </exception>
-        public ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare)
+        public ValidateMigrationInputSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, DataMigrationBlobShare backupBlobShare)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupBlobShare"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
         /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateMigrationInputSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, IList<string> selectedLogins, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateMigrationInputSqlServerSqlMITaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, IList<string> selectedLogins, DataMigrationFileShareInfo backupFileShare, DataMigrationBlobShare backupBlobShare, DataMigrationBackupMode? backupMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information for connecting to source. </summary>
-        public SqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Information for connecting to target. </summary>
-        public SqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateSqlServerSqlMIDatabaseInput> SelectedDatabases { get; }
         /// <summary> Logins to migrate. </summary>
         public IList<string> SelectedLogins { get; }
         /// <summary> Backup file share information for all selected databases. </summary>
-        public FileShare BackupFileShare { get; set; }
+        public DataMigrationFileShareInfo BackupFileShare { get; set; }
         /// <summary> SAS URI of Azure Storage Account Container to be used for storing backup files. </summary>
-        internal BlobShare BackupBlobShare { get; set; }
+        internal DataMigrationBlobShare BackupBlobShare { get; set; }
         /// <summary> SAS URI of Azure Storage Account Container. </summary>
         public Uri BackupBlobShareSasUri
         {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             set
             {
                 if (BackupBlobShare is null)
-                    BackupBlobShare = new BlobShare();
+                    BackupBlobShare = new DataMigrationBlobShare();
                 BackupBlobShare.SasUri = value;
             }
         }
 
         /// <summary> Backup Mode to specify whether to use existing backup or create new backup. </summary>
-        public BackupMode? BackupMode { get; set; }
+        public DataMigrationBackupMode? BackupMode { get; set; }
     }
 }

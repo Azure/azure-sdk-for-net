@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -17,35 +18,91 @@ namespace Azure.Generator.Management.Visitors;
 internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
+    private static readonly HashSet<string> _knownModels = new HashSet<string>()
+        {
+            "Sku",
+            "SkuName",
+            "SkuTier",
+            "SkuFamily",
+            "SkuInformation",
+            "Plan",
+            "Usage",
+            "Kind",
+            // Private endpoint definitions which are defined in swagger common-types/privatelinks.json and are used by RPs
+            "PrivateEndpointConnection",
+            "PrivateLinkResource",
+            "PrivateLinkServiceConnectionState",
+            "PrivateEndpointServiceConnectionStatus",
+            "PrivateEndpointConnectionProvisioningState",
+            // not defined in common-types, but common in various RP
+            "PrivateLinkResourceProperties",
+            "PrivateLinkServiceConnectionStateProperty",
+            // internal, but could be public in the future, also make the names more consistent
+            "PrivateEndpointConnectionListResult",
+            "PrivateLinkResourceListResult"
+        };
 
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
+    private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
-        if (type is not null && TryTransformUrlToUri(model.Name, out var newName))
+        if (type is null)
         {
+            return null;
+        }
+
+        if (TryTransformUrlToUri(model.Name, out var newName))
+        {
+            UpdateConstructors(type, newName);
+            UpdateSerialization(type, newName, type.Name);
             type.Update(name: newName);
         }
 
-        if (type is not null)
+        if (_knownModels.Contains(model.Name))
         {
-            if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            UpdateConstructors(type, newName);
+            UpdateSerialization(type, newName, type.Name);
+            type.Update(name: newName);
+        }
+
+        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+        {
+            newName = $"{enclosingResourceName}Patch";
+            UpdateConstructors(type, newName);
+            UpdateSerialization(type, newName, type.Name);
+            type.Update(name: newName);
+
+            _resourceUpdateModelTypes.Add(type.Type);
+            foreach (var serializationProvider in type.SerializationProviders)
             {
-                var newModelName = $"{enclosingResourceName}Patch";
-
-                _resourceUpdateModelTypes.Add(type.Type);
-
-                type.Update(name: newModelName);
-
-                foreach (var serializationProvider in type.SerializationProviders)
-                {
-                    serializationProvider.Update(name: newModelName);
-                    _resourceUpdateModelTypes.Add(serializationProvider.Type);
-                }
+                _resourceUpdateModelTypes.Add(serializationProvider.Type);
             }
         }
         return base.PreVisitModel(model, type);
+    }
+
+    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+    private static void UpdateConstructors(ModelProvider type, string newName)
+    {
+        foreach (var constructor in type.Constructors)
+        {
+            // Update the constructor name to match the model name
+            constructor.Signature.Update(name: newName);
+        }
+    }
+
+    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+    private void UpdateSerialization(ModelProvider type, string newName, string originalName)
+    {
+        foreach (MrwSerializationTypeDefinition serializationProvider in type.SerializationProviders)
+        {
+            // Update the serialization provider name to match the model name
+            serializationProvider.Update(name: newName);
+            _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
+        }
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
@@ -102,6 +159,13 @@ internal class NameVisitor : ScmLibraryVisitor
             // This is required as a workaround to update documentation for the method signature
             method.Update(signature: method.Signature);
         }
+
+        // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
+        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
+        {
+            method.Signature.Update(name: newName);
+        }
+
         return base.VisitMethod(method);
     }
 

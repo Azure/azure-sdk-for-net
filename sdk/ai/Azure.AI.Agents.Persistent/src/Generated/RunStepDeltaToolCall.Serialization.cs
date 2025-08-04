@@ -84,6 +84,7 @@ namespace Azure.AI.Agents.Persistent
                     case "code_interpreter": return RunStepDeltaCodeInterpreterToolCall.DeserializeRunStepDeltaCodeInterpreterToolCall(element, options);
                     case "file_search": return RunStepDeltaFileSearchToolCall.DeserializeRunStepDeltaFileSearchToolCall(element, options);
                     case "function": return RunStepDeltaFunctionToolCall.DeserializeRunStepDeltaFunctionToolCall(element, options);
+                    case "mcp": return RunStepDeltaMcpToolCall.DeserializeRunStepDeltaMcpToolCall(element, options);
                 }
             }
             return UnknownRunStepDeltaToolCall.DeserializeUnknownRunStepDeltaToolCall(element, options);

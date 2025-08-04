@@ -39,5 +39,3 @@ extends:
     AOTTestInputs:
     - ArtifactName: Azure.Data.AppConfiguration
       ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.ResourceManager.AppConfiguration
-      ExpectedWarningsFilepath: None

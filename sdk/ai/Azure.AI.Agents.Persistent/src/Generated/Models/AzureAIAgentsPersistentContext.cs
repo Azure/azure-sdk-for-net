@@ -146,6 +146,8 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(RunStepDeltaFileSearchToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaFunction))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaFunctionToolCall))]
+    [ModelReaderWriterBuildable(typeof(RunStepDeltaMCPObject))]
+    [ModelReaderWriterBuildable(typeof(RunStepDeltaMcpToolCall))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaMessageCreation))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaMessageCreationObject))]
     [ModelReaderWriterBuildable(typeof(RunStepDeltaToolCall))]

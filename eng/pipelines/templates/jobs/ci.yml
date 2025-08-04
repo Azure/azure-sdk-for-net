@@ -94,11 +94,18 @@ jobs:
         os: windows
 
       variables:
-      - template: /eng/pipelines/templates/variables/codeql.yml
-      - name: Codeql.BuildIdentifier
-        value: ${{ parameters.ServiceDirectory }}
       - name: SDKType
         value: ${{ parameters.SDKType }}
+
+      # Only run CG and codeql on internal build job
+      ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+        templateContext:
+          sdl:
+            componentgovernance:
+              enabled: true
+            codeql:
+              compiled:
+                enabled: false
 
       steps:
         - template: /eng/pipelines/templates/steps/build.yml

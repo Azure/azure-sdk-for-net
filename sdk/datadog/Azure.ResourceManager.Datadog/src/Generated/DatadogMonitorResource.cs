@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), new ModelReaderWriterOptions("W"), AzureResourceManagerDatadogContext.Default), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDatadogContext.Default), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _datadogMonitorResourceMonitorsRestClient.CreateListLinkedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), new ModelReaderWriterOptions("W"), AzureResourceManagerDatadogContext.Default), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDatadogContext.Default), _datadogMonitorResourceMonitorsClientDiagnostics, Pipeline, "DatadogMonitorResource.GetLinkedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

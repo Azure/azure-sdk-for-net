@@ -1,4 +1,4 @@
-# Azure.Provisioning.RedisEnterprise client library for .NET
+# Azure Provisioning RedisEnterprise client library for .NET
 
 Azure.Provisioning.RedisEnterprise simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,54 @@ dotnet add package Azure.Provisioning.RedisEnterprise
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create A Redis Enterprise Cluster With Vector Database
+
+This example demonstrates how to create a Redis Enterprise cluster with RediSearch and RedisJSON modules for vector database capabilities, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cache/redis-enterprise-vectordb/main.bicep).
+
+```C# Snippet:RedisEnterpriseBasic
+Infrastructure infra = new();
+ProvisioningParameter principalId = new ProvisioningParameter("principalId", typeof(string))
+{
+    Description = "The principal ID of the user assigned identity to use for the Redis Enterprise cluster."
+};
+infra.Add(principalId);
+RedisEnterpriseCluster redisEnterprise =
+    new("redisEnterprise", "2022-01-01")
+    {
+        Sku = new RedisEnterpriseSku
+        {
+            Name = RedisEnterpriseSkuName.EnterpriseE10,
+            Capacity = 2
+        }
+    };
+infra.Add(redisEnterprise);
+RedisEnterpriseDatabase database =
+    new("redisDatabase", "2022-01-01")
+    {
+        Name = "default",
+        Parent = redisEnterprise,
+        EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
+        ClusteringPolicy = RedisEnterpriseClusteringPolicy.EnterpriseCluster,
+        Modules =
+        [
+            new RedisEnterpriseModule { Name = "RediSearch" },
+            new RedisEnterpriseModule { Name = "RedisJSON" }
+        ],
+        Port = 10000
+    };
+infra.Add(database);
+AccessPolicyAssignment accessPolicyAssignment =
+    new("accessPolicyAssignment", "2022-01-01")
+    {
+        Parent = database,
+        AccessPolicyName = "default",
+        UserObjectId = principalId
+    };
+infra.Add(accessPolicyAssignment);
+```
 
 ## Troubleshooting
 
