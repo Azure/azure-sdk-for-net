@@ -386,7 +386,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
         catch (RequestFailedException ex)
         {
-            _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}");
+            _logger?.LogError($"Failed to create the test run in the Playwright service: {ex.Message}. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.");
             throw new Exception(Constants.s_playwright_service_create_test_run_error, ex);
         }
     }
