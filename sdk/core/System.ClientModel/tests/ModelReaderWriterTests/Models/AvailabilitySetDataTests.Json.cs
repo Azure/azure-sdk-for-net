@@ -187,11 +187,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(pointer, expectedValue);
 
             CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
+            Assert.AreEqual("{\"y\":123}"u8.ToArray(), model.Patch.GetJson("$.foobar.x"u8).ToArray());
+            Assert.AreEqual(123, model.Patch.GetInt32("$.foobar.x.y"u8));
+            Assert.AreEqual(123, model.Patch.GetNullableInt32("$.foobar.x.y"u8));
 
             var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
 
             var model2 = GetRoundTripModel(data);
             CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
+            Assert.AreEqual("{\"y\":123}"u8.ToArray(), model2.Patch.GetJson("$.foobar.x"u8).ToArray());
+            Assert.AreEqual(123, model2.Patch.GetInt32("$.foobar.x.y"u8));
+            Assert.AreEqual(123, model2.Patch.GetNullableInt32("$.foobar.x.y"u8));
 
             AssertCommon(model, model2);
         }
@@ -260,12 +266,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model2 = GetRoundTripModel(data);
 
             Assert.AreEqual("new-location", model2.Location);
-        }
-
-        [Test]
-        public void AddNewFlattenedProperty()
-        {
-            Assert.Fail("Not implemented");
         }
 
         private AvailabilitySetData GetInitialModel()

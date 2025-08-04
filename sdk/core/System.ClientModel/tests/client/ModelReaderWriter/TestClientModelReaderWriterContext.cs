@@ -25,6 +25,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private UnknownBaseModel_Builder? _unknownBaseModel_Builder;
         private ModelY_Builder? _modelY_Builder;
         private ListOfAset_Builder? _listOfAset_Builder;
+        private DictionaryOfAset_Builder? _dictionaryOfAset_Builder;
 
         protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder? builder)
         {
@@ -39,9 +40,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 Type t when t == typeof(UnknownBaseModel) => _unknownBaseModel_Builder ??= new(),
                 Type t when t == typeof(ModelY) => _modelY_Builder ??= new(),
                 Type t when t == typeof(ListOfAset) => _listOfAset_Builder ??= new(),
+                Type t when t == typeof(DictionaryOfAset) => _dictionaryOfAset_Builder ??= new(),
                 _ => null
             };
             return builder is not null;
+        }
+
+        private class DictionaryOfAset_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(DictionaryOfAset);
+
+            protected override object CreateInstance() => new DictionaryOfAset();
         }
 
         private class ListOfAset_Builder : ModelReaderWriterTypeBuilder

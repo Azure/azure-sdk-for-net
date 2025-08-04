@@ -217,45 +217,13 @@ internal static class JsonPathReaderExtensions
                     if (jsonReader.TokenType == JsonTokenType.PropertyName)
                         jsonReader.Read();
 
-                    if (jsonReader.TokenType != JsonTokenType.StartObject)
-                    {
+                    if (!SkipToProperty(ref jsonReader, pathReader))
                         return false;
-                    }
-
-                    while (jsonReader.Read())
-                    {
-                        if (jsonReader.TokenType == JsonTokenType.PropertyName &&
-                            jsonReader.ValueSpan.SequenceEqual(pathReader.Current.ValueSpan))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            // Skip the value
-                            jsonReader.Skip();
-                        }
-                    }
                     break;
 
                 case JsonPathTokenType.Property:
-                    if (jsonReader.TokenType != JsonTokenType.StartObject)
-                    {
+                    if (!SkipToProperty(ref jsonReader, pathReader))
                         return false;
-                    }
-
-                    while (jsonReader.Read())
-                    {
-                        if (jsonReader.TokenType == JsonTokenType.PropertyName &&
-                            jsonReader.ValueSpan.SequenceEqual(pathReader.Current.ValueSpan))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            // Skip the value
-                            jsonReader.Skip();
-                        }
-                    }
                     break;
 
                 case JsonPathTokenType.ArrayStart:
@@ -310,6 +278,30 @@ internal static class JsonPathReaderExtensions
 
                 default:
                     return false;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool SkipToProperty(ref Utf8JsonReader jsonReader, JsonPathReader pathReader)
+    {
+        if (jsonReader.TokenType != JsonTokenType.StartObject)
+        {
+            return false;
+        }
+
+        while (jsonReader.Read())
+        {
+            if (jsonReader.TokenType == JsonTokenType.PropertyName &&
+                jsonReader.ValueSpan.SequenceEqual(pathReader.Current.ValueSpan))
+            {
+                return true;
+            }
+            else
+            {
+                // Skip the value
+                jsonReader.Skip();
             }
         }
 

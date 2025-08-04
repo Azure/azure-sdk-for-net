@@ -77,7 +77,41 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReplaceEntireArray()
         {
-            Assert.Fail("Not implemented");
+            var model = GetInitialModel();
+
+            model.Patch.Set("$.newArray[-]"u8, "5"u8);
+            model.Patch.Set("$.newArray[-]"u8, "10"u8);
+
+            Assert.AreEqual("[5,10]"u8.ToArray(), model.Patch.GetJson("$.newArray[-]"u8).ToArray());
+            Assert.AreEqual("5"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("10"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
+
+            var data = WriteModifiedModel(model, "newArray", "[5,10]");
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual("[5,10]"u8.ToArray(), model2.Patch.GetJson("$.newArray[-]"u8).ToArray());
+            Assert.AreEqual("5"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("10"u8.ToArray(), model2.Patch.GetJson("$.newArray[1]"u8).ToArray());
+
+            AssertCommon(model, model2);
+
+            model2.Patch.Set("$.newArray"u8, "[1,2,3]"u8);
+
+            Assert.AreEqual("[1,2,3]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[1,2,3]"u8.ToArray(), model2.Patch.GetJson("$.newArray[-]"u8).ToArray());
+            Assert.AreEqual(1, model2.Patch.GetInt32("$.newArray[0]"u8));
+            Assert.AreEqual(2, model2.Patch.GetInt32("$.newArray[1]"u8));
+            Assert.AreEqual(3, model2.Patch.GetInt32("$.newArray[2]"u8));
+
+            var data2 = WriteModifiedModel(model2, "newArray", "[1,2,3]");
+
+            var model3 = GetRoundTripModel(data2);
+
+            Assert.AreEqual("[1,2,3]"u8.ToArray(), model3.Patch.GetJson("$.newArray[-]"u8).ToArray());
+            Assert.AreEqual("[1,2,3]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual(1, model3.Patch.GetInt32("$.newArray[0]"u8));
+            Assert.AreEqual(2, model3.Patch.GetInt32("$.newArray[1]"u8));
+            Assert.AreEqual(3, model3.Patch.GetInt32("$.newArray[2]"u8));
         }
 
         [Test]
@@ -168,9 +202,49 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         [Test]
+        [Ignore("WIP")]
         public void ReplaceItemInArrayClr()
         {
-            Assert.Fail("Not implemented");
+            var model = GetInitialModel();
+
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId1" });
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId2" });
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId3" });
+
+            var data = WriteModifiedModel(model, "virtualMachines", "[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"},{\"id\":\"myExistingVmId3\"}]");
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual(3, model2.VirtualMachines.Count);
+            Assert.AreEqual("myExistingVmId1", model2.VirtualMachines[0].Id);
+            Assert.AreEqual("myExistingVmId2", model2.VirtualMachines[1].Id);
+            Assert.AreEqual("myExistingVmId3", model2.VirtualMachines[2].Id);
+
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"},{\"id\":\"myExistingVmId3\"}]"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
+            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
+            Assert.AreEqual("{\"id\":\"myExistingVmId3\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToArray());
+            Assert.AreEqual("myExistingVmId1", model2.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+            Assert.AreEqual("myExistingVmId2", model2.Patch.GetString("$.properties.virtualMachines[1].id"u8));
+            Assert.AreEqual("myExistingVmId3", model2.Patch.GetString("$.properties.virtualMachines[2].id"u8));
+
+            model2.Patch.Set("$.properties.virtualMachines[1]"u8, new WritableSubResource() { Id = "myNewVmId" });
+
+            var data2 = WriteModifiedModel(model2, "virtualMachines", "[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId\"},{\"id\":\"myExistingVmId3\"}]");
+
+            var model3 = GetRoundTripModel(data2);
+            Assert.AreEqual(3, model3.VirtualMachines.Count);
+            Assert.AreEqual("myExistingVmId1", model3.VirtualMachines[0].Id);
+            Assert.AreEqual("myNewVmId", model3.VirtualMachines[1].Id);
+            Assert.AreEqual("myExistingVmId3", model3.VirtualMachines[2].Id);
+
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId\"},{\"id\":\"myExistingVmId3\"}]"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
+            Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
+            Assert.AreEqual("{\"id\":\"myExistingVmId3\"}"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToArray());
+
+            Assert.AreEqual("myExistingVmId1", model3.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+            Assert.AreEqual("myNewVmId", model3.Patch.GetString("$.properties.virtualMachines[1].id"u8));
+            Assert.AreEqual("myExistingVmId3", model3.Patch.GetString("$.properties.virtualMachines[2].id"u8));
         }
 
         [Test]
@@ -440,7 +514,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void GetPropertyFromUnknownArrayEntry()
         {
-            Assert.Fail("Not implemented");
+            var model = GetInitialModel();
+
+            Assert.Throws<Exception>(() => model.Patch.GetString("$.properties.unknownArray[0].id"u8));
         }
 
         [Test]
