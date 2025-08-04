@@ -201,6 +201,107 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Theory]
+        [InlineData(true, true)]
+        [InlineData(false, true)]
+        [InlineData(true, false)]
+        [InlineData(false, false)]
+        public async Task VerifySamplingOptions(bool isRateLimitedSampler, bool useExporter)
+        {
+            var options;
+            var serviceCollection = new ServiceCollection();
+            if (useExporter)
+            {
+                options = new AzureMonitorExporterOptions();
+                options.ConnectionString = TestConnectionString;
+                if (isRateLimitedSampler)
+                {
+                    options.TracesPerSecond = 10;
+                }
+                serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitorExporter(options);
+            }
+            else // use distro
+            {
+                options = new AzureMonitorOptions();
+                options.ConnectionString = TestConnectionString;
+                if (isRateLimitedSampler)
+                {
+                    options.TracesPerSecond = 10;
+                }
+                serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options);
+            }
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            await StartHostedServicesAsync(serviceProvider);
+
+            EvaluationHelper.EvaluateTracerProvider(
+                serviceProvider: serviceProvider,
+                expectedLiveMetricsProcessor: enableLiveMetrics,
+                expectedProfilingSessionTraceProcessor: true,
+                hasInstrumentations: true,
+                isExpectedSamplerRateLimited: isRateLimitedSampler);
+        }
+
+        [Theory]
+        [InlineData("microsoft.rate_limited", "10", true, true, false)]
+        [InlineData("microsoft.rate_limited", "invalid", false, true, false)]
+        [InlineData("microsoft.fixed_percentage", "0.5", false, true, false)]
+        [InlineData("TraceIdRatioBased", "0.5", false, true, false)]
+        [InlineData("microsoft.rate_limited", "10", true, false, false)]
+        [InlineData("microsoft.rate_limited", "invalid", false, false, false)]
+        [InlineData("microsoft.fixed_percentage", "0.5", false, false, false)]
+        [InlineData("TraceIdRatioBased", "0.5", false, false, false)]
+        [InlineData("microsoft.fixed_percentage", "0.5", false, true, true)]
+        [InlineData("microsoft.fixed_percentage", "0.5", false, false, true)]
+        public async Task VerifySamplingEnvVars(string sampler, string samplerArg, bool isRateLimitedSampler, bool useExporter, bool testPrecendence)
+        {
+            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER, sampler);
+            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER_ARG, samplerArg);
+
+            var serviceCollection = new ServiceCollection();
+            if (useExporter)
+            {
+                serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitorExporter(options =>
+                {
+                    if (testPrecendence)
+                    {
+                        options.TracesPerSecond = 10; // The environment variable should take precedence
+                    }
+                    options.ConnectionString = TestConnectionString;
+                });
+            }
+            else // use distro
+            {
+                serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    if (testPrecendence)
+                    {
+                        options.TracesPerSecond = 10; // The environment variable should take precedence
+                    }
+                    options.ConnectionString = TestConnectionString;
+                });
+            }
+
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            await StartHostedServicesAsync(serviceProvider);
+
+            EvaluationHelper.EvaluateTracerProvider(
+                serviceProvider: serviceProvider,
+                expectedLiveMetricsProcessor: enableLiveMetrics,
+                expectedProfilingSessionTraceProcessor: true,
+                hasInstrumentations: true,
+                isExpectedSamplerRateLimited: isRateLimitedSampler);
+
+            // Clean up environment variables
+            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER, null);
+            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER_ARG, null);
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task VerifyUseAzureMonitorExporter(bool enableLiveMetrics)
@@ -245,7 +346,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 public bool foundStandardMetricsExtractionProcessor;
             }
 
-            public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool hasInstrumentations)
+            public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool hasInstrumentations, bool isExpectedSamplerRateLimited = false)
             {
                 var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
                 Assert.NotNull(tracerProvider);
@@ -271,7 +372,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.NotNull(samplerProperty);
                 var sampler = samplerProperty.GetValue(tracerProvider);
                 Assert.NotNull(sampler);
-                Assert.Equal(nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
+                Assert.Equal(isExpectedSamplerRateLimited ? nameof(Exporter.Internals.RateLimitedSampler) : nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
 
                 // Validate Instrumentations
                 var instrumentationsProperty = tracerProvider.GetType().GetProperty("Instrumentations", BindingFlags.NonPublic | BindingFlags.Instance);

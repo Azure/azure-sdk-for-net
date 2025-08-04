@@ -460,6 +460,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void LiveMetricsNotSupported(string methodName) => WriteEvent(45, methodName);
 
         [Event(46, Message = "Unsupported sampler environment variable configuration. OTEL_TRACES_SAMPLER='{0}', OTEL_TRACES_SAMPLER_ARG='{1}'. Will attempt to fall back to configuration via code, or if that's not specified then default to the ApplicationInsightsSampler with a sampling ratio of 1.", Level = EventLevel.Warning)]
-        public void UnsupportedSamplerEnvironmentVariable(string samplerName, string samplerArg) => WriteEvent(46, samplerName ?? "null", samplerArg ?? "null");
+        public void UnsupportedSamplerEnvironmentVariable(string? samplerName, string? samplerArg) => WriteEvent(46, samplerName ?? "null", samplerArg ?? "null");
     }
 }

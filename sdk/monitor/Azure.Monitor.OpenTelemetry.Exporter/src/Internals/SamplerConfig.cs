@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 /// <summary>
 /// Factory for creating samplers based on configuration and environment variables.
 /// </summary>
-internal static class SamplerFactory
+internal static class SamplerConfig
 {
     private const string RateLimitedSamplerName = "microsoft.rate_limited";
     private const string FixedPercentageSamplerName = "microsoft.fixed_percentage";
@@ -46,8 +46,13 @@ internal static class SamplerFactory
         return CreateSamplerFromOptions(options);
     }
 
-    private static Sampler CreateSamplerFromEnvironmentVariables(string samplerName, string samplerArg)
+    private static Sampler? CreateSamplerFromEnvironmentVariables(string? samplerName, string? samplerArg)
     {
+        if (string.IsNullOrEmpty(samplerName) || string.IsNullOrEmpty(samplerArg))
+        {
+            return null;
+        }
+
         switch (samplerName?.ToLowerInvariant())
         {
             case RateLimitedSamplerName:
@@ -80,10 +85,9 @@ internal static class SamplerFactory
         return new ApplicationInsightsSampler(options.SamplingRatio);
     }
 
-    private static bool TryParseDouble(string value, out double result)
+    private static bool TryParseDouble(string? value, out double result)
     {
         result = 0.0;
-        return !string.IsNullOrEmpty(value) && 
-               double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result);
+        return !string.IsNullOrEmpty(value) && double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result);
     }
 }
