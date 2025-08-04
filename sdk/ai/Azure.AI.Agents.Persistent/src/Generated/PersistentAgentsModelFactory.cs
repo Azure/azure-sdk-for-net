@@ -780,7 +780,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepDetails">
         /// The details of the run step.
         /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaMessageCreation"/> and <see cref="Persistent.RunStepDeltaToolCallObject"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaMCPObject"/>, <see cref="Persistent.RunStepDeltaMessageCreation"/> and <see cref="Persistent.RunStepDeltaToolCallObject"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDelta"/> instance for mocking. </returns>
         public static RunStepDelta RunStepDelta(RunStepDeltaDetail stepDetails = null)
@@ -808,7 +808,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The collection of tool calls for the tool call detail item.
         /// Please note <see cref="Persistent.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/> and <see cref="Persistent.RunStepDeltaFunctionToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/> and <see cref="Persistent.RunStepDeltaMcpToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
         public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
@@ -826,6 +826,16 @@ namespace Azure.AI.Agents.Persistent
         public static RunStepDeltaToolCall RunStepDeltaToolCall(int index = default, string id = null, string type = null)
         {
             return new UnknownRunStepDeltaToolCall(index, id, type, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMcpToolCall"/>. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="arguments"> The arguments for MCP call. *. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMcpToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(int index = default, string id = null, string arguments = null)
+        {
+            return new RunStepDeltaMcpToolCall(index, id, "mcp", serializedAdditionalRawData: null, arguments);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaFunctionToolCall"/>. </summary>
@@ -918,6 +928,16 @@ namespace Azure.AI.Agents.Persistent
         public static RunStepDeltaCodeInterpreterImageOutputObject RunStepDeltaCodeInterpreterImageOutputObject(string fileId = null)
         {
             return new RunStepDeltaCodeInterpreterImageOutputObject(fileId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMCPObject"/>. </summary>
+        /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaMCPObject"/> instance for mocking. </returns>
+        public static RunStepDeltaMCPObject RunStepDeltaMCPObject(IEnumerable<RunStepDeltaMcpToolCall> toolCalls = null)
+        {
+            toolCalls ??= new List<RunStepDeltaMcpToolCall>();
+
+            return new RunStepDeltaMCPObject("mcp", serializedAdditionalRawData: null, toolCalls?.ToList());
         }
     }
 }

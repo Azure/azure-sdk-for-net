@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,35 +18,76 @@ namespace Azure.Generator.Management.Visitors;
 internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
+    private static readonly HashSet<string> _knownModels = new HashSet<string>()
+        {
+            "Sku",
+            "SkuName",
+            "SkuTier",
+            "SkuFamily",
+            "SkuInformation",
+            "Plan",
+            "Usage",
+            "Kind",
+            // Private endpoint definitions which are defined in swagger common-types/privatelinks.json and are used by RPs
+            "PrivateEndpointConnection",
+            "PrivateLinkResource",
+            "PrivateLinkServiceConnectionState",
+            "PrivateEndpointServiceConnectionStatus",
+            "PrivateEndpointConnectionProvisioningState",
+            // not defined in common-types, but common in various RP
+            "PrivateLinkResourceProperties",
+            "PrivateLinkServiceConnectionStateProperty",
+            // internal, but could be public in the future, also make the names more consistent
+            "PrivateEndpointConnectionListResult",
+            "PrivateLinkResourceListResult"
+        };
 
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
-        if (type is not null && TryTransformUrlToUri(model.Name, out var newName))
+        if (type is null)
         {
-            type.Update(name: newName);
+            return null;
         }
 
-        if (type is not null)
+        if (TryTransformUrlToUri(model.Name, out var newName))
         {
-            if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+            type.Update(name: newName);
+            UpdateSerialization(type, newName);
+        }
+
+        if (_knownModels.Contains(model.Name))
+        {
+            var UpdatedName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            type.Update(name: UpdatedName);
+            UpdateSerialization(type, UpdatedName);
+        }
+
+        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+        {
+            var newModelName = $"{enclosingResourceName}Patch";
+
+            _resourceUpdateModelTypes.Add(type.Type);
+
+            type.Update(name: newModelName);
+
+            foreach (var serializationProvider in type.SerializationProviders)
             {
-                var newModelName = $"{enclosingResourceName}Patch";
-
-                _resourceUpdateModelTypes.Add(type.Type);
-
-                type.Update(name: newModelName);
-
-                foreach (var serializationProvider in type.SerializationProviders)
-                {
-                    serializationProvider.Update(name: newModelName);
-                    _resourceUpdateModelTypes.Add(serializationProvider.Type);
-                }
+                serializationProvider.Update(name: newModelName);
+                _resourceUpdateModelTypes.Add(serializationProvider.Type);
             }
         }
         return base.PreVisitModel(model, type);
+    }
+
+    private static void UpdateSerialization(ModelProvider type, string newName)
+    {
+        foreach (var serializationProvider in type.SerializationProviders)
+        {
+            serializationProvider.Update(name: newName);
+        }
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)

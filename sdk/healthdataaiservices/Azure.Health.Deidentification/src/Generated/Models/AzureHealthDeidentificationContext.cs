@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.Health.Deidentification
 {
@@ -13,6 +14,22 @@ namespace Azure.Health.Deidentification
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(DeidentificationJob))]
+    [ModelReaderWriterBuildable(typeof(SourceStorageLocation))]
+    [ModelReaderWriterBuildable(typeof(TargetStorageLocation))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationJobCustomizationOptions))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationJobSummary))]
+    [ModelReaderWriterBuildable(typeof(PagedDeidentificationJob))]
+    [ModelReaderWriterBuildable(typeof(PagedDeidentificationDocumentDetails))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationDocumentDetails))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationDocumentLocation))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationContent))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationCustomizationOptions))]
+    [ModelReaderWriterBuildable(typeof(DeidentificationResult))]
+    [ModelReaderWriterBuildable(typeof(PhiTaggerResult))]
+    [ModelReaderWriterBuildable(typeof(PhiEntity))]
+    [ModelReaderWriterBuildable(typeof(StringIndex))]
     public partial class AzureHealthDeidentificationContext : ModelReaderWriterContext
     {
     }

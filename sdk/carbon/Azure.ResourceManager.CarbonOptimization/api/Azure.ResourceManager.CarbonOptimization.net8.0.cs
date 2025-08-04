@@ -1,27 +1,5 @@
 namespace Azure.ResourceManager.CarbonOptimization
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmission))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionItemDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionListResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionMonthlySummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionOverallSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryDateRange))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionQueryFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemMonthlySummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionTopItemsSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ItemDetailsQueryFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.MonthlySummaryReportQueryFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.OverallSummaryReportQueryFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionItemDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemMonthlySummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ResourceCarbonEmissionTopItemsSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionItemDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemMonthlySummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.ResourceGroupCarbonEmissionTopItemsSummary))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.SubscriptionAccessDecision))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.TopItemsMonthlySummaryReportQueryFilter))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.CarbonOptimization.Models.TopItemsSummaryReportQueryFilter))]
     public partial class AzureResourceManagerCarbonOptimizationContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerCarbonOptimizationContext() { }
