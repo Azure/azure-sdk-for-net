@@ -24,9 +24,9 @@ The script will install the latest version of the azsdk cli executable from [too
 
 Azure SDK MCP server code is in [azure-sdk-tools/tools/azsdk-cli/Azure.Sdk.Tools.Cli](https://github.com/Azure/azure-sdk-tools/tree/main/tools/azsdk-cli/Azure.Sdk.Tools.Cli).
 
-Azure SDK MCP servers should support [stdio and sse transports](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse).
+Azure SDK MCP servers should support [stdio and streamable HTTP transports](https://modelcontextprotocol.io/docs/concepts/transports).
 
-When running in copilot the default is stdio mode, but SSE is useful to support for external debugging.
+When running in copilot the default is stdio mode.
 
 ### Developing MCP servers in C#
 
