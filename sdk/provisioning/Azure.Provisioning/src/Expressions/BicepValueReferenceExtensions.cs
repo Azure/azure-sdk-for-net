@@ -30,17 +30,11 @@ public static class BicepValueReferenceExtensions
     /// <returns></returns>
     public static BicepExpression ToBicepExpression<T>(this BicepValue<T> value)
     {
-        if (value is BicepListIndexer<T> indexer)
+        return value switch
         {
-            return BicepSyntax.Index(((IBicepValue)indexer).Self!.GetReference(), new IntLiteralExpression(indexer.Index));
-        }
-        else if (value is BicepDictionaryIndexer<T> indexerDict)
-        {
-            return BicepSyntax.Index(((IBicepValue)indexerDict).Self!.GetReference(), new StringLiteralExpression(indexerDict.Key));
-        }
-        else
-        {
-            return ((IBicepValue)value).ToBicepExpression();
-        }
+            BicepListIndexer<T> listIndexer => BicepSyntax.Index(((IBicepValue)listIndexer).Self!.GetReference(), new IntLiteralExpression(listIndexer.Index)),
+            BicepDictionaryIndexer<T> dictIndexer => BicepSyntax.Index(((IBicepValue)dictIndexer).Self!.GetReference(), new StringLiteralExpression(dictIndexer.Key)),
+            _ => ((IBicepValue)value).ToBicepExpression()
+        };
     }
 }
