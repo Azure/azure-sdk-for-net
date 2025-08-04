@@ -296,13 +296,13 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<StorageTaskReportInstance> Get(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageTaskReportInstance> GetStorageTasksReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTasksReportGetCollectionResultOfT(
+            return new StorageTasksReportGetStorageTasksReportsCollectionResultOfT(
                 _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,13 +316,13 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<StorageTaskReportInstance> GetAsyncAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTasksReportsAsyncAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StorageTasksReportGetAsyncCollectionResultOfT(
+            return new StorageTasksReportGetStorageTasksReportsAsyncCollectionResultOfT(
                 _storageTasksReportRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

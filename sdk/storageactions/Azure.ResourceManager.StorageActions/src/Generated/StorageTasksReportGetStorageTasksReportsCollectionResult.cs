@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    internal partial class StorageTasksReportGetAsyncCollectionResultOfT : AsyncPageable<StorageTaskReportInstance>
+    internal partial class StorageTasksReportGetStorageTasksReportsCollectionResult : Pageable<BinaryData>
     {
         private readonly StorageTasksReport _client;
         private readonly Guid _subscriptionId;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.StorageActions
         private readonly string _filter;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of StorageTasksReportGetAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of StorageTasksReportGetStorageTasksReportsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StorageTasksReport client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="storageTaskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="storageTaskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public StorageTasksReportGetAsyncCollectionResultOfT(StorageTasksReport client, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public StorageTasksReportGetStorageTasksReportsCollectionResult(StorageTasksReport client, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storageTaskName, nameof(storageTaskName));
@@ -49,23 +48,28 @@ namespace Azure.ResourceManager.StorageActions
             _context = context;
         }
 
-        /// <summary> Gets the pages of StorageTasksReportGetAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of StorageTasksReportGetStorageTasksReportsCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of StorageTasksReportGetAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StorageTaskReportInstance>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of StorageTasksReportGetStorageTasksReportsCollectionResult as an enumerable collection. </returns>
+        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
                 StorageTaskReportSummary responseWithType = StorageTaskReportSummary.FromResponse(response);
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in responseWithType.Value)
+                {
+                    items.Add(BinaryData.FromObjectAsJson(item));
+                }
                 nextPage = responseWithType.NextLink;
-                yield return Page<StorageTaskReportInstance>.FromValues(responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
@@ -73,14 +77,14 @@ namespace Azure.ResourceManager.StorageActions
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRequest(nextLink, _subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _filter, _context) : _client.CreateGetRequest(_subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasksReport.Get");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTasksReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _filter, _context) : _client.CreateGetStorageTasksReportsRequest(_subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _filter, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasksReport.GetStorageTasksReports");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

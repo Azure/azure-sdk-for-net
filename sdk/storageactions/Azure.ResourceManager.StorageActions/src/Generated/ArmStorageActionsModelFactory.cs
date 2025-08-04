@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="elseOperations"> List of operations to execute in the else block. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="elseOperations"/> is null. </exception>
         /// <returns> A new <see cref="Models.StorageTaskAction"/> instance for mocking. </returns>
-        public static StorageTaskAction StorageTaskAction(StorageTaskIfCondition @if = default, IList<StorageTaskOperationInfo> elseOperations = default)
+        public static StorageTaskAction StorageTaskAction(StorageTaskIfCondition @if = default, IList<StorageTaskOperationInfo> elseOperations)
         {
             return new StorageTaskAction(@if, elseOperations is null ? default : new StorageTaskElseCondition(elseOperations, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }

@@ -6568,7 +6568,7 @@
             {
               "$id": "501",
               "kind": "paging",
-              "name": "list",
+              "name": "GetStorageTasksReports",
               "accessibility": "public",
               "apiVersions": [
                 "2023-01-01"
@@ -6576,7 +6576,7 @@
               "doc": "Fetch the storage tasks run report summary for each assignment.",
               "operation": {
                 "$id": "502",
-                "name": "list",
+                "name": "GetStorageTasksReports",
                 "resourceName": "StorageTasks",
                 "doc": "Fetch the storage tasks run report summary for each assignment.",
                 "accessibility": "public",

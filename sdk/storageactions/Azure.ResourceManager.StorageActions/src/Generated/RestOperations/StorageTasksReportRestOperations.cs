@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
+        internal HttpMessage CreateGetStorageTasksReportsRequest(Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageActions
             return message;
         }
 
-        internal HttpMessage CreateNextGetRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetStorageTasksReportsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
