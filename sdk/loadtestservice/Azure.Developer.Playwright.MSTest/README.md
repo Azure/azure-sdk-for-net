@@ -134,7 +134,7 @@ Key concepts of the Azure Playwright MSTest SDK for .NET can be found [here](htt
 
 Code samples for using this SDK can be found in the following locations
 
--   [.NET Azure Playwright MSTest Library Code Samples](https://aka.ms/pww/docs/sample)
+-   [.NET Azure Playwright MSTest Library Code Samples](https://aka.ms/pww/samples)
 
 ## Troubleshooting
 

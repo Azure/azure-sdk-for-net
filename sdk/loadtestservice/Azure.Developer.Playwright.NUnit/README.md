@@ -144,13 +144,13 @@ dotnet test
 
 ## Key concepts
 
-Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/docs/what-is-mpt)
+Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/docs/overview)
 
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
 
--   [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/docs/sample)
+-   [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/samples)
 
 ## Troubleshooting
 
