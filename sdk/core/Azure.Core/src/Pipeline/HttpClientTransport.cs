@@ -23,8 +23,12 @@ namespace Azure.Core.Pipeline
         /// </summary>
         public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
+        private volatile HttpClient _client;
+
         // The transport's private HttpClient is internal because it is used by tests.
-        internal HttpClient Client { get; }
+        internal HttpClient Client => _client;
+
+        internal Func<HttpPipelineTransportOptions, HttpClientTransport>? TransportFactory { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -45,7 +49,7 @@ namespace Azure.Core.Pipeline
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
         public HttpClientTransport(HttpMessageHandler messageHandler)
         {
-            Client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
+            _client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
         }
 
         /// <summary>
@@ -54,7 +58,50 @@ namespace Azure.Core.Pipeline
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client)
         {
-            Client = client ?? throw new ArgumentNullException(nameof(client));
+            _client = client ?? throw new ArgumentNullException(nameof(client));
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided factory.
+        /// Subsequent calls to <see cref="HttpPipelineTransport.TryUpdateTransport(HttpPipelineTransportOptions)"/> will use the new transport.
+        /// </summary>
+        /// <param name="transportFactory">The factory function to create the transport.</param>
+        /// <param name="options">The options to pass to the factory.</param>
+        /// <returns>A new <see cref="HttpClientTransport"/> instance.</returns>
+        public static HttpClientTransport Create(
+            Func<HttpPipelineTransportOptions, HttpClientTransport> transportFactory,
+            HttpPipelineTransportOptions? options = null)
+        {
+            if (transportFactory == null)
+            {
+                throw new ArgumentNullException(nameof(transportFactory));
+            }
+
+            var transport = transportFactory(options ?? new HttpPipelineTransportOptions());
+            transport.TransportFactory = transportFactory;
+            return transport;
+        }
+
+        /// <inheritdoc />
+        public override bool TryUpdateTransport(HttpPipelineTransportOptions options)
+        {
+            if (TransportFactory == null)
+            {
+                return false;
+            }
+
+            var newTransport = TransportFactory(options);
+            if (newTransport == null)
+            {
+                return false;
+            }
+
+            var oldClient = Interlocked.Exchange(ref _client, newTransport.Client);
+            if (oldClient != null && oldClient != Shared.Client)
+            {
+                oldClient.Dispose();
+            }
+            return true;
         }
 
         /// <inheritdoc />
@@ -253,7 +300,7 @@ namespace Azure.Core.Pipeline
         {
             if (this != Shared)
             {
-                Client.Dispose();
+                _client.Dispose();
             }
 
             GC.SuppressFinalize(this);

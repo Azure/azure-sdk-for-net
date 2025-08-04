@@ -4,7 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
     {
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
-        private protected readonly HttpPipelineTransportPolicy _transportPolicy;
+        private protected readonly HttpPipelineTransport _transport;
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
 
@@ -48,22 +48,27 @@ namespace Azure.Core.Pipeline
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[]? policies = null, ResponseClassifier? responseClassifier = null)
         {
-            var localTransport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             ResponseClassifier = responseClassifier ?? ResponseClassifier.Shared;
 
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
             HttpPipelinePolicy[] all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = _transportPolicy = new HttpPipelineTransportPolicy(localTransport,
+            all[policies.Length] = new HttpPipelineTransportPolicy(_transport,
                 ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
 
-            _pipeline = all;
-            for (int i = 0; i < _pipeline.Length; i++)
+            for (int i = 0; i < policies.Length; i++)
             {
-                HttpPipelinePolicy policy = _pipeline.Span[i];
-                policy.OwningPipeline = this;
+                // If the policy implements ITransportUpdated, we need to subscribe to its TransportUpdated event
+                if (policies[i] is ITransportUpdated transportUpdated)
+                {
+                    transportUpdated.TransportUpdated += options => _transport.TryUpdateTransport(options);
+                    break;
+                }
             }
+
+            _pipeline = all;
         }
 
         internal HttpPipeline(
@@ -75,18 +80,23 @@ namespace Azure.Core.Pipeline
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
-            var localTransport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
 
-            _transportPolicy = pipeline[pipeline.Length - 1] as HttpPipelineTransportPolicy ?? throw new InvalidOperationException("The last policy in the pipeline must be of type HttpPipelineTransportPolicy.");
+            Debug.Assert(pipeline[pipeline.Length - 1] is HttpPipelineTransportPolicy);
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
             _internallyConstructed = true;
-            for (int i = 0; i < _pipeline.Length; i++)
+
+            for (int i = 0; i < pipeline.Length; i++)
             {
-                HttpPipelinePolicy policy = _pipeline.Span[i];
-                policy.OwningPipeline = this;
+                // If the policy implements ITransportUpdated, we need to subscribe to its TransportUpdated event
+                if (pipeline[i] is ITransportUpdated transportUpdated)
+                {
+                    transportUpdated.TransportUpdated += options => _transport.TryUpdateTransport(options);
+                    break;
+                }
             }
         }
 
@@ -95,7 +105,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-            => _transportPolicy.Transport.CreateRequest();
+            => _transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -257,19 +267,6 @@ namespace Azure.Core.Pipeline
             Argument.AssertNotNull(messageProperties, nameof(messageProperties));
             CurrentHttpMessagePropertiesScope.Value = new HttpMessagePropertiesScope(messageProperties, CurrentHttpMessagePropertiesScope.Value);
             return CurrentHttpMessagePropertiesScope.Value;
-        }
-
-        /// <summary>
-        /// Updates the policy at the specified position in the pipeline.
-        /// </summary>
-        /// <param name="position">The position of the policy to update.</param>
-        /// <param name="options">The options to update the policy with.</param>
-        public void UpdatePolicy(HttpPipelineUpdatePosition position, object options)
-        {
-            if (position == HttpPipelineUpdatePosition.Transport && options is HttpPipelineTransportOptions transportOptions)
-            {
-                _transportPolicy.Update(transportOptions);
-            }
         }
 
         private ReadOnlyMemory<HttpPipelinePolicy> CreateRequestPipeline(HttpPipelinePolicy[] policies, List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)> customPolicies)

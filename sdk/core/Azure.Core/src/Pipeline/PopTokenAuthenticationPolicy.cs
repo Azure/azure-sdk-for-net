@@ -23,6 +23,9 @@ namespace Azure.Core.Pipeline
         private volatile HttpPipelineTransportOptions _transportOptions;
         private string? _currentBindingCertThumbprint;
 
+        // event  for when the transport needs to be updated
+        internal event Action<HttpPipelineTransportOptions>? TransportUpdated;
+
         /// <summary>
         /// Creates a new instance of <see cref="PopTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
         /// </summary>

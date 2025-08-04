@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,6 +31,18 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns></returns>
         public abstract Request CreateRequest();
+
+        /// <summary>
+        /// Updates the transport with the provided <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The options to use for updating the transport.</param>
+        /// <returns>
+        /// <c>true</c> if the transport was updated successfully; otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool TryUpdateTransport(HttpPipelineTransportOptions options)
+        {
+            return false;
+        }
 
         /// <summary>
         /// Creates the default <see cref="HttpPipelineTransport"/> based on the current environment and configuration.
