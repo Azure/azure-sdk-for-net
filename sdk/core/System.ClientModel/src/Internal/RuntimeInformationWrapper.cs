@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace System.ClientModel.Internal
+namespace System.ClientModel
 {
     internal class RuntimeInformationWrapper
     {

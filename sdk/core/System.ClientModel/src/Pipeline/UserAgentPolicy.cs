@@ -86,7 +86,7 @@ public class UserAgentPolicy : PipelinePolicy
     /// <returns>A formatted user agent string.</returns>
     public static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId = null)
     {
-        return GenerateUserAgentString(callerAssembly, applicationId, new Internal.RuntimeInformationWrapper());
+        return GenerateUserAgentString(callerAssembly, applicationId, new RuntimeInformationWrapper());
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class UserAgentPolicy : PipelinePolicy
     /// <param name="applicationId">An optional application ID to prepend to the user agent string.</param>
     /// <param name="runtimeInformation">Custom runtime information for testing scenarios.</param>
     /// <returns>A formatted user agent string.</returns>
-    internal static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId, Internal.RuntimeInformationWrapper runtimeInformation)
+    internal static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId, RuntimeInformationWrapper runtimeInformation)
     {
         AssemblyInformationalVersionAttribute? versionAttribute = callerAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
         if (versionAttribute == null)

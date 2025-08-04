@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Internal;
+using System.ClientModel;
 using System.Runtime.InteropServices;
 
 namespace ClientModel.Tests.Mocks
