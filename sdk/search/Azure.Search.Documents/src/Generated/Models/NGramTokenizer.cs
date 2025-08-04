@@ -27,15 +27,21 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="NGramTokenizer"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
         /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
         /// <param name="tokenChars"> Character classes to keep in the tokens. </param>
-        internal NGramTokenizer(string oDataType, string name, int? minGram, int? maxGram, IList<TokenCharacterKind> tokenChars) : base(oDataType, name)
+        internal NGramTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? minGram, int? maxGram, IList<TokenCharacterKind> tokenChars) : base(oDataType, name, serializedAdditionalRawData)
         {
             MinGram = minGram;
             MaxGram = maxGram;
             TokenChars = tokenChars;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.NGramTokenizer";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NGramTokenizer"/> for deserialization. </summary>
+        internal NGramTokenizer()
+        {
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </summary>
