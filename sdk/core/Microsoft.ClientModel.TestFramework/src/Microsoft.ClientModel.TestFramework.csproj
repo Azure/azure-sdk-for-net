@@ -9,6 +9,7 @@
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
