@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.24",
-    "@azure-tools/typespec-azure-core": "0.58.0",
+    "@azure-tools/typespec-azure-core": "0.59.0-dev.8",
     "@azure-tools/typespec-azure-resource-manager": "0.58.0",
     "@azure-tools/typespec-azure-rulesets": "0.58.0",
     "@azure-tools/typespec-client-generator-core": "0.58.1",
