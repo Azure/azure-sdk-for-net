@@ -69,7 +69,7 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.NotNull(serializationProvider);
             Assert.AreEqual(serializationProvider!.Name, updatedSkuModelName);
             var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.StartsWith("Deserialize"));
-            Assert.NotNull("DeserializeSamplesSku", deserializationMethod!.Signature.Name);
+            Assert.AreEqual("DeserializeSamplesSku", deserializationMethod!.Signature.Name);
         }
     }
 }
