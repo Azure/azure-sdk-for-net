@@ -34,11 +34,11 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
-            var visitor = new TestVisitor();
+
+            // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
-            var transformedModel = visitor.InvokeVisit(model, type);
-            Assert.That(transformedModel?.Name, Is.EqualTo(TestModelName.Replace("Url", "Uri")));
-            Assert.That(transformedModel?.Properties[0].Name, Is.EqualTo(TestProtyName.Replace("Url", "Uri")));
+            Assert.That(type?.Name, Is.EqualTo(TestModelName.Replace("Url", "Uri")));
+            Assert.That(type?.Properties[0].Name, Is.EqualTo(TestProtyName.Replace("Url", "Uri")));
         }
 
         [Test]
@@ -58,22 +58,18 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
-            var visitor = new TestVisitor();
-            var type = plugin.Object.TypeFactory.CreateModel(model);
-            var transformedModel = visitor.InvokeVisit(model, type);
-            var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
-            Assert.AreEqual(transformedModel?.Name, $"{resourceProviderName}{skuModelName}");
-            var serializationProvider = transformedModel?.SerializationProviders.SingleOrDefault();
-            Assert.NotNull(serializationProvider);
-            Assert.AreEqual(serializationProvider!.Name, $"{resourceProviderName}{skuModelName}");
-        }
 
-        private class TestVisitor : NameVisitor
-        {
-            public ModelProvider? InvokeVisit(InputModelType model, ModelProvider? type)
-            {
-                return base.PreVisitModel(model, type);
-            }
+            // PreVisitModel is called during the model creation
+            var type = plugin.Object.TypeFactory.CreateModel(model);
+            var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
+            var updatedSkuModelName = $"{resourceProviderName}{skuModelName}";
+            Assert.AreEqual(type?.Name, updatedSkuModelName);
+            Assert.AreEqual(type!.Constructors[0].Signature.Name, $"{resourceProviderName}{skuModelName}");
+            var serializationProvider = type?.SerializationProviders.SingleOrDefault();
+            Assert.NotNull(serializationProvider);
+            Assert.AreEqual(serializationProvider!.Name, updatedSkuModelName);
+            var deserializationMethod = serializationProvider.Methods.SingleOrDefault(m => m.Signature.Name.StartsWith("Deserialize"));
+            Assert.AreEqual("DeserializeSamplesSku", deserializationMethod!.Signature.Name);
         }
     }
 }

@@ -831,7 +831,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaMcpToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="arguments"> The arguments for MCP call. *. </param>
+        /// <param name="arguments"> The arguments for MCP call. </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaMcpToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(int index = default, string id = null, string arguments = null)
         {
