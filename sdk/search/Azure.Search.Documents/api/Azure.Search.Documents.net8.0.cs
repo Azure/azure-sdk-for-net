@@ -18,7 +18,6 @@ namespace Azure.Search.Documents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.AutocompleteOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.AutocompleteOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureSearchDocumentsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSearchDocumentsContext() { }
