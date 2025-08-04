@@ -59,10 +59,10 @@ namespace Azure.Core
         {
             // Use System.ClientModel's UserAgentPolicy.GenerateUserAgentString and apply Azure SDK specific transformations
             string userAgentString = UserAgentPolicy.GenerateUserAgentString(clientAssembly, applicationId);
-            return ApplyAzureSdkTransformations(userAgentString, clientAssembly);
+            return ApplyAzureTransformations(userAgentString, clientAssembly);
         }
 
-        private static string ApplyAzureSdkTransformations(string userAgentString, Assembly clientAssembly)
+        private static string ApplyAzureTransformations(string userAgentString, Assembly clientAssembly)
         {
             // Transform the assembly name from System.ClientModel format to Azure SDK format
             string assemblyName = clientAssembly.GetName().Name!;

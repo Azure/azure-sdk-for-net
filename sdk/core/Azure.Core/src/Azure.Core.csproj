@@ -29,8 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- TODO: Switch back to package reference after System.ClientModel includes UserAgentPolicy.GenerateUserAgentString - Issue: https://github.com/Azure/azure-sdk-for-net/issues/51517 -->
     <ProjectReference Include="../../System.ClientModel/src/System.ClientModel.csproj" />
     <ProjectReference Include="../../System.ClientModel/gen/System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+    <!-- 
+    <PackageReference Include="System.ClientModel" />
+    -->
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
