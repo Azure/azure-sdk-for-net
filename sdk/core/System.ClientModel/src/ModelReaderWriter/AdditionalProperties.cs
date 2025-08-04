@@ -27,29 +27,29 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public bool Contains(ReadOnlySpan<byte> name)
+    public bool Contains(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
             return false;
 
-        return _properties.ContainsKey(name);
+        return _properties.ContainsKey(jsonPath);
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public bool ContainsStartsWith(ReadOnlySpan<byte> name)
+    public bool ContainsStartsWith(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
             return false;
 
         foreach (var kvp in _properties)
         {
-            if (name.Length == kvp.Key.Length || kvp.Key.AsSpan().StartsWith(name))
+            if (jsonPath.Length == kvp.Key.Length || kvp.Key.AsSpan().StartsWith(jsonPath))
             {
                 return true;
             }
@@ -61,84 +61,84 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> name, string value)
+    public void Set(ReadOnlySpan<byte> jsonPath, string value)
     {
-        SetInternal(name, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(value));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> name, byte[] value)
+    public void Set(ReadOnlySpan<byte> jsonPath, byte[] value)
     {
-        SetInternal(name, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(value));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> name, BinaryData value)
+    public void Set(ReadOnlySpan<byte> jsonPath, BinaryData value)
     {
-        SetInternal(name, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(value));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public void Set<T>(ReadOnlySpan<byte> name, IJsonModel<T> value)
+    public void Set<T>(ReadOnlySpan<byte> jsonPath, IJsonModel<T> value)
     {
         var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
         using var reader = writer.ExtractReader();
-        SetInternal(name, EncodeValue(reader.ToBinaryData()));
+        SetInternal(jsonPath, EncodeValue(reader.ToBinaryData()));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> name, int value)
+    public void Set(ReadOnlySpan<byte> jsonPath, int value)
     {
         // Int32
-        SetInternal(name, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(value));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="json"></param>
-    public void Set(ReadOnlySpan<byte> name, ReadOnlySpan<byte> json)
+    public void Set(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> json)
     {
-        SetInternal(name, EncodeValue(json));
+        SetInternal(jsonPath, EncodeValue(json));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> name, bool value)
+    public void Set(ReadOnlySpan<byte> jsonPath, bool value)
     {
-        SetInternal(name, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(value));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="jsonPath"></param>
     /// <param name="value"></param>
     [RequiresUnreferencedCode("RequiresUnreferencedCode")]
     [RequiresDynamicCode("RequiresDynamicCode")]
-    public void Set(ReadOnlySpan<byte> name, object value)
+    public void Set(ReadOnlySpan<byte> jsonPath, object value)
     {
         if (IsAnonymousType(value))
         {
@@ -146,35 +146,35 @@ public partial struct AdditionalProperties
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
-            SetInternal(name, EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options)));
+            SetInternal(jsonPath, EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options)));
         }
         else
         {
-            SetInternal(name, EncodeValue(value));
+            SetInternal(jsonPath, EncodeValue(value));
         }
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPointer"></param>
-    public void SetNull(ReadOnlySpan<byte> jsonPointer)
+    /// <param name="jsonPath"></param>
+    public void SetNull(ReadOnlySpan<byte> jsonPath)
     {
-        Set(jsonPointer, NullValue.Instance);
+        Set(jsonPath, NullValue.Instance);
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="propertyName"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public string? GetString(ReadOnlySpan<byte> propertyName)
+    public string? GetString(ReadOnlySpan<byte> jsonPath)
     {
-        var encodedValue = GetPrimitive(propertyName);
-        if (encodedValue.Kind == ValueKind.Null)
+        var bytes = GetValue(jsonPath);
+        if (bytes.Span.SequenceEqual(s_nullValueArray.Value.Span))
             return null;
 
-        var span = encodedValue.Value.Span;
+        var span = bytes.Span;
         if (span[0] == (byte)'"' && span[span.Length - 1] == (byte)'"')
             span = span.Slice(1, span.Length - 2);
 
@@ -188,40 +188,15 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPointer"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public ReadOnlyMemory<byte> GetStringUtf8(ReadOnlySpan<byte> jsonPointer)
+    public int? GetNullableInt32(ReadOnlySpan<byte> jsonPath)
     {
-        var encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Value.Length == 0 || encodedValue.Kind != ValueKind.Utf8String)
-            ThrowPropertyNotFoundException(jsonPointer);
-
-        // Parse JSON string representation (skip the first byte which is the kind)
-        ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
-#if NET6_0_OR_GREATER
-        string jsonString = Encoding.UTF8.GetString(valueBytes);
-#else
-        string jsonString = Encoding.UTF8.GetString(valueBytes.ToArray());
-#endif
-        string actualString = JsonSerializer.Deserialize<string>(jsonString) ?? string.Empty;
-
-        // Return the actual UTF8 bytes of the string (not the JSON representation)
-        return Encoding.UTF8.GetBytes(actualString);
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPointer"></param>
-    /// <returns></returns>
-    public int? GetNullableInt32(ReadOnlySpan<byte> jsonPointer)
-    {
-        var encodedBytes = GetPrimitive(jsonPointer);
-
-        if (encodedBytes.Kind == ValueKind.Null)
+        var bytes = GetValue(jsonPath);
+        if (bytes.Span.SequenceEqual(s_nullValueArray.Value.Span))
             return null;
 
-        if (Utf8Parser.TryParse(encodedBytes.Value.Span, out int value, out _))
+        if (Utf8Parser.TryParse(bytes.Span, out int value, out _))
         {
             return value;
         }
@@ -234,13 +209,13 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPointer"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public int GetInt32(ReadOnlySpan<byte> jsonPointer)
+    public int GetInt32(ReadOnlySpan<byte> jsonPath)
     {
-        var encodedBytes = GetPrimitive(jsonPointer);
+        var bytes = GetValue(jsonPath);
 
-        if (Utf8Parser.TryParse(encodedBytes.Value.Span, out int value, out _))
+        if (Utf8Parser.TryParse(bytes.Span, out int value, out _))
         {
             return value;
         }
@@ -253,13 +228,13 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPointer"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public bool GetBoolean(ReadOnlySpan<byte> jsonPointer)
+    public bool GetBoolean(ReadOnlySpan<byte> jsonPath)
     {
-        var encodedBytes = GetPrimitive(jsonPointer);
+        var bytes = GetValue(jsonPath);
 
-        if (Utf8Parser.TryParse(encodedBytes.Value.Span, out bool value, out _))
+        if (Utf8Parser.TryParse(bytes.Span, out bool value, out _))
         {
             return value;
         }
@@ -272,25 +247,21 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPointer"></param>
+    /// <param name="jsonPath"></param>
     /// <returns></returns>
-    public BinaryData GetJson(ReadOnlySpan<byte> jsonPointer)
+    public BinaryData GetJson(ReadOnlySpan<byte> jsonPath)
     {
-        var encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Value.Length == 0 || !encodedValue.Kind.HasFlag(ValueKind.Json))
-            ThrowPropertyNotFoundException(jsonPointer);
-
-        return BinaryData.FromBytes(encodedValue.Value);
+        return new(GetValue(jsonPath));
     }
 
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPointer"></param>
-    public void Remove(ReadOnlySpan<byte> jsonPointer)
+    /// <param name="jsonPath"></param>
+    public void Remove(ReadOnlySpan<byte> jsonPath)
     {
         // Special (remove, set null, etc)
-        Set(jsonPointer, RemovedValue.Instance);
+        Set(jsonPath, RemovedValue.Instance);
     }
 
     /// <summary>

@@ -265,7 +265,8 @@ internal static class JsonPathReaderExtensions
                     break;
 
                 case JsonPathTokenType.PropertySeparator:
-                    jsonReader.Read();
+                    if (jsonReader.TokenType != JsonTokenType.StartObject)
+                        jsonReader.Read();
                     break;
 
                 case JsonPathTokenType.End:

@@ -5,7 +5,7 @@ namespace System.ClientModel.Primitives;
 
 public partial struct AdditionalProperties
 {
-    private struct EncodedValue
+    private readonly struct EncodedValue
     {
         public static EncodedValue Empty => new(ValueKind.None, ReadOnlyMemory<byte>.Empty);
 
@@ -15,7 +15,7 @@ public partial struct AdditionalProperties
             Value = value;
         }
 
-        public ValueKind Kind { get; set; }
+        public ValueKind Kind { get; }
         public ReadOnlyMemory<byte> Value { get; }
     }
 }

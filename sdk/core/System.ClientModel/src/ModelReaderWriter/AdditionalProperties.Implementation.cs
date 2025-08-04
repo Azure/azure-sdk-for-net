@@ -54,11 +54,12 @@ public partial struct AdditionalProperties
     }
 
     // Helper method to get raw encoded value bytes
-    private EncodedValue GetEncodedValue(ReadOnlySpan<byte> jsonPath)
+    private ReadOnlyMemory<byte> GetValue(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
         {
-            return EncodedValue.Empty;
+            ThrowPropertyNotFoundException(jsonPath);
+            return ReadOnlyMemory<byte>.Empty;
         }
 
         if (jsonPath.IsArrayInsert())
@@ -74,16 +75,19 @@ public partial struct AdditionalProperties
                 Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
                 childPath[0] = (byte)'$';
                 childSlice.CopyTo(childPath.Slice(1));
-                return new EncodedValue(currentValue.Kind, currentValue.Value.GetJson(childPath).ToArray());
+                return currentValue.Value.GetJson(childPath);
             }
 
-            return EncodedValue.Empty;
+            ThrowPropertyNotFoundException(jsonPath);
+            return ReadOnlyMemory<byte>.Empty;
         }
-
-        return encodedValue;
+        else
+        {
+            return encodedValue.Value;
+        }
     }
 
-    private bool TryGetParentMatch(ReadOnlySpan<byte> name, bool includeRoot, [NotNullWhen(true)] out ReadOnlySpan<byte> parentPath, out EncodedValue encodedValue)
+    private bool TryGetParentMatch(ReadOnlySpan<byte> jsonPath, bool includeRoot, [NotNullWhen(true)] out ReadOnlySpan<byte> parentPath, out EncodedValue encodedValue)
     {
         parentPath = default;
         encodedValue = EncodedValue.Empty;
@@ -92,7 +96,7 @@ public partial struct AdditionalProperties
             return false;
         }
 
-        parentPath = name.GetParent();
+        parentPath = jsonPath.GetParent();
         while (parentPath.Length > 0)
         {
             if (_properties.TryGetValue(parentPath, out encodedValue))
@@ -115,14 +119,14 @@ public partial struct AdditionalProperties
         return false;
     }
 
-    private EncodedValue CombineAllArrayItems(ReadOnlySpan<byte> name)
+    private ReadOnlyMemory<byte> CombineAllArrayItems(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties == null)
         {
-            return EncodedValue.Empty;
+            return ReadOnlyMemory<byte>.Empty;
         }
 
-        var rootArrayName = name.Slice(0, name.Length - 2);
+        var rootArrayName = jsonPath.Slice(0, jsonPath.Length - 2);
         //is it worth it to calculate the size?
         int size = 0;
         int count = 0;
@@ -138,11 +142,11 @@ public partial struct AdditionalProperties
         if (count == 0)
         {
             //check for the full array entry
-            if (_properties.TryGetValue(name.GetParent(), out var fullArrayValue))
+            if (_properties.TryGetValue(jsonPath.GetParent(), out var fullArrayValue))
             {
-                return fullArrayValue;
+                return fullArrayValue.Value;
             }
-            return EncodedValue.Empty;
+            return ReadOnlyMemory<byte>.Empty;
         }
         else
         {
@@ -166,51 +170,7 @@ public partial struct AdditionalProperties
                 }
             }
             memoryStream.WriteByte((byte)']');
-            return new(ValueKind.Json, memoryStream.ToArray());
-        }
-    }
-
-    private EncodedValue GetPrimitive(ReadOnlySpan<byte> pointer)
-    {
-        // Direct property access
-        EncodedValue encodedValue = GetEncodedValue(pointer);
-        if (encodedValue.Value.Length == 0)
-        {
-            ThrowPropertyNotFoundException(pointer);
-            return default;
-        }
-        return encodedValue;
-    }
-
-    // Helper method to write objects as JSON
-    private static void WriteObjectAsJson(Utf8JsonWriter writer, string propertyName, object value)
-    {
-        // Skip removed properties during serialization
-        if (value is RemovedValue)
-            return;
-
-        ReadOnlySpan<byte> nameBytes = System.Text.Encoding.UTF8.GetBytes(propertyName);
-
-        switch (value)
-        {
-            case string s:
-                writer.WriteString(nameBytes, s);
-                break;
-            case int i:
-                writer.WriteNumber(nameBytes, i);
-                break;
-            case bool b:
-                writer.WriteBoolean(nameBytes, b);
-                break;
-            case byte[] jsonBytes:
-                writer.WritePropertyName(nameBytes);
-                writer.WriteRawValue(jsonBytes);
-                break;
-            case NullValue:
-                writer.WriteNull(nameBytes);
-                break;
-            default:
-                throw new NotSupportedException($"Unsupported value type: {value?.GetType()}");
+            return memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Length);
         }
     }
 
@@ -390,9 +350,10 @@ public partial struct AdditionalProperties
         else
         {
             var indexSpan = jsonPath.GetIndexSpan();
-            if (!indexSpan.IsEmpty)
+            if (!indexSpan.IsEmpty && !encodedValue.Kind.HasFlag(ValueKind.ArrayItem))
             {
-                encodedValue.Kind |= ValueKind.ArrayItem; // Mark as array item
+                // Mark as array item
+                encodedValue = new(ValueKind.ArrayItem | encodedValue.Kind, encodedValue.Value);
             }
 
             if (indexSpan.Length == 1 && indexSpan[0] == (byte)'-')
@@ -435,19 +396,6 @@ public partial struct AdditionalProperties
                 }
             }
         }
-    }
-
-    private object Get(ReadOnlySpan<byte> name)
-    {
-        if (_properties == null)
-            ThrowPropertyNotFoundException(name);
-
-        if (!_properties.TryGetValue(name, out var encodedValue))
-        {
-            ThrowPropertyNotFoundException(name);
-        }
-
-        return DecodeValue(encodedValue);
     }
 
     private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, EncodedValue encodedValue)
@@ -512,8 +460,8 @@ public partial struct AdditionalProperties
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     [DoesNotReturn]
-    private void ThrowPropertyNotFoundException(ReadOnlySpan<byte> name)
+    private void ThrowPropertyNotFoundException(ReadOnlySpan<byte> jsonPath)
     {
-        throw new KeyNotFoundException(Encoding.UTF8.GetString(name.ToArray()));
+        throw new KeyNotFoundException(Encoding.UTF8.GetString(jsonPath.ToArray()));
     }
 }
