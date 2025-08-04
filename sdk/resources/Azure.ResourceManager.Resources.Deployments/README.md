@@ -1,6 +1,6 @@
 # Microsoft Azure Resources.Deployments management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Resource Manager Deployments provide an Azure native Infrastructure-as-Code (IaC) solution for managing Azure resources declaratively. This library can be used to manage Template Deployments, and is also compatible with Bicep-generated Templates.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
