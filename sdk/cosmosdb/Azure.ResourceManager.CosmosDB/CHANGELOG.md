@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.CosmodDB` AOT-compatible
+- Make `Azure.ResourceManager.CosmosDB` AOT-compatible
 
 ## 1.4.0-beta.12 (2024-12-20)
 
