@@ -31,7 +31,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal PrivateLink(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MgmtTypeSpecPrivateLinkResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,7 +39,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PrivateLinkResourceProperties Properties { get; }
+        public MgmtTypeSpecPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; }
