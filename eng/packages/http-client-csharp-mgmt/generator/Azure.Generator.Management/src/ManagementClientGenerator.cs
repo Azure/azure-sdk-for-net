@@ -52,12 +52,13 @@ namespace Azure.Generator.Management
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
-            AddVisitor(new InheritableSystemObjectModelVisitor());
+            AddVisitor(new SystemObjectModelVisitor());
             AddVisitor(new NameVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new SafeFlattenVisitor());
+            AddVisitor(new ModelFactoryVisitor());
         }
     }
 }

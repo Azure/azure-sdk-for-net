@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -45,7 +46,7 @@ namespace MgmtTypeSpec.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(ModelSerializationExtensions.WireOptions);
             }
         }
 
@@ -75,11 +76,11 @@ namespace MgmtTypeSpec.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateLinkResourceProperties properties = default;
-            string name = default;
+            MgmtTypeSpecPrivateLinkResourceProperties properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -92,8 +93,17 @@ namespace MgmtTypeSpec.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
@@ -103,7 +113,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    systemData = prop.Value.Deserialize<SystemData>();
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -112,7 +122,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    properties = PrivateLinkResourceProperties.DeserializePrivateLinkResourceProperties(prop.Value, options);
+                    properties = MgmtTypeSpecPrivateLinkResourceProperties.DeserializeMgmtTypeSpecPrivateLinkResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -121,7 +131,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    identity = prop.Value.Deserialize<ManagedServiceIdentity>();
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,11 +141,11 @@ namespace MgmtTypeSpec.Models
             }
             return new PrivateLink(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                name,
                 identity);
         }
 

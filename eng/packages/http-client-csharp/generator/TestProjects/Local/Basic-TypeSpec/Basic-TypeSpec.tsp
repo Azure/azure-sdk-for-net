@@ -172,6 +172,7 @@ model ModelWithClientName {
 }
 
 @doc("this is a roundtrip model")
+@useSystemTextJsonConverter()
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;
@@ -442,3 +443,15 @@ model Page<T> {
 @convenientAPI(true)
 @list
 op ListWithPaging(): Page<ThingModel>;
+
+@route("conditionalrequest")
+@doc("A sample operation with conditional requests")
+@convenientAPI(true)
+@get
+op ConditionalRequest(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string): void;
+
+@route("conditionalrequest/date")
+@doc("A sample operation with conditional requests")
+@convenientAPI(true)
+@get
+op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None-Match") ifNoneMatch?: string, @header("If-Modified-Since") ifModifiedSince?: string): void;

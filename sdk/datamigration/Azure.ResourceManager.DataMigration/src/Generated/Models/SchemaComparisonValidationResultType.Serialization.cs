@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string objectName = default;
-            ObjectType? objectType = default;
-            UpdateActionType? updateAction = default;
+            DataMigrationDatabaseObjectType? objectType = default;
+            MigrationValidatioUpdateActionType? updateAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    objectType = new ObjectType(property.Value.GetString());
+                    objectType = new DataMigrationDatabaseObjectType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("updateAction"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    updateAction = new UpdateActionType(property.Value.GetString());
+                    updateAction = new MigrationValidatioUpdateActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

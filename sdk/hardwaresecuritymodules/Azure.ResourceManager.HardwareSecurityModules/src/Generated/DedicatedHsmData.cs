@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU details. </param>
-        /// <param name="zones"> The Dedicated Hsm zones. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedHsmSku sku, IList<string> zones, DedicatedHsmProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> SKU details. </summary>
         internal DedicatedHsmSku Sku { get; set; }
         /// <summary> SKU of the dedicated HSM. </summary>
-        [WirePath("sku.name")]
         public DedicatedHsmSkuName? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -105,11 +104,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        /// <summary> The Dedicated Hsm zones. </summary>
-        [WirePath("zones")]
+        /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
         /// <summary> Properties of the dedicated HSM. </summary>
-        [WirePath("properties")]
         public DedicatedHsmProperties Properties { get; set; }
     }
 }
