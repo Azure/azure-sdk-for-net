@@ -44,7 +44,7 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 
    - Select the **Playwright Workspaces** card, and then select **Create**.
 
-     ![Search for Playwright Workspaces in Azure Marketplace](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/azure-portal-search-playwright-resource.png?raw=true)
+     ![Search for Playwright Workspaces in Azure Marketplace](https://aka.ms/pww/docs/searchurlsnapshot)
 
    - Provide the following information to configure a new Playwright workspace:
 
@@ -66,7 +66,7 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 
    - To view the new workspace, select **Go to resource**.
 
-     ![Deployment complete - Go to resource](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/create-resource-deployment-complete.png?raw=true)
+     ![Deployment complete - Go to resource](https://aka.ms/pww/docs/deploymenturlsnapshot)
                                       |
 
 > [!NOTE]
