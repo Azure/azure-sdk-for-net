@@ -4793,8 +4793,7 @@
               {
                 "methodId": "Azure.ResourceManager.Operations.list",
                 "operationPath": "/providers/MgmtTypeSpec/operations",
-                "operationScope": "Tenant",
-                "carrierResource": ""
+                "operationScope": "Tenant"
               }
             ]
           }

@@ -306,6 +306,10 @@ function getOperationScope(path: string): ResourceScope {
 function getCarrierResource(path: string, metadata: ResourceMetadata[]): string | undefined {
   const candidates: string[] = [];
   for (const resource of metadata) {
+    // skip those failed resources
+    if (!resource.resourceIdPattern) {
+      continue;
+    }
     if (path.startsWith(resource.resourceIdPattern)) {
       candidates.push(resource.resourceIdPattern);
     }

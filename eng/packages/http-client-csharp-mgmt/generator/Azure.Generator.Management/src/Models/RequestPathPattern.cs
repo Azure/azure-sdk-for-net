@@ -4,6 +4,8 @@
 using Azure.Core;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -28,6 +30,28 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
         public static readonly RequestPathPattern Tenant = new(string.Empty);
+
+        public static RequestPathPattern GetFromCoreType(CSharpType armCoreType)
+        {
+            if (armCoreType.FrameworkType == typeof(SubscriptionResource))
+            {
+                return Subscription;
+            }
+            else if (armCoreType.FrameworkType == typeof(ResourceGroupResource))
+            {
+                return ResourceGroup;
+            }
+            else if (armCoreType.FrameworkType == typeof(ManagementGroupResource))
+            {
+                return ManagementGroup;
+            }
+            else if (armCoreType.FrameworkType == typeof(TenantResource))
+            {
+                return Tenant;
+            }
+
+            throw new InvalidOperationException($"Unhandled type {armCoreType.Name}");
+        }
 
         private string _path;
         private IReadOnlyList<RequestPathSegment> _segments;

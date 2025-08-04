@@ -12,7 +12,6 @@ using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
 using Microsoft.CodeAnalysis;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -35,6 +34,7 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal sealed class ResourceClientProvider : TypeProvider
     {
+        // TODO -- find a way to inject the non-resource operations holding by this resource
         internal static ResourceClientProvider Create(ResourceMetadata resourceMetadata)
         {
             // Create a resource that supports multiple clients, using ResourceName from metadata

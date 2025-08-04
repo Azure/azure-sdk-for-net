@@ -151,7 +151,7 @@ namespace Azure.Generator.Management
             {
                 if (candidates.Count > 0)
                 {
-                    var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates);
+                    var mockableExtension = new MockableResourceProvider(_scopeToTypes[scope], candidates, []);
                     mockableResources.Add(mockableExtension);
                     ManagementClientGenerator.Instance.AddTypeToKeep(mockableExtension.Name);
                 }

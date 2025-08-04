@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -20,14 +22,20 @@ namespace Azure.Generator.Management.Providers
     internal class MockableResourceProvider : TypeProvider
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
+        private protected readonly IReadOnlyList<InputServiceMethod> _methods;
 
         // TODO -- in the future we need to update this to include the operations this mockable resource should include.
-        public MockableResourceProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources)
+        public MockableResourceProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<InputServiceMethod> methods)
         {
             ArmCoreType = armCoreType;
             _resources = resources;
+            _methods = methods;
+            ContextualPath = RequestPathPattern.GetFromCoreType(armCoreType);
         }
+
         internal CSharpType ArmCoreType { get; }
+
+        public RequestPathPattern ContextualPath { get; }
 
         protected override string BuildNamespace() => $"{base.BuildNamespace()}.Mocking";
 
