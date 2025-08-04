@@ -79,6 +79,38 @@ namespace System.ClientModel.Primitives
         public static System.Diagnostics.Activity MarkClientActivityFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
         public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, System.ClientModel.Primitives.ClientPipelineOptions options, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct AdditionalProperties
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public AdditionalProperties(System.ReadOnlyMemory<byte> rawJson) { throw null; }
+        public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public bool ContainsStartsWith(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public int? GetArrayLength(System.ReadOnlySpan<byte> array) { throw null; }
+        public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public int GetInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public System.BinaryData GetJson(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public int? GetNullableInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public string? GetString(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public bool IsRemoved(byte[] jsonPath) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void PropagateTo(ref System.ClientModel.Primitives.AdditionalProperties target, System.ReadOnlySpan<byte> prefix) { }
+        public void Remove(System.ReadOnlySpan<byte> jsonPath) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.BinaryData value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, bool value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, byte[] value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, int value) { }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("RequiresDynamicCode")]
+        public void Set(System.ReadOnlySpan<byte> jsonPath, object value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
+        public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
+        public void Set<T>(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.IJsonModel<T> value) { }
+        public override string ToString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Write(System.Text.Json.Utf8JsonWriter writer) { }
+    }
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.AuthenticationPolicy
     {
         internal ApiKeyAuthenticationPolicy() { }
