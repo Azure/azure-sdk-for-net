@@ -24,7 +24,7 @@ The script will install the latest version of the azsdk cli executable from [too
 
 Azure SDK MCP server code is in [azure-sdk-tools/tools/azsdk-cli/Azure.Sdk.Tools.Cli](https://github.com/Azure/azure-sdk-tools/tree/main/tools/azsdk-cli/Azure.Sdk.Tools.Cli).
 
-Azure SDK MCP servers should support [stdio and streamable HTTP transports](https://modelcontextprotocol.io/docs/concepts/transports).
+Azure SDK MCP servers [**MUST** support stdio and **SHOULD** support streamable HTTP using latest OAuth 2.1 Best Current Practices (BCPs)](https://modelcontextprotocol.io/docs/concepts/transports).
 
 When running in copilot the default is stdio mode.
 
