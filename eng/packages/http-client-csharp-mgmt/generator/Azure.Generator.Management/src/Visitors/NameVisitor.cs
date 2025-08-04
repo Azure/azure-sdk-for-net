@@ -43,7 +43,6 @@ internal class NameVisitor : ScmLibraryVisitor
         };
 
     private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
-    private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
@@ -101,7 +100,6 @@ internal class NameVisitor : ScmLibraryVisitor
         {
             // Update the serialization provider name to match the model name
             serializationProvider.Update(name: newName);
-            _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
         }
     }
 
@@ -158,12 +156,6 @@ internal class NameVisitor : ScmLibraryVisitor
         {
             // This is required as a workaround to update documentation for the method signature
             method.Update(signature: method.Signature);
-        }
-
-        // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
-        {
-            method.Signature.Update(name: newName);
         }
 
         return base.VisitMethod(method);
