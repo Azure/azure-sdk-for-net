@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-08-04)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.ApplicationInsights` AOT-compatible
 
 ## 1.0.1 (2025-03-11)
 
