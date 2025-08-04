@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// unless the item does not exist in the conversation history, in which case the
     /// server will respond with an error.
     /// </summary>
-    public partial class ClientEventConversationItemDelete : ClientEvent
+    internal partial class ClientEventConversationItemDelete : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemDelete"/>. </summary>
         /// <param name="itemId"> The ID of the item to delete. </param>

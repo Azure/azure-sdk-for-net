@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class RequestUserMessageItem : IUtf8JsonSerializable, IJsonModel<RequestUserMessageItem>
+    internal partial class RequestUserMessageItem : IUtf8JsonSerializable, IJsonModel<RequestUserMessageItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestUserMessageItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
     /// If successful, the server will respond with a `conversation.item.created`
     /// event, otherwise an `error` event will be sent.
     /// </summary>
-    public partial class ClientEventConversationItemCreate : ClientEvent
+    internal partial class ClientEventConversationItemCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
         internal ClientEventConversationItemCreate()

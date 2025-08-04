@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ClientEventInputAudioTurnEnd : IUtf8JsonSerializable, IJsonModel<ClientEventInputAudioTurnEnd>
+    internal partial class ClientEventInputAudioTurnEnd : IUtf8JsonSerializable, IJsonModel<ClientEventInputAudioTurnEnd>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEventInputAudioTurnEnd>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

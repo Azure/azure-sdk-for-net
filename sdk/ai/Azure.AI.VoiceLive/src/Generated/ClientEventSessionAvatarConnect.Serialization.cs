@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ClientEventSessionAvatarConnect : IUtf8JsonSerializable, IJsonModel<ClientEventSessionAvatarConnect>
+    internal partial class ClientEventSessionAvatarConnect : IUtf8JsonSerializable, IJsonModel<ClientEventSessionAvatarConnect>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEventSessionAvatarConnect>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

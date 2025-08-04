@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
     /// `instructions`, and `temperature`. These fields will override the Session's
     /// configuration for this Response only.
     /// </summary>
-    public partial class ClientEventResponseCreate : ClientEvent
+    internal partial class ClientEventResponseCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
         internal ClientEventResponseCreate()
