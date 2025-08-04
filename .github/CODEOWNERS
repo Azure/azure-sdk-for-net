@@ -134,14 +134,14 @@
 # ServiceLabel: %Analysis Services
 # ServiceOwners:                                                   @athipp @taiwu @minghan
 
-# ServiceLabel: %API Management
-# ServiceOwners:                                                   @miaojiang
+# ServiceLabel: %API Management @ReilleyMilne @jsquire
+# ServiceOwners:                                                   @miaojiang @ReilleyMilne @jsquire @ReilleyMilne @jsquire
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta
+/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta @ReilleyMilne @jsquire
 
-# ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @shenmuxiaosen @avanigupta
+# ServiceLabel: %App Configuration @ReilleyMilne @jsquire
+# ServiceOwners:                                                   @shenmuxiaosen @avanigupta @ReilleyMilne @jsquire @ReilleyMilne @jsquire
 
 # ServiceLabel: %App Services
 # ServiceOwners:                                                   @antcp @AzureAppServiceCLI
