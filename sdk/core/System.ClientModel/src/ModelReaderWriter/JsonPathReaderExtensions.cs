@@ -206,17 +206,34 @@ internal static class JsonPathReaderExtensions
             switch (pathReader.Current.TokenType)
             {
                 case JsonPathTokenType.Root:
-                    if (!pathReader.Read() || (pathReader.Current.TokenType != JsonPathTokenType.PropertySeparator && pathReader.Current.TokenType != JsonPathTokenType.ArrayStart))
+                    if (!jsonReader.Read())
+                    {
+                        return false;
+                    }
+                    break;
+
+                case JsonPathTokenType.QuotedString:
+                    //deals with the case of $.x['y']
+                    if (jsonReader.TokenType == JsonTokenType.PropertyName)
+                        jsonReader.Read();
+
+                    if (jsonReader.TokenType != JsonTokenType.StartObject)
                     {
                         return false;
                     }
 
-                    if (pathReader.Current.TokenType == JsonPathTokenType.ArrayStart)
-                        inArray = true;
-
-                    if (!jsonReader.Read())
+                    while (jsonReader.Read())
                     {
-                        return false;
+                        if (jsonReader.TokenType == JsonTokenType.PropertyName &&
+                            jsonReader.ValueSpan.SequenceEqual(pathReader.Current.ValueSpan))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            // Skip the value
+                            jsonReader.Skip();
+                        }
                     }
                     break;
 
@@ -238,14 +255,6 @@ internal static class JsonPathReaderExtensions
                             // Skip the value
                             jsonReader.Skip();
                         }
-                    }
-                    break;
-
-                case JsonPathTokenType.QuotedString:
-                    if (!jsonReader.Read() || jsonReader.TokenType != JsonTokenType.PropertyName ||
-                        !jsonReader.ValueSpan.SequenceEqual(pathReader.Current.ValueSpan))
-                    {
-                        return false;
                     }
                     break;
 

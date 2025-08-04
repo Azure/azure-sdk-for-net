@@ -58,8 +58,14 @@ public partial struct AdditionalProperties
     {
         if (_properties == null)
         {
+            if (TryGetParentMatch(jsonPath, true, out var parentPath, out var currentValue))
+            {
+                if (parentPath.IsRoot())
+                {
+                    return currentValue.Value.GetJson(jsonPath);
+                }
+            }
             ThrowPropertyNotFoundException(jsonPath);
-            return ReadOnlyMemory<byte>.Empty;
         }
 
         if (jsonPath.IsArrayInsert())
@@ -71,11 +77,18 @@ public partial struct AdditionalProperties
         {
             if (TryGetParentMatch(jsonPath, true, out var parentPath, out var currentValue))
             {
-                var childSlice = jsonPath.Slice(parentPath.Length);
-                Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
-                childPath[0] = (byte)'$';
-                childSlice.CopyTo(childPath.Slice(1));
-                return currentValue.Value.GetJson(childPath);
+                if (!parentPath.IsRoot())
+                {
+                    var childSlice = jsonPath.Slice(parentPath.Length);
+                    Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
+                    childPath[0] = (byte)'$';
+                    childSlice.CopyTo(childPath.Slice(1));
+                    return currentValue.Value.GetJson(childPath);
+                }
+                else
+                {
+                    return currentValue.Value.GetJson(jsonPath);
+                }
             }
 
             ThrowPropertyNotFoundException(jsonPath);
@@ -93,6 +106,12 @@ public partial struct AdditionalProperties
         encodedValue = EncodedValue.Empty;
         if (_properties == null)
         {
+            if (includeRoot && !_rawJson.Value.IsEmpty)
+            {
+                encodedValue = _rawJson;
+                parentPath = "$"u8;
+                return true;
+            }
             return false;
         }
 

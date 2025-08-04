@@ -1,0 +1,172 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Buffers.Text;
+using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using ClientModel.Tests.ClientShared;
+
+namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
+{
+    public partial class ListOfAset : IJsonModel<ListOfAset>
+    {
+        private AdditionalProperties _patch;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ref AdditionalProperties Patch => ref _patch;
+
+        public List<AvailabilitySetData> Items { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of ListOfAset.
+        /// </summary>
+        public ListOfAset()
+        {
+            Items = new List<AvailabilitySetData>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of ListOfAset.
+        /// </summary>
+        /// <param name="items">The list of availability set data items.</param>
+        /// <param name="patch">Additional properties for patching.</param>
+        internal ListOfAset(IList<AvailabilitySetData> items, AdditionalProperties patch)
+        {
+            Items = items?.ToList() ?? new();
+            _patch = patch;
+        }
+
+        void IJsonModel<ListOfAset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListOfAset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListOfAset)} does not support writing '{format}' format.");
+            }
+
+            Serialize(writer, options);
+        }
+
+        private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+            }
+            else if (OptionalProperty.IsCollectionDefined(Items))
+            {
+                if (Patch.ContainsStartsWith("$"u8))
+                {
+                    var jsonPath = "$["u8;
+                    Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
+                    for (int i = 0; i < Items.Count; i++)
+                    {
+                        if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$[{i}]")))
+                        {
+                            continue;
+                        }
+
+                        var indexInPatch = Patch.GetArrayLength("$"u8);
+                        var index = indexInPatch.HasValue ? indexInPatch.Value + i : i;
+                        jsonPath.CopyTo(buffer);
+                        Utf8Formatter.TryFormat(index, buffer.Slice(jsonPath.Length), out var bytesWritten);
+                        buffer[jsonPath.Length + bytesWritten] = (byte)']';
+                        var prefix = buffer.Slice(0, jsonPath.Length + bytesWritten + 1);
+
+                        Patch.PropagateTo(ref Items[i].Patch, prefix);
+                        Patch.Set("$[-]"u8, Items[i]);
+                    }
+                }
+                else
+                {
+                    writer.WriteStartArray();
+                    foreach (var item in Items)
+                    {
+                        ((IJsonModel<AvailabilitySetData>)item).Write(writer, options);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+
+            Patch.Write(writer);
+        }
+
+        ListOfAset IJsonModel<ListOfAset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListOfAset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListOfAset)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeListOfAset(document.RootElement, options, null!);
+        }
+
+        ListOfAset IPersistableModel<ListOfAset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListOfAset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeListOfAset(document.RootElement, options, data);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListOfAset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListOfAset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public static ListOfAset DeserializeListOfAset(JsonElement element, ModelReaderWriterOptions options, BinaryData data)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null!;
+            }
+
+            if (element.ValueKind != JsonValueKind.Array)
+            {
+                throw new FormatException($"Expected array for {nameof(ListOfAset)}, got {element.ValueKind}");
+            }
+
+            List<AvailabilitySetData> items = new List<AvailabilitySetData>();
+            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+
+            foreach (var arrayItem in element.EnumerateArray())
+            {
+                if (arrayItem.ValueKind == JsonValueKind.Null)
+                {
+                    items.Add(null!);
+                }
+                else if (arrayItem.ValueKind == JsonValueKind.Object)
+                {
+                    items.Add(AvailabilitySetData.DeserializeAvailabilitySetData(arrayItem, options, BinaryData.FromString(arrayItem.GetRawText())));
+                }
+            }
+
+            return new ListOfAset(items, additionalProperties);
+        }
+
+        BinaryData IPersistableModel<ListOfAset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListOfAset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ListOfAset)} does not support writing '{options.Format}' format.");
+            }
+        }
+    }
+}

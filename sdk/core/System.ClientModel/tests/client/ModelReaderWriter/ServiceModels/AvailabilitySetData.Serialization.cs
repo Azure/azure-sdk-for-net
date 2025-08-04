@@ -8,7 +8,6 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using ClientModel.Tests.ClientShared;
@@ -54,12 +53,18 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             if (OptionalProperty.IsCollectionDefined(Tags) && !Patch.Contains("$.tags"u8))
             {
                 writer.WritePropertyName("tags"u8);
+                AdditionalProperties tagsAp = new();
+                Patch.PropagateTo(ref tagsAp, "$.tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    if (!tagsAp.Contains([.. "$."u8, .. Encoding.UTF8.GetBytes(item.Key)]))
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
                 }
+                tagsAp.Write(writer);
                 writer.WriteEndObject();
             }
             if (!Patch.Contains("$.location"u8))
@@ -92,6 +97,8 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 {
                     if (flattenedJson.ContainsStartsWith("$.virtualMachines"u8))
                     {
+                        var jsonPath = "$.virtualMachines["u8;
+                        Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
                         for (int i = 0; i < VirtualMachines.Count; i++)
                         {
                             if (flattenedJson.IsRemoved(Encoding.UTF8.GetBytes($"$.virtualMachines[{i}]")))
@@ -101,8 +108,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
                             var indexInPatch = flattenedJson.GetArrayLength("$.virtualMachines"u8);
                             var index = indexInPatch.HasValue ? indexInPatch.Value + i : i;
-                            var jsonPath = "$.virtualMachines["u8;
-                            Span<byte> buffer = stackalloc byte[jsonPath.Length + 11];
                             jsonPath.CopyTo(buffer);
                             Utf8Formatter.TryFormat(index, buffer.Slice(jsonPath.Length), out var bytesWritten);
                             buffer[jsonPath.Length + bytesWritten] = (byte)']';
@@ -118,7 +123,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                         writer.WriteStartArray();
                         foreach (var item in VirtualMachines)
                         {
-                            JsonSerializer.Serialize(writer, item);
+                            ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                         }
                         writer.WriteEndArray();
                     }
@@ -126,7 +131,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 if (OptionalProperty.IsDefined(ProximityPlacementGroup) && !flattenedJson.Contains("$.proximityPlacementGroup"u8))
                 {
                     writer.WritePropertyName("proximityPlacementGroup"u8);
-                    JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                    ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
                 }
 
                 flattenedJson.Write(writer);

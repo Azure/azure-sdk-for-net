@@ -13,13 +13,21 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = GetInitialModel();
 
             model.Patch.Set("$.newDictionary['key1']"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Set("$.newDictionary.key2"u8, "{\"x\":\"value2\"}"u8);
 
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
+            //TODO do we need to normalize retrieving using a different syntax than inserting?
+            //Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key1"u8).ToArray());
+            //Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key2"u8).ToArray());
 
-            var data = WriteModifiedModel(model, "newDictionary", "{\"key1\":{\"x\":\"value1\"}}");
+            var data = WriteModifiedModel(model, "newDictionary", "{\"key1\":{\"x\":\"value1\"},\"key2\":{\"x\":\"value2\"}}");
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary.key1"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary.key2"u8).ToArray());
 
             AssertCommon(model, model2);
         }
@@ -27,7 +35,19 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void AddItemToDictionaryClr()
         {
-            Assert.Fail("Not implemented");
+            var model = GetInitialModel();
+
+            model.Patch.Set("$.tags.insertedKey"u8, "insertedValue");
+
+            Assert.AreEqual("insertedValue", model.Patch.GetString("$.tags.insertedKey"u8));
+
+            var data = WriteModifiedModel(model, "tags", "{\"key\":\"value\",\"insertedKey\":\"insertedValue\"}");
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual("insertedValue", model2.Patch.GetString("$.tags['insertedKey']"u8));
+            Assert.AreEqual("insertedValue", model2.Patch.GetString("$.tags.insertedKey"u8));
+
+            AssertCommon(model, model2, "tags");
         }
 
         [Test]

@@ -296,7 +296,11 @@ public partial struct AdditionalProperties
                     continue;
                 }
 
-                writer.WritePropertyName(parent.GetPropertyName());
+                if (writer.CurrentDepth > 0)
+                {
+                    // only write the property name if we are not at the root
+                    writer.WritePropertyName(parent.GetPropertyName());
+                }
                 writer.WriteStartArray();
                 foreach (var arrayItem in _properties)
                 {

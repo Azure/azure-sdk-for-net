@@ -66,6 +66,13 @@ internal ref struct JsonPathReader
                 return true;
 
             case (byte)'[':
+                // if the next byte is '\'', or '"', it's a quoted string, otherwise it's an array start
+                if (_consumed + 1 < _jsonPath.Length && (_jsonPath[_consumed + 1] == '\'' || _jsonPath[_consumed + 1] == '"'))
+                {
+                    _consumed++; // Skip the '['
+                    Current = ReadQuotedString();
+                    return true;
+                }
                 Current = new JsonPathToken(JsonPathTokenType.ArrayStart, _consumed++);
                 return true;
 

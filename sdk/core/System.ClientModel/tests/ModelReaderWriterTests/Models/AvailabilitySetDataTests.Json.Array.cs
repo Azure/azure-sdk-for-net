@@ -1,8 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
+using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client;
+using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using System.IO;
+using Azure.Core;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -440,7 +446,39 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void AddItemToRootArray()
         {
-            Assert.Fail("Not implemented");
+            var json = File.ReadAllText(TestData.GetLocation("AvailabilitySetData/List/JsonFormat.json")).TrimEnd();
+
+            var model = ModelReaderWriter.Read<ListOfAset>(BinaryData.FromString(json), ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+
+            Assert.IsNotNull(model);
+            Assert.AreEqual(2, model!.Items.Count);
+            Assert.AreEqual("testAS-3375", model.Items[0].Name);
+            Assert.AreEqual("testAS-3376", model.Items[1].Name);
+            Assert.AreEqual("testAS-3375", model.Patch.GetString("$[0].name"u8));
+            Assert.AreEqual("testAS-3376", model.Patch.GetString("$[1].name"u8));
+
+            model.Patch.Set("$[-]"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
+            {
+                Name = "testAS-3377",
+                Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377",
+                ResourceType = "Microsoft.Compute/availabilitySets",
+            });
+
+            var data = ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+
+            var model2 = ModelReaderWriter.Read<ListOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+
+            Assert.IsNotNull(model2);
+            Assert.AreEqual(3, model2!.Items.Count);
+            Assert.AreEqual("testAS-3377", model2.Items[0].Name);
+            Assert.AreEqual("testAS-3375", model2.Items[1].Name);
+            Assert.AreEqual("testAS-3376", model2.Items[2].Name);
+            Assert.AreEqual("testAS-3377", model2.Patch.GetString("$[0].name"u8));
+            Assert.AreEqual("testAS-3375", model2.Patch.GetString("$[1].name"u8));
+            Assert.AreEqual("testAS-3376", model2.Patch.GetString("$[2].name"u8));
+
+            Assert.AreEqual("brazilsouth", model2.Items[0].Location.ToString());
+            Assert.AreEqual("brazilsouth", model2.Patch.GetString("$[0].location"u8));
         }
     }
 }
