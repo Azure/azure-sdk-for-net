@@ -1201,15 +1201,21 @@ namespace TestProject
 
             // Check the context file for pragma suppressions in the constructor
             var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
-            var contextText = contextSource.SourceText.ToString();
+            var contextText = contextSource.SourceText.ToString().Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Select(line => line.Trim())
+                .ToList();
 
-            // The constructor should have pragma suppressions for experimental types
-            StringAssert.Contains("#pragma warning disable TEST001", contextText);
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText);
-            StringAssert.Contains("#pragma warning restore TEST001", contextText);
+            var startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST001"));
+            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST001");
 
-            StringAssert.Contains("#pragma warning disable TEST002", contextText);
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.OtherModel)", contextText);
+            Assert.IsTrue(startIndex + 2 < contextText.Count, "Not enough lines after pragma disable");
+            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
+            StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
+
+            startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST002"));
+            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST002");
+            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.OtherModel)", contextText[startIndex + 1]);
+            StringAssert.Contains("#pragma warning restore TEST002", contextText[startIndex + 2]);
 
             // Also check the builder files
             var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
@@ -1283,12 +1289,16 @@ namespace TestProject
 
             // Check the context file for pragma suppressions in the constructor
             var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
-            var contextText = contextSource.SourceText.ToString();
+            var contextText = contextSource.SourceText.ToString().Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Select(line => line.Trim())
+                .ToList();
 
-            // The constructor should have pragma suppressions for experimental types
-            StringAssert.Contains("#pragma warning disable TEST001", contextText);
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText);
-            StringAssert.Contains("#pragma warning restore TEST001", contextText);
+            var startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST001"));
+            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST001");
+
+            Assert.IsTrue(startIndex + 2 < contextText.Count, "Not enough lines after pragma disable");
+            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
+            StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
 
             // Also check the builder files
             var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
@@ -1365,12 +1375,16 @@ $$"""
 
             // Check the context file for pragma suppressions in the constructor
             var contextSource = generatedSources.First(s => s.HintName == "LocalContext.g.cs");
-            var contextText = contextSource.SourceText.ToString();
+            var contextText = contextSource.SourceText.ToString().Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Select(line => line.Trim())
+                .ToList();
 
-            // The constructor should have pragma suppressions for experimental types
-            StringAssert.Contains("#pragma warning disable TEST001", contextText);
-            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText);
-            StringAssert.Contains("#pragma warning restore TEST001", contextText);
+            var startIndex = contextText.FindIndex(line => line.Contains("#pragma warning disable TEST001"));
+            Assert.IsTrue(startIndex >= 0, "Could not find #pragma warning disable TEST001");
+
+            Assert.IsTrue(startIndex + 2 < contextText.Count, "Not enough lines after pragma disable");
+            StringAssert.Contains("_typeBuilderFactories.Add(typeof(global::TestProject.JsonModel)", contextText[startIndex + 1]);
+            StringAssert.Contains("#pragma warning restore TEST001", contextText[startIndex + 2]);
 
             // Also check the builder files
             var jsonModelBuilder = generatedSources.First(s => s.HintName.Contains("JsonModel_Builder"));
@@ -1529,7 +1543,8 @@ $$"""
 
             var result = CompilationHelper.RunSourceGenerator(
                 compilation,
-                out var newCompilation);
+                out var newCompilation,
+                out var generatedSources);
 
             Assert.IsNotNull(result.GenerationSpec);
             Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
@@ -1588,6 +1603,16 @@ $$"""
                 Assert.AreEqual("JsonModel", collectionBuilder.Type.ItemType!.Name);
                 Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
                 Assert.AreEqual("TEST001", collectionBuilder.Type.ExperimentalDiagnosticId);
+            }
+
+            // Also check the builder files
+            var builders = generatedSources.Where(s => s.HintName.EndsWith("Builder.g.cs"));
+            Assert.IsNotEmpty(builders);
+            foreach (var builder in builders)
+            {
+                var builderText = builder.SourceText.ToString();
+                StringAssert.Contains("#pragma warning disable TEST001", builderText);
+                StringAssert.Contains("#pragma warning restore TEST001", builderText);
             }
         }
 #endif

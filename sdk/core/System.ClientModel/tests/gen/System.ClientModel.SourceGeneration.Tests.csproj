@@ -16,7 +16,7 @@
     <PackageReference Include="System.Linq.Async" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
     <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" VersionOverride ="4.12.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" VersionOverride ="4.12.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
