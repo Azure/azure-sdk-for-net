@@ -90,10 +90,9 @@ public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
     public PlaywrightServiceNUnitSetup() : base(
         credential: new DefaultAzureCredential()
     )
-    {}
+    { }
 }
-
-   ```
+```
 
 ### Setup Azure Playwright cloud browser connection
 
