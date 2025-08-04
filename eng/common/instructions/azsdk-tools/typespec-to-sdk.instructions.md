@@ -1,5 +1,4 @@
 ---
-mode: 'agent'
 description: 'Generate SDKs from TypeSpec'
 ---
 Your goal is to guide user through the process of generating SDKs from TypeSpec projects. Show all the high level steps to the user to ensure they understand the flow. Use the provided tools to perform actions and gather information as needed.

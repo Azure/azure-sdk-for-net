@@ -1,7 +1,5 @@
 ---
-mode: 'agent'
 description: 'Identify languages configured in the TypeSpec project and add it to release plan'
-tools: ['GetReleasePlanForPullRequest', 'GetReleasePlan', 'UpdateReleasePlanSDKInfo']
 ---
 # Step 1: Find the list of languages and package names
 **Goal**: Identify languages configured in the TypeSpec project and generate the json object with language and package name.
