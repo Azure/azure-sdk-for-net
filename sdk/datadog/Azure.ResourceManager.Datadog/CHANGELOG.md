@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2025-08-04)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.Datadog` AOT-compatible
 
 ## 1.0.0-beta.5 (2025-03-11)
 
