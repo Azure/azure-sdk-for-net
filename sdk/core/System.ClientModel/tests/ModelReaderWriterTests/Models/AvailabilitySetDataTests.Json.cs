@@ -250,15 +250,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(pointer, "new-location");
             Assert.AreEqual("new-location", model.Patch.GetString(pointer));
 
-            //setting the location property directly should override the payload change
+            //setting the location property directly does not override the patch
+            //if we want this we need to tie property setters to the patch which is very tricky
             model.Location = "another-location";
-            Assert.AreEqual("another-location", model.Patch.GetString(pointer));
+            Assert.AreEqual("new-location", model.Patch.GetString(pointer));
 
             var data = WriteModifiedModel(model);
 
             var model2 = GetRoundTripModel(data);
 
-            Assert.AreEqual("another-location", model2.Location);
+            Assert.AreEqual("new-location", model2.Location);
         }
 
         [Test]

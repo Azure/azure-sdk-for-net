@@ -18,14 +18,10 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public bool Contains(ReadOnlySpan<byte> name)
+    /// <param name="rawJson"></param>
+    public AdditionalProperties(ReadOnlyMemory<byte> rawJson)
     {
-        if (_properties == null)
-            return false;
-
-        return _properties.ContainsKey(name.ToArray());
+        _rawJson = new(ValueKind.Json, rawJson);
     }
 
     /// <summary>
@@ -33,7 +29,7 @@ public partial struct AdditionalProperties
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public bool Contains(byte[] name)
+    public bool Contains(ReadOnlySpan<byte> name)
     {
         if (_properties == null)
             return false;
@@ -51,31 +47,15 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return false;
 
-        byte[] nameBytes = name.ToArray();
-        return _properties.Keys.Any(k => k.AsSpan().StartsWith(nameBytes));
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public IEnumerable<KeyValuePair<byte[], byte[]>> EntriesStartsWith(byte[] name)
-    {
-        if (_properties == null)
-            yield break;
-
         foreach (var kvp in _properties)
         {
-            var keySpan = kvp.Key.AsSpan();
-            if (keySpan.Length <= name.Length)
-                continue;
-
-            if (kvp.Key.AsSpan().StartsWith(name))
+            if (name.Length == kvp.Key.Length || kvp.Key.AsSpan().StartsWith(name))
             {
-                yield return kvp;
+                return true;
             }
         }
+
+        return false;
     }
 
     /// <summary>
@@ -191,10 +171,10 @@ public partial struct AdditionalProperties
     public string? GetString(ReadOnlySpan<byte> propertyName)
     {
         var encodedValue = GetPrimitive(propertyName);
-        if (encodedValue[0] == (byte)ValueKind.Null)
+        if (encodedValue.Kind == ValueKind.Null)
             return null;
 
-        var span = encodedValue.AsSpan(1);
+        var span = encodedValue.Value.Span;
         if (span[0] == (byte)'"' && span[span.Length - 1] == (byte)'"')
             span = span.Slice(1, span.Length - 2);
 
@@ -212,12 +192,12 @@ public partial struct AdditionalProperties
     /// <returns></returns>
     public ReadOnlyMemory<byte> GetStringUtf8(ReadOnlySpan<byte> jsonPointer)
     {
-        byte[] encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Length == 0 || (ValueKind)encodedValue[0] != ValueKind.Utf8String)
+        var encodedValue = GetEncodedValue(jsonPointer);
+        if (encodedValue.Value.Length == 0 || encodedValue.Kind != ValueKind.Utf8String)
             ThrowPropertyNotFoundException(jsonPointer);
 
         // Parse JSON string representation (skip the first byte which is the kind)
-        ReadOnlySpan<byte> valueBytes = encodedValue.AsSpan(1);
+        ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
 #if NET6_0_OR_GREATER
         string jsonString = Encoding.UTF8.GetString(valueBytes);
 #else
@@ -238,10 +218,10 @@ public partial struct AdditionalProperties
     {
         var encodedBytes = GetPrimitive(jsonPointer);
 
-        if (encodedBytes[0] == (byte)ValueKind.Null)
+        if (encodedBytes.Kind == ValueKind.Null)
             return null;
 
-        if (Utf8Parser.TryParse(encodedBytes.AsSpan(1), out int value, out _))
+        if (Utf8Parser.TryParse(encodedBytes.Value.Span, out int value, out _))
         {
             return value;
         }
@@ -260,7 +240,7 @@ public partial struct AdditionalProperties
     {
         var encodedBytes = GetPrimitive(jsonPointer);
 
-        if (Utf8Parser.TryParse(encodedBytes.AsSpan(1), out int value, out _))
+        if (Utf8Parser.TryParse(encodedBytes.Value.Span, out int value, out _))
         {
             return value;
         }
@@ -279,7 +259,7 @@ public partial struct AdditionalProperties
     {
         var encodedBytes = GetPrimitive(jsonPointer);
 
-        if (Utf8Parser.TryParse(encodedBytes.AsSpan(1), out bool value, out _))
+        if (Utf8Parser.TryParse(encodedBytes.Value.Span, out bool value, out _))
         {
             return value;
         }
@@ -296,13 +276,11 @@ public partial struct AdditionalProperties
     /// <returns></returns>
     public BinaryData GetJson(ReadOnlySpan<byte> jsonPointer)
     {
-        byte[] encodedValue = GetEncodedValue(jsonPointer);
-        if (encodedValue.Length == 0 || (encodedValue[0] & (byte)ValueKind.Json) == 0)
+        var encodedValue = GetEncodedValue(jsonPointer);
+        if (encodedValue.Value.Length == 0 || !encodedValue.Kind.HasFlag(ValueKind.Json))
             ThrowPropertyNotFoundException(jsonPointer);
 
-        // Extract JSON bytes (skip the first byte which is the kind)
-        byte[] jsonBytes = encodedValue.AsSpan(1).ToArray();
-        return BinaryData.FromBytes(jsonBytes);
+        return BinaryData.FromBytes(encodedValue.Value);
     }
 
     /// <summary>
@@ -325,60 +303,62 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return;
 
-        HashSet<byte[]> arrays = new(ByteArrayEqualityComparer.Instance);
+        SpanHashSet arrays = new();
 
         foreach (var kvp in _properties)
         {
             if (kvp.Key.IsRoot())
                 continue;
 
-            if (kvp.Value[0] == (byte)ValueKind.Removed)
+            if (kvp.Value.Kind == ValueKind.Removed)
             {
                 continue;
             }
 
             var parent = kvp.Key.GetParent();
 
-            if ((kvp.Value[0] & (byte)ValueKind.ArrayItem) != 0)
+            if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItem))
             {
-                var arrayKey = kvp.Key.GetParent().ToArray();
-                if (arrays.Contains(arrayKey))
+                var arrayKeySpan = kvp.Key.GetParent();
+                if (arrays.Contains(arrayKeySpan))
                 {
                     continue;
                 }
 
                 writer.WritePropertyName(parent.GetPropertyName());
                 writer.WriteStartArray();
-                foreach (var arrayItem in EntriesStartsWith(arrayKey))
+                foreach (var arrayItem in _properties)
                 {
-                    if ((arrayItem.Value[0] & (byte)ValueKind.Removed) > 0 || arrayItem.Key.GetIndexSpan().IsEmpty)
+                    if (arrayKeySpan.Length == arrayItem.Key.Length || !arrayItem.Key.AsSpan().StartsWith(arrayKeySpan))
                         continue;
 
-                    writer.WriteRawValue(arrayItem.Value.AsSpan().Slice(1));
+                    if (arrayItem.Value.Kind.HasFlag(ValueKind.Removed) || arrayItem.Key.GetIndexSpan().IsEmpty)
+                        continue;
+
+                    writer.WriteRawValue(arrayItem.Value.Value.Span);
                 }
                 writer.WriteEndArray();
 
-                arrays.Add(arrayKey);
+                arrays.Add(arrayKeySpan);
                 continue;
             }
 
             if (!parent.IsRoot())
             {
                 JsonPathReader pathReader = new(kvp.Key);
-                ReadOnlySpan<byte> _firstProperty = pathReader.GetFirstProperty();
+                ReadOnlySpan<byte> firstProperty = pathReader.GetFirstProperty();
 
-                var firstPropertyBytes = _firstProperty.ToArray();
-                if (Propagated.Contains(firstPropertyBytes))
+                if (Propagated.Contains(firstProperty))
                 {
                     continue;
                 }
 
-                Propagated.Add(firstPropertyBytes);
+                Propagated.Add(firstProperty);
 
                 AdditionalProperties local = new();
-                PropagateTo(ref local, _firstProperty);
+                PropagateTo(ref local, firstProperty);
 
-                writer.WritePropertyName(_firstProperty.GetPropertyName());
+                writer.WritePropertyName(firstProperty.GetPropertyName());
                 writer.WriteStartObject();
                 local.Write(writer);
                 writer.WriteEndObject();
@@ -397,16 +377,26 @@ public partial struct AdditionalProperties
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void PropagateTo(ref AdditionalProperties target, ReadOnlySpan<byte> prefix)
     {
-        foreach (var entry in EntriesStartsWith(prefix.ToArray()))
+        if (_properties == null)
+            return;
+
+        //64 is an arbitrary size but most array names should be small
+        Span<byte> arraySpan = stackalloc byte[64];
+        arraySpan[0] = (byte)'$';
+
+        foreach (var entry in _properties)
         {
+            if (prefix.Length == entry.Key.Length || !entry.Key.AsSpan().StartsWith(prefix))
+                continue;
+
             JsonPathReader pathReader = new(entry.Key);
             ReadOnlySpan<byte> _firstProperty = pathReader.GetFirstProperty();
             if (!_firstProperty.IsEmpty)
             {
-                Propagated.Add(_firstProperty.ToArray());
+                Propagated.Add(_firstProperty);
             }
             var inner = entry.Key.AsSpan().Slice(prefix.Length);
-            if ((entry.Value[0] & (byte)ValueKind.ArrayItem) > 0)
+            if (entry.Value.Kind.HasFlag(ValueKind.ArrayItem))
             {
                 var indexSpan = entry.Key.GetIndexSpan();
                 if (indexSpan.Length == 0)
@@ -417,21 +407,33 @@ public partial struct AdditionalProperties
 
                 if (Utf8Parser.TryParse(indexSpan, out int index, out _))
                 {
-                    byte[] arrayBytes = [(byte)'$', .. inner.Slice(0, inner.IndexOf((byte)'['))];
-                    if (target._arrayIndices is null)
+                    bool useSpan;
+                    byte[]? arrayBytes = default;
+                    var innerSlice = inner.Slice(0, inner.IndexOf((byte)'['));
+                    if (innerSlice.Length + 1 <= arraySpan.Length)
                     {
-                        target._arrayIndices = new Dictionary<byte[], int>(ByteArrayEqualityComparer.Instance);
-                        target._arrayIndices[arrayBytes] = index;
+                        useSpan = true;
+                        innerSlice.CopyTo(arraySpan.Slice(1));
                     }
                     else
                     {
-                        if (!target._arrayIndices.TryGetValue(arrayBytes, out int existingIndex))
+                        useSpan = false;
+                        arrayBytes = [(byte)'$', .. inner.Slice(0, inner.IndexOf((byte)'['))];
+                    }
+                    if (target._arrayIndices is null)
+                    {
+                        target._arrayIndices = new();
+                        target._arrayIndices[useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes] = index;
+                    }
+                    else
+                    {
+                        if (!target._arrayIndices.TryGetValue(useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes, out int existingIndex))
                         {
-                            target._arrayIndices[arrayBytes] = index;
+                            target._arrayIndices[useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes] = index;
                         }
                         else
                         {
-                            target._arrayIndices[arrayBytes] = Math.Max(index, existingIndex);
+                            target._arrayIndices[useSpan ? arraySpan.Slice(0, innerSlice.Length + 1) : arrayBytes] = Math.Max(index, existingIndex);
                         }
                     }
                 }
@@ -476,7 +478,7 @@ public partial struct AdditionalProperties
     /// <returns></returns>
     public int? GetArrayLength(ReadOnlySpan<byte> array)
     {
-        if (_arrayIndices == null || !_arrayIndices.TryGetValue(array.ToArray(), out var index))
+        if (_arrayIndices == null || !_arrayIndices.TryGetValue(array, out var index))
         {
             return null;
         }
@@ -494,6 +496,6 @@ public partial struct AdditionalProperties
         if (_properties is null)
             return false;
 
-        return _properties.TryGetValue(jsonPath, out var value) && value[0] == (byte)ValueKind.Removed;
+        return _properties.TryGetValue(jsonPath, out var value) && value.Kind == ValueKind.Removed;
     }
 }

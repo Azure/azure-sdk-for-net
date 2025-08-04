@@ -90,7 +90,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 }
                 else if (OptionalProperty.IsCollectionDefined(VirtualMachines))
                 {
-                    if (flattenedJson.EntriesStartsWith("$.virtualMachines"u8.ToArray()).Any())
+                    if (flattenedJson.ContainsStartsWith("$.virtualMachines"u8))
                     {
                         for (int i = 0; i < VirtualMachines.Count; i++)
                         {
@@ -157,7 +157,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<IList<WritableSubResource>> virtualMachines = default;
             OptionalProperty<WritableSubResource> proximityPlacementGroup = default;
             OptionalProperty<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -166,7 +166,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options, null);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -279,20 +279,23 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     }
                     continue;
                 }
-                rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], BinaryData.FromString(property.Value.GetRawText()));
             }
 
-            var model = new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses));
-
-            if (data is not null)
-                model.Patch.Set("$"u8, data);
-
-            foreach(var kvp in rawDataDictionary)
-            {
-                model.Patch.Set(Encoding.UTF8.GetBytes([.. "$.", .. kvp.Key]), kvp.Value);
-            }
-
-            return model;
+            return new AvailabilitySetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                OptionalProperty.ToDictionary(tags),
+                location,
+                sku.Value,
+                OptionalProperty.ToNullable(platformUpdateDomainCount),
+                OptionalProperty.ToNullable(platformFaultDomainCount),
+                OptionalProperty.ToList(virtualMachines),
+                proximityPlacementGroup,
+                OptionalProperty.ToList(statuses),
+                additionalProperties);
         }
 
         AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)

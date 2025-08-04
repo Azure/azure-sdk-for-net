@@ -9,7 +9,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public abstract partial class ResourceData
     {
-        private AdditionalProperties _patch = new();
+        private AdditionalProperties _patch;
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ref AdditionalProperties Patch => ref _patch;
 
@@ -23,12 +23,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        protected ResourceData(string id, string name, string resourceType, SystemData systemData)
+        protected ResourceData(string id, string name, string resourceType, SystemData systemData, in AdditionalProperties additionalProperties)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
             SystemData = systemData;
+            _patch = additionalProperties;
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
