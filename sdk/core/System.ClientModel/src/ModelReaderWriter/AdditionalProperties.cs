@@ -160,7 +160,7 @@ public partial struct AdditionalProperties
     /// <param name="jsonPath"></param>
     public void SetNull(ReadOnlySpan<byte> jsonPath)
     {
-        Set(jsonPath, NullValue.Instance);
+        SetInternal(jsonPath, s_nullValueArray);
     }
 
     /// <summary>
@@ -261,7 +261,7 @@ public partial struct AdditionalProperties
     public void Remove(ReadOnlySpan<byte> jsonPath)
     {
         // Special (remove, set null, etc)
-        Set(jsonPath, RemovedValue.Instance);
+        SetInternal(jsonPath, s_removedValueArray);
     }
 
     /// <summary>

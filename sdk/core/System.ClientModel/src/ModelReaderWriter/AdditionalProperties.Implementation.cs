@@ -273,14 +273,6 @@ public partial struct AdditionalProperties
             case byte[] jsonBytes:
                 return EncodeValue(jsonBytes);
 
-            case RemovedValue:
-                // Use singleton array for removed value
-                return s_removedValueArray;
-
-            case NullValue:
-                // Use singleton array for null value
-                return s_nullValueArray;
-
             default:
                 throw new NotSupportedException($"Unsupported value type: {value?.GetType()}");
         }
@@ -329,10 +321,10 @@ public partial struct AdditionalProperties
                 return valueBytes.ToArray();
 
             case ValueKind.Removed:
-                return RemovedValue.Instance;
+                return s_removedValueArray.Value;
 
             case ValueKind.Null:
-                return NullValue.Instance;
+                return s_nullValueArray.Value;
 
             default:
                 throw new ArgumentException($"Unknown value kind: {kind}");
