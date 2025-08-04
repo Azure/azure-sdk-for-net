@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.VoiceLive", "src\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.VoiceLive.Tests", "tests\Azure.AI.VoiceLive.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicVoiceAssistant", "..\..\..\..\..\..\scratch\vl_sample\samples\BasicVoiceAssistant.csproj", "{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicVoiceAssistant", "samples\BasicVoiceAssistant\BasicVoiceAssistant.csproj", "{4F423188-2AE3-CB57-5BE2-808B33B8B5AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
