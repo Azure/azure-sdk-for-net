@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.Confluent.Models
 
         private const string AZUREBLOBSOURCEValue = "AZUREBLOBSOURCE";
         private const string AZUREBLOBSINKValue = "AZUREBLOBSINK";
+        private const string AZURECOSMOSV2SINKValue = "AZURECOSMOSV2SINK";
+        private const string AZURECOSMOSV2SOURCEValue = "AZURECOSMOSV2SOURCE";
 
         /// <summary> AZUREBLOBSOURCE. </summary>
         public static ConnectorClass AZUREBLOBSOURCE { get; } = new ConnectorClass(AZUREBLOBSOURCEValue);
         /// <summary> AZUREBLOBSINK. </summary>
         public static ConnectorClass AZUREBLOBSINK { get; } = new ConnectorClass(AZUREBLOBSINKValue);
+        /// <summary> AZURECOSMOSV2SINK. </summary>
+        public static ConnectorClass AZURECOSMOSV2SINK { get; } = new ConnectorClass(AZURECOSMOSV2SINKValue);
+        /// <summary> AZURECOSMOSV2SOURCE. </summary>
+        public static ConnectorClass AZURECOSMOSV2SOURCE { get; } = new ConnectorClass(AZURECOSMOSV2SOURCEValue);
         /// <summary> Determines if two <see cref="ConnectorClass"/> values are the same. </summary>
         public static bool operator ==(ConnectorClass left, ConnectorClass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConnectorClass"/> values are not the same. </summary>

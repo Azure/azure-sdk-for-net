@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="cosmosContainersTopicMapping"> Azure Cosmos Database Containers Topic Mapping. </param>
         /// <param name="cosmosMessageKeyEnabled"> Azure Cosmos Database Message Key Enabled. </param>
         /// <param name="cosmosMessageKeyField"> Azure Cosmos Database Message Key Field. </param>
-        internal AzureCosmosDBSourceConnectorServiceInfo(ConnectorServiceType connectorServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string cosmosDatabaseName, string cosmosMasterKey, string cosmosConnectionEndpoint, string cosmosContainersTopicMapping, bool? cosmosMessageKeyEnabled, string cosmosMessageKeyField) : base(connectorServiceType, serializedAdditionalRawData)
+        /// <param name="cosmosIncludeAllContainers"> Azure Cosmos Database Include all the containers in the database. </param>
+        internal AzureCosmosDBSourceConnectorServiceInfo(ConnectorServiceType connectorServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string cosmosDatabaseName, string cosmosMasterKey, string cosmosConnectionEndpoint, string cosmosContainersTopicMapping, bool? cosmosMessageKeyEnabled, string cosmosMessageKeyField, string cosmosIncludeAllContainers) : base(connectorServiceType, serializedAdditionalRawData)
         {
             CosmosDatabaseName = cosmosDatabaseName;
             CosmosMasterKey = cosmosMasterKey;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Confluent.Models
             CosmosContainersTopicMapping = cosmosContainersTopicMapping;
             CosmosMessageKeyEnabled = cosmosMessageKeyEnabled;
             CosmosMessageKeyField = cosmosMessageKeyField;
+            CosmosIncludeAllContainers = cosmosIncludeAllContainers;
             ConnectorServiceType = connectorServiceType;
         }
 
@@ -51,5 +53,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public bool? CosmosMessageKeyEnabled { get; set; }
         /// <summary> Azure Cosmos Database Message Key Field. </summary>
         public string CosmosMessageKeyField { get; set; }
+        /// <summary> Azure Cosmos Database Include all the containers in the database. </summary>
+        public string CosmosIncludeAllContainers { get; set; }
     }
 }

@@ -744,6 +744,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public string CosmosDatabaseName { get { throw null; } set { } }
         public string CosmosIdStrategy { get { throw null; } set { } }
         public string CosmosMasterKey { get { throw null; } set { } }
+        public string CosmosWriteDetails { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Confluent.Models.AzureCosmosDBSinkConnectorServiceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AzureCosmosDBSinkConnectorServiceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Confluent.Models.AzureCosmosDBSinkConnectorServiceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -757,6 +758,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public string CosmosConnectionEndpoint { get { throw null; } set { } }
         public string CosmosContainersTopicMapping { get { throw null; } set { } }
         public string CosmosDatabaseName { get { throw null; } set { } }
+        public string CosmosIncludeAllContainers { get { throw null; } set { } }
         public string CosmosMasterKey { get { throw null; } set { } }
         public bool? CosmosMessageKeyEnabled { get { throw null; } set { } }
         public string CosmosMessageKeyField { get { throw null; } set { } }
@@ -1057,6 +1059,8 @@ namespace Azure.ResourceManager.Confluent.Models
         public ConnectorClass(string value) { throw null; }
         public static Azure.ResourceManager.Confluent.Models.ConnectorClass AZUREBLOBSINK { get { throw null; } }
         public static Azure.ResourceManager.Confluent.Models.ConnectorClass AZUREBLOBSOURCE { get { throw null; } }
+        public static Azure.ResourceManager.Confluent.Models.ConnectorClass AZURECOSMOSV2SINK { get { throw null; } }
+        public static Azure.ResourceManager.Confluent.Models.ConnectorClass AZURECOSMOSV2SOURCE { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Confluent.Models.ConnectorClass other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

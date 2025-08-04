@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Confluent.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateApiKey_OrganizationCreateClusterAPIKey()
+        public async Task CreateApiKey_OrganizationCreateAPIKeyMaximumSet()
         {
-            // Generated from example definition: 2024-07-01/Organization_CreateClusterAPIKey.json
+            // Generated from example definition: 2025-07-17-preview/examples/Organization_CreateAPIKey_MaximumSet_Gen.json
             // this example is just showing the usage of "SCClusterRecords_CreateApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,20 +30,49 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // this example assumes you already have this SCClusterRecordResource created on azure
             // for more information of creating SCClusterRecordResource, please refer to the document of SCClusterRecordResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string organizationName = "myOrganization";
-            string environmentId = "env-12132";
-            string clusterId = "clusterId-123";
+            string subscriptionId = "F1DD149D-DDBF-4A56-ACC5-35ADC1C6103D";
+            string resourceGroupName = "rgconfluent";
+            string organizationName = "ivxzjxogbgqr";
+            string environmentId = "pfcuotbaojfqilngrmm";
+            string clusterId = "sthhgl";
             ResourceIdentifier scClusterRecordResourceId = SCClusterRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
             SCClusterRecordResource scClusterRecord = client.GetSCClusterRecordResource(scClusterRecordResourceId);
 
             // invoke the operation
             ConfluentApiKeyCreateContent content = new ConfluentApiKeyCreateContent
             {
-                Name = "CI kafka access key",
-                Description = "This API key provides kafka access to cluster x",
+                Name = "qgeqraygiikrd",
+                Description = "dqwkocklqbjzfq",
             };
+            ConfluentApiKeyRecord result = await scClusterRecord.CreateApiKeyAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateApiKey_OrganizationCreateAPIKeyMinimumSet()
+        {
+            // Generated from example definition: 2025-07-17-preview/examples/Organization_CreateAPIKey_MinimumSet_Gen.json
+            // this example is just showing the usage of "SCClusterRecords_CreateApiKey" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SCClusterRecordResource created on azure
+            // for more information of creating SCClusterRecordResource, please refer to the document of SCClusterRecordResource
+            string subscriptionId = "F1DD149D-DDBF-4A56-ACC5-35ADC1C6103D";
+            string resourceGroupName = "rgconfluent";
+            string organizationName = "oncpruqcamvwrvvscgvkwvue";
+            string environmentId = "kmgmtyyeyjygkbykmfpwtohtbvll";
+            string clusterId = "hfqxytoqrtd";
+            ResourceIdentifier scClusterRecordResourceId = SCClusterRecordResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName, environmentId, clusterId);
+            SCClusterRecordResource scClusterRecord = client.GetSCClusterRecordResource(scClusterRecordResourceId);
+
+            // invoke the operation
+            ConfluentApiKeyCreateContent content = new ConfluentApiKeyCreateContent();
             ConfluentApiKeyRecord result = await scClusterRecord.CreateApiKeyAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Confluent.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetClusterApiKey_OrganizationGetClusterAPIKey()
+        public async Task GetClusterApiKey_OrganizationGetClusterAPIKeyMaximumSet()
         {
-            // Generated from example definition: 2024-07-01/Organization_GetClusterAPIKey.json
+            // Generated from example definition: 2025-07-17-preview/examples/Organization_GetClusterAPIKey_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_GetClusterApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // this example assumes you already have this ConfluentOrganizationResource created on azure
             // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string organizationName = "myOrganization";
+            string subscriptionId = "F1DD149D-DDBF-4A56-ACC5-35ADC1C6103D";
+            string resourceGroupName = "rgconfluent";
+            string organizationName = "obkrtvdosidk";
             ResourceIdentifier confluentOrganizationResourceId = ConfluentOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            string apiKeyId = "apiKeyId-123";
+            string apiKeyId = "ubxlwyxtaxkxdn";
             ConfluentApiKeyRecord result = await confluentOrganization.GetClusterApiKeyAsync(apiKeyId);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -45,9 +45,36 @@ namespace Azure.ResourceManager.Confluent.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DeleteClusterApiKey_OrganizationDeleteClusterAPIKey()
+        public async Task GetClusterApiKey_OrganizationGetClusterAPIKeyMinimumSet()
         {
-            // Generated from example definition: 2024-07-01/Organization_DeleteClusterAPIKey.json
+            // Generated from example definition: 2025-07-17-preview/examples/Organization_GetClusterAPIKey_MinimumSet_Gen.json
+            // this example is just showing the usage of "OrganizationResource_GetClusterApiKey" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ConfluentOrganizationResource created on azure
+            // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
+            string subscriptionId = "F1DD149D-DDBF-4A56-ACC5-35ADC1C6103D";
+            string resourceGroupName = "rgconfluent";
+            string organizationName = "dwlvoielafuqbrvjm";
+            ResourceIdentifier confluentOrganizationResourceId = ConfluentOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
+
+            // invoke the operation
+            string apiKeyId = "nizcjkvv";
+            ConfluentApiKeyRecord result = await confluentOrganization.GetClusterApiKeyAsync(apiKeyId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeleteClusterApiKey_OrganizationDeleteClusterAPIKeyMaximumSet()
+        {
+            // Generated from example definition: 2025-07-17-preview/examples/Organization_DeleteClusterAPIKey_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_DeleteClusterApiKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,14 +84,41 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // this example assumes you already have this ConfluentOrganizationResource created on azure
             // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string organizationName = "myOrganization";
+            string subscriptionId = "F1DD149D-DDBF-4A56-ACC5-35ADC1C6103D";
+            string resourceGroupName = "rgconfluent";
+            string organizationName = "i";
             ResourceIdentifier confluentOrganizationResourceId = ConfluentOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            string apiKeyId = "ZFZ6SZZZWGYBEIFB";
+            string apiKeyId = "qjrgzkeeewxy";
+            await confluentOrganization.DeleteClusterApiKeyAsync(apiKeyId);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeleteClusterApiKey_OrganizationDeleteClusterAPIKeyMinimumSet()
+        {
+            // Generated from example definition: 2025-07-17-preview/examples/Organization_DeleteClusterAPIKey_MinimumSet_Gen.json
+            // this example is just showing the usage of "OrganizationResource_DeleteClusterApiKey" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ConfluentOrganizationResource created on azure
+            // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
+            string subscriptionId = "F1DD149D-DDBF-4A56-ACC5-35ADC1C6103D";
+            string resourceGroupName = "rgconfluent";
+            string organizationName = "dumuqboiqd";
+            ResourceIdentifier confluentOrganizationResourceId = ConfluentOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
+
+            // invoke the operation
+            string apiKeyId = "uwfyesskfavbitvsjzutiia";
             await confluentOrganization.DeleteClusterApiKeyAsync(apiKeyId);
 
             Console.WriteLine("Succeeded");

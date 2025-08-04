@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
         /// <param name="cosmosContainersTopicMapping"> Azure Cosmos Database Containers Topic Mapping. </param>
         /// <param name="cosmosIdStrategy"> Azure Cosmos Database Id Strategy. </param>
-        internal AzureCosmosDBSinkConnectorServiceInfo(ConnectorServiceType connectorServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string cosmosDatabaseName, string cosmosMasterKey, string cosmosConnectionEndpoint, string cosmosContainersTopicMapping, string cosmosIdStrategy) : base(connectorServiceType, serializedAdditionalRawData)
+        /// <param name="cosmosWriteDetails"> Azure Cosmos write config details. </param>
+        internal AzureCosmosDBSinkConnectorServiceInfo(ConnectorServiceType connectorServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string cosmosDatabaseName, string cosmosMasterKey, string cosmosConnectionEndpoint, string cosmosContainersTopicMapping, string cosmosIdStrategy, string cosmosWriteDetails) : base(connectorServiceType, serializedAdditionalRawData)
         {
             CosmosDatabaseName = cosmosDatabaseName;
             CosmosMasterKey = cosmosMasterKey;
             CosmosConnectionEndpoint = cosmosConnectionEndpoint;
             CosmosContainersTopicMapping = cosmosContainersTopicMapping;
             CosmosIdStrategy = cosmosIdStrategy;
+            CosmosWriteDetails = cosmosWriteDetails;
             ConnectorServiceType = connectorServiceType;
         }
 
@@ -47,5 +49,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public string CosmosContainersTopicMapping { get; set; }
         /// <summary> Azure Cosmos Database Id Strategy. </summary>
         public string CosmosIdStrategy { get; set; }
+        /// <summary> Azure Cosmos write config details. </summary>
+        public string CosmosWriteDetails { get; set; }
     }
 }

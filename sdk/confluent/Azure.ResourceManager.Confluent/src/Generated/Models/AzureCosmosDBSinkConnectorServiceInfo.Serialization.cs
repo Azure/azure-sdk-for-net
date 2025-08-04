@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("cosmosIdStrategy"u8);
                 writer.WriteStringValue(CosmosIdStrategy);
             }
+            if (Optional.IsDefined(CosmosWriteDetails))
+            {
+                writer.WritePropertyName("cosmosWriteDetails"u8);
+                writer.WriteStringValue(CosmosWriteDetails);
+            }
         }
 
         AzureCosmosDBSinkConnectorServiceInfo IJsonModel<AzureCosmosDBSinkConnectorServiceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string cosmosConnectionEndpoint = default;
             string cosmosContainersTopicMapping = default;
             string cosmosIdStrategy = default;
+            string cosmosWriteDetails = default;
             ConnectorServiceType connectorServiceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -117,6 +123,11 @@ namespace Azure.ResourceManager.Confluent.Models
                     cosmosIdStrategy = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("cosmosWriteDetails"u8))
+                {
+                    cosmosWriteDetails = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("connectorServiceType"u8))
                 {
                     connectorServiceType = new ConnectorServiceType(property.Value.GetString());
@@ -135,7 +146,8 @@ namespace Azure.ResourceManager.Confluent.Models
                 cosmosMasterKey,
                 cosmosConnectionEndpoint,
                 cosmosContainersTopicMapping,
-                cosmosIdStrategy);
+                cosmosIdStrategy,
+                cosmosWriteDetails);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBSinkConnectorServiceInfo>.Write(ModelReaderWriterOptions options)
