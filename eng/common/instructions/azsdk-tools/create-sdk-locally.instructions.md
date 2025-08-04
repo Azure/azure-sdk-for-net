@@ -1,7 +1,3 @@
----
-mode: 'agent'
-tools: ['codebase']
----
 Your goal is to help guide the user to create SDK locally for TypeSpec changes. This is currently supported for **Python** only. User can generate SDK for other languages using SDK generation pipeline.
 ## Steps to create Python SDK locally from TypeSpec
 ### Step 1: Check for existing azure-sdk-for-python repository
