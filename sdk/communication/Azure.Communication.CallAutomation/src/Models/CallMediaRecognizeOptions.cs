@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
 
-        /// <summary> Gets or sets a list of languages for Language Identification. </summary>
+        /// <summary>  List of locales for Language Identification. Supports upto 4 locales in the format: ["en-us", "fr-fr", "hi-in"] etc. </summary>
         public IList<string> SpeechLanguages { get; set; }
 
         /// <summary> Gets or sets a value indicating if sentiment analysis should be used. </summary>

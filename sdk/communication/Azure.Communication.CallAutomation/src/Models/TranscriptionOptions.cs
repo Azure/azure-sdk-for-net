@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation
         public PiiRedactionOptions PiiRedactionOptions { get; set; }
         /// <summary> Indicating if sentiment analysis should be used. </summary>
         public bool? EnableSentimentAnalysis { get; set; }
-        /// <summary> List of languages for Language Identification. </summary>
+        /// <summary>  List of locales for Language Identification. Supports upto 4 locales in the format: ["en-us", "fr-fr", "hi-in"] etc. </summary>
         public IList<string> Locales { get; set; }
         /// <summary> Summarization configuration options. </summary>
         public SummarizationOptions SummarizationOptions { get; set; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Gets or sets the type of PII redaction to be used. </summary>
+    /// <summary> Value indicating the PII redaction type to be used. </summary>
     public readonly partial struct RedactionType : IEquatable<RedactionType>
     {
         private readonly string _value;

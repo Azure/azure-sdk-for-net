@@ -59,8 +59,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SipDiagnosticInfo"/>. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
+        /// <param name="code"> Represents the diagnostic code returned by the SIP service, used for identifying specific issues or statuses. </param>
+        /// <param name="message"> Message associated with the code for diagnosing. </param>
         /// <returns> A new <see cref="CallAutomation.SipDiagnosticInfo"/> instance for mocking. </returns>
         public static SipDiagnosticInfo SipDiagnosticInfo(int? code = null, string message = null)
         {
