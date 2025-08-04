@@ -32,7 +32,5 @@ When running in copilot the default is stdio mode, but SSE is useful to support 
 
 See the [C# MCP SDK](https://github.com/modelcontextprotocol/csharp-sdk)
 
-Add an [SSE transport](https://github.com/modelcontextprotocol/csharp-sdk/tree/main/samples/AspNetCoreSseServer)
-
 TODO: Add the azsdk-cli project to pull in MCP server dependencies from the repo
 
