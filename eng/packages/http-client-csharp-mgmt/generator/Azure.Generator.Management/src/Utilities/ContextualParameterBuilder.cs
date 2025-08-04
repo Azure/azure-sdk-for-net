@@ -5,10 +5,8 @@ using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.Snippets;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {

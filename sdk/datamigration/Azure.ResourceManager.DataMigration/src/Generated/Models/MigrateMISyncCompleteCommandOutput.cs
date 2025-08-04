@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandOutput"/>. </summary>
         internal MigrateMISyncCompleteCommandOutput()
         {
-            Errors = new ChangeTrackingList<ReportableException>();
+            Errors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandOutput"/>. </summary>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMISyncCompleteCommandOutput(IReadOnlyList<ReportableException> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateMISyncCompleteCommandOutput(IReadOnlyList<DataMigrationReportableException> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of errors that happened during the command execution. </summary>
-        public IReadOnlyList<ReportableException> Errors { get; }
+        public IReadOnlyList<DataMigrationReportableException> Errors { get; }
     }
 }

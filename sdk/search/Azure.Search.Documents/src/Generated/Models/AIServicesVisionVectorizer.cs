@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,11 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AIServicesVisionVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="aiServicesVisionParameters"> Contains the parameters specific to AI Services Vision embedding vectorization. </param>
-        internal AIServicesVisionVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, AIServicesVisionParameters aiServicesVisionParameters) : base(vectorizerName, kind)
+        internal AIServicesVisionVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AIServicesVisionParameters aiServicesVisionParameters) : base(vectorizerName, kind, serializedAdditionalRawData)
         {
             AIServicesVisionParameters = aiServicesVisionParameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AIServicesVisionVectorizer"/> for deserialization. </summary>
+        internal AIServicesVisionVectorizer()
+        {
         }
 
         /// <summary> Contains the parameters specific to AI Services Vision embedding vectorization. </summary>

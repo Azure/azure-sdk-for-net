@@ -35,7 +35,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
 
-        protected override CSharpType? GetBaseType() => typeof(ArmResource);
+        protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
         protected override ConstructorProvider[] BuildConstructors()
             => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
@@ -76,7 +76,7 @@ namespace Azure.Generator.Management.Providers
             if (resource.IsSingleton)
             {
                 var resourceMethodSignature = new MethodSignature(
-                    $"Get{resource.SpecName}",
+                    $"Get{resource.ResourceName}",
                     $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     resource.Type,
@@ -97,7 +97,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var collection = resource.ResourceCollection!;
                 // the first method is returning the collection
-                var pluralOfResourceName = resource.SpecName.Pluralize();
+                var pluralOfResourceName = resource.ResourceName.Pluralize();
                 var collectionMethodSignature = new MethodSignature(
                     $"Get{pluralOfResourceName}",
                     $"Gets a collection of {pluralOfResourceName} in the {ArmCoreType:C}",
@@ -119,13 +119,13 @@ namespace Azure.Generator.Management.Providers
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{collection.SpecName}");
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{resource.ResourceName}");
                 }
 
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{collection.SpecName}Async");
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{resource.ResourceName}Async");
                 }
 
                 static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)

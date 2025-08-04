@@ -13,9 +13,15 @@
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      AZC0035; <!-- Missing model factory methods.  #51228-->
+    </NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Memory.Data" /> <!-- TODO remove after Azure.Core release with updated version -->
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

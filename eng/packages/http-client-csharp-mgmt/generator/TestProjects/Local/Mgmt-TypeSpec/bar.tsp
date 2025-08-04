@@ -52,6 +52,7 @@ model BarSettings is ProxyResource<BarSettingsProperties> {
 
 model BarSettingsProperties {
   /** enabled */
+  @visibility(Lifecycle.Read)
   isEnabled?: boolean;
 }
 

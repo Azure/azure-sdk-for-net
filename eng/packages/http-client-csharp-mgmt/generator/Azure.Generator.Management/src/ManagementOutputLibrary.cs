@@ -25,6 +25,12 @@ namespace Azure.Generator.Management
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
+        private PageableWrapperProvider? _pageableWrapper;
+        internal PageableWrapperProvider PageableWrapper => _pageableWrapper ??= new PageableWrapperProvider(false);
+
+        private PageableWrapperProvider? _asyncPageableWrapper;
+        internal PageableWrapperProvider AsyncPageableWrapper => _asyncPageableWrapper ??= new PageableWrapperProvider(true);
+
         // TODO: replace this with CSharpType to TypeProvider mapping
         private HashSet<CSharpType>? _resourceTypes;
         private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
@@ -176,13 +182,16 @@ namespace Azure.Generator.Management
             var resources = BuildResources();
             var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
             var extensions = BuildExtensions(resources);
+
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 ArmOperation,
                 GenericArmOperation,
                 .. resources,
                 .. collections,
                 .. extensions,
+                PageableWrapper,
+                AsyncPageableWrapper,
                 .. resources.Select(r => r.Source),
                 .. resources.SelectMany(r => r.SerializationProviders)];
         }

@@ -1,30 +1,5 @@
 namespace Azure.ResourceManager.BillingBenefits
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsAppliedScopeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsCommitment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtendedStatusInfo))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPrice))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsPurchaseContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsRoleAssignmentEntity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatch))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanPatchProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilization))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSavingsPlanUtilizationAggregate))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsSku))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.BillingPlanInformation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanOrderPaymentDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanUpdateValidateContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult))]
     public partial class AzureResourceManagerBillingBenefitsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerBillingBenefitsContext() { }

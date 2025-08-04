@@ -1,18 +1,5 @@
 namespace Azure.ResourceManager.LoadTesting
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.LoadTestingQuotaData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.LoadTestingResource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.LoadTestingResourceData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkIdentity))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDependency))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingEndpointDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketDimensions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch))]
     public partial class AzureResourceManagerLoadTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerLoadTestingContext() { }
