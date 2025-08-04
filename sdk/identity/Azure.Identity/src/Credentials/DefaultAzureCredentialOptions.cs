@@ -184,7 +184,7 @@ namespace Azure.Identity
         /// the cache, the SharedTokenCacheCredential won't be used for authentication.
         /// Defaults to the value of environment variable <c>AZURE_USERNAME</c>.
         /// </remarks>
-        [Obsolete("SharedTokenCacheCredential is deprecated. For brokered authentication, consider using InteractiveBrowserCredential.")]
+        [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
