@@ -1,7 +1,5 @@
 ---
-mode: 'agent'
 description: 'Verify SDK namespace approval for management plane'
-tools: ['GetReleasePlan', 'GetReleasePlanForPullRequest', 'LinkNameSpaceApprovalIssue']
 ---
 This task is required only for management plane API spec and only if a release plan exists for the API spec pull request.
 

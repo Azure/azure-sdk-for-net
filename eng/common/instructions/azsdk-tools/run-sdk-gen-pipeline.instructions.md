@@ -1,6 +1,4 @@
 ---
-mode: 'agent'
-tools: ['GenerateSDK', 'GetSDKPullRequestDetails', 'GetReleasePlan', 'GetReleasePlanForPullRequest', 'GetPipelineRun', 'GetPipelineRunStatus', 'LinkSdkPullRequestToReleasePlan']
 description: 'Generate SDKs from TypeSpec using pipeline'
 ---
 Your goal is to generate SDKs from the TypeSpec spec pull request. Get API spec pull request link for current branch or from user if not available in current context.

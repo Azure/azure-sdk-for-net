@@ -1,6 +1,4 @@
 ---
-mode: 'agent'
-tools: ['CheckPackageReleaseReadiness']
 description: 'This prompt is designed to check the release readiness of a SDK package.'
 ---
 ## Goal
