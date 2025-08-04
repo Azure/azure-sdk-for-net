@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Utilities;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -11,12 +11,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class UpdateOperationMethodProvider(
         ResourceClientProvider resource,
-        ClientProvider restClient,
+        RestClientInfo restClientInfo,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
-        FieldProvider clientDiagnosticsField,
-        FieldProvider restClientField,
-        bool isAsync) : ResourceOperationMethodProvider(resource, resource.ContextualPath, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
+        bool isAsync) : ResourceOperationMethodProvider(resource, resource.ContextualPath, restClientInfo, method, convenienceMethod, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {

@@ -610,6 +610,7 @@ namespace Azure.Provisioning.Expressions
         public BicepInterpolatedStringHandler(int literalLength, int formattedCount) { throw null; }
         public void AppendFormatted<T>(T t) { }
         public void AppendLiteral(string text) { }
+        public static implicit operator Azure.Provisioning.Expressions.BicepInterpolatedStringHandler (System.FormattableString formattable) { throw null; }
     }
     public partial class BicepProgram
     {

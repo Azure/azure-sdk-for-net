@@ -1,6 +1,6 @@
 global::Samples.Argument.AssertNotNull(key, nameof(key));
 
-using global::Azure.Core.Pipeline.DiagnosticScope scope = _responseTypeClientDiagnostics.CreateScope("ResponseTypeResource.RemoveTag");
+using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeResource.RemoveTag");
 scope.Start();
 try
 {
@@ -12,8 +12,7 @@ try
         global::Azure.RequestContext context = new global::Azure.RequestContext
         {
             CancellationToken = cancellationToken
-        }
-        ;
+        };
         global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(this.Id.Name, global::System.Guid.Parse(this.Id.SubscriptionId), context);
         global::Azure.Response result = await this.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);

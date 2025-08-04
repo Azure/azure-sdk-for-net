@@ -16,7 +16,7 @@ namespace MgmtTypeSpec.Models
 {
     /// <summary> The ZooProperties. </summary>
     [JsonConverter(typeof(ZooPropertiesConverter))]
-    internal partial class ZooProperties : IJsonModel<ZooProperties>
+    public partial class ZooProperties : IJsonModel<ZooProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

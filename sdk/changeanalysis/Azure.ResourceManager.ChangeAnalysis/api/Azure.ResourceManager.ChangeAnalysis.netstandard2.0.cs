@@ -1,8 +1,5 @@
 namespace Azure.ResourceManager.ChangeAnalysis
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange))]
     public partial class AzureResourceManagerChangeAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerChangeAnalysisContext() { }

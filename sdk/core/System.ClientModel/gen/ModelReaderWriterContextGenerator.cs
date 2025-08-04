@@ -17,8 +17,6 @@ namespace System.ClientModel.SourceGeneration;
 [Generator]
 internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGenerator
 {
-    private static readonly SymbolDisplayFormat s_fullyQualifiedNoGlobal = new SymbolDisplayFormat(
-        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
     private const string BuildableAttributeName = "System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute";
 
     /// <inheritdoc/>
@@ -53,14 +51,22 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
     {
         if (data.TypesWithAttribute.Length > 1)
         {
-            context.ReportDiagnostic(Diagnostic.Create(
-                DiagnosticDescriptors.MultipleContextsNotSupported,
-                data.TypesWithAttribute[0].Context?.Locations.First(),
-                data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
-            return;
-        }
+            var first = data.TypesWithAttribute[0].Context;
 
-        if (data.TypesWithAttribute.Length == 0)
+            for (int i = 1; i < data.TypesWithAttribute.Length; i++)
+            {
+                if (!SymbolEqualityComparer.Default.Equals(first, data.TypesWithAttribute[i].Context))
+                {
+                    // If we have multiple contexts, we cannot generate a single context.
+                    context.ReportDiagnostic(Diagnostic.Create(
+                        DiagnosticDescriptors.MultipleContextsNotSupported,
+                        data.TypesWithAttribute[0].Context?.Locations.First(),
+                        data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
+                    return;
+                }
+            }
+        }
+        else if (data.TypesWithAttribute.Length == 0)
         {
             // nothing to generate
             return;

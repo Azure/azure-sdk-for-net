@@ -22,7 +22,7 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
-        private readonly ClientDiagnostics _fooClientDiagnostics;
+        private readonly ClientDiagnostics _foosClientDiagnostics;
         private readonly Foos _foosRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
@@ -35,9 +35,9 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
+            _foosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
-            _foosRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
+            _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -63,20 +63,19 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.CreateOrUpdateAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
-                    _fooClientDiagnostics,
+                    _foosClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -106,20 +105,19 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
-                    _fooClientDiagnostics,
+                    _foosClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -146,15 +144,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.GetAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
@@ -180,15 +177,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.Get");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Get");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
@@ -209,14 +205,22 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FooResource(Client, data));
         }
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FooData, FooResource>(new FoosGetCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FooResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
@@ -228,15 +232,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.ExistsAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.ExistsAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
@@ -258,15 +261,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.Exists");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.Exists");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
@@ -288,15 +290,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetIfExistsAsync");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
@@ -322,15 +323,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.GetIfExists");
+            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooCollection.GetIfExists");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
