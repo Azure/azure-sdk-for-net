@@ -125,13 +125,48 @@ public class BicepList<T> :
         }
     }
 
-    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item) => _values.Add(item);
+    public void Insert(int index, BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot insert into {_self?.PropertyName}");
+        }
+        _values.Insert(index, item);
+    }
+    public void Add(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot add to {_self?.PropertyName}");
+        }
+        _values.Add(item);
+    }
 
     // TODO: Decide whether it's important to "unlink" resources on removal
-    public void RemoveAt(int index) => _values.RemoveAt(index);
-    public void Clear() => _values.Clear();
-    public bool Remove(BicepValue<T> item) => _values.Remove(item);
+    public void RemoveAt(int index)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot remove from {_self?.PropertyName}");
+        }
+        _values.RemoveAt(index);
+    }
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot clear {_self?.PropertyName}");
+        }
+        _values.Clear();
+    }
+    public bool Remove(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot remove from {_self?.PropertyName}");
+        }
+        return _values.Remove(item);
+    }
 
     public int Count => _values.Count;
     public bool IsReadOnly => _values.IsReadOnly;

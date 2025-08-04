@@ -106,12 +106,42 @@ public class BicepDictionary<T> :
         }
     }
 
-    public void Add(string key, BicepValue<T> value) => _values.Add(key, value);
-    public void Add(KeyValuePair<string, BicepValue<T>> item) => _values.Add(item.Key, item.Value);
+    public void Add(string key, BicepValue<T> value)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot add to {_self?.PropertyName}");
+        }
+        _values.Add(key, value);
+    }
+
+    public void Add(KeyValuePair<string, BicepValue<T>> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot add to {_self?.PropertyName}");
+        }
+        _values.Add(item.Key, item.Value);
+    }
 
     // TODO: Decide whether it's important to "unlink" resources on removal
-    public bool Remove(string key) => _values.Remove(key);
-    public void Clear() => _values.Clear();
+    public bool Remove(string key)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot remove from {_self?.PropertyName}");
+        }
+        return _values.Remove(key);
+    }
+
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot clear {_self?.PropertyName}");
+        }
+        _values.Clear();
+    }
 
     public ICollection<string> Keys => _values.Keys;
     public ICollection<BicepValue<T>> Values => _values.Values;

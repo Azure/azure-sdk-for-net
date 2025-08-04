@@ -115,6 +115,29 @@ namespace Azure.Provisioning.Tests.Expressions
         }
 
         [Test]
+        public void ValidateOutputListProperty_Empty()
+        {
+            var resource = new TestResource("test");
+            var outputList = resource.OutputList;
+            Assert.AreEqual("[]", outputList.ToString()); // TODO -- should this throw? or just like right now we return an empty list?
+            Assert.AreEqual("test.outputList", outputList.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateOutputListProperty_Indexer()
+        {
+            var resource = new TestResource("test");
+            // add value to an output list will throw
+            Assert.Throws<InvalidOperationException>(() => resource.OutputList.Add("outputItem1"));
+            // call the setter of indexer will throw
+            Assert.Throws<InvalidOperationException>(() => resource.OutputList[0] = "outputItem1");
+
+            var validIndexer = resource.OutputList[0];
+            Assert.Throws<ArgumentOutOfRangeException>(() => validIndexer.ToString());
+            Assert.AreEqual("test.outputList[0]", validIndexer.ToBicepExpression().ToString());
+        }
+
+        [Test]
         public void ValidateNestedListProperty_Empty()
         {
             var resource = new TestResource("test")
@@ -162,6 +185,35 @@ namespace Azure.Provisioning.Tests.Expressions
         }
 
         [Test]
+        public void ValidateNestedOutputListProperty_Empty()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            var nestedOutputList = resource.Properties.OutputList;
+            Assert.AreEqual("[]", nestedOutputList.ToString()); // TODO -- should this throw? or just like right now we return an empty list?
+            Assert.AreEqual("test.properties.outputList", nestedOutputList.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateNestedOutputListProperty_Indexer()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            // add value to an output list will throw
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputList.Add("outputItem1"));
+            // call the setter of indexer will throw
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputList[0] = "outputItem1");
+
+            var validIndexer = resource.Properties.OutputList[0];
+            Assert.Throws<ArgumentOutOfRangeException>(() => validIndexer.ToString());
+            Assert.AreEqual("test.properties.outputList[0]", validIndexer.ToBicepExpression().ToString());
+        }
+
+        [Test]
         public void ValidateDictionaryProperty_Empty()
         {
             var resource = new TestResource("test");
@@ -200,6 +252,104 @@ namespace Azure.Provisioning.Tests.Expressions
         }
 
         [Test]
+        public void ValidateOutputDictionaryProperty_Empty()
+        {
+            var resource = new TestResource("test");
+            var outputDict = resource.OutputDictionary;
+            Assert.AreEqual("{ }", outputDict.ToString()); // TODO -- should this throw? or just like right now we return an empty dictionary?
+            Assert.AreEqual("test.outputDictionary", outputDict.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateOutputDictionaryProperty_Indexer()
+        {
+            var resource = new TestResource("test");
+            // add value to an output dictionary will throw
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary.Add("outputKey", "outputValue"));
+            // call the setter of indexer will throw
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary["outputKey"] = "outputValue");
+
+            var validIndexer = resource.OutputDictionary["outputKey"];
+            Assert.Throws<KeyNotFoundException>(() => validIndexer.ToString());
+            Assert.AreEqual("test.outputDictionary['outputKey']", validIndexer.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_Empty()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            var nestedDict = resource.Properties.Dictionary;
+            Assert.AreEqual("{ }", nestedDict.ToString());
+            Assert.AreEqual("test.properties.dictionary", nestedDict.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_WithValues()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary["nestedKey1"] = "nestedValue1";
+            resource.Properties.Dictionary["nestedKey2"] = "nestedValue2";
+            Assert.AreEqual("""
+                {
+                  nestedKey1: 'nestedValue1'
+                  nestedKey2: 'nestedValue2'
+                }
+                """, resource.Properties.Dictionary.ToString());
+            Assert.AreEqual("test.properties.dictionary", resource.Properties.Dictionary.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateNestedDictionaryProperty_Indexer()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary["nestedKey1"] = "nestedValue1";
+            var validIndexer = resource.Properties.Dictionary["nestedKey1"];
+            Assert.AreEqual("'nestedValue1'", validIndexer.ToString());
+            Assert.AreEqual("test.properties.dictionary['nestedKey1']", validIndexer.ToBicepExpression().ToString());
+            var invalidIndexer = resource.Properties.Dictionary["missingNestedKey"];
+            Assert.Throws<KeyNotFoundException>(() => invalidIndexer.ToString());
+            Assert.AreEqual("test.properties.dictionary['missingNestedKey']", invalidIndexer.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateNestedOutputDictionaryProperty_Empty()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            var nestedOutputDict = resource.Properties.OutputDictionary;
+            Assert.AreEqual("{ }", nestedOutputDict.ToString()); // TODO -- should this throw? or just like right now we return an empty dictionary?
+            Assert.AreEqual("test.properties.outputDictionary", nestedOutputDict.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateNestedOutputDictionaryProperty_Indexer()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            // add value to an output dictionary will throw
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputDictionary.Add("outputKey", "outputValue"));
+            // call the setter of indexer will throw
+            Assert.Throws<InvalidOperationException>(() => resource.Properties.OutputDictionary["outputKey"] = "outputValue");
+
+            var validIndexer = resource.Properties.OutputDictionary["outputKey"];
+            Assert.Throws<KeyNotFoundException>(() => validIndexer.ToString());
+            Assert.AreEqual("test.properties.outputDictionary['outputKey']", validIndexer.ToBicepExpression().ToString());
+        }
+
+        [Test]
         public void ValidateFailsForPropertyOnUnnamedConstruct()
         {
             var properties = new TestProperties();
@@ -211,6 +361,125 @@ namespace Azure.Provisioning.Tests.Expressions
             var withoutValue = properties.WithoutValue;
             Assert.Throws<InvalidOperationException>(() => withoutValue.ToString());
             Assert.Throws<InvalidOperationException>(() => withoutValue.ToBicepExpression().ToString());
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_PlainValues()
+        {
+            var resource = new TestResource("test");
+            resource.WithValue = "foo";
+
+            var interpolated = BicepFunction.Interpolate($"with value: {resource.WithValue}, without value: {resource.WithoutValue}");
+
+            Assert.AreEqual(interpolated.ToString(), "'with value: foo, without value: ${test.withoutValue}'");
+
+            var interpolatedWithExpressions = BicepFunction.Interpolate($"with value: {resource.WithValue.ToBicepExpression()}, without value: {resource.WithoutValue.ToBicepExpression()}");
+
+            Assert.AreEqual(interpolatedWithExpressions.ToString(), "'with value: ${test.withValue}, without value: ${test.withoutValue}'");
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_ListValues()
+        {
+            var resource = new TestResource("test");
+            resource.List.Add("item1");
+
+            var interpolated = BicepFunction.Interpolate($"list item: {resource.List[0]}");
+            Assert.AreEqual(interpolated.ToString(), "'list item: item1'");
+            var interpolatedWithExpression = BicepFunction.Interpolate($"list item: {resource.List[0].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedWithExpression.ToString(), "'list item: ${test.list[0]}'");
+            // this should throw because `resource.List[1]` is out of range
+            Assert.Throws<ArgumentOutOfRangeException>(() => BicepFunction.Interpolate($"list item with valid index: {resource.List[0]}, list item with invalid index: {resource.List[1]}"));
+
+            var interpolatedExpressionWithInvalidIndex = BicepFunction.Interpolate($"list item with valid index: {resource.List[0].ToBicepExpression()}, list item with invalid index: {resource.List[1].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedExpressionWithInvalidIndex.ToString(), "'list item with valid index: ${test.list[0]}, list item with invalid index: ${test.list[1]}'");
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_DictionaryValues()
+        {
+            var resource = new TestResource("test");
+            resource.Dictionary["key1"] = "value1";
+
+            var interpolated = BicepFunction.Interpolate($"dictionary item: {resource.Dictionary["key1"]}");
+            Assert.AreEqual(interpolated.ToString(), "'dictionary item: value1'");
+
+            var interpolatedWithExpression = BicepFunction.Interpolate($"dictionary item: {resource.Dictionary["key1"].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedWithExpression.ToString(), "'dictionary item: ${test.dictionary[\'key1\']}'");
+
+            // this should throw because `resource.Dictionary["missingKey"]` doesn't exist
+            Assert.Throws<KeyNotFoundException>(() => BicepFunction.Interpolate($"dictionary item with valid key: {resource.Dictionary["key1"]}, dictionary item with missing key: {resource.Dictionary["missingKey"]}"));
+
+            var interpolatedExpressionWithMissingKey = BicepFunction.Interpolate($"dictionary item with valid key: {resource.Dictionary["key1"].ToBicepExpression()}, dictionary item with missing key: {resource.Dictionary["missingKey"].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedExpressionWithMissingKey.ToString(), "'dictionary item with valid key: ${test.dictionary[\'key1\']}, dictionary item with missing key: ${test.dictionary[\'missingKey\']}'");
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_NestedDictionaryValues()
+        {
+            var resource = new TestResource("test")
+            {
+                Properties = new TestProperties()
+            };
+            resource.Properties.Dictionary["nestedKey1"] = "nestedValue1";
+
+            var interpolated = BicepFunction.Interpolate($"nested dictionary item: {resource.Properties.Dictionary["nestedKey1"]}");
+            Assert.AreEqual(interpolated.ToString(), "'nested dictionary item: nestedValue1'");
+
+            var interpolatedWithExpression = BicepFunction.Interpolate($"nested dictionary item: {resource.Properties.Dictionary["nestedKey1"].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedWithExpression.ToString(), "'nested dictionary item: ${test.properties.dictionary[\'nestedKey1\']}'");
+
+            // this should throw because the missing key doesn't exist
+            Assert.Throws<KeyNotFoundException>(() => BicepFunction.Interpolate($"nested dictionary item with valid key: {resource.Properties.Dictionary["nestedKey1"]}, nested dictionary item with missing key: {resource.Properties.Dictionary["missingNestedKey"]}"));
+
+            var interpolatedExpressionWithMissingKey = BicepFunction.Interpolate($"nested dictionary item with valid key: {resource.Properties.Dictionary["nestedKey1"].ToBicepExpression()}, nested dictionary item with missing key: {resource.Properties.Dictionary["missingNestedKey"].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedExpressionWithMissingKey.ToString(), "'nested dictionary item with valid key: ${test.properties.dictionary[\'nestedKey1\']}, nested dictionary item with missing key: ${test.properties.dictionary[\'missingNestedKey\']}'");
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_OutputDictionaryValues()
+        {
+            var resource = new TestResource("test");
+            var outputDict = resource.OutputDictionary;
+
+            // add value to an output dictionary will throw, so we can't populate it
+            Assert.Throws<InvalidOperationException>(() => resource.OutputDictionary.Add("outputKey", "outputValue"));
+
+            // test direct reference to output dictionary key (which should behave like expressions)
+            var validIndexer = resource.OutputDictionary["outputKey"];
+            Assert.Throws<KeyNotFoundException>(() => validIndexer.ToString());
+
+            var interpolatedWithExpression = BicepFunction.Interpolate($"output dictionary item: {resource.OutputDictionary["outputKey"].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedWithExpression.ToString(), "'output dictionary item: ${test.outputDictionary[\'outputKey\']}'");
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_MixedDictionaryAndListValues()
+        {
+            var resource = new TestResource("test");
+            resource.Dictionary["config"] = "production";
+            resource.List.Add("item1");
+
+            var interpolated = BicepFunction.Interpolate($"Config: {resource.Dictionary["config"]}, First item: {resource.List[0]}");
+            Assert.AreEqual(interpolated.ToString(), "'Config: production, First item: item1'");
+
+            var interpolatedWithExpressions = BicepFunction.Interpolate($"Config: {resource.Dictionary["config"].ToBicepExpression()}, First item: {resource.List[0].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedWithExpressions.ToString(), "'Config: ${test.dictionary[\'config\']}, First item: ${test.list[0]}'");
+        }
+
+        [Test]
+        public void ValidateBicepFunctionInterpolate_DictionaryWithSpecialCharacterKeys()
+        {
+            var resource = new TestResource("test");
+            resource.Dictionary["my-key"] = "my-value";
+            resource.Dictionary["key.with.dots"] = "dotted-value";
+            resource.Dictionary["key with spaces"] = "spaced-value";
+
+            var interpolated = BicepFunction.Interpolate($"Hyphenated: {resource.Dictionary["my-key"]}, Dotted: {resource.Dictionary["key.with.dots"]}, Spaced: {resource.Dictionary["key with spaces"]}");
+            Assert.AreEqual(interpolated.ToString(), "'Hyphenated: my-value, Dotted: dotted-value, Spaced: spaced-value'");
+
+            var interpolatedWithExpressions = BicepFunction.Interpolate($"Hyphenated: {resource.Dictionary["my-key"].ToBicepExpression()}, Dotted: {resource.Dictionary["key.with.dots"].ToBicepExpression()}, Spaced: {resource.Dictionary["key with spaces"].ToBicepExpression()}");
+            Assert.AreEqual(interpolatedWithExpressions.ToString(), "'Hyphenated: ${test.dictionary[\'my-key\']}, Dotted: ${test.dictionary[\'key.with.dots\']}, Spaced: ${test.dictionary[\'key with spaces\']}'");
         }
 
         private class TestResource : ProvisionableResource
@@ -239,11 +508,10 @@ namespace Azure.Provisioning.Tests.Expressions
                 get { Initialize(); return _list!; }
             }
 
-            private TestProperties? _properties;
-            public TestProperties Properties
+            private BicepList<string>? _outputList;
+            public BicepList<string> OutputList
             {
-                get { Initialize(); return _properties!; }
-                set { Initialize(); AssignOrReplace(ref _properties, value); }
+                get { Initialize(); return _outputList!; }
             }
 
             private BicepDictionary<string>? _dictionary;
@@ -252,14 +520,29 @@ namespace Azure.Provisioning.Tests.Expressions
                 get { Initialize(); return _dictionary!; }
             }
 
+            private BicepDictionary<string>? _outputDictionary;
+            public BicepDictionary<string> OutputDictionary
+            {
+                get { Initialize(); return _outputDictionary!; }
+            }
+
+            private TestProperties? _properties;
+            public TestProperties Properties
+            {
+                get { Initialize(); return _properties!; }
+                set { Initialize(); AssignOrReplace(ref _properties, value); }
+            }
+
             protected override void DefineProvisionableProperties()
             {
                 base.DefineProvisionableProperties();
                 _withValue = DefineProperty<string>("WithValue", ["withValue"]);
                 _withoutValue = DefineProperty<string>("WithoutValue", ["withoutValue"]);
                 _list = DefineListProperty<string>("List", ["list"]);
-                _properties = DefineModelProperty<TestProperties>("Properties", ["properties"]);
+                _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
                 _dictionary = DefineDictionaryProperty<string>("Dictionary", ["dictionary"]);
+                _outputDictionary = DefineDictionaryProperty<string>("OutputDictionary", ["outputDictionary"], isOutput: true);
+                _properties = DefineModelProperty<TestProperties>("Properties", ["properties"]);
             }
         }
 
@@ -285,10 +568,22 @@ namespace Azure.Provisioning.Tests.Expressions
                 get { Initialize(); return _list!; }
             }
 
+            private BicepList<string>? _outputList;
+            public BicepList<string> OutputList
+            {
+                get { Initialize(); return _outputList!; }
+            }
+
             private BicepDictionary<string>? _dictionary;
             public BicepDictionary<string> Dictionary
             {
                 get { Initialize(); return _dictionary!; }
+            }
+
+            private BicepDictionary<string>? _outputDictionary;
+            public BicepDictionary<string> OutputDictionary
+            {
+                get { Initialize(); return _outputDictionary!; }
             }
 
             protected override void DefineProvisionableProperties()
@@ -297,7 +592,9 @@ namespace Azure.Provisioning.Tests.Expressions
                 _withValue = DefineProperty<string>("WithValue", ["withValue"]);
                 _withoutValue = DefineProperty<string>("WithoutValue", ["withoutValue"]);
                 _list = DefineListProperty<string>("List", ["list"]);
+                _outputList = DefineListProperty<string>("OutputList", ["outputList"], isOutput: true);
                 _dictionary = DefineDictionaryProperty<string>("Dictionary", ["dictionary"]);
+                _outputDictionary = DefineDictionaryProperty<string>("OutputDictionary", ["outputDictionary"], isOutput: true);
             }
         }
     }
