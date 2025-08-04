@@ -122,6 +122,51 @@ public class UserAgentPolicy : PipelinePolicy
     }
 
     /// <summary>
+    /// Generates a user agent string from the provided assembly and optional application ID using custom runtime information.
+    /// This method is intended for testing scenarios that need to mock runtime information.
+    /// </summary>
+    /// <param name="callerAssembly">The caller assembly to extract name and version information from.</param>
+    /// <param name="applicationId">An optional application ID to prepend to the user agent string.</param>
+    /// <param name="runtimeInformation">Custom runtime information for testing scenarios.</param>
+    /// <returns>A formatted user agent string.</returns>
+    internal static string GenerateUserAgentString(Assembly callerAssembly, string? applicationId, Internal.RuntimeInformationWrapper runtimeInformation)
+    {
+        AssemblyInformationalVersionAttribute? versionAttribute = callerAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+        if (versionAttribute == null)
+        {
+            throw new InvalidOperationException(
+                $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{callerAssembly.FullName}'.");
+        }
+
+        string version = versionAttribute.InformationalVersion;
+
+        string assemblyName = callerAssembly.GetName().Name!;
+
+        int hashSeparator = version.IndexOf('+');
+        if (hashSeparator != -1)
+        {
+            version = version.Substring(0, hashSeparator);
+        }
+
+        // RFC 9110 section 5.5 https://www.rfc-editor.org/rfc/rfc9110.txt#section-5.5 does not require any specific encoding : "Fields needing a greater range of characters
+        // can use an encoding, such as the one defined in RFC8187." RFC8187 is targeted at parameter values, almost always filename, so using url encoding here instead, which is
+        // more widely used. Since user-agent does not usually contain non-ascii, only encode when necessary.
+        // This was added to support operating systems with non-ascii characters in their release names.
+        string osDescription = runtimeInformation.OSDescription;
+#if NET8_0_OR_GREATER
+        osDescription = System.Text.Ascii.IsValid(osDescription) ? osDescription : WebUtility.UrlEncode(osDescription);
+#else
+        osDescription = ContainsNonAscii(osDescription) ? WebUtility.UrlEncode(osDescription) : osDescription;
+#endif
+
+        var platformInformation = EscapeProductInformation($"({runtimeInformation.FrameworkDescription}; {osDescription})");
+
+        return applicationId != null
+            ? $"{applicationId} {assemblyName}/{version} {platformInformation}"
+            : $"{assemblyName}/{version} {platformInformation}";
+    }
+
+    /// <summary>
     /// If the ProductInformation is not in the proper format, this escapes any ')' , '(' or '\' characters per https://www.rfc-editor.org/rfc/rfc7230#section-3.2.6
     /// </summary>
     /// <param name="productInfo">The ProductInfo portion of the user agent</param>

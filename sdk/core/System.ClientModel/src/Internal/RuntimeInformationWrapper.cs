@@ -3,7 +3,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace Azure.Core
+namespace System.ClientModel.Internal
 {
     internal class RuntimeInformationWrapper
     {
