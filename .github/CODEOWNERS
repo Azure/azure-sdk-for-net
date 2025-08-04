@@ -671,6 +671,12 @@
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia
 
+# PRLabel: %purestorage
+/sdk/contosowidgetmanager/ @Shirelmr @praveenkuttappan
+
+# ServiceLabel: %purestorage
+# ServiceOwners: @Shirelmr @praveenkuttappan
+
 # PRLabel: %Remote Rendering
 /sdk/remoterendering/                                              @FlorianBorn71 @MichaelZp0 @ChristopherManthei
 
