@@ -6,11 +6,11 @@ Ready to get started? Jump into our [quickstart guide](https://github.com/Azure/
 
 ## Useful links
 
--   [Quickstart: Run end-to-end tests at scale](https://aka.ms/mpt/quickstart)
+-   [Quickstart: Run end-to-end tests at scale](https://aka.ms/pww/quickstart)
 -   [View Azure Playwright service demo](https://youtu.be/GenC1jAeTZE)
--   [Documentation](https://aka.ms/mpt/docs)
--   [Pricing](https://aka.ms/mpt/pricing)
--   [Share feedback](https://aka.ms/mpt/feedback)
+-   [Documentation](https://aka.ms/pww/docs)
+-   [Pricing](https://aka.ms/pww/pricing)
+-   [Share feedback](https://aka.ms/pww/feedback)
 
 ## Getting started
 
@@ -33,11 +33,11 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 
 #### Create a Workspace
 
-1. Sign in to the [Playwright portal](https://aka.ms/mpt/portal) with your Azure account.
+1. Sign in to the [Playwright portal](https://aka.ms/pww/portal) with your Azure account.
 
 2. Create the Workspace
 
-    ![Create new workspace](https://github.com/microsoft/playwright-testing-service/assets/12104064/d571e86b-9d43-48ac-a2b7-63afb9bb86a8)
+    ![Create new workspace](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/azure-portal-create-resource.png?raw=true)
 
     | Field                  | Description                                                                                           |
     | ---------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -69,9 +69,9 @@ public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit { }
 
 ### Obtain region endpoint
 
-1. In the [Playwright portal](https://aka.ms/mpt/portal), copy the command under **Add region endpoint in your set up**.
+1. In the [Playwright portal](https://aka.ms/pww/portal), copy the command under **Add region endpoint in your set up**.
 
-    ![Set workspace endpoint](https://github.com/microsoft/playwright-testing-service/assets/12104064/d81ca629-2b23-4d34-8b70-67b6f7061a83)
+    ![Set workspace endpoint](https://aka.ms/pww/docs/copyurlsnapshot)
 
     The endpoint URL corresponds to the workspace region. You might see a different endpoint URL in the Playwright portal, depending on the region you selected when creating the workspace.
 
@@ -89,13 +89,13 @@ dotnet test
 
 ## Key concepts
 
-Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/mpt/what-is-mpt)
+Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/what-is-mpt)
 
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
 
--   [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/mpt/sample)
+-   [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/sample)
 
 ## Troubleshooting
 
@@ -104,11 +104,11 @@ Code samples for using this SDK can be found in the following locations
 
 ## Next steps
 
--   Run tests in a [CI/CD pipeline.](https://aka.ms/mpt/configure-pipeline)
+-   Run tests in a [CI/CD pipeline.](https://aka.ms/pww/configure-pipeline)
 
--   Learn how to [manage access](https://aka.ms/mpt/manage-access) to the created workspace.
+-   Learn how to [manage access](https://aka.ms/pww/manage-access) to the created workspace.
 
--   Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/mpt/parallelism).
+-   Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/pww/parallelism).
 
 ## Contributing
 

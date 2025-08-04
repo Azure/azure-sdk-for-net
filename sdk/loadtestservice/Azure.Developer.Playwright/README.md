@@ -22,22 +22,22 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 - Your Azure account must be assigned the [Owner](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#owner), [Contributor](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles#contributor), or one of the [classic administrator roles](https://learn.microsoft.com/azure/role-based-access-control/rbac-and-directory-admin-roles#classic-subscription-administrator-roles).
 
 ## Useful links
-- [Quickstart: Run end-to-end tests at scale](https://aka.ms/mpt/quickstart)
-- [Quickstart: Set up continuous end-to-end testing across different browsers and operating systems](https://aka.ms/mpt/ci)
-- [Explore features and benefits](https://aka.ms/mpt/about)
+- [Quickstart: Run end-to-end tests at scale](https://aka.ms/pww/quickstart)
+- [Quickstart: Set up continuous end-to-end testing across different browsers and operating systems](https://aka.ms/pww/ci)
+- [Explore features and benefits](https://aka.ms/pww/about)
 - [View Azure Playwright service demo](https://youtu.be/GenC1jAeTZE)
-- [Documentation](https://aka.ms/mpt/docs)
-- [Pricing](https://aka.ms/mpt/pricing)
-- [Share feedback](https://aka.ms/mpt/feedback)
+- [Documentation](https://aka.ms/pww/docs)
+- [Pricing](https://aka.ms/pww/pricing)
+- [Share feedback](https://aka.ms/pww/feedback)
 
 ## Key concepts
 
-Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/mpt/what-is-mpt)
+Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/what-is-mpt)
 
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
-- [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/mpt/sample)
+- [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/sample)
 
 ## Troubleshooting
 
@@ -46,11 +46,11 @@ Code samples for using this SDK can be found in the following locations
 
 ## Next steps
 
-- Run tests in a [CI/CD pipeline.](https://aka.ms/mpt/configure-pipeline)
+- Run tests in a [CI/CD pipeline.](https://aka.ms/pww/configure-pipeline)
 
-- Learn how to [manage access](https://aka.ms/mpt/manage-access) to the created workspace.
+- Learn how to [manage access](https://aka.ms/pww/manage-access) to the created workspace.
 
-- Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/mpt/parallelism).
+- Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/pww/parallelism).
 
 ## Contributing
 
