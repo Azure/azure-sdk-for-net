@@ -4,6 +4,6 @@
   },
   "sdk": {
     "version": "9.0.102",
-    "rollForward": "feature"
+    "rollForward": "major"
   }
 }
