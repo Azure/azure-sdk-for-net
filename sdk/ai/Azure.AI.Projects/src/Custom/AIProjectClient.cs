@@ -23,8 +23,46 @@ namespace Azure.AI.Projects
         {
         }
 
-        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal AIProjectClient(Uri endpoint, AIProjectClientOptions options) : base(_defaultMaxCacheSize)
         {
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="endpoint">
+        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
+        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
+        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
+        /// specify the Foundry Project name.
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AIProjectClient(Uri endpoint, TokenCredential credential = null) : this(endpoint, credential, new AIProjectClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> Service credential. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public AIProjectClient(Uri endpoint, TokenCredential credential, AIProjectClientOptions options)
+            : base(_defaultMaxCacheSize)
+        {
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = CreatePipeline(credential, options);
+            _apiVersion = options.Version;
+            _tokenCredential = credential;
+
+            _cacheManager = new ConnectionCacheManager(_endpoint, credential);
         }
 
         public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AIProjectClientOptions options)
@@ -39,6 +77,10 @@ namespace Azure.AI.Projects
             _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+        }
+
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
+        {
         }
 
         private readonly ConnectionCacheManager _cacheManager;
@@ -60,5 +102,35 @@ namespace Azure.AI.Projects
         public DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
         public IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
         public Telemetry Telemetry { get => new Telemetry(this); }
+
+        private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)
+        => ClientPipeline.Create(
+            options ?? new(),
+            perCallPolicies:
+            [
+                // CreateAddUserAgentHeaderPolicy(options),
+                // CreateAddClientRequestIdHeaderPolicy(),
+            ],
+            perTryPolicies:
+            [
+                authenticationPolicy,
+            ],
+            beforeTransportPolicies: []);
+
+        internal static ClientPipeline CreatePipeline(ApiKeyCredential credential, AIProjectClientOptions options = null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            return CreatePipeline(ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "api-key"), options);
+        }
+
+        internal static ClientPipeline CreatePipeline(TokenCredential credential, AIProjectClientOptions options = null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, AuthorizationScopes), options);
+        }
+
+        private static PipelineMessageClassifier s_pipelineMessageClassifier;
+        internal static PipelineMessageClassifier PipelineMessageClassifier
+            => s_pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
     }
 }
