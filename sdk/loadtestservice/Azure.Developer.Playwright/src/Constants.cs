@@ -144,8 +144,8 @@ internal class Constants
     // Error messages
     internal static readonly string s_no_service_endpoint_error_message = "Please set PLAYWRIGHT_SERVICE_URL in your environment variables.";
     internal static readonly string s_service_endpoint_removed_since_scalable_execution_disabled_error_message = "GetConnectOptions method cannot be used when UseCloudHostedBrowsers is set to false in the setup file.";
-    internal static readonly string s_no_auth_error = "Could not authenticate with the service. Please refer to https://aka.ms/pww/authentication for more information.";
-    internal static readonly string s_entra_no_cred_error = "Azure credentials not found when using Entra ID authentication. Please refer to https://aka.ms/pww/authentication for more information.";
+    internal static readonly string s_no_auth_error = "Could not authenticate with the service. Please refer to https://aka.ms/pww/docs/authentication for more information.";
+    internal static readonly string s_entra_no_cred_error = "Azure credentials not found when using Entra ID authentication. Please refer to https://aka.ms/pww/docs/authentication for more information.";
     internal static readonly string s_invalid_mpt_pat_error = "The Access Token provided in the environment variable is invalid.";
     internal static readonly string s_expired_mpt_pat_error = "The Access Token you are using is expired. Create a new token.";
     internal static readonly string s_invalid_os_error = "Invalid operating system, supported values are 'linux' and 'windows'.";
@@ -154,7 +154,7 @@ internal class Constants
     internal static readonly string s_playwright_service_runId_not_guid_error_message = "Error: The Run ID must be a valid GUID format. Please provide a valid GUID for the Run ID.";
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
     internal static readonly string s_playwright_Version_not_supported_error_message = "The Playwright version you are using does not support playwright workspaces. Please update to Playwright version 1.50.0 or higher.";
-    internal static readonly string s_playwright_Invalid_version = "The Playwright version you are using is not supported. See the list of supported versions at https://aka.ms/pww/supported-versions.";
+    internal static readonly string s_playwright_Invalid_version = "The Playwright version you are using is not supported. See the list of supported versions at https://aka.ms/pww/docs/supported-versions.";
     internal static readonly string s_playwright_service_create_test_run_error = " Please refer to https://aka.ms/pww/docs/troubleshooting for more information.";
 
     // Internal environment variables

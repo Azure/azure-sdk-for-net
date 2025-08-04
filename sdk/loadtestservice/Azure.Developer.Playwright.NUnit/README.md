@@ -6,11 +6,11 @@ Ready to get started? Jump into our [quickstart guide](https://github.com/Azure/
 
 ## Useful links
 
--   [Quickstart: Run end-to-end tests at scale](https://aka.ms/pww/quickstart)
+-   [Quickstart: Run end-to-end tests at scale](https://aka.ms/pww/docs/quickstart)
 -   [View Azure Playwright service demo](https://youtu.be/GenC1jAeTZE)
 -   [Documentation](https://aka.ms/pww/docs)
--   [Pricing](https://aka.ms/pww/pricing)
--   [Share feedback](https://aka.ms/pww/feedback)
+-   [Pricing](https://aka.ms/pww/docs/pricing)
+-   [Share feedback](https://aka.ms/pww/docs/feedback)
 
 ## Getting started
 
@@ -33,7 +33,7 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 
 #### Create a Workspace
 
-1. Sign in to the [Playwright portal](https://aka.ms/pww/portal) with your Azure account.
+1. Sign in to the [Playwright portal](https://portal.azure.com/) with your Azure account.
 
 2. Create the Workspace
 
@@ -69,7 +69,7 @@ public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit { }
 
 ### Obtain region endpoint
 
-1. In the [Playwright portal](https://aka.ms/pww/portal), copy the command under **Add region endpoint in your set up**.
+1. In the [Playwright portal](https://portal.azure.com/), copy the command under **Add region endpoint in your set up**.
 
     ![Set workspace endpoint](https://aka.ms/pww/docs/copyurlsnapshot)
 
@@ -89,13 +89,13 @@ dotnet test
 
 ## Key concepts
 
-Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/what-is-mpt)
+Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/docs/what-is-mpt)
 
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
 
--   [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/sample)
+-   [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/docs/sample)
 
 ## Troubleshooting
 
@@ -104,11 +104,11 @@ Code samples for using this SDK can be found in the following locations
 
 ## Next steps
 
--   Run tests in a [CI/CD pipeline.](https://aka.ms/pww/configure-pipeline)
+-   Run tests in a [CI/CD pipeline.](https://aka.ms/pww/docs/configure-pipeline)
 
--   Learn how to [manage access](https://aka.ms/pww/manage-access) to the created workspace.
+-   Learn how to [manage access](https://aka.ms/pww/docs/manage-access) to the created workspace.
 
--   Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/pww/parallelism).
+-   Experiment with different number of workers to [determine the optimal configuration of your test suite](https://aka.ms/pww/docs/parallelism).
 
 ## Contributing
 
