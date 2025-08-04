@@ -28,7 +28,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     {
         protected readonly TypeProvider _enclosingType;
         protected readonly RequestPathPattern _contextualPath;
-        protected readonly ResourceClientProvider _resource;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
@@ -41,8 +40,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly string _methodName;
         private readonly CSharpType? _originalReturnType;
         private protected readonly CSharpType _returnType;
-        // TODO -- should be removed
-        private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
         private readonly bool _isFakeLongRunningOperation;
 
@@ -67,14 +64,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             _enclosingType = enclosingType;
             _contextualPath = contextualPath;
-            _resource = InitializeResource(enclosingType);
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
             _methodName = methodName ?? convenienceMethod.Signature.Name;
             _originalReturnType = _serviceMethod.GetResponseBodyType();
-            _isGeneric = _originalReturnType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
             _returnType = GetReturnType();
@@ -189,7 +184,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out VariableExpression responseVariable)
         {
-            if (_isGeneric && !_isLongRunningOperation)
+            if (_originalReturnType != null && !_isLongRunningOperation)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
@@ -215,16 +210,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var statements = new List<MethodBodyStatement>();
 
-            var armOperationType = _isGeneric
-                ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
-                    .MakeGenericType([_resource.Type])
-                : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
+            var armOperationType = _returnType; // if this is a fake LRO, the return type is the ArmOperation<T> type.
 
             var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
             statements.Add(uriDeclaration);
             var rehydrationTokenDeclaration = NextLinkOperationImplementationSnippets.CreateRehydrationToken(uriVariable.As<RequestUriBuilder>(), _serviceMethod.Operation.HttpMethod, out var rehydrationTokenVariable);
             statements.Add(rehydrationTokenDeclaration);
 
+            // TODO -- we should have cases here when this method returns a resource data type or a usual model type.
             var responseFromValueExpression = Static(typeof(Response)).Invoke(
                 nameof(Response.FromValue),
                 New.Instance(
