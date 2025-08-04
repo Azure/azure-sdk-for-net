@@ -1,8 +1,3 @@
----
-mode: 'agent'
-tools: ['CreateReleasePlan', 'GetReleasePlanForPullRequest', 'GetReleasePlan', 'LinkSdkPullRequestToReleasePlan']
----
-
 # Release Plan Creation Process
 You goal is to create a valid release plan. You must prompt user to provide all required information and all input must match the format and requirement mentioned in step 3 below.
 Follow these steps in order to create or manage a release plan for an API specification pull request:

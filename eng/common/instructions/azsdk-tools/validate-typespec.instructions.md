@@ -1,6 +1,4 @@
 ---
-mode: 'agent'
-tools: ['RunTypeSpecValidation']
 description: 'Validate TypeSpec'
 ---
 Your goal is identify the TypeSpec project root if not available in current context and validate TypeSpec project.
