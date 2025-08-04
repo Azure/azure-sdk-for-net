@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Represents the openapi tool call in a streaming run step. *. </summary>
+    /// <summary> Represents the openapi tool call in a streaming run step. </summary>
     public partial class RunStepDeltaOpenAPIToolCall : RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIToolCall"/>. </summary>

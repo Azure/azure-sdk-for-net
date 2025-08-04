@@ -1385,7 +1385,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(int index = 0, string id = null, string arguments = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation RunStepDeltaMessageCreation(Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject messageCreation = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject RunStepDeltaMessageCreationObject(string messageId = null) { throw null; }
-        public static Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject RunStepDeltaOpenapiObject(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> toolCalls = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> toolCalls = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall RunStepDeltaOpenAPIToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> openAPI = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaToolCall RunStepDeltaToolCall(int index = 0, string id = null, string type = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject RunStepDeltaToolCallObject(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaToolCall> toolCalls = null) { throw null; }
@@ -2161,16 +2161,16 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RunStepDeltaOpenapiObject : Azure.AI.Agents.Persistent.RunStepDeltaDetail, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>
+    public partial class RunStepDeltaOpenAPIObject : Azure.AI.Agents.Persistent.RunStepDeltaDetail, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>
     {
-        internal RunStepDeltaOpenapiObject() { }
+        internal RunStepDeltaOpenAPIObject() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> ToolCalls { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenapiObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RunStepDeltaOpenAPIToolCall : Azure.AI.Agents.Persistent.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>
     {

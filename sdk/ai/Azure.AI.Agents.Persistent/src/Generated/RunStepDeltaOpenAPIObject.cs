@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents an invocation of openapi as part of a streaming run step. </summary>
-    public partial class RunStepDeltaOpenapiObject : RunStepDeltaDetail
+    public partial class RunStepDeltaOpenAPIObject : RunStepDeltaDetail
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenapiObject"/>. </summary>
-        internal RunStepDeltaOpenapiObject()
+        /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIObject"/>. </summary>
+        internal RunStepDeltaOpenAPIObject()
         {
             Type = "openapi";
             ToolCalls = new ChangeTrackingList<RunStepDeltaOpenAPIToolCall>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenapiObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIObject"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        internal RunStepDeltaOpenapiObject(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RunStepDeltaOpenAPIToolCall> toolCalls) : base(type, serializedAdditionalRawData)
+        internal RunStepDeltaOpenAPIObject(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RunStepDeltaOpenAPIToolCall> toolCalls) : base(type, serializedAdditionalRawData)
         {
             ToolCalls = toolCalls;
         }

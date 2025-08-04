@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class RunStepDeltaOpenapiObject : IUtf8JsonSerializable, IJsonModel<RunStepDeltaOpenapiObject>
+    public partial class RunStepDeltaOpenAPIObject : IUtf8JsonSerializable, IJsonModel<RunStepDeltaOpenAPIObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepDeltaOpenapiObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepDeltaOpenAPIObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RunStepDeltaOpenapiObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepDeltaOpenAPIObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenapiObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenAPIObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaOpenapiObject)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepDeltaOpenAPIObject)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -47,19 +47,19 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        RunStepDeltaOpenapiObject IJsonModel<RunStepDeltaOpenapiObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepDeltaOpenAPIObject IJsonModel<RunStepDeltaOpenAPIObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenapiObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenAPIObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepDeltaOpenapiObject)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepDeltaOpenAPIObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunStepDeltaOpenapiObject(document.RootElement, options);
+            return DeserializeRunStepDeltaOpenAPIObject(document.RootElement, options);
         }
 
-        internal static RunStepDeltaOpenapiObject DeserializeRunStepDeltaOpenapiObject(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepDeltaOpenAPIObject DeserializeRunStepDeltaOpenAPIObject(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -98,46 +98,46 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RunStepDeltaOpenapiObject(type, serializedAdditionalRawData, toolCalls ?? new ChangeTrackingList<RunStepDeltaOpenAPIToolCall>());
+            return new RunStepDeltaOpenAPIObject(type, serializedAdditionalRawData, toolCalls ?? new ChangeTrackingList<RunStepDeltaOpenAPIToolCall>());
         }
 
-        BinaryData IPersistableModel<RunStepDeltaOpenapiObject>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepDeltaOpenAPIObject>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenapiObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenAPIObject>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaOpenapiObject)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepDeltaOpenAPIObject)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RunStepDeltaOpenapiObject IPersistableModel<RunStepDeltaOpenapiObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepDeltaOpenAPIObject IPersistableModel<RunStepDeltaOpenAPIObject>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenapiObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaOpenAPIObject>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRunStepDeltaOpenapiObject(document.RootElement, options);
+                        return DeserializeRunStepDeltaOpenAPIObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepDeltaOpenapiObject)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepDeltaOpenAPIObject)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RunStepDeltaOpenapiObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepDeltaOpenAPIObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new RunStepDeltaOpenapiObject FromResponse(Response response)
+        internal static new RunStepDeltaOpenAPIObject FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRunStepDeltaOpenapiObject(document.RootElement);
+            return DeserializeRunStepDeltaOpenAPIObject(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

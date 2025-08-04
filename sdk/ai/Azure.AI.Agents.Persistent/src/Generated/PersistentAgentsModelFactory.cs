@@ -780,7 +780,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stepDetails">
         /// The details of the run step.
         /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaMCPObject"/>, <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaOpenapiObject"/> and <see cref="Persistent.RunStepDeltaToolCallObject"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaMCPObject"/>, <see cref="Persistent.RunStepDeltaMessageCreation"/>, <see cref="Persistent.RunStepDeltaOpenAPIObject"/> and <see cref="Persistent.RunStepDeltaToolCallObject"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDelta"/> instance for mocking. </returns>
         public static RunStepDelta RunStepDelta(RunStepDeltaDetail stepDetails = null)
@@ -986,14 +986,14 @@ namespace Azure.AI.Agents.Persistent
             return new RunStepDeltaMCPObject("mcp", serializedAdditionalRawData: null, toolCalls?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaOpenapiObject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaOpenAPIObject"/>. </summary>
         /// <param name="toolCalls"> The collection of tool calls for the tool call detail item. </param>
-        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenapiObject"/> instance for mocking. </returns>
-        public static RunStepDeltaOpenapiObject RunStepDeltaOpenapiObject(IEnumerable<RunStepDeltaOpenAPIToolCall> toolCalls = null)
+        /// <returns> A new <see cref="Persistent.RunStepDeltaOpenAPIObject"/> instance for mocking. </returns>
+        public static RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(IEnumerable<RunStepDeltaOpenAPIToolCall> toolCalls = null)
         {
             toolCalls ??= new List<RunStepDeltaOpenAPIToolCall>();
 
-            return new RunStepDeltaOpenapiObject("openapi", serializedAdditionalRawData: null, toolCalls?.ToList());
+            return new RunStepDeltaOpenAPIObject("openapi", serializedAdditionalRawData: null, toolCalls?.ToList());
         }
     }
 }
