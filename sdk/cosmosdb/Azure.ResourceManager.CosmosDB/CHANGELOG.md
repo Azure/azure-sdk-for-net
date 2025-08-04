@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.13 (Unreleased)
+## 1.4.0-beta.13 (2025-08-04)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.CosmodDB` AOT-compatible
 
 ## 1.4.0-beta.12 (2024-12-20)
 
