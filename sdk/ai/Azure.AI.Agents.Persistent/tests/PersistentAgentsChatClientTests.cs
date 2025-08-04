@@ -32,7 +32,8 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             Default,
             WithTools,
-            WithResponseFormat
+            WithResponseFormat,
+            WithJsonSchemaResponseFormat
         }
         #endregion
 
@@ -42,7 +43,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4o",
+                model: "gpt-4.1",
                 name: AGENT_NAME,
                 instructions: "You are a helpful chat agent."
             );
@@ -77,6 +78,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ChatOptionsTestType.Default)]
         [TestCase(ChatOptionsTestType.WithTools)]
         [TestCase(ChatOptionsTestType.WithResponseFormat)]
+        [TestCase(ChatOptionsTestType.WithJsonSchemaResponseFormat)]
         public async Task TestGetStreamingResponseAsync(ChatOptionsTestType optionsType)
         {
             // This test will not record the sync version, however, CI/CD will still check
@@ -107,6 +109,35 @@ namespace Azure.AI.Agents.Persistent.Tests
                 options = new ChatOptions
                 {
                     ResponseFormat = ChatResponseFormat.Json
+                };
+            }
+            else if (optionsType == ChatOptionsTestType.WithJsonSchemaResponseFormat)
+            {
+                var schema = """
+                {
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "The full name of the person."
+                        },
+                        "age": {
+                            "type": "integer",
+                            "description": "The age of the person in years."
+                        },
+                        "occupation": {
+                            "type": "string",
+                            "description": "The primary occupation or job title of the person."
+                        }
+                    },
+                    "required": ["name", "age", "occupation"]
+                }
+                """;
+                var jsonSchema = JsonSerializer.Deserialize<JsonElement>(schema, JsonSerializerOptions.Default);
+                options = new ChatOptions
+                {
+                    ResponseFormat = ChatResponseFormatJson.ForJsonSchema(jsonSchema, "TestSchema", "Schema for testing purposes")
                 };
             }
 
@@ -286,24 +317,24 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private PersistentAgentsClient GetClient()
         {
-            var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
             PersistentAgentsAdministrationClient admClient;
 
             if (Mode == RecordedTestMode.Playback)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new MockCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new MockCredential(), opts));
                 return new PersistentAgentsClient(admClient);
             }
 
             var cli = Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new AzureCliCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new AzureCliCredential(), opts));
             }
             else
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(projectEndpoint, new DefaultAzureCredential(), opts));
             }
 
             return new PersistentAgentsClient(admClient);
