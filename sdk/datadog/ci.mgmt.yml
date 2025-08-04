@@ -23,5 +23,5 @@ extends:
       safeName: AzureResourceManagerDatadog
     CheckAOTCompat: true
     AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.ContainerService
+    - ArtifactName: Azure.ResourceManager.Datadog
       ExpectedWarningsFilepath: None
