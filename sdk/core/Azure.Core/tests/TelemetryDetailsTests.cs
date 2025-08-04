@@ -102,7 +102,7 @@ namespace Azure.Core.Tests
             var assembly = Assembly.GetAssembly(GetType());
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             string version = versionAttribute.InformationalVersion;
-            int hashSeparator = version.IndexOf('+', StringComparison.Ordinal);
+            int hashSeparator = version.IndexOf('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests
             var assembly = Assembly.GetAssembly(GetType());
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             string version = versionAttribute.InformationalVersion;
-            int hashSeparator = version.IndexOf('+', StringComparison.Ordinal);
+            int hashSeparator = version.IndexOf('+');
             if (hashSeparator != -1)
             {
                 version = version.Substring(0, hashSeparator);
