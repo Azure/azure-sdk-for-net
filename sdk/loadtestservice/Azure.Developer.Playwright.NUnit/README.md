@@ -33,17 +33,42 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 
 #### Create a Workspace
 
-1. Sign in to the [Playwright portal](https://portal.azure.com/) with your Azure account.
+1. Sign in to the [Azure portal](https://portal.azure.com/) with your Azure account.
 
-2. Create the Workspace
+1. Create the Workspace.
 
-    ![Create new workspace](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/azure-portal-create-resource.png?raw=true)
+   - Select the menu button in the upper-left corner of the portal, and then select Create a resource.
 
-    | Field                  | Description                                                                                           |
-    | ---------------------- | ----------------------------------------------------------------------------------------------------- |
-    | **Workspace Name**     | A unique name to identify your workspace.<BR>The name can't contain special characters or whitespace. |
-    | **Azure Subscription** | Select an Azure subscription where you want to create the workspace.                                  |
-    | **Region**             | This is where test run data will be stored for your workspace.                                        |
+     ![Create a resource in Azure portal](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/azure-portal-create-resource.png?raw=true)
+
+   - Enter **Playwright Workspaces** in the search box.
+
+   - Select the **Playwright Workspaces** card, and then select **Create**.
+
+     ![Search for Playwright Workspaces in Azure Marketplace](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/azure-portal-search-playwright-resource.png?raw=true)
+
+   - Provide the following information to configure a new Playwright workspace:
+
+     | Field | Description |
+     |-------|-------------|
+     | **Subscription** | Select the Azure subscription that you want to use for this Playwright workspace. |
+     | **Resource group** | Select an existing resource group. Or select **Create new**, and then enter a unique name for the new resource group. |
+     | **Name** | Enter a unique name to identify your workspace.<br/>The name can only consist of alphanumerical characters, and have a length between 3 and 64 characters. |
+     | **Location** | Select a geographic location to host your workspace.<br/>This location also determines where the test execution results are stored. |
+
+     > [!NOTE]
+     > Optionally, you can configure more details on the **Tags** tab. Tags are name/value pairs that enable you to categorize resources and view consolidated billing by applying the same tag to multiple resources and resource groups.
+
+   - After you're finished configuring the resource, select **Review + Create**.
+
+   - Review all the configuration settings and select **Create** to start the deployment of the Playwright workspace.
+
+   - When the process has finished, a deployment success message appears.
+
+   - To view the new workspace, select **Go to resource**.
+
+     ![Deployment complete - Go to resource](https://github.com/Azure/playwright-workspaces/blob/main/media/how-to-manage-playwright-workspace/create-resource-deployment-complete.png?raw=true)
+                                      |
 
 > [!NOTE]
 > If you don't see this screen, select an existing workspace and go to the next section.
@@ -61,11 +86,41 @@ using Azure.Identity;
 namespace PlaywrightService.SampleTests; // Remember to change this as per your project namespace
 
 [SetUpFixture]
-public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit { }
+public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
+{
+    public PlaywrightServiceNUnitSetup() : base(
+        credential: new DefaultAzureCredential()
+    )
+    {}
+}
+
+   ```
+
+### Setup Azure Playwright cloud browser connection
+
+Override builtin PageTest fixture with Azure Playwright cloud browser connection and use ServicePageTest in all test classes.
+
+```csharp
+using Microsoft.Playwright.NUnit;
+using Azure.Developer.Playwright;
+using Azure.Identity;
+using Microsoft.Playwright;
+
+namespace PlaywrightService.SampleTests;
+
+public class ServicePageTest : PageTest
+{
+    public override async Task<(string, BrowserTypeConnectOptions?)?> ConnectOptionsAsync()
+    {
+        PlaywrightServiceBrowserClient client = new PlaywrightServiceBrowserClient(credential: new DefaultAzureCredential());
+        var connectOptions = await client.GetConnectOptionsAsync<BrowserTypeConnectOptions>();
+        return (connectOptions.WsEndpoint, connectOptions.Options);
+    }
+}
 ```
 
 > [!NOTE]
-> Make sure your project uses `Microsoft.Playwright.NUnit` version 1.37 or above.
+> Make sure your project uses `Microsoft.Playwright.NUnit` version 1.50.0 or above.
 
 ### Obtain region endpoint
 
