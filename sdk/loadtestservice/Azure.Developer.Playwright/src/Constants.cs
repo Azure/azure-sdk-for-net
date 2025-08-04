@@ -155,7 +155,7 @@ internal class Constants
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
     internal static readonly string s_playwright_Version_not_supported_error_message = "The Playwright version you are using does not support playwright workspaces. Please update to Playwright version 1.50.0 or higher.";
     internal static readonly string s_playwright_Invalid_version = "The Playwright version you are using is not supported. See the list of supported versions at https://aka.ms/pww/docs/supported-versions.";
-    internal static readonly string s_playwright_service_create_test_run_error = "Please refer to https://aka.ms/pww/docs/troubleshooting for more information.";
+    internal static readonly string s_playwright_service_create_test_run_error = "Failed to create the test run in the Playwright service. Please refer to https://aka.ms/pww/docs/troubleshooting for more information.";
 
     // Internal environment variables
     internal static readonly string s_playwright_service_use_cloud_hosted_browsers_environment_variable = "_MPT_USE_CLOUD_HOSTED_BROWSERS";
