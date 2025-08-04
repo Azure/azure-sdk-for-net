@@ -177,5 +177,36 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             builder.Path = string.Join("/", builder.Path, childPath);
             Assert.AreEqual(builder.Uri, childContainer.Uri);
         }
+
+        [Test]
+        public void GetStorageResourceReference_Encoding()
+        {
+            string[] dirs = ["prefix", "pre=fix", "prefix with space"];
+            string[] tests =
+            [
+                "path=true@&#%",
+                "path%3Dtest%26",
+                "with space",
+                "sub=dir/path=true@&#%",
+                "sub%3Ddir/path=true@&#%",
+                "sub dir/path=true@&#%"
+            ];
+
+            string sharePath = "https://account.file.core.windows.net/myshare";
+            ShareClient shareClient = new(new Uri(sharePath));
+
+            foreach (string dir in dirs)
+            {
+                ShareDirectoryClient directoryClient = shareClient.GetDirectoryClient(dir);
+                ShareDirectoryStorageResourceContainer containerResource = new(directoryClient, default);
+                foreach (string test in tests)
+                {
+                    StorageResourceItem resource = containerResource.GetStorageResourceReference(test, default);
+
+                    string combined = string.Join("/", sharePath, Uri.EscapeDataString(dir), Uri.EscapeDataString(test).Replace("%2F", "/"));
+                    Assert.That(resource.Uri.AbsoluteUri, Is.EqualTo(combined));
+                }
+            }
+        }
     }
 }

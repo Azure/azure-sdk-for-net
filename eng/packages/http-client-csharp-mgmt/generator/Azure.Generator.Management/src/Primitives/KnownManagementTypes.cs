@@ -44,6 +44,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
+            ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
