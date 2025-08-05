@@ -268,7 +268,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepMcpToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -454,6 +454,35 @@ namespace Azure.AI.Agents.Persistent
         public static RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = null, string output = null)
         {
             return new RunStepDeepResearchToolCallDetails(input, output, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepConnectedAgentToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="connectedAgent"></param>
+        /// <returns> A new <see cref="Persistent.RunStepConnectedAgentToolCall"/> instance for mocking. </returns>
+        public static RunStepConnectedAgentToolCall RunStepConnectedAgentToolCall(string id = null, RunStepConnectedAgent connectedAgent = null)
+        {
+            return new RunStepConnectedAgentToolCall("connected_agent", id, serializedAdditionalRawData: null, connectedAgent);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepConnectedAgent"/>. </summary>
+        /// <param name="name"> The name of connected agent. </param>
+        /// <param name="arguments"> The JSON serialized query to the connected agent. </param>
+        /// <param name="output"> The tool output. </param>
+        /// <param name="runId"> The run ID used by the connected agent. </param>
+        /// <param name="threadId"> The thread ID used by the connected agent. </param>
+        /// <param name="agentId"> The ID of a connected agent. </param>
+        /// <returns> A new <see cref="Persistent.RunStepConnectedAgent"/> instance for mocking. </returns>
+        public static RunStepConnectedAgent RunStepConnectedAgent(string name = null, string arguments = null, string output = null, string runId = null, string threadId = null, string agentId = null)
+        {
+            return new RunStepConnectedAgent(
+                name,
+                arguments,
+                output,
+                runId,
+                threadId,
+                agentId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepError"/>. </summary>
@@ -808,7 +837,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The collection of tool calls for the tool call detail item.
         /// Please note <see cref="Persistent.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/> and <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/> and <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
         public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
@@ -848,6 +877,16 @@ namespace Azure.AI.Agents.Persistent
             openAPI ??= new Dictionary<string, string>();
 
             return new RunStepDeltaOpenAPIToolCall(index, id, "openapi", serializedAdditionalRawData: null, openAPI);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="connectedAgent"> The collection of tool calls for the tool call detail item. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaConnectedAgentToolCall RunStepDeltaConnectedAgentToolCall(int index = default, string id = null, RunStepConnectedAgent connectedAgent = null)
+        {
+            return new RunStepDeltaConnectedAgentToolCall(index, id, "connected_agent", serializedAdditionalRawData: null, connectedAgent);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaFunctionToolCall"/>. </summary>
