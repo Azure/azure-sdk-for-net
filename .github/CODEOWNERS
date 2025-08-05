@@ -403,7 +403,7 @@
 
 # ServiceLabel: %Container Registry
 # AzureSdkOwners:                                                  @jsquire
-# ServiceOwners:                                                   @toddysm @yugangw-MSFT
+# ServiceOwners:                                                   @toddysm @shizhMSFT
 
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
