@@ -17,6 +17,7 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:RedisEnterpriseBasic
                 Infrastructure infra = new();
                 ProvisioningParameter principalId = new ProvisioningParameter("principalId", typeof(string))
                 {
@@ -56,6 +57,7 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
                         UserObjectId = principalId
                     };
                 infra.Add(accessPolicyAssignment);
+                #endregion
                 return infra;
             })
         .Compare(

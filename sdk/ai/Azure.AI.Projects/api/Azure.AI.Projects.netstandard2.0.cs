@@ -90,13 +90,13 @@ namespace Azure.AI.Projects
         protected AIProjectClient() : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, Azure.Core.TokenCredential credential = null) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
-        public Azure.AI.Projects.Connections Connections { get { throw null; } }
-        public Azure.AI.Projects.Datasets Datasets { get { throw null; } }
-        public Azure.AI.Projects.Deployments Deployments { get { throw null; } }
-        public Azure.AI.Projects.Evaluations Evaluations { get { throw null; } }
-        public Azure.AI.Projects.Indexes Indexes { get { throw null; } }
+        public virtual Azure.AI.Projects.Connections Connections { get { throw null; } }
+        public virtual Azure.AI.Projects.Datasets Datasets { get { throw null; } }
+        public virtual Azure.AI.Projects.Deployments Deployments { get { throw null; } }
+        public virtual Azure.AI.Projects.Evaluations Evaluations { get { throw null; } }
+        public virtual Azure.AI.Projects.Indexes Indexes { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
+        public virtual Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         public OpenAI.Chat.ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
         public OpenAI.Embeddings.EmbeddingClient GetAzureOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }

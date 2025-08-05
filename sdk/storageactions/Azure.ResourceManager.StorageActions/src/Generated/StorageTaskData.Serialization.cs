@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageActions
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, new ModelReaderWriterOptions("W|v3"));
+            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageActions
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), new ModelReaderWriterOptions("W|v3"), AzureResourceManagerStorageActionsContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerStorageActionsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

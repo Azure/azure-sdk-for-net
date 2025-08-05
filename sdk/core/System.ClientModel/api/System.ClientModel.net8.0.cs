@@ -129,6 +129,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.CredentialKind CredentialKind { get { throw null; } }
         public string Id { get { throw null; } }
         public string Locator { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
         public override string ToString() { throw null; }
         public bool TryGetLocatorAsUri(out System.Uri? uri) { throw null; }
     }
@@ -444,5 +445,14 @@ namespace System.ClientModel.Primitives
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
+    }
+    public partial class UserAgentPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public UserAgentPolicy(System.Reflection.Assembly callerAssembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
+        public static string GenerateUserAgentString(System.Reflection.Assembly callerAssembly, string? applicationId = null) { throw null; }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
 }
