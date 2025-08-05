@@ -17,36 +17,13 @@ namespace Azure.AI.Projects.Tests;
 
 public class AIAgentsTest : RecordedTestBase<AIProjectsTestEnvironment>
 {
-    public AIAgentsTest(bool isAsync) : base(isAsync)
+    public AIAgentsTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
     {
-        TestDiagnostics = false;
     }
 
+    [TestCase]
     [RecordedTest]
-    public void AgentsTestSync()
-    {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
-
-        Console.WriteLine("Create an agent with a model deployment");
-        PersistentAgent agent = agentsClient.Administration.CreateAgent(
-            model: modelDeploymentName,
-            name: "Math Tutor",
-            instructions: "You are a personal math tutor. Write and run code to answer math questions."
-        );
-        Assert.NotNull(agent.Id);
-        Assert.That(agent.Model == modelDeploymentName);
-        Assert.That(agent.Name == "Math Tutor");
-        Assert.That(agent.Instructions == "You are a personal math tutor. Write and run code to answer math questions.");
-
-        agentsClient.Administration.DeleteAgent(agentId: agent.Id);
-    }
-
-    [RecordedTest]
-    public async Task AgentsTestAsync()
+    public async Task AgentsTest()
     {
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
