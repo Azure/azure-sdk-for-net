@@ -140,7 +140,7 @@ namespace Azure.Generator.Management.Providers
             var clientDiagnosticsParameter = new ParameterProvider("clientDiagnostics", $"The instance of <see cref=\"ClientDiagnostics\"/>", typeof(ClientDiagnostics));
             var pipelineParameter = new ParameterProvider("pipeline", $"The instance of <see cref=\"HttpPipeline\"/>", typeof(HttpPipeline));
             var requestParameter = new ParameterProvider("request", $"The operation request", typeof(Request));
-            var responseParameter = new ParameterProvider("response", $"The opertion response", typeof(Response));
+            var responseParameter = new ParameterProvider("response", $"The operation response", typeof(Response));
             var finalStateViaParameter = new ParameterProvider("finalStateVia", $"The finalStateVia of the operation", typeof(OperationFinalStateVia));
             var skipApiVersionOverrideParameter = new ParameterProvider("skipApiVersionOverride", $"If should skip Api version override", typeof(bool), defaultValue: Literal(false));
             var apiVersionOverrideValueParameter = new ParameterProvider("apiVersionOverrideValue", $"The Api version override value", typeof(string), defaultValue: Null);
