@@ -47,14 +47,6 @@ namespace MgmtTypeSpec.Models
             {
                 return Properties is null ? default : Properties.Something;
             }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ZooUpdateProperties();
-                }
-                Properties.Something = value;
-            }
         }
     }
 }
