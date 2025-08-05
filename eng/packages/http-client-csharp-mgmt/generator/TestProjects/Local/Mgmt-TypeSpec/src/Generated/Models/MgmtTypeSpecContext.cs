@@ -18,7 +18,7 @@ namespace MgmtTypeSpec
     /// </summary>
     [ModelReaderWriterBuildable(typeof(PrivateLinkListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateLink))]
-    [ModelReaderWriterBuildable(typeof(PrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(MgmtTypeSpecPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooProperties))]
@@ -38,6 +38,8 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(ZooPatch))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
+    [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     public partial class MgmtTypeSpecContext : ModelReaderWriterContext
     {

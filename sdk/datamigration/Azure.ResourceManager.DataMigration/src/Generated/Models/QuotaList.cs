@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="QuotaList"/>. </summary>
         internal QuotaList()
         {
-            Value = new ChangeTrackingList<Quota>();
+            Value = new ChangeTrackingList<DataMigrationQuota>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaList"/>. </summary>
         /// <param name="value"> List of quotas. </param>
         /// <param name="nextLink"> URL to load the next page of quotas, or null or missing if this is the last page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaList(IReadOnlyList<Quota> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaList(IReadOnlyList<DataMigrationQuota> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> List of quotas. </summary>
-        public IReadOnlyList<Quota> Value { get; }
+        public IReadOnlyList<DataMigrationQuota> Value { get; }
         /// <summary> URL to load the next page of quotas, or null or missing if this is the last page. </summary>
         public string NextLink { get; }
     }
