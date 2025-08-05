@@ -40,7 +40,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly string _methodName;
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
-        private protected readonly ResourceClientProvider? _resourceClient;
+        private protected readonly ResourceClientProvider? _returnBodyResourceClient;
         private readonly bool _isLongRunningOperation;
         private readonly bool _isFakeLongRunningOperation;
         private readonly FormattableString? _description;
@@ -85,14 +85,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _serviceMethod,
                 ref _originalBodyType,
                 ref _returnBodyType,
-                ref _resourceClient);
+                ref _returnBodyResourceClient);
             _clientDiagnosticsField = restClientInfo.DiagnosticsField;
             _restClientField = restClientInfo.RestClientField;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
 
-        private void InitializeLroFlags(
+        private static void InitializeLroFlags(
             in InputServiceMethod serviceMethod,
             in bool forceLro,
             ref bool isLongRunningOperation,
@@ -103,7 +103,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             isFakeLongRunningOperation = forceLro && !isLongRunningOperation;
         }
 
-        private void InitializeTypeInfo(
+        private static void InitializeTypeInfo(
             in InputServiceMethod serviceMethod,
             ref CSharpType? originalBodyType,
             ref CSharpType? returnBodyType,
@@ -241,11 +241,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             ValueExpression responseValueExpression = responseVariable;
             // when the response is wrapped by a resource, we need to construct it from the response value.
-            if (_resourceClient != null)
+            if (_returnBodyResourceClient != null)
             {
                 responseValueExpression = ResponseSnippets.FromValue(
                     New.Instance(
-                            _resourceClient.Type,
+                            _returnBodyResourceClient.Type,
                             This.As<ArmResource>().Client(),
                             responseVariable.Value()),
                     responseVariable.GetRawResponse());
@@ -285,9 +285,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _resourceClient != null
+            var operationInstanceArguments = _returnBodyResourceClient != null
                 ? [
-                    New.Instance(_resourceClient.Source.Type, This.As<ArmResource>().Client()),
+                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
                     .. armOperationArguments
                   ]
                 : armOperationArguments;
@@ -342,10 +342,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             List<MethodBodyStatement> statements = [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
-            if (_resourceClient != null)
+            if (_returnBodyResourceClient != null)
             {
                 var returnValueExpression = New.Instance(
-                    _resourceClient.Type,
+                    _returnBodyResourceClient.Type,
                     This.As<ArmResource>().Client(),
                     responseVariable.Value());
                 var returnStatement = Return(

@@ -46,14 +46,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 {
                     Return(
                         New.Instance(
-                            new CSharpType(typeof(NoValueResponse<>), _resourceClient!.Type),
+                            new CSharpType(typeof(NoValueResponse<>), _returnBodyResourceClient!.Type),
                             responseVariable.GetRawResponse()
                         )
                     )
                 }
             ];
 
-            var returnValueExpression = New.Instance(_resourceClient.Type, This.As<ArmResource>().Client(), responseVariable.Value());
+            var returnValueExpression = New.Instance(_returnBodyResourceClient.Type, This.As<ArmResource>().Client(), responseVariable.Value());
             statements.Add(
                 Return(
                     ResponseSnippets.FromValue(

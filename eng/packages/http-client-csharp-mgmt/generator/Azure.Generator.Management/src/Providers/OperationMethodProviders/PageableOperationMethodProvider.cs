@@ -27,7 +27,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly bool _isAsync;
         private readonly CSharpType _itemType;
         private readonly CSharpType _actualItemType;
-        private ResourceClientProvider? _resourceClient;
+        private ResourceClientProvider? _itemResourceClient;
         private readonly ResourceOperationKind _methodKind;
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
@@ -52,7 +52,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InitializeTypeInfo(
                 itemType,
                 ref _actualItemType!,
-                ref _resourceClient
+                ref _itemResourceClient
             );
             _methodKind = methodKind;
             _signature = CreateSignature();
@@ -95,7 +95,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 _convenienceMethod.Signature.ReturnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, false),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -119,9 +119,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
 
             // Handle ResourceData type conversion if needed
-            if (_resourceClient != null)
+            if (_itemResourceClient != null)
             {
-                statements.Add(BuildResourceDataConversionStatement(collectionResultOfT, _resourceClient.Type, arguments));
+                statements.Add(BuildResourceDataConversionStatement(collectionResultOfT, _itemResourceClient.Type, arguments));
             }
             else
             {

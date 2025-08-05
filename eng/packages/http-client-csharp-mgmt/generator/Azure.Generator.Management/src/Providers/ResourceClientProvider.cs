@@ -327,7 +327,7 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
-                var isFakeLro = ResourceHelpers.IsFakeLroMethod(methodKind);
+                var isFakeLro = ResourceHelpers.ShouldMakeLro(methodKind);
 
                 // Get the appropriate rest client for this specific method
                 var restClientInfo = _resourceMetadata.GetRestClientForServiceMethod(method, _clientInfos);

@@ -16,13 +16,13 @@ namespace Azure.Generator.Management.Utilities
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             RequestPathPattern contextualPath,
-            bool isFakeLro)
+            bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
 
             // Add WaitUntil parameter for long-running operations
-            if (serviceMethod.IsLongRunningOperation() || isFakeLro)
+            if (forceLro || serviceMethod.IsLongRunningOperation())
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }

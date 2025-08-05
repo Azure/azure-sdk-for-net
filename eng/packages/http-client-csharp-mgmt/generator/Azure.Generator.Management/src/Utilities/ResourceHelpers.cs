@@ -37,13 +37,12 @@ namespace Azure.Generator.Management.Utilities
         }
 
         /// <summary>
-        /// Determines if the given resource operation kind should be treated as a "fake LRO" (Long-Running Operation).
-        /// A "fake LRO" is an operation that is not a true long-running operation at the REST API level,
-        /// but is modeled as an LRO in the SDK for consistency and to provide a uniform developer experience.
-        /// Only Create and Delete operations are treated as fake LROs because, in Azure, these operations are
-        /// commonly expected to be long-running, even if the underlying service does not implement the LRO pattern.
+        /// Determines if the given resource operation kind should also be treated as an LRO (Long-Running Operation).
+        /// When this happens, an operation is not a true long-running operation at the REST API level,
+        /// but it is modeled as an LRO in the SDK for consistency and to provide a uniform developer experience.
+        /// Only Create and Delete operations are forced to be LROs for now.
         /// </summary>
-        public static bool IsFakeLroMethod(ResourceOperationKind operationKind)
+        public static bool ShouldMakeLro(ResourceOperationKind operationKind)
         {
             return operationKind == ResourceOperationKind.Create
                 || operationKind == ResourceOperationKind.Delete;
