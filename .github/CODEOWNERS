@@ -408,8 +408,10 @@
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
 
+/sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @ReilleyMilne @shirelmr
+
 # ServiceLabel: %Cosmos
-/sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
+# ServiceOwners:                                                   @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @ReilleyMilne @shirelmr
 
 # ServiceLabel: %Cost Management - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
