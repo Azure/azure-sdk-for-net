@@ -230,12 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             await StartHostedServicesAsync(serviceProvider);
 
-            EvaluationHelper.EvaluateTracerProvider(
-                serviceProvider: serviceProvider,
-                expectedLiveMetricsProcessor: true,
-                expectedProfilingSessionTraceProcessor: true,
-                hasInstrumentations: true,
-                isExpectedSamplerRateLimited: isRateLimitedSampler);
+            EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, isRateLimitedSampler);
         }
 
         [Theory]
@@ -283,12 +278,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             await StartHostedServicesAsync(serviceProvider);
 
-            EvaluationHelper.EvaluateTracerProvider(
-                serviceProvider: serviceProvider,
-                expectedLiveMetricsProcessor: true,
-                expectedProfilingSessionTraceProcessor: true,
-                hasInstrumentations: true,
-                isExpectedSamplerRateLimited: isRateLimitedSampler);
+            EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, isRateLimitedSampler);
 
             // Clean up environment variables
             Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
@@ -340,7 +330,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 public bool foundStandardMetricsExtractionProcessor;
             }
 
-            public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool hasInstrumentations, bool isExpectedSamplerRateLimited = false)
+            public static void EvaluateTracerProvider(IServiceProvider serviceProvider, bool expectedLiveMetricsProcessor, bool expectedProfilingSessionTraceProcessor, bool hasInstrumentations)
             {
                 var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
                 Assert.NotNull(tracerProvider);
@@ -362,11 +352,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.Equal(expectedProfilingSessionTraceProcessor, variables.foundProfilingSessionTraceProcessor);
 
                 // Validate Sampler
-                var samplerProperty = tracerProviderSdkType.GetProperty("Sampler", BindingFlags.NonPublic | BindingFlags.Instance);
-                Assert.NotNull(samplerProperty);
-                var sampler = samplerProperty.GetValue(tracerProvider);
-                Assert.NotNull(sampler);
-                Assert.Equal(isExpectedSamplerRateLimited ? nameof(Exporter.Internals.RateLimitedSampler) : nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
+                EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, false);
 
                 // Validate Instrumentations
                 var instrumentationsProperty = tracerProvider.GetType().GetProperty("Instrumentations", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -392,6 +378,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 {
                     Assert.Empty(instrumentations);
                 }
+            }
+
+            public static void EvaluateTracerProviderSampler(IServiceProvider serviceProvider, bool isExpectedSamplerRateLimited)
+            {
+                var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+                Assert.NotNull(tracerProvider);
+
+                // Get TracerProviderSdk
+                var tracerProviderSdkType = tracerProvider.GetType();
+
+                 // Validate Sampler
+                var samplerProperty = tracerProviderSdkType.GetProperty("Sampler", BindingFlags.NonPublic | BindingFlags.Instance);
+                Assert.NotNull(samplerProperty);
+                var sampler = samplerProperty.GetValue(tracerProvider);
+                Assert.NotNull(sampler);
+                Assert.Equal(isExpectedSamplerRateLimited ? nameof(Exporter.Internals.RateLimitedSampler) : nameof(Exporter.Internals.ApplicationInsightsSampler), sampler.GetType().Name);
             }
 
             public static void EvaluateMeterProvider(IServiceProvider serviceProvider)
