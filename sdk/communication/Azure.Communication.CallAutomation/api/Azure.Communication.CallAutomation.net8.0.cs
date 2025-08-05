@@ -1720,12 +1720,6 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.TranscriptionResultState left, Azure.Communication.CallAutomation.TranscriptionResultState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TranscriptionSentimentResult
-    {
-        public TranscriptionSentimentResult() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sentiment")]
-        public string TranscriptionSentiment { get { throw null; } set { } }
-    }
     public partial class TranscriptionStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal TranscriptionStarted() { }
