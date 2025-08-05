@@ -47,7 +47,7 @@ namespace Azure.Generator.Management.Visitors
                         internalizedProperties.Add(internalProperty);
 
                         // flatten the single property to public and associate it with the internal property
-                        var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = GetFlags(property.IsReadOnly, !singleProperty.Body.HasSetter, singleProperty.Type, propertyTypeProvider, propertyTypeProvider);
+                        var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = GetFlags(property.IsReadOnly, singleProperty, propertyTypeProvider, propertyTypeProvider);
                         var flattenPropertyName = $"{internalProperty.Name}{singleProperty.Name}"; // TODO: handle name conflicts
                         var flattenPropertyBody = new MethodPropertyBody(
                             BuildGetter(includeGetterNullCheck, internalProperty, propertyTypeProvider, singleProperty),
@@ -67,13 +67,14 @@ namespace Azure.Generator.Management.Visitors
             return base.PreVisitModel(model, type);
         }
 
-        private static (bool IsReadOnly, bool? IncludeGetterNullCheck, bool IncludeSetterNullCheck) GetFlags(bool isPropertyReadOnly, bool isInnerPropertyReadOnly, CSharpType innerPropertyType, ModelProvider innerModel, ModelProvider propertyModel)
+        private static (bool IsReadOnly, bool? IncludeGetterNullCheck, bool IncludeSetterNullCheck) GetFlags(bool isPropertyReadOnly, PropertyProvider singleProperty, ModelProvider innerModel, ModelProvider propertyModel)
         {
+            var isInnerPropertyReadOnly = !singleProperty.Body.HasSetter;
             if (!isPropertyReadOnly && isInnerPropertyReadOnly)
             {
                 if (HasDefaultPublicCtor(innerModel))
                 {
-                    if (innerPropertyType.Arguments.Count > 0)
+                    if (singleProperty.Type.Arguments.Count > 0)
                         return (true, true, false);
                     else
                         return (true, false, false);
