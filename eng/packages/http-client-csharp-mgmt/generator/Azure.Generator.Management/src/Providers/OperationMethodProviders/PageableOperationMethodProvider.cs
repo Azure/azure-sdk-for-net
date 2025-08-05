@@ -87,7 +87,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : new CSharpType(typeof(Pageable<>), _actualItemType);
             var methodName = _methodKind == ResourceOperationKind.List
                 ? (_isAsync ? "GetAllAsync" : "GetAll")
-                : (_isAsync ? $"{_convenienceMethod.Signature.Name}Async" : _convenienceMethod.Signature.Name);
+                : _convenienceMethod.Signature.Name;
 
             return new MethodSignature(
                 methodName,

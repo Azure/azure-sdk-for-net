@@ -538,6 +538,18 @@ namespace Azure.AI.Agents.Persistent
         public static bool operator !=(Azure.AI.Agents.Persistent.ListSortOrder left, Azure.AI.Agents.Persistent.ListSortOrder right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MCPApprovalPerTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>
+    {
+        public MCPApprovalPerTool() { }
+        public Azure.AI.Agents.Persistent.MCPToolList Always { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.MCPToolList Never { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPApprovalPerTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPApprovalPerTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPApprovalPerTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MCPToolDefinition : Azure.AI.Agents.Persistent.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolDefinition>
     {
         public MCPToolDefinition(string serverLabel, string serverUrl) { }
@@ -551,12 +563,23 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MCPToolList : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolList>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>
+    {
+        public MCPToolList(System.Collections.Generic.IEnumerable<string> toolNames) { }
+        public System.Collections.Generic.IList<string> ToolNames { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPToolList System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.MCPToolList System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MCPToolResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>
     {
         public MCPToolResource(string serverLabel) { }
         public MCPToolResource(string serverLabel, System.Collections.Generic.IDictionary<string, string> headers) { }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
-        public Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval? RequireApproval { get { throw null; } set { } }
+        public System.BinaryData RequireApproval { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.MCPToolResource System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -566,24 +589,6 @@ namespace Azure.AI.Agents.Persistent
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public Azure.AI.Agents.Persistent.ToolResources ToToolResources() { throw null; }
         public void UpdateHeader(string key, string value) { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MCPToolResourceRequireApproval : System.IEquatable<Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MCPToolResourceRequireApproval(string value) { throw null; }
-        public static Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval Always { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval Never { get { throw null; } }
-        public bool Equals(Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval left, Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval right) { throw null; }
-        public static implicit operator Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval left, Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class MessageAttachment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MessageAttachment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MessageAttachment>
     {
@@ -1363,6 +1368,8 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall RunStepDeepResearchToolCall(string id = null, Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails deepResearch = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = null, string output = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDelta RunStepDelta(Azure.AI.Agents.Persistent.RunStepDeltaDetail stepDetails = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall RunStepDeltaAzureAISearchToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> azureAISearch = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall RunStepDeltaBingGroundingToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> bingGrounding = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaChunk RunStepDeltaChunk(string id = null, Azure.AI.Agents.Persistent.RunStepDeltaChunkObject @object = default(Azure.AI.Agents.Persistent.RunStepDeltaChunkObject), Azure.AI.Agents.Persistent.RunStepDelta delta = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput> outputs = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterImageOutput RunStepDeltaCodeInterpreterImageOutput(int index = 0, Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterImageOutputObject image = null) { throw null; }
@@ -1370,6 +1377,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterLogOutput RunStepDeltaCodeInterpreterLogOutput(int index = 0, string logs = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput RunStepDeltaCodeInterpreterOutput(int index = 0, string type = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall RunStepDeltaCodeInterpreterToolCall(int index = 0, string id = null, Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterDetailItemObject codeInterpreter = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall RunStepDeltaDeepResearchToolCall(int index = 0, string id = null, Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails deepResearch = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaFileSearchToolCall RunStepDeltaFileSearchToolCall(int index = 0, string id = null, Azure.AI.Agents.Persistent.RunStepFileSearchToolCallResults fileSearch = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaFunction RunStepDeltaFunction(string name = null, string arguments = null, string output = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaFunctionToolCall RunStepDeltaFunctionToolCall(int index = 0, string id = null, Azure.AI.Agents.Persistent.RunStepDeltaFunction function = null) { throw null; }
@@ -1377,6 +1385,8 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStepDeltaMcpToolCall RunStepDeltaMcpToolCall(int index = 0, string id = null, string arguments = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation RunStepDeltaMessageCreation(Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject messageCreation = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject RunStepDeltaMessageCreationObject(string messageId = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject RunStepDeltaOpenAPIObject(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> toolCalls = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall RunStepDeltaOpenAPIToolCall(int index = 0, string id = null, System.Collections.Generic.IReadOnlyDictionary<string, string> openAPI = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaToolCall RunStepDeltaToolCall(int index = 0, string id = null, string type = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaToolCallObject RunStepDeltaToolCallObject(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaToolCall> toolCalls = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepError RunStepError(Azure.AI.Agents.Persistent.RunStepErrorCode code = default(Azure.AI.Agents.Persistent.RunStepErrorCode), string message = null) { throw null; }
@@ -1932,6 +1942,28 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDelta>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDelta>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RunStepDeltaAzureAISearchToolCall : Azure.AI.Agents.Persistent.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>
+    {
+        internal RunStepDeltaAzureAISearchToolCall() : base (default(int), default(string)) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> AzureAISearch { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaAzureAISearchToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunStepDeltaBingGroundingToolCall : Azure.AI.Agents.Persistent.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>
+    {
+        internal RunStepDeltaBingGroundingToolCall() : base (default(int), default(string)) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> BingGrounding { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaBingGroundingToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RunStepDeltaChunk : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaChunk>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaChunk>
     {
         internal RunStepDeltaChunk() { }
@@ -2029,6 +2061,17 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RunStepDeltaDeepResearchToolCall : Azure.AI.Agents.Persistent.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>
+    {
+        internal RunStepDeltaDeepResearchToolCall() : base (default(int), default(string)) { }
+        public Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails DeepResearch { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaDeepResearchToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class RunStepDeltaDetail : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaDetail>
     {
         protected RunStepDeltaDetail() { }
@@ -2118,6 +2161,28 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaMessageCreationObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RunStepDeltaOpenAPIObject : Azure.AI.Agents.Persistent.RunStepDeltaDetail, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>
+    {
+        internal RunStepDeltaOpenAPIObject() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall> ToolCalls { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunStepDeltaOpenAPIToolCall : Azure.AI.Agents.Persistent.RunStepDeltaToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>
+    {
+        internal RunStepDeltaOpenAPIToolCall() : base (default(int), default(string)) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> OpenAPI { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaOpenAPIToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class RunStepDeltaToolCall : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeltaToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeltaToolCall>
     {
         protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> SerializedAdditionalRawData;
@@ -2161,6 +2226,7 @@ namespace Azure.AI.Agents.Persistent
         public string FunctionArguments { get { throw null; } }
         public string FunctionName { get { throw null; } }
         public string FunctionOutput { get { throw null; } }
+        public Azure.AI.Agents.Persistent.RunStepDeltaToolCall GetDeltaToolCall { get { throw null; } }
         public string StepId { get { throw null; } }
         public string ToolCallId { get { throw null; } }
         public int? ToolCallIndex { get { throw null; } }
