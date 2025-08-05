@@ -167,7 +167,7 @@ Response response = await client.UploadAsync(
 
 You can also upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method in which  logs are passed in a generic `IEnumerable` type along with an optional `LogsUploadOptions` parameter. The `LogsUploadOptions` parameter includes a serializer, concurrency, and an EventHandler.
 
-When uploading custom logs as an `IEnumerable` of an application model type, the `LogsIngestionClient` will perform serialization on your behalf, using either the [ObjectSerializer](https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet) registered with your `LogsUploadOptions` or the serializer used by [BinaryData.FromObjectAsJson](https://learn.microsoft.com/dotnet/api/system.binarydata.fromobjectasjson).  Both of these approaches are use a serialization path that is not compatible with [ahead-of-time compilation (AOT)](https://learn.microsoft.com/dotnet/core/deploying/native-aot).
+When uploading custom logs as an `IEnumerable` of an application model type, the `LogsIngestionClient` will perform serialization on your behalf, using either the [ObjectSerializer](https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet) registered with your `LogsUploadOptions` or the serializer used by [BinaryData.FromObjectAsJson](https://learn.microsoft.com/dotnet/api/system.binarydata.fromobjectasjson). Both approaches use a serialization path that is not compatible with [ahead-of-time compilation (AOT)](https://learn.microsoft.com/dotnet/core/deploying/native-aot).
 
 ```C# Snippet:UploadLogDataIEnumerableAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
