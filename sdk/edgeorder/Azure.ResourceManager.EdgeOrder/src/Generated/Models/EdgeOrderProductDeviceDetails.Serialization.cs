@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
+            if (options.Format != "W" && Optional.IsDefined(DisplaySerialNumber))
+            {
+                writer.WritePropertyName("displaySerialNumber"u8);
+                writer.WriteStringValue(DisplaySerialNumber);
+            }
             if (options.Format != "W" && Optional.IsDefined(ManagementResourceId))
             {
                 writer.WritePropertyName("managementResourceId"u8);
@@ -48,6 +53,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 writer.WritePropertyName("managementResourceTenantId"u8);
                 writer.WriteStringValue(ManagementResourceTenantId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningSupport))
+            {
+                writer.WritePropertyName("provisioningSupport"u8);
+                writer.WriteStringValue(ProvisioningSupport.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningDetails))
+            {
+                writer.WritePropertyName("provisioningDetails"u8);
+                writer.WriteObjectValue(ProvisioningDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,8 +102,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             string serialNumber = default;
+            string displaySerialNumber = default;
             string managementResourceId = default;
             string managementResourceTenantId = default;
+            ProvisioningSupport? provisioningSupport = default;
+            ProvisioningDetails provisioningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,6 +114,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displaySerialNumber"u8))
+                {
+                    displaySerialNumber = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("managementResourceId"u8))
@@ -108,13 +131,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementResourceTenantId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("provisioningSupport"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningSupport = new ProvisioningSupport(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderProductDeviceDetails(serialNumber, managementResourceId, managementResourceTenantId, serializedAdditionalRawData);
+            return new EdgeOrderProductDeviceDetails(
+                serialNumber,
+                displaySerialNumber,
+                managementResourceId,
+                managementResourceTenantId,
+                provisioningSupport,
+                provisioningDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductDeviceDetails>.Write(ModelReaderWriterOptions options)

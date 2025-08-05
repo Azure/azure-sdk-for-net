@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadataListResult"/>. </summary>
-        internal ProductFamiliesMetadataListResult()
+        /// <param name="value"> The ProductFamiliesMetadataDetails items on this page. </param>
+        internal ProductFamiliesMetadataListResult(IEnumerable<ProductFamiliesMetadata> value)
         {
-            Value = new ChangeTrackingList<ProductFamiliesMetadata>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadataListResult"/>. </summary>
-        /// <param name="value"> List of product family metadata details. </param>
-        /// <param name="nextLink"> Link for the next set of product families. </param>
+        /// <param name="value"> The ProductFamiliesMetadataDetails items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductFamiliesMetadataListResult(IReadOnlyList<ProductFamiliesMetadata> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductFamiliesMetadataListResult(IReadOnlyList<ProductFamiliesMetadata> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of product family metadata details. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadataListResult"/> for deserialization. </summary>
+        internal ProductFamiliesMetadataListResult()
+        {
+        }
+
+        /// <summary> The ProductFamiliesMetadataDetails items on this page. </summary>
         public IReadOnlyList<ProductFamiliesMetadata> Value { get; }
-        /// <summary> Link for the next set of product families. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -36,51 +36,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteObjectValue(Description, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
-            {
-                writer.WritePropertyName("imageInformation"u8);
-                writer.WriteStartArray();
-                foreach (var item in ImageInformation)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(CostInformation))
-            {
-                writer.WritePropertyName("costInformation"u8);
-                writer.WriteObjectValue(CostInformation, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
-            {
-                writer.WritePropertyName("availabilityInformation"u8);
-                writer.WriteObjectValue(AvailabilityInformation, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
-            {
-                writer.WritePropertyName("hierarchyInformation"u8);
-                writer.WriteObjectValue(HierarchyInformation, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
-            {
-                writer.WritePropertyName("filterableProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in FilterableProperties)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProductLines))
             {
                 writer.WritePropertyName("productLines"u8);
@@ -139,13 +94,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            string displayName = default;
-            ProductDescription description = default;
-            IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
-            EdgeOrderProductCostInformation costInformation = default;
-            ProductAvailabilityInformation availabilityInformation = default;
-            HierarchyInformation hierarchyInformation = default;
-            IReadOnlyList<FilterableProperty> filterableProperties = default;
             IReadOnlyList<ProductLine> productLines = default;
             IReadOnlyList<ResourceProviderDetails> resourceProviderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,75 +109,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            description = ProductDescription.DeserializeProductDescription(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("imageInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item, options));
-                            }
-                            imageInformation = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("costInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("hierarchyInformation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("filterableProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<FilterableProperty> array = new List<FilterableProperty>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item, options));
-                            }
-                            filterableProperties = array;
-                            continue;
-                        }
                         if (property0.NameEquals("productLines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -267,17 +146,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProductFamily(
-                displayName,
-                description,
-                imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
-                costInformation,
-                availabilityInformation,
-                hierarchyInformation,
-                filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
-                productLines ?? new ChangeTrackingList<ProductLine>(),
-                resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(),
-                serializedAdditionalRawData);
+            return new ProductFamily(productLines ?? new ChangeTrackingList<ProductLine>(), resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductFamily>.Write(ModelReaderWriterOptions options)

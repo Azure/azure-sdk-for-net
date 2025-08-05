@@ -59,11 +59,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
         /// <param name="filterableProperty"> Filters specific to product. </param>
+        /// <param name="childConfigurationFilter"> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty, ChildConfigurationFilter childConfigurationFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = filterableProperty;
+            ChildConfigurationFilter = childConfigurationFilter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,5 +78,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public HierarchyInformation HierarchyInformation { get; }
         /// <summary> Filters specific to product. </summary>
         public IList<FilterableProperty> FilterableProperty { get; }
+        /// <summary> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </summary>
+        public ChildConfigurationFilter ChildConfigurationFilter { get; set; }
     }
 }

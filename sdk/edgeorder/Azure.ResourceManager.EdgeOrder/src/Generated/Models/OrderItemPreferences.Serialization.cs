@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences, options);
             }
+            if (Optional.IsDefined(TermCommitmentPreferences))
+            {
+                writer.WritePropertyName("termCommitmentPreferences"u8);
+                writer.WriteObjectValue(TermCommitmentPreferences, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,6 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             TransportPreferences transportPreferences = default;
             EncryptionPreferences encryptionPreferences = default;
             ManagementResourcePreferences managementResourcePreferences = default;
+            TermCommitmentPreferences termCommitmentPreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,13 +151,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("termCommitmentPreferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termCommitmentPreferences = TermCommitmentPreferences.DeserializeTermCommitmentPreferences(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrderItemPreferences(notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(), transportPreferences, encryptionPreferences, managementResourcePreferences, serializedAdditionalRawData);
+            return new OrderItemPreferences(
+                notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(),
+                transportPreferences,
+                encryptionPreferences,
+                managementResourcePreferences,
+                termCommitmentPreferences,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrderItemPreferences>.Write(ModelReaderWriterOptions options)

@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteObjectValue(ProductDetails, options);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
+            if (Optional.IsDefined(OrderItemMode))
+            {
+                writer.WritePropertyName("orderItemMode"u8);
+                writer.WriteStringValue(OrderItemMode.Value.ToString());
+            }
+            if (Optional.IsDefined(SiteDetails))
+            {
+                writer.WritePropertyName("siteDetails"u8);
+                writer.WriteObjectValue(SiteDetails, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
@@ -104,16 +114,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("returnStatus"u8);
                 writer.WriteStringValue(ReturnStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
-            {
-                writer.WritePropertyName("managementRpDetails"u8);
-                writer.WriteObjectValue(FirstOrDefaultManagement, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRpDetailsList))
             {
                 writer.WritePropertyName("managementRpDetailsList"u8);
                 writer.WriteStartArray();
-                foreach (var item in ManagementRPDetailsList)
+                foreach (var item in ManagementRpDetailsList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -163,6 +168,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
+            OrderMode? orderItemMode = default;
+            SiteDetails siteDetails = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory = default;
             OrderItemPreferences preferences = default;
@@ -174,8 +181,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderActionStatus? deletionStatus = default;
             string returnReason = default;
             OrderItemReturnStatus? returnStatus = default;
-            ResourceProviderDetails managementRPDetails = default;
-            IReadOnlyList<ResourceProviderDetails> managementRPDetailsList = default;
+            IReadOnlyList<ResourceProviderDetails> managementRpDetailsList = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -189,6 +195,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 if (property.NameEquals("orderItemType"u8))
                 {
                     orderItemType = new OrderItemType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("orderItemMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    orderItemMode = new OrderMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("siteDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    siteDetails = SiteDetails.DeserializeSiteDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentStage"u8))
@@ -292,15 +316,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     returnStatus = new OrderItemReturnStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managementRpDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("managementRpDetailsList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -312,7 +327,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
                     }
-                    managementRPDetailsList = array;
+                    managementRpDetailsList = array;
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -333,6 +348,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemDetails(
                 productDetails,
                 orderItemType,
+                orderItemMode,
+                siteDetails,
                 currentStage,
                 orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
                 preferences,
@@ -344,8 +361,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 deletionStatus,
                 returnReason,
                 returnStatus,
-                managementRPDetails,
-                managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                managementRpDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
                 error,
                 serializedAdditionalRawData);
         }

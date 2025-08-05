@@ -46,15 +46,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
-        /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
-        public EdgeOrderShippingAddress(string streetAddress1, string country)
+        /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
+        public EdgeOrderShippingAddress(string country)
         {
-            Argument.AssertNotNull(streetAddress1, nameof(streetAddress1));
             Argument.AssertNotNull(country, nameof(country));
 
-            StreetAddress1 = streetAddress1;
             Country = country;
         }
 

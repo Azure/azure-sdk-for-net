@@ -40,20 +40,10 @@ namespace Azure.ResourceManager.EdgeOrder
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemIds))
+            if (options.Format != "W" && Optional.IsDefined(OrderItemIds))
             {
                 writer.WritePropertyName("orderItemIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in OrderItemIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(OrderItemIds);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
@@ -69,6 +59,11 @@ namespace Azure.ResourceManager.EdgeOrder
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(OrderMode))
+            {
+                writer.WritePropertyName("orderMode"u8);
+                writer.WriteStringValue(OrderMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -97,9 +92,10 @@ namespace Azure.ResourceManager.EdgeOrder
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IReadOnlyList<ResourceIdentifier> orderItemIds = default;
+            ResourceIdentifier orderItemIds = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderStageHistory = default;
+            OrderMode? orderMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,19 +139,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            orderItemIds = array;
+                            orderItemIds = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("currentStage"u8))
@@ -181,6 +165,15 @@ namespace Azure.ResourceManager.EdgeOrder
                             orderStageHistory = array;
                             continue;
                         }
+                        if (property0.NameEquals("orderMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            orderMode = new OrderMode(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -195,9 +188,10 @@ namespace Azure.ResourceManager.EdgeOrder
                 name,
                 type,
                 systemData,
-                orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                orderItemIds,
                 currentStage,
                 orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                orderMode,
                 serializedAdditionalRawData);
         }
 

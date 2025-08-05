@@ -48,53 +48,42 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
         internal ProductConfiguration()
         {
-            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
             Specifications = new ChangeTrackingList<ProductSpecification>();
+            ChildConfigurationTypes = new ChangeTrackingList<ChildConfigurationType>();
+            GroupedChildConfigurations = new ChangeTrackingList<GroupedChildConfigurations>();
+            SupportedTermCommitmentDurations = new ChangeTrackingList<TimeSpan>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductConfiguration"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="specifications"> Specifications of the configuration. </param>
         /// <param name="dimensions"> Dimensions of the configuration. </param>
+        /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
+        /// <param name="childConfigurationTypes"> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </param>
+        /// <param name="groupedChildConfigurations"> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </param>
+        /// <param name="supportedTermCommitmentDurations"> The Term Commitment Durations that are supported for a configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductConfiguration(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductConfiguration(IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, ProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DisplayName = displayName;
-            Description = description;
-            ImageInformation = imageInformation;
-            CostInformation = costInformation;
-            AvailabilityInformation = availabilityInformation;
-            HierarchyInformation = hierarchyInformation;
-            FilterableProperties = filterableProperties;
             Specifications = specifications;
             Dimensions = dimensions;
+            ProvisioningSupport = provisioningSupport;
+            ChildConfigurationTypes = childConfigurationTypes;
+            GroupedChildConfigurations = groupedChildConfigurations;
+            SupportedTermCommitmentDurations = supportedTermCommitmentDurations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display Name for the product system. </summary>
-        public string DisplayName { get; }
-        /// <summary> Description related to the product system. </summary>
-        public ProductDescription Description { get; }
-        /// <summary> Image information for the product system. </summary>
-        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation { get; }
-        /// <summary> Cost information for the product system. </summary>
-        public EdgeOrderProductCostInformation CostInformation { get; }
-        /// <summary> Availability information of the product system. </summary>
-        public ProductAvailabilityInformation AvailabilityInformation { get; }
-        /// <summary> Hierarchy information of a product. </summary>
-        public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
-        public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
         /// <summary> Specifications of the configuration. </summary>
         public IReadOnlyList<ProductSpecification> Specifications { get; }
         /// <summary> Dimensions of the configuration. </summary>
         public ProductDimensions Dimensions { get; }
+        /// <summary> Determining nature of provisioning that the configuration supports. </summary>
+        public ProvisioningSupport? ProvisioningSupport { get; }
+        /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
+        public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes { get; }
+        /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>
+        public IReadOnlyList<GroupedChildConfigurations> GroupedChildConfigurations { get; }
+        /// <summary> The Term Commitment Durations that are supported for a configuration. </summary>
+        public IReadOnlyList<TimeSpan> SupportedTermCommitmentDurations { get; }
     }
 }

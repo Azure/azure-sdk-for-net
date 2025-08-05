@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.EdgeOrder
     /// </summary>
     public partial class EdgeOrderItemCollection : ArmCollection, IEnumerable<EdgeOrderItemResource>, IAsyncEnumerable<EdgeOrderItemResource>
     {
-        private readonly ClientDiagnostics _edgeOrderItemClientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _edgeOrderItemRestClient;
+        private readonly ClientDiagnostics _edgeOrderItemOrderItemResourcesClientDiagnostics;
+        private readonly OrderItemResourcesRestOperations _edgeOrderItemOrderItemResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemCollection"/> class for mocking. </summary>
         protected EdgeOrderItemCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EdgeOrderItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeOrderItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderItemResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EdgeOrderItemResource.ResourceType, out string edgeOrderItemApiVersion);
-            _edgeOrderItemRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderItemApiVersion);
+            _edgeOrderItemOrderItemResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderItemResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EdgeOrderItemResource.ResourceType, out string edgeOrderItemOrderItemResourcesApiVersion);
+            _edgeOrderItemOrderItemResourcesRestClient = new OrderItemResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderItemOrderItemResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API.
+        /// Create an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item
+        /// API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -61,11 +62,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CreateOrderItem</description>
+        /// <description>OrderItemResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -79,19 +80,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeOrderItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.CreateOrUpdate");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.CreateOrderItemAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(new EdgeOrderItemOperationSource(Client), _edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateCreateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _edgeOrderItemOrderItemResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation(_edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, _edgeOrderItemOrderItemResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -102,7 +103,8 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Creates an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item API.
+        /// Create an order item. Existing order item cannot be updated with this api and should instead be updated with the Update order item
+        /// API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -110,11 +112,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CreateOrderItem</description>
+        /// <description>OrderItemResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -128,19 +130,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EdgeOrderItemResource> CreateOrUpdate(WaitUntil waitUntil, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.CreateOrUpdate");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.CreateOrderItem(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data, cancellationToken);
-                var operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(new EdgeOrderItemOperationSource(Client), _edgeOrderItemClientDiagnostics, Pipeline, _edgeOrderItemRestClient.CreateCreateOrderItemRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _edgeOrderItemOrderItemResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data, cancellationToken);
+                var operation = new EdgeOrderArmOperation(_edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, _edgeOrderItemOrderItemResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets an order item.
+        /// Get an order item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -159,11 +161,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <description>OrderItemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -172,7 +174,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
@@ -180,11 +182,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Get");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderItemOrderItemResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets an order item.
+        /// Get an order item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -205,11 +207,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <description>OrderItemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
@@ -226,11 +228,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Get");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken);
+                var response = _edgeOrderItemOrderItemResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Lists order item at resource group level.
+        /// List order items at resource group level.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -251,11 +253,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListOrderItemsAtResourceGroupLevel</description>
+        /// <description>OrderItemResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,20 +265,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id and order Item Type. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemOrderItemResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderItemOrderItemResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists order item at resource group level.
+        /// List order items at resource group level.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -284,11 +287,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListOrderItemsAtResourceGroupLevel</description>
+        /// <description>OrderItemResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,16 +299,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id and order Item Type. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
+        /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderItemRestClient.CreateListOrderItemsAtResourceGroupLevelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeOrderItemOrderItemResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeOrderItemOrderItemResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeOrderItemResource(Client, EdgeOrderItemData.DeserializeEdgeOrderItemData(e)), _edgeOrderItemOrderItemResourcesClientDiagnostics, Pipeline, "EdgeOrderItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,11 +321,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <description>OrderItemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -330,7 +334,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
@@ -338,11 +342,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Exists");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderItemOrderItemResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,11 +365,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <description>OrderItemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -374,7 +378,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
@@ -382,11 +386,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Exists");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken);
+                var response = _edgeOrderItemOrderItemResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,11 +409,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <description>OrderItemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -418,7 +422,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
@@ -426,11 +430,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetIfExists");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeOrderItemRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderItemOrderItemResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<EdgeOrderItemResource>(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());
@@ -451,11 +455,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderItemByName</description>
+        /// <description>OrderItemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +468,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
@@ -472,11 +476,11 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
-            using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetIfExists");
+            using var scope = _edgeOrderItemOrderItemResourcesClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeOrderItemRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken);
+                var response = _edgeOrderItemOrderItemResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, orderItemName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<EdgeOrderItemResource>(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderItemResource(Client, response.Value), response.GetRawResponse());

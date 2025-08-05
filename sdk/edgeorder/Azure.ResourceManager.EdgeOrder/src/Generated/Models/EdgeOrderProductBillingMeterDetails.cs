@@ -53,26 +53,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProductBillingMeterDetails"/>. </summary>
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails">
-        /// Represents MeterDetails
+        /// Represents MeterDetails.
         /// Please note <see cref="EdgeOrderProductMeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
         /// </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>
+        /// <param name="termTypeDetails"> Represent Term Type details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductBillingMeterDetails(string name, EdgeOrderProductMeterDetails meterDetails, EdgeOrderProductMeteringType? meteringType, string frequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProductBillingMeterDetails(string name, EdgeOrderProductMeterDetails meterDetails, EdgeOrderProductMeteringType? meteringType, string frequency, TermTypeDetails termTypeDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MeterDetails = meterDetails;
             MeteringType = meteringType;
             Frequency = frequency;
+            TermTypeDetails = termTypeDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents Billing type name. </summary>
         public string Name { get; }
         /// <summary>
-        /// Represents MeterDetails
+        /// Represents MeterDetails.
         /// Please note <see cref="EdgeOrderProductMeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
         /// </summary>
@@ -81,5 +83,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public EdgeOrderProductMeteringType? MeteringType { get; }
         /// <summary> Frequency of recurrence. </summary>
         public string Frequency { get; }
+        /// <summary> Represent Term Type details. </summary>
+        public TermTypeDetails TermTypeDetails { get; }
     }
 }

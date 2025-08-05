@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EdgeOrder
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _edgeOrderClientDiagnostics;
-        private readonly EdgeOrderManagementRestOperations _edgeOrderRestClient;
+        private readonly ClientDiagnostics _edgeOrderOrderResourcesClientDiagnostics;
+        private readonly OrderResourcesRestOperations _edgeOrderOrderResourcesRestClient;
         private readonly EdgeOrderData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeOrderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeOrderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string edgeOrderApiVersion);
-            _edgeOrderRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderApiVersion);
+            _edgeOrderOrderResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string edgeOrderOrderResourcesApiVersion);
+            _edgeOrderOrderResourcesRestClient = new OrderResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderOrderResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets an order.
+        /// Get an order.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderByName</description>
+        /// <description>OrderResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeOrderResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderClientDiagnostics.CreateScope("EdgeOrderResource.Get");
+            using var scope = _edgeOrderOrderResourcesClientDiagnostics.CreateScope("EdgeOrderResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeOrderRestClient.GetOrderByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _edgeOrderOrderResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderResource(Client, response.Value), response.GetRawResponse());
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         /// <summary>
-        /// Gets an order.
+        /// Get an order.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetOrderByName</description>
+        /// <description>OrderResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeOrderResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeOrderClientDiagnostics.CreateScope("EdgeOrderResource.Get");
+            using var scope = _edgeOrderOrderResourcesClientDiagnostics.CreateScope("EdgeOrderResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeOrderRestClient.GetOrderByName(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _edgeOrderOrderResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EdgeOrderResource(Client, response.Value), response.GetRawResponse());

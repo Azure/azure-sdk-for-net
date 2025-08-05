@@ -53,13 +53,8 @@ namespace Azure.ResourceManager.EdgeOrder
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="contactDetails"> Contact details for the address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public EdgeOrderAddressData(AzureLocation location, EdgeOrderAddressContactDetails contactDetails) : base(location)
+        public EdgeOrderAddressData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
-
-            ContactDetails = contactDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressData"/>. </summary>
@@ -69,15 +64,19 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="addressClassification"> Type of address based on its usage context. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderAddressData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EdgeOrderAddressData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AddressClassification? addressClassification, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            AddressClassification = addressClassification;
             ShippingAddress = shippingAddress;
             ContactDetails = contactDetails;
             AddressValidationStatus = addressValidationStatus;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,11 +85,15 @@ namespace Azure.ResourceManager.EdgeOrder
         {
         }
 
+        /// <summary> Type of address based on its usage context. </summary>
+        public AddressClassification? AddressClassification { get; set; }
         /// <summary> Shipping details for the address. </summary>
         public EdgeOrderShippingAddress ShippingAddress { get; set; }
         /// <summary> Contact details for the address. </summary>
         public EdgeOrderAddressContactDetails ContactDetails { get; set; }
         /// <summary> Status of address validation. </summary>
         public EdgeOrderAddressValidationStatus? AddressValidationStatus { get; }
+        /// <summary> Provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }
