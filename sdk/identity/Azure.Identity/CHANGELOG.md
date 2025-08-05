@@ -8,13 +8,11 @@
 
 #### Behavioral Breaking Changes
 
-- Deprecated `SharedTokenCacheCredential`, which was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead. The following changes have been made:
-  - Marked the following members as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`:
-    - `SharedTokenCacheCredential` class
-    - `SharedTokenCacheCredentialOptions` class
-    - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property
-    - `DefaultAzureCredentialOptions.SharedTokenCacheUsername` property
-  - `SharedTokenCacheCredential` is no longer included in the `DefaultAzureCredential` authentication flow by default
+- Deprecated `SharedTokenCacheCredential`, which was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead. Marked the following members as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`:
+  - `SharedTokenCacheCredential` class
+  - `SharedTokenCacheCredentialOptions` class
+  - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property
+  - `DefaultAzureCredentialOptions.SharedTokenCacheUsername` property
 
 ### Bugs Fixed
 
