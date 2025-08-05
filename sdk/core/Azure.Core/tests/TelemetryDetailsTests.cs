@@ -108,15 +108,10 @@ namespace Azure.Core.Tests
                 version = version.Substring(0, hashSeparator);
             }
 
-            // Verify that the assembly name was transformed to Azure SDK format
+            // Verify the full user agent string format
             string userAgent = target.ToString();
-            Assert.That(userAgent, Does.Contain("azsdk-net-Core.Tests"));
-            Assert.That(userAgent, Does.Contain($"/{version}"));
-            Assert.That(userAgent, Does.Contain(appId));
-            Assert.That(userAgent, Does.Contain(RuntimeInformation.FrameworkDescription));
-
-            // Verify it does NOT contain the original assembly name format
-            Assert.That(userAgent, Does.Not.Contain("Azure.Core.Tests"));
+            string expectedUserAgent = $"{appId} azsdk-net-Core.Tests/{version} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            Assert.That(userAgent, Is.EqualTo(expectedUserAgent));
         }
 
         [Test]
