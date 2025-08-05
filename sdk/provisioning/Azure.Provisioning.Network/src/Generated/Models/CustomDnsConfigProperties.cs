@@ -49,7 +49,7 @@ public partial class CustomDnsConfigProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _fqdn = DefineProperty<string>("Fqdn", ["Fqdn"]);
-        _iPAddresses = DefineListProperty<string>("IPAddresses", ["IPAddresses"]);
+        _fqdn = DefineProperty<string>("Fqdn", ["fqdn"]);
+        _iPAddresses = DefineListProperty<string>("IPAddresses", ["ipAddresses"]);
     }
 }

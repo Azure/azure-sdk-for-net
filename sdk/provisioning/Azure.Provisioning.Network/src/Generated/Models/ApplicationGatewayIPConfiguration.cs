@@ -90,11 +90,11 @@ public partial class ApplicationGatewayIPConfiguration : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["SubnetId"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["properties", "subnet", "id"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

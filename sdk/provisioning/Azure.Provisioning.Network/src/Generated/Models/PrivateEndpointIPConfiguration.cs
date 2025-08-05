@@ -92,10 +92,10 @@ public partial class PrivateEndpointIPConfiguration : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _privateEndpointIPConfigurationType = DefineProperty<string>("PrivateEndpointIPConfigurationType", ["PrivateEndpointIPConfigurationType"], isOutput: true);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _groupId = DefineProperty<string>("GroupId", ["GroupId"]);
-        _memberName = DefineProperty<string>("MemberName", ["MemberName"]);
-        _privateIPAddress = DefineProperty<IPAddress>("PrivateIPAddress", ["PrivateIPAddress"]);
+        _privateEndpointIPConfigurationType = DefineProperty<string>("PrivateEndpointIPConfigurationType", ["type"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _groupId = DefineProperty<string>("GroupId", ["properties", "groupId"]);
+        _memberName = DefineProperty<string>("MemberName", ["properties", "memberName"]);
+        _privateIPAddress = DefineProperty<IPAddress>("PrivateIPAddress", ["properties", "privateIPAddress"]);
     }
 }

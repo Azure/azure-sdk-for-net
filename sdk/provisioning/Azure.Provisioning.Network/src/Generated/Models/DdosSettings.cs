@@ -49,7 +49,7 @@ public partial class DdosSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _protectionMode = DefineProperty<DdosSettingsProtectionMode>("ProtectionMode", ["ProtectionMode"]);
-        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["DdosProtectionPlanId"]);
+        _protectionMode = DefineProperty<DdosSettingsProtectionMode>("ProtectionMode", ["protectionMode"]);
+        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["ddosProtectionPlan", "id"]);
     }
 }

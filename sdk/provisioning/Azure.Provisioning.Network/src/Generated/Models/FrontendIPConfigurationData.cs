@@ -200,22 +200,22 @@ public partial class FrontendIPConfigurationData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _zones = DefineListProperty<string>("Zones", ["Zones"]);
-        _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["InboundNatRules"], isOutput: true);
-        _inboundNatPools = DefineListProperty<WritableSubResource>("InboundNatPools", ["InboundNatPools"], isOutput: true);
-        _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["OutboundRules"], isOutput: true);
-        _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["LoadBalancingRules"], isOutput: true);
-        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["PrivateIPAddress"]);
-        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["PrivateIPAllocationMethod"]);
-        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["PrivateIPAddressVersion"]);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["Subnet"]);
-        _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["PublicIPAddress"]);
-        _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["PublicIPPrefixId"]);
-        _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["GatewayLoadBalancerId"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
+        _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["properties", "inboundNatRules"], isOutput: true);
+        _inboundNatPools = DefineListProperty<WritableSubResource>("InboundNatPools", ["properties", "inboundNatPools"], isOutput: true);
+        _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["properties", "outboundRules"], isOutput: true);
+        _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["properties", "loadBalancingRules"], isOutput: true);
+        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
+        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
+        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"]);
+        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
+        _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"]);
+        _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"]);
+        _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["properties", "gatewayLoadBalancer", "id"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

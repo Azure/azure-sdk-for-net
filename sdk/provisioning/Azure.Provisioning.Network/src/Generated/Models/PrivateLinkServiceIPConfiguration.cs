@@ -132,15 +132,15 @@ public partial class PrivateLinkServiceIPConfiguration : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["PrivateIPAddress"]);
-        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["PrivateIPAllocationMethod"]);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["Subnet"]);
-        _primary = DefineProperty<bool>("Primary", ["Primary"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["PrivateIPAddressVersion"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
+        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
+        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
+        _primary = DefineProperty<bool>("Primary", ["properties", "primary"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

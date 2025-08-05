@@ -167,18 +167,18 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _flushConnection = DefineProperty<bool>("FlushConnection", ["FlushConnection"]);
-        _securityRules = DefineListProperty<SecurityRuleData>("SecurityRules", ["SecurityRules"]);
-        _defaultSecurityRules = DefineListProperty<SecurityRuleData>("DefaultSecurityRules", ["DefaultSecurityRules"], isOutput: true);
-        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["NetworkInterfaces"], isOutput: true);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["Subnets"], isOutput: true);
-        _flowLogs = DefineListProperty<FlowLogData>("FlowLogs", ["FlowLogs"], isOutput: true);
-        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["ResourceGuid"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _flushConnection = DefineProperty<bool>("FlushConnection", ["properties", "flushConnection"]);
+        _securityRules = DefineListProperty<SecurityRuleData>("SecurityRules", ["properties", "securityRules"]);
+        _defaultSecurityRules = DefineListProperty<SecurityRuleData>("DefaultSecurityRules", ["properties", "defaultSecurityRules"], isOutput: true);
+        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
+        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
+        _flowLogs = DefineListProperty<FlowLogData>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
     }

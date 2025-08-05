@@ -62,8 +62,8 @@ public partial class NetworkPrivateLinkServiceConnectionState : ProvisionableCon
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _status = DefineProperty<string>("Status", ["Status"]);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _actionsRequired = DefineProperty<string>("ActionsRequired", ["ActionsRequired"]);
+        _status = DefineProperty<string>("Status", ["status"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _actionsRequired = DefineProperty<string>("ActionsRequired", ["actionsRequired"]);
     }
 }

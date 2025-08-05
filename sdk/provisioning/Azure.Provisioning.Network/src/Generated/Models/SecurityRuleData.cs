@@ -242,25 +242,25 @@ public partial class SecurityRuleData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _protocol = DefineProperty<SecurityRuleProtocol>("Protocol", ["Protocol"]);
-        _sourcePortRange = DefineProperty<string>("SourcePortRange", ["SourcePortRange"]);
-        _destinationPortRange = DefineProperty<string>("DestinationPortRange", ["DestinationPortRange"]);
-        _sourceAddressPrefix = DefineProperty<string>("SourceAddressPrefix", ["SourceAddressPrefix"]);
-        _sourceAddressPrefixes = DefineListProperty<string>("SourceAddressPrefixes", ["SourceAddressPrefixes"]);
-        _sourceApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("SourceApplicationSecurityGroups", ["SourceApplicationSecurityGroups"]);
-        _destinationAddressPrefix = DefineProperty<string>("DestinationAddressPrefix", ["DestinationAddressPrefix"]);
-        _destinationAddressPrefixes = DefineListProperty<string>("DestinationAddressPrefixes", ["DestinationAddressPrefixes"]);
-        _destinationApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("DestinationApplicationSecurityGroups", ["DestinationApplicationSecurityGroups"]);
-        _sourcePortRanges = DefineListProperty<string>("SourcePortRanges", ["SourcePortRanges"]);
-        _destinationPortRanges = DefineListProperty<string>("DestinationPortRanges", ["DestinationPortRanges"]);
-        _access = DefineProperty<SecurityRuleAccess>("Access", ["Access"]);
-        _priority = DefineProperty<int>("Priority", ["Priority"]);
-        _direction = DefineProperty<SecurityRuleDirection>("Direction", ["Direction"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _protocol = DefineProperty<SecurityRuleProtocol>("Protocol", ["properties", "protocol"]);
+        _sourcePortRange = DefineProperty<string>("SourcePortRange", ["properties", "sourcePortRange"]);
+        _destinationPortRange = DefineProperty<string>("DestinationPortRange", ["properties", "destinationPortRange"]);
+        _sourceAddressPrefix = DefineProperty<string>("SourceAddressPrefix", ["properties", "sourceAddressPrefix"]);
+        _sourceAddressPrefixes = DefineListProperty<string>("SourceAddressPrefixes", ["properties", "sourceAddressPrefixes"]);
+        _sourceApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("SourceApplicationSecurityGroups", ["properties", "sourceApplicationSecurityGroups"]);
+        _destinationAddressPrefix = DefineProperty<string>("DestinationAddressPrefix", ["properties", "destinationAddressPrefix"]);
+        _destinationAddressPrefixes = DefineListProperty<string>("DestinationAddressPrefixes", ["properties", "destinationAddressPrefixes"]);
+        _destinationApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("DestinationApplicationSecurityGroups", ["properties", "destinationApplicationSecurityGroups"]);
+        _sourcePortRanges = DefineListProperty<string>("SourcePortRanges", ["properties", "sourcePortRanges"]);
+        _destinationPortRanges = DefineListProperty<string>("DestinationPortRanges", ["properties", "destinationPortRanges"]);
+        _access = DefineProperty<SecurityRuleAccess>("Access", ["properties", "access"]);
+        _priority = DefineProperty<int>("Priority", ["properties", "priority"]);
+        _direction = DefineProperty<SecurityRuleDirection>("Direction", ["properties", "direction"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"]);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"]);
     }
 }

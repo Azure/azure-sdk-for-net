@@ -226,24 +226,24 @@ public partial class NetworkInterfaceIPConfigurationData : ProvisionableConstruc
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["GatewayLoadBalancerId"]);
-        _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["VirtualNetworkTaps"]);
-        _applicationGatewayBackendAddressPools = DefineListProperty<ApplicationGatewayBackendAddressPool>("ApplicationGatewayBackendAddressPools", ["ApplicationGatewayBackendAddressPools"]);
-        _loadBalancerBackendAddressPools = DefineListProperty<BackendAddressPoolData>("LoadBalancerBackendAddressPools", ["LoadBalancerBackendAddressPools"]);
-        _loadBalancerInboundNatRules = DefineListProperty<InboundNatRuleData>("LoadBalancerInboundNatRules", ["LoadBalancerInboundNatRules"]);
-        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["PrivateIPAddress"]);
-        _privateIPAddressPrefixLength = DefineProperty<int>("PrivateIPAddressPrefixLength", ["PrivateIPAddressPrefixLength"]);
-        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["PrivateIPAllocationMethod"]);
-        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["PrivateIPAddressVersion"]);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["Subnet"]);
-        _primary = DefineProperty<bool>("Primary", ["Primary"]);
-        _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["PublicIPAddress"]);
-        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("ApplicationSecurityGroups", ["ApplicationSecurityGroups"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateLinkConnectionProperties = DefineModelProperty<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>("PrivateLinkConnectionProperties", ["PrivateLinkConnectionProperties"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["properties", "gatewayLoadBalancer", "id"]);
+        _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"]);
+        _applicationGatewayBackendAddressPools = DefineListProperty<ApplicationGatewayBackendAddressPool>("ApplicationGatewayBackendAddressPools", ["properties", "applicationGatewayBackendAddressPools"]);
+        _loadBalancerBackendAddressPools = DefineListProperty<BackendAddressPoolData>("LoadBalancerBackendAddressPools", ["properties", "loadBalancerBackendAddressPools"]);
+        _loadBalancerInboundNatRules = DefineListProperty<InboundNatRuleData>("LoadBalancerInboundNatRules", ["properties", "loadBalancerInboundNatRules"]);
+        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
+        _privateIPAddressPrefixLength = DefineProperty<int>("PrivateIPAddressPrefixLength", ["properties", "privateIPAddressPrefixLength"]);
+        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
+        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"]);
+        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
+        _primary = DefineProperty<bool>("Primary", ["properties", "primary"]);
+        _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"]);
+        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _privateLinkConnectionProperties = DefineModelProperty<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>("PrivateLinkConnectionProperties", ["properties", "privateLinkConnectionProperties"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"]);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"]);
     }
 }

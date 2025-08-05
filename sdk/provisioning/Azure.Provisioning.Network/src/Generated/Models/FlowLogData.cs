@@ -190,20 +190,20 @@ public partial class FlowLogData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["Identity"]);
-        _targetResourceId = DefineProperty<ResourceIdentifier>("TargetResourceId", ["TargetResourceId"]);
-        _targetResourceGuid = DefineProperty<Guid>("TargetResourceGuid", ["TargetResourceGuid"], isOutput: true);
-        _storageId = DefineProperty<ResourceIdentifier>("StorageId", ["StorageId"]);
-        _enabledFilteringCriteria = DefineProperty<string>("EnabledFilteringCriteria", ["EnabledFilteringCriteria"]);
-        _enabled = DefineProperty<bool>("Enabled", ["Enabled"]);
-        _retentionPolicy = DefineModelProperty<RetentionPolicyParameters>("RetentionPolicy", ["RetentionPolicy"]);
-        _format = DefineModelProperty<FlowLogProperties>("Format", ["Format"]);
-        _trafficAnalyticsConfiguration = DefineModelProperty<TrafficAnalyticsConfigurationProperties>("TrafficAnalyticsConfiguration", ["TrafficAnalyticsConfiguration"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _targetResourceId = DefineProperty<ResourceIdentifier>("TargetResourceId", ["properties", "targetResourceId"]);
+        _targetResourceGuid = DefineProperty<Guid>("TargetResourceGuid", ["properties", "targetResourceGuid"], isOutput: true);
+        _storageId = DefineProperty<ResourceIdentifier>("StorageId", ["properties", "storageId"]);
+        _enabledFilteringCriteria = DefineProperty<string>("EnabledFilteringCriteria", ["properties", "enabledFilteringCriteria"]);
+        _enabled = DefineProperty<bool>("Enabled", ["properties", "enabled"]);
+        _retentionPolicy = DefineModelProperty<RetentionPolicyParameters>("RetentionPolicy", ["properties", "retentionPolicy"]);
+        _format = DefineModelProperty<FlowLogProperties>("Format", ["properties", "format"]);
+        _trafficAnalyticsConfiguration = DefineModelProperty<TrafficAnalyticsConfigurationProperties>("TrafficAnalyticsConfiguration", ["properties", "flowAnalyticsConfiguration", "networkWatcherFlowAnalyticsConfiguration"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
     }

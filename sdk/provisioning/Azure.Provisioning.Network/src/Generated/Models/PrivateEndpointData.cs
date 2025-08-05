@@ -195,20 +195,20 @@ public partial class PrivateEndpointData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["ExtendedLocation"]);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["Subnet"]);
-        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["NetworkInterfaces"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["PrivateLinkServiceConnections"]);
-        _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["ManualPrivateLinkServiceConnections"]);
-        _customDnsConfigs = DefineListProperty<CustomDnsConfigProperties>("CustomDnsConfigs", ["CustomDnsConfigs"]);
-        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("ApplicationSecurityGroups", ["ApplicationSecurityGroups"]);
-        _iPConfigurations = DefineListProperty<PrivateEndpointIPConfiguration>("IPConfigurations", ["IPConfigurations"]);
-        _customNetworkInterfaceName = DefineProperty<string>("CustomNetworkInterfaceName", ["CustomNetworkInterfaceName"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
+        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
+        _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);
+        _customDnsConfigs = DefineListProperty<CustomDnsConfigProperties>("CustomDnsConfigs", ["properties", "customDnsConfigs"]);
+        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroupData>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"]);
+        _iPConfigurations = DefineListProperty<PrivateEndpointIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
+        _customNetworkInterfaceName = DefineProperty<string>("CustomNetworkInterfaceName", ["properties", "customNetworkInterfaceName"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
     }

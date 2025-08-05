@@ -86,10 +86,10 @@ public partial class NetworkInterfaceDnsSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dnsServers = DefineListProperty<string>("DnsServers", ["DnsServers"]);
-        _appliedDnsServers = DefineListProperty<string>("AppliedDnsServers", ["AppliedDnsServers"], isOutput: true);
-        _internalDnsNameLabel = DefineProperty<string>("InternalDnsNameLabel", ["InternalDnsNameLabel"]);
-        _internalFqdn = DefineProperty<string>("InternalFqdn", ["InternalFqdn"], isOutput: true);
-        _internalDomainNameSuffix = DefineProperty<string>("InternalDomainNameSuffix", ["InternalDomainNameSuffix"], isOutput: true);
+        _dnsServers = DefineListProperty<string>("DnsServers", ["dnsServers"]);
+        _appliedDnsServers = DefineListProperty<string>("AppliedDnsServers", ["appliedDnsServers"], isOutput: true);
+        _internalDnsNameLabel = DefineProperty<string>("InternalDnsNameLabel", ["internalDnsNameLabel"]);
+        _internalFqdn = DefineProperty<string>("InternalFqdn", ["internalFqdn"], isOutput: true);
+        _internalDomainNameSuffix = DefineProperty<string>("InternalDomainNameSuffix", ["internalDomainNameSuffix"], isOutput: true);
     }
 }

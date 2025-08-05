@@ -118,14 +118,14 @@ public partial class ServiceAssociationLink : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _linkedResourceType = DefineProperty<ResourceType>("LinkedResourceType", ["LinkedResourceType"]);
-        _link = DefineProperty<ResourceIdentifier>("Link", ["Link"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _allowDelete = DefineProperty<bool>("AllowDelete", ["AllowDelete"]);
-        _locations = DefineListProperty<AzureLocation>("Locations", ["Locations"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _linkedResourceType = DefineProperty<ResourceType>("LinkedResourceType", ["properties", "linkedResourceType"]);
+        _link = DefineProperty<ResourceIdentifier>("Link", ["properties", "link"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _allowDelete = DefineProperty<bool>("AllowDelete", ["properties", "allowDelete"]);
+        _locations = DefineListProperty<AzureLocation>("Locations", ["properties", "locations"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

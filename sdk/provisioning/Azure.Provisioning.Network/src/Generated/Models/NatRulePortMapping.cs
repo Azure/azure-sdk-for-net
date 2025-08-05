@@ -55,8 +55,8 @@ public partial class NatRulePortMapping : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _inboundNatRuleName = DefineProperty<string>("InboundNatRuleName", ["InboundNatRuleName"], isOutput: true);
-        _frontendPort = DefineProperty<int>("FrontendPort", ["FrontendPort"], isOutput: true);
-        _backendPort = DefineProperty<int>("BackendPort", ["BackendPort"], isOutput: true);
+        _inboundNatRuleName = DefineProperty<string>("InboundNatRuleName", ["inboundNatRuleName"], isOutput: true);
+        _frontendPort = DefineProperty<int>("FrontendPort", ["frontendPort"], isOutput: true);
+        _backendPort = DefineProperty<int>("BackendPort", ["backendPort"], isOutput: true);
     }
 }

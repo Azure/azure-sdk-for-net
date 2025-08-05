@@ -202,21 +202,21 @@ public partial class NatGatewayData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _skuName = DefineProperty<NatGatewaySkuName>("SkuName", ["SkuName"]);
-        _zones = DefineListProperty<string>("Zones", ["Zones"]);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["IdleTimeoutInMinutes"]);
-        _publicIPAddresses = DefineListProperty<WritableSubResource>("PublicIPAddresses", ["PublicIPAddresses"]);
-        _publicIPAddressesV6 = DefineListProperty<WritableSubResource>("PublicIPAddressesV6", ["PublicIPAddressesV6"]);
-        _publicIPPrefixes = DefineListProperty<WritableSubResource>("PublicIPPrefixes", ["PublicIPPrefixes"]);
-        _publicIPPrefixesV6 = DefineListProperty<WritableSubResource>("PublicIPPrefixesV6", ["PublicIPPrefixesV6"]);
-        _subnets = DefineListProperty<WritableSubResource>("Subnets", ["Subnets"], isOutput: true);
-        _sourceVirtualNetworkId = DefineProperty<ResourceIdentifier>("SourceVirtualNetworkId", ["SourceVirtualNetworkId"]);
-        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["ResourceGuid"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _skuName = DefineProperty<NatGatewaySkuName>("SkuName", ["sku", "name"]);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["properties", "idleTimeoutInMinutes"]);
+        _publicIPAddresses = DefineListProperty<WritableSubResource>("PublicIPAddresses", ["properties", "publicIpAddresses"]);
+        _publicIPAddressesV6 = DefineListProperty<WritableSubResource>("PublicIPAddressesV6", ["properties", "publicIpAddressesV6"]);
+        _publicIPPrefixes = DefineListProperty<WritableSubResource>("PublicIPPrefixes", ["properties", "publicIpPrefixes"]);
+        _publicIPPrefixesV6 = DefineListProperty<WritableSubResource>("PublicIPPrefixesV6", ["properties", "publicIpPrefixesV6"]);
+        _subnets = DefineListProperty<WritableSubResource>("Subnets", ["properties", "subnets"], isOutput: true);
+        _sourceVirtualNetworkId = DefineProperty<ResourceIdentifier>("SourceVirtualNetworkId", ["properties", "sourceVirtualNetwork", "id"]);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
     }

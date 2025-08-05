@@ -47,7 +47,7 @@ public partial class PublicIPAddressSku : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<PublicIPAddressSkuName>("Name", ["Name"]);
-        _tier = DefineProperty<PublicIPAddressSkuTier>("Tier", ["Tier"]);
+        _name = DefineProperty<PublicIPAddressSkuName>("Name", ["name"]);
+        _tier = DefineProperty<PublicIPAddressSkuTier>("Tier", ["tier"]);
     }
 }

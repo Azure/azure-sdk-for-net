@@ -60,8 +60,8 @@ public partial class IpamPoolPrefixAllocation : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _numberOfIPAddresses = DefineProperty<string>("NumberOfIPAddresses", ["NumberOfIPAddresses"]);
-        _allocatedAddressPrefixes = DefineListProperty<string>("AllocatedAddressPrefixes", ["AllocatedAddressPrefixes"], isOutput: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _numberOfIPAddresses = DefineProperty<string>("NumberOfIPAddresses", ["numberOfIpAddresses"]);
+        _allocatedAddressPrefixes = DefineListProperty<string>("AllocatedAddressPrefixes", ["allocatedAddressPrefixes"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["pool", "id"]);
     }
 }

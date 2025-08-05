@@ -58,8 +58,8 @@ public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionPropert
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _groupId = DefineProperty<string>("GroupId", ["GroupId"], isOutput: true);
-        _requiredMemberName = DefineProperty<string>("RequiredMemberName", ["RequiredMemberName"], isOutput: true);
-        _fqdns = DefineListProperty<string>("Fqdns", ["Fqdns"], isOutput: true);
+        _groupId = DefineProperty<string>("GroupId", ["groupId"], isOutput: true);
+        _requiredMemberName = DefineProperty<string>("RequiredMemberName", ["requiredMemberName"], isOutput: true);
+        _fqdns = DefineListProperty<string>("Fqdns", ["fqdns"], isOutput: true);
     }
 }

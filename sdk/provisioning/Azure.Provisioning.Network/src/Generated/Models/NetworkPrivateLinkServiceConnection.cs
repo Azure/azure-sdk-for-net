@@ -122,14 +122,14 @@ public partial class NetworkPrivateLinkServiceConnection : ProvisionableConstruc
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateLinkServiceId = DefineProperty<ResourceIdentifier>("PrivateLinkServiceId", ["PrivateLinkServiceId"]);
-        _groupIds = DefineListProperty<string>("GroupIds", ["GroupIds"]);
-        _requestMessage = DefineProperty<string>("RequestMessage", ["RequestMessage"]);
-        _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>("ConnectionState", ["ConnectionState"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _privateLinkServiceId = DefineProperty<ResourceIdentifier>("PrivateLinkServiceId", ["properties", "privateLinkServiceId"]);
+        _groupIds = DefineListProperty<string>("GroupIds", ["properties", "groupIds"]);
+        _requestMessage = DefineProperty<string>("RequestMessage", ["properties", "requestMessage"]);
+        _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

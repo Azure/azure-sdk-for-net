@@ -48,7 +48,7 @@ public partial class VirtualNetworkBgpCommunities : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _virtualNetworkCommunity = DefineProperty<string>("VirtualNetworkCommunity", ["VirtualNetworkCommunity"]);
-        _regionalCommunity = DefineProperty<string>("RegionalCommunity", ["RegionalCommunity"], isOutput: true);
+        _virtualNetworkCommunity = DefineProperty<string>("VirtualNetworkCommunity", ["virtualNetworkCommunity"]);
+        _regionalCommunity = DefineProperty<string>("RegionalCommunity", ["regionalCommunity"], isOutput: true);
     }
 }

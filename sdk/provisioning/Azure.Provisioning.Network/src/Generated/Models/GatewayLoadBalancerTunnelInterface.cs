@@ -70,9 +70,9 @@ public partial class GatewayLoadBalancerTunnelInterface : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _identifier = DefineProperty<int>("Identifier", ["Identifier"]);
-        _protocol = DefineProperty<GatewayLoadBalancerTunnelProtocol>("Protocol", ["Protocol"]);
-        _interfaceType = DefineProperty<GatewayLoadBalancerTunnelInterfaceType>("InterfaceType", ["InterfaceType"]);
+        _port = DefineProperty<int>("Port", ["port"]);
+        _identifier = DefineProperty<int>("Identifier", ["identifier"]);
+        _protocol = DefineProperty<GatewayLoadBalancerTunnelProtocol>("Protocol", ["protocol"]);
+        _interfaceType = DefineProperty<GatewayLoadBalancerTunnelInterfaceType>("InterfaceType", ["type"]);
     }
 }

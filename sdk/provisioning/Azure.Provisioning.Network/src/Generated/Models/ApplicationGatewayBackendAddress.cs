@@ -49,7 +49,7 @@ public partial class ApplicationGatewayBackendAddress : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _fqdn = DefineProperty<string>("Fqdn", ["Fqdn"]);
-        _iPAddress = DefineProperty<string>("IPAddress", ["IPAddress"]);
+        _fqdn = DefineProperty<string>("Fqdn", ["fqdn"]);
+        _iPAddress = DefineProperty<string>("IPAddress", ["ipAddress"]);
     }
 }

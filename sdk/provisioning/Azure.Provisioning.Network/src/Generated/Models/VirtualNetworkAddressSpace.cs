@@ -52,7 +52,7 @@ public partial class VirtualNetworkAddressSpace : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["AddressPrefixes"]);
-        _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["IpamPoolPrefixAllocations"]);
+        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["addressPrefixes"]);
+        _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["ipamPoolPrefixAllocations"]);
     }
 }

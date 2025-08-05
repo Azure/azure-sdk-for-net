@@ -48,7 +48,7 @@ public partial class RetentionPolicyParameters : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _days = DefineProperty<int>("Days", ["Days"]);
-        _enabled = DefineProperty<bool>("Enabled", ["Enabled"]);
+        _days = DefineProperty<int>("Days", ["days"]);
+        _enabled = DefineProperty<bool>("Enabled", ["enabled"]);
     }
 }

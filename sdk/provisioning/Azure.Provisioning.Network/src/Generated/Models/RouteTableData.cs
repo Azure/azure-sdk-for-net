@@ -139,15 +139,15 @@ public partial class RouteTableData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _routes = DefineListProperty<RouteData>("Routes", ["Routes"]);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["Subnets"], isOutput: true);
-        _disableBgpRoutePropagation = DefineProperty<bool>("DisableBgpRoutePropagation", ["DisableBgpRoutePropagation"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["ResourceGuid"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _routes = DefineListProperty<RouteData>("Routes", ["properties", "routes"]);
+        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
+        _disableBgpRoutePropagation = DefineProperty<bool>("DisableBgpRoutePropagation", ["properties", "disableBgpRoutePropagation"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
     }

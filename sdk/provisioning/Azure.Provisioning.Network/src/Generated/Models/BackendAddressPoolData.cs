@@ -190,21 +190,21 @@ public partial class BackendAddressPoolData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["TunnelInterfaces"]);
-        _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>("LoadBalancerBackendAddresses", ["LoadBalancerBackendAddresses"]);
-        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfigurations", ["BackendIPConfigurations"], isOutput: true);
-        _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["LoadBalancingRules"], isOutput: true);
-        _outboundRuleId = DefineProperty<ResourceIdentifier>("OutboundRuleId", ["OutboundRuleId"], isOutput: true);
-        _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["OutboundRules"], isOutput: true);
-        _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["InboundNatRules"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _drainPeriodInSeconds = DefineProperty<int>("DrainPeriodInSeconds", ["DrainPeriodInSeconds"]);
-        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["VirtualNetworkId"]);
-        _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["SyncMode"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["properties", "location"]);
+        _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["properties", "tunnelInterfaces"]);
+        _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>("LoadBalancerBackendAddresses", ["properties", "loadBalancerBackendAddresses"]);
+        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
+        _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["properties", "loadBalancingRules"], isOutput: true);
+        _outboundRuleId = DefineProperty<ResourceIdentifier>("OutboundRuleId", ["properties", "outboundRule", "id"], isOutput: true);
+        _outboundRules = DefineListProperty<WritableSubResource>("OutboundRules", ["properties", "outboundRules"], isOutput: true);
+        _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["properties", "inboundNatRules"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _drainPeriodInSeconds = DefineProperty<int>("DrainPeriodInSeconds", ["properties", "drainPeriodInSeconds"]);
+        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"]);
+        _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["properties", "syncMode"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

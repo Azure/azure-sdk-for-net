@@ -80,9 +80,9 @@ public partial class PublicIPAddressDnsSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _domainNameLabel = DefineProperty<string>("DomainNameLabel", ["DomainNameLabel"]);
-        _domainNameLabelScope = DefineProperty<PublicIPAddressDnsSettingsDomainNameLabelScope>("DomainNameLabelScope", ["DomainNameLabelScope"]);
-        _fqdn = DefineProperty<string>("Fqdn", ["Fqdn"]);
-        _reverseFqdn = DefineProperty<string>("ReverseFqdn", ["ReverseFqdn"]);
+        _domainNameLabel = DefineProperty<string>("DomainNameLabel", ["domainNameLabel"]);
+        _domainNameLabelScope = DefineProperty<PublicIPAddressDnsSettingsDomainNameLabelScope>("DomainNameLabelScope", ["domainNameLabelScope"]);
+        _fqdn = DefineProperty<string>("Fqdn", ["fqdn"]);
+        _reverseFqdn = DefineProperty<string>("ReverseFqdn", ["reverseFqdn"]);
     }
 }

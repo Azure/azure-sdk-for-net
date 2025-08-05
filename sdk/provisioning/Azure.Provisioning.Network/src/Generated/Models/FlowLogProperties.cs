@@ -48,7 +48,7 @@ public partial class FlowLogProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _formatType = DefineProperty<FlowLogFormatType>("FormatType", ["FormatType"]);
-        _version = DefineProperty<int>("Version", ["Version"]);
+        _formatType = DefineProperty<FlowLogFormatType>("FormatType", ["type"]);
+        _version = DefineProperty<int>("Version", ["version"]);
     }
 }

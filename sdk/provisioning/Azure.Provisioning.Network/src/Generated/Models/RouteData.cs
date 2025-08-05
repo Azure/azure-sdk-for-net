@@ -120,14 +120,14 @@ public partial class RouteData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _addressPrefix = DefineProperty<string>("AddressPrefix", ["AddressPrefix"]);
-        _nextHopType = DefineProperty<RouteNextHopType>("NextHopType", ["NextHopType"]);
-        _nextHopIPAddress = DefineProperty<string>("NextHopIPAddress", ["NextHopIPAddress"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _hasBgpOverride = DefineProperty<bool>("HasBgpOverride", ["HasBgpOverride"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _addressPrefix = DefineProperty<string>("AddressPrefix", ["properties", "addressPrefix"]);
+        _nextHopType = DefineProperty<RouteNextHopType>("NextHopType", ["properties", "nextHopType"]);
+        _nextHopIPAddress = DefineProperty<string>("NextHopIPAddress", ["properties", "nextHopIpAddress"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _hasBgpOverride = DefineProperty<bool>("HasBgpOverride", ["properties", "hasBgpOverride"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"]);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"]);
     }
 }

@@ -81,10 +81,10 @@ public partial class TrafficAnalyticsConfigurationProperties : ProvisionableCons
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _enabled = DefineProperty<bool>("Enabled", ["Enabled"]);
-        _workspaceId = DefineProperty<string>("WorkspaceId", ["WorkspaceId"]);
-        _workspaceRegion = DefineProperty<string>("WorkspaceRegion", ["WorkspaceRegion"]);
-        _workspaceResourceId = DefineProperty<ResourceIdentifier>("WorkspaceResourceId", ["WorkspaceResourceId"]);
-        _trafficAnalyticsIntervalInMinutes = DefineProperty<int>("TrafficAnalyticsIntervalInMinutes", ["TrafficAnalyticsIntervalInMinutes"]);
+        _enabled = DefineProperty<bool>("Enabled", ["enabled"]);
+        _workspaceId = DefineProperty<string>("WorkspaceId", ["workspaceId"]);
+        _workspaceRegion = DefineProperty<string>("WorkspaceRegion", ["workspaceRegion"]);
+        _workspaceResourceId = DefineProperty<ResourceIdentifier>("WorkspaceResourceId", ["workspaceResourceId"]);
+        _trafficAnalyticsIntervalInMinutes = DefineProperty<int>("TrafficAnalyticsIntervalInMinutes", ["trafficAnalyticsInterval"]);
     }
 }

@@ -120,14 +120,14 @@ public partial class NetworkPrivateEndpointConnectionData : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["PrivateEndpoint"], isOutput: true);
-        _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>("ConnectionState", ["ConnectionState"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _linkIdentifier = DefineProperty<string>("LinkIdentifier", ["LinkIdentifier"], isOutput: true);
-        _privateEndpointLocation = DefineProperty<string>("PrivateEndpointLocation", ["PrivateEndpointLocation"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
+        _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _linkIdentifier = DefineProperty<string>("LinkIdentifier", ["properties", "linkIdentifier"], isOutput: true);
+        _privateEndpointLocation = DefineProperty<string>("PrivateEndpointLocation", ["properties", "privateEndpointLocation"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

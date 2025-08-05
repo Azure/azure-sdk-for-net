@@ -208,22 +208,22 @@ public partial class PrivateLinkServiceData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["ExtendedLocation"]);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _loadBalancerFrontendIPConfigurations = DefineListProperty<FrontendIPConfigurationData>("LoadBalancerFrontendIPConfigurations", ["LoadBalancerFrontendIPConfigurations"]);
-        _iPConfigurations = DefineListProperty<PrivateLinkServiceIPConfiguration>("IPConfigurations", ["IPConfigurations"]);
-        _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["DestinationIPAddress"]);
-        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["NetworkInterfaces"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<NetworkPrivateEndpointConnectionData>("PrivateEndpointConnections", ["PrivateEndpointConnections"], isOutput: true);
-        _visibilitySubscriptions = DefineListProperty<string>("VisibilitySubscriptions", ["VisibilitySubscriptions"]);
-        _autoApprovalSubscriptions = DefineListProperty<string>("AutoApprovalSubscriptions", ["AutoApprovalSubscriptions"]);
-        _fqdns = DefineListProperty<string>("Fqdns", ["Fqdns"]);
-        _alias = DefineProperty<string>("Alias", ["Alias"], isOutput: true);
-        _enableProxyProtocol = DefineProperty<bool>("EnableProxyProtocol", ["EnableProxyProtocol"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _loadBalancerFrontendIPConfigurations = DefineListProperty<FrontendIPConfigurationData>("LoadBalancerFrontendIPConfigurations", ["properties", "loadBalancerFrontendIpConfigurations"]);
+        _iPConfigurations = DefineListProperty<PrivateLinkServiceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
+        _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["properties", "destinationIPAddress"]);
+        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<NetworkPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _visibilitySubscriptions = DefineListProperty<string>("VisibilitySubscriptions", ["properties", "visibility", "subscriptions"]);
+        _autoApprovalSubscriptions = DefineListProperty<string>("AutoApprovalSubscriptions", ["properties", "autoApproval", "subscriptions"]);
+        _fqdns = DefineListProperty<string>("Fqdns", ["properties", "fqdns"]);
+        _alias = DefineProperty<string>("Alias", ["properties", "alias"], isOutput: true);
+        _enableProxyProtocol = DefineProperty<bool>("EnableProxyProtocol", ["properties", "enableProxyProtocol"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
     }

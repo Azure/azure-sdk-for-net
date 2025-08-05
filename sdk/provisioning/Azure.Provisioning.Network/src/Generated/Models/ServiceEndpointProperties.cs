@@ -69,9 +69,9 @@ public partial class ServiceEndpointProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _service = DefineProperty<string>("Service", ["Service"]);
-        _networkIdentifierId = DefineProperty<ResourceIdentifier>("NetworkIdentifierId", ["NetworkIdentifierId"]);
-        _locations = DefineListProperty<AzureLocation>("Locations", ["Locations"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _service = DefineProperty<string>("Service", ["service"]);
+        _networkIdentifierId = DefineProperty<ResourceIdentifier>("NetworkIdentifierId", ["networkIdentifier", "id"]);
+        _locations = DefineListProperty<AzureLocation>("Locations", ["locations"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
     }
 }

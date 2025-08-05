@@ -51,7 +51,7 @@ public partial class VirtualNetworkEncryption : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isEnabled = DefineProperty<bool>("IsEnabled", ["IsEnabled"]);
-        _enforcement = DefineProperty<VirtualNetworkEncryptionEnforcement>("Enforcement", ["Enforcement"]);
+        _isEnabled = DefineProperty<bool>("IsEnabled", ["enabled"]);
+        _enforcement = DefineProperty<VirtualNetworkEncryptionEnforcement>("Enforcement", ["enforcement"]);
     }
 }

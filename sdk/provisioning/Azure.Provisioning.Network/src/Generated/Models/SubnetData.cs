@@ -295,31 +295,31 @@ public partial class SubnetData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _addressPrefix = DefineProperty<string>("AddressPrefix", ["AddressPrefix"]);
-        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["AddressPrefixes"]);
-        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroupData>("NetworkSecurityGroup", ["NetworkSecurityGroup"]);
-        _routeTable = DefineModelProperty<RouteTableData>("RouteTable", ["RouteTable"]);
-        _natGatewayId = DefineProperty<ResourceIdentifier>("NatGatewayId", ["NatGatewayId"]);
-        _serviceEndpoints = DefineListProperty<ServiceEndpointProperties>("ServiceEndpoints", ["ServiceEndpoints"]);
-        _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicyData>("ServiceEndpointPolicies", ["ServiceEndpointPolicies"]);
-        _privateEndpoints = DefineListProperty<PrivateEndpointData>("PrivateEndpoints", ["PrivateEndpoints"], isOutput: true);
-        _iPConfigurations = DefineListProperty<NetworkIPConfiguration>("IPConfigurations", ["IPConfigurations"], isOutput: true);
-        _iPConfigurationProfiles = DefineListProperty<NetworkIPConfigurationProfile>("IPConfigurationProfiles", ["IPConfigurationProfiles"], isOutput: true);
-        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["IPAllocations"]);
-        _resourceNavigationLinks = DefineListProperty<ResourceNavigationLink>("ResourceNavigationLinks", ["ResourceNavigationLinks"], isOutput: true);
-        _serviceAssociationLinks = DefineListProperty<ServiceAssociationLink>("ServiceAssociationLinks", ["ServiceAssociationLinks"], isOutput: true);
-        _delegations = DefineListProperty<ServiceDelegation>("Delegations", ["Delegations"]);
-        _purpose = DefineProperty<string>("Purpose", ["Purpose"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>("PrivateEndpointNetworkPolicy", ["PrivateEndpointNetworkPolicy"]);
-        _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>("PrivateLinkServiceNetworkPolicy", ["PrivateLinkServiceNetworkPolicy"]);
-        _applicationGatewayIPConfigurations = DefineListProperty<ApplicationGatewayIPConfiguration>("ApplicationGatewayIPConfigurations", ["ApplicationGatewayIPConfigurations"]);
-        _sharingScope = DefineProperty<SharingScope>("SharingScope", ["SharingScope"]);
-        _defaultOutboundAccess = DefineProperty<bool>("DefaultOutboundAccess", ["DefaultOutboundAccess"]);
-        _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["IpamPoolPrefixAllocations"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _addressPrefix = DefineProperty<string>("AddressPrefix", ["properties", "addressPrefix"]);
+        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["properties", "addressPrefixes"]);
+        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroupData>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
+        _routeTable = DefineModelProperty<RouteTableData>("RouteTable", ["properties", "routeTable"]);
+        _natGatewayId = DefineProperty<ResourceIdentifier>("NatGatewayId", ["properties", "natGateway", "id"]);
+        _serviceEndpoints = DefineListProperty<ServiceEndpointProperties>("ServiceEndpoints", ["properties", "serviceEndpoints"]);
+        _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicyData>("ServiceEndpointPolicies", ["properties", "serviceEndpointPolicies"]);
+        _privateEndpoints = DefineListProperty<PrivateEndpointData>("PrivateEndpoints", ["properties", "privateEndpoints"], isOutput: true);
+        _iPConfigurations = DefineListProperty<NetworkIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"], isOutput: true);
+        _iPConfigurationProfiles = DefineListProperty<NetworkIPConfigurationProfile>("IPConfigurationProfiles", ["properties", "ipConfigurationProfiles"], isOutput: true);
+        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
+        _resourceNavigationLinks = DefineListProperty<ResourceNavigationLink>("ResourceNavigationLinks", ["properties", "resourceNavigationLinks"], isOutput: true);
+        _serviceAssociationLinks = DefineListProperty<ServiceAssociationLink>("ServiceAssociationLinks", ["properties", "serviceAssociationLinks"], isOutput: true);
+        _delegations = DefineListProperty<ServiceDelegation>("Delegations", ["properties", "delegations"]);
+        _purpose = DefineProperty<string>("Purpose", ["properties", "purpose"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>("PrivateEndpointNetworkPolicy", ["properties", "privateEndpointNetworkPolicies"]);
+        _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>("PrivateLinkServiceNetworkPolicy", ["properties", "privateLinkServiceNetworkPolicies"]);
+        _applicationGatewayIPConfigurations = DefineListProperty<ApplicationGatewayIPConfiguration>("ApplicationGatewayIPConfigurations", ["properties", "applicationGatewayIPConfigurations"]);
+        _sharingScope = DefineProperty<SharingScope>("SharingScope", ["properties", "sharingScope"]);
+        _defaultOutboundAccess = DefineProperty<bool>("DefaultOutboundAccess", ["properties", "defaultOutboundAccess"]);
+        _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["properties", "ipamPoolPrefixAllocations"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"]);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"]);
     }
 }

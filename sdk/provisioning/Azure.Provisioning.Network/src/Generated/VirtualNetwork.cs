@@ -270,27 +270,27 @@ public partial class VirtualNetwork : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _data = DefineModelProperty<VirtualNetworkData>("Data", ["Data"]);
         _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["AddressPrefixes"], isOutput: true);
-        _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["AddressSpace"], isOutput: true);
-        _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("BgpCommunities", ["BgpCommunities"], isOutput: true);
-        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["DdosProtectionPlanId"], isOutput: true);
-        _defaultPublicNatGatewayId = DefineProperty<ResourceIdentifier>("DefaultPublicNatGatewayId", ["DefaultPublicNatGatewayId"], isOutput: true);
-        _dhcpOptionsDnsServers = DefineListProperty<string>("DhcpOptionsDnsServers", ["DhcpOptionsDnsServers"], isOutput: true);
-        _enableDdosProtection = DefineProperty<bool>("EnableDdosProtection", ["EnableDdosProtection"], isOutput: true);
-        _enableVmProtection = DefineProperty<bool>("EnableVmProtection", ["EnableVmProtection"], isOutput: true);
-        _encryption = DefineModelProperty<VirtualNetworkEncryption>("Encryption", ["Encryption"], isOutput: true);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["ExtendedLocation"], isOutput: true);
-        _flowLogs = DefineListProperty<FlowLogData>("FlowLogs", ["FlowLogs"], isOutput: true);
-        _flowTimeoutInMinutes = DefineProperty<int>("FlowTimeoutInMinutes", ["FlowTimeoutInMinutes"], isOutput: true);
+        _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["properties", "addressSpace"], isOutput: true);
+        _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("BgpCommunities", ["properties", "bgpCommunities"], isOutput: true);
+        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["properties", "ddosProtectionPlan", "id"], isOutput: true);
+        _defaultPublicNatGatewayId = DefineProperty<ResourceIdentifier>("DefaultPublicNatGatewayId", ["properties", "defaultPublicNatGateway", "id"], isOutput: true);
+        _dhcpOptionsDnsServers = DefineListProperty<string>("DhcpOptionsDnsServers", ["properties", "dhcpOptions", "dnsServers"], isOutput: true);
+        _enableDdosProtection = DefineProperty<bool>("EnableDdosProtection", ["properties", "enableDdosProtection"], isOutput: true);
+        _enableVmProtection = DefineProperty<bool>("EnableVmProtection", ["properties", "enableVmProtection"], isOutput: true);
+        _encryption = DefineModelProperty<VirtualNetworkEncryption>("Encryption", ["properties", "encryption"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"], isOutput: true);
+        _flowLogs = DefineListProperty<FlowLogData>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
+        _flowTimeoutInMinutes = DefineProperty<int>("FlowTimeoutInMinutes", ["properties", "flowTimeoutInMinutes"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["IPAllocations"], isOutput: true);
+        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
-        _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>("PrivateEndpointVnetPolicy", ["PrivateEndpointVnetPolicy"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["ResourceGuid"], isOutput: true);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["Subnets"], isOutput: true);
+        _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>("PrivateEndpointVnetPolicy", ["properties", "privateEndpointVNetPolicies"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
+        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"], isOutput: true);
-        _virtualNetworkPeerings = DefineListProperty<VirtualNetworkPeeringData>("VirtualNetworkPeerings", ["VirtualNetworkPeerings"], isOutput: true);
+        _virtualNetworkPeerings = DefineListProperty<VirtualNetworkPeeringData>("VirtualNetworkPeerings", ["properties", "virtualNetworkPeerings"], isOutput: true);
     }
 
     /// <summary>

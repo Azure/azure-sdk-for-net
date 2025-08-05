@@ -211,21 +211,21 @@ public partial class InboundNatRuleData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _frontendIPConfigurationId = DefineProperty<ResourceIdentifier>("FrontendIPConfigurationId", ["FrontendIPConfigurationId"]);
-        _backendIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfiguration", ["BackendIPConfiguration"], isOutput: true);
-        _protocol = DefineProperty<LoadBalancingTransportProtocol>("Protocol", ["Protocol"]);
-        _frontendPort = DefineProperty<int>("FrontendPort", ["FrontendPort"]);
-        _backendPort = DefineProperty<int>("BackendPort", ["BackendPort"]);
-        _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["IdleTimeoutInMinutes"]);
-        _enableFloatingIP = DefineProperty<bool>("EnableFloatingIP", ["EnableFloatingIP"]);
-        _enableTcpReset = DefineProperty<bool>("EnableTcpReset", ["EnableTcpReset"]);
-        _frontendPortRangeStart = DefineProperty<int>("FrontendPortRangeStart", ["FrontendPortRangeStart"]);
-        _frontendPortRangeEnd = DefineProperty<int>("FrontendPortRangeEnd", ["FrontendPortRangeEnd"]);
-        _backendAddressPoolId = DefineProperty<ResourceIdentifier>("BackendAddressPoolId", ["BackendAddressPoolId"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _frontendIPConfigurationId = DefineProperty<ResourceIdentifier>("FrontendIPConfigurationId", ["properties", "frontendIPConfiguration", "id"]);
+        _backendIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfiguration", ["properties", "backendIPConfiguration"], isOutput: true);
+        _protocol = DefineProperty<LoadBalancingTransportProtocol>("Protocol", ["properties", "protocol"]);
+        _frontendPort = DefineProperty<int>("FrontendPort", ["properties", "frontendPort"]);
+        _backendPort = DefineProperty<int>("BackendPort", ["properties", "backendPort"]);
+        _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["properties", "idleTimeoutInMinutes"]);
+        _enableFloatingIP = DefineProperty<bool>("EnableFloatingIP", ["properties", "enableFloatingIP"]);
+        _enableTcpReset = DefineProperty<bool>("EnableTcpReset", ["properties", "enableTcpReset"]);
+        _frontendPortRangeStart = DefineProperty<int>("FrontendPortRangeStart", ["properties", "frontendPortRangeStart"]);
+        _frontendPortRangeEnd = DefineProperty<int>("FrontendPortRangeEnd", ["properties", "frontendPortRangeEnd"]);
+        _backendAddressPoolId = DefineProperty<ResourceIdentifier>("BackendAddressPoolId", ["properties", "backendAddressPool", "id"]);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"], isOutput: true);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"], isOutput: true);
     }
 }

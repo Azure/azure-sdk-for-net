@@ -99,12 +99,12 @@ public partial class ServiceDelegation : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
-        _serviceName = DefineProperty<string>("ServiceName", ["ServiceName"]);
-        _actions = DefineListProperty<string>("Actions", ["Actions"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _serviceName = DefineProperty<string>("ServiceName", ["properties", "serviceName"]);
+        _actions = DefineListProperty<string>("Actions", ["properties", "actions"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _resourceType = DefineProperty<ResourceType>("ResourceType", ["ResourceType"]);
+        _resourceType = DefineProperty<ResourceType>("ResourceType", ["type"]);
     }
 }

@@ -111,12 +111,12 @@ public partial class LoadBalancerBackendAddress : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["VirtualNetworkId"]);
-        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["SubnetId"]);
-        _iPAddress = DefineProperty<string>("IPAddress", ["IPAddress"]);
-        _networkInterfaceIPConfigurationId = DefineProperty<ResourceIdentifier>("NetworkInterfaceIPConfigurationId", ["NetworkInterfaceIPConfigurationId"], isOutput: true);
-        _loadBalancerFrontendIPConfigurationId = DefineProperty<ResourceIdentifier>("LoadBalancerFrontendIPConfigurationId", ["LoadBalancerFrontendIPConfigurationId"]);
-        _inboundNatRulesPortMapping = DefineListProperty<NatRulePortMapping>("InboundNatRulesPortMapping", ["InboundNatRulesPortMapping"], isOutput: true);
-        _adminState = DefineProperty<LoadBalancerBackendAddressAdminState>("AdminState", ["AdminState"]);
+        _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"]);
+        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["properties", "subnet", "id"]);
+        _iPAddress = DefineProperty<string>("IPAddress", ["properties", "ipAddress"]);
+        _networkInterfaceIPConfigurationId = DefineProperty<ResourceIdentifier>("NetworkInterfaceIPConfigurationId", ["properties", "networkInterfaceIPConfiguration", "id"], isOutput: true);
+        _loadBalancerFrontendIPConfigurationId = DefineProperty<ResourceIdentifier>("LoadBalancerFrontendIPConfigurationId", ["properties", "loadBalancerFrontendIPConfiguration", "id"]);
+        _inboundNatRulesPortMapping = DefineListProperty<NatRulePortMapping>("InboundNatRulesPortMapping", ["properties", "inboundNatRulesPortMapping"], isOutput: true);
+        _adminState = DefineProperty<LoadBalancerBackendAddressAdminState>("AdminState", ["properties", "adminState"]);
     }
 }

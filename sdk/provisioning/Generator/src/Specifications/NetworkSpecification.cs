@@ -63,7 +63,10 @@ public class NetworkSpecification() :
     private readonly HashSet<Type> _generatedResources = new()
     {
         typeof(VirtualNetworkCollection),
-        typeof(VirtualNetworkResource)
+        typeof(VirtualNetworkResource),
+        typeof(BackendAddressPoolCollection),
+        typeof(BackendAddressPoolResource),
+        // TODO -- add a new mechanism in the generator to reuse resource model when a resource data is find as a property
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
