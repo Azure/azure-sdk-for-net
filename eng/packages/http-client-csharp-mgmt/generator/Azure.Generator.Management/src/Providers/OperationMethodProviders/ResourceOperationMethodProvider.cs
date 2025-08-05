@@ -99,7 +99,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ref bool isFakeLongRunningOperation)
         {
             isLongRunningOperation = serviceMethod.IsLongRunningOperation();
-            // when the method is not a real LRO, but we have to force it to be a LRO, the fake lro flag is true.
+            // when the method is not a real LRO, but we have to force it to be an LRO, the fake lro flag is true.
             isFakeLongRunningOperation = forceLro && !isLongRunningOperation;
         }
 
