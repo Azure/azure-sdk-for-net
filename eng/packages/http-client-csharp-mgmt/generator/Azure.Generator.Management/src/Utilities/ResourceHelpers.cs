@@ -35,5 +35,12 @@ namespace Azure.Generator.Management.Utilities
                 _ => null
             };
         }
+
+        public static bool IsFakeLroMethod(ResourceOperationKind operationKind)
+        {
+            // Fake LRO methods are used for operations that are not true LROs but are treated as such for consistency.
+            return operationKind == ResourceOperationKind.Create
+                || operationKind == ResourceOperationKind.Delete;
+        }
     }
 }

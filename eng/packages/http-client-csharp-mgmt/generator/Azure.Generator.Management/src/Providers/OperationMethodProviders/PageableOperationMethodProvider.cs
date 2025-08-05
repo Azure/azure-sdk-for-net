@@ -78,7 +78,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 _convenienceMethod.Signature.ReturnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, false),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

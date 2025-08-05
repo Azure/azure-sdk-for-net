@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -18,43 +20,39 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         RestClientInfo restClientInfo,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(collection, collection.ContextualPath, restClientInfo, method, convenienceMethod, isAsync)
+        bool isAsync)
+        : ResourceOperationMethodProvider(
+            collection,
+            collection.ContextualPath,
+            restClientInfo,
+            method,
+            convenienceMethod,
+            isAsync,
+            methodName: isAsync ? "GetIfExistsAsync" : "GetIfExists",
+            description: $"Tries to get details for this resource from the service.")
     {
-        protected override MethodSignature CreateSignature()
+        protected override CSharpType BuildReturnType()
         {
-            var returnType = new CSharpType(typeof(NullableResponse<>), _resource.Type)
-                .WrapAsync(_isAsync);
-
-            return new MethodSignature(
-                _isAsync ? "GetIfExistsAsync" : "GetIfExists",
-                $"Tries to get details for this resource from the service.",
-                _convenienceMethod.Signature.Modifiers,
-                returnType,
-                _convenienceMethod.Signature.ReturnDescription,
-                GetOperationMethodParameters(),
-                _convenienceMethod.Signature.Attributes,
-                _convenienceMethod.Signature.GenericArguments,
-                _convenienceMethod.Signature.GenericParameterConstraints,
-                _convenienceMethod.Signature.ExplicitInterface,
-                _convenienceMethod.Signature.NonDocumentComment);
+            return new CSharpType(typeof(NullableResponse<>), _returnBodyType!).WrapAsync(_isAsync);
         }
 
         protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
+            // we need to add some null checks before we return the response.
             List<MethodBodyStatement> statements =
             [
                 new IfStatement(responseVariable.Property("Value").Equal(Null))
                 {
                     Return(
                         New.Instance(
-                            new CSharpType(typeof(NoValueResponse<>), _resource.Type),
+                            new CSharpType(typeof(NoValueResponse<>), _resourceClient!.Type),
                             responseVariable.Invoke("GetRawResponse")
                         )
                     )
                 }
             ];
 
-            var returnValueExpression = New.Instance(_resource.Type, This.Property("Client"), responseVariable.Property("Value"));
+            var returnValueExpression = New.Instance(_resourceClient.Type, This.As<ArmResource>().Client(), responseVariable.Property("Value"));
             statements.Add(
                 Return(
                     Static(typeof(Response)).Invoke(
