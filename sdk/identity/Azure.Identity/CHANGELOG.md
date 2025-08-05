@@ -12,11 +12,14 @@
   - `SharedTokenCacheCredential` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
   - `SharedTokenCacheCredentialOptions` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
   - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheUsername` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
   - `SharedTokenCacheCredential` is no longer included in the `DefaultAzureCredential` authentication flow
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Added the `EditorBrowsable(Never)` attribute to property `VisualStudioCodeTenantId` as `TenantId` is preferred. The `VisualStudioCodeTenantId` property exists only to provide backwards compatibility.
 
 ## 1.15.0-beta.1 (2025-07-17)
 
