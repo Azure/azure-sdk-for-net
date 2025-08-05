@@ -15,8 +15,6 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.Interfaces;
-
 namespace Azure.Storage.DataMovement.Tests;
 
 public class TransferManagerTests
