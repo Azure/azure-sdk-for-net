@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// TODO: Resolve bicep serialization issue
-/*
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.Network;
 
@@ -57,4 +55,3 @@ public class NetworkSpecification() :
         Roles.Add(new Role("NetworkContributor", "4d97b98b-1d4f-4787-a291-c67834d212e7", "Lets you manage networks, but not access to them."));
     }
 }
-*/
