@@ -2,8 +2,13 @@
 
 ## 1.15.0-beta.2 (Unreleased)
 
+### Bugs Fixed
+
+- Tenant ID comparisons in credential options are now case-insensitive. This affects `AdditionallyAllowedTenants` values which will now be matched against tenant IDs without case sensitivity, making the authentication more resilient to case differences in tenant IDs returned from WWW-Authenticate challenges ([#51693](https://github.com/Azure/azure-sdk-for-net/issues/51693)).
+
 ### Other Changes
 
+- `BrokerAuthenticationCredential` has been renamed as `BrokerCredential`.
 - Deprecated `SharedTokenCacheCredential`, which was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead. Marked the following members as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`:
   - `SharedTokenCacheCredential` class
   - `SharedTokenCacheCredentialOptions` class
