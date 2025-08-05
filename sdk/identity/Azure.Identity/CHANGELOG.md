@@ -2,22 +2,13 @@
 
 ## 1.15.0-beta.2 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-#### Behavioral Breaking Changes
+### Other Changes
 
 - Deprecated `SharedTokenCacheCredential`, which was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead. Marked the following members as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`:
   - `SharedTokenCacheCredential` class
   - `SharedTokenCacheCredentialOptions` class
   - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property
   - `DefaultAzureCredentialOptions.SharedTokenCacheUsername` property
-
-### Bugs Fixed
-
-### Other Changes
-
 - Added the `EditorBrowsable(Never)` attribute to property `VisualStudioCodeTenantId` as `TenantId` is preferred. The `VisualStudioCodeTenantId` property exists only to provide backwards compatibility.
 
 ## 1.15.0-beta.1 (2025-07-17)
