@@ -23,6 +23,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         private const string AGENT_NAME2 = "cs_e2e_tests_client2";
         private const string VCT_STORE_NAME = "cs_e2e_tests_vct_store";
         private const string FILE_NAME = "product_info_1.md";
+        private const string OPENAPI_SPEC_FILE = "weather_openapi.json";
         private const string FILE_NAME2 = "test_file.txt";
         private const string TEMP_DIR = "cs_e2e_temp_dir";
 
@@ -94,6 +95,33 @@ namespace Azure.AI.Agents.Persistent.Tests
             { AzureAISearchQueryTypeEnum.Vector, AzureAISearchQueryType.Vector },
             { AzureAISearchQueryTypeEnum.VectorSimpleHybrid, AzureAISearchQueryType.VectorSimpleHybrid },
             { AzureAISearchQueryTypeEnum.VectorSemanticHybrid, AzureAISearchQueryType.VectorSemanticHybrid }
+        };
+
+        public enum ToolTypes
+        {
+            BingGrounding,
+            OpenAPI,
+            DeepResearch,
+            AzureAISearch
+        }
+
+        public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
+        {
+            {ToolTypes.BingGrounding, typeof(RunStepDeltaBingGroundingToolCall) },
+            {ToolTypes.OpenAPI, typeof(RunStepDeltaOpenAPIToolCall)},
+            {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
+            {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)}
+        };
+
+        public Dictionary<ToolTypes, string> ToolPrompts = new()
+        {
+            {ToolTypes.BingGrounding, "How does wikipedia explain Euler's Identity?" },
+            {ToolTypes.OpenAPI, "What's the weather in Seattle?"},
+            {ToolTypes.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
+                "including what is currently known about orcas' cognitive capabilities, " +
+                "communication systems and problem-solving reflected in recent publications in top their scientific " +
+                "journals like Science, Nature and PNAS."},
+            {ToolTypes.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"}
         };
         #endregion
 
@@ -1667,7 +1695,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             await client.Messages.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
-                "What is the temperature rating of the cozynights sleeping bag?");
+                ToolPrompts[ToolTypes.AzureAISearch]);
             ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
             do
@@ -1752,32 +1780,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             await client.Messages.CreateMessageAsync(
                 thread.Id,
                 MessageRole.User,
-                "What is the temperature rating of the cozynights sleeping bag?");
-            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
-            {
-                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
-                {
-                    Console.WriteLine("--- Run started! ---");
-                }
-                else if (streamingUpdate is MessageContentUpdate contentUpdate)
-                {
-                    if (contentUpdate.TextAnnotation != null)
-                    {
-                        Console.Write($" [see {contentUpdate.TextAnnotation.Title}] ({contentUpdate.TextAnnotation.Url})");
-                    }
-                    else
-                    {
-                        //Detect the reference placeholder and skip it. Instead we will print the actual reference.
-                        if (contentUpdate.Text[0] != (char)12304 || contentUpdate.Text[contentUpdate.Text.Length - 1] != (char)12305)
-                            Console.Write(contentUpdate.Text);
-                    }
-                }
-                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
+                ToolPrompts[ToolTypes.AzureAISearch]);
+            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[ToolTypes.AzureAISearch]);
         }
 
         [RecordedTest]
@@ -1915,23 +1919,12 @@ namespace Azure.AI.Agents.Persistent.Tests
         public async Task TestDeepResearchTool()
         {
             PersistentAgentsClient client = GetClient();
-            DeepResearchToolDefinition deepResearch = new(
-                new DeepResearchDetails(
-                    model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
-                    bingGroundingConnections: [
-                        new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)
-                    ]
-                )
-            );
             string instruction = "You are a helpful Agent that assists in researching scientific topics.";
-            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [deepResearch]);
+            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [GetToolDefinition(ToolTypes.DeepResearch)]);
             PersistentAgentThreadCreationOptions threadOp = new();
             threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
-                content: "Research the current state of studies on orca intelligence and orca language, " +
-                "including what is currently known about orcas' cognitive capabilities, " +
-                "communication systems and problem-solving reflected in recent publications in top thier scientific " +
-                "journals like Science, Nature and PNAS."
+                content: ToolPrompts[ToolTypes.DeepResearch]
             ));
             ThreadAndRunOptions opts = new()
             {
@@ -2119,8 +2112,79 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.Greater((await client.Messages.GetMessagesAsync(thread.Id).ToListAsync()).Count, 1);
         }
 
+        [RecordedTest]
+        [TestCase(ToolTypes.BingGrounding)]
+        [TestCase(ToolTypes.OpenAPI)]
+        [TestCase(ToolTypes.DeepResearch)]
+        // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
+        public async Task TestStreamDelta(ToolTypes toolToTest)
+        {
+            // Commenting DeepResearch as it is not compatible with unit test framework iterations
+            // and connection breaks after timeout during streaming test.
+            // The error says that the thread already contains the active run.
+            if (toolToTest == ToolTypes.DeepResearch && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive("DeepResearch is not fully supported by TestFramework");
+            ToolResources toolRes = GetToolResources(toolToTest);
+            ToolDefinition toolDef = GetToolDefinition(toolToTest);
+            PersistentAgentsClient client = GetClient();
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                model: "gpt-4o",
+                tools: toolDef is null ? null : [toolDef],
+                toolResources: toolRes
+            );
+            // Create thread for communication
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+            // Create message to thread
+            await client.Messages.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                content: ToolPrompts[toolToTest]);
+            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[toolToTest]);
+        }
+
         #region Helpers
 
+        private static async Task ValidateStream(PersistentAgentsClient client, string agentId, string threadId, Type runStepDeltaType)
+        {
+            bool isStarted = false;
+            bool receivedMessage = false;
+            bool gotExpectedDelta = false;
+            bool isCompleted = false;
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(threadId, agentId))
+            {
+                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+                {
+                    isStarted = true;
+                }
+                else if (streamingUpdate is MessageContentUpdate msg)
+                {
+                    Console.WriteLine(msg.Text);
+                    receivedMessage = true;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
+                {
+                    Assert.Fail(errorStep.Value.LastError.Message);
+                }
+                else if (streamingUpdate is RunStepDetailsUpdate runStepDelta)
+                {
+                    if (runStepDelta.GetDeltaToolCall.GetType() == runStepDeltaType)
+                    {
+                        gotExpectedDelta = true;
+                    }
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    isCompleted = true;
+                }
+                FailOnStreamError(streamingUpdate);
+            }
+            Assert.True(isStarted, "The stream is missing Start event.");
+            Assert.True(receivedMessage, "The message was never received.");
+            Assert.True(gotExpectedDelta, $"The delta tool call of type {runStepDeltaType} was not found.");
+            Assert.True(isCompleted, "The stream was not completed.");
+        }
         private static string CreateTempDirMayBe()
         {
             string tempDir = Path.Combine(Path.GetTempPath(), TEMP_DIR);
@@ -2166,13 +2230,14 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(resp.Value);
         }
 
-        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4", IEnumerable<ToolDefinition> tools=null)
+        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4", IEnumerable<ToolDefinition> tools=null, ToolResources toolResources=null)
         {
             return await client.Administration.CreateAgentAsync(
                 model: model,
                 name: agentName,
                 instructions: instruction,
-                tools: tools
+                tools: tools,
+                toolResources: toolResources
             );
         }
 
@@ -2237,10 +2302,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             return batch;
         }
 
-        private static string GetFile([CallerFilePath] string pth = "")
+        private static string GetFile([CallerFilePath] string pth = "", string fileName= FILE_NAME)
         {
             var dirName = Path.GetDirectoryName(pth) ?? "";
-            return Path.Combine(new string[] { dirName, "TestData", FILE_NAME });
+            return Path.Combine(new string[] { dirName, "TestData", fileName });
         }
 
         private static async Task<int> CountElementsAndRemoveIds(PersistentAgentsClient client, HashSet<string> ids)
@@ -2255,7 +2320,44 @@ namespace Azure.AI.Agents.Persistent.Tests
             return count;
         }
 
-        private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType)
+        private ToolResources GetToolResources(ToolTypes toolType)
+            => toolType switch
+            {
+                ToolTypes.AzureAISearch => GetAISearchToolResource(
+                    queryType: AzureAISearchQueryTypeEnum.Simple,
+                    filter: "category eq 'sleeping bag'"
+                ),
+                _ => null
+            };
+
+        private ToolDefinition GetToolDefinition(ToolTypes toolType)
+            => toolType switch
+                {
+                    ToolTypes.BingGrounding => new BingGroundingToolDefinition(
+                        new BingGroundingSearchToolParameters(
+                            [new BingGroundingSearchConfiguration(TestEnvironment.BING_CONNECTION_ID)]
+                        )
+                    ),
+                    ToolTypes.OpenAPI => new OpenApiToolDefinition(
+                        name: "get_weather",
+                        description: "Retrieve weather information for a location",
+                        spec: BinaryData.FromBytes(File.ReadAllBytes(GetFile(fileName: OPENAPI_SPEC_FILE))),
+                        openApiAuthentication: new OpenApiAnonymousAuthDetails(),
+                        defaultParams: ["format"]
+                    ),
+                    ToolTypes.DeepResearch => new DeepResearchToolDefinition(
+                        new DeepResearchDetails(
+                                model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
+                                bingGroundingConnections: [
+                                    new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)
+                            ]
+                        )
+                    ),
+                    ToolTypes.AzureAISearch => new AzureAISearchToolDefinition(),
+                    _ => null
+                };
+
+        private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType, string filter=null)
         {
             return new ToolResources()
             {
@@ -2263,10 +2365,18 @@ namespace Azure.AI.Agents.Persistent.Tests
                     indexConnectionId: TestEnvironment.AI_SEARCH_CONNECTION_ID,
                     indexName: "sample_index",
                     queryType: SearchQueryTypes[queryType],
-                    filter: null,
+                    filter: filter,
                     topK: 5
                 )
             };
+        }
+
+        public static void FailOnStreamError(StreamingUpdate streamingUpdate)
+        {
+            if ((streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed || streamingUpdate.UpdateKind == StreamingUpdateReason.Error) && streamingUpdate is RunUpdate errorStep)
+            {
+                Assert.Fail(errorStep.Value.LastError.Message);
+            }
         }
 
         #endregion
