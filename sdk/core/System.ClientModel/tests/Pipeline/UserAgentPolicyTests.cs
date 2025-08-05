@@ -317,16 +317,19 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         };
 
         string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly, null, mockRuntimeInfo);
-        Assert.IsNotNull(userAgent);
-        Assert.IsNotEmpty(userAgent);
 
-        // Should contain assembly name and version
+        // Get expected values
         string assemblyName = assembly.GetName().Name!;
-        Assert.That(userAgent, Does.Contain(assemblyName));
+        AssemblyInformationalVersionAttribute? versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+        string version = versionAttribute!.InformationalVersion;
+        int hashSeparator = version.IndexOf('+');
+        if (hashSeparator != -1)
+        {
+            version = version.Substring(0, hashSeparator);
+        }
 
-        // Should contain custom runtime information
-        Assert.That(userAgent, Does.Contain("Test Framework"));
-        Assert.That(userAgent, Does.Contain("Test OS"));
+        string expectedUserAgent = $"{assemblyName}/{version} ({mockRuntimeInfo.FrameworkDescriptionMock}; {mockRuntimeInfo.OSDescriptionMock})";
+        Assert.AreEqual(expectedUserAgent, userAgent);
     }
 
     [Test]
@@ -341,18 +344,18 @@ public class UserAgentPolicyTests : SyncAsyncTestBase
         };
 
         string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly, applicationId, mockRuntimeInfo);
-        Assert.IsNotNull(userAgent);
-        Assert.IsNotEmpty(userAgent);
 
-        // Should start with application ID
-        Assert.That(userAgent, Does.StartWith(applicationId));
-
-        // Should contain assembly name and version
+        // Get expected values
         string assemblyName = assembly.GetName().Name!;
-        Assert.That(userAgent, Does.Contain(assemblyName));
+        AssemblyInformationalVersionAttribute? versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+        string version = versionAttribute!.InformationalVersion;
+        int hashSeparator = version.IndexOf('+');
+        if (hashSeparator != -1)
+        {
+            version = version.Substring(0, hashSeparator);
+        }
 
-        // Should contain custom runtime information
-        Assert.That(userAgent, Does.Contain("Test Framework"));
-        Assert.That(userAgent, Does.Contain("Test OS"));
+        string expectedUserAgent = $"{applicationId} {assemblyName}/{version} ({mockRuntimeInfo.FrameworkDescriptionMock}; {mockRuntimeInfo.OSDescriptionMock})";
+        Assert.AreEqual(expectedUserAgent, userAgent);
     }
 }
