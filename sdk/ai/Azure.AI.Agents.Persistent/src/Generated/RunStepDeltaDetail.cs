@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary>
     /// Represents a single run step detail item in a streaming run step's delta payload.
     /// Please note <see cref="RunStepDeltaDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/> and <see cref="RunStepDeltaToolCallObject"/>.
+    /// The available derived classes include <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaOpenAPIObject"/> and <see cref="RunStepDeltaToolCallObject"/>.
     /// </summary>
     public abstract partial class RunStepDeltaDetail
     {

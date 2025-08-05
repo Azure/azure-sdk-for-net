@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public GetUserTablesMySqlTaskInput(MySqlConnectionInfo connectionInfo, IEnumerable<string> selectedDatabases)
+        public GetUserTablesMySqlTaskInput(DataMigrationMySqlConnectionInfo connectionInfo, IEnumerable<string> selectedDatabases)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesMySqlTaskInput(MySqlConnectionInfo connectionInfo, IList<string> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesMySqlTaskInput(DataMigrationMySqlConnectionInfo connectionInfo, IList<string> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfo = connectionInfo;
             SelectedDatabases = selectedDatabases;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for SQL Server. </summary>
-        public MySqlConnectionInfo ConnectionInfo { get; set; }
+        public DataMigrationMySqlConnectionInfo ConnectionInfo { get; set; }
         /// <summary> List of database names to collect tables for. </summary>
         public IList<string> SelectedDatabases { get; }
     }

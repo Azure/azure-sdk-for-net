@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Migration error. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, ReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType, serializedAdditionalRawData)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType, serializedAdditionalRawData)
         {
             Error = error;
             Events = events;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Migration error. </summary>
-        public ReportableException Error { get; }
+        public DataMigrationReportableException Error { get; }
         /// <summary> List of error events. </summary>
         public IReadOnlyList<SyncMigrationDatabaseErrorEvent> Events { get; }
     }

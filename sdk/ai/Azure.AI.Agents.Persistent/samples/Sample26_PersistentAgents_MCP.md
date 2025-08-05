@@ -81,7 +81,7 @@ while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || r
         {
             if (toolCall is RequiredMcpToolCall mcpToolCall)
             {
-                Console.WriteLine($"Approving MCP tool call: {mcpToolCall.Name}");
+                Console.WriteLine($"Approving MCP tool call: {mcpToolCall.Name}, Arguments: {mcpToolCall.Arguments}");
                 toolApprovals.Add(new ToolApproval(mcpToolCall.Id, approve: true)
                 {
                     Headers = { ["SuperSecret"] = "123456" }

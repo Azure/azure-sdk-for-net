@@ -37,12 +37,11 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ZooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion);
+            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
             _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion0);
-            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion0);
+            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -76,7 +75,7 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateCreateZooRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
+                HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
@@ -118,7 +117,7 @@ namespace MgmtTypeSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zoosRestClient.CreateCreateZooRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
+                HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
