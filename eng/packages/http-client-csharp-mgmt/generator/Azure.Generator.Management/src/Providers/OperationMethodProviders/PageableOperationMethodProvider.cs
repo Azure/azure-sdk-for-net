@@ -66,7 +66,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             )
         {
             actualItemType = itemType;
-            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(_itemType, out resourceClient))
+            if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
             {
                 actualItemType = resourceClient.Type;
             }
