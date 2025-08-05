@@ -63,6 +63,11 @@ namespace Azure.Communication.CallAutomation
 
         private static PiiRedactionOptions ConvertToPiiRedactionOptions(PiiRedactionOptionsInternal piiRedactionOptions)
         {
+            if (piiRedactionOptions == null)
+            {
+                return null;
+            }
+
             return new PiiRedactionOptions() { Enable = piiRedactionOptions.Enable, RedactionType = piiRedactionOptions.RedactionType };
         }
     }
