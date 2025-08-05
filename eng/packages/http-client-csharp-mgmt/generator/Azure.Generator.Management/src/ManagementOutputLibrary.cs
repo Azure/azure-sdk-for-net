@@ -184,11 +184,7 @@ namespace Azure.Generator.Management
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
             _resourceDataTypes ??= ResourceClients.ToDictionary(r => r.ResourceData.Type, r => r);
-            if (_resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider))
-            {
-                return true;
-            }
-            return false;
+            return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
         }
     }
 }
