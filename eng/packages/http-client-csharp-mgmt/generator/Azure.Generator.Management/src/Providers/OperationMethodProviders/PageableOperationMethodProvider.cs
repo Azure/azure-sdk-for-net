@@ -59,7 +59,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _bodyStatements = BuildBodyStatements();
         }
 
-        private void InitializeTypeInfo(
+        private static void InitializeTypeInfo(
             CSharpType itemType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient
