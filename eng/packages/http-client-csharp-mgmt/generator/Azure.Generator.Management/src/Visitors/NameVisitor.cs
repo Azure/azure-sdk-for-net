@@ -51,10 +51,15 @@ internal class NameVisitor : ScmLibraryVisitor
 
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
+        if (type is null)
+        {
+            return null;
+        }
+
         if (_knownTypes.Contains(enumType.Name))
         {
             var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
-            enumType.Update(name: newName);
+            type.Update(name: newName);
         }
         return base.PreVisitEnum(enumType, type);
     }
