@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Trace;
@@ -207,29 +208,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         [InlineData(false, false)]
         public async Task VerifySamplingOptions(bool isRateLimitedSampler, bool useExporter)
         {
-            var options;
             var serviceCollection = new ServiceCollection();
             if (useExporter)
             {
-                options = new AzureMonitorExporterOptions();
-                options.ConnectionString = TestConnectionString;
-                if (isRateLimitedSampler)
-                {
-                    options.TracesPerSecond = 10;
-                }
                 serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitorExporter(options);
+                .UseAzureMonitorExporter(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
+                });
             }
             else // use distro
             {
-                options = new AzureMonitorOptions();
-                options.ConnectionString = TestConnectionString;
-                if (isRateLimitedSampler)
-                {
-                    options.TracesPerSecond = 10;
-                }
                 serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitor(options);
+                .UseAzureMonitor(options => {
+                    options.ConnectionString = TestConnectionString;
+                    options.TracesPerSecond = isRateLimitedSampler ? 10 : null;
+                });
             }
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -237,7 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             EvaluationHelper.EvaluateTracerProvider(
                 serviceProvider: serviceProvider,
-                expectedLiveMetricsProcessor: enableLiveMetrics,
+                expectedLiveMetricsProcessor: true,
                 expectedProfilingSessionTraceProcessor: true,
                 hasInstrumentations: true,
                 isExpectedSamplerRateLimited: isRateLimitedSampler);
@@ -256,8 +251,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         [InlineData("microsoft.fixed_percentage", "0.5", false, false, true)]
         public async Task VerifySamplingEnvVars(string sampler, string samplerArg, bool isRateLimitedSampler, bool useExporter, bool testPrecendence)
         {
-            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER, sampler);
-            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER_ARG, samplerArg);
+            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", sampler);
+            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", samplerArg);
 
             var serviceCollection = new ServiceCollection();
             if (useExporter)
@@ -285,20 +280,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 });
             }
 
-
             using var serviceProvider = serviceCollection.BuildServiceProvider();
             await StartHostedServicesAsync(serviceProvider);
 
             EvaluationHelper.EvaluateTracerProvider(
                 serviceProvider: serviceProvider,
-                expectedLiveMetricsProcessor: enableLiveMetrics,
+                expectedLiveMetricsProcessor: true,
                 expectedProfilingSessionTraceProcessor: true,
                 hasInstrumentations: true,
                 isExpectedSamplerRateLimited: isRateLimitedSampler);
 
             // Clean up environment variables
-            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER, null);
-            Environment.SetEnvironmentVariable(EnvironmentVariableConstants.OTEL_TRACES_SAMPLER_ARG, null);
+            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
+            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
         }
 
         [Theory]
