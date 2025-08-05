@@ -72,13 +72,6 @@ namespace MgmtTypeSpec.Models
             return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="propertiesAccessControlEnabled"> Gets or sets the AccessControlEnabled. </param>
-        /// <returns> A new <see cref="Models.FooSettingsPatch"/> instance for mocking. </returns>
-        public static FooSettingsPatch FooSettingsPatch(bool? propertiesAccessControlEnabled = default)
-        {
-            return new FooSettingsPatch(propertiesAccessControlEnabled is null ? default : new FooSettingsUpdateProperties(propertiesAccessControlEnabled, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

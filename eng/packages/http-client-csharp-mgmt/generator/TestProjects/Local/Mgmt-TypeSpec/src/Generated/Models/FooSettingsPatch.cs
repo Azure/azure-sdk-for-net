@@ -40,6 +40,14 @@ namespace MgmtTypeSpec.Models
             {
                 return Properties is null ? default : Properties.AccessControlEnabled;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooSettingsUpdateProperties();
+                }
+                Properties.AccessControlEnabled = value;
+            }
         }
     }
 }

@@ -59,6 +59,14 @@ namespace MgmtTypeSpec
             {
                 return Properties is null ? default : Properties.Something;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ZooProperties();
+                }
+                Properties.Something = value;
+            }
         }
     }
 }
