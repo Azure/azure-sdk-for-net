@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
+
 namespace System.ClientModel.Primitives;
 
 internal enum JsonPathTokenType
 {
     Root,               // $
-    PropertySeparator,  // .
+    PropertySeparator,  // . or [' or ["
     Property,           // propertyName
-    ArrayStart,         // [
-    ArrayEnd,           // ]
-    QuotedString,       // 'value' or "value"
-    Number,             // 123
+    ArrayIndex,         // [(\d+)]
     End
 }
 
@@ -35,6 +34,9 @@ internal ref struct JsonPathReader
     private int _consumed;
 
     public JsonPathToken Current { get; private set; }
+
+    public JsonPathReader(string jsonPath)
+        : this(Encoding.UTF8.GetBytes(jsonPath).AsSpan()) { }
 
     public JsonPathReader(ReadOnlySpan<byte> jsonPath)
     {
@@ -69,23 +71,34 @@ internal ref struct JsonPathReader
                 // if the next byte is '\'', or '"', it's a quoted string, otherwise it's an array start
                 if (_consumed + 1 < _jsonPath.Length && (_jsonPath[_consumed + 1] == '\'' || _jsonPath[_consumed + 1] == '"'))
                 {
-                    _consumed++; // Skip the '['
-                    Current = ReadQuotedString();
+                    Current = new JsonPathToken(JsonPathTokenType.PropertySeparator, _consumed++);
                     return true;
                 }
-                Current = new JsonPathToken(JsonPathTokenType.ArrayStart, _consumed++);
-                return true;
-
-            case (byte)']':
-                Current = new JsonPathToken(JsonPathTokenType.ArrayEnd, _consumed++);
-                return true;
+                if (_consumed + 1 < _jsonPath.Length && IsDigit(_jsonPath[_consumed + 1]))
+                {
+                    _consumed++; // Skip '['
+                    Current = ReadNumber();
+                    if (_consumed < _jsonPath.Length && _jsonPath[_consumed] == ']')
+                    {
+                        _consumed++; // Skip closing bracket
+                        return true;
+                    }
+                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after number");
+                }
+                throw new FormatException($"Invalid JsonPath syntax at position {_consumed + 1}: expected a property or array index after '['");
 
             case (byte)'\'' or (byte)'"':
                 Current = ReadQuotedString();
-                return true;
+                if (_consumed < _jsonPath.Length && _jsonPath[_consumed] == ']')
+                {
+                    _consumed++; // Skip closing bracket
+                    return true;
+                }
+                throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after quoted string");
 
             default:
-                Current = IsDigit(current) ? ReadNumber() : ReadProperty();
+                // Read a property name
+                Current = ReadProperty();
                 return true;
         }
     }
@@ -101,7 +114,7 @@ internal ref struct JsonPathReader
         if (!Read())
             return ReadOnlySpan<byte>.Empty;
 
-        if (Current.TokenType != JsonPathTokenType.PropertySeparator && Current.TokenType != JsonPathTokenType.ArrayStart)
+        if (Current.TokenType != JsonPathTokenType.PropertySeparator)
             return ReadOnlySpan<byte>.Empty;
 
         if (!Read())
@@ -112,15 +125,8 @@ internal ref struct JsonPathReader
             case JsonPathTokenType.Property:
                 return _jsonPath.Slice(0, _consumed);
 
-            case JsonPathTokenType.ArrayStart:
-                if (!Read())
-                    return ReadOnlySpan<byte>.Empty;
-
-                if (Current.TokenType != JsonPathTokenType.QuotedString)
-                    return ReadOnlySpan<byte>.Empty;
-
-                return _jsonPath.Slice(0, _consumed);
-
+            //should get first property return $[0] if its an array rooted jsonpath?
+            //case JsonPathTokenType.ArrayIndex:
             default:
                 return ReadOnlySpan<byte>.Empty;
         }
@@ -135,11 +141,11 @@ internal ref struct JsonPathReader
             _consumed++;
 
         if (_consumed >= _jsonPath.Length)
-            throw new ArgumentException("Unterminated quoted string in JsonPath");
+            throw new FormatException("Unterminated quoted string in JsonPath");
 
         var value = _jsonPath.Slice(start, _consumed - start);
         _consumed++; // Skip closing quote
-        return new JsonPathToken(JsonPathTokenType.QuotedString, start, value);
+        return new JsonPathToken(JsonPathTokenType.Property, start, value);
     }
 
     private JsonPathToken ReadNumber()
@@ -148,7 +154,7 @@ internal ref struct JsonPathReader
         while (_consumed < _jsonPath.Length && IsDigit(_jsonPath[_consumed]))
             _consumed++;
 
-        return new JsonPathToken(JsonPathTokenType.Number, start, _jsonPath.Slice(start, _consumed - start));
+        return new JsonPathToken(JsonPathTokenType.ArrayIndex, start, _jsonPath.Slice(start, _consumed - start));
     }
 
     private JsonPathToken ReadProperty()

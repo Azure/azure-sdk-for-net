@@ -61,13 +61,13 @@ internal static class JsonPathReaderExtensions
         JsonPathToken lastToken = default;
         while (reader.Read() && reader.Current.TokenType != JsonPathTokenType.End)
         {
-            if (reader.Current.TokenType == JsonPathTokenType.Property || reader.Current.TokenType == JsonPathTokenType.QuotedString)
+            if (reader.Current.TokenType == JsonPathTokenType.Property)
             {
                 lastToken = reader.Current;
             }
         }
 
-        return lastToken.TokenType == JsonPathTokenType.Property || lastToken.TokenType == JsonPathTokenType.QuotedString
+        return lastToken.TokenType == JsonPathTokenType.Property
             ? lastToken.ValueSpan
             : ReadOnlySpan<byte>.Empty;
     }
@@ -200,7 +200,6 @@ internal static class JsonPathReaderExtensions
 
         JsonPathReader pathReader = new(jsonPath);
 
-        bool inArray = false;
         while (pathReader.Read())
         {
             switch (pathReader.Current.TokenType)
@@ -212,45 +211,16 @@ internal static class JsonPathReaderExtensions
                     }
                     break;
 
-                case JsonPathTokenType.QuotedString:
-                    //deals with the case of $.x['y']
-                    if (jsonReader.TokenType == JsonTokenType.PropertyName)
-                        jsonReader.Read();
-
-                    if (!SkipToProperty(ref jsonReader, pathReader))
-                        return false;
-                    break;
-
                 case JsonPathTokenType.Property:
                     if (!SkipToProperty(ref jsonReader, pathReader))
                         return false;
                     break;
 
-                case JsonPathTokenType.ArrayStart:
-                    inArray = true;
+                case JsonPathTokenType.ArrayIndex:
                     if (jsonReader.TokenType == JsonTokenType.PropertyName)
-                        jsonReader.Read();
+                        jsonReader.Read(); // Move to the value after the property name
 
                     if (jsonReader.TokenType != JsonTokenType.StartArray)
-                    {
-                        return false;
-                    }
-                    break;
-
-                case JsonPathTokenType.ArrayEnd:
-                    inArray = false;
-                    break;
-
-                case JsonPathTokenType.PropertySeparator:
-                    if (jsonReader.TokenType != JsonTokenType.StartObject)
-                        jsonReader.Read();
-                    break;
-
-                case JsonPathTokenType.End:
-                    return true;
-
-                case JsonPathTokenType.Number:
-                    if (!inArray)
                         return false;
 
                     int currentIndex = 0;
@@ -273,8 +243,15 @@ internal static class JsonPathReaderExtensions
                         }
                         currentIndex++;
                     }
-
                     break;
+
+                case JsonPathTokenType.PropertySeparator:
+                    if (jsonReader.TokenType == JsonTokenType.PropertyName)
+                        jsonReader.Read();
+                    break;
+
+                case JsonPathTokenType.End:
+                    return true;
 
                 default:
                     return false;
