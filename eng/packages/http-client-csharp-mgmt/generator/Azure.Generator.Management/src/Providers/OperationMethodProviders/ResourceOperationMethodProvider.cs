@@ -8,7 +8,6 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Humanizer.Localisation;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -202,7 +201,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
-            out VariableExpression responseVariable)
+            out ScopedApi<Response> responseVariable)
         {
             if (_originalBodyType != null && !_isLongRunningOperation)
             {
@@ -225,7 +224,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private IReadOnlyList<MethodBodyStatement> BuildFakeLroHandling(
             VariableExpression messageVariable,
-            VariableExpression responseVariable,
+            ScopedApi<Response> responseVariable,
             ParameterProvider cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
@@ -244,13 +243,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // when the response is wrapped by a resource, we need to construct it from the response value.
             if (_resourceClient != null)
             {
-                responseValueExpression = Static(typeof(Response)).Invoke(
-                        nameof(Response.FromValue),
-                        New.Instance(
+                responseValueExpression = ResponseSnippets.FromValue(
+                    New.Instance(
                             _resourceClient.Type,
                             This.As<ArmResource>().Client(),
-                            responseVariable.Property("Value")),
-                        responseVariable.Invoke("GetRawResponse"));
+                            responseVariable.Value()),
+                    responseVariable.GetRawResponse());
             }
 
             ValueExpression[] armOperationArguments = [responseValueExpression, rehydrationTokenVariable];
@@ -267,7 +265,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
-            VariableExpression responseVariable,
+            ScopedApi<Response> responseVariable,
             ParameterProvider cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
@@ -281,7 +279,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             ValueExpression[] armOperationArguments = [
                 _clientDiagnosticsField,
-                This.Property("Pipeline"),
+                This.As<ArmResource>().Pipeline(),
                 messageVariable.Property("Request"),
                 responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
@@ -289,7 +287,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var operationInstanceArguments = _resourceClient != null
                 ? [
-                    New.Instance(_resourceClient.Source.Type, This.Property("Client")),
+                    New.Instance(_resourceClient.Source.Type, This.As<ArmResource>().Client()),
                     .. armOperationArguments
                   ]
                 : armOperationArguments;
@@ -330,16 +328,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         }
 
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
-        // TODO - make the responseVariable strongly typed
-        protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
+        protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
             var nullCheckStatement = new IfStatement(
-                responseVariable.Property("Value").Equal(Null))
+                responseVariable.Value().Equal(Null))
             {
                 ((KeywordExpression)ThrowExpression(
                     New.Instance(
                         typeof(RequestFailedException),
-                        responseVariable.Invoke("GetRawResponse")))).Terminate()
+                        responseVariable.GetRawResponse()))).Terminate()
             };
 
             List<MethodBodyStatement> statements = [nullCheckStatement];
@@ -349,13 +346,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 var returnValueExpression = New.Instance(
                     _resourceClient.Type,
-                    This.Property("Client"),
-                    responseVariable.Property("Value"));
+                    This.As<ArmResource>().Client(),
+                    responseVariable.Value());
                 var returnStatement = Return(
-                    Static(typeof(Response)).Invoke(
-                        nameof(Response.FromValue),
+                    ResponseSnippets.FromValue(
                         returnValueExpression,
-                        responseVariable.Invoke("GetRawResponse")));
+                        responseVariable.GetRawResponse()));
                 statements.Add(returnStatement);
             }
             else
